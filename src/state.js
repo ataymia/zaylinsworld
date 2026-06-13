@@ -1,0 +1,76 @@
+// ───────────────────────────────────────────────────────────────────────────
+//  state.js — game state + save/load (localStorage)
+// ───────────────────────────────────────────────────────────────────────────
+import { defaultCustom } from './avatar.js';
+
+const SAVE_KEY = 'zaylinsworld.save.v2';
+
+export function defaultState() {
+  return {
+    version: 2,
+    custom: defaultCustom(),
+    money: 500,
+    // stats 0..100
+    stats: { energy: 100, hunger: 80, fitness: 20, smarts: 15, hygiene: 90, fun: 50 },
+    job: 'Unemployed',
+    wanted: 0,          // 0..5 stars
+    heat: 0,            // long-term crime heat
+    monsterMode: false,
+    timeMin: 8 * 60,    // in-game minutes (08:00)
+    day: 1,
+    server: 'sunside',  // city/server vibe
+    pos: { x: 0, z: 10 },
+    facing: 0,
+    carDamage: 0,
+    createdCharacter: false,
+    // ownership
+    ownedCars: [],      // car ids bought at dealership
+    ownedJewelry: [],   // jewelry ids bought at Frostbox
+    ownedGear: [],      // gear ids bought at Block Supply
+    chicken: 0,         // pieces of chicken in inventory
+    freshCut: false,    // lineup mini-game result
+    npcMemory: {},      // id -> { greeted, timesTalked, lastDay }
+    inventory: [],
+  };
+}
+
+export function loadState() {
+  try {
+    const raw = localStorage.getItem(SAVE_KEY);
+    if (!raw) return null;
+    const data = JSON.parse(raw);
+    // shallow merge over defaults so new fields stay valid
+    const base = defaultState();
+    return {
+      ...base, ...data,
+      custom: { ...base.custom, ...(data.custom || {}) },
+      stats: { ...base.stats, ...(data.stats || {}) },
+      pos: { ...base.pos, ...(data.pos || {}) },
+      npcMemory: { ...(data.npcMemory || {}) },
+      ownedCars: data.ownedCars || [],
+      ownedJewelry: data.ownedJewelry || [],
+      ownedGear: data.ownedGear || [],
+    };
+  } catch (e) {
+    console.warn('Failed to load save:', e);
+    return null;
+  }
+}
+
+export function saveState(state) {
+  try {
+    localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+    return true;
+  } catch (e) {
+    console.warn('Failed to save:', e);
+    return false;
+  }
+}
+
+export function clearSave() {
+  localStorage.removeItem(SAVE_KEY);
+}
+
+export function hasSave() {
+  return !!localStorage.getItem(SAVE_KEY);
+}

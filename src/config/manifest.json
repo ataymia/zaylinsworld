@@ -1,0 +1,46 @@
+{
+  "$comment": "Asset manifest for Zaylin's World. Each slot is null (procedural fallback), a path string relative to public/assets/, or { file, scale, yOffset, rotationY }. Drop licensed GLBs into public/assets/models/<category>/ and point the slot here. Missing/failed loads warn once in console and fall back to procedural meshes.",
+  "environment": {
+    "hdri": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/kloppenheim_06_puresky_1k.hdr"
+  },
+  "characters": {
+    "player_avatar": "models/characters/player_avatar.glb",
+    "npc_basic_01": "models/characters/npc_basic_01.glb",
+    "npc_basic_02": "models/characters/npc_basic_02.glb",
+    "npc_shopkeeper_frostbox": "models/characters/npc_shopkeeper_frostbox.glb"
+  },
+  "hair": {
+    "hair_afro": "models/hair/hair_afro.glb",
+    "hair_waves": "models/hair/hair_waves.glb",
+    "hair_locs": "models/hair/hair_locs.glb",
+    "hair_taper_fade": "models/hair/hair_taper_fade.glb",
+    "hair_braids": "models/hair/hair_braids.glb",
+    "hair_cornrows": "models/hair/hair_cornrows.glb"
+  },
+  "vehicles": {
+    "car_starter": "models/vehicles/car_starter.glb",
+    "car_sedan": "models/vehicles/car_sedan.glb",
+    "car_supercar_01": "models/vehicles/car_supercar_01.glb",
+    "car_hypercar_01": "models/vehicles/car_hypercar_01.glb"
+  },
+  "buildings": {
+    "frostbox_exterior": null,
+    "dealership_exterior": null,
+    "chicken_spot_exterior": null,
+    "home_exterior": null
+  },
+  "interiors": {
+    "frostbox_interior": null,
+    "dealership_interior": null,
+    "chicken_spot_interior": null,
+    "home_interior": null,
+    "bathroom_interior": null
+  },
+  "jewelry": {
+    "frostbox_display_case": "models/jewelry/frostbox_display_case.glb",
+    "frostbox_chain_cuban": "models/jewelry/frostbox_chain_cuban.glb",
+    "frostbox_pendant_initial": "models/jewelry/frostbox_pendant_initial.glb",
+    "frostbox_gem_diamond": { "file": "models/jewelry/frostbox_gem_diamond.glb", "scale": 1, "yOffset": 0, "rotationY": 0 }
+  },
+  "props": {}
+}

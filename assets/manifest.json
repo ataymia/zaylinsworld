@@ -1,0 +1,27 @@
+{
+  "$schema": "Asset slots for Zaylin's World. Drop licensed .glb/.gltf files in /assets/models and point the slots here. Missing files fall back to built-in procedural meshes automatically.",
+  "environment": {
+    "hdri": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/kloppenheim_06_puresky_1k.hdr"
+  },
+  "characters": {
+    "playerBase": null,
+    "npcBases": []
+  },
+  "vehicles": {
+    "hatch": null,
+    "coupe": null,
+    "sedan": null,
+    "super": null
+  },
+  "hair": {},
+  "jewelry": {},
+  "interiors": {
+    "dealership": null,
+    "frostbox": null,
+    "blocksupply": null,
+    "chicken": null,
+    "home": null,
+    "kicks": null
+  },
+  "props": {}
+}

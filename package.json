@@ -1,0 +1,20 @@
+{
+  "name": "zaylinsworld",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Zaylin's World — an optimized, browser-playable 3D open-world game built with Three.js + Vite.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --host",
+    "gen:gem": "node tools/make-sample-gem.mjs",
+    "gen:assets": "node tools/build-assets.mjs"
+  },
+  "dependencies": {
+    "three": "0.160.1"
+  },
+  "devDependencies": {
+    "vite": "^5.4.10"
+  }
+}

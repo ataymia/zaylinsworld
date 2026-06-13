@@ -1,1616 +1,264 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zaylin's World</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zaylin's World — 3D</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #111; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; }
-  canvas { display: block; }
+  :root{
+    --panel:#15151f; --panel2:#1d1d2b; --line:#33334a;
+    --accent:#4eff91; --accent2:#9fe8ff; --gold:#e7c14a;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;}
+  body{background:#0a0a12;overflow:hidden;font-family:'Segoe UI',system-ui,Arial,sans-serif;color:#fff;}
+  canvas{display:block;}
 
   /* ── HUD ── */
-  #hud {
-    position: fixed; top: 0; left: 0; right: 0;
-    display: flex; justify-content: space-between; align-items: flex-start;
-    padding: 10px 16px; pointer-events: none; z-index: 50;
-  }
-  .hud-box {
-    background: rgba(0,0,0,.65); border: 1px solid rgba(255,255,255,.15);
-    border-radius: 10px; padding: 8px 12px; color: #fff; font-size: 13px;
-    backdrop-filter: blur(4px); pointer-events: all;
-  }
-  .hud-box h3 { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
-  #stat-bars { display: flex; flex-direction: column; gap: 4px; min-width: 160px; }
-  .sbar { display: flex; align-items: center; gap: 6px; font-size: 12px; }
-  .sbar-track { flex: 1; height: 7px; background: #333; border-radius: 4px; overflow: hidden; }
-  .sbar-fill { height: 100%; border-radius: 4px; transition: width .3s; }
+  #hud{position:fixed;inset:0 0 auto 0;display:flex;justify-content:space-between;
+    align-items:flex-start;padding:10px 14px;pointer-events:none;z-index:40;gap:10px;flex-wrap:wrap;}
+  .hud-box{background:rgba(8,8,16,.62);border:1px solid rgba(255,255,255,.12);
+    border-radius:12px;padding:8px 12px;font-size:13px;backdrop-filter:blur(6px);}
+  .hud-box h3{font-size:10px;color:#8a8aa0;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+  #money-box{font-size:22px;font-weight:800;color:var(--accent);}
+  #stat-bars{display:flex;flex-direction:column;gap:4px;min-width:172px;}
+  .sbar{display:flex;align-items:center;gap:6px;font-size:11px;}
+  .sbar-track{flex:1;height:7px;background:#2a2a38;border-radius:5px;overflow:hidden;}
+  .sbar-fill{height:100%;border-radius:5px;transition:width .3s;}
+  #wanted-stars{font-size:18px;letter-spacing:2px;}
+  #monster-badge{background:#7a1fa0;border-color:#b46bd6;color:#fff;font-weight:700;}
+  #right-stack{display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
 
-  #money-box { font-size: 22px; font-weight: 700; color: #4eff91; min-width: 110px; text-align: center; }
-  #wanted-box { min-width: 130px; }
-  #wanted-stars { font-size: 20px; letter-spacing: 2px; }
-  #job-box { min-width: 150px; }
-  #loc-box { min-width: 160px; }
+  /* ── interaction prompt ── */
+  #prompt{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);
+    background:rgba(8,8,16,.82);border:1px solid rgba(255,255,255,.28);
+    padding:10px 20px;border-radius:30px;font-size:15px;z-index:45;display:none;
+    box-shadow:0 4px 18px rgba(0,0,0,.5);}
+  #prompt .key{display:inline-block;background:#fff;color:#111;font-weight:800;
+    border-radius:6px;padding:1px 8px;margin-right:8px;}
 
-  /* ── MINIMAP ── */
-  #minimap-wrap {
-    position: fixed; bottom: 12px; right: 12px; z-index: 60;
-    border: 2px solid rgba(255,255,255,.25); border-radius: 8px; overflow: hidden;
-  }
-  #minimap { display: block; }
+  /* ── crosshair (first person) ── */
+  #crosshair{position:fixed;left:50%;top:50%;width:6px;height:6px;margin:-3px;
+    border-radius:50%;background:rgba(255,255,255,.7);z-index:30;display:none;}
 
-  /* ── NOTIFICATION ── */
-  #notif {
-    position: fixed; top: 70px; left: 50%; transform: translateX(-50%);
-    background: rgba(0,0,0,.8); color: #fff; padding: 10px 22px;
-    border-radius: 24px; font-size: 14px; z-index: 100;
-    border: 1px solid rgba(255,255,255,.2); pointer-events: none;
-    transition: opacity .4s; opacity: 0;
-  }
+  /* ── controls hint ── */
+  #hint{position:fixed;left:14px;bottom:12px;z-index:35;font-size:11px;color:#9a9ab0;
+    background:rgba(8,8,16,.5);border:1px solid rgba(255,255,255,.1);
+    border-radius:10px;padding:7px 11px;max-width:340px;line-height:1.55;}
+  #hint b{color:#cfcfe6;}
 
-  /* ── SCREENS (overlay panels) ── */
-  .screen {
-    position: fixed; inset: 0; z-index: 200;
-    background: rgba(0,0,0,.88); display: flex; align-items: center; justify-content: center;
-    flex-direction: column; color: #fff;
-  }
-  .screen.hidden { display: none; }
-  .panel {
-    background: #1a1a2e; border: 1px solid #444; border-radius: 16px;
-    padding: 28px 32px; max-width: 520px; width: 90%; max-height: 90vh; overflow-y: auto;
-  }
-  .panel h2 { font-size: 22px; margin-bottom: 18px; color: #4eff91; }
-  .panel h3 { font-size: 15px; margin: 14px 0 8px; color: #ccc; }
-  .btn {
-    background: #4eff91; color: #000; border: none; border-radius: 8px;
-    padding: 10px 20px; font-size: 14px; font-weight: 700; cursor: pointer;
-    margin: 4px; transition: background .2s;
-  }
-  .btn:hover { background: #3dcc74; }
-  .btn-red { background: #ff4e6a; color: #fff; }
-  .btn-red:hover { background: #cc3050; }
-  .btn-blue { background: #4e9eff; color: #fff; }
-  .btn-blue:hover { background: #3070cc; }
-  .btn-gold { background: #ffd700; color: #000; }
-  .btn-gold:hover { background: #ccac00; }
-  .btn-sm { padding: 6px 14px; font-size: 12px; }
-  .close-btn { position: absolute; top: 12px; right: 16px; background: none; border: none; color: #aaa; font-size: 22px; cursor: pointer; }
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-  .option-card {
-    background: #252540; border: 2px solid #333; border-radius: 10px;
-    padding: 10px; cursor: pointer; text-align: center; transition: border-color .2s;
-  }
-  .option-card:hover, .option-card.selected { border-color: #4eff91; }
-  .option-card .card-icon { font-size: 28px; margin-bottom: 6px; }
-  .option-card .card-label { font-size: 12px; color: #ccc; }
-  .color-swatch {
-    width: 32px; height: 32px; border-radius: 50%; border: 3px solid #333;
-    cursor: pointer; display: inline-block; margin: 3px; transition: border-color .2s;
-  }
-  .color-swatch.selected { border-color: #4eff91; }
-  input[type=range] { width: 100%; accent-color: #4eff91; }
-  label { font-size: 13px; color: #ccc; }
-  select { background: #252540; color: #fff; border: 1px solid #444; border-radius: 6px; padding: 6px 10px; font-size: 13px; width: 100%; }
+  /* ── notification ── */
+  #notif{position:fixed;top:74px;left:50%;transform:translateX(-50%);
+    background:rgba(8,8,16,.86);padding:10px 22px;border-radius:26px;font-size:14px;
+    z-index:60;border:1px solid rgba(255,255,255,.22);pointer-events:none;
+    opacity:0;transition:opacity .35s;}
 
-  /* ── TITLE SCREEN ── */
-  #title-screen { background: radial-gradient(ellipse at center, #0d1b3e 0%, #000 80%); }
-  #title-screen h1 {
-    font-size: 52px; font-weight: 900;
-    background: linear-gradient(135deg, #4eff91, #4e9eff, #ff4e91);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    text-shadow: none; margin-bottom: 6px;
-  }
-  #title-screen .sub { color: #888; font-size: 14px; margin-bottom: 30px; letter-spacing: 2px; }
-  #title-screen .private-badge {
-    background: #ff4e6a; color: #fff; font-size: 11px; font-weight: 700;
-    padding: 3px 10px; border-radius: 20px; letter-spacing: 2px; margin-bottom: 24px;
-  }
+  /* ── overlay screens ── */
+  .screen{position:fixed;inset:0;z-index:200;background:rgba(4,4,10,.9);
+    display:flex;align-items:center;justify-content:center;flex-direction:column;}
+  .screen.hidden{display:none;}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;
+    padding:22px 26px;width:min(960px,94vw);max-height:92vh;overflow:hidden;display:flex;flex-direction:column;}
+  .panel h1{font-size:26px;margin-bottom:2px;}
+  .panel .sub{color:#9a9ab0;font-size:13px;margin-bottom:14px;}
 
-  /* ── CHAR CUSTOMIZER ── */
-  #char-preview-wrap { display: flex; justify-content: center; margin-bottom: 16px; }
-  #char-preview { width: 100px; height: 140px; }
+  /* ── creator ── */
+  #creator .panel{flex-direction:row;gap:20px;}
+  #creator-left{flex:0 0 38%;display:flex;flex-direction:column;}
+  #creator-left h1{margin-bottom:2px;}
+  #creator-canvas-wrap{flex:1;border-radius:14px;overflow:hidden;background:#10101a;
+    border:1px solid var(--line);min-height:360px;position:relative;}
+  #creator-canvas-wrap .turn{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
+    font-size:11px;color:#8a8aa0;}
+  #creator-right{flex:1;display:flex;flex-direction:column;min-width:0;}
+  #creator-options{flex:1;overflow-y:auto;padding-right:8px;}
+  .opt-row{margin-bottom:12px;}
+  .opt-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#8a8aa0;margin-bottom:6px;}
+  .opt-chips{display:flex;flex-wrap:wrap;gap:6px;}
+  .chip{display:inline-flex;align-items:center;gap:6px;background:var(--panel2);
+    border:1px solid var(--line);color:#dcdcf0;border-radius:20px;padding:6px 12px;
+    font-size:12px;cursor:pointer;transition:.15s;}
+  .chip:hover{border-color:#5a5a80;}
+  .chip.active{background:var(--accent);color:#06210f;border-color:var(--accent);font-weight:700;}
+  .chip .sw{width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.4);}
+  .btn-row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;}
+  .btn{background:var(--accent);color:#06210f;border:none;border-radius:12px;
+    padding:12px 22px;font-size:15px;font-weight:800;cursor:pointer;transition:.15s;}
+  .btn:hover{filter:brightness(1.08);}
+  .btn.secondary{background:var(--panel2);color:#dcdcf0;border:1px solid var(--line);}
+  .btn.gold{background:var(--gold);color:#2a200a;}
+  .btn.danger{background:#3a1d24;color:#ff9a9a;border:1px solid #6b2c38;}
+  .btn:disabled{opacity:.4;cursor:not-allowed;}
 
-  /* ── SHOP TABS ── */
-  .tab-bar { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
-  .tab { background: #252540; border: 1px solid #333; border-radius: 8px; padding: 7px 14px; cursor: pointer; font-size: 13px; color: #aaa; }
-  .tab.active { background: #4eff91; color: #000; font-weight: 700; border-color: #4eff91; }
+  /* ── dialogue ── */
+  #dialogue{z-index:210;background:rgba(4,4,10,.5);justify-content:flex-end;padding-bottom:40px;}
+  #dialogue .dbox{background:var(--panel);border:1px solid var(--line);border-radius:16px;
+    width:min(680px,92vw);padding:18px 22px;}
+  #dia-name{color:var(--accent2);font-weight:800;font-size:16px;margin-bottom:6px;}
+  #dia-text{font-size:15px;line-height:1.5;margin-bottom:14px;min-height:46px;}
+  #dia-choices{display:flex;flex-direction:column;gap:8px;}
+  .dchoice{text-align:left;background:var(--panel2);border:1px solid var(--line);
+    color:#eaeaf6;border-radius:10px;padding:11px 14px;font-size:14px;cursor:pointer;transition:.15s;}
+  .dchoice:hover{border-color:var(--accent);background:#22223a;}
 
-  /* ── INTERACTION PROMPT ── */
-  #interact-prompt {
-    position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
-    background: rgba(0,0,0,.75); color: #fff; padding: 8px 20px;
-    border-radius: 20px; font-size: 13px; z-index: 90;
-    border: 1px solid rgba(255,255,255,.2); pointer-events: none;
-    transition: opacity .3s; opacity: 0;
-  }
+  /* ── generic shop / menu ── */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+    gap:12px;overflow-y:auto;padding:4px;flex:1;}
+  .card{background:var(--panel2);border:1px solid var(--line);border-radius:14px;
+    padding:14px;display:flex;flex-direction:column;gap:8px;}
+  .card .cname{font-weight:700;font-size:15px;}
+  .card .cinfo{font-size:12px;color:#9a9ab0;flex:1;}
+  .card .cprice{font-weight:800;color:var(--gold);font-size:16px;}
+  .card .owned{font-size:11px;color:var(--accent);font-weight:700;}
+  .shop-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+  .shop-money{font-weight:800;color:var(--accent);font-size:18px;}
 
-  /* ── MONSTER MODE FLASH ── */
-  #monster-flash {
-    position: fixed; inset: 0; pointer-events: none; z-index: 40;
-    background: radial-gradient(ellipse at center, transparent 40%, rgba(255,0,50,.3) 100%);
-    opacity: 0; transition: opacity .5s;
-  }
+  /* ── chain builder preview ── */
+  #builder .panel{flex-direction:row;gap:20px;}
+  #builder-canvas-wrap{flex:0 0 40%;border-radius:14px;background:#10101a;
+    border:1px solid var(--line);min-height:360px;}
+  #builder-right{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+  #builder-opts{overflow-y:auto;flex:1;}
+  .price-line{font-size:24px;font-weight:800;color:var(--gold);margin:10px 0;}
 
-  /* Controls hint */
-  #controls-hint {
-    position: fixed; bottom: 12px; left: 12px; z-index: 60;
-    background: rgba(0,0,0,.6); color: #888; font-size: 11px;
-    padding: 8px 12px; border-radius: 8px; line-height: 1.7;
-    border: 1px solid rgba(255,255,255,.1);
-  }
+  /* ── mini-game bar ── */
+  #minigame{position:fixed;left:50%;bottom:140px;transform:translateX(-50%);z-index:120;
+    display:none;flex-direction:column;align-items:center;gap:10px;}
+  #mg-title{font-size:15px;background:rgba(8,8,16,.85);padding:6px 16px;border-radius:20px;
+    border:1px solid rgba(255,255,255,.2);}
+  #mg-bar{position:relative;width:340px;height:26px;background:#22223a;border-radius:13px;
+    overflow:hidden;border:1px solid var(--line);}
+  #mg-zone{position:absolute;top:0;height:100%;background:rgba(78,255,145,.35);
+    border-left:2px solid var(--accent);border-right:2px solid var(--accent);}
+  #mg-marker{position:absolute;top:0;width:5px;height:100%;background:#fff;border-radius:2px;}
+  #mg-hint{font-size:12px;color:#bcbccf;}
+
+  .corner-btn{position:fixed;top:10px;right:14px;z-index:50;pointer-events:auto;}
+  small.dim{color:#8a8aa0;}
+
+  /* ── loading screen ── */
+  #loading{position:fixed;inset:0;z-index:300;background:radial-gradient(circle at 50% 35%,#16162a,#06060d 70%);
+    display:flex;align-items:center;justify-content:center;transition:opacity .6s ease;}
+  #loading.done{opacity:0;pointer-events:none;}
+  .load-inner{display:flex;flex-direction:column;align-items:center;gap:16px;width:min(420px,82vw);text-align:center;}
+  .load-logo{font-size:40px;font-weight:900;letter-spacing:1px;color:#fff;
+    text-shadow:0 0 22px rgba(78,255,145,.35);}
+  .load-logo span{color:var(--accent);margin-left:8px;}
+  .load-bar{width:100%;height:10px;background:#1c1c2c;border:1px solid #33334a;border-radius:8px;overflow:hidden;}
+  #load-bar-fill{height:100%;width:8%;border-radius:8px;
+    background:linear-gradient(90deg,#4eff91,#9fe8ff);transition:width .3s ease;}
+  #load-label{font-size:13px;color:#9a9ab0;}
+  .load-tip{font-size:11px;color:#6a6a82;margin-top:6px;}
+  .load-tip b{color:#cfcfe6;}
 </style>
 </head>
 <body>
+  <canvas id="game"></canvas>
+  <div id="crosshair"></div>
 
-<!-- ═══════════════════ TITLE SCREEN ═══════════════════ -->
-<div id="title-screen" class="screen">
-  <h1>Zaylin's World</h1>
-  <div class="sub">OPEN-WORLD KID CITY</div>
-  <div class="private-badge">🔒 PRIVATE TESTING</div>
-  <button class="btn" style="font-size:18px;padding:14px 36px;" onclick="startGame()">PLAY NOW</button>
-  <p style="color:#555;font-size:12px;margin-top:20px;">WASD/Arrows to move · E to interact · M for map · C for customizer</p>
-</div>
-
-<!-- ═══════════════════ CHARACTER CUSTOMIZER ═══════════════════ -->
-<div id="char-screen" class="screen hidden">
-  <div class="panel" style="position:relative;">
-    <button class="close-btn" onclick="closeScreen('char-screen')">✕</button>
-    <h2>👤 Character Customizer</h2>
-    <div id="char-preview-wrap">
-      <canvas id="char-preview" width="100" height="140"></canvas>
+  <!-- HUD -->
+  <div id="hud">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <div class="hud-box"><h3>Wallet</h3><div id="money-box">$0</div></div>
+      <div class="hud-box"><h3>Time</h3><div id="time-box">Day 1 08:00</div></div>
+      <div class="hud-box"><h3>Location</h3><div id="loc-box">City</div></div>
+      <div class="hud-box"><h3>Job</h3><div id="job-box">Unemployed</div></div>
     </div>
-    <h3>Skin Tone</h3>
-    <div id="skin-swatches"></div>
-    <h3>Hair Style</h3>
-    <div id="hair-styles" class="grid-3"></div>
-    <h3>Hair Color</h3>
-    <div id="hair-colors"></div>
-    <h3>Outfit</h3>
-    <div id="outfit-styles" class="grid-2"></div>
-    <h3>Outfit Color</h3>
-    <div id="outfit-colors"></div>
-    <h3>Accessories</h3>
-    <div id="accessories" class="grid-3"></div>
-    <h3>Name</h3>
-    <input id="player-name-input" type="text" maxlength="16" value="Zaylin"
-      style="width:100%;padding:8px 12px;background:#252540;color:#fff;border:1px solid #444;border-radius:8px;font-size:15px;">
-    <br><br>
-    <button class="btn btn-gold" onclick="saveCharacter()">✅ Save Look</button>
+    <div id="right-stack">
+      <div class="hud-box" id="stats-wrap"><h3>Stats</h3><div id="stat-bars"></div></div>
+      <div class="hud-box"><h3>Wanted</h3><div id="wanted-stars">☆☆☆☆☆</div></div>
+      <div class="hud-box" id="monster-badge" style="display:none;">👹 MONSTER MODE</div>
+    </div>
   </div>
-</div>
 
-<!-- ═══════════════════ SHOP ═══════════════════ -->
-<div id="shop-screen" class="screen hidden">
-  <div class="panel" style="position:relative;max-width:600px;">
-    <button class="close-btn" onclick="closeScreen('shop-screen')">✕</button>
-    <h2 id="shop-title">🛍️ Shop</h2>
-    <div class="tab-bar" id="shop-tabs"></div>
-    <div id="shop-content"></div>
+  <div id="prompt"></div>
+  <div id="notif"></div>
+  <div id="hint">
+    <b>WASD</b> move · <b>Mouse</b> look (click to lock) · <b>Shift</b> run · <b>Space</b> jump ·
+    <b>E</b> interact/talk · <b>F</b> enter car · <b>V</b> camera · <b>C</b> wardrobe · <b>M</b> monster
   </div>
-</div>
 
-<!-- ═══════════════════ HOUSING ═══════════════════ -->
-<div id="house-screen" class="screen hidden">
-  <div class="panel" style="position:relative;">
-    <button class="close-btn" onclick="closeScreen('house-screen')">✕</button>
-    <h2>🏠 Housing</h2>
-    <div id="house-content"></div>
-  </div>
-</div>
-
-<!-- ═══════════════════ JOB ═══════════════════ -->
-<div id="job-screen" class="screen hidden">
-  <div class="panel" style="position:relative;">
-    <button class="close-btn" onclick="closeScreen('job-screen')">✕</button>
-    <h2>💼 Jobs</h2>
-    <div id="job-content"></div>
-  </div>
-</div>
-
-<!-- ═══════════════════ SCHOOL ═══════════════════ -->
-<div id="school-screen" class="screen hidden">
-  <div class="panel" style="position:relative;">
-    <button class="close-btn" onclick="closeScreen('school-screen')">✕</button>
-    <h2>🎓 School & Stats</h2>
-    <div id="school-content"></div>
-  </div>
-</div>
-
-<!-- ═══════════════════ NPC DIALOG ═══════════════════ -->
-<div id="npc-screen" class="screen hidden">
-  <div class="panel" style="position:relative;max-width:420px;">
-    <button class="close-btn" onclick="closeScreen('npc-screen')">✕</button>
-    <h2 id="npc-name-title">NPC</h2>
-    <p id="npc-dialog-text" style="color:#ccc;line-height:1.6;margin-bottom:16px;"></p>
-    <div id="npc-options"></div>
-  </div>
-</div>
-
-<!-- ═══════════════════ MINIMAP ═══════════════════ -->
-<div id="minimap-wrap"><canvas id="minimap" width="160" height="160"></canvas></div>
-
-<!-- ═══════════════════ HUD ═══════════════════ -->
-<div id="hud">
-  <div class="hud-box" id="stat-bars">
-    <h3>Stats</h3>
-    <div class="sbar"><span style="width:50px">❤️ HP</span><div class="sbar-track"><div class="sbar-fill" id="bar-hp" style="width:100%;background:#ff4e6a"></div></div></div>
-    <div class="sbar"><span style="width:50px">⚡ Energy</span><div class="sbar-track"><div class="sbar-fill" id="bar-energy" style="width:80%;background:#4e9eff"></div></div></div>
-    <div class="sbar"><span style="width:50px">😊 Mood</span><div class="sbar-track"><div class="sbar-fill" id="bar-mood" style="width:75%;background:#ffd700"></div></div></div>
-    <div class="sbar"><span style="width:50px">📚 Edu</span><div class="sbar-track"><div class="sbar-fill" id="bar-edu" style="width:20%;background:#a64eff"></div></div></div>
-    <div class="sbar"><span style="width:50px">💪 Str</span><div class="sbar-track"><div class="sbar-fill" id="bar-str" style="width:10%;background:#ff914e"></div></div></div>
-  </div>
-  <div class="hud-box" id="money-box">
-    <h3>💰 Cash</h3>
-    <span id="money-display">$250</span>
-  </div>
-  <div class="hud-box" id="wanted-box">
-    <h3>⭐ Wanted</h3>
-    <div id="wanted-stars">☆☆☆☆☆</div>
-    <div id="monster-badge" style="display:none;color:#ff4e6a;font-weight:700;font-size:12px;margin-top:4px;">👹 MONSTER MODE</div>
-  </div>
-  <div class="hud-box" id="job-box">
-    <h3>💼 Job</h3>
-    <div id="hud-job">Unemployed</div>
-    <div id="hud-shift" style="font-size:11px;color:#888;margin-top:2px;"></div>
-  </div>
-  <div class="hud-box" id="loc-box">
-    <h3>📍 Location</h3>
-    <div id="hud-location">Zaylin City</div>
-    <div style="font-size:11px;color:#888;margin-top:2px;" id="hud-time"></div>
-  </div>
-</div>
-
-<!-- ═══════════════════ NOTIFICATIONS ═══════════════════ -->
-<div id="notif"></div>
-<div id="interact-prompt"></div>
-<div id="monster-flash"></div>
-
-<!-- ═══════════════════ CONTROLS HINT ═══════════════════ -->
-<div id="controls-hint">
-  WASD/↑↓←→ Move &nbsp;·&nbsp; E Interact<br>
-  F Enter/Exit Car &nbsp;·&nbsp; M Monster Mode<br>
-  C Customize &nbsp;·&nbsp; J Jobs &nbsp;·&nbsp; H Housing<br>
-  Esc Menu
-</div>
-
-<!-- ═══════════════════ GAME CANVAS ═══════════════════ -->
-<canvas id="gameCanvas"></canvas>
-
-<script>
-// ═══════════════════════════════════════════════════════════
-//  ZAYLIN'S WORLD  —  Pure HTML5 Canvas Game Engine
-//  No external dependencies. Private testing build.
-// ═══════════════════════════════════════════════════════════
-
-const canvas = document.getElementById('gameCanvas');
-const ctx    = canvas.getContext('2d');
-const mm     = document.getElementById('minimap');
-const mmCtx  = mm.getContext('2d');
-
-// ── Resize ──
-function resize() {
-  canvas.width  = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resize();
-window.addEventListener('resize', resize);
-
-// ─────────────────────────────────────────────────────────
-//  GAME STATE
-// ─────────────────────────────────────────────────────────
-const STATE = {
-  running: false,
-  inCar: false,
-  monsterMode: false,
-  gameTime: 8 * 60,        // minutes since midnight
-  day: 1,
-  wantedLevel: 0,
-  wantedTimer: 0,
-};
-
-const PLAYER = {
-  x: 1200, y: 1200,
-  w: 22, h: 30,
-  speed: 2.8,
-  dx: 0, dy: 0,
-  facing: 'down',
-  name: 'Zaylin',
-  // stats 0-100
-  hp: 100, energy: 80, mood: 75, education: 20, strength: 10,
-  // inventory & money
-  money: 250,
-  job: null,
-  shiftActive: false,
-  shiftProgress: 0,
-  house: null,
-  // customization
-  skinTone: '#C68642',
-  hairStyle: 0,
-  hairColor: '#2b1d0e',
-  outfitStyle: 0,
-  outfitColor: '#4e9eff',
-  accessory: 0,
-  // jewelry (Frostbox)
-  jewelry: { necklace: null, rings: [], earrings: null },
-  // Block Supply gear
-  gear: { backpack: null, cap: null, shoes: null },
-  // NPC memory: npcId -> { attitude, lastTopic, visits }
-  npcMemory: {},
-};
-
-const CAM = { x: 0, y: 0 };
-const KEYS = {};
-let activeCar = null;
-
-// ─────────────────────────────────────────────────────────
-//  WORLD MAP  (tile-based, 80×80 tiles, 32px each)
-// ─────────────────────────────────────────────────────────
-const TILE = 32;
-const MAP_W = 100, MAP_H = 100;
-// Tile types
-const T = { GRASS:0, ROAD:1, SIDEWALK:2, BUILDING:3, PARK:4,
-            WATER:5, BEACH:6, PARKING:7, SCHOOL:8, SHOP:9,
-            HOUSE:10, POLICE:11, HOSPITAL:12, GAS:13, BANK:14 };
-
-const TILE_COLORS = {
-  0:'#3a7d44', 1:'#555', 2:'#aaa', 3:'#444', 4:'#4a9e5c',
-  5:'#1a6eaf', 6:'#d4b483', 7:'#666', 8:'#3d6bb5', 9:'#c04040',
-  10:'#8b5e3c', 11:'#2255cc', 12:'#cc4444', 13:'#cc8822', 14:'#ccaa22'
-};
-
-// Generate map procedurally
-const MAP = new Uint8Array(MAP_W * MAP_H);
-(function buildMap(){
-  // Fill grass
-  MAP.fill(T.GRASS);
-  // Main roads (grid)
-  for(let x=0;x<MAP_W;x++){
-    for(let y=0;y<MAP_H;y++){
-      // horizontal roads every 12
-      if(y%12===6||y%12===7) setTile(x,y,T.ROAD);
-      // vertical roads every 12
-      if(x%12===6||x%12===7) setTile(x,y,T.ROAD);
-    }
-  }
-  // Sidewalks beside roads
-  for(let x=0;x<MAP_W;x++){
-    for(let y=0;y<MAP_H;y++){
-      if(getTile(x,y)===T.GRASS){
-        if(isNearRoad(x,y)) setTile(x,y,T.SIDEWALK);
-      }
-    }
-  }
-  // Place blocks of buildings
-  for(let bx=0;bx<MAP_W;bx+=12){
-    for(let by=0;by<MAP_H;by+=12){
-      placeCityBlock(bx, by);
-    }
-  }
-  // Water/beach in corner
-  for(let x=0;x<18;x++) for(let y=80;y<MAP_H;y++) setTile(x,y,T.WATER);
-  for(let x=0;x<22;x++) for(let y=78;y<82;y++) setTile(x,y,T.BEACH);
-  // Park
-  for(let x=14;x<26;x++) for(let y=14;y<24;y++) if(getTile(x,y)!==T.ROAD) setTile(x,y,T.PARK);
-})();
-
-function setTile(x,y,t){ if(x>=0&&x<MAP_W&&y>=0&&y<MAP_H) MAP[y*MAP_W+x]=t; }
-function getTile(x,y){ if(x<0||x>=MAP_W||y<0||y>=MAP_H) return T.BUILDING; return MAP[y*MAP_W+x]; }
-function isNearRoad(x,y){
-  for(let dx=-1;dx<=1;dx++) for(let dy=-1;dy<=1;dy++){
-    if(getTile(x+dx,y+dy)===T.ROAD) return true;
-  }
-  return false;
-}
-function placeCityBlock(bx,by){
-  const types = [T.BUILDING,T.SHOP,T.HOUSE,T.SCHOOL,T.POLICE,T.HOSPITAL,T.GAS,T.BANK,T.PARKING];
-  const pick = (x,y) => {
-    let hash = (x*73856093 ^ y*19349663) >>> 0;
-    return types[hash % types.length];
-  };
-  for(let x=bx+1;x<bx+5&&x<MAP_W;x++){
-    for(let y=by+1;y<by+5&&y<MAP_H;y++){
-      if(getTile(x,y)===T.GRASS||getTile(x,y)===T.SIDEWALK){
-        setTile(x,y, pick(x,y));
-      }
-    }
-  }
-}
-
-// ─────────────────────────────────────────────────────────
-//  BUILDINGS / ZONES (named locations)
-// ─────────────────────────────────────────────────────────
-const ZONES = [
-  { name:'Zaylin City Center', x:18*TILE, y:18*TILE, r:200, color:'#4e9eff' },
-  { name:'Frostbox Jewelry',   x:37*TILE, y:8*TILE,  r:80, color:'#a64eff' },
-  { name:'Block Supply HQ',    x:60*TILE, y:10*TILE, r:80, color:'#ff914e' },
-  { name:'Zaylin High School', x:15*TILE, y:40*TILE, r:90, color:'#ffd700' },
-  { name:'City Hospital',      x:70*TILE, y:40*TILE, r:80, color:'#ff4e6a' },
-  { name:'Police HQ',          x:50*TILE, y:50*TILE, r:80, color:'#4e9eff' },
-  { name:'Beach District',     x:8*TILE,  y:85*TILE, r:100, color:'#d4b483' },
-  { name:'Zaylin Heights',     x:80*TILE, y:20*TILE, r:90, color:'#3a7d44' },
-  { name:'Car Dealership',     x:30*TILE, y:60*TILE, r:80, color:'#ff4e6a' },
-  { name:'City Bank',          x:45*TILE, y:25*TILE, r:70, color:'#ccaa22' },
-  { name:'Zaylin Park',        x:20*TILE, y:18*TILE, r:120, color:'#4a9e5c' },
-];
-
-function getZone(wx,wy){
-  for(const z of ZONES){
-    const dx=wx-z.x, dy=wy-z.y;
-    if(dx*dx+dy*dy < z.r*z.r) return z;
-  }
-  return null;
-}
-
-// ─────────────────────────────────────────────────────────
-//  CARS
-// ─────────────────────────────────────────────────────────
-const CAR_COLORS = ['#ff4e4e','#4e9eff','#4eff91','#ffd700','#ff914e','#a64eff','#fff','#333'];
-const CAR_NAMES  = ['Viper GT','Cruiser X','Neon Run','Shadow','Blitz Z','Phantom','Classic','Storm'];
-
-class Car {
-  constructor(x,y,color,name,isNPC=true){
-    this.x=x; this.y=y; this.w=28; this.h=48;
-    this.angle=0; this.speed=0; this.maxSpeed=isNPC?2.5:5;
-    this.color=color; this.name=name;
-    this.isNPC=isNPC; this.occupied=false;
-    this.aiTarget=null; this.aiTimer=0;
-  }
-  getBounds(){
-    return { x:this.x-this.w/2, y:this.y-this.h/2, w:this.w, h:this.h };
-  }
-}
-
-// Player car pool
-const playerCars = [
-  new Car(1250, 1180, '#ff4e4e', 'Viper GT', false),
-  new Car(1310, 1180, '#4e9eff', 'Cruiser X', false),
-];
-playerCars.forEach(c=>c.isNPC=false);
-
-// NPC cars
-const npcCars = [];
-for(let i=0;i<30;i++){
-  const cx = 200 + Math.random()*2800;
-  const cy = 200 + Math.random()*2800;
-  npcCars.push(new Car(cx, cy, CAR_COLORS[i%CAR_COLORS.length], CAR_NAMES[i%CAR_NAMES.length], true));
-}
-const allCars = [...playerCars, ...npcCars];
-
-// ─────────────────────────────────────────────────────────
-//  NPCs
-// ─────────────────────────────────────────────────────────
-const NPC_NAMES = ['Maya','Jordan','Tyler','Alex','Sam','Riley','Quinn','Morgan','Casey','Avery',
-                   'Officer Chen','Nurse Blake','Principal Hart','Mr. Frost','Coach Davis'];
-const NPC_ROLES = ['Friend','Rival','Shopkeeper','Police','Nurse','Teacher','Jeweler','Coach','Neighbor','Classmate',
-                   'Officer','Nurse','Principal','Jeweler','Coach'];
-const NPC_SKIN  = ['#C68642','#8D5524','#F1C27D','#FFDBB4','#3b2314','#D2956A'];
-
-class NPC {
-  constructor(id, x, y, name, role){
-    this.id=id; this.x=x; this.y=y; this.w=20; this.h=28;
-    this.name=name; this.role=role;
-    this.skin=NPC_SKIN[id%NPC_SKIN.length];
-    this.color=CAR_COLORS[id%CAR_COLORS.length];
-    this.dx=0; this.dy=0;
-    this.walkTimer=0; this.walkDuration=0;
-    this.facing='down';
-  }
-}
-
-const npcs = NPC_NAMES.map((n,i)=>new NPC(
-  i,
-  300 + (i%8)*350 + Math.random()*100,
-  300 + Math.floor(i/8)*350 + Math.random()*100,
-  n, NPC_ROLES[i]
-));
-
-// ─────────────────────────────────────────────────────────
-//  JOBS
-// ─────────────────────────────────────────────────────────
-const JOBS = [
-  { id:'delivery',  name:'📦 Delivery Driver', pay:25, duration:60, req:{}, desc:'Deliver packages around the city.' },
-  { id:'officer',   name:'👮 Police Officer',  pay:40, duration:90, req:{education:30}, desc:'Keep the city safe. Edu 30+ needed.' },
-  { id:'teacher',   name:'🍎 Teacher',          pay:35, duration:80, req:{education:60}, desc:'Teach at Zaylin High. Edu 60+ needed.' },
-  { id:'doctor',    name:'🩺 Doctor',           pay:60, duration:100,req:{education:80}, desc:'Save lives at City Hospital. Edu 80+ needed.' },
-  { id:'chef',      name:'👨‍🍳 Chef',            pay:28, duration:50, req:{}, desc:'Cook meals at the diner.' },
-  { id:'mechanic',  name:'🔧 Mechanic',         pay:32, duration:60, req:{strength:25}, desc:'Fix cars. Str 25+ needed.' },
-  { id:'athlete',   name:'🏃 Athlete',          pay:45, duration:70, req:{strength:50}, desc:'Compete for the city. Str 50+ needed.' },
-  { id:'jeweler',   name:'💎 Jeweler',          pay:38, duration:60, req:{education:20}, desc:'Work at Frostbox Jewelry.' },
-];
-
-// ─────────────────────────────────────────────────────────
-//  HOUSING
-// ─────────────────────────────────────────────────────────
-const HOUSES = [
-  { id:'apartment', name:'🏢 City Apartment',  cost:800,  rent:50,  desc:'Cozy downtown apartment. Monthly rent $50.' },
-  { id:'house',     name:'🏠 Suburb House',    cost:2500, rent:0,   desc:'Own a house in the suburbs.' },
-  { id:'mansion',   name:'🏰 Zaylin Mansion',  cost:8000, rent:0,   desc:'Luxury mansion with pool.' },
-  { id:'beach',     name:'🌊 Beach House',     cost:5000, rent:0,   desc:'Ocean view in Beach District.' },
-];
-
-// ─────────────────────────────────────────────────────────
-//  SCHOOL COURSES
-// ─────────────────────────────────────────────────────────
-const COURSES = [
-  { id:'math',     name:'📐 Math',      cost:50,  stat:'education', gain:8,  time:30 },
-  { id:'science',  name:'🔬 Science',   cost:60,  stat:'education', gain:10, time:35 },
-  { id:'pe',       name:'🏋️ PE',       cost:30,  stat:'strength',  gain:8,  time:25 },
-  { id:'art',      name:'🎨 Art',       cost:40,  stat:'mood',      gain:12, time:20 },
-  { id:'karate',   name:'🥋 Karate',   cost:70,  stat:'strength',  gain:15, time:40 },
-  { id:'coding',   name:'💻 Coding',   cost:80,  stat:'education', gain:15, time:45 },
-];
-
-// ─────────────────────────────────────────────────────────
-//  FROSTBOX JEWELRY ITEMS
-// ─────────────────────────────────────────────────────────
-const JEWELRY = {
-  necklaces: [
-    { id:'n1', name:'Gold Chain',    cost:120, icon:'📿', color:'#ffd700' },
-    { id:'n2', name:'Diamond Drop',  cost:350, icon:'💎', color:'#a0f0ff' },
-    { id:'n3', name:'Pearl Strand',  cost:200, icon:'🔮', color:'#fff' },
-    { id:'n4', name:'Frost Crystal', cost:280, icon:'❄️', color:'#c0e8ff' },
-  ],
-  rings: [
-    { id:'r1', name:'Gold Band',     cost:80,  icon:'💍', color:'#ffd700' },
-    { id:'r2', name:'Ruby Ring',     cost:220, icon:'♦️', color:'#ff4455' },
-    { id:'r3', name:'Sapphire',      cost:180, icon:'🔵', color:'#4466ff' },
-  ],
-  earrings: [
-    { id:'e1', name:'Gold Studs',    cost:60,  icon:'✨', color:'#ffd700' },
-    { id:'e2', name:'Crystal Drop',  cost:140, icon:'💧', color:'#a0f0ff' },
-    { id:'e3', name:'Hoop Set',      cost:100, icon:'⭕', color:'#ffd700' },
-  ],
-};
-
-// ─────────────────────────────────────────────────────────
-//  BLOCK SUPPLY GEAR ITEMS
-// ─────────────────────────────────────────────────────────
-const GEAR = {
-  caps: [
-    { id:'c1', name:'Street Cap',   cost:30,  icon:'🧢', color:'#333' },
-    { id:'c2', name:'Gold Cap',     cost:65,  icon:'🧢', color:'#ffd700' },
-    { id:'c3', name:'Neon Visor',   cost:50,  icon:'🧢', color:'#4eff91' },
-  ],
-  backpacks: [
-    { id:'b1', name:'Block Bag',    cost:45,  icon:'🎒', color:'#333' },
-    { id:'b2', name:'Supply Pack',  cost:90,  icon:'🎒', color:'#ff914e' },
-    { id:'b3', name:'Chrome Pack',  cost:120, icon:'🎒', color:'#aaa' },
-  ],
-  shoes: [
-    { id:'s1', name:'Street Kicks', cost:55,  icon:'👟', color:'#fff' },
-    { id:'s2', name:'Block Boots',  cost:95,  icon:'👢', color:'#333' },
-    { id:'s3', name:'Neon Runners', cost:130, icon:'👟', color:'#4eff91' },
-  ],
-};
-
-// ─────────────────────────────────────────────────────────
-//  CHARACTER CUSTOMIZATION OPTIONS
-// ─────────────────────────────────────────────────────────
-const SKIN_TONES  = ['#FFDBB4','#F1C27D','#C68642','#8D5524','#3b2314','#D2956A'];
-const HAIR_STYLES = ['Short','Afro','Braids','Curly','Ponytail','Bald'];
-const HAIR_COLORS = ['#2b1d0e','#000','#8B0000','#ffd700','#4e9eff','#ff4e91','#4eff91','#a64eff','#ff914e'];
-const OUTFIT_STYLES= ['Casual','Sporty','School','Work','Fancy','Street'];
-const OUTFIT_COLORS= ['#4e9eff','#ff4e4e','#4eff91','#ffd700','#a64eff','#ff914e','#fff','#333'];
-const ACCESSORIES  = ['None','Sunglasses','Hat','Headphones','Mask','Crown'];
-
-// ─────────────────────────────────────────────────────────
-//  INPUT
-// ─────────────────────────────────────────────────────────
-document.addEventListener('keydown', e => {
-  const k = e.key.toLowerCase();
-  KEYS[k] = true;
-  if(!STATE.running) return;
-  if(k==='e') handleInteract();
-  if(k==='f') handleCarEnterExit();
-  if(k==='m') toggleMonsterMode();
-  if(k==='c') openScreen('char-screen'), buildCharCustomizer();
-  if(k==='j') openScreen('job-screen'),  buildJobScreen();
-  if(k==='h') openScreen('house-screen'), buildHouseScreen();
-  if(k==='escape') closeAllScreens();
-});
-document.addEventListener('keyup',  e => { KEYS[e.key.toLowerCase()] = false; });
-
-// ─────────────────────────────────────────────────────────
-//  TITLE / START
-// ─────────────────────────────────────────────────────────
-function startGame(){
-  document.getElementById('title-screen').classList.add('hidden');
-  buildCharCustomizer();
-  openScreen('char-screen');
-  STATE.running = true;
-  requestAnimationFrame(gameLoop);
-}
-
-// ─────────────────────────────────────────────────────────
-//  MAIN GAME LOOP
-// ─────────────────────────────────────────────────────────
-let lastTime = 0;
-function gameLoop(ts){
-  const dt = Math.min((ts - lastTime) / 16.67, 3);
-  lastTime = ts;
-
-  if(!anyScreenOpen()){
-    updatePlayer(dt);
-    updateNPCs(dt);
-    updateNPCCars(dt);
-    updateWanted(dt);
-    updateShift(dt);
-    updateGameTime(dt);
-    checkInteractPrompt();
-  }
-
-  render();
-  renderMinimap();
-  updateHUD();
-  requestAnimationFrame(gameLoop);
-}
-
-// ─────────────────────────────────────────────────────────
-//  UPDATE PLAYER
-// ─────────────────────────────────────────────────────────
-function updatePlayer(dt){
-  if(STATE.inCar && activeCar){
-    updateDriving(dt);
-    return;
-  }
-  let mx=0, my=0;
-  if(KEYS['arrowleft']||KEYS['a'])  mx=-1;
-  if(KEYS['arrowright']||KEYS['d']) mx= 1;
-  if(KEYS['arrowup']||KEYS['w'])    my=-1;
-  if(KEYS['arrowdown']||KEYS['s'])  my= 1;
-
-  if(mx!==0&&my!==0){ mx*=0.707; my*=0.707; }
-
-  const spd = STATE.monsterMode ? PLAYER.speed*2 : PLAYER.speed;
-  const nx = PLAYER.x + mx*spd*dt;
-  const ny = PLAYER.y + my*spd*dt;
-
-  if(!isSolid(nx, PLAYER.y)) PLAYER.x = nx;
-  if(!isSolid(PLAYER.x, ny)) PLAYER.y = ny;
-
-  if(mx<0) PLAYER.facing='left';
-  else if(mx>0) PLAYER.facing='right';
-  else if(my<0) PLAYER.facing='up';
-  else if(my>0) PLAYER.facing='down';
-
-  // camera follow
-  CAM.x = PLAYER.x - canvas.width/2;
-  CAM.y = PLAYER.y - canvas.height/2;
-}
-
-function isSolid(wx,wy){
-  const tx=Math.floor(wx/TILE), ty=Math.floor(wy/TILE);
-  const t=getTile(tx,ty);
-  return t===T.BUILDING||t===T.WATER;
-}
-
-// ─────────────────────────────────────────────────────────
-//  DRIVING
-// ─────────────────────────────────────────────────────────
-function updateDriving(dt){
-  if(!activeCar) return;
-  const steer = (KEYS['a']||KEYS['arrowleft'] ? -1 : 0) + (KEYS['d']||KEYS['arrowright'] ? 1 : 0);
-  const throttle = (KEYS['w']||KEYS['arrowup'] ? 1 : 0) - (KEYS['s']||KEYS['arrowdown'] ? 0.7 : 0);
-
-  activeCar.speed += throttle * 0.3 * dt;
-  activeCar.speed = Math.max(-activeCar.maxSpeed*0.5, Math.min(activeCar.maxSpeed, activeCar.speed));
-  activeCar.speed *= 0.96;
-
-  if(Math.abs(activeCar.speed)>0.1){
-    activeCar.angle += steer * 0.04 * Math.sign(activeCar.speed) * dt;
-  }
-
-  const nx = activeCar.x + Math.sin(activeCar.angle)*activeCar.speed*dt;
-  const ny = activeCar.y - Math.cos(activeCar.angle)*activeCar.speed*dt;
-
-  if(!isSolid(nx, activeCar.y)) activeCar.x=nx;
-  else { activeCar.speed *= -0.3; }
-  if(!isSolid(activeCar.x, ny)) activeCar.y=ny;
-  else { activeCar.speed *= -0.3; }
-
-  PLAYER.x = activeCar.x;
-  PLAYER.y = activeCar.y;
-  CAM.x = PLAYER.x - canvas.width/2;
-  CAM.y = PLAYER.y - canvas.height/2;
-
-  // Speeding -> wanted
-  if(Math.abs(activeCar.speed)>activeCar.maxSpeed*0.85){
-    if(Math.random()<0.002) addWanted(1);
-  }
-}
-
-function handleCarEnterExit(){
-  if(STATE.inCar){
-    STATE.inCar = false;
-    PLAYER.x = activeCar.x + 40;
-    PLAYER.y = activeCar.y;
-    activeCar.occupied = false;
-    activeCar = null;
-    notify('🚗 Exited vehicle');
-  } else {
-    const car = nearestCar();
-    if(car && dist(PLAYER, car)<80){
-      if(car.isNPC && STATE.wantedLevel===0){
-        // cannot steal unless monster mode
-        if(!STATE.monsterMode){ notify('⚠️ That\'s not your car!'); return; }
-        addWanted(2);
-        notify('🚨 Grand theft auto! Wanted level up!');
-      }
-      activeCar = car;
-      car.occupied = true;
-      STATE.inCar = true;
-      notify(`🚗 Entered ${car.name}`);
-    } else {
-      notify('No car nearby (get closer)');
-    }
-  }
-}
-
-function nearestCar(){
-  let best=null, bd=9999;
-  for(const c of allCars){
-    if(!c.occupied || c===activeCar){
-      const d=dist(PLAYER,c);
-      if(d<bd){ bd=d; best=c; }
-    }
-  }
-  return best;
-}
-
-// ─────────────────────────────────────────────────────────
-//  NPC AI
-// ─────────────────────────────────────────────────────────
-function updateNPCs(dt){
-  for(const n of npcs){
-    n.walkTimer -= dt;
-    if(n.walkTimer<=0){
-      n.walkTimer = 60 + Math.random()*120;
-      n.walkDuration = 30 + Math.random()*60;
-      const ang = Math.random()*Math.PI*2;
-      const spd = 0.5 + Math.random()*0.8;
-      n.dx = Math.cos(ang)*spd;
-      n.dy = Math.sin(ang)*spd;
-    }
-    if(n.walkDuration>0){
-      n.walkDuration -= dt;
-      const nx=n.x+n.dx*dt, ny=n.y+n.dy*dt;
-      if(!isSolid(nx,n.y)) n.x=nx;
-      if(!isSolid(n.x,ny)) n.y=ny;
-      if(n.dx<0) n.facing='left';
-      else if(n.dx>0) n.facing='right';
-      else if(n.dy<0) n.facing='up';
-      else n.facing='down';
-    } else { n.dx=0; n.dy=0; }
-
-    // flee from monster mode
-    if(STATE.monsterMode){
-      const d=dist(PLAYER,n);
-      if(d<200){
-        const ang2=Math.atan2(n.y-PLAYER.y, n.x-PLAYER.x);
-        n.x += Math.cos(ang2)*2*dt;
-        n.y += Math.sin(ang2)*2*dt;
-      }
-    }
-  }
-}
-
-function updateNPCCars(dt){
-  for(const c of npcCars){
-    if(c.occupied) continue;
-    c.aiTimer -= dt;
-    if(c.aiTimer<=0){
-      c.aiTimer=60+Math.random()*120;
-      const ang=Math.random()*Math.PI*2;
-      c.aiTarget={ dx:Math.cos(ang), dy:Math.sin(ang) };
-    }
-    if(c.aiTarget){
-      c.angle = Math.atan2(c.aiTarget.dx, -c.aiTarget.dy);
-      c.speed = 1.5+Math.random();
-      const nx=c.x+Math.sin(c.angle)*c.speed*dt;
-      const ny=c.y-Math.cos(c.angle)*c.speed*dt;
-      if(!isSolid(nx,c.y)) c.x=nx; else c.aiTarget=null;
-      if(!isSolid(c.x,ny)) c.y=ny; else c.aiTarget=null;
-      // wrap
-      if(c.x<0) c.x=MAP_W*TILE-10;
-      if(c.x>MAP_W*TILE) c.x=10;
-      if(c.y<0) c.y=MAP_H*TILE-10;
-      if(c.y>MAP_H*TILE) c.y=10;
-    }
-  }
-}
-
-// ─────────────────────────────────────────────────────────
-//  WANTED / CONSEQUENCES
-// ─────────────────────────────────────────────────────────
-function addWanted(n){
-  STATE.wantedLevel = Math.min(5, STATE.wantedLevel+n);
-  STATE.wantedTimer = 600; // ticks before cooldown
-}
-
-function updateWanted(dt){
-  if(STATE.wantedLevel>0){
-    STATE.wantedTimer -= dt;
-    if(STATE.wantedTimer<=0){
-      STATE.wantedLevel = Math.max(0, STATE.wantedLevel-1);
-      STATE.wantedTimer = 400;
-      if(STATE.wantedLevel===0) notify('✅ You\'re in the clear now.');
-    }
-    // Police chase at high levels
-    if(STATE.wantedLevel>=3&&Math.random()<0.001){
-      PLAYER.hp = Math.max(10, PLAYER.hp-5);
-      notify('🚨 Police hit! HP -5');
-    }
-    if(STATE.wantedLevel>=5&&Math.random()<0.0005){
-      PLAYER.money = Math.max(0, Math.floor(PLAYER.money*0.8));
-      notify('💸 Busted! Fined 20% of cash.');
-      STATE.wantedLevel=2;
-    }
-  }
-}
-
-// ─────────────────────────────────────────────────────────
-//  MONSTER MODE
-// ─────────────────────────────────────────────────────────
-function toggleMonsterMode(){
-  STATE.monsterMode = !STATE.monsterMode;
-  document.getElementById('monster-badge').style.display = STATE.monsterMode?'block':'none';
-  document.getElementById('monster-flash').style.opacity = STATE.monsterMode?'1':'0';
-  if(STATE.monsterMode){
-    notify('👹 MONSTER MODE ACTIVATED! Chaos ensues!');
-    addWanted(3);
-  } else {
-    notify('😇 Calmed down. Monster mode off.');
-    document.getElementById('monster-flash').style.opacity='0';
-  }
-}
-
-// ─────────────────────────────────────────────────────────
-//  WORK SHIFT
-// ─────────────────────────────────────────────────────────
-function updateShift(dt){
-  if(!PLAYER.shiftActive||!PLAYER.job) return;
-  const job = JOBS.find(j=>j.id===PLAYER.job);
-  if(!job) return;
-  PLAYER.shiftProgress += dt;
-  if(PLAYER.shiftProgress >= job.duration*60){
-    PLAYER.shiftActive=false;
-    PLAYER.shiftProgress=0;
-    PLAYER.money += job.pay;
-    PLAYER.energy = Math.max(0, PLAYER.energy-15);
-    notify(`💰 Shift complete! +$${job.pay} earned.`);
-    document.getElementById('hud-shift').textContent='';
-  } else {
-    const pct = Math.round(PLAYER.shiftProgress/(job.duration*60)*100);
-    document.getElementById('hud-shift').textContent=`Shift: ${pct}%`;
-  }
-}
-
-// ─────────────────────────────────────────────────────────
-//  GAME TIME
-// ─────────────────────────────────────────────────────────
-function updateGameTime(dt){
-  STATE.gameTime += dt*0.05;
-  if(STATE.gameTime >= 24*60){
-    STATE.gameTime=0;
-    STATE.day++;
-    PLAYER.energy = Math.min(100, PLAYER.energy+40);
-    PLAYER.hp     = Math.min(100, PLAYER.hp+10);
-    notify(`🌅 Day ${STATE.day} begins!`);
-    // Rent
-    if(PLAYER.house){
-      const h=HOUSES.find(x=>x.id===PLAYER.house);
-      if(h&&h.rent>0){
-        PLAYER.money=Math.max(0,PLAYER.money-h.rent);
-        notify(`🏠 Rent paid: $${h.rent}`);
-      }
-    }
-  }
-  const h=Math.floor(STATE.gameTime/60), m=Math.floor(STATE.gameTime%60);
-  document.getElementById('hud-time').textContent=`Day ${STATE.day} · ${h}:${m<10?'0'+m:m}`;
-}
-
-// ─────────────────────────────────────────────────────────
-//  INTERACT
-// ─────────────────────────────────────────────────────────
-function handleInteract(){
-  // NPC?
-  for(const n of npcs){
-    if(dist(PLAYER,n)<60){
-      talkToNPC(n);
-      return;
-    }
-  }
-  // Zone?
-  const z=getZone(PLAYER.x, PLAYER.y);
-  if(z){
-    if(z.name.includes('Frostbox')) openShop('frostbox');
-    else if(z.name.includes('Block Supply')) openShop('blocksupply');
-    else if(z.name.includes('School')) { openScreen('school-screen'); buildSchoolScreen(); }
-    else if(z.name.includes('Hospital')){ PLAYER.hp=100; PLAYER.energy=Math.min(100,PLAYER.energy+30); notify('🏥 Healed! HP restored.'); }
-    else if(z.name.includes('Police')&&STATE.wantedLevel>0){ STATE.wantedLevel=0; PLAYER.money=Math.max(0,PLAYER.money-100); notify('👮 Turned yourself in. -$100 fine, record cleared.'); }
-    else if(z.name.includes('Bank')){ notify(`🏦 Balance: $${PLAYER.money}`); }
-    else notify(`📍 You are at: ${z.name}`);
-  } else {
-    notify('Nothing nearby to interact with');
-  }
-}
-
-function checkInteractPrompt(){
-  const ip=document.getElementById('interact-prompt');
-  let msg='';
-  for(const n of npcs){
-    if(dist(PLAYER,n)<70){ msg=`[E] Talk to ${n.name}`; break; }
-  }
-  if(!msg){
-    const z=getZone(PLAYER.x,PLAYER.y);
-    if(z) msg=`[E] Enter ${z.name}`;
-  }
-  if(!msg && !STATE.inCar){
-    const c=nearestCar();
-    if(c&&dist(PLAYER,c)<80) msg=`[F] ${c.isNPC?'(Illegal!)':''} Enter ${c.name}`;
-  }
-  if(msg){ ip.textContent=msg; ip.style.opacity='1'; }
-  else    { ip.style.opacity='0'; }
-}
-
-// ─────────────────────────────────────────────────────────
-//  NPC DIALOG (with memory)
-// ─────────────────────────────────────────────────────────
-function talkToNPC(n){
-  if(!PLAYER.npcMemory[n.id]) PLAYER.npcMemory[n.id]={attitude:50,visits:0,lastTopic:null};
-  const mem=PLAYER.npcMemory[n.id];
-  mem.visits++;
-
-  const greets = [
-    `Hey ${PLAYER.name}! Good to see you.`,
-    `What's up? You're back again — visit #${mem.visits}!`,
-    `Oh it's you again. You've talked to me ${mem.visits} times!`,
-    `${mem.attitude>60?'I like you!':'Hmm, you seem suspicious...'}`,
-  ];
-  const dialog = greets[Math.min(mem.visits-1, greets.length-1)];
-
-  document.getElementById('npc-name-title').textContent=`${n.name} (${n.role})`;
-  document.getElementById('npc-dialog-text').textContent=dialog;
-
-  const opts=document.getElementById('npc-options');
-  opts.innerHTML='';
-  const options=[
-    { label:'👋 Greet', fn:()=>{ mem.attitude=Math.min(100,mem.attitude+5); notify(`${n.name} likes you more (+5 attitude)`); closeScreen('npc-screen'); }},
-    { label:'🎁 Gift ($20)', fn:()=>{
-      if(PLAYER.money<20){ notify('Not enough cash'); return; }
-      PLAYER.money-=20; mem.attitude=Math.min(100,mem.attitude+15);
-      notify(`${n.name} loves the gift! +15 attitude`); closeScreen('npc-screen');
-    }},
-    { label:'😠 Taunt', fn:()=>{ mem.attitude=Math.max(0,mem.attitude-15); addWanted(mem.attitude<20?1:0); notify(`${n.name} is upset!`); closeScreen('npc-screen'); }},
-    { label:'❓ Ask about job', fn:()=>{
-      document.getElementById('npc-dialog-text').textContent=
-        n.role==='Teacher'?`Come study at Zaylin High! Education helps you get better jobs.`:
-        n.role==='Police'?`Keep the city clean. Turn yourself in at Police HQ if wanted.`:
-        `I work at the ${n.role} station. You should check the job board!`;
-    }},
-    { label:'🚪 Bye', fn:()=>closeScreen('npc-screen') },
-  ];
-  for(const o of options){
-    const b=document.createElement('button');
-    b.className='btn btn-sm'; b.textContent=o.label;
-    b.onclick=o.fn; opts.appendChild(b);
-  }
-  openScreen('npc-screen');
-}
-
-// ─────────────────────────────────────────────────────────
-//  SHOPS
-// ─────────────────────────────────────────────────────────
-function openShop(type){
-  document.getElementById('shop-title').textContent =
-    type==='frostbox'?'💎 Frostbox Jewelry':'🛍️ Block Supply';
-  const tabs=document.getElementById('shop-tabs');
-  const content=document.getElementById('shop-content');
-  tabs.innerHTML=''; content.innerHTML='';
-
-  const sections = type==='frostbox'
-    ? [{key:'necklaces',label:'📿 Necklaces'},{key:'rings',label:'💍 Rings'},{key:'earrings',label:'✨ Earrings'}]
-    : [{key:'caps',label:'🧢 Caps'},{key:'backpacks',label:'🎒 Backpacks'},{key:'shoes',label:'👟 Shoes'}];
-
-  function showTab(key){
-    tabs.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-    tabs.querySelector(`[data-key="${key}"]`).classList.add('active');
-    content.innerHTML='';
-    const items = type==='frostbox'?JEWELRY[key]:GEAR[key];
-    const equip  = type==='frostbox'?PLAYER.jewelry:PLAYER.gear;
-    const slot   = type==='frostbox'?key.slice(0,-1):key.slice(0,-1); // remove 's' — rough pluralization
-    for(const item of items){
-      let owned=false;
-      if(type==='frostbox'){
-        if(key==='rings') owned=equip.rings.includes(item.id);
-        else owned=equip[slot]===item.id;
-      } else {
-        owned=equip[key.slice(0,-1)]===item.id;
-      }
-      const d=document.createElement('div');
-      d.className=`option-card${owned?' selected':''}`;
-      d.innerHTML=`<div class="card-icon">${item.icon}</div>
-        <div class="card-label">${item.name}</div>
-        <div style="color:#4eff91;font-weight:700;font-size:13px">$${item.cost}</div>
-        ${owned?'<div style="color:#4eff91;font-size:11px">✓ Equipped</div>':''}`;
-      d.onclick=()=>{
-        if(owned){ notify(`Already wearing ${item.name}`); return; }
-        if(PLAYER.money<item.cost){ notify('Not enough cash!'); return; }
-        PLAYER.money-=item.cost;
-        if(type==='frostbox'){
-          if(key==='rings') PLAYER.jewelry.rings.push(item.id);
-          else PLAYER.jewelry[slot]=item.id;
-        } else {
-          PLAYER.gear[key.slice(0,-1)]=item.id;
-        }
-        notify(`✨ Got ${item.name}!`);
-        showTab(key);
-      };
-      content.appendChild(d);
-    }
-    content.style.display='grid';
-    content.style.gridTemplateColumns='1fr 1fr 1fr';
-    content.style.gap='10px';
-  }
-
-  for(const s of sections){
-    const t=document.createElement('div');
-    t.className='tab'; t.textContent=s.label; t.dataset.key=s.key;
-    t.onclick=()=>showTab(s.key);
-    tabs.appendChild(t);
-  }
-  showTab(sections[0].key);
-  openScreen('shop-screen');
-}
-
-// ─────────────────────────────────────────────────────────
-//  JOB SCREEN
-// ─────────────────────────────────────────────────────────
-function buildJobScreen(){
-  const c=document.getElementById('job-content');
-  c.innerHTML='';
-  for(const j of JOBS){
-    const meetsReq = Object.entries(j.req).every(([k,v])=>PLAYER[k]>=v);
-    const isActive = PLAYER.job===j.id;
-    const d=document.createElement('div');
-    d.className='option-card'; d.style.display='flex'; d.style.flexDirection='column'; d.style.gap='6px';
-    d.innerHTML=`
-      <div style="font-size:17px;font-weight:700">${j.name}</div>
-      <div style="font-size:12px;color:#aaa">${j.desc}</div>
-      <div style="font-size:13px;color:#4eff91">$${j.pay} per shift · ${j.duration}min</div>
-      ${!meetsReq?`<div style="font-size:11px;color:#ff4e6a">🔒 Requires: ${Object.entries(j.req).map(([k,v])=>`${k} ${v}+`).join(', ')}</div>`:''}
-    `;
-    if(meetsReq){
-      const b=document.createElement('button');
-      if(isActive&&PLAYER.shiftActive){ b.className='btn btn-sm'; b.textContent='⏳ On shift...'; b.disabled=true; }
-      else if(isActive){ b.className='btn btn-sm btn-blue'; b.textContent='⚡ Start Shift';
-        b.onclick=()=>{ PLAYER.shiftActive=true; PLAYER.shiftProgress=0; notify(`⚡ Shift started at ${j.name}!`); closeScreen('job-screen'); };
-      } else {
-        b.className='btn btn-sm'; b.textContent='Apply';
-        b.onclick=()=>{ PLAYER.job=j.id; PLAYER.shiftActive=false; PLAYER.shiftProgress=0;
-          document.getElementById('hud-job').textContent=j.name;
-          notify(`💼 You are now a ${j.name}!`); buildJobScreen(); };
-      }
-      d.appendChild(b);
-    }
-    c.appendChild(d);
-  }
-}
-
-// ─────────────────────────────────────────────────────────
-//  HOUSE SCREEN
-// ─────────────────────────────────────────────────────────
-function buildHouseScreen(){
-  const c=document.getElementById('house-content');
-  c.innerHTML='';
-  for(const h of HOUSES){
-    const owned=PLAYER.house===h.id;
-    const d=document.createElement('div');
-    d.className=`option-card${owned?' selected':''}`;
-    d.innerHTML=`
-      <div style="font-size:22px">${h.name.split(' ')[0]}</div>
-      <div style="font-weight:700">${h.name}</div>
-      <div style="font-size:12px;color:#aaa;margin:4px 0">${h.desc}</div>
-      <div style="color:#4eff91;font-weight:700">$${h.cost}</div>
-      ${owned?'<div style="color:#4eff91">✓ Home</div>':''}
-    `;
-    if(!owned){
-      const b=document.createElement('button');
-      b.className='btn btn-sm'; b.textContent=`Buy $${h.cost}`;
-      b.onclick=()=>{
-        if(PLAYER.money<h.cost){ notify('Not enough cash!'); return; }
-        PLAYER.money-=h.cost;
-        PLAYER.house=h.id;
-        notify(`🏠 Moved into ${h.name}!`);
-        PLAYER.mood=Math.min(100,PLAYER.mood+20);
-        buildHouseScreen();
-      };
-      d.appendChild(b);
-    }
-    c.appendChild(d);
-  }
-}
-
-// ─────────────────────────────────────────────────────────
-//  SCHOOL SCREEN
-// ─────────────────────────────────────────────────────────
-function buildSchoolScreen(){
-  const c=document.getElementById('school-content');
-  c.innerHTML=`<p style="color:#aaa;font-size:13px;margin-bottom:14px">Improve your stats to unlock better jobs and opportunities.</p>`;
-  for(const course of COURSES){
-    const d=document.createElement('div');
-    d.className='option-card'; d.style.display='flex'; d.style.alignItems='center'; d.style.gap='12px';
-    d.innerHTML=`
-      <div style="font-size:26px">${course.name.split(' ')[0]}</div>
-      <div style="flex:1">
-        <div style="font-weight:700">${course.name}</div>
-        <div style="font-size:12px;color:#aaa">+${course.gain} ${course.stat} · ${course.time}min · $${course.cost}</div>
+  <!-- Character creator -->
+  <div id="creator" class="screen">
+    <div class="panel">
+      <div id="creator-left">
+        <h1>Zaylin's World</h1>
+        <div class="sub">Build your character</div>
+        <div id="creator-canvas-wrap"><div class="turn">— rotating preview —</div></div>
+        <div class="btn-row">
+          <button class="btn" id="creator-enter">Enter the City</button>
+          <button class="btn secondary" id="creator-continue">Continue Save</button>
+          <button class="btn danger" id="creator-reset">Reset</button>
+        </div>
       </div>
-    `;
-    const b=document.createElement('button');
-    b.className='btn btn-sm'; b.textContent='Attend';
-    b.onclick=()=>{
-      if(PLAYER.money<course.cost){ notify('Not enough cash!'); return; }
-      PLAYER.money-=course.cost;
-      PLAYER[course.stat]=Math.min(100,(PLAYER[course.stat]||0)+course.gain);
-      notify(`📚 Completed ${course.name}! +${course.gain} ${course.stat}`);
-      buildSchoolScreen();
-    };
-    d.appendChild(b);
-    c.appendChild(d);
-  }
-}
+      <div id="creator-right">
+        <div class="sub" style="margin-bottom:8px">Customize skin, hair, body, outfit, jewelry & city vibe</div>
+        <div id="creator-options"></div>
+      </div>
+    </div>
+  </div>
 
-// ─────────────────────────────────────────────────────────
-//  CHARACTER CUSTOMIZER BUILDER
-// ─────────────────────────────────────────────────────────
-function buildCharCustomizer(){
-  // Skin
-  const ss=document.getElementById('skin-swatches');
-  if(ss) ss.innerHTML='';
-  SKIN_TONES.forEach((c,i)=>{
-    const s=document.createElement('span');
-    s.className=`color-swatch${PLAYER.skinTone===c?' selected':''}`;
-    s.style.background=c;
-    s.onclick=()=>{ PLAYER.skinTone=c; buildCharCustomizer(); };
-    if(ss) ss.appendChild(s);
-  });
-  // Hair styles
-  const hs=document.getElementById('hair-styles');
-  if(hs) hs.innerHTML='';
-  HAIR_STYLES.forEach((h,i)=>{
-    const d=document.createElement('div');
-    d.className=`option-card${PLAYER.hairStyle===i?' selected':''}`;
-    d.innerHTML=`<div class="card-label">${h}</div>`;
-    d.onclick=()=>{ PLAYER.hairStyle=i; buildCharCustomizer(); };
-    if(hs) hs.appendChild(d);
-  });
-  // Hair colors
-  const hc=document.getElementById('hair-colors');
-  if(hc) hc.innerHTML='';
-  HAIR_COLORS.forEach(c=>{
-    const s=document.createElement('span');
-    s.className=`color-swatch${PLAYER.hairColor===c?' selected':''}`;
-    s.style.background=c;
-    s.onclick=()=>{ PLAYER.hairColor=c; buildCharCustomizer(); };
-    if(hc) hc.appendChild(s);
-  });
-  // Outfits
-  const os=document.getElementById('outfit-styles');
-  if(os) os.innerHTML='';
-  OUTFIT_STYLES.forEach((o,i)=>{
-    const d=document.createElement('div');
-    d.className=`option-card${PLAYER.outfitStyle===i?' selected':''}`;
-    d.innerHTML=`<div class="card-label">${o}</div>`;
-    d.onclick=()=>{ PLAYER.outfitStyle=i; buildCharCustomizer(); };
-    if(os) os.appendChild(d);
-  });
-  // Outfit colors
-  const oc=document.getElementById('outfit-colors');
-  if(oc) oc.innerHTML='';
-  OUTFIT_COLORS.forEach(c=>{
-    const s=document.createElement('span');
-    s.className=`color-swatch${PLAYER.outfitColor===c?' selected':''}`;
-    s.style.background=c;
-    s.onclick=()=>{ PLAYER.outfitColor=c; buildCharCustomizer(); };
-    if(oc) oc.appendChild(s);
-  });
-  // Accessories
-  const ac=document.getElementById('accessories');
-  if(ac) ac.innerHTML='';
-  ACCESSORIES.forEach((a,i)=>{
-    const d=document.createElement('div');
-    d.className=`option-card${PLAYER.accessory===i?' selected':''}`;
-    d.innerHTML=`<div class="card-label">${a}</div>`;
-    d.onclick=()=>{ PLAYER.accessory=i; buildCharCustomizer(); };
-    if(ac) ac.appendChild(d);
-  });
-  drawCharPreview();
-}
+  <!-- Dialogue -->
+  <div id="dialogue" class="screen hidden">
+    <div class="dbox">
+      <div id="dia-name">NPC</div>
+      <div id="dia-text"></div>
+      <div id="dia-choices"></div>
+    </div>
+  </div>
 
-function saveCharacter(){
-  const inp=document.getElementById('player-name-input');
-  if(inp) PLAYER.name=inp.value||'Zaylin';
-  closeScreen('char-screen');
-  notify(`✅ Look saved! Looking good, ${PLAYER.name}!`);
-}
+  <!-- Generic shop / menu -->
+  <div id="shop" class="screen hidden">
+    <div class="panel">
+      <div class="shop-head">
+        <div><h1 id="shop-title">Shop</h1><div class="sub" id="shop-sub"></div></div>
+        <div style="text-align:right">
+          <div class="shop-money" id="shop-money">$0</div>
+          <button class="btn secondary" id="shop-close" style="margin-top:8px;padding:8px 16px">Exit (Esc)</button>
+        </div>
+      </div>
+      <div class="grid" id="shop-grid"></div>
+    </div>
+  </div>
 
-// ─────────────────────────────────────────────────────────
-//  CHARACTER PREVIEW CANVAS
-// ─────────────────────────────────────────────────────────
-function drawCharPreview(){
-  const pv=document.getElementById('char-preview');
-  if(!pv) return;
-  const pc=pv.getContext('2d');
-  pc.clearRect(0,0,100,140);
-  drawPersonDetailed(pc, 50, 70, PLAYER, 2.2, false);
-}
+  <!-- Chain builder -->
+  <div id="builder" class="screen hidden">
+    <div class="panel">
+      <div id="builder-canvas-wrap"></div>
+      <div id="builder-right">
+        <div class="shop-head">
+          <div><h1>Frostbox Custom Chain</h1><div class="sub">Build it. Ice it. Wear it.</div></div>
+          <div style="text-align:right">
+            <div class="shop-money" id="builder-money">$0</div>
+          </div>
+        </div>
+        <div id="builder-opts"></div>
+        <div class="price-line">Total: <span id="builder-price">$0</span></div>
+        <div class="btn-row">
+          <button class="btn gold" id="builder-buy">Buy & Wear</button>
+          <button class="btn secondary" id="builder-close">Exit (Esc)</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-// ─────────────────────────────────────────────────────────
-//  RENDERING
-// ─────────────────────────────────────────────────────────
-function render(){
-  ctx.fillStyle='#1a1a1a';
-  ctx.fillRect(0,0,canvas.width,canvas.height);
+  <!-- Mini-game bar -->
+  <div id="minigame">
+    <div id="mg-title">Mini-game</div>
+    <div id="mg-bar"><div id="mg-zone"></div><div id="mg-marker"></div></div>
+    <div id="mg-hint">Press <b>SPACE</b> in the green zone</div>
+  </div>
 
-  ctx.save();
-  ctx.translate(-Math.round(CAM.x), -Math.round(CAM.y));
+  <!-- Loading screen -->
+  <div id="loading">
+    <div class="load-inner">
+      <div class="load-logo">Zaylin's<span>World</span></div>
+      <div class="load-bar"><div id="load-bar-fill"></div></div>
+      <div id="load-label">Booting…</div>
+      <div class="load-tip">Tip: press <b>O</b> or the ⚙ button to tune graphics if it runs slow.</div>
+    </div>
+  </div>
 
-  // Tiles
-  const startX=Math.max(0,Math.floor(CAM.x/TILE));
-  const endX  =Math.min(MAP_W-1,Math.ceil((CAM.x+canvas.width)/TILE));
-  const startY=Math.max(0,Math.floor(CAM.y/TILE));
-  const endY  =Math.min(MAP_H-1,Math.ceil((CAM.y+canvas.height)/TILE));
-
-  for(let tx=startX;tx<=endX;tx++){
-    for(let ty=startY;ty<=endY;ty++){
-      const t=getTile(tx,ty);
-      ctx.fillStyle=TILE_COLORS[t]||'#333';
-      ctx.fillRect(tx*TILE, ty*TILE, TILE, TILE);
-      // Road markings
-      if(t===T.ROAD){
-        ctx.fillStyle='rgba(255,255,100,0.15)';
-        if(tx%12===6) ctx.fillRect(tx*TILE+14,ty*TILE,4,TILE);
-        if(ty%12===6) ctx.fillRect(tx*TILE,ty*TILE+14,TILE,4);
-      }
-      // Building details
-      if(t===T.BUILDING||t===T.SHOP||t===T.SCHOOL||t===T.POLICE||t===T.HOSPITAL||t===T.BANK){
-        ctx.fillStyle='rgba(0,0,0,.3)';
-        ctx.fillRect(tx*TILE+2,ty*TILE+2,TILE-4,TILE-4);
-        // windows
-        ctx.fillStyle='rgba(255,255,150,0.5)';
-        for(let wx=0;wx<3;wx++) for(let wy=0;wy<4;wy++){
-          ctx.fillRect(tx*TILE+5+wx*9, ty*TILE+4+wy*7, 5,4);
-        }
-      }
-      // Park trees
-      if(t===T.PARK&&(tx+ty)%3===0){
-        ctx.fillStyle='#2a6b30';
-        ctx.beginPath();
-        ctx.arc(tx*TILE+16,ty*TILE+16,10,0,Math.PI*2);
-        ctx.fill();
-      }
-    }
-  }
-
-  // Zone labels
-  for(const z of ZONES){
-    if(z.x>CAM.x-200&&z.x<CAM.x+canvas.width+200&&z.y>CAM.y-200&&z.y<CAM.y+canvas.height+200){
-      ctx.save();
-      ctx.globalAlpha=0.55;
-      ctx.fillStyle=z.color;
-      ctx.beginPath();
-      ctx.arc(z.x,z.y,z.r,0,Math.PI*2);
-      ctx.fill();
-      ctx.globalAlpha=1;
-      ctx.fillStyle='#fff';
-      ctx.font='bold 12px Segoe UI';
-      ctx.textAlign='center';
-      ctx.fillText(z.name,z.x,z.y);
-      ctx.restore();
-    }
-  }
-
-  // NPC Cars
-  for(const c of allCars) drawCar(ctx, c);
-
-  // NPCs
-  for(const n of npcs) drawPersonDetailed(ctx, n.x, n.y, n, 1, false);
-
-  // Player
-  if(!STATE.inCar){
-    drawPersonDetailed(ctx, PLAYER.x, PLAYER.y, PLAYER, 1, true);
-    // player name
-    ctx.fillStyle='#fff';
-    ctx.font='bold 11px Segoe UI';
-    ctx.textAlign='center';
-    ctx.fillText(PLAYER.name, PLAYER.x, PLAYER.y - 22);
-  }
-
-  // Monster mode aura
-  if(STATE.monsterMode){
-    ctx.save();
-    const grad=ctx.createRadialGradient(PLAYER.x,PLAYER.y,0,PLAYER.x,PLAYER.y,120);
-    grad.addColorStop(0,'rgba(255,0,60,0.35)');
-    grad.addColorStop(1,'rgba(255,0,60,0)');
-    ctx.fillStyle=grad;
-    ctx.beginPath(); ctx.arc(PLAYER.x,PLAYER.y,120,0,Math.PI*2); ctx.fill();
-    ctx.restore();
-  }
-
-  ctx.restore();
-}
-
-// ─────────────────────────────────────────────────────────
-//  DRAW CHARACTER
-// ─────────────────────────────────────────────────────────
-function drawPersonDetailed(c, x, y, p, scale=1, isPlayer=false){
-  const s=scale;
-  c.save();
-  c.translate(x, y);
-
-  // Shadow
-  c.fillStyle='rgba(0,0,0,0.25)';
-  c.beginPath();
-  c.ellipse(0, 14*s, 12*s, 5*s, 0, 0, Math.PI*2);
-  c.fill();
-
-  const skin = p.skinTone || p.skin || '#C68642';
-  const outfit = p.outfitColor || p.color || '#4e9eff';
-  const hair   = p.hairColor   || '#2b1d0e';
-  const hairSt = p.hairStyle   || 0;
-
-  // Body / outfit
-  c.fillStyle = outfit;
-  c.beginPath();
-  c.roundRect(-7*s, -4*s, 14*s, 16*s, 3*s);
-  c.fill();
-
-  // Arms
-  c.fillStyle = skin;
-  c.fillRect(-12*s, -3*s, 5*s, 10*s);
-  c.fillRect(7*s,   -3*s, 5*s, 10*s);
-
-  // Legs
-  c.fillStyle='#333';
-  c.fillRect(-6*s, 12*s, 5*s, 9*s);
-  c.fillRect(1*s,  12*s, 5*s, 9*s);
-
-  // Shoes (Block Supply)
-  const shoeC = p.gear?.shoes ? '#4eff91' : '#fff';
-  c.fillStyle=shoeC;
-  c.fillRect(-7*s, 20*s, 6*s, 3*s);
-  c.fillRect(1*s,  20*s, 6*s, 3*s);
-
-  // Head
-  c.fillStyle = skin;
-  c.beginPath();
-  c.arc(0, -10*s, 9*s, 0, Math.PI*2);
-  c.fill();
-
-  // Face
-  c.fillStyle='rgba(0,0,0,0.7)';
-  c.fillRect(-3*s, -12*s, 2.5*s, 2*s); // left eye
-  c.fillRect(0.5*s,-12*s, 2.5*s, 2*s); // right eye
-  c.fillStyle='rgba(0,0,0,0.5)';
-  c.fillRect(-2*s, -9*s, 4*s, 1.5*s);  // mouth
-
-  // Hair
-  c.fillStyle=hair;
-  if(hairSt===0){ // Short
-    c.beginPath(); c.arc(0,-10*s,9*s,Math.PI,0); c.fill();
-  } else if(hairSt===1){ // Afro
-    c.beginPath(); c.arc(0,-11*s,13*s,0,Math.PI*2); c.fill();
-    c.fillStyle=skin; c.beginPath(); c.arc(0,-10*s,9*s,0,Math.PI*2); c.fill();
-    c.fillStyle=skin; c.fillRect(-7*s,-11*s,14*s,4*s);
-  } else if(hairSt===2){ // Braids
-    c.beginPath(); c.arc(0,-10*s,9*s,Math.PI,0); c.fill();
-    c.fillRect(-2*s,-1*s,4*s,12*s);
-  } else if(hairSt===3){ // Curly
-    for(let i=0;i<6;i++){
-      const a=i/6*Math.PI;
-      c.beginPath(); c.arc(Math.cos(a)*10*s,-10*s+Math.sin(a)*5*s-5*s,5*s,0,Math.PI*2); c.fill();
-    }
-  } else if(hairSt===4){ // Ponytail
-    c.beginPath(); c.arc(0,-10*s,9*s,Math.PI,0); c.fill();
-    c.fillRect(-2*s,-20*s,4*s,12*s);
-  }
-  // Bald = no hair drawn
-
-  // Jewelry (Frostbox necklace glow)
-  if(isPlayer && p.jewelry?.necklace){
-    const jItems=[...JEWELRY.necklaces,...JEWELRY.rings,...JEWELRY.earrings];
-    const jItem=jItems.find(j=>j.id===p.jewelry.necklace);
-    if(jItem){
-      c.fillStyle=jItem.color;
-      c.globalAlpha=0.8;
-      c.beginPath(); c.arc(0, 2*s, 3*s, 0, Math.PI*2); c.fill();
-      c.globalAlpha=1;
-    }
-  }
-
-  // Accessory
-  if(isPlayer){
-    const acc=p.accessory||0;
-    if(acc===1){ // Sunglasses
-      c.fillStyle='rgba(0,0,0,0.8)';
-      c.fillRect(-7*s,-13*s,6*s,3*s);
-      c.fillRect(1*s,-13*s,6*s,3*s);
-      c.fillStyle='#555';
-      c.fillRect(-1.5*s,-12.5*s,3*s,1.5*s);
-    } else if(acc===2){ // Hat
-      c.fillStyle='#333';
-      c.fillRect(-10*s,-18*s,20*s,4*s);
-      c.fillRect(-6*s,-24*s,12*s,8*s);
-    } else if(acc===3){ // Headphones
-      c.strokeStyle='#555'; c.lineWidth=2*s;
-      c.beginPath(); c.arc(0,-10*s,12*s,Math.PI*1.1,Math.PI*1.9); c.stroke();
-      c.fillStyle='#333';
-      c.fillRect(-12.5*s,-12*s,4*s,5*s);
-      c.fillRect(8.5*s,-12*s,4*s,5*s);
-    } else if(acc===4){ // Mask
-      c.fillStyle='#222'; c.globalAlpha=0.85;
-      c.beginPath(); c.roundRect(-6*s,-11*s,12*s,6*s,2*s); c.fill();
-      c.globalAlpha=1;
-    } else if(acc===5){ // Crown
-      c.fillStyle='#ffd700';
-      c.beginPath();
-      c.moveTo(-7*s,-19*s); c.lineTo(-7*s,-24*s);
-      c.lineTo(-3.5*s,-22*s); c.lineTo(0,-26*s);
-      c.lineTo(3.5*s,-22*s); c.lineTo(7*s,-24*s);
-      c.lineTo(7*s,-19*s); c.closePath();
-      c.fill();
-    }
-    // Block Supply backpack
-    if(p.gear?.backpack){
-      c.fillStyle='#ff914e'; c.globalAlpha=0.9;
-      c.beginPath(); c.roundRect(8*s,-5*s,7*s,12*s,2*s); c.fill();
-      c.globalAlpha=1;
-    }
-    // Block Supply cap
-    if(p.gear?.cap){
-      c.fillStyle='#4eff91';
-      c.fillRect(-9*s,-19*s,18*s,4*s);
-      c.fillRect(-5*s,-25*s,10*s,7*s);
-    }
-  }
-
-  c.restore();
-}
-
-// ─────────────────────────────────────────────────────────
-//  DRAW CAR
-// ─────────────────────────────────────────────────────────
-function drawCar(c, car){
-  c.save();
-  c.translate(car.x, car.y);
-  c.rotate(car.angle);
-  // Body
-  c.fillStyle=car.color;
-  c.beginPath();
-  c.roundRect(-car.w/2, -car.h/2, car.w, car.h, 5);
-  c.fill();
-  // Windshield
-  c.fillStyle='rgba(120,200,255,0.5)';
-  c.fillRect(-car.w/2+3, -car.h/2+4, car.w-6, car.h/3);
-  // Headlights
-  c.fillStyle='#ffffaa';
-  c.fillRect(-car.w/2+2,-car.h/2+2,6,4);
-  c.fillRect(car.w/2-8,-car.h/2+2,6,4);
-  // Taillights
-  c.fillStyle='#ff4444';
-  c.fillRect(-car.w/2+2,car.h/2-6,6,4);
-  c.fillRect(car.w/2-8,car.h/2-6,6,4);
-  c.restore();
-}
-
-// ─────────────────────────────────────────────────────────
-//  MINIMAP
-// ─────────────────────────────────────────────────────────
-function renderMinimap(){
-  mmCtx.fillStyle='#111';
-  mmCtx.fillRect(0,0,160,160);
-  const scale=160/(MAP_W*TILE);
-  // Tiles
-  for(let tx=0;tx<MAP_W;tx+=2){
-    for(let ty=0;ty<MAP_H;ty+=2){
-      const t=getTile(tx,ty);
-      mmCtx.fillStyle=TILE_COLORS[t]||'#333';
-      mmCtx.fillRect(tx*TILE*scale,ty*TILE*scale,TILE*scale*2,TILE*scale*2);
-    }
-  }
-  // Player
-  mmCtx.fillStyle='#4eff91';
-  mmCtx.beginPath();
-  mmCtx.arc(PLAYER.x*scale, PLAYER.y*scale, 4, 0, Math.PI*2);
-  mmCtx.fill();
-  // NPCs
-  for(const n of npcs){
-    mmCtx.fillStyle='#fff';
-    mmCtx.fillRect(n.x*scale-1.5,n.y*scale-1.5,3,3);
-  }
-  // NPC cars
-  mmCtx.fillStyle='#ff4e4e';
-  for(const c of npcCars){
-    mmCtx.fillRect(c.x*scale-2,c.y*scale-2,4,4);
-  }
-  // View rect
-  mmCtx.strokeStyle='rgba(255,255,255,.3)';
-  mmCtx.strokeRect(CAM.x*scale,CAM.y*scale,canvas.width*scale,canvas.height*scale);
-}
-
-// ─────────────────────────────────────────────────────────
-//  HUD UPDATE
-// ─────────────────────────────────────────────────────────
-function updateHUD(){
-  document.getElementById('bar-hp').style.width     =clamp(PLAYER.hp,0,100)+'%';
-  document.getElementById('bar-energy').style.width =clamp(PLAYER.energy,0,100)+'%';
-  document.getElementById('bar-mood').style.width   =clamp(PLAYER.mood,0,100)+'%';
-  document.getElementById('bar-edu').style.width    =clamp(PLAYER.education,0,100)+'%';
-  document.getElementById('bar-str').style.width    =clamp(PLAYER.strength,0,100)+'%';
-  document.getElementById('money-display').textContent='$'+PLAYER.money;
-  const stars='★'.repeat(STATE.wantedLevel)+'☆'.repeat(5-STATE.wantedLevel);
-  document.getElementById('wanted-stars').textContent=stars;
-  document.getElementById('wanted-stars').style.color=STATE.wantedLevel>2?'#ff4e6a':STATE.wantedLevel>0?'#ffd700':'#888';
-  // Job
-  if(PLAYER.job){
-    const j=JOBS.find(x=>x.id===PLAYER.job);
-    document.getElementById('hud-job').textContent=j?j.name:'Unemployed';
-  }
-  // Location
-  const z=getZone(PLAYER.x,PLAYER.y);
-  document.getElementById('hud-location').textContent=z?z.name:STATE.inCar?`Driving ${activeCar?.name||''}`:PLAYER.house?'At Home':'Zaylin City';
-}
-
-// ─────────────────────────────────────────────────────────
-//  NOTIFICATIONS
-// ─────────────────────────────────────────────────────────
-let notifTimeout=null;
-function notify(msg){
-  const el=document.getElementById('notif');
-  el.textContent=msg; el.style.opacity='1';
-  if(notifTimeout) clearTimeout(notifTimeout);
-  notifTimeout=setTimeout(()=>{ el.style.opacity='0'; },2800);
-}
-
-// ─────────────────────────────────────────────────────────
-//  SCREEN MANAGEMENT
-// ─────────────────────────────────────────────────────────
-function openScreen(id){ document.getElementById(id).classList.remove('hidden'); }
-function closeScreen(id){ document.getElementById(id).classList.add('hidden'); }
-function closeAllScreens(){
-  ['char-screen','shop-screen','house-screen','job-screen','school-screen','npc-screen']
-    .forEach(s=>closeScreen(s));
-}
-function anyScreenOpen(){
-  return ['char-screen','shop-screen','house-screen','job-screen','school-screen','npc-screen']
-    .some(s=>!document.getElementById(s).classList.contains('hidden'));
-}
-
-// ─────────────────────────────────────────────────────────
-//  UTILS
-// ─────────────────────────────────────────────────────────
-function dist(a,b){ const dx=a.x-b.x,dy=a.y-b.y; return Math.sqrt(dx*dx+dy*dy); }
-function clamp(v,mn,mx){ return Math.max(mn,Math.min(mx,v)); }
-
-// CanvasRenderingContext2D.roundRect polyfill for older browsers
-if(!CanvasRenderingContext2D.prototype.roundRect){
-  CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h,r){
-    r=Math.min(r,w/2,h/2);
-    this.beginPath();
-    this.moveTo(x+r,y);
-    this.lineTo(x+w-r,y);
-    this.quadraticCurveTo(x+w,y,x+w,y+r);
-    this.lineTo(x+w,y+h-r);
-    this.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
-    this.lineTo(x+r,y+h);
-    this.quadraticCurveTo(x,y+h,x,y+h-r);
-    this.lineTo(x,y+r);
-    this.quadraticCurveTo(x,y,x+r,y);
-    this.closePath();
-  };
-}
-</script>
+  <script type="module" src="./src/main.js"></script>
 </body>
 </html>
