@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zaylin's World - Private Test Sandbox</title>
+  <style>
+    :root {
+      --bg: #151824;
+      --panel: #20253a;
+      --panel-alt: #2b3250;
+      --text: #f4f7ff;
+      --accent: #78d7ff;
+      --danger: #ff6b7c;
+      --ok: #7bffa6;
+      --warning: #ffd66b;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: linear-gradient(180deg, #101220, #1d2340);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header, main, footer {
+      width: min(1200px, 96vw);
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 1rem 0;
+      display: grid;
+      gap: 0.4rem;
+    }
+
+    h1 { margin: 0; font-size: 1.4rem; }
+    p { margin: 0; }
+
+    main {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    .panel {
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 0.9rem;
+      border: 1px solid #323a5b;
+    }
+
+    #map {
+      width: 100%;
+      aspect-ratio: 1.2;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 3px;
+    }
+
+    .tile {
+      border-radius: 4px;
+      display: grid;
+      place-items: center;
+      font-size: 0.7rem;
+      text-align: center;
+      user-select: none;
+      min-height: 32px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #394f63;
+    }
+
+    .tile.road { background: #5d657d; }
+    .tile.school { background: #5f7cc7; }
+    .tile.home { background: #7b9774; }
+    .tile.shop { background: #8563a8; }
+    .tile.job { background: #9f7e4d; }
+    .tile.park { background: #4f8f6a; }
+    .tile.player { outline: 3px solid var(--accent); }
+    .tile.car::after { content: "🚗"; }
+    .tile.npc::before { content: "🧍"; }
+
+    .grid { display: grid; gap: 0.5rem; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.4rem;
+    }
+
+    .chip {
+      background: var(--panel-alt);
+      border: 1px solid #47507e;
+      border-radius: 8px;
+      padding: 0.45rem;
+      font-size: 0.85rem;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+    }
+
+    button, select {
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem;
+      font-size: 0.84rem;
+      color: #0d1222;
+      background: #d8e4ff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button.secondary { background: #c2d8df; }
+    button.warn { background: var(--warning); }
+    button.danger { background: var(--danger); color: #1e0610; }
+
+    ul { margin: 0; padding-left: 1.1rem; }
+    #log {
+      max-height: 180px;
+      overflow: auto;
+      font-size: 0.8rem;
+      background: #171c30;
+      border-radius: 8px;
+      padding: 0.6rem;
+      border: 1px solid #353d64;
+    }
+
+    .small { font-size: 0.78rem; opacity: 0.85; }
+
+    footer {
+      padding-bottom: 1rem;
+      font-size: 0.78rem;
+      opacity: 0.8;
+    }
+
+    @media (max-width: 900px) {
+      main { grid-template-columns: 1fr; }
+      .controls { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Zaylin's World · Private Test Kid-City Sandbox</h1>
+    <p class="small">Stylized, GTA-inspired open world loop with safe kid-friendly interactions and consequence systems for early private testing.</p>
+  </header>
+
+  <main>
+    <section class="panel grid">
+      <div id="map" aria-label="city-map"></div>
+      <div class="controls">
+        <button id="moveUp">Move ↑</button>
+        <button id="moveRight">Move →</button>
+        <button id="moveLeft">Move ←</button>
+        <button id="moveDown">Move ↓</button>
+        <button id="toggleCar" class="secondary">Toggle Car</button>
+        <button id="monsterMode" class="danger">Monster Mode</button>
+      </div>
+      <p class="small">Tip: visit 🏫 school, 💼 jobs, 🏠 homes, 💎 Frostbox, 🧢 Block Supply.</p>
+    </section>
+
+    <section class="panel grid">
+      <div>
+        <h2 style="margin:0 0 0.4rem 0;font-size:1rem;">Character Customization</h2>
+        <div class="controls">
+          <select id="avatarColor" aria-label="avatar-color">
+            <option value="Neon Blue">Neon Blue</option>
+            <option value="Sunset Pink">Sunset Pink</option>
+            <option value="Lime Glow">Lime Glow</option>
+          </select>
+          <select id="avatarStyle" aria-label="avatar-style">
+            <option value="Street">Street</option>
+            <option value="Explorer">Explorer</option>
+            <option value="Scholar">Scholar</option>
+          </select>
+          <select id="frostboxJewelry" aria-label="frostbox-jewelry">
+            <option value="None">Frostbox: None</option>
+            <option value="Ice Chain">Frostbox: Ice Chain</option>
+            <option value="Star Ring">Frostbox: Star Ring</option>
+          </select>
+          <select id="blockSupplyGear" aria-label="block-supply-gear">
+            <option value="None">Block Supply: None</option>
+            <option value="Turbo Sneakers">Block Supply: Turbo Sneakers</option>
+            <option value="Builder Backpack">Block Supply: Builder Backpack</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <h2 style="margin:0 0 0.4rem 0;font-size:1rem;">Stats & Progression</h2>
+        <div class="stats" id="stats"></div>
+      </div>
+
+      <div>
+        <h2 style="margin:0 0 0.4rem 0;font-size:1rem;">NPC Memory & Consequences</h2>
+        <div class="chip" id="npcMemory"></div>
+      </div>
+
+      <div>
+        <h2 style="margin:0 0 0.4rem 0;font-size:1rem;">Event Log</h2>
+        <div id="log" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Private testing build: content and systems are intentionally lightweight and safe for iterative feedback.
+  </footer>
+
+  <script>
+    const cityTypes = [
+      "road","road","school","road","park","road","job","road","shop","road","home","road",
+      "road","road","road","road","road","road","road","road","road","road","road","road",
+      "home","road","park","road","job","road","school","road","road","road","shop","road",
+      "road","road","road","road","road","road","road","road","road","road","road","road",
+      "road","shop","road","school","road","home","road","job","road","park","road","home",
+      "road","road","road","road","road","road","road","road","road","road","road","road",
+      "school","road","home","road","park","road","shop","road","job","road","home","road",
+      "road","road","road","road","road","road","road","road","road","road","road","road",
+      "home","road","job","road","shop","road","park","road","school","road","home","road",
+      "road","road","road","road","road","road","road","road","road","road","road","road",
+      "park","road","school","road","job","road","home","road","shop","road","park","road",
+      "road","home","road","road","road","road","road","job","road","road","road","road"
+    ];
+
+    const state = {
+      size: 12,
+      playerIndex: 0,
+      npcIndex: 25,
+      carEnabled: false,
+      monsterMode: false,
+      heat: 0,
+      money: 15,
+      housing: "No Home",
+      education: 0,
+      reputation: 50,
+      trafficTick: 0,
+      avatarColor: "Neon Blue",
+      avatarStyle: "Street",
+      frostboxJewelry: "None",
+      blockSupplyGear: "None",
+      npcMemory: [],
+      logs: []
+    };
+
+    const mapEl = document.getElementById("map");
+    const statsEl = document.getElementById("stats");
+    const logEl = document.getElementById("log");
+    const npcMemoryEl = document.getElementById("npcMemory");
+
+    function addLog(text) {
+      state.logs.unshift(`[${new Date().toLocaleTimeString()}] ${text}`);
+      state.logs = state.logs.slice(0, 20);
+      logEl.innerHTML = `<ul>${state.logs.map(item => `<li>${item}</li>`).join("")}</ul>`;
+    }
+
+    function tileLabel(type) {
+      return ({ school: "🏫", home: "🏠", job: "💼", shop: "🛍️", park: "🌳", road: "" })[type] || "";
+    }
+
+    function moveNpcTraffic() {
+      state.trafficTick += 1;
+      if (state.trafficTick % 2 !== 0) return;
+
+      const directions = [-1, 1, -state.size, state.size];
+      const roadOptions = directions
+        .map(d => state.npcIndex + d)
+        .filter(i => i >= 0 && i < cityTypes.length && cityTypes[i] === "road");
+
+      if (roadOptions.length > 0) {
+        state.npcIndex = roadOptions[Math.floor(Math.random() * roadOptions.length)];
+      }
+    }
+
+    function rememberNpc(event) {
+      state.npcMemory.unshift(event);
+      state.npcMemory = state.npcMemory.slice(0, 4);
+      npcMemoryEl.textContent = state.npcMemory.join(" • ") || "NPCs remember kind and risky behavior.";
+    }
+
+    function applyTileEffect() {
+      const tile = cityTypes[state.playerIndex];
+
+      if (tile === "school") {
+        state.education += 1;
+        state.reputation += 1;
+        addLog("Studied at school. Education and reputation increased.");
+        rememberNpc("Saw you studying hard");
+      } else if (tile === "job") {
+        const payout = 5 + Math.floor(state.education / 3);
+        state.money += payout;
+        addLog(`Worked a job and earned $${payout}.`);
+        rememberNpc("Knows you as reliable worker");
+      } else if (tile === "home") {
+        if (state.housing === "No Home" && state.money >= 20) {
+          state.money -= 20;
+          state.housing = "Starter Apartment";
+          addLog("Bought a starter home for $20.");
+          rememberNpc("Heard you moved into a home");
+        } else {
+          addLog("Rested at housing zone.");
+        }
+      } else if (tile === "shop") {
+        if (state.money >= 4) {
+          state.money -= 4;
+          state.reputation += 1;
+          addLog("Visited a city shop and bought supplies.");
+          rememberNpc("Remembers polite shopping");
+        } else {
+          addLog("Not enough money for shop items.");
+        }
+      } else if (tile === "park") {
+        state.reputation += 1;
+        addLog("Explored the park and met city friends.");
+        rememberNpc("Remembers friendly park visit");
+      }
+
+      if (state.monsterMode) {
+        state.heat += 4;
+        state.reputation -= 2;
+        rememberNpc("Saw your monster mode chaos");
+        addLog("Monster mode caused chaos! Heat increased.");
+      } else if (state.heat > 0) {
+        state.heat = Math.max(0, state.heat - 1);
+      }
+
+      if (state.heat >= 16) {
+        state.money = Math.max(0, state.money - 5);
+        state.heat -= 5;
+        addLog("Consequences triggered: city services fined you $5.");
+      }
+
+      if (state.reputation < 15) {
+        addLog("NPC trust is very low. Helpful jobs pay less.");
+      }
+    }
+
+    function movePlayer(delta) {
+      const next = state.playerIndex + delta;
+      const col = state.playerIndex % state.size;
+      if (next < 0 || next >= cityTypes.length) return;
+      if (delta === -1 && col === 0) return;
+      if (delta === 1 && col === state.size - 1) return;
+
+      state.playerIndex = next;
+      moveNpcTraffic();
+      applyTileEffect();
+      render();
+    }
+
+    function updateStats() {
+      const speedBoost = state.carEnabled ? 1 : 0;
+      const gearBonus = state.blockSupplyGear === "Turbo Sneakers" ? 1 : 0;
+      const styleBonus = state.avatarStyle === "Scholar" ? Math.floor(state.education / 5) : 0;
+
+      const stats = {
+        Money: `$${state.money}`,
+        Housing: state.housing,
+        Education: state.education,
+        Reputation: state.reputation,
+        Heat: state.heat,
+        Mobility: speedBoost + gearBonus + styleBonus,
+        Car: state.carEnabled ? "On" : "Off",
+        Monster: state.monsterMode ? "On" : "Off"
+      };
+
+      statsEl.innerHTML = Object.entries(stats)
+        .map(([key, value]) => `<div class="chip"><strong>${key}:</strong> ${value}</div>`)
+        .join("");
+    }
+
+    function renderMap() {
+      mapEl.innerHTML = "";
+      cityTypes.forEach((type, index) => {
+        const tile = document.createElement("div");
+        tile.className = `tile ${type}`;
+        tile.textContent = tileLabel(type);
+
+        if (index === state.npcIndex) tile.classList.add("npc");
+        if (state.carEnabled && index === state.playerIndex) tile.classList.add("car");
+        if (index === state.playerIndex) tile.classList.add("player");
+
+        mapEl.appendChild(tile);
+      });
+    }
+
+    function render() {
+      renderMap();
+      updateStats();
+      npcMemoryEl.textContent = state.npcMemory.join(" • ") || "NPCs remember kind and risky behavior.";
+    }
+
+    document.getElementById("moveUp").addEventListener("click", () => movePlayer(-state.size));
+    document.getElementById("moveDown").addEventListener("click", () => movePlayer(state.size));
+    document.getElementById("moveLeft").addEventListener("click", () => movePlayer(-1));
+    document.getElementById("moveRight").addEventListener("click", () => movePlayer(1));
+
+    document.getElementById("toggleCar").addEventListener("click", () => {
+      state.carEnabled = !state.carEnabled;
+      addLog(state.carEnabled ? "Car entered from traffic lane." : "Car parked safely.");
+      render();
+    });
+
+    document.getElementById("monsterMode").addEventListener("click", () => {
+      state.monsterMode = !state.monsterMode;
+      addLog(state.monsterMode ? "Monster mode activated." : "Monster mode disabled.");
+      render();
+    });
+
+    document.getElementById("avatarColor").addEventListener("change", (e) => {
+      state.avatarColor = e.target.value;
+      addLog(`Avatar color set to ${state.avatarColor}.`);
+    });
+
+    document.getElementById("avatarStyle").addEventListener("change", (e) => {
+      state.avatarStyle = e.target.value;
+      addLog(`Avatar style switched to ${state.avatarStyle}.`);
+      render();
+    });
+
+    document.getElementById("frostboxJewelry").addEventListener("change", (e) => {
+      state.frostboxJewelry = e.target.value;
+      const bonus = state.frostboxJewelry === "Ice Chain" ? 2 : state.frostboxJewelry === "Star Ring" ? 1 : 0;
+      state.reputation += bonus;
+      addLog(`Customized Frostbox jewelry: ${state.frostboxJewelry}.`);
+      render();
+    });
+
+    document.getElementById("blockSupplyGear").addEventListener("change", (e) => {
+      state.blockSupplyGear = e.target.value;
+      addLog(`Equipped Block Supply gear: ${state.blockSupplyGear}.`);
+      render();
+    });
+
+    window.addEventListener("keydown", (event) => {
+      const moves = {
+        ArrowUp: -state.size,
+        ArrowDown: state.size,
+        ArrowLeft: -1,
+        ArrowRight: 1
+      };
+
+      if (event.key in moves) {
+        event.preventDefault();
+        const delta = moves[event.key];
+        const steps = state.carEnabled ? 2 : 1;
+        for (let i = 0; i < steps; i += 1) movePlayer(delta);
+      }
+    });
+
+    addLog("Welcome to Zaylin's World private test build.");
+    render();
+  </script>
+</body>
+</html>
