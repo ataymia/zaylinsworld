@@ -170,16 +170,39 @@ export function buildCity(scene) {
   const asphaltTex = noiseTexture('#2a2a2e', ['#222226', '#333339', '#1c1c20'], 1600, 14);
   const roadM = new THREE.MeshStandardMaterial({ map: asphaltTex, roughness: 0.95, metalness: 0 });
   const lineM = mat('#d9c24a', { rough: 0.7, emissive: '#6b5a18', emissiveIntensity: 0.25 });
-  const hRoad = new THREE.Mesh(new THREE.PlaneGeometry(140, 9), roadM);
-  hRoad.rotation.x = -Math.PI / 2; hRoad.position.y = 0.015; hRoad.receiveShadow = true; scene.add(hRoad);
-  const vRoad = new THREE.Mesh(new THREE.PlaneGeometry(9, 140), roadM);
-  vRoad.rotation.x = -Math.PI / 2; vRoad.position.y = 0.016; vRoad.receiveShadow = true; scene.add(vRoad);
-  for (let i = -65; i <= 65; i += 5) {
-    const a = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 0.2), lineM);
-    a.rotation.x = -Math.PI / 2; a.position.set(i, 0.03, 0); scene.add(a);
-    const b = new THREE.Mesh(new THREE.PlaneGeometry(0.2, 2.2), lineM);
-    b.rotation.x = -Math.PI / 2; b.position.set(0, 0.031, i); scene.add(b);
-  }
+  const walkTex = noiseTexture('#9a9aa0', ['#888890', '#a8a8b0', '#7e7e86'], 900, 10);
+  const walkM = new THREE.MeshStandardMaterial({ map: walkTex, roughness: 0.95, metalness: 0 });
+
+  // ── street grid: roads at -40 / 0 / +40 on both axes → 9 intersections, so
+  // the city reads as connected blocks instead of a single long street. (Road
+  // kit upload was broken, so these are temporary generated roads.) ───────────
+  const ROADS = [-40, 0, 40];
+  const ROAD_LEN = 128, ROAD_W = 9, WALK_W = 2.2;
+  const addRoad = (horizontal, offset) => {
+    const geo = horizontal ? new THREE.PlaneGeometry(ROAD_LEN, ROAD_W) : new THREE.PlaneGeometry(ROAD_W, ROAD_LEN);
+    const road = new THREE.Mesh(geo, roadM);
+    road.rotation.x = -Math.PI / 2;
+    road.position.set(horizontal ? 0 : offset, 0.015, horizontal ? offset : 0);
+    road.receiveShadow = true; scene.add(road);
+    // sidewalks flanking the road
+    [-1, 1].forEach(side => {
+      const wg = horizontal ? new THREE.PlaneGeometry(ROAD_LEN, WALK_W) : new THREE.PlaneGeometry(WALK_W, ROAD_LEN);
+      const w = new THREE.Mesh(wg, walkM);
+      w.rotation.x = -Math.PI / 2;
+      const d = (ROAD_W / 2 + WALK_W / 2) * side;
+      w.position.set(horizontal ? 0 : offset + d, 0.012, horizontal ? offset + d : 0);
+      w.receiveShadow = true; scene.add(w);
+    });
+    // dashed centre line
+    for (let i = -ROAD_LEN / 2 + 5; i <= ROAD_LEN / 2 - 5; i += 5) {
+      const dg = horizontal ? new THREE.PlaneGeometry(2.2, 0.2) : new THREE.PlaneGeometry(0.2, 2.2);
+      const dash = new THREE.Mesh(dg, lineM);
+      dash.rotation.x = -Math.PI / 2;
+      dash.position.set(horizontal ? i : offset, 0.03, horizontal ? offset : i);
+      scene.add(dash);
+    }
+  };
+  ROADS.forEach(o => { addRoad(true, o); addRoad(false, o); });
 
   const toCenter = (x, z) => new THREE.Vector3(-x, 0, -z).normalize();
   const defs = [

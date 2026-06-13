@@ -52,7 +52,33 @@ export const HAIRSTYLES = [
   { id: 'bald-fade',      name: 'Bald Fade' },
   { id: 'lineup',         name: 'Lineup / Hairline' },
   { id: 'durag',          name: 'Durag / Wave Cap' },
+  // ── real glTF hairstyles (Kenney mini-kit) — attached as modular assets ──
+  { id: 'gltf-buzzed',    name: 'Buzz Cut (3D)' },
+  { id: 'gltf-parted',    name: 'Side Part (3D)' },
+  { id: 'gltf-long',      name: 'Long Hair (3D)' },
+  { id: 'gltf-buns',      name: 'Space Buns (3D)' },
+  { id: 'gltf-buzzed-f',  name: 'Tapered (3D)' },
 ];
+
+// ── glTF hair attachment config (Kenney mini-kit) ───────────────────────────
+// Each entry tells the attachment system which file to load and how to seat it
+// on the avatar head. The loader auto-fits by the asset's OWN bounding box
+// (re-centering onto the scalp anchor and scaling to head width), so the asset's
+// original Kenney head-space position is discarded — this is what prevents hair
+// from landing across the eyes. The per-asset values below fine-tune that fit.
+//   anchor   : which head anchor to seat on (scalp_center | head_top | hairline_front | scalp_back)
+//   scaleMul : multiply the auto-fit scale (1 = exact head-width fit)
+//   yOffset  : raise(+)/lower(-) along the head's up axis, in meters
+//   zOffset  : push forward(+)/back(-), in meters
+//   rotX/Y/Z : extra rotation in radians
+export const HAIR_GLTF = {
+  'gltf-buzzed':   { file: 'Hair_Buzzed.gltf',        name: 'Buzz Cut',  anchor: 'scalp_center', scaleMul: 1.06, yOffset: 0.02, zOffset: 0.00, rotX: 0, rotY: 0, rotZ: 0 },
+  'gltf-parted':   { file: 'Hair_SimpleParted.gltf',  name: 'Side Part', anchor: 'scalp_center', scaleMul: 1.10, yOffset: 0.04, zOffset: 0.02, rotX: 0, rotY: 0, rotZ: 0 },
+  'gltf-long':     { file: 'Hair_Long.gltf',          name: 'Long Hair', anchor: 'scalp_center', scaleMul: 1.12, yOffset: 0.06, zOffset: -0.02, rotX: 0, rotY: 0, rotZ: 0 },
+  'gltf-buns':     { file: 'Hair_Buns.gltf',          name: 'Space Buns',anchor: 'scalp_center', scaleMul: 1.04, yOffset: 0.04, zOffset: 0.00, rotX: 0, rotY: 0, rotZ: 0 },
+  'gltf-buzzed-f': { file: 'Hair_BuzzedFemale.gltf',  name: 'Tapered',   anchor: 'scalp_center', scaleMul: 1.06, yOffset: 0.02, zOffset: 0.00, rotX: 0, rotY: 0, rotZ: 0 },
+};
+export function isGltfHair(id) { return typeof id === 'string' && id.startsWith('gltf-'); }
 
 export const OUTFIT_TOPS = [
   { id: 'tee-white',  name: 'White Tee',    color: '#e8e8e8' },
@@ -153,6 +179,12 @@ export function buildHair(styleId, colorHex) {
   const R = 0.26;
   const g = new THREE.Group();
   g.name = 'hair';
+  // glTF hairstyles are attached asynchronously after the avatar is built
+  // (see hairKit.js). Return an empty, tagged group as the mount point.
+  if (isGltfHair(styleId)) {
+    g.userData.gltfHair = styleId;
+    return g;
+  }
   const hm = mat(colorHex, { rough: 0.95 });
   const fadeM = mat(new THREE.Color(colorHex).multiplyScalar(0.6).getStyle(), { rough: 0.95 });
 
@@ -486,6 +518,25 @@ export function buildAvatar(custom) {
   headGroup.add(hairGroup);
   root.add(headGroup);
 
+  // ── attachment anchors (named empties) ──────────────────────────────────────
+  // Head anchors live under headGroup so they track the head; body anchors live
+  // under root. Hair seats on scalp anchors; jewelry seats on neck/chest anchors.
+  const anchors = {};
+  const mkAnchor = (name, parent, x, y, z) => {
+    const a = new THREE.Object3D();
+    a.name = 'anchor:' + name;
+    a.position.set(x, y, z);
+    parent.add(a);
+    anchors[name] = a;
+    return a;
+  };
+  mkAnchor('head_top',       headGroup, 0, headR,        0);
+  mkAnchor('scalp_center',   headGroup, 0, headR * 0.45, 0);
+  mkAnchor('hairline_front', headGroup, 0, headR * 0.25, headR * 0.85);
+  mkAnchor('scalp_back',     headGroup, 0, headR * 0.35, -headR * 0.7);
+  mkAnchor('neck',           root, 0, shoulderY + 0.04, torsoD * 0.18);
+  mkAnchor('upper_chest',    root, 0, shoulderY - 0.16, torsoD * 0.55);
+
   // ── limbs with joint pivots for walk animation ──
   const upperArmM = topM; // sleeves
   const makeArm = (sx) => {
@@ -530,6 +581,8 @@ export function buildAvatar(custom) {
   root.add(leftLeg, rightLeg);
 
   // ── jewelry ──
+  // Seated on the neck + upper_chest anchors so the chain rests around the
+  // collar (not inside the torso) and the pendant hangs centered on the chest.
   if (c.jewelry && c.jewelry !== 'none') {
     const isWhite = c.jewelry === 'iced';
     const goldM = new THREE.MeshPhysicalMaterial({
@@ -539,24 +592,38 @@ export function buildAvatar(custom) {
       color: '#ffffff', metalness: 0, roughness: 0, transmission: 0.9, ior: 2.4,
       thickness: 0.4, clearcoat: 1, clearcoatRoughness: 0, envMapIntensity: 2.0,
       emissive: '#bfe3ff', emissiveIntensity: 0.12 });
-    const linkR = c.jewelry === 'cuban' ? 0.21 : 0.18;
-    const tube = c.jewelry === 'cuban' ? 0.04 : 0.028;
-    // a chain made of individual links draped at the collar
+    const isCuban = c.jewelry === 'cuban';
+    const tube = isCuban ? 0.04 : 0.028;
+    const links = isCuban ? 26 : 32;
+
+    // Chain group anchored at the neck. Links form an open collar (a U that
+    // hugs the front of the neck and dips to the sternum at the front-center).
     const chainGroup = new THREE.Group();
-    const links = c.jewelry === 'cuban' ? 22 : 30;
+    const collar = anchors.neck.position;          // root-space neck base
+    const radX = isCuban ? 0.17 : 0.15;            // half-width across the collar
+    const radZ = 0.13;                             // front reach over the chest
+    const drop = 0.16;                             // how far the front dips
     for (let i = 0; i < links; i++) {
-      const a = (i / links) * Math.PI * 2;
+      // sweep from one shoulder, around the front, to the other shoulder
+      const tParam = i / (links - 1);              // 0..1
+      const ang = Math.PI * (0.15 + tParam * 0.7); // front arc only
+      const x = Math.cos(ang) * radX * (ang < Math.PI / 2 ? 1 : -1) * 0 + (tParam - 0.5) * 2 * radX;
+      const front = Math.sin(Math.PI * tParam);    // 0 at sides, 1 at front-center
       const link = new THREE.Mesh(new THREE.TorusGeometry(tube * 1.4, tube * 0.55, 6, 12), goldM);
-      link.position.set(Math.sin(a) * linkR, shoulderY - 0.06 - Math.cos(a < Math.PI ? a : Math.PI) * 0.06,
-        Math.cos(a) * linkR * 0.7 + torsoD * 0.2);
-      link.rotation.y = a; link.rotation.x = Math.PI / 2;
-      if (i % 2) link.rotation.z = Math.PI / 2;
+      link.position.set(
+        x,
+        collar.y - drop * front - 0.02,
+        collar.z + radZ * front);
+      link.rotation.x = Math.PI / 2;
+      link.rotation.z = (tParam - 0.5) * 1.2;
+      if (i % 2) link.rotation.y = Math.PI / 2;
       chainGroup.add(link);
     }
     root.add(chainGroup);
+
+    // Pendant — hangs centered on the upper chest for every chain type.
+    const pend = new THREE.Group();
     if (c.jewelry === 'iced') {
-      // iced-out pendant: faceted gem cluster
-      const pend = new THREE.Group();
       const setting = new THREE.Mesh(new THREE.OctahedronGeometry(0.085, 0), goldM);
       pend.add(setting);
       for (let i = 0; i < 6; i++) {
@@ -567,9 +634,18 @@ export function buildAvatar(custom) {
       }
       const center = new THREE.Mesh(new THREE.OctahedronGeometry(0.04, 0), gemM);
       center.position.z = 0.03; pend.add(center);
-      pend.position.set(0, shoulderY - 0.24, torsoD / 2 + 0.02);
-      root.add(pend);
+    } else {
+      // simple dog-tag / medallion pendant for chain + cuban
+      const tag = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.02, 16), goldM);
+      tag.rotation.x = Math.PI / 2;
+      pend.add(tag);
+      const bail = new THREE.Mesh(new THREE.TorusGeometry(0.02, 0.008, 6, 10), goldM);
+      bail.position.y = 0.055; bail.rotation.x = Math.PI / 2;
+      pend.add(bail);
     }
+    const chest = anchors.upper_chest.position;
+    pend.position.set(0, chest.y, chest.z + 0.02);
+    root.add(pend);
   }
 
   // ── accessories ──
@@ -608,7 +684,7 @@ export function buildAvatar(custom) {
 
   return {
     group: root,
-    parts: { leftArm, rightArm, leftLeg, rightLeg, headGroup, hairGroup, torso },
+    parts: { leftArm, rightArm, leftLeg, rightLeg, headGroup, hairGroup, torso, anchors },
     eyeHeight: headCY * heightMul,
   };
 }

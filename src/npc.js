@@ -99,14 +99,17 @@ function carMesh(color, type) {
 
 export function createTraffic(scene, count = 6) {
   const colors = ['#c0392b', '#2980b9', '#27ae60', '#f1c40f', '#8e44ad', '#e67e22', '#ecf0f1', '#16a085'];
+  const ROADS = [-40, 0, 40];                 // matches the street grid in world.js
   const cars = [];
   for (let i = 0; i < count; i++) {
     const g = carMesh(pick(colors));
     const horizontal = i % 2 === 0;
+    const road = pick(ROADS);                  // which of the 3 parallel streets
     const lane = (Math.random() < 0.5 ? -2.2 : 2.2);
+    const cross = road + lane;                 // lateral position = road + lane
     const speed = (7 + Math.random() * 5) * (Math.random() < 0.5 ? 1 : -1);
-    if (horizontal) { g.position.set((Math.random() - 0.5) * 110, 0, lane); g.rotation.y = speed > 0 ? Math.PI / 2 : -Math.PI / 2; }
-    else { g.position.set(lane, 0, (Math.random() - 0.5) * 110); g.rotation.y = speed > 0 ? 0 : Math.PI; }
+    if (horizontal) { g.position.set((Math.random() - 0.5) * 110, 0, cross); g.rotation.y = speed > 0 ? Math.PI / 2 : -Math.PI / 2; }
+    else { g.position.set(cross, 0, (Math.random() - 0.5) * 110); g.rotation.y = speed > 0 ? 0 : Math.PI; }
     scene.add(g);
     cars.push({ g, horizontal, speed, baseSpeed: speed, damage: 0 });
   }

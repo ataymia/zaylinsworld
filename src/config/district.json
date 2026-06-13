@@ -1,0 +1,14 @@
+{
+  "$comment": "Placement config for the starter district. Kenney Retro Urban Kit buildings placed as real assets along the street grid (roads at -40/0/40 on both axes). Edit x/z/ry/scale to move or tune any building; cityKit.js loads each glTF, grounds it, scales, rotates, places it, adds a box collider, and (if label set) a storefront sign. ry is rotation in radians (0 faces +z).",
+  "defaults": { "scale": 0.6 },
+  "buildings": [
+    { "model": "Building_Medium_2_001", "x": -20, "z": -47, "ry": 0,       "scale": 0.55, "label": "APARTMENTS",  "sign": "#9fe8ff" },
+    { "model": "Building_Small_1",       "x": -2,  "z": -47, "ry": 0,       "scale": 0.6,  "label": "BODEGA",      "sign": "#ffcf3f" },
+    { "model": "Building_Large_2",       "x": 22,  "z": -49, "ry": 0,       "scale": 0.5,  "label": "OFFICE TOWER","sign": "#bfe3ff" },
+    { "model": "Building_Small_1",       "x": -47, "z": -16, "ry": 1.5708,  "scale": 0.6,  "label": "LAUNDROMAT",  "sign": "#d9b3ff" },
+    { "model": "Building_Medium_2_001",  "x": -47, "z": 16,  "ry": 1.5708,  "scale": 0.5,  "label": null },
+    { "model": "Building_Medium_2_001",  "x": 47,  "z": 30,  "ry": -1.5708, "scale": 0.55, "label": "GARAGE",      "sign": "#ff9f9f" },
+    { "model": "Building_Small_1",       "x": -18, "z": 47,  "ry": 3.1416,  "scale": 0.55, "label": "ROW HOUSES",  "sign": "#b3ffd1" },
+    { "model": "Building_Small_1",       "x": 16,  "z": 47,  "ry": 3.1416,  "scale": 0.55, "label": null }
+  ]
+}

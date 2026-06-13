@@ -3,7 +3,9 @@
 // ───────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 import { Sky } from 'three/addons/objects/Sky.js';
-import { buildAvatar } from './avatar.js';
+import { buildAvatar, isGltfHair, HAIRSTYLES, HAIR_COLORS, JEWELRY } from './avatar.js';
+import { attachGltfHair, attachedHairInfo } from './hairKit.js';
+import { buildDistrict } from './cityKit.js';
 import { buildCity, colliders as cityColliders } from './world.js';
 import { buildInteriors, DEALER_CARS, JEWELRY_STOCK, GEAR_STOCK } from './interiors.js';
 import {
@@ -152,10 +154,18 @@ const manager = new InteractionManager();
 const clock = new THREE.Clock();
 
 // ── creator ───────────────────────────────────────────────────────────────────
+function avatarHairColorHex(custom) {
+  const c = HAIR_COLORS.find((h) => h.id === (custom && custom.hairColor)) || HAIR_COLORS[0];
+  return c.color;
+}
 function rebuildCreatorPreview() {
   if (creatorAvatar) creatorPV.scene.remove(creatorAvatar.group);
   creatorAvatar = buildAvatar(state.custom);
   creatorPV.scene.add(creatorAvatar.group);
+  if (isGltfHair(state.custom.hair)) {
+    const hc = avatarHairColorHex(state.custom);
+    attachGltfHair(creatorAvatar, state.custom.hair, hc, renderer);
+  }
 }
 function initCreator() {
   document.exitPointerLock?.();
@@ -220,6 +230,9 @@ function rebuildPlayer() {
   player.group.rotation.y = rot;
   player.group.visible = vis;
   scene.add(player.group);
+  if (isGltfHair(state.custom.hair)) {
+    attachGltfHair(player, state.custom.hair, avatarHairColorHex(state.custom), renderer);
+  }
   // NOTE: the player stays procedural so it keeps its walk animation AND honors
   // every character-creator choice (skin, outfit, hair, jewelry). The player_avatar
   // GLB slot is reserved for drop-in use; static interior NPCs use the GLB pack.
@@ -236,6 +249,10 @@ function applyWorldAssets() {
   enhanceShopkeepers();
   enhanceShowroomCars();
   placeFrostboxJewelry();
+  // place Kenney Retro Urban Kit buildings into the district (async, fire-and-forget)
+  buildDistrict(scene, renderer)
+    .then((placed) => { if (placed && placed.length) console.info('[district] landmarks:', placed.map(p => p.label).join(', ')); })
+    .catch((e) => console.warn('[district] failed:', e));
 }
 
 // static shop staff → GLB humanoids
@@ -431,6 +448,76 @@ function toggleInteriorDebug() {
   interiorDebug = !interiorDebug;
   updateInteriorDebug();
   notify('Interior debug ' + (interiorDebug ? 'ON' : 'off'));
+}
+
+// ── hair / jewelry attachment debug (toggle with H) ─────────────────────────
+// While ON: [ / ] cycle hairstyles, J cycles jewelry. The overlay reports the
+// current selection and the computed attach transform of any glTF hair so the
+// per-asset offsets in avatar.js → HAIR_GLTF can be dialed in by eye.
+let hairDebug = false;
+let _hairDbgEl = null;
+function ensureHairDebugEl() {
+  if (_hairDbgEl) return _hairDbgEl;
+  _hairDbgEl = document.createElement('div');
+  _hairDbgEl.id = 'hair-debug';
+  _hairDbgEl.style.cssText = 'position:fixed;right:12px;bottom:12px;z-index:200;font:12px/1.5 ui-monospace,monospace;' +
+    'background:rgba(8,8,16,.82);color:#ffd27f;border:1px solid #50432a;border-radius:8px;' +
+    'padding:8px 10px;white-space:pre;pointer-events:none;display:none;max-width:360px;';
+  document.body.appendChild(_hairDbgEl);
+  return _hairDbgEl;
+}
+function updateHairDebug() {
+  if (!hairDebug) { if (_hairDbgEl) _hairDbgEl.style.display = 'none'; return; }
+  const el = ensureHairDebugEl();
+  el.style.display = 'block';
+  const hairId = state.custom.hair;
+  const hairName = (HAIRSTYLES.find(h => h.id === hairId) || {}).name || hairId;
+  const jewId = state.custom.jewelry;
+  const jewName = (JEWELRY.find(j => j.id === jewId) || {}).name || jewId;
+  const info = player ? attachedHairInfo(player) : null;
+  const lines = [
+    'HAIR / JEWELRY DEBUG (press H)',
+    '[ / ]  cycle hairstyle',
+    'J      cycle jewelry',
+    '',
+    'hairstyle : ' + hairName + '  (' + hairId + ')',
+    'type      : ' + (isGltfHair(hairId) ? 'glTF mini-kit' : 'procedural'),
+    'jewelry   : ' + jewName + '  (' + jewId + ')',
+  ];
+  if (info) {
+    lines.push(
+      '',
+      'attached  : ' + info.style,
+      'scale     : ' + info.scale.toFixed(3),
+      'position  : ' + fmtV(info.pos),
+      'rotation  : (' + info.rot.x.toFixed(2) + ', ' + info.rot.y.toFixed(2) + ', ' + info.rot.z.toFixed(2) + ')',
+    );
+  } else if (isGltfHair(hairId)) {
+    lines.push('', 'attached  : (loading…)');
+  }
+  el.textContent = lines.join('\n');
+}
+function toggleHairDebug() {
+  hairDebug = !hairDebug;
+  updateHairDebug();
+  notify('Hair/jewelry debug ' + (hairDebug ? 'ON' : 'off'));
+}
+function cycleHair(dir) {
+  const i = HAIRSTYLES.findIndex(h => h.id === state.custom.hair);
+  const n = (i + dir + HAIRSTYLES.length) % HAIRSTYLES.length;
+  state.custom.hair = HAIRSTYLES[n].id;
+  rebuildPlayer();
+  updateHairDebug();
+  setTimeout(updateHairDebug, 250);   // catch async glTF attach
+  notify('Hair → ' + HAIRSTYLES[n].name);
+}
+function cycleJewelry() {
+  const i = JEWELRY.findIndex(j => j.id === state.custom.jewelry);
+  const n = (i + 1) % JEWELRY.length;
+  state.custom.jewelry = JEWELRY[n].id;
+  rebuildPlayer();
+  updateHairDebug();
+  notify('Jewelry → ' + JEWELRY[n].name);
 }
 
 // ── vehicle ──────────────────────────────────────────────────────────────────
@@ -1165,6 +1252,12 @@ window.addEventListener('keydown', e => {
   if (k === 'v') { const m = controls.cycleMode(); notify('Camera: ' + m.toUpperCase()); document.getElementById('crosshair').style.display = m === CAM.FIRST ? '' : 'none'; }
   if (k === 'c' && !inCar && area === 'city') openWardrobe();
   if (k === 'i') toggleInteriorDebug();
+  if (k === 'h') toggleHairDebug();
+  if (hairDebug) {
+    if (k === ']') cycleHair(1);
+    if (k === '[') cycleHair(-1);
+    if (k === 'j') cycleJewelry();
+  }
   if (k === 'm') { state.monsterMode = !state.monsterMode; notify('Monster Mode ' + (state.monsterMode ? 'ON 👹' : 'off')); }
 });
 
