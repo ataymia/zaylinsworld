@@ -108,24 +108,45 @@ export function createTraffic(scene, count = 6) {
     if (horizontal) { g.position.set((Math.random() - 0.5) * 110, 0, lane); g.rotation.y = speed > 0 ? Math.PI / 2 : -Math.PI / 2; }
     else { g.position.set(lane, 0, (Math.random() - 0.5) * 110); g.rotation.y = speed > 0 ? 0 : Math.PI; }
     scene.add(g);
-    cars.push({ g, horizontal, speed });
+    cars.push({ g, horizontal, speed, baseSpeed: speed, damage: 0 });
   }
   return cars;
 }
 
-export function updateTraffic(cars, dt) {
+// Traffic AI: roll wheels, follow the lane, and BRAKE for obstacles ahead
+// (other cars or the player). `obstacles` is an array of THREE.Vector3 world
+// positions. If a car can't brake in time it will physically overlap an
+// obstacle and the caller's collision pass resolves the impact.
+export function updateTraffic(cars, dt, obstacles = []) {
   for (const c of cars) {
+    if (c.baseSpeed === undefined) c.baseSpeed = c.speed;
+    const cpos = c.g.position;
+    const sign = Math.sign(c.baseSpeed) || 1;
+    const ax = c.horizontal ? 'x' : 'z';        // travel axis
+    const la = c.horizontal ? 'z' : 'x';        // lateral axis
+
+    // brake if something sits ahead in this lane within braking distance
+    let brake = false;
+    for (const o of obstacles) {
+      if (o === cpos) continue;
+      const ahead = (o[ax] - cpos[ax]) * sign;  // >0 → in front of the car
+      const lateral = Math.abs(o[la] - cpos[la]);
+      if (ahead > 0.5 && ahead < 7.5 && lateral < 2.4) { brake = true; break; }
+    }
+    const target = brake ? 0 : c.baseSpeed;
+    c.speed += (target - c.speed) * Math.min(1, dt * 3.5);
+
     const dist = Math.abs(c.speed) * dt;
-    const spin = dist / 0.36;          // roll the wheels
+    const spin = dist / 0.36;                    // roll the wheels
     (c.g.userData.wheels || []).forEach(w => { w.rotation.x += spin; });
     if (c.horizontal) {
-      c.g.position.x += c.speed * dt;
-      if (c.g.position.x > 65) c.g.position.x = -65;
-      if (c.g.position.x < -65) c.g.position.x = 65;
+      cpos.x += c.speed * dt;
+      if (cpos.x > 65) cpos.x = -65;
+      if (cpos.x < -65) cpos.x = 65;
     } else {
-      c.g.position.z += c.speed * dt;
-      if (c.g.position.z > 65) c.g.position.z = -65;
-      if (c.g.position.z < -65) c.g.position.z = 65;
+      cpos.z += c.speed * dt;
+      if (cpos.z > 65) cpos.z = -65;
+      if (cpos.z < -65) cpos.z = 65;
     }
   }
 }

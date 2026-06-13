@@ -141,6 +141,7 @@ let cityEntrances = [];           // saved for live density re-registration
 let entranceMap = {};            // interiorId -> { doorPos, faceDir }
 let area = 'city';
 let inCar = false;
+let drivingVehicle = null;     // the vehicle currently being driven (owned car or a stolen traffic car)
 let returnPos = new THREE.Vector3(0, 0, 12);
 let velY = 0, onGround = true;
 let builderOpen = false;
@@ -293,7 +294,16 @@ function registerInteractables(entrances) {
     getPosition: () => car.g.position,
     enabled: () => !inCar,
     getPrompt: () => 'Enter vehicle',
-    onInteract: () => enterCar(),
+    onInteract: () => enterCar(car),
+  });
+
+  // steal the nearest slow/stopped NPC traffic car (F)
+  manager.register({
+    id: 'steal-car', area: 'city', key: 'f', radius: 3.0,
+    getPosition: () => (nearestStealable()?.g.position) || OFFSCREEN,
+    enabled: () => !inCar && !!nearestStealable(),
+    getPrompt: () => 'Steal vehicle',
+    onInteract: () => { const v = nearestStealable(); if (v) enterCar(v, { steal: true }); },
   });
 
   // building entrances (E)
@@ -345,71 +355,257 @@ function registerInteractables(entrances) {
 
 // ── interiors enter/leave ───────────────────────────────────────────────────
 function enterInterior(id) {
-  const intr = interiors.byId[id];
+  const intr = interiors?.byId?.[id];
+  // Safe fallback: never break the game if an interior is missing/malformed.
+  if (!intr || !intr.spawn) {
+    console.warn('[interior] "' + id + '" failed to load — staying outside.');
+    notify('That place is closed right now.');
+    showPrompt(null);
+    return;
+  }
   returnPos.copy(entranceMap[id]?.doorPos || player.group.position);
   area = id;
   interiors.group.visible = true;
-  player.group.position.copy(intr.spawn);
-  player.group.rotation.y = 0;
+  player.group.visible = true;
+  player.group.position.copy(intr.spawn); player.group.position.y = 0;
+  player.group.rotation.y = Math.PI;             // face into the room (toward back wall)
   velY = 0; onGround = true;
+
+  // Reset to a known-good interior camera pose and keep it inside the walls so the
+  // third-person camera can never slip outside and reveal the void.
+  controls.resetView(0, 0.22, 5);
+  const cb = new THREE.Box3();
+  (intr.colliders || []).forEach(b => cb.union(b));
+  controls.bounds = cb.isEmpty() ? null : { min: cb.min.clone(), max: cb.max.clone() };
+  controls.snapTo(player.group.position, player.eyeHeight);
+
   notify('Entered ' + intr.name);
   showPrompt(null);
+  updateInteriorDebug();
   saveNow();
 }
 function leaveInterior() {
   area = 'city';
   interiors.group.visible = false;
+  controls.bounds = null;
+  player.group.visible = true;
   player.group.position.copy(returnPos); player.group.position.y = 0;
-  const fd = entranceMap_facing();
-  if (fd) player.group.rotation.y = Math.atan2(fd.x, fd.z);
+  controls.resetView(Math.PI, 0.25, 6);
+  controls.snapTo(player.group.position, player.eyeHeight);
   showPrompt(null);
+  updateInteriorDebug();
   saveNow();
 }
 function entranceMap_facing() { return null; }
 
+// ── interior debug overlay (toggle with I) ──────────────────────────────────
+let interiorDebug = false;
+let _dbgEl = null;
+function ensureInteriorDebugEl() {
+  if (_dbgEl) return _dbgEl;
+  _dbgEl = document.createElement('div');
+  _dbgEl.id = 'interior-debug';
+  _dbgEl.style.cssText = 'position:fixed;left:12px;bottom:12px;z-index:200;font:12px/1.5 ui-monospace,monospace;' +
+    'background:rgba(8,8,16,.82);color:#9fe8ff;border:1px solid #2a3550;border-radius:8px;' +
+    'padding:8px 10px;white-space:pre;pointer-events:none;display:none;max-width:360px;';
+  document.body.appendChild(_dbgEl);
+  return _dbgEl;
+}
+function fmtV(v) { return v ? `(${v.x.toFixed(1)}, ${v.y.toFixed(1)}, ${v.z.toFixed(1)})` : '—'; }
+function updateInteriorDebug() {
+  if (!interiorDebug) { if (_dbgEl) _dbgEl.style.display = 'none'; return; }
+  const el = ensureInteriorDebugEl();
+  el.style.display = 'block';
+  const intr = area !== 'city' ? interiors?.byId?.[area] : null;
+  el.textContent = [
+    'INTERIOR DEBUG (press I)',
+    'building id  : ' + (intr ? intr.id : area),
+    'interior     : ' + (intr ? 'loaded=true' : (area === 'city' ? 'city (outside)' : 'loaded=false')),
+    'player pos   : ' + fmtV(player?.group.position),
+    'camera pos   : ' + fmtV(camera.position),
+    'spawn marker : ' + fmtV(intr?.spawn),
+    'exit marker  : ' + fmtV(intr?.exit),
+  ].join('\n');
+}
+function toggleInteriorDebug() {
+  interiorDebug = !interiorDebug;
+  updateInteriorDebug();
+  notify('Interior debug ' + (interiorDebug ? 'ON' : 'off'));
+}
+
 // ── vehicle ──────────────────────────────────────────────────────────────────
-function enterCar() {
+const OFFSCREEN = new THREE.Vector3(1e6, 1e6, 1e6);
+// nearest traffic car the player can hop into — must be slow enough to board
+function nearestStealable() {
+  if (!player || area !== 'city') return null;
+  const pp = player.group.position;
+  let best = null, bestD = 3.0;
+  for (const c of traffic) {
+    if (Math.abs(c.speed || 0) > 6) continue;          // can't board fast-moving traffic (yet)
+    const d = c.g.position.distanceTo(pp);
+    if (d < bestD) { bestD = d; best = c; }
+  }
+  return best;
+}
+// Enter (or steal) a vehicle. `vehicle` is any object with { g, speed, damage }.
+// `opts.steal` flags an NPC-owned traffic car → witness/wanted logic.
+function enterCar(vehicle = car, opts = {}) {
+  if (!vehicle) return;
+  drivingVehicle = vehicle;
+  if (vehicle.speed === undefined) vehicle.speed = 0;
+  if (vehicle.damage === undefined) vehicle.damage = 0;
+  // If we're hijacking a traffic car, pull it out of the AI list so it stops
+  // auto-driving and becomes fully player-controlled.
+  if (opts.steal) {
+    const idx = traffic.indexOf(vehicle);
+    if (idx >= 0) traffic.splice(idx, 1);
+    vehicle.stolen = true;
+    const witnessed = witnessesNear(vehicle.g.position, 16);
+    if (witnessed > 0) {
+      state.wanted = Math.min(5, (state.wanted || 0) + 1);
+      state.heat = Math.min(100, (state.heat || 0) + 8);
+      console.log(`[crime] grand theft auto WITNESSED by ${witnessed} → wanted=${state.wanted}`);
+      notify('🚨 Car theft witnessed! Wanted +1');
+    } else {
+      state.heat = Math.min(100, (state.heat || 0) + 2);
+      console.log('[crime] grand theft auto (no witnesses) → heat+2');
+      notify('🚗 Hot-wired a ride — nobody saw that.');
+    }
+  } else {
+    notify('🚗 Driving — W/S throttle, A/D steer, F to exit');
+  }
   inCar = true;
   player.group.visible = false;
-  car.speed = 0;
-  notify('🚗 Driving — W/S throttle, A/D steer, F to exit');
+  vehicle.speed = 0;
+  controls.bounds = null;
   showPrompt(null);
+  saveNow();
+}
+// count NPCs (and the player's known witnesses) within a radius of a position
+function witnessesNear(pos, radius) {
+  let n = 0;
+  for (const npc of cityNPCs) {
+    if (npc.av.group.position.distanceTo(pos) <= radius) n++;
+  }
+  return n;
 }
 function exitCar() {
+  const v = drivingVehicle || car;
   inCar = false;
   player.group.visible = true;
-  const side = new THREE.Vector3(Math.cos(car.g.rotation.y), 0, -Math.sin(car.g.rotation.y));
-  player.group.position.copy(car.g.position).addScaledVector(side, 2.4); player.group.position.y = 0;
-  car.speed = 0;
+  const side = new THREE.Vector3(Math.cos(v.g.rotation.y), 0, -Math.sin(v.g.rotation.y));
+  player.group.position.copy(v.g.position).addScaledVector(side, 2.4); player.group.position.y = 0;
+  v.speed = 0;
+  drivingVehicle = null;
   notify('Stepped out of the vehicle');
   saveNow();
 }
 function updateCar(dt) {
+  const v = drivingVehicle || car;
   const inp = controls.moveInput();
   const accel = 16, maxF = 24, maxR = 9, fric = 7;
-  if (inp.f > 0) car.speed += accel * dt;
-  else if (inp.f < 0) car.speed -= accel * dt;
-  else car.speed -= Math.sign(car.speed) * Math.min(Math.abs(car.speed), fric * dt);
-  car.speed = Math.max(-maxR, Math.min(maxF, car.speed));
+  if (inp.f > 0) v.speed += accel * dt;
+  else if (inp.f < 0) v.speed -= accel * dt;
+  else v.speed -= Math.sign(v.speed) * Math.min(Math.abs(v.speed), fric * dt);
+  v.speed = Math.max(-maxR, Math.min(maxF, v.speed));
 
-  if (inp.s !== 0 && Math.abs(car.speed) > 0.2) {
-    const rate = 1.6 * (Math.abs(car.speed) / maxF + 0.18);
-    car.g.rotation.y -= inp.s * rate * dt * Math.sign(car.speed);
+  if (inp.s !== 0 && Math.abs(v.speed) > 0.2) {
+    const rate = 1.6 * (Math.abs(v.speed) / maxF + 0.18);
+    v.g.rotation.y -= inp.s * rate * dt * Math.sign(v.speed);
   }
-  const dir = new THREE.Vector3(Math.sin(car.g.rotation.y), 0, Math.cos(car.g.rotation.y));
-  const before = car.g.position.clone();
-  car.g.position.addScaledVector(dir, car.speed * dt); car.g.position.y = 0;
-  resolveCollision(car.g.position, 1.5, cityColliders);
-  if (car.g.position.distanceTo(before) > 0.02 && car.g.position.distanceTo(before) < Math.abs(car.speed * dt) * 0.6 && Math.abs(car.speed) > 7) {
-    car.damage = Math.min(100, car.damage + Math.abs(car.speed) * dt * 5);
-    state.carDamage = Math.floor(car.damage);
-    car.speed *= 0.35;
-    notify('💥 Crash! Car damage ' + Math.floor(car.damage) + '%');
+  const dir = new THREE.Vector3(Math.sin(v.g.rotation.y), 0, Math.cos(v.g.rotation.y));
+  const before = v.g.position.clone();
+  v.g.position.addScaledVector(dir, v.speed * dt); v.g.position.y = 0;
+  resolveCollision(v.g.position, 1.5, cityColliders);
+  if (v.g.position.distanceTo(before) > 0.02 && v.g.position.distanceTo(before) < Math.abs(v.speed * dt) * 0.6 && Math.abs(v.speed) > 7) {
+    v.damage = Math.min(100, (v.damage || 0) + Math.abs(v.speed) * dt * 5);
+    if (v === car) state.carDamage = Math.floor(v.damage);
+    v.speed *= 0.35;
+    notify('💥 Crash! Car damage ' + Math.floor(v.damage) + '%');
   }
-  // wheels look
-  car.g.children.forEach(c => { if (c.geometry?.type === 'CylinderGeometry') c.rotation.x += car.speed * dt; });
-  player.group.position.copy(car.g.position);
-  controls.update(car.g.position.clone().setY(0.9), 1.7, dt);
+  // roll wheels (GLB wheel meshes or procedural cylinders)
+  (v.g.userData.wheels || []).forEach(w => { w.rotation.x += v.speed * dt; });
+  v.g.children.forEach(c => { if (c.geometry?.type === 'CylinderGeometry') c.rotation.x += v.speed * dt; });
+  player.group.position.copy(v.g.position);
+  controls.update(v.g.position.clone().setY(0.9), 1.7, dt);
+}
+
+// ── vehicle collision (cars ↔ player, cars ↔ cars) ──────────────────────────────
+let playerHitCD = 0;            // seconds of i-frames after being hit by a car
+let injuredTimer = 0;          // brief stumble/injured state (visual + lockout)
+const CAR_R = 1.8, PLAYER_R = 0.6;
+
+// Real vehicle collision: cars push the player (knockback + injury) and bounce
+// off each other (slow + damage). Circle/cylinder model — simple, robust, and
+// enough to stop cars phasing through people and each other.
+function updateVehicleCollisions(dt) {
+  if (area !== 'city') return;
+  playerHitCD = Math.max(0, playerHitCD - dt);
+  injuredTimer = Math.max(0, injuredTimer - dt);
+
+  const cars = [];
+  for (const c of traffic) cars.push(c);
+  if (car && !inCar) cars.push(car);           // parked drivable car is a solid obstacle
+  if (inCar && drivingVehicle && !cars.includes(drivingVehicle)) cars.push(drivingVehicle);  // the car you drive collides too
+  for (const c of cars) if (c._crashCD) c._crashCD = Math.max(0, c._crashCD - dt);
+
+  // car ↔ car: separate overlaps, bounce, accumulate damage
+  for (let i = 0; i < cars.length; i++) {
+    for (let j = i + 1; j < cars.length; j++) {
+      const a = cars[i], b = cars[j];
+      const dx = b.g.position.x - a.g.position.x;
+      const dz = b.g.position.z - a.g.position.z;
+      const d = Math.hypot(dx, dz);
+      const minD = CAR_R * 2;
+      if (d >= minD || d < 1e-4) continue;
+      const nx = dx / d, nz = dz / d;
+      const push = (minD - d) / 2 + 0.01;
+      a.g.position.x -= nx * push; a.g.position.z -= nz * push;
+      b.g.position.x += nx * push; b.g.position.z += nz * push;
+      const rel = Math.abs(a.speed || 0) + Math.abs(b.speed || 0);
+      if (rel > 4 && !a._crashCD && !b._crashCD) {
+        a.damage = Math.min(100, (a.damage || 0) + rel * 0.6);
+        b.damage = Math.min(100, (b.damage || 0) + rel * 0.6);
+        console.log(`[collision] car↔car  rel=${rel.toFixed(1)}  dmgA=${Math.floor(a.damage)}%  dmgB=${Math.floor(b.damage)}%`);
+        if (a === car || b === car) state.carDamage = Math.floor(car.damage || 0);
+        if (rel > 16) state.heat = Math.min(100, (state.heat || 0) + 3);   // heavy pileup raises heat
+      }
+      if ('speed' in a) a.speed *= -0.25;
+      if ('speed' in b) b.speed *= -0.25;
+      a._crashCD = 0.6; b._crashCD = 0.6;
+    }
+  }
+
+  // car ↔ player: knockback + injury with an i-frame cooldown
+  if (!inCar && player) {
+    const pp = player.group.position;
+    for (const c of cars) {
+      const dx = pp.x - c.g.position.x, dz = pp.z - c.g.position.z;
+      const d = Math.hypot(dx, dz);
+      if (d >= CAR_R + PLAYER_R) continue;
+      let nx = dx, nz = dz, n = d;
+      if (n < 1e-4) { nx = Math.sin(c.g.rotation.y); nz = Math.cos(c.g.rotation.y); n = 1; }
+      nx /= n; nz /= n;
+      const spd = Math.abs(c.speed || 0);
+      if (playerHitCD <= 0 && spd > 1.5) {
+        const impact = spd;
+        const big = impact > 12;
+        const knock = Math.min(6, 1.5 + impact * 0.45);
+        pp.x += nx * knock; pp.z += nz * knock;
+        velY = Math.min(6, 2 + impact * 0.25); onGround = false;          // stumble/knockdown hop
+        playerHitCD = 1.2;                                                // no 20-hits-per-second
+        const st = state.stats;
+        st.energy = Math.max(0, st.energy - (big ? 45 : 18));
+        injuredTimer = big ? 2.4 : 1.0;
+        if ('speed' in c) c.speed *= 0.3;                                 // the car reacts to the hit
+        console.log(`[collision] car→player  impact=${impact.toFixed(1)}  ${big ? 'SEVERE' : 'minor'}  energy=${Math.floor(st.energy)}`);
+        notify(big ? '🚑 You got hit hard by a car!' : '😖 A car clipped you — watch the road!');
+      } else if (playerHitCD <= 0) {
+        const sep = (CAR_R + PLAYER_R - d) + 0.01;                        // gently separate from a stopped car
+        pp.x += nx * sep; pp.z += nz * sep;
+      }
+    }
+  }
 }
 
 // ── collisions ─────────────────────────────────────────────────────────────────
@@ -439,7 +635,9 @@ function updatePlayer(dt, t) {
   const inp = controls.moveInput();
   const yaw = controls.cameraYaw();
   const forward = new THREE.Vector3(-Math.sin(yaw), 0, -Math.cos(yaw));
-  const right = new THREE.Vector3(forward.z, 0, -forward.x);
+  // screen-right = forward × up (Y-up, right-handed). For forward=(fx,0,fz) this
+  // is (-fz, 0, fx). The old (fz,0,-fx) was negated, which inverted A/D + arrows.
+  const right = new THREE.Vector3(-forward.z, 0, forward.x);
   const move = new THREE.Vector3().addScaledVector(forward, inp.f).addScaledVector(right, inp.s);
   const moving = move.lengthSq() > 0.001;
   if (moving) move.normalize();
@@ -966,6 +1164,7 @@ window.addEventListener('keydown', e => {
   const k = e.key.toLowerCase();
   if (k === 'v') { const m = controls.cycleMode(); notify('Camera: ' + m.toUpperCase()); document.getElementById('crosshair').style.display = m === CAM.FIRST ? '' : 'none'; }
   if (k === 'c' && !inCar && area === 'city') openWardrobe();
+  if (k === 'i') toggleInteriorDebug();
   if (k === 'm') { state.monsterMode = !state.monsterMode; notify('Monster Mode ' + (state.monsterMode ? 'ON 👹' : 'off')); }
 });
 
@@ -998,7 +1197,12 @@ function animate() {
 
   // play mode
   updateCityNPCs(cityNPCs, dt, t);
-  updateTraffic(traffic, dt);
+  // braking obstacles: other traffic + the player + the parked drivable car
+  const trafficObstacles = [];
+  for (const c of traffic) trafficObstacles.push(c.g.position);
+  if (player && !inCar && area === 'city') trafficObstacles.push(player.group.position);
+  if (car && !inCar) trafficObstacles.push(car.g.position);
+  updateTraffic(traffic, dt, trafficObstacles);
   updateMixers(dt);                                  // skinned GLB animations
   for (const g of extraSpinners) g.rotation.y += dt * 0.8;   // idle-spin display models
   // spin any dealership car flagged for preview
@@ -1007,6 +1211,7 @@ function animate() {
   const busy = isUIOpen() || isSettingsOpen() || eating || hairGame;
   if (!busy) {
     if (inCar) updateCar(dt); else updatePlayer(dt, t);
+    updateVehicleCollisions(dt);
     handleInteraction();
     updateProgression(dt);
   } else {
@@ -1018,6 +1223,7 @@ function animate() {
   if (hairGame) updateHairline();
 
   updateHUD(state, locationLabel());
+  if (interiorDebug) updateInteriorDebug();
   renderer.render(scene, camera);
   controls.endFrame();
   revealOnce();

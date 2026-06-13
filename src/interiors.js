@@ -13,6 +13,7 @@ function mat(color, o = {}) {
     color: new THREE.Color(color),
     roughness: o.rough ?? 0.9, metalness: o.metal ?? 0,
     flatShading: o.flat ?? false,
+    side: o.side ?? THREE.FrontSide,
     emissive: o.emissive ? new THREE.Color(o.emissive) : new THREE.Color('#000'),
     emissiveIntensity: o.emissiveIntensity ?? 1,
   });
@@ -46,12 +47,14 @@ function buildRoom(cx, cz, w, d, floorColor, wallColor, ceilColor = '#1a1a24') {
   const colliders = [];
   const wallH = 3.4, t = 0.3;
 
-  const floor = box(w, 0.2, d, mat(floorColor, { rough: 0.95 }));
+  // Shell pieces are DoubleSided so the third-person camera never reveals the
+  // "void" by seeing through a back-facing wall from just outside the room.
+  const floor = box(w, 0.2, d, mat(floorColor, { rough: 0.95, side: THREE.DoubleSide }));
   floor.position.set(cx, -0.1, cz); group.add(floor);
-  const ceil = box(w, 0.2, d, mat(ceilColor));
+  const ceil = box(w, 0.2, d, mat(ceilColor, { side: THREE.DoubleSide }));
   ceil.position.set(cx, wallH, cz); group.add(ceil);
 
-  const wm = mat(wallColor, { rough: 0.97 });
+  const wm = mat(wallColor, { rough: 0.97, side: THREE.DoubleSide });
   const addWall = (x, z, ww, dd) => {
     const wall = box(ww, wallH, dd, wm); wall.position.set(x, wallH / 2, z); group.add(wall);
     const bb = new THREE.Box3().setFromObject(wall); colliders.push(bb);

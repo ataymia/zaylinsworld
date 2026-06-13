@@ -16,6 +16,7 @@ export class Controls {
     this.distance = 6;      // third-person distance
     this.pointerLocked = false;
     this.justPressed = new Set();
+    this.bounds = null;     // optional {min,max} AABB to keep the camera inside (interiors)
     this._bind();
   }
 
@@ -60,6 +61,28 @@ export class Controls {
     return this.mode;
   }
 
+  // Reset the orbit to a known-good third-person pose (used when entering an
+  // interior so the camera never starts outside the room or facing a wall).
+  resetView(yaw = 0, pitch = 0.22, distance = 5) {
+    this.yaw = yaw; this.pitch = pitch; this.distance = distance;
+  }
+
+  // Constrain a desired camera position to the room AABB (with an inset) so the
+  // third-person camera can't slip through interior walls and reveal the void.
+  _clampToBounds(p) {
+    const b = this.bounds; if (!b) return;
+    const inset = 0.45;
+    p.x = Math.max(b.min.x + inset, Math.min(b.max.x - inset, p.x));
+    p.z = Math.max(b.min.z + inset, Math.min(b.max.z - inset, p.z));
+    p.y = Math.max(b.min.y + 0.4, Math.min(b.max.y - 0.3, p.y));
+  }
+
+  // Snap the camera to its target pose immediately (no lerp) — avoids a frame of
+  // void when teleporting between city and interiors.
+  snapTo(targetPos, eyeHeight) {
+    this.update(targetPos, eyeHeight, 999);
+  }
+
   // movement input vector in camera space (x=strafe, z=forward)
   moveInput() {
     let f = 0, s = 0;
@@ -91,7 +114,9 @@ export class Controls {
       desired.copy(targetPos)
         .add(offset.multiplyScalar(dist));
       desired.y = Math.max(0.6, targetPos.y + eyeHeight * 0.7 + this.pitch * 3 + dist * 0.35);
-      this.camera.position.lerp(desired, Math.min(1, dt * 10));
+      this._clampToBounds(desired);
+      const a = Math.min(1, dt * 10);
+      this.camera.position.lerp(desired, a);
       const look = targetPos.clone(); look.y += eyeHeight * 0.6;
       this.camera.lookAt(look);
     }
