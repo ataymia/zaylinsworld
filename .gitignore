@@ -13,3 +13,8 @@ dist/
 # local env
 .env
 .env.local
+
+# raw asset source archives + high-res originals (extracted/processed into
+# public/assets/; keep the lean web copies in git, not the multi-100MB sources)
+/*.zip
+vendor/source-textures/

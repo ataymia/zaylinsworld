@@ -1,0 +1,30 @@
+{
+  "$comment": "PBR material library (CC0, ambientCG) for jewelry/chain generation. Each entry points to web-downscaled 1K maps under public/assets/textures/materials/<id>/. Maps follow three.js MeshStandardMaterial slots: color (sRGB), roughness, metalness, normal (GL convention), height (displacement). marble has no metalness map (dielectric). Use `tileRepeat` as a starting UV repeat for small jewelry parts. These are wired by future chain/jewelry generation (currently on hold).",
+  "basePath": "textures/materials/",
+  "materials": {
+    "metal_gold": {
+      "label": "Polished Gold",
+      "source": "ambientCG Metal048A",
+      "maps": { "color": "metal_gold/color.png", "roughness": "metal_gold/roughness.png", "metalness": "metal_gold/metalness.png", "normal": "metal_gold/normal.png", "height": "metal_gold/height.png" },
+      "tint": "#ffe49d", "metalness": 1.0, "roughness": 0.25, "tileRepeat": 2
+    },
+    "metal_silver": {
+      "label": "Silver / White Gold",
+      "source": "ambientCG Metal049A",
+      "maps": { "color": "metal_silver/color.png", "roughness": "metal_silver/roughness.png", "metalness": "metal_silver/metalness.png", "normal": "metal_silver/normal.png", "height": "metal_silver/height.png" },
+      "tint": "#fdfbf6", "metalness": 1.0, "roughness": 0.18, "tileRepeat": 2
+    },
+    "metal_brass": {
+      "label": "Brushed Brass",
+      "source": "ambientCG Metal007",
+      "maps": { "color": "metal_brass/color.png", "roughness": "metal_brass/roughness.png", "metalness": "metal_brass/metalness.png", "normal": "metal_brass/normal.png", "height": "metal_brass/height.png" },
+      "tint": "#c69850", "metalness": 1.0, "roughness": 0.35, "tileRepeat": 2
+    },
+    "marble_white": {
+      "label": "White Marble (display)",
+      "source": "ambientCG Marble021",
+      "maps": { "color": "marble_white/color.png", "roughness": "marble_white/roughness.png", "normal": "marble_white/normal.png", "height": "marble_white/height.png" },
+      "tint": "#f5f3f2", "metalness": 0.0, "roughness": 0.3, "tileRepeat": 1
+    }
+  }
+}

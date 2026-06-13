@@ -17,28 +17,29 @@ import { join, basename } from 'node:path';
 const ROOT = process.cwd();
 const MODELS = join(ROOT, 'public/assets/models');
 
-// kitId → folder (served at assets/models/<rel>)
+// kitId → { dir (served at assets/models/<rel>), ext }
 const KITS = {
-  'urban-kit':  'buildings/urban-kit',
-  'mini-kit':   'characters/mini-kit',
+  'urban-kit': { dir: 'buildings/urban-kit',  ext: '.gltf' },
+  'mini-kit':  { dir: 'characters/mini-kit',  ext: '.gltf' },
+  'car-kit':   { dir: 'vehicles/car-kit',     ext: '.glb'  },
 };
 
-function listGltf(absDir) {
+function listModels(absDir, ext) {
   if (!existsSync(absDir)) return [];
   return readdirSync(absDir)
-    .filter((f) => f.toLowerCase().endsWith('.gltf'))
+    .filter((f) => f.toLowerCase().endsWith(ext))
     .sort();
 }
 
 const kits = {};
-for (const [id, rel] of Object.entries(KITS)) {
+for (const [id, { dir: rel, ext }] of Object.entries(KITS)) {
   const absDir = join(MODELS, rel);
-  const files = listGltf(absDir);
+  const files = listModels(absDir, ext);
   kits[id] = {
     dir: `assets/models/${rel}`,
     count: files.length,
     models: files.map((f) => ({
-      name: basename(f, '.gltf'),
+      name: basename(f, ext),
       file: f,
       url: `assets/models/${rel}/${f}`,
     })),

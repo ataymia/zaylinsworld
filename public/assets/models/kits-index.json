@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-13T20:22:54.328Z",
+  "generatedAt": "2026-06-13T21:23:15.181Z",
   "kits": {
     "urban-kit": {
       "dir": "assets/models/buildings/urban-kit",
@@ -835,6 +835,262 @@
           "name": "Superhero_Male_FullBody",
           "file": "Superhero_Male_FullBody.gltf",
           "url": "assets/models/characters/mini-kit/Superhero_Male_FullBody.gltf"
+        }
+      ]
+    },
+    "car-kit": {
+      "dir": "assets/models/vehicles/car-kit",
+      "count": 50,
+      "models": [
+        {
+          "name": "ambulance",
+          "file": "ambulance.glb",
+          "url": "assets/models/vehicles/car-kit/ambulance.glb"
+        },
+        {
+          "name": "box",
+          "file": "box.glb",
+          "url": "assets/models/vehicles/car-kit/box.glb"
+        },
+        {
+          "name": "cone-flat",
+          "file": "cone-flat.glb",
+          "url": "assets/models/vehicles/car-kit/cone-flat.glb"
+        },
+        {
+          "name": "cone",
+          "file": "cone.glb",
+          "url": "assets/models/vehicles/car-kit/cone.glb"
+        },
+        {
+          "name": "debris-bolt",
+          "file": "debris-bolt.glb",
+          "url": "assets/models/vehicles/car-kit/debris-bolt.glb"
+        },
+        {
+          "name": "debris-bumper",
+          "file": "debris-bumper.glb",
+          "url": "assets/models/vehicles/car-kit/debris-bumper.glb"
+        },
+        {
+          "name": "debris-door-window",
+          "file": "debris-door-window.glb",
+          "url": "assets/models/vehicles/car-kit/debris-door-window.glb"
+        },
+        {
+          "name": "debris-door",
+          "file": "debris-door.glb",
+          "url": "assets/models/vehicles/car-kit/debris-door.glb"
+        },
+        {
+          "name": "debris-drivetrain-axle",
+          "file": "debris-drivetrain-axle.glb",
+          "url": "assets/models/vehicles/car-kit/debris-drivetrain-axle.glb"
+        },
+        {
+          "name": "debris-drivetrain",
+          "file": "debris-drivetrain.glb",
+          "url": "assets/models/vehicles/car-kit/debris-drivetrain.glb"
+        },
+        {
+          "name": "debris-nut",
+          "file": "debris-nut.glb",
+          "url": "assets/models/vehicles/car-kit/debris-nut.glb"
+        },
+        {
+          "name": "debris-plate-a",
+          "file": "debris-plate-a.glb",
+          "url": "assets/models/vehicles/car-kit/debris-plate-a.glb"
+        },
+        {
+          "name": "debris-plate-b",
+          "file": "debris-plate-b.glb",
+          "url": "assets/models/vehicles/car-kit/debris-plate-b.glb"
+        },
+        {
+          "name": "debris-plate-small-a",
+          "file": "debris-plate-small-a.glb",
+          "url": "assets/models/vehicles/car-kit/debris-plate-small-a.glb"
+        },
+        {
+          "name": "debris-plate-small-b",
+          "file": "debris-plate-small-b.glb",
+          "url": "assets/models/vehicles/car-kit/debris-plate-small-b.glb"
+        },
+        {
+          "name": "debris-spoiler-a",
+          "file": "debris-spoiler-a.glb",
+          "url": "assets/models/vehicles/car-kit/debris-spoiler-a.glb"
+        },
+        {
+          "name": "debris-spoiler-b",
+          "file": "debris-spoiler-b.glb",
+          "url": "assets/models/vehicles/car-kit/debris-spoiler-b.glb"
+        },
+        {
+          "name": "debris-tire",
+          "file": "debris-tire.glb",
+          "url": "assets/models/vehicles/car-kit/debris-tire.glb"
+        },
+        {
+          "name": "delivery-flat",
+          "file": "delivery-flat.glb",
+          "url": "assets/models/vehicles/car-kit/delivery-flat.glb"
+        },
+        {
+          "name": "delivery",
+          "file": "delivery.glb",
+          "url": "assets/models/vehicles/car-kit/delivery.glb"
+        },
+        {
+          "name": "firetruck",
+          "file": "firetruck.glb",
+          "url": "assets/models/vehicles/car-kit/firetruck.glb"
+        },
+        {
+          "name": "garbage-truck",
+          "file": "garbage-truck.glb",
+          "url": "assets/models/vehicles/car-kit/garbage-truck.glb"
+        },
+        {
+          "name": "hatchback-sports",
+          "file": "hatchback-sports.glb",
+          "url": "assets/models/vehicles/car-kit/hatchback-sports.glb"
+        },
+        {
+          "name": "kart-oobi",
+          "file": "kart-oobi.glb",
+          "url": "assets/models/vehicles/car-kit/kart-oobi.glb"
+        },
+        {
+          "name": "kart-oodi",
+          "file": "kart-oodi.glb",
+          "url": "assets/models/vehicles/car-kit/kart-oodi.glb"
+        },
+        {
+          "name": "kart-ooli",
+          "file": "kart-ooli.glb",
+          "url": "assets/models/vehicles/car-kit/kart-ooli.glb"
+        },
+        {
+          "name": "kart-oopi",
+          "file": "kart-oopi.glb",
+          "url": "assets/models/vehicles/car-kit/kart-oopi.glb"
+        },
+        {
+          "name": "kart-oozi",
+          "file": "kart-oozi.glb",
+          "url": "assets/models/vehicles/car-kit/kart-oozi.glb"
+        },
+        {
+          "name": "police",
+          "file": "police.glb",
+          "url": "assets/models/vehicles/car-kit/police.glb"
+        },
+        {
+          "name": "race-future",
+          "file": "race-future.glb",
+          "url": "assets/models/vehicles/car-kit/race-future.glb"
+        },
+        {
+          "name": "race",
+          "file": "race.glb",
+          "url": "assets/models/vehicles/car-kit/race.glb"
+        },
+        {
+          "name": "sedan-sports",
+          "file": "sedan-sports.glb",
+          "url": "assets/models/vehicles/car-kit/sedan-sports.glb"
+        },
+        {
+          "name": "sedan",
+          "file": "sedan.glb",
+          "url": "assets/models/vehicles/car-kit/sedan.glb"
+        },
+        {
+          "name": "suv-luxury",
+          "file": "suv-luxury.glb",
+          "url": "assets/models/vehicles/car-kit/suv-luxury.glb"
+        },
+        {
+          "name": "suv",
+          "file": "suv.glb",
+          "url": "assets/models/vehicles/car-kit/suv.glb"
+        },
+        {
+          "name": "taxi",
+          "file": "taxi.glb",
+          "url": "assets/models/vehicles/car-kit/taxi.glb"
+        },
+        {
+          "name": "tractor-police",
+          "file": "tractor-police.glb",
+          "url": "assets/models/vehicles/car-kit/tractor-police.glb"
+        },
+        {
+          "name": "tractor-shovel",
+          "file": "tractor-shovel.glb",
+          "url": "assets/models/vehicles/car-kit/tractor-shovel.glb"
+        },
+        {
+          "name": "tractor",
+          "file": "tractor.glb",
+          "url": "assets/models/vehicles/car-kit/tractor.glb"
+        },
+        {
+          "name": "truck-flat",
+          "file": "truck-flat.glb",
+          "url": "assets/models/vehicles/car-kit/truck-flat.glb"
+        },
+        {
+          "name": "truck",
+          "file": "truck.glb",
+          "url": "assets/models/vehicles/car-kit/truck.glb"
+        },
+        {
+          "name": "van",
+          "file": "van.glb",
+          "url": "assets/models/vehicles/car-kit/van.glb"
+        },
+        {
+          "name": "wheel-dark",
+          "file": "wheel-dark.glb",
+          "url": "assets/models/vehicles/car-kit/wheel-dark.glb"
+        },
+        {
+          "name": "wheel-default",
+          "file": "wheel-default.glb",
+          "url": "assets/models/vehicles/car-kit/wheel-default.glb"
+        },
+        {
+          "name": "wheel-racing",
+          "file": "wheel-racing.glb",
+          "url": "assets/models/vehicles/car-kit/wheel-racing.glb"
+        },
+        {
+          "name": "wheel-tractor-back",
+          "file": "wheel-tractor-back.glb",
+          "url": "assets/models/vehicles/car-kit/wheel-tractor-back.glb"
+        },
+        {
+          "name": "wheel-tractor-dark-back",
+          "file": "wheel-tractor-dark-back.glb",
+          "url": "assets/models/vehicles/car-kit/wheel-tractor-dark-back.glb"
+        },
+        {
+          "name": "wheel-tractor-dark-front",
+          "file": "wheel-tractor-dark-front.glb",
+          "url": "assets/models/vehicles/car-kit/wheel-tractor-dark-front.glb"
+        },
+        {
+          "name": "wheel-tractor-front",
+          "file": "wheel-tractor-front.glb",
+          "url": "assets/models/vehicles/car-kit/wheel-tractor-front.glb"
+        },
+        {
+          "name": "wheel-truck",
+          "file": "wheel-truck.glb",
+          "url": "assets/models/vehicles/car-kit/wheel-truck.glb"
         }
       ]
     }
