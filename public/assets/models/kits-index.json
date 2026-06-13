@@ -1,0 +1,842 @@
+{
+  "generatedAt": "2026-06-13T20:22:54.328Z",
+  "kits": {
+    "urban-kit": {
+      "dir": "assets/models/buildings/urban-kit",
+      "count": 155,
+      "models": [
+        {
+          "name": "Brick_90Angle_L",
+          "file": "Brick_90Angle_L.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_90Angle_L.gltf"
+        },
+        {
+          "name": "Brick_90Angle_R",
+          "file": "Brick_90Angle_R.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_90Angle_R.gltf"
+        },
+        {
+          "name": "Brick_BottomTrim",
+          "file": "Brick_BottomTrim.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_BottomTrim.gltf"
+        },
+        {
+          "name": "Brick_Column_RedBricks",
+          "file": "Brick_Column_RedBricks.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_Column_RedBricks.gltf"
+        },
+        {
+          "name": "Brick_Column_Small",
+          "file": "Brick_Column_Small.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_Column_Small.gltf"
+        },
+        {
+          "name": "Brick_Column_TrimBricks",
+          "file": "Brick_Column_TrimBricks.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_Column_TrimBricks.gltf"
+        },
+        {
+          "name": "Brick_CornerColumn_Bottom",
+          "file": "Brick_CornerColumn_Bottom.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_CornerColumn_Bottom.gltf"
+        },
+        {
+          "name": "Brick_CornerColumn_Cap",
+          "file": "Brick_CornerColumn_Cap.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_CornerColumn_Cap.gltf"
+        },
+        {
+          "name": "Brick_CornerColumn_CapShort",
+          "file": "Brick_CornerColumn_CapShort.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_CornerColumn_CapShort.gltf"
+        },
+        {
+          "name": "Brick_CornerColumn_Center",
+          "file": "Brick_CornerColumn_Center.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_CornerColumn_Center.gltf"
+        },
+        {
+          "name": "Brick_CornerColumn_Center_Half",
+          "file": "Brick_CornerColumn_Center_Half.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_CornerColumn_Center_Half.gltf"
+        },
+        {
+          "name": "Brick_CornerColumn_Top",
+          "file": "Brick_CornerColumn_Top.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_CornerColumn_Top.gltf"
+        },
+        {
+          "name": "Brick_Corner_Plain",
+          "file": "Brick_Corner_Plain.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_Corner_Plain.gltf"
+        },
+        {
+          "name": "Brick_HalfColumn_Bottom",
+          "file": "Brick_HalfColumn_Bottom.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_HalfColumn_Bottom.gltf"
+        },
+        {
+          "name": "Brick_HalfColumn_Center",
+          "file": "Brick_HalfColumn_Center.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_HalfColumn_Center.gltf"
+        },
+        {
+          "name": "Brick_HalfColumn_Top",
+          "file": "Brick_HalfColumn_Top.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_HalfColumn_Top.gltf"
+        },
+        {
+          "name": "Brick_HalfTrim",
+          "file": "Brick_HalfTrim.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_HalfTrim.gltf"
+        },
+        {
+          "name": "Brick_Inset",
+          "file": "Brick_Inset.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_Inset.gltf"
+        },
+        {
+          "name": "Brick_Inset_Window",
+          "file": "Brick_Inset_Window.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_Inset_Window.gltf"
+        },
+        {
+          "name": "Brick_Inset_Window_Curved",
+          "file": "Brick_Inset_Window_Curved.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_Inset_Window_Curved.gltf"
+        },
+        {
+          "name": "Brick_Inset_Window_Curved_Small",
+          "file": "Brick_Inset_Window_Curved_Small.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_Inset_Window_Curved_Small.gltf"
+        },
+        {
+          "name": "Brick_InteriorWall_1",
+          "file": "Brick_InteriorWall_1.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_InteriorWall_1.gltf"
+        },
+        {
+          "name": "Brick_InteriorWall_3",
+          "file": "Brick_InteriorWall_3.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_InteriorWall_3.gltf"
+        },
+        {
+          "name": "Brick_InteriorWall_4",
+          "file": "Brick_InteriorWall_4.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_InteriorWall_4.gltf"
+        },
+        {
+          "name": "Brick_Ornament_Horizontal",
+          "file": "Brick_Ornament_Horizontal.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_Ornament_Horizontal.gltf"
+        },
+        {
+          "name": "Brick_Plain_1",
+          "file": "Brick_Plain_1.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_Plain_1.gltf"
+        },
+        {
+          "name": "Brick_Plain_3",
+          "file": "Brick_Plain_3.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_Plain_3.gltf"
+        },
+        {
+          "name": "Brick_Plain_3_noWear",
+          "file": "Brick_Plain_3_noWear.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_Plain_3_noWear.gltf"
+        },
+        {
+          "name": "Brick_Plain_4",
+          "file": "Brick_Plain_4.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_Plain_4.gltf"
+        },
+        {
+          "name": "Brick_RedWhite_DoubleWindow",
+          "file": "Brick_RedWhite_DoubleWindow.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_RedWhite_DoubleWindow.gltf"
+        },
+        {
+          "name": "Brick_TopTrim",
+          "file": "Brick_TopTrim.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_TopTrim.gltf"
+        },
+        {
+          "name": "Brick_TopTrim_90Angle_L",
+          "file": "Brick_TopTrim_90Angle_L.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_TopTrim_90Angle_L.gltf"
+        },
+        {
+          "name": "Brick_TopTrim_90Angle_R",
+          "file": "Brick_TopTrim_90Angle_R.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_TopTrim_90Angle_R.gltf"
+        },
+        {
+          "name": "Brick_TopTrim_Corner",
+          "file": "Brick_TopTrim_Corner.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_TopTrim_Corner.gltf"
+        },
+        {
+          "name": "Brick_Window_CurvedDouble",
+          "file": "Brick_Window_CurvedDouble.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_Window_CurvedDouble.gltf"
+        },
+        {
+          "name": "Brick_Window_Square_Single",
+          "file": "Brick_Window_Square_Single.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_Window_Square_Single.gltf"
+        },
+        {
+          "name": "Brick_Window_Trim",
+          "file": "Brick_Window_Trim.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_Window_Trim.gltf"
+        },
+        {
+          "name": "Brick_Window_Trim_Single",
+          "file": "Brick_Window_Trim_Single.gltf",
+          "url": "assets/models/buildings/urban-kit/Brick_Window_Trim_Single.gltf"
+        },
+        {
+          "name": "Building_Large_2",
+          "file": "Building_Large_2.gltf",
+          "url": "assets/models/buildings/urban-kit/Building_Large_2.gltf"
+        },
+        {
+          "name": "Building_Medium_2_001",
+          "file": "Building_Medium_2_001.gltf",
+          "url": "assets/models/buildings/urban-kit/Building_Medium_2_001.gltf"
+        },
+        {
+          "name": "Building_Small_1",
+          "file": "Building_Small_1.gltf",
+          "url": "assets/models/buildings/urban-kit/Building_Small_1.gltf"
+        },
+        {
+          "name": "Cornice_Brick_90Angle_L",
+          "file": "Cornice_Brick_90Angle_L.gltf",
+          "url": "assets/models/buildings/urban-kit/Cornice_Brick_90Angle_L.gltf"
+        },
+        {
+          "name": "Cornice_Brick_90Angle_R",
+          "file": "Cornice_Brick_90Angle_R.gltf",
+          "url": "assets/models/buildings/urban-kit/Cornice_Brick_90Angle_R.gltf"
+        },
+        {
+          "name": "Cornice_Brick_Center",
+          "file": "Cornice_Brick_Center.gltf",
+          "url": "assets/models/buildings/urban-kit/Cornice_Brick_Center.gltf"
+        },
+        {
+          "name": "Cornice_Brick_L",
+          "file": "Cornice_Brick_L.gltf",
+          "url": "assets/models/buildings/urban-kit/Cornice_Brick_L.gltf"
+        },
+        {
+          "name": "Cornice_Brick_R",
+          "file": "Cornice_Brick_R.gltf",
+          "url": "assets/models/buildings/urban-kit/Cornice_Brick_R.gltf"
+        },
+        {
+          "name": "Cornice_Metal_90Angle_L",
+          "file": "Cornice_Metal_90Angle_L.gltf",
+          "url": "assets/models/buildings/urban-kit/Cornice_Metal_90Angle_L.gltf"
+        },
+        {
+          "name": "Cornice_Metal_90Angle_R",
+          "file": "Cornice_Metal_90Angle_R.gltf",
+          "url": "assets/models/buildings/urban-kit/Cornice_Metal_90Angle_R.gltf"
+        },
+        {
+          "name": "Cornice_Metal_Center",
+          "file": "Cornice_Metal_Center.gltf",
+          "url": "assets/models/buildings/urban-kit/Cornice_Metal_Center.gltf"
+        },
+        {
+          "name": "Cornice_Metal_L",
+          "file": "Cornice_Metal_L.gltf",
+          "url": "assets/models/buildings/urban-kit/Cornice_Metal_L.gltf"
+        },
+        {
+          "name": "Cornice_Metal_R",
+          "file": "Cornice_Metal_R.gltf",
+          "url": "assets/models/buildings/urban-kit/Cornice_Metal_R.gltf"
+        },
+        {
+          "name": "Cornice_Trim_90Angle_L",
+          "file": "Cornice_Trim_90Angle_L.gltf",
+          "url": "assets/models/buildings/urban-kit/Cornice_Trim_90Angle_L.gltf"
+        },
+        {
+          "name": "Cornice_Trim_90Angle_R",
+          "file": "Cornice_Trim_90Angle_R.gltf",
+          "url": "assets/models/buildings/urban-kit/Cornice_Trim_90Angle_R.gltf"
+        },
+        {
+          "name": "Cornice_Trim_Center",
+          "file": "Cornice_Trim_Center.gltf",
+          "url": "assets/models/buildings/urban-kit/Cornice_Trim_Center.gltf"
+        },
+        {
+          "name": "Cornice_Trim_L",
+          "file": "Cornice_Trim_L.gltf",
+          "url": "assets/models/buildings/urban-kit/Cornice_Trim_L.gltf"
+        },
+        {
+          "name": "Cornice_Trim_R",
+          "file": "Cornice_Trim_R.gltf",
+          "url": "assets/models/buildings/urban-kit/Cornice_Trim_R.gltf"
+        },
+        {
+          "name": "Decal_ArrowForwardLeft",
+          "file": "Decal_ArrowForwardLeft.gltf",
+          "url": "assets/models/buildings/urban-kit/Decal_ArrowForwardLeft.gltf"
+        },
+        {
+          "name": "Decal_ArrowForwardRight",
+          "file": "Decal_ArrowForwardRight.gltf",
+          "url": "assets/models/buildings/urban-kit/Decal_ArrowForwardRight.gltf"
+        },
+        {
+          "name": "Decal_ArrowStraight",
+          "file": "Decal_ArrowStraight.gltf",
+          "url": "assets/models/buildings/urban-kit/Decal_ArrowStraight.gltf"
+        },
+        {
+          "name": "Decal_ArrowTurnLeft",
+          "file": "Decal_ArrowTurnLeft.gltf",
+          "url": "assets/models/buildings/urban-kit/Decal_ArrowTurnLeft.gltf"
+        },
+        {
+          "name": "Decal_ArrowTurnRight",
+          "file": "Decal_ArrowTurnRight.gltf",
+          "url": "assets/models/buildings/urban-kit/Decal_ArrowTurnRight.gltf"
+        },
+        {
+          "name": "Decal_Bikelane",
+          "file": "Decal_Bikelane.gltf",
+          "url": "assets/models/buildings/urban-kit/Decal_Bikelane.gltf"
+        },
+        {
+          "name": "Decal_BrokenLine_Straight",
+          "file": "Decal_BrokenLine_Straight.gltf",
+          "url": "assets/models/buildings/urban-kit/Decal_BrokenLine_Straight.gltf"
+        },
+        {
+          "name": "Decal_Crosswalk",
+          "file": "Decal_Crosswalk.gltf",
+          "url": "assets/models/buildings/urban-kit/Decal_Crosswalk.gltf"
+        },
+        {
+          "name": "Decal_Crosswalk_Wide",
+          "file": "Decal_Crosswalk_Wide.gltf",
+          "url": "assets/models/buildings/urban-kit/Decal_Crosswalk_Wide.gltf"
+        },
+        {
+          "name": "Decal_Curve_2Lane_Stripe",
+          "file": "Decal_Curve_2Lane_Stripe.gltf",
+          "url": "assets/models/buildings/urban-kit/Decal_Curve_2Lane_Stripe.gltf"
+        },
+        {
+          "name": "Decal_Curve_4LaneShort",
+          "file": "Decal_Curve_4LaneShort.gltf",
+          "url": "assets/models/buildings/urban-kit/Decal_Curve_4LaneShort.gltf"
+        },
+        {
+          "name": "Decal_Curve_4LaneShort_DoubleYellow",
+          "file": "Decal_Curve_4LaneShort_DoubleYellow.gltf",
+          "url": "assets/models/buildings/urban-kit/Decal_Curve_4LaneShort_DoubleYellow.gltf"
+        },
+        {
+          "name": "Decal_Curve_4LaneShort_Stripe",
+          "file": "Decal_Curve_4LaneShort_Stripe.gltf",
+          "url": "assets/models/buildings/urban-kit/Decal_Curve_4LaneShort_Stripe.gltf"
+        },
+        {
+          "name": "Decal_DoubleYellow_Straight",
+          "file": "Decal_DoubleYellow_Straight.gltf",
+          "url": "assets/models/buildings/urban-kit/Decal_DoubleYellow_Straight.gltf"
+        },
+        {
+          "name": "Decal_Only",
+          "file": "Decal_Only.gltf",
+          "url": "assets/models/buildings/urban-kit/Decal_Only.gltf"
+        },
+        {
+          "name": "Decal_Slow",
+          "file": "Decal_Slow.gltf",
+          "url": "assets/models/buildings/urban-kit/Decal_Slow.gltf"
+        },
+        {
+          "name": "Decal_Stop",
+          "file": "Decal_Stop.gltf",
+          "url": "assets/models/buildings/urban-kit/Decal_Stop.gltf"
+        },
+        {
+          "name": "DoorFrame_Metal_Single",
+          "file": "DoorFrame_Metal_Single.gltf",
+          "url": "assets/models/buildings/urban-kit/DoorFrame_Metal_Single.gltf"
+        },
+        {
+          "name": "DoorFrame_Trim",
+          "file": "DoorFrame_Trim.gltf",
+          "url": "assets/models/buildings/urban-kit/DoorFrame_Trim.gltf"
+        },
+        {
+          "name": "DoorFrame_Wooden",
+          "file": "DoorFrame_Wooden.gltf",
+          "url": "assets/models/buildings/urban-kit/DoorFrame_Wooden.gltf"
+        },
+        {
+          "name": "Door_1",
+          "file": "Door_1.gltf",
+          "url": "assets/models/buildings/urban-kit/Door_1.gltf"
+        },
+        {
+          "name": "Door_2",
+          "file": "Door_2.gltf",
+          "url": "assets/models/buildings/urban-kit/Door_2.gltf"
+        },
+        {
+          "name": "Door_3",
+          "file": "Door_3.gltf",
+          "url": "assets/models/buildings/urban-kit/Door_3.gltf"
+        },
+        {
+          "name": "Entrance_Concrete_2x1",
+          "file": "Entrance_Concrete_2x1.gltf",
+          "url": "assets/models/buildings/urban-kit/Entrance_Concrete_2x1.gltf"
+        },
+        {
+          "name": "Entrance_Concrete_2x2",
+          "file": "Entrance_Concrete_2x2.gltf",
+          "url": "assets/models/buildings/urban-kit/Entrance_Concrete_2x2.gltf"
+        },
+        {
+          "name": "Floor_2x2",
+          "file": "Floor_2x2.gltf",
+          "url": "assets/models/buildings/urban-kit/Floor_2x2.gltf"
+        },
+        {
+          "name": "Floor_4x4",
+          "file": "Floor_4x4.gltf",
+          "url": "assets/models/buildings/urban-kit/Floor_4x4.gltf"
+        },
+        {
+          "name": "Floor_Inset",
+          "file": "Floor_Inset.gltf",
+          "url": "assets/models/buildings/urban-kit/Floor_Inset.gltf"
+        },
+        {
+          "name": "Metal_Column_Bottom",
+          "file": "Metal_Column_Bottom.gltf",
+          "url": "assets/models/buildings/urban-kit/Metal_Column_Bottom.gltf"
+        },
+        {
+          "name": "Metal_Column_Center",
+          "file": "Metal_Column_Center.gltf",
+          "url": "assets/models/buildings/urban-kit/Metal_Column_Center.gltf"
+        },
+        {
+          "name": "Metal_Column_Small_Bottom",
+          "file": "Metal_Column_Small_Bottom.gltf",
+          "url": "assets/models/buildings/urban-kit/Metal_Column_Small_Bottom.gltf"
+        },
+        {
+          "name": "Metal_Column_Small_Center",
+          "file": "Metal_Column_Small_Center.gltf",
+          "url": "assets/models/buildings/urban-kit/Metal_Column_Small_Center.gltf"
+        },
+        {
+          "name": "Metal_Column_Small_Top",
+          "file": "Metal_Column_Small_Top.gltf",
+          "url": "assets/models/buildings/urban-kit/Metal_Column_Small_Top.gltf"
+        },
+        {
+          "name": "Metal_Column_Top",
+          "file": "Metal_Column_Top.gltf",
+          "url": "assets/models/buildings/urban-kit/Metal_Column_Top.gltf"
+        },
+        {
+          "name": "Metal_FirstFloor_Wall",
+          "file": "Metal_FirstFloor_Wall.gltf",
+          "url": "assets/models/buildings/urban-kit/Metal_FirstFloor_Wall.gltf"
+        },
+        {
+          "name": "Metal_FirstFloor_Wall_1",
+          "file": "Metal_FirstFloor_Wall_1.gltf",
+          "url": "assets/models/buildings/urban-kit/Metal_FirstFloor_Wall_1.gltf"
+        },
+        {
+          "name": "Metal_FirstFloor_Window",
+          "file": "Metal_FirstFloor_Window.gltf",
+          "url": "assets/models/buildings/urban-kit/Metal_FirstFloor_Window.gltf"
+        },
+        {
+          "name": "Metal_FullWindow",
+          "file": "Metal_FullWindow.gltf",
+          "url": "assets/models/buildings/urban-kit/Metal_FullWindow.gltf"
+        },
+        {
+          "name": "Metal_Plain_1",
+          "file": "Metal_Plain_1.gltf",
+          "url": "assets/models/buildings/urban-kit/Metal_Plain_1.gltf"
+        },
+        {
+          "name": "Metal_Plain_3",
+          "file": "Metal_Plain_3.gltf",
+          "url": "assets/models/buildings/urban-kit/Metal_Plain_3.gltf"
+        },
+        {
+          "name": "Metal_Window",
+          "file": "Metal_Window.gltf",
+          "url": "assets/models/buildings/urban-kit/Metal_Window.gltf"
+        },
+        {
+          "name": "Metal_Window_Half",
+          "file": "Metal_Window_Half.gltf",
+          "url": "assets/models/buildings/urban-kit/Metal_Window_Half.gltf"
+        },
+        {
+          "name": "Prop_ACUnit",
+          "file": "Prop_ACUnit.gltf",
+          "url": "assets/models/buildings/urban-kit/Prop_ACUnit.gltf"
+        },
+        {
+          "name": "Prop_Bollard",
+          "file": "Prop_Bollard.gltf",
+          "url": "assets/models/buildings/urban-kit/Prop_Bollard.gltf"
+        },
+        {
+          "name": "Prop_Drain",
+          "file": "Prop_Drain.gltf",
+          "url": "assets/models/buildings/urban-kit/Prop_Drain.gltf"
+        },
+        {
+          "name": "Prop_ManholeCover",
+          "file": "Prop_ManholeCover.gltf",
+          "url": "assets/models/buildings/urban-kit/Prop_ManholeCover.gltf"
+        },
+        {
+          "name": "Prop_Planter_Single",
+          "file": "Prop_Planter_Single.gltf",
+          "url": "assets/models/buildings/urban-kit/Prop_Planter_Single.gltf"
+        },
+        {
+          "name": "Roof_2x2",
+          "file": "Roof_2x2.gltf",
+          "url": "assets/models/buildings/urban-kit/Roof_2x2.gltf"
+        },
+        {
+          "name": "Roof_2x2_90Angle_Center",
+          "file": "Roof_2x2_90Angle_Center.gltf",
+          "url": "assets/models/buildings/urban-kit/Roof_2x2_90Angle_Center.gltf"
+        },
+        {
+          "name": "Roof_2x2_90Angle_L",
+          "file": "Roof_2x2_90Angle_L.gltf",
+          "url": "assets/models/buildings/urban-kit/Roof_2x2_90Angle_L.gltf"
+        },
+        {
+          "name": "Roof_2x2_90Angle_R",
+          "file": "Roof_2x2_90Angle_R.gltf",
+          "url": "assets/models/buildings/urban-kit/Roof_2x2_90Angle_R.gltf"
+        },
+        {
+          "name": "Roof_4x4",
+          "file": "Roof_4x4.gltf",
+          "url": "assets/models/buildings/urban-kit/Roof_4x4.gltf"
+        },
+        {
+          "name": "Roof_SlateCornice_Center",
+          "file": "Roof_SlateCornice_Center.gltf",
+          "url": "assets/models/buildings/urban-kit/Roof_SlateCornice_Center.gltf"
+        },
+        {
+          "name": "Roof_SlateCornice_Corner",
+          "file": "Roof_SlateCornice_Corner.gltf",
+          "url": "assets/models/buildings/urban-kit/Roof_SlateCornice_Corner.gltf"
+        },
+        {
+          "name": "Roof_SlateCornice_InnerCorner",
+          "file": "Roof_SlateCornice_InnerCorner.gltf",
+          "url": "assets/models/buildings/urban-kit/Roof_SlateCornice_InnerCorner.gltf"
+        },
+        {
+          "name": "Roof_SlateCornice_Window_1",
+          "file": "Roof_SlateCornice_Window_1.gltf",
+          "url": "assets/models/buildings/urban-kit/Roof_SlateCornice_Window_1.gltf"
+        },
+        {
+          "name": "Roof_Slate_Center",
+          "file": "Roof_Slate_Center.gltf",
+          "url": "assets/models/buildings/urban-kit/Roof_Slate_Center.gltf"
+        },
+        {
+          "name": "Roof_Slate_Corner",
+          "file": "Roof_Slate_Corner.gltf",
+          "url": "assets/models/buildings/urban-kit/Roof_Slate_Corner.gltf"
+        },
+        {
+          "name": "Roof_Slate_InnerCorner",
+          "file": "Roof_Slate_InnerCorner.gltf",
+          "url": "assets/models/buildings/urban-kit/Roof_Slate_InnerCorner.gltf"
+        },
+        {
+          "name": "Roof_Slate_Window_1",
+          "file": "Roof_Slate_Window_1.gltf",
+          "url": "assets/models/buildings/urban-kit/Roof_Slate_Window_1.gltf"
+        },
+        {
+          "name": "Sidewalk_Corner_Flat_3m",
+          "file": "Sidewalk_Corner_Flat_3m.gltf",
+          "url": "assets/models/buildings/urban-kit/Sidewalk_Corner_Flat_3m.gltf"
+        },
+        {
+          "name": "Sidewalk_Corner_Flat_3m_Stripe",
+          "file": "Sidewalk_Corner_Flat_3m_Stripe.gltf",
+          "url": "assets/models/buildings/urban-kit/Sidewalk_Corner_Flat_3m_Stripe.gltf"
+        },
+        {
+          "name": "Sidewalk_Corner_Round_3m",
+          "file": "Sidewalk_Corner_Round_3m.gltf",
+          "url": "assets/models/buildings/urban-kit/Sidewalk_Corner_Round_3m.gltf"
+        },
+        {
+          "name": "Sidewalk_Corner_Round_3m_Stripe",
+          "file": "Sidewalk_Corner_Round_3m_Stripe.gltf",
+          "url": "assets/models/buildings/urban-kit/Sidewalk_Corner_Round_3m_Stripe.gltf"
+        },
+        {
+          "name": "Sidewalk_NoCurb_3m",
+          "file": "Sidewalk_NoCurb_3m.gltf",
+          "url": "assets/models/buildings/urban-kit/Sidewalk_NoCurb_3m.gltf"
+        },
+        {
+          "name": "Sidewalk_Planter",
+          "file": "Sidewalk_Planter.gltf",
+          "url": "assets/models/buildings/urban-kit/Sidewalk_Planter.gltf"
+        },
+        {
+          "name": "Sidewalk_Straight_3m",
+          "file": "Sidewalk_Straight_3m.gltf",
+          "url": "assets/models/buildings/urban-kit/Sidewalk_Straight_3m.gltf"
+        },
+        {
+          "name": "Sidewalk_Straight_3m_Stripe",
+          "file": "Sidewalk_Straight_3m_Stripe.gltf",
+          "url": "assets/models/buildings/urban-kit/Sidewalk_Straight_3m_Stripe.gltf"
+        },
+        {
+          "name": "Stairs_Entrance_Concrete",
+          "file": "Stairs_Entrance_Concrete.gltf",
+          "url": "assets/models/buildings/urban-kit/Stairs_Entrance_Concrete.gltf"
+        },
+        {
+          "name": "Stairs_Rails_Metal",
+          "file": "Stairs_Rails_Metal.gltf",
+          "url": "assets/models/buildings/urban-kit/Stairs_Rails_Metal.gltf"
+        },
+        {
+          "name": "Stairs_Rails_Metal_Straight_1",
+          "file": "Stairs_Rails_Metal_Straight_1.gltf",
+          "url": "assets/models/buildings/urban-kit/Stairs_Rails_Metal_Straight_1.gltf"
+        },
+        {
+          "name": "Stairs_Rails_Metal_Straight_2",
+          "file": "Stairs_Rails_Metal_Straight_2.gltf",
+          "url": "assets/models/buildings/urban-kit/Stairs_Rails_Metal_Straight_2.gltf"
+        },
+        {
+          "name": "Street_2Lane",
+          "file": "Street_2Lane.gltf",
+          "url": "assets/models/buildings/urban-kit/Street_2Lane.gltf"
+        },
+        {
+          "name": "Street_2Lane_noSidewalk",
+          "file": "Street_2Lane_noSidewalk.gltf",
+          "url": "assets/models/buildings/urban-kit/Street_2Lane_noSidewalk.gltf"
+        },
+        {
+          "name": "Street_4Lane",
+          "file": "Street_4Lane.gltf",
+          "url": "assets/models/buildings/urban-kit/Street_4Lane.gltf"
+        },
+        {
+          "name": "Street_4Lane_noSidewalk",
+          "file": "Street_4Lane_noSidewalk.gltf",
+          "url": "assets/models/buildings/urban-kit/Street_4Lane_noSidewalk.gltf"
+        },
+        {
+          "name": "Street_4WayIntersection",
+          "file": "Street_4WayIntersection.gltf",
+          "url": "assets/models/buildings/urban-kit/Street_4WayIntersection.gltf"
+        },
+        {
+          "name": "Street_Asphalt_6x6",
+          "file": "Street_Asphalt_6x6.gltf",
+          "url": "assets/models/buildings/urban-kit/Street_Asphalt_6x6.gltf"
+        },
+        {
+          "name": "Street_Asphalt_9x9",
+          "file": "Street_Asphalt_9x9.gltf",
+          "url": "assets/models/buildings/urban-kit/Street_Asphalt_9x9.gltf"
+        },
+        {
+          "name": "Street_Asphalt_Curve_2Lane - Copy - Copy",
+          "file": "Street_Asphalt_Curve_2Lane - Copy - Copy.gltf",
+          "url": "assets/models/buildings/urban-kit/Street_Asphalt_Curve_2Lane - Copy - Copy.gltf"
+        },
+        {
+          "name": "Street_Asphalt_Curve_2Lane - Copy",
+          "file": "Street_Asphalt_Curve_2Lane - Copy.gltf",
+          "url": "assets/models/buildings/urban-kit/Street_Asphalt_Curve_2Lane - Copy.gltf"
+        },
+        {
+          "name": "Street_Asphalt_Curve_2Lane",
+          "file": "Street_Asphalt_Curve_2Lane.gltf",
+          "url": "assets/models/buildings/urban-kit/Street_Asphalt_Curve_2Lane.gltf"
+        },
+        {
+          "name": "Street_Asphalt_Curve_4Lane_Short",
+          "file": "Street_Asphalt_Curve_4Lane_Short.gltf",
+          "url": "assets/models/buildings/urban-kit/Street_Asphalt_Curve_4Lane_Short.gltf"
+        },
+        {
+          "name": "Street_Curve_2Lane",
+          "file": "Street_Curve_2Lane.gltf",
+          "url": "assets/models/buildings/urban-kit/Street_Curve_2Lane.gltf"
+        },
+        {
+          "name": "Street_Curve_2Lane_Curb",
+          "file": "Street_Curve_2Lane_Curb.gltf",
+          "url": "assets/models/buildings/urban-kit/Street_Curve_2Lane_Curb.gltf"
+        },
+        {
+          "name": "Street_Curve_4LaneShort",
+          "file": "Street_Curve_4LaneShort.gltf",
+          "url": "assets/models/buildings/urban-kit/Street_Curve_4LaneShort.gltf"
+        },
+        {
+          "name": "Street_Curve_4Lane_Short_Curb",
+          "file": "Street_Curve_4Lane_Short_Curb.gltf",
+          "url": "assets/models/buildings/urban-kit/Street_Curve_4Lane_Short_Curb.gltf"
+        },
+        {
+          "name": "Street_TIntersection",
+          "file": "Street_TIntersection.gltf",
+          "url": "assets/models/buildings/urban-kit/Street_TIntersection.gltf"
+        },
+        {
+          "name": "Trim_90Angle_TopCover",
+          "file": "Trim_90Angle_TopCover.gltf",
+          "url": "assets/models/buildings/urban-kit/Trim_90Angle_TopCover.gltf"
+        },
+        {
+          "name": "Trim_Column_Bottom",
+          "file": "Trim_Column_Bottom.gltf",
+          "url": "assets/models/buildings/urban-kit/Trim_Column_Bottom.gltf"
+        },
+        {
+          "name": "Trim_Column_Center",
+          "file": "Trim_Column_Center.gltf",
+          "url": "assets/models/buildings/urban-kit/Trim_Column_Center.gltf"
+        },
+        {
+          "name": "Trim_Column_Top",
+          "file": "Trim_Column_Top.gltf",
+          "url": "assets/models/buildings/urban-kit/Trim_Column_Top.gltf"
+        },
+        {
+          "name": "Trim_Corner",
+          "file": "Trim_Corner.gltf",
+          "url": "assets/models/buildings/urban-kit/Trim_Corner.gltf"
+        },
+        {
+          "name": "Trim_FirstFloor_Wall",
+          "file": "Trim_FirstFloor_Wall.gltf",
+          "url": "assets/models/buildings/urban-kit/Trim_FirstFloor_Wall.gltf"
+        },
+        {
+          "name": "Trim_FirstFloor_Window_001",
+          "file": "Trim_FirstFloor_Window_001.gltf",
+          "url": "assets/models/buildings/urban-kit/Trim_FirstFloor_Window_001.gltf"
+        },
+        {
+          "name": "Trim_FirstFloor_Window_Columns",
+          "file": "Trim_FirstFloor_Window_Columns.gltf",
+          "url": "assets/models/buildings/urban-kit/Trim_FirstFloor_Window_Columns.gltf"
+        },
+        {
+          "name": "Trim_Plain_3",
+          "file": "Trim_Plain_3.gltf",
+          "url": "assets/models/buildings/urban-kit/Trim_Plain_3.gltf"
+        },
+        {
+          "name": "Trim_Wall_Guard",
+          "file": "Trim_Wall_Guard.gltf",
+          "url": "assets/models/buildings/urban-kit/Trim_Wall_Guard.gltf"
+        },
+        {
+          "name": "Trim_Window",
+          "file": "Trim_Window.gltf",
+          "url": "assets/models/buildings/urban-kit/Trim_Window.gltf"
+        }
+      ]
+    },
+    "mini-kit": {
+      "dir": "assets/models/characters/mini-kit",
+      "count": 10,
+      "models": [
+        {
+          "name": "Eyebrows_Female",
+          "file": "Eyebrows_Female.gltf",
+          "url": "assets/models/characters/mini-kit/Eyebrows_Female.gltf"
+        },
+        {
+          "name": "Eyebrows_Regular",
+          "file": "Eyebrows_Regular.gltf",
+          "url": "assets/models/characters/mini-kit/Eyebrows_Regular.gltf"
+        },
+        {
+          "name": "Hair_Beard",
+          "file": "Hair_Beard.gltf",
+          "url": "assets/models/characters/mini-kit/Hair_Beard.gltf"
+        },
+        {
+          "name": "Hair_Buns",
+          "file": "Hair_Buns.gltf",
+          "url": "assets/models/characters/mini-kit/Hair_Buns.gltf"
+        },
+        {
+          "name": "Hair_Buzzed",
+          "file": "Hair_Buzzed.gltf",
+          "url": "assets/models/characters/mini-kit/Hair_Buzzed.gltf"
+        },
+        {
+          "name": "Hair_BuzzedFemale",
+          "file": "Hair_BuzzedFemale.gltf",
+          "url": "assets/models/characters/mini-kit/Hair_BuzzedFemale.gltf"
+        },
+        {
+          "name": "Hair_Long",
+          "file": "Hair_Long.gltf",
+          "url": "assets/models/characters/mini-kit/Hair_Long.gltf"
+        },
+        {
+          "name": "Hair_SimpleParted",
+          "file": "Hair_SimpleParted.gltf",
+          "url": "assets/models/characters/mini-kit/Hair_SimpleParted.gltf"
+        },
+        {
+          "name": "Superhero_Female_FullBody",
+          "file": "Superhero_Female_FullBody.gltf",
+          "url": "assets/models/characters/mini-kit/Superhero_Female_FullBody.gltf"
+        },
+        {
+          "name": "Superhero_Male_FullBody",
+          "file": "Superhero_Male_FullBody.gltf",
+          "url": "assets/models/characters/mini-kit/Superhero_Male_FullBody.gltf"
+        }
+      ]
+    }
+  }
+}
