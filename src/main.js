@@ -6,6 +6,7 @@ import { Sky } from 'three/addons/objects/Sky.js';
 import { buildAvatar, isGltfHair, HAIRSTYLES, HAIR_COLORS, JEWELRY } from './avatar.js';
 import { attachGltfHair, attachedHairInfo } from './hairKit.js';
 import { buildDistrict } from './cityKit.js';
+import { preloadVehicles, swapVehicleVisual, TRAFFIC_FLEET, DRIVABLE_DEFAULT, DEALER_FLEET } from './vehicleKit.js';
 import { buildCity, colliders as cityColliders } from './world.js';
 import { buildInteriors, DEALER_CARS, JEWELRY_STOCK, GEAR_STOCK } from './interiors.js';
 import {
@@ -200,7 +201,7 @@ function enterWorld() {
     scene.add(interiors.group);
     cityNPCs = createCityNPCs(scene, Math.max(2, Math.round(9 * graphics.npcDensity)));
     traffic = createTraffic(scene, Math.max(2, Math.round(7 * graphics.trafficDensity)));
-    car = createDrivableCar(scene, 7, 6);
+    car = createDrivableCar(scene, 13, 3);
     registerInteractables(cityInfo.entrances);
     graphics.applyToScene(scene, renderer);   // reflections + texture filtering
     started = true;
@@ -247,12 +248,31 @@ const extraSpinners = [];   // display models that idle-rotate (e.g. jewelry)
 // clearly visible in-game with no animation regressions.
 function applyWorldAssets() {
   enhanceShopkeepers();
-  enhanceShowroomCars();
   placeFrostboxJewelry();
+  applyVehicleModels();                      // swap procedural cars → Kenney Car Kit GLBs (incl. dealership)
   // place Kenney Retro Urban Kit buildings into the district (async, fire-and-forget)
   buildDistrict(scene, renderer)
     .then((placed) => { if (placed && placed.length) console.info('[district] landmarks:', placed.map(p => p.label).join(', ')); })
     .catch((e) => console.warn('[district] failed:', e));
+}
+
+// Swap the procedural traffic + drivable cars for real Kenney Car Kit models
+// (CC0). Static-mesh cars with separate wheel nodes, so wheel-spin still works;
+// collision circles + drive/steal logic are unchanged. Procedural cars remain as
+// a graceful fallback if the kit fails to preload.
+async function applyVehicleModels() {
+  try {
+    await preloadVehicles(renderer);
+  } catch (e) { console.warn('[vehicles] preload failed:', e); return; }
+  // varied traffic
+  traffic.forEach((c, i) => swapVehicleVisual(c, TRAFFIC_FLEET[i % TRAFFIC_FLEET.length]));
+  // the player's drivable car
+  if (car) swapVehicleVisual(car, DRIVABLE_DEFAULT);
+  // dealership showroom (newer, flashier models)
+  const dealer = interiors && interiors.byId['dealership'];
+  if (dealer && dealer.displayCars) {
+    dealer.displayCars.forEach((dc, i) => swapVehicleVisual(dc, DEALER_FLEET[i % DEALER_FLEET.length]));
+  }
 }
 
 // static shop staff → GLB humanoids
@@ -1127,6 +1147,8 @@ function rebuildDensity() {
   if (traffic.length !== targetT) {
     traffic.forEach(c => scene.remove(c.g));
     traffic = createTraffic(scene, targetT);
+    // re-skin the rebuilt traffic with kit cars (preload is cached, so sync)
+    traffic.forEach((c, i) => swapVehicleVisual(c, TRAFFIC_FLEET[i % TRAFFIC_FLEET.length]));
     changed = true;
   }
   if (changed) registerInteractables(cityEntrances);

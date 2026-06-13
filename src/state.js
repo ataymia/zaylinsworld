@@ -2,6 +2,7 @@
 //  state.js — game state + save/load (localStorage)
 // ───────────────────────────────────────────────────────────────────────────
 import { defaultCustom } from './avatar.js';
+import { SPAWN } from './config/mapConfig.js';
 
 const SAVE_KEY = 'zaylinsworld.save.v2';
 
@@ -19,8 +20,8 @@ export function defaultState() {
     timeMin: 8 * 60,    // in-game minutes (08:00)
     day: 1,
     server: 'sunside',  // city/server vibe
-    pos: { x: 0, z: 10 },
-    facing: 0,
+    pos: { x: SPAWN.x, z: SPAWN.z },
+    facing: SPAWN.faceY,
     carDamage: 0,
     createdCharacter: false,
     // ownership

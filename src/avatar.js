@@ -71,12 +71,13 @@ export const HAIRSTYLES = [
 //   yOffset  : raise(+)/lower(-) along the head's up axis, in meters
 //   zOffset  : push forward(+)/back(-), in meters
 //   rotX/Y/Z : extra rotation in radians
+//   fallback : procedural HAIRSTYLES id rendered if the glTF fails to load/attach
 export const HAIR_GLTF = {
-  'gltf-buzzed':   { file: 'Hair_Buzzed.gltf',        name: 'Buzz Cut',  anchor: 'scalp_center', scaleMul: 1.06, yOffset: 0.02, zOffset: 0.00, rotX: 0, rotY: 0, rotZ: 0 },
-  'gltf-parted':   { file: 'Hair_SimpleParted.gltf',  name: 'Side Part', anchor: 'scalp_center', scaleMul: 1.10, yOffset: 0.04, zOffset: 0.02, rotX: 0, rotY: 0, rotZ: 0 },
-  'gltf-long':     { file: 'Hair_Long.gltf',          name: 'Long Hair', anchor: 'scalp_center', scaleMul: 1.12, yOffset: 0.06, zOffset: -0.02, rotX: 0, rotY: 0, rotZ: 0 },
-  'gltf-buns':     { file: 'Hair_Buns.gltf',          name: 'Space Buns',anchor: 'scalp_center', scaleMul: 1.04, yOffset: 0.04, zOffset: 0.00, rotX: 0, rotY: 0, rotZ: 0 },
-  'gltf-buzzed-f': { file: 'Hair_BuzzedFemale.gltf',  name: 'Tapered',   anchor: 'scalp_center', scaleMul: 1.06, yOffset: 0.02, zOffset: 0.00, rotX: 0, rotY: 0, rotZ: 0 },
+  'gltf-buzzed':   { file: 'Hair_Buzzed.gltf',        name: 'Buzz Cut',  anchor: 'scalp_center', scaleMul: 1.06, yOffset: 0.02, zOffset: 0.00, rotX: 0, rotY: 0, rotZ: 0, fallback: 'low-fade' },
+  'gltf-parted':   { file: 'Hair_SimpleParted.gltf',  name: 'Side Part', anchor: 'scalp_center', scaleMul: 1.10, yOffset: 0.04, zOffset: 0.02, rotX: 0, rotY: 0, rotZ: 0, fallback: 'taper-fade' },
+  'gltf-long':     { file: 'Hair_Long.gltf',          name: 'Long Hair', anchor: 'scalp_center', scaleMul: 1.12, yOffset: 0.06, zOffset: -0.02, rotX: 0, rotY: 0, rotZ: 0, fallback: 'afro' },
+  'gltf-buns':     { file: 'Hair_Buns.gltf',          name: 'Space Buns',anchor: 'scalp_center', scaleMul: 1.04, yOffset: 0.04, zOffset: 0.00, rotX: 0, rotY: 0, rotZ: 0, fallback: 'mini-afro' },
+  'gltf-buzzed-f': { file: 'Hair_BuzzedFemale.gltf',  name: 'Tapered',   anchor: 'scalp_center', scaleMul: 1.06, yOffset: 0.02, zOffset: 0.00, rotX: 0, rotY: 0, rotZ: 0, fallback: 'taper-fade' },
 };
 export function isGltfHair(id) { return typeof id === 'string' && id.startsWith('gltf-'); }
 

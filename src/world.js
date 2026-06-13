@@ -3,6 +3,10 @@
 //  props, and entrance trigger data for the interaction manager.
 // ───────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
+import {
+  ROAD, CROSSWALKS, LANDMARKS, FEATURES,
+  PARK, PARKING, STREET_LIGHTS, STREET_TREES, SPAWN,
+} from './config/mapConfig.js';
 
 function mat(color, opts = {}) {
   return new THREE.MeshStandardMaterial({
@@ -162,39 +166,31 @@ export function buildCity(scene) {
     new THREE.MeshStandardMaterial({ map: grassTex, roughness: 1, metalness: 0 }));
   ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
 
-  const paveTex = noiseTexture('#8d8d95', ['#7a7a82', '#9a9aa2', '#6f6f77'], 1400, 8);
-  const plaza = new THREE.Mesh(new THREE.CircleGeometry(16, 40),
-    new THREE.MeshStandardMaterial({ map: paveTex, roughness: 0.92, metalness: 0 }));
-  plaza.rotation.x = -Math.PI / 2; plaza.position.y = 0.02; plaza.receiveShadow = true; scene.add(plaza);
-
   const asphaltTex = noiseTexture('#2a2a2e', ['#222226', '#333339', '#1c1c20'], 1600, 14);
   const roadM = new THREE.MeshStandardMaterial({ map: asphaltTex, roughness: 0.95, metalness: 0 });
   const lineM = mat('#d9c24a', { rough: 0.7, emissive: '#6b5a18', emissiveIntensity: 0.25 });
   const walkTex = noiseTexture('#9a9aa0', ['#888890', '#a8a8b0', '#7e7e86'], 900, 10);
   const walkM = new THREE.MeshStandardMaterial({ map: walkTex, roughness: 0.95, metalness: 0 });
+  const stripeM = new THREE.MeshBasicMaterial({ color: '#e9e9ef' });
 
-  // ── street grid: roads at -40 / 0 / +40 on both axes → 9 intersections, so
-  // the city reads as connected blocks instead of a single long street. (Road
-  // kit upload was broken, so these are temporary generated roads.) ───────────
-  const ROADS = [-40, 0, 40];
-  const ROAD_LEN = 128, ROAD_W = 9, WALK_W = 2.2;
+  // ── street grid (driven by mapConfig.ROAD) ────────────────────────────────
+  const LEN = ROAD.extent * 2;          // closed grid: roads meet exactly at the corners
+  const { width: ROAD_W, walk: WALK_W } = ROAD;
   const addRoad = (horizontal, offset) => {
-    const geo = horizontal ? new THREE.PlaneGeometry(ROAD_LEN, ROAD_W) : new THREE.PlaneGeometry(ROAD_W, ROAD_LEN);
+    const geo = horizontal ? new THREE.PlaneGeometry(LEN, ROAD_W) : new THREE.PlaneGeometry(ROAD_W, LEN);
     const road = new THREE.Mesh(geo, roadM);
     road.rotation.x = -Math.PI / 2;
     road.position.set(horizontal ? 0 : offset, 0.015, horizontal ? offset : 0);
     road.receiveShadow = true; scene.add(road);
-    // sidewalks flanking the road
     [-1, 1].forEach(side => {
-      const wg = horizontal ? new THREE.PlaneGeometry(ROAD_LEN, WALK_W) : new THREE.PlaneGeometry(WALK_W, ROAD_LEN);
+      const wg = horizontal ? new THREE.PlaneGeometry(LEN, WALK_W) : new THREE.PlaneGeometry(WALK_W, LEN);
       const w = new THREE.Mesh(wg, walkM);
       w.rotation.x = -Math.PI / 2;
-      const d = (ROAD_W / 2 + WALK_W / 2) * side;
-      w.position.set(horizontal ? 0 : offset + d, 0.012, horizontal ? offset + d : 0);
+      const dd = (ROAD_W / 2 + WALK_W / 2) * side;
+      w.position.set(horizontal ? 0 : offset + dd, 0.012, horizontal ? offset + dd : 0);
       w.receiveShadow = true; scene.add(w);
     });
-    // dashed centre line
-    for (let i = -ROAD_LEN / 2 + 5; i <= ROAD_LEN / 2 - 5; i += 5) {
+    for (let i = -LEN / 2 + 5; i <= LEN / 2 - 5; i += 5) {
       const dg = horizontal ? new THREE.PlaneGeometry(2.2, 0.2) : new THREE.PlaneGeometry(0.2, 2.2);
       const dash = new THREE.Mesh(dg, lineM);
       dash.rotation.x = -Math.PI / 2;
@@ -202,47 +198,66 @@ export function buildCity(scene) {
       scene.add(dash);
     }
   };
-  ROADS.forEach(o => { addRoad(true, o); addRoad(false, o); });
+  ROAD.hz.forEach(o => addRoad(true, o));
+  ROAD.vx.forEach(o => addRoad(false, o));
 
-  const toCenter = (x, z) => new THREE.Vector3(-x, 0, -z).normalize();
-  const defs = [
-    { id: 'dealership', name: 'AUTO HAUS',     interiorId: 'dealership', x: 0,   z: -34, w: 18, d: 12, h: 8, color: '#5b6470', sign: '#9fe8ff' },
-    { id: 'frostbox',   name: 'FROSTBOX',      interiorId: 'frostbox',   x: -30, z: -20, w: 11, d: 10, h: 6, color: '#26406b', sign: '#9fe8ff' },
-    { id: 'blocksupply',name: 'BLOCK SUPPLY',  interiorId: 'blocksupply',x: 30,  z: -20, w: 11, d: 10, h: 6, color: '#4b2c6b', sign: '#d9b3ff' },
-    { id: 'chicken',    name: 'CHICKEN SPOT',  interiorId: 'chicken',    x: -30, z: 20,  w: 12, d: 10, h: 6, color: '#b5302a', sign: '#ffcf3f' },
-    { id: 'home',       name: "ZAYLEN'S HOME", interiorId: 'home',       x: 30,  z: 20,  w: 11, d: 10, h: 5, color: '#8a7a5a', sign: '#bfe3ff' },
-    { id: 'kicks',      name: 'KICKS & FITS',  interiorId: 'kicks',      x: -34, z: 0,   w: 11, d: 10, h: 6, color: '#2c6b4b', sign: '#b3ffd1' },
-  ];
+  // crosswalk stripes at the configured intersections (all four approaches)
+  CROSSWALKS.forEach(([cx, cz]) => {
+    const edge = ROAD_W / 2 + 0.5;
+    for (const [ox, oz, horiz] of [[0, -edge, true], [0, edge, true], [-edge, 0, false], [edge, 0, false]]) {
+      for (let s = -3; s <= 3; s++) {
+        const g = horiz ? new THREE.PlaneGeometry(0.55, 2.0) : new THREE.PlaneGeometry(2.0, 0.55);
+        const m = new THREE.Mesh(g, stripeM);
+        m.rotation.x = -Math.PI / 2;
+        m.position.set(cx + ox + (horiz ? s * 0.95 : 0), 0.028, cz + oz + (horiz ? 0 : s * 0.95));
+        scene.add(m);
+      }
+    }
+  });
 
+  // ── dealership parking lot ────────────────────────────────────────────────
+  const lot = new THREE.Mesh(new THREE.PlaneGeometry(PARKING.w, PARKING.d),
+    new THREE.MeshStandardMaterial({ color: '#33333a', roughness: 0.95 }));
+  lot.rotation.x = -Math.PI / 2; lot.position.set(PARKING.cx, 0.018, PARKING.cz);
+  lot.receiveShadow = true; scene.add(lot);
+  for (let s = 1; s < PARKING.stalls; s++) {
+    const lx = PARKING.cx - PARKING.w / 2 + (PARKING.w / PARKING.stalls) * s;
+    const line = new THREE.Mesh(new THREE.PlaneGeometry(0.12, PARKING.d - 0.8), stripeM);
+    line.rotation.x = -Math.PI / 2; line.position.set(lx, 0.03, PARKING.cz); scene.add(line);
+  }
+
+  // ── park / plaza block ────────────────────────────────────────────────────
+  const paveTex = noiseTexture('#8d8d95', ['#7a7a82', '#9a9aa2', '#6f6f77'], 1400, 8);
+  const plaza = new THREE.Mesh(new THREE.CircleGeometry(PARK.r, 40),
+    new THREE.MeshStandardMaterial({ map: paveTex, roughness: 0.92, metalness: 0 }));
+  plaza.rotation.x = -Math.PI / 2; plaza.position.set(PARK.cx, 0.02, PARK.cz);
+  plaza.receiveShadow = true; scene.add(plaza);
+  PARK.trees.forEach(([x, z]) => tree(scene, x, z));
+  PARK.benches.forEach(([x, z, ry]) => bench(scene, x, z, ry));
+  PARK.lights.forEach(([x, z]) => streetLight(scene, x, z));
+
+  // ── enterable landmarks (working doors + interiors) ───────────────────────
+  const dirOf = ([dx, dz]) => new THREE.Vector3(dx, 0, dz).normalize();
   const entrances = [];
-  defs.forEach(b => {
+  LANDMARKS.forEach(b => {
     const r = makeBuilding(scene, {
       x: b.x, z: b.z, w: b.w, d: b.d, h: b.h, color: b.color,
-      name: b.name, signColor: b.sign, faceDir: toCenter(b.x, b.z), door: true,
+      name: b.name, signColor: b.sign, faceDir: dirOf(b.face), door: true,
     });
     entrances.push({ id: b.id, name: b.name, interiorId: b.interiorId, doorPos: r.doorPos, faceDir: r.faceDir });
   });
 
-  makeBuilding(scene, { x: 34, z: 0, w: 11, d: 10, h: 7, color: '#6b2c2c',
-    name: 'IRON CITY GYM', signColor: '#ff9f9f', faceDir: toCenter(34, 0), door: false });
+  // ── non-enterable feature buildings (no prompt) ───────────────────────────
+  FEATURES.forEach(f => {
+    makeBuilding(scene, {
+      x: f.x, z: f.z, w: f.w, d: f.d, h: f.h, color: f.color,
+      name: f.name, signColor: f.sign, faceDir: dirOf(f.face), door: false,
+    });
+  });
 
-  const palette = ['#586273', '#735858', '#586b5e', '#6b6358', '#62587a'];
-  const rand = (a, b) => a + Math.random() * (b - a);
-  for (let i = 0; i < 16; i++) {
-    const a = (i / 16) * Math.PI * 2;
-    const rr = rand(52, 70);
-    const x = Math.cos(a) * rr, z = Math.sin(a) * rr;
-    makeBuilding(scene, { x, z, w: rand(6, 10), d: rand(6, 10), h: rand(10, 24),
-      color: palette[i % palette.length], faceDir: toCenter(x, z), door: false, name: null });
-  }
+  // ── street furniture lining Main Street ───────────────────────────────────
+  STREET_LIGHTS.forEach(([x, z]) => streetLight(scene, x, z));
+  STREET_TREES.forEach(([x, z]) => tree(scene, x, z));
 
-  for (let i = 0; i < 12; i++) {
-    const a = (i / 12) * Math.PI * 2;
-    tree(scene, Math.cos(a) * 19, Math.sin(a) * 19);
-  }
-  [[8, 8], [-8, 8], [8, -8], [-8, -8], [16, 0], [-16, 0], [0, 16], [0, -16]]
-    .forEach(([x, z]) => streetLight(scene, x, z));
-  bench(scene, 6, 12, 0.3); bench(scene, -6, -12, 2.8);
-
-  return { spawn: new THREE.Vector3(0, 0, 12), entrances };
+  return { spawn: new THREE.Vector3(SPAWN.x, 0, SPAWN.z), spawnFaceY: SPAWN.faceY, entrances };
 }
