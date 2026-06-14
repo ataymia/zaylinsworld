@@ -1450,6 +1450,35 @@ function openWeaponShop() {
   });
 }
 
+// ── inventory overlay ───────────────────────────────────────────────────────────
+// Shows everything the player owns and lets them re-equip / holster weapons.
+// Reachable any time with the I key, so a holstered gun can always be pulled back
+// out — no more "lost weapon" state.
+function inventoryOpts() {
+  const owned = (state.ownedWeapons || ['fists']).map(id => weaponById(id));
+  const choices = [];
+  for (const w of owned) {
+    const eq = state.equippedWeapon === w.id;
+    const a = w.melee ? null : (state.ammo && state.ammo[w.id]);
+    const ammoStr = w.melee ? '' : (a ? `  (${a.mag}/${a.reserve === Infinity ? '∞' : a.reserve})` : '');
+    choices.push({
+      label: `${w.icon} ${w.name}${ammoStr}${eq ? '   ✓ equipped' : ''}`,
+      onPick: () => { if (!eq) equipWeapon(w.id); return inventoryOpts(); },
+    });
+  }
+  if (state.equippedWeapon !== 'fists') {
+    choices.unshift({ label: '✋ Holster weapon (back to fists)', onPick: () => { equipWeapon('fists'); return inventoryOpts(); } });
+  }
+  choices.push({ label: 'Close', onPick: () => undefined });
+  return {
+    name: '🎒 Inventory',
+    text: `Cash $${(state.money || 0).toLocaleString()}  ·  🍗 ${state.chicken || 0}  ·  🗑️ ${trashCarried || 0}  ·  💎 ${state.gems || 0}. ` +
+          `Tap a weapon to equip it. Hotkeys: 1–7 equip · Q/X switch · click to fire · R reload.`,
+    choices,
+  };
+}
+function openInventory() { if (!isUIOpen()) openDialogue(inventoryOpts()); }
+
 // One-time init for the weapon controller + mission tracker.
 function initGameSystems() {
   initWeapons({
@@ -1515,6 +1544,27 @@ function updatePlayer(dt, t) {
   if (p.y <= 0) { p.y = 0; velY = 0; onGround = true; }
 
   resolveCollision(p, 0.5);
+
+  // solid pedestrians: the player can't phase through NPCs anymore. Push both
+  // apart on overlap (player gets most of the correction, the NPC nudges aside).
+  if (area === 'city' && !inCar) {
+    const PR = 0.55;
+    for (const n of cityNPCs) {
+      if (n.downed) continue;
+      const g = n.av.group;
+      const dx = p.x - g.position.x, dz = p.z - g.position.z;
+      const d = Math.hypot(dx, dz);
+      const minD = PR + 0.45;
+      if (d < minD && d > 1e-4) {
+        const push = (minD - d);
+        const ux = dx / d, uz = dz / d;
+        p.x += ux * push * 0.7;
+        p.z += uz * push * 0.7;
+        g.position.x -= ux * push * 0.3;
+        g.position.z -= uz * push * 0.3;
+      }
+    }
+  }
 
   if (controls.mode === CAM.FIRST) player.group.rotation.y = yaw;
   else if (moving) player.group.rotation.y = lerpAngle(player.group.rotation.y, Math.atan2(move.x, move.z), Math.min(1, dt * 12));
@@ -2222,7 +2272,8 @@ window.addEventListener('keydown', e => {
   if (k === 'g' && !inCar && area === 'city') robNearestNpc();
   if (k === 'v') { const m = controls.cycleMode(); notify('Camera: ' + m.toUpperCase()); document.getElementById('crosshair').style.display = m === CAM.FIRST ? '' : 'none'; }
   if (k === 'c' && !inCar && area === 'city') openWardrobe();
-  if (k === 'i') toggleInteriorDebug();
+  if (k === 'i') openInventory();                 // 🎒 inventory — re-equip / holster weapons
+  if (k === '`') toggleInteriorDebug();           // dev: interior debug overlay
   if (k === 'h') toggleHairDebug();
   if (hairDebug) {
     if (k === ']') cycleHair(1);
@@ -2230,11 +2281,16 @@ window.addEventListener('keydown', e => {
     if (k === 'j') cycleJewelry();
   }
   if (k === 'm') { state.monsterMode = !state.monsterMode; notify('Monster Mode ' + (state.monsterMode ? 'ON 👹' : 'off')); }
-  // weapons: reload, quick-switch, and 1–7 to equip by catalog slot
+  // weapons: reload, quick-switch, and 1–9 to equip from your OWNED list (a held
+  // gun is never lost — press its number or open the inventory to draw it again).
   if (k === 'r') reloadPressed = true;
   if (k === 'q') cycleWeapon(-1);
   if (k === 'x') cycleWeapon(1);
-  if (k >= '1' && k <= '7') { const w = WEAPONS[parseInt(k, 10) - 1]; if (w) equipWeapon(w.id); }
+  if (k >= '1' && k <= '9') {
+    const owned = state.ownedWeapons || ['fists'];
+    const w = owned[parseInt(k, 10) - 1];
+    if (w) equipWeapon(w);
+  }
 });
 
 onMenuClose(() => { builderOpen = false; });

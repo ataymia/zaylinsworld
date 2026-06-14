@@ -205,11 +205,13 @@ export function buildHair(styleId, colorHex) {
   const hm = mat(colorHex, { rough: 0.95 });
   const fadeM = mat(new THREE.Color(colorHex).multiplyScalar(0.6).getStyle(), { rough: 0.95 });
 
-  // shared: short faded sides hugging the head
+  // shared: short faded sides — an UPPER dome that caps the skull above the brow
+  // line only, so it wraps the top/back of the head and never shells the face.
   const sides = () => {
-    const s = new THREE.Mesh(new THREE.SphereGeometry(R * 1.04, 16, 12), fadeM);
-    s.scale.set(1, 0.9, 1);
-    s.position.y = R * 0.05;
+    const s = new THREE.Mesh(
+      new THREE.SphereGeometry(R * 1.06, 18, 12, 0, Math.PI * 2, 0, Math.PI * 0.52), fadeM);
+    s.scale.set(1, 1.04, 1.02);
+    s.position.set(0, R * 0.2, -R * 0.04);
     return s;
   };
   const skullCap = (scaleY = 1.0, up = 0.18, rough = 0.95) => {
@@ -222,16 +224,18 @@ export function buildHair(styleId, colorHex) {
 
   switch (styleId) {
     case 'afro': {
-      const fro = new THREE.Mesh(new THREE.IcosahedronGeometry(R * 1.95, 2), hm);
-      fro.scale.set(1.05, 0.95, 1.02);
-      fro.position.y = R * 0.55;
+      // big rounded crown seated ABOVE the brows and pushed slightly back so it
+      // wraps the skull instead of hanging down over the face.
+      const fro = new THREE.Mesh(new THREE.IcosahedronGeometry(R * 1.5, 2), hm);
+      fro.scale.set(1.08, 1.02, 1.0);
+      fro.position.set(0, R * 1.2, -R * 0.15);
       g.add(fro, sides());
       break;
     }
     case 'mini-afro': {
-      const fro = new THREE.Mesh(new THREE.IcosahedronGeometry(R * 1.35, 2), hm);
-      fro.scale.set(1.05, 0.95, 1.0);
-      fro.position.y = R * 0.45;
+      const fro = new THREE.Mesh(new THREE.IcosahedronGeometry(R * 1.12, 2), hm);
+      fro.scale.set(1.06, 1.0, 1.0);
+      fro.position.set(0, R * 1.05, -R * 0.12);
       g.add(fro, sides());
       break;
     }
@@ -394,10 +398,11 @@ export function buildHair(styleId, colorHex) {
       break;
     }
     case 'lineup': {
-      const c = skullCap(0.45, 0.06);
-      // sharp front hairline edge
-      const front = box(R * 1.5, R * 0.16, R * 0.12, hm);
-      front.position.set(0, R * 0.35, R * 0.92);
+      // a clean cap that hugs the scalp with a crisp hairline edge that sits at
+      // the top of the forehead — NOT a plate stuck across the face.
+      const c = skullCap(0.5, 0.16);
+      const front = box(R * 1.46, R * 0.1, R * 0.16, hm);
+      front.position.set(0, R * 0.66, R * 0.74);
       g.add(c, front, sides());
       break;
     }
