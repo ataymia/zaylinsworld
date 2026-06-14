@@ -933,6 +933,8 @@ function spawnCopCar() {
   const ang = Math.random() * Math.PI * 2, R = 28;
   const c = createDrivableCar(scene, pp.x + Math.cos(ang) * R, pp.z + Math.sin(ang) * R, '#1b2a55');
   c.isCop = true; c.mass = 2.6; c.speed = 0; c.damage = 0;
+  // use the real police GLB if the kit is loaded, else keep the navy procedural body
+  swapVehicleVisual(c, 'police');
   const bar = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.12, 0.22),
     new THREE.MeshStandardMaterial({ color: 0x3060ff, emissive: 0x1a2f8a, emissiveIntensity: 0.7 }));
   bar.position.set(0, 1.5, 0); c.g.add(bar); c.lightBar = bar;

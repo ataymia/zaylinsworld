@@ -47,7 +47,47 @@ art packs are listed below.
   source archives are kept out of git (see `.gitignore`).
 - **Config:** `src/config/materials.json`. Re-process with `node tools/process-materials.mjs`.
 
----
+## Cosmo — Low Poly Cars
+- **Source:** Low Poly Cars by Cosmo (ArtStation: https://www.artstation.com/cosmoart · itch.io)
+- **Author:** Cosmo (CosmoArt0)
+- **License:** Free for commercial/non-commercial use, no attribution required;
+  redistribution/resale of the assets as-is is prohibited (we only ship them
+  inside the game, not as standalone files).
+- **Used for:** Live traffic, the player's drivable car, dealership showroom, and
+  stealable cars. `police.glb` is used for police patrol cruisers.
+- **Original filenames:** `coupe.glb`, `ghini.glb`, `italia.glb`, `kamaro.glb`,
+  `mobil.glb`, `van.glb`, `jeep.glb`, `rally.glb`, `armor.glb`, `police.glb`,
+  `fenyr.glb`, `lamb.glb` (+ `License.txt`).
+- **Location in repo:** `public/assets/models/vehicles/lowpoly-cars/`.
+- **Config:** `VEHICLE_FILES` / `TRAFFIC_FLEET` / `DEALER_FLEET` in `src/vehicleKit.js`.
+
+## Styloo — Guns Asset Pack (GLTF/FBX V1.1)
+- **Source:** https://styloo.itch.io/
+- **Author:** Styloo
+- **License:** Free asset pack (itch.io) — usable in free or commercial projects.
+- **Used for:** Purchasable / equippable / shootable weapons at the Block Supply
+  weapons counter (pistol, SMG, rifle, shotgun, sniper, rocket launcher).
+- **Original filenames:** `pew.glb`, `mac10.glb`, `ak47.glb`, `shotgun.glb`,
+  `awp.glb`, `rocketlaucher.glb`, `ammobox.glb`.
+- **Location in repo:** `public/assets/models/weapons/`.
+- **Config:** `weapons` slots in `src/config/manifest.json`; catalog in `src/weapons.js`.
+
+## Magory — Ultimate Gem Collection (64×64)
+- **Source:** https://magory.itch.io/ultimate-gem-collections
+- **Author:** Tomasz Kucza (magory.itch.io)
+- **License:** Free for any free or commercial project.
+- **Used for:** Collectible city gem sprites (Frostbox gem tie-in).
+- **Original filenames:** `gem*.png` (64×64 sprites).
+- **Location in repo:** `public/assets/textures/gems/`.
+- **Config:** `GEMS` anchors in `src/config/mapConfig.js`; placed by `src/main.js`.
+
+## Urban Props / Trash & Debris
+- **Source:** Free low-poly urban prop / debris packs (itch.io / CC0-style).
+- **License:** Free for commercial/non-commercial use.
+- **Used for:** Street dressing (bins, debris, urban clutter) along the district.
+- **Original filenames:** `urban-props.glb`, `trash-debris.glb`.
+- **Location in repo:** `public/assets/models/props/`.
+- **Config:** placed via `src/props.js`.
 
 CC0 assets may be used freely for any purpose. Attribution is not legally required
 but is given here as a courtesy and to support Kenney's and ambientCG's work. If you
