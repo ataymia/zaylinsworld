@@ -21,7 +21,7 @@ import { initMissions, missionEvent, renderTracker } from './missions.js';
 import { Controls, CAM } from './controls.js';
 import { InteractionManager } from './interaction.js';
 import { loadState, saveState, defaultState, clearSave, hasSave } from './state.js';
-import { GEMS } from './config/mapConfig.js';
+import { GEMS, LANDMARKS } from './config/mapConfig.js';
 import { loadHDRI } from './assets.js';
 import {
   hdriUrl, loadSlotModel, updateMixers, enhanceAvatar, enhanceVehicle, assetUrl,
@@ -248,9 +248,43 @@ function rebuildPlayer() {
   if (isGltfHair(state.custom.hair)) {
     attachGltfHair(player, state.custom.hair, avatarHairColorHex(state.custom), renderer);
   }
+  mountHeldWeapon();                          // re-attach the visible 3rd-person weapon prop
   // NOTE: the player stays procedural so it keeps its walk animation AND honors
   // every character-creator choice (skin, outfit, hair, jewelry). The player_avatar
   // GLB slot is reserved for drop-in use; static interior NPCs use the GLB pack.
+}
+
+// ── visible held weapon (3rd person) ────────────────────────────────────────────
+// A lightweight stylized prop mounted in the player's right hand so the equipped
+// weapon is actually visible on the avatar (the detailed first-person view-model
+// lives on the camera). Rebuilt whenever the weapon changes or the avatar rebuilds.
+let heldWeaponProp = null;
+function mountHeldWeapon() {
+  if (!player) return;
+  const arm = player.parts && player.parts.rightArm;
+  if (!arm) return;
+  if (heldWeaponProp) { heldWeaponProp.parent?.remove(heldWeaponProp); heldWeaponProp = null; }
+  const w = currentWeapon();
+  if (!w || w.melee) return;                  // fists → nothing in hand
+  const g = new THREE.Group();
+  const metal = new THREE.MeshStandardMaterial({ color: '#22262b', roughness: 0.5, metalness: 0.6 });
+  const grip = new THREE.MeshStandardMaterial({ color: '#3a2c22', roughness: 0.8 });
+  // sizes roughly scale with the weapon class so a pistol ≠ a rifle silhouette
+  const long = w.id === 'rifle' || w.id === 'smg' || w.id === 'sniper' || w.id === 'shotgun' || w.id === 'rocket';
+  const barrelLen = w.id === 'rocket' ? 0.95 : (w.id === 'sniper' ? 0.9 : long ? 0.7 : 0.34);
+  const body = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.12, barrelLen), metal);
+  body.position.z = barrelLen * 0.35; g.add(body);
+  const handle = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.16, 0.08), grip);
+  handle.position.set(0, -0.12, 0.02); g.add(handle);
+  if (w.id === 'rocket') {
+    const tube = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.95, 10), metal);
+    tube.rotation.x = Math.PI / 2; tube.position.z = 0.3; g.add(tube);
+  }
+  // mount at the hand end of the arm, pointing forward (+Z)
+  g.position.set(0, -0.45, 0.12);
+  g.scale.setScalar(1.0);
+  arm.add(g);
+  heldWeaponProp = g;
 }
 
 // ── real 3D asset wiring (GLB swaps with procedural fallback) ─────────────────
@@ -270,6 +304,8 @@ function applyWorldAssets() {
     .catch((e) => console.warn('[props] failed:', e));
   // scatter collectible gems across the city (Ultimate Gem Collection textures)
   placeCityGems();
+  // intentional sidewalk litter + sanitation worker + dumpster (cleanup side job)
+  placeTrashJob();
   // place Kenney Retro Urban Kit buildings into the district (async, fire-and-forget)
   buildDistrict(scene, renderer)
     .then((placed) => { if (placed && placed.length) console.info('[district] landmarks:', placed.map(p => p.label).join(', ')); })
@@ -288,11 +324,16 @@ async function applyVehicleModels() {
   traffic.forEach((c, i) => swapVehicleVisual(c, TRAFFIC_FLEET[i % TRAFFIC_FLEET.length]));
   // the player's drivable car
   if (car) swapVehicleVisual(car, DRIVABLE_DEFAULT);
-  // dealership showroom (newer, flashier models)
+  // dealership showroom — each car gets its OWN unique model (price-tiered), so a
+  // $3.5k hatch never shares a body with a $92k supercar.
   const dealer = interiors && interiors.byId['dealership'];
   if (dealer && dealer.displayCars) {
-    dealer.displayCars.forEach((dc, i) => swapVehicleVisual(dc, DEALER_FLEET[i % DEALER_FLEET.length]));
+    dealer.displayCars.forEach((dc, i) => {
+      const def = DEALER_CARS[i];
+      swapVehicleVisual(dc, (def && def.kitModel) || DEALER_FLEET[i % DEALER_FLEET.length]);
+    });
   }
+  console.log('[vehicles] models applied — traffic:', traffic.length, 'dealer:', dealer?.displayCars?.length || 0);
 }
 
 // static shop staff → GLB humanoids
@@ -428,6 +469,145 @@ function collectGem(value) {
   saveNow();
 }
 
+// ── TRASH CLEANUP SIDE JOB ──────────────────────────────────────────────────────
+// Intentional litter placed on sidewalks beside storefronts (never in driving
+// lanes). Talk to the sanitation worker to accept a tiered cleanup task, pick up
+// trash around town (E), then deposit it at the dumpster for pay. Collected trash
+// disappears from the world, so finishing a job visibly cleans the area.
+let cityTrash = [];                 // { mesh, x, z, collected }
+let trashGroup = null;
+let dumpster = null;                // { mesh, pos }
+let sanitationNpc = null;           // { av, pos }
+let trashJob = { active: false, need: 0, collected: 0, reward: 0, tier: '' };
+let trashCarried = 0;
+
+function placeTrashJob() {
+  cityTrash = [];
+  trashGroup = new THREE.Group(); trashGroup.name = 'city-trash';
+  const trashMat = new THREE.MeshStandardMaterial({ color: '#6b6f55', roughness: 0.9 });
+  const bagMat = new THREE.MeshStandardMaterial({ color: '#2b2f3a', roughness: 0.85 });
+  // two curated litter spots beside each landmark, offset onto the sidewalk
+  // (toward the building, away from the road center).
+  const offs = [[2.6, 1.8], [-2.4, 2.2], [1.9, -2.6]];
+  let idx = 0;
+  for (const lm of LANDMARKS) {
+    const pick = offs[idx % offs.length]; idx++;
+    for (let k = 0; k < 2; k++) {
+      const ox = pick[0] + (k ? 1.1 : 0), oz = pick[1] + (k ? -0.8 : 0);
+      const x = lm.x + ox, z = lm.z + oz;
+      const piece = new THREE.Group();
+      const isBag = (idx + k) % 2 === 0;
+      if (isBag) {
+        const bag = new THREE.Mesh(new THREE.DodecahedronGeometry(0.28, 0), bagMat);
+        bag.scale.set(1, 0.8, 1); bag.position.y = 0.24; piece.add(bag);
+      } else {
+        const can = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.1, 0.34, 8), trashMat);
+        can.rotation.z = 1.1; can.position.y = 0.14; piece.add(can);
+        const cup = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.07, 0.2, 7), trashMat);
+        cup.position.set(0.28, 0.1, 0.12); piece.add(cup);
+      }
+      piece.position.set(x, 0, z);
+      trashGroup.add(piece);
+      cityTrash.push({ mesh: piece, x, z, collected: false });
+    }
+  }
+  // dumpster near spawn so deposits are convenient
+  const dPos = new THREE.Vector3(SPAWN.x - 4, 0, SPAWN.z + 4);
+  const dGrp = new THREE.Group();
+  const body = new THREE.Mesh(new THREE.BoxGeometry(2.2, 1.3, 1.3),
+    new THREE.MeshStandardMaterial({ color: '#2f6f3a', roughness: 0.8, metalness: 0.2 }));
+  body.position.y = 0.65; dGrp.add(body);
+  const lid = new THREE.Mesh(new THREE.BoxGeometry(2.3, 0.18, 1.4),
+    new THREE.MeshStandardMaterial({ color: '#244f2b', roughness: 0.8 }));
+  lid.position.y = 1.35; lid.rotation.x = -0.18; dGrp.add(lid);
+  dGrp.position.copy(dPos);
+  { const l = makeLabel('DUMPSTER', '#bfe6c4'); l.position.y = 2.0; dGrp.add(l); }
+  trashGroup.add(dGrp);
+  dumpster = { mesh: dGrp, pos: dPos.clone().setY(0) };
+  // sanitation worker near spawn offers the job
+  const sPos = new THREE.Vector3(SPAWN.x - 2, 0, SPAWN.z + 5);
+  const worker = buildAvatar({ ...defaultCustom(), top: 'hoodie-red' });
+  worker.group.position.copy(sPos);
+  worker.group.rotation.y = Math.PI;
+  const vest = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.6, 0.34),
+    new THREE.MeshStandardMaterial({ color: '#f4a300', roughness: 0.6, emissive: '#caa', emissiveIntensity: 0.1 }));
+  vest.position.y = 1.15; worker.group.add(vest);
+  { const l = makeLabel('SANITATION', '#ffd98a'); l.position.y = 2.2; worker.group.add(l); }
+  scene.add(worker.group);
+  sanitationNpc = { av: worker, pos: sPos.clone().setY(0) };
+
+  scene.add(trashGroup);
+  console.info('[trash] litter pieces:', cityTrash.length);
+}
+
+function activeTrashCount() { return cityTrash.filter(t => !t.collected).length; }
+
+function pickupTrash(item) {
+  if (item.collected) return;
+  item.collected = true;
+  trashGroup.remove(item.mesh);
+  trashCarried++;
+  if (trashJob.active) {
+    trashJob.collected++;
+    state.stats.fitness = Math.min(100, state.stats.fitness + 0.4);   // light labor
+    notify(`🗑️ Picked up trash (${trashJob.collected}/${trashJob.need}). Drop it at the dumpster.`);
+    if (trashJob.collected >= trashJob.need) notify('✅ Quota met! Head to the dumpster to cash out.');
+  } else {
+    notify(`🗑️ Picked up trash (carrying ${trashCarried}). Talk to Sanitation for a paid cleanup.`);
+  }
+  registerInteractables(cityEntrances);   // remove this pickup's interactable
+  saveNow();
+}
+
+function depositTrash() {
+  if (trashCarried <= 0) { notify('Nothing to deposit — pick up some trash first.'); return; }
+  const dropped = trashCarried; trashCarried = 0;
+  if (trashJob.active && trashJob.collected >= trashJob.need) {
+    const reward = trashJob.reward;
+    state.money += reward;
+    state.stats.fitness = Math.min(100, state.stats.fitness + 4);
+    state.stats.fun = Math.min(100, state.stats.fun + 4);
+    notify(`🧹 ${trashJob.tier} cleanup complete! +$${reward}. The block looks cleaner.`);
+    trashJob = { active: false, need: 0, collected: 0, reward: 0, tier: '' };
+    missionEvent('trash-done');
+  } else {
+    notify(`🗑️ Dumped ${dropped} piece${dropped > 1 ? 's' : ''}. Accept a job from Sanitation to get paid.`);
+  }
+  saveNow();
+}
+
+function talkToSanitation() {
+  if (trashJob.active) {
+    openDialogue({
+      name: 'Sanitation Worker',
+      text: `Current job: ${trashJob.tier}. Collected ${trashJob.collected}/${trashJob.need}. Drop what you grab at the dumpster near the corner.`,
+      choices: [
+        { label: 'Cancel this job', onPick: () => { trashJob = { active: false, need: 0, collected: 0, reward: 0, tier: '' }; notify('Cleanup job cancelled.'); } },
+        { label: 'Keep working', onPick: () => {} },
+      ],
+    });
+    return;
+  }
+  const avail = activeTrashCount();
+  openDialogue({
+    name: 'Sanitation Worker',
+    text: `City's a mess — about ${avail} pieces of litter out there. Pick a cleanup contract; collect the quota and dump it at the dumpster to get paid.`,
+    choices: [
+      { label: 'Small cleanup — 5 pieces ($120)', onPick: () => startTrashJob('Small', 5, 120) },
+      { label: 'Medium cleanup — 10 pieces ($280)', onPick: () => startTrashJob('Medium', 10, 280) },
+      { label: 'Large cleanup — 15 pieces ($480)', onPick: () => startTrashJob('Large', 15, 480) },
+      { label: 'Not now', onPick: () => {} },
+    ],
+  });
+}
+function startTrashJob(tier, need, reward) {
+  const avail = activeTrashCount() + trashCarried;
+  if (avail < need) { notify(`Not enough litter around for a ${tier} job right now.`); return; }
+  trashJob = { active: true, need, collected: Math.min(trashCarried, need), reward, tier };
+  notify(`🧹 ${tier} cleanup started — collect ${need} pieces, then deposit at the dumpster.`);
+  saveNow();
+}
+
 // ── register ALL interactables (each has a real working action) ───────────────
 function registerInteractables(entrances) {
   manager.clear();
@@ -469,6 +649,35 @@ function registerInteractables(entrances) {
       onInteract: () => talkTo(n),
     });
   });
+
+  // trash cleanup side job: pickups, dumpster deposit, sanitation worker
+  cityTrash.forEach((item, i) => {
+    manager.register({
+      id: 'trash-' + i, area: 'city', key: 'e', radius: 2.0,
+      getPosition: () => (item.collected ? OFFSCREEN : item.mesh.position),
+      enabled: () => !item.collected && !inCar,
+      getPrompt: () => 'Pick up trash',
+      onInteract: () => pickupTrash(item),
+    });
+  });
+  if (dumpster) {
+    manager.register({
+      id: 'dumpster', area: 'city', key: 'e', radius: 2.6,
+      getPosition: () => dumpster.pos,
+      enabled: () => !inCar,
+      getPrompt: () => (trashCarried > 0 ? `Deposit trash (${trashCarried})` : 'Dumpster'),
+      onInteract: () => depositTrash(),
+    });
+  }
+  if (sanitationNpc) {
+    manager.register({
+      id: 'sanitation', area: 'city', key: 'e', radius: 2.6,
+      getPosition: () => sanitationNpc.pos,
+      enabled: () => !inCar,
+      getPrompt: () => 'Talk to Sanitation',
+      onInteract: () => talkToSanitation(),
+    });
+  }
 
   // interiors: exits, NPCs, stations
   Object.values(interiors.byId).forEach(intr => {
@@ -714,6 +923,36 @@ function witnessesNear(pos, radius) {
   }
   return n;
 }
+
+// ── ROBBERY (stylized mugging — risk vs reward) ─────────────────────────────────
+// Shake down the nearest civilian for cash. The victim always notices, so wanted/
+// heat rise and police respond. Reward is only granted on a successful shakedown.
+function robNearestNpc() {
+  if (!player) return;
+  const pp = player.group.position;
+  let best = null, bestD = 2.8;
+  for (const n of cityNPCs) {
+    if (n.downed || n.robbed) continue;
+    const g = n.av.group.position;
+    const d = Math.hypot(g.x - pp.x, g.z - pp.z);
+    if (d < bestD) { bestD = d; best = n; }
+  }
+  if (!best) { notify('Get closer to someone to rob them.'); return; }
+  const cw = currentWeapon();
+  const armed = cw && !cw.melee;                        // armed muggings net more but draw more heat
+  const haul = Math.floor(40 + Math.random() * 80) * (armed ? 2 : 1);
+  state.money += haul;
+  best.robbed = true;
+  ensureNpcHp(best);
+  best.hitT = 0.25; best.panic = 2.6;                  // victim recoils + flees
+  const witnesses = witnessesNear(pp, 22);
+  const gain = armed ? 2 : 1;
+  state.wanted = Math.min(5, (state.wanted || 0) + gain);
+  state.heat = Math.min(100, (state.heat || 0) + (armed ? 22 : 12));
+  notify(`💰 Robbed a civilian for $${haul}! ${witnesses > 1 ? 'You were seen — police alerted.' : 'Wanted +' + gain}`);
+  missionEvent('rob-done');
+  saveNow();
+}
 function exitCar() {
   const v = drivingVehicle || car;
   inCar = false;
@@ -840,14 +1079,38 @@ function updateVehicleCollisions(dt) {
         playerHitCD = 1.2;                                                // no 20-hits-per-second
         const st = state.stats;
         st.energy = Math.max(0, st.energy - (big ? 45 : 18));
+        st.health = Math.max(0, (st.health ?? 100) - (big ? 35 : 12));    // car impacts hurt
         injuredTimer = big ? 2.4 : 1.0;
         if ('speed' in c) c.speed *= 0.3;                                 // the car reacts to the hit
-        console.log(`[collision] car→player  impact=${impact.toFixed(1)}  ${big ? 'SEVERE' : 'minor'}  energy=${Math.floor(st.energy)}`);
+        console.log(`[collision] car→player  impact=${impact.toFixed(1)}  ${big ? 'SEVERE' : 'minor'}  energy=${Math.floor(st.energy)} health=${Math.floor(st.health)}`);
         notify(big ? '🚑 You got hit hard by a car!' : '😖 A car clipped you — watch the road!');
+        if (st.health <= 0) downPlayer('You were taken out by a vehicle.');
       } else if (playerHitCD <= 0) {
         const sep = (CAR_R + PLAYER_R - d) + 0.01;                        // gently separate from a stopped car
         pp.x += nx * sep; pp.z += nz * sep;
       }
+    }
+  }
+
+  // car → pedestrian: moving cars injure (and can take out) civilians
+  for (const c of cars) {
+    const spd = Math.abs(c.speed || 0);
+    if (spd < 3) continue;
+    for (const n of cityNPCs) {
+      if (n._hitCD > 0) continue;
+      const g = n.av.group;
+      const dx = g.position.x - c.g.position.x, dz = g.position.z - c.g.position.z;
+      const d = Math.hypot(dx, dz);
+      if (d >= CAR_R + 0.6) continue;
+      const nn = d < 1e-4 ? 1 : d;
+      const knx = dx / nn, knz = dz / nn;
+      g.position.x += knx * 2.2; g.position.z += knz * 2.2;             // knock aside
+      ensureNpcHp(n);
+      n.hp -= spd > 12 ? 70 : 34; n.hitT = 0.25; n._hitCD = 0.7;
+      // a witnessed hit-and-run draws heat
+      state.heat = Math.min(100, (state.heat || 0) + 4);
+      if (n.hp <= 0) downNpc(n);
+      else if ((state.wanted || 0) < 1) { state.wanted = 1; notify('🚨 You hit someone! Police alerted.'); }
     }
   }
 }
@@ -861,27 +1124,70 @@ function updateVehicleCollisions(dt) {
 
 let copCoolTimer = 0;
 
+// ── NPC health / stylized takedowns ─────────────────────────────────────────────
+const NPC_MAX_HP = 60;
+function ensureNpcHp(n) {
+  if (n.hp == null) { n.hp = NPC_MAX_HP; n.maxHp = NPC_MAX_HP; }
+  if (n._hitCD == null) n._hitCD = 0;
+  return n;
+}
+// Stylized, non-graphic takedown: the NPC slumps (lies flat), stops walking, and
+// is cleaned up after a moment. No blood/gore — just a downed pose + fade.
+function downNpc(n) {
+  if (n.downed) return;
+  n.downed = true; n.talking = true;            // talking flag halts its walk AI
+  n.av.group.rotation.x = -Math.PI / 2;         // fall over
+  n.av.group.position.y = 0.3;
+  if (n.hpBar) { scene.remove(n.hpBar); n.hpBar = null; }
+  state.heat = Math.min(100, (state.heat || 0) + 10);
+  setTimeout(() => {
+    scene.remove(n.av.group);
+    const i = cityNPCs.indexOf(n); if (i >= 0) cityNPCs.splice(i, 1);
+    registerInteractables(cityEntrances);
+  }, 4000);
+}
+// Player goes down: respawn at home, restore some health, lose a little cash.
+let playerDownCD = 0;
+function downPlayer(reason) {
+  if (playerDownCD > 0) return;
+  playerDownCD = 3;
+  const fine = Math.min(state.money, 150);
+  state.money -= fine;
+  state.stats.health = 60; state.stats.energy = Math.max(30, state.stats.energy);
+  state.wanted = Math.max(0, (state.wanted || 0) - 1);
+  if (inCar) exitCar();
+  area = 'city';
+  interiors && (interiors.group.visible = false);
+  controls.bounds = null;
+  player.group.visible = true;
+  player.group.position.set(SPAWN_FALLBACK.x, 0, SPAWN_FALLBACK.z);
+  notify('🏥 ' + (reason || 'You were downed') + ' — patched up at home (-$' + fine + ')');
+  saveNow();
+}
+
 // Targets handed to the weapon raycaster: civilians + cops, each with onHit().
 function getWeaponTargets() {
   const out = [];
   if (area !== 'city') return out;
   for (const n of cityNPCs) {
+    if (n.downed) continue;
+    ensureNpcHp(n);
     out.push({
       pos: n.av.group.position.clone().setY(1.1), r: 0.95, kind: 'civ', ref: n,
-      onHit: (dmg) => { n.hp = (n.hp ?? 42) - dmg; n.hitT = 0.2; return n.hp <= 0; },
+      onHit: (dmg) => { n.hp -= dmg; n.hitT = 0.25; return n.hp <= 0; },
     });
   }
   for (const u of policeUnits) {
     out.push({
       pos: u.av.group.position.clone().setY(1.1), r: 1.0, kind: 'cop', ref: u,
-      onHit: (dmg) => { u.health -= dmg; u.hitT = 0.2; return u.health <= 0; },
+      onHit: (dmg) => { u.health -= dmg; u.hitT = 0.25; return u.health <= 0; },
     });
   }
   return out;
 }
 
 // Firing a gun in public is a crime → alerts police.
-function onWeaponShot() {
+function onWeaponShot(hitAny) {
   if (area !== 'city') return;
   if ((state.wanted || 0) < 1) { state.wanted = 1; notify('🚨 Shots fired! Police alerted.'); }
   state.heat = Math.min(100, (state.heat || 0) + 6);
@@ -892,12 +1198,8 @@ function onWeaponKill(tg) {
   if (tg.kind === 'civ') {
     state.wanted = Math.min(5, (state.wanted || 0) + 2);
     state.heat = Math.min(100, (state.heat || 0) + 25);
-    const n = tg.ref;
-    scene.remove(n.av.group);
-    const idx = cityNPCs.indexOf(n);
-    if (idx >= 0) cityNPCs.splice(idx, 1);
-    registerInteractables(cityEntrances);     // drop its "Talk" interactable
-    notify('🚨 You killed a civilian! Wanted +2');
+    downNpc(tg.ref);
+    notify('🚨 Civilian down! Wanted +2');
   } else if (tg.kind === 'cop') {
     state.wanted = Math.min(5, (state.wanted || 0) + 1);
     state.heat = Math.min(100, (state.heat || 0) + 20);
@@ -907,6 +1209,74 @@ function onWeaponKill(tg) {
   }
   saveNow();
 }
+
+// ── floating sprite label (canvas text billboard) ───────────────────────────────
+function makeLabel(text, color = '#ffffff') {
+  const cv = document.createElement('canvas'); cv.width = 256; cv.height = 64;
+  const ctx = cv.getContext('2d');
+  ctx.fillStyle = 'rgba(10,10,16,0.55)'; ctx.fillRect(0, 0, 256, 64);
+  ctx.font = 'bold 34px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillStyle = color; ctx.fillText(text, 128, 34);
+  const tex = new THREE.CanvasTexture(cv); tex.colorSpace = THREE.SRGBColorSpace;
+  const spr = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, depthTest: false, toneMapped: false }));
+  spr.scale.set(1.6, 0.4, 1); spr.renderOrder = 999;
+  return spr;
+}
+
+// ── floating health bars (sprite billboards, always face camera) ────────────────
+function makeHealthBar() {
+  const grp = new THREE.Group();
+  const bg = new THREE.Sprite(new THREE.SpriteMaterial({ color: 0x101014, depthTest: false, transparent: true, opacity: 0.85 }));
+  bg.scale.set(0.92, 0.14, 1);
+  const fill = new THREE.Sprite(new THREE.SpriteMaterial({ color: 0x39d353, depthTest: false, transparent: true }));
+  fill.scale.set(0.88, 0.1, 1);
+  grp.add(bg, fill);
+  grp.renderOrder = 1000;
+  grp.userData.fill = fill;
+  return grp;
+}
+function setHealthBar(grp, frac) {
+  frac = Math.max(0, Math.min(1, frac));
+  const fill = grp.userData.fill;
+  fill.scale.x = Math.max(0.001, 0.88 * frac);
+  fill.position.x = -0.44 * (1 - frac);                 // anchor to the left edge
+  fill.material.color.setHSL(0.34 * frac, 0.85, 0.5);   // green → yellow → red
+}
+// Show a bar above any NPC that is hurt or recently hit; hide at full health.
+function updateNpcHealthBars(dt) {
+  const pp = player ? player.group.position : null;
+  for (const n of cityNPCs) {
+    if (n._hitCD > 0) n._hitCD -= dt;
+    if (n.hitT > 0) { n.hitT -= dt; n.panic = 2.2; }   // any hit triggers a panic run
+    if (n.downed) continue;
+    // panic: flee directly away from the player (NPC "reacts" to being attacked)
+    if (n.panic > 0 && pp) {
+      n.panic -= dt;
+      const g = n.av.group;
+      const dx = g.position.x - pp.x, dz = g.position.z - pp.z;
+      const d = Math.hypot(dx, dz) || 1;
+      const sp = 4.4 * dt;
+      g.position.x += dx / d * sp; g.position.z += dz / d * sp;
+      g.rotation.y = Math.atan2(dx, dz);
+      resolveCollision(g.position, 0.45, cityColliders);
+      n.talking = true;                                 // suppress its normal stroll AI while fleeing
+    } else if (n.panic <= 0 && n._wasPanicking) {
+      n.talking = false;
+    }
+    n._wasPanicking = n.panic > 0;
+    const hurt = n.hp != null && n.hp < (n.maxHp || NPC_MAX_HP);
+    if (hurt || n.hitT > 0) {
+      if (!n.hpBar) { n.hpBar = makeHealthBar(); scene.add(n.hpBar); }
+      const p = n.av.group.position;
+      n.hpBar.position.set(p.x, 2.35, p.z);
+      setHealthBar(n.hpBar, (n.hp ?? NPC_MAX_HP) / (n.maxHp || NPC_MAX_HP));
+      n.hpBar.visible = area === 'city';
+    } else if (n.hpBar) {
+      scene.remove(n.hpBar); n.hpBar = null;
+    }
+  }
+}
+
 
 // Build a foot patrol officer (procedural avatar + navy vest & cap so it reads
 // clearly as police) and drop it on a ring around the player.
@@ -971,11 +1341,18 @@ function updatePolice(dt) {
   const wanted = state.wanted || 0;
   if (wanted === 0) { if (policeUnits.length || policeCars.length) despawnAllPolice(); bustTimer = 0; return; }
 
+  // first responder shows up instantly the moment you become wanted — no waiting
+  if (policeUnits.length === 0 && policeCars.length === 0) {
+    spawnFootCop();
+    if (wanted >= 2) spawnFootCop();
+    notify('🚓 Police are responding!');
+  }
+
   // spawn pacing — more stars ⇒ more units, cruisers appear at 3★+
   policeAccum += dt;
   const wantFoot = Math.min(4, wanted + 1);
   const wantCars = wanted >= 3 ? Math.min(2, wanted - 2) : 0;
-  if (policeAccum > 2.0) {
+  if (policeAccum > 1.2) {
     policeAccum = 0;
     if (policeUnits.length < wantFoot) spawnFootCop();
     if (policeCars.length < wantCars) spawnCopCar();
@@ -1076,6 +1453,7 @@ function initGameSystems() {
   initWeapons({
     camera, scene, renderer, state, notify, saveNow,
     getTargets: getWeaponTargets, onKill: onWeaponKill, onShotFired: onWeaponShot,
+    onEquip: () => mountHeldWeapon(),
   });
   initMissions({ state, notify, saveNow });
   renderTracker();
@@ -1120,7 +1498,13 @@ function updatePlayer(dt, t) {
   const moving = move.lengthSq() > 0.001;
   if (moving) move.normalize();
 
-  const speed = inp.run ? 6.2 : 3.4;
+  // Sprinting costs stamina (energy); higher FITNESS = faster sprint + slower
+  // drain, so gym training tangibly improves how you move.
+  const pstats = state.stats;
+  const pfit = pstats.fitness || 0;
+  const canSprint = inp.run && moving && (pstats.energy || 0) > 2;
+  const speed = canSprint ? (5.6 + (pfit / 100) * 2.2) : 3.4;
+  if (canSprint) pstats.energy = Math.max(0, pstats.energy - (7 * (1 - pfit / 200)) * dt);
   const p = player.group.position;
   p.addScaledVector(move, speed * dt);
 
@@ -1133,8 +1517,8 @@ function updatePlayer(dt, t) {
   if (controls.mode === CAM.FIRST) player.group.rotation.y = yaw;
   else if (moving) player.group.rotation.y = lerpAngle(player.group.rotation.y, Math.atan2(move.x, move.z), Math.min(1, dt * 12));
 
-  const amp = moving ? (inp.run ? 0.95 : 0.62) : 0;
-  const rate = inp.run ? 12 : 8.4;
+  const amp = moving ? (canSprint ? 0.95 : 0.62) : 0;
+  const rate = canSprint ? 12 : 8.4;
   const ph = t * rate;
   const sw = Math.sin(ph) * amp;
   player.parts.leftLeg.rotation.x = sw; player.parts.rightLeg.rotation.x = -sw;
@@ -1275,6 +1659,7 @@ function runStation(intr, st) {
     case 'workout': startWorkout(); break;
     case 'study': startStudy(); break;
     case 'job-work': doJobShift(); break;
+    case 'garage-work': doGarageShift(); break;
     case 'repair': repairVehicle(); break;
     case 'weapon-shop': openWeaponShop(); break;
     default: notify('Nothing happens here.');
@@ -1309,10 +1694,17 @@ function buyCar(carDef) {
   saveNow();
 }
 function setActiveCar(carDef) {
-  // recolor the city drivable car to represent the chosen ride
-  car.g.traverse(o => { if (o.isMesh && o.material && o.material.metalness >= 0.3 && o.material.color && o.geometry?.type === 'BoxGeometry') { /* body panels */ } });
-  if (car.g.children[0]?.material) car.g.children[0].material.color.set(carDef.color);
+  // give the drivable car the purchased model so the whip you own matches the
+  // one you bought at the showroom (unique kit body per dealership car).
+  if (carDef.kitModel) {
+    const ok = swapVehicleVisual(car, carDef.kitModel);
+    if (!ok && car.g.children[0]?.material) car.g.children[0].material.color.set(carDef.color);
+  } else if (car.g.children[0]?.material) {
+    car.g.children[0].material.color.set(carDef.color);
+  }
   car.damage = 0; state.carDamage = 0;
+  state.activeCar = carDef.id;
+  applyCarDamageVisual(car);
 }
 
 // jewelry quick-shop
@@ -1405,18 +1797,53 @@ function buyChicken() {
   missionEvent('buy-chicken');
   saveNow();
 }
+// ── WORK SHIFTS (task loops — pay ONLY after completing the tasks) ──────────────
+// Every job runs a short checklist of timed tasks via the shared mini-game. Pay
+// and stat boosts scale with how many tasks you nailed (bad/okay/good/excellent).
+function grade(hits, rounds) {
+  const f = rounds ? hits / rounds : 0;
+  if (f >= 0.95) return { label: 'EXCELLENT', mult: 1.5 };
+  if (f >= 0.65) return { label: 'GOOD', mult: 1.15 };
+  if (f >= 0.35) return { label: 'OKAY', mult: 0.85 };
+  return { label: 'POOR', mult: 0.5 };
+}
+function runWorkShift({ title, jobName, tasks, basePay, energyCost = 20, onPaid }) {
+  if (state.stats.energy < 12) { notify('Too gassed to work — rest or eat first.'); return; }
+  startTimingGame({
+    title, rounds: tasks.length, speedBase: 2.2, labels: tasks,
+    onFinish: (hits, rounds) => {
+      const g = grade(hits, rounds);
+      const pay = Math.round(basePay * g.mult);
+      state.money += pay;
+      state.job = jobName;
+      state.stats.energy = Math.max(0, state.stats.energy - energyCost);
+      state.stats.hygiene = Math.max(0, state.stats.hygiene - 8);
+      notify(`✅ ${g.label} shift (${hits}/${rounds}) — earned $${pay}`);
+      if (onPaid) onPaid(g, hits, rounds);
+      state.timeMin += 150;
+      missionEvent('job-done');
+      saveNow();
+    },
+  });
+}
+
+// Chicken Spot crew shift.
 function workShift() {
-  state.money += 55; state.job = 'Chicken Spot Crew';
-  state.stats.energy = Math.max(0, state.stats.energy - 18);
-  state.stats.hygiene = Math.max(0, state.stats.hygiene - 10);
-  state.timeMin += 180;
-  notify('🧑‍🍳 Worked a shift: +$55, -energy');
-  saveNow();
+  runWorkShift({
+    title: '🍗 Chicken Spot Shift', jobName: 'Chicken Spot Crew', basePay: 60,
+    tasks: ['Take order', 'Fry & serve', 'Wipe counter', 'Restock', 'Take out trash'],
+    onPaid: (g) => {
+      // good service builds a little business sense (smarts) + fun
+      state.stats.smarts = Math.min(100, state.stats.smarts + (g.mult >= 1.15 ? 2 : 1));
+      state.stats.fun = Math.min(100, state.stats.fun + 3);
+    },
+  });
 }
 function restAtHome() {
   state.stats.energy = 100; state.stats.hygiene = 100;
+  state.stats.health = Math.min(100, (state.stats.health ?? 100) + 35);   // sleep heals
   state.timeMin += 240;
-  notify('😴 Slept it off — energy full');
+  notify('😴 Slept it off — energy & health restored');
   saveNow();
 }
 function openSafe() {
@@ -1454,9 +1881,14 @@ function startEating() {
   camera.add(eatPiece);
 }
 function updateEating() {
-  showPrompt('Take a bite (' + eatBites + ' left)', 'e');
+  // fail-safe: if the piece vanished for any reason, end cleanly (prevents a stuck busy state)
+  if (!eatPiece) { eating = false; showPrompt(null); return; }
+  showPrompt('Take a bite — ' + eatBites + ' left', 'click / E');
   eatPiece.rotation.y += 0.01;
-  if (controls.consumePress('e')) {
+  // accept either the E key OR a left click so the player is never stuck
+  const bite = controls.consumePress('e') || firePressed;
+  firePressed = false;
+  if (bite) {
     eatBites--;
     const s = Math.max(0.01, eatBites / 4);
     eatMeat.scale.set(1.3 * s, s, s);
@@ -1467,7 +1899,9 @@ function finishEating() {
   notify('🍗 Clean to the bone! +Hunger');
   state.stats.hunger = Math.min(100, state.stats.hunger + 38);
   state.stats.fun = Math.min(100, state.stats.fun + 8);
-  setTimeout(() => { if (eatPiece) { camera.remove(eatPiece); eatPiece = null; } }, 600);
+  // remove the piece immediately so the loop can never get wedged on a stale node
+  if (eatPiece) { camera.remove(eatPiece); eatPiece = null; }
+  eatMeat = null;
   eating = false;
   showPrompt(null);
   missionEvent('eat-done');
@@ -1480,13 +1914,14 @@ function finishEating() {
 // name is kept because the main loop + busy guard already gate on it.
 let hairGame = false, hairState = null;
 const mgEl = () => document.getElementById('minigame');
-function startTimingGame({ title, hintVerb = 'SPACE', rounds = 3, speedBase = 2.0, speedStep = 0.7, onFinish }) {
+function startTimingGame({ title, hintVerb = 'SPACE', rounds = 3, speedBase = 2.0, speedStep = 0.7, onFinish, labels = null }) {
   hairGame = true;
   hairState = { round: 0, hits: 0, rounds, speedBase, speedStep, speed: speedBase,
-    zoneStart: 38, zoneW: 22, t0: clock.elapsedTime, onFinish, hintVerb };
+    zoneStart: 38, zoneW: 22, t0: clock.elapsedTime, onFinish, hintVerb, labels };
   newTimingRound();
   document.getElementById('mg-title').textContent = title;
-  document.getElementById('mg-hint').innerHTML = `Press <b>${hintVerb}</b> in the green zone (round 1/${rounds})`;
+  const lbl = labels ? `<b>${labels[0]}</b> — ` : '';
+  document.getElementById('mg-hint').innerHTML = `${lbl}press <b>${hintVerb}</b> in the green zone (1/${rounds})`;
   mgEl().style.display = 'flex';
 }
 function newTimingRound() {
@@ -1508,8 +1943,10 @@ function updateHairline() {
     if (hairState.round >= hairState.rounds) finishTimingGame();
     else {
       newTimingRound();
+      const lbls = hairState.labels;
+      const lbl = lbls ? `<b>${lbls[hairState.round] || lbls[lbls.length - 1]}</b> — ` : '';
       document.getElementById('mg-hint').innerHTML =
-        `${hit ? '✅ nice!' : '❌ missed'} — Press <b>${hairState.hintVerb}</b> (round ${hairState.round + 1}/${hairState.rounds})`;
+        `${hit ? '✅' : '❌'} ${lbl}press <b>${hairState.hintVerb}</b> (${hairState.round + 1}/${hairState.rounds})`;
     }
   }
 }
@@ -1576,21 +2013,26 @@ function startStudy() {
   });
 }
 
-// Office job shift — earns cash scaled by smarts, costs energy + time.
+// Office job shift — task loop; pay scaled by performance AND smarts.
 function doJobShift() {
   if (state.stats.energy < 20) { notify('No energy for a shift — rest first.'); return; }
-  const base = 70;
-  const bonus = Math.round((state.stats.smarts / 100) * 80);   // smarter → better pay
-  const pay = base + bonus;
-  state.money += pay;
-  state.job = 'WorkTower Associate';
-  state.stats.energy = Math.max(0, state.stats.energy - 30);
-  state.stats.hygiene = Math.max(0, state.stats.hygiene - 8);
-  state.stats.fun = Math.max(0, state.stats.fun - 6);
-  state.timeMin += 240;
-  notify(`💼 Shift done: +$${pay} (base $${base} + $${bonus} smarts bonus)`);
-  missionEvent('job-done');
-  saveNow();
+  const smartBonus = Math.round((state.stats.smarts / 100) * 80);   // smarter → better base pay
+  runWorkShift({
+    title: '💼 Office Shift', jobName: 'WorkTower Associate', basePay: 70 + smartBonus, energyCost: 28,
+    tasks: ['Boot computer', 'File paperwork', 'Answer email', 'Deliver folder', 'Update checklist'],
+    onPaid: (g) => {
+      state.stats.smarts = Math.min(100, state.stats.smarts + (g.mult >= 1.15 ? 3 : 1));
+      state.stats.fun = Math.max(0, state.stats.fun - 4);
+    },
+  });
+}
+// Garage shift — task loop; builds a little fitness from the labor.
+function doGarageShift() {
+  runWorkShift({
+    title: '🔧 Garage Shift', jobName: 'Garage Hand', basePay: 75, energyCost: 26,
+    tasks: ['Grab the tools', 'Clean the spill', 'Inspect car', 'Tighten the part', 'Park in bay'],
+    onPaid: (g) => { state.stats.fitness = Math.min(100, state.stats.fitness + (g.mult >= 1.15 ? 2 : 1)); },
+  });
 }
 
 // Garage repair — fixes the active/driven car's damage for a fee.
@@ -1774,6 +2216,8 @@ function handleInteraction() {
 window.addEventListener('keydown', e => {
   if (mode !== 'play' || isUIOpen() || isSettingsOpen() || eating || hairGame) return;
   const k = e.key.toLowerCase();
+  // robbery: shake down the nearest civilian for cash (risky — draws heat)
+  if (k === 'g' && !inCar && area === 'city') robNearestNpc();
   if (k === 'v') { const m = controls.cycleMode(); notify('Camera: ' + m.toUpperCase()); document.getElementById('crosshair').style.display = m === CAM.FIRST ? '' : 'none'; }
   if (k === 'c' && !inCar && area === 'city') openWardrobe();
   if (k === 'i') toggleInteriorDebug();
@@ -1840,6 +2284,7 @@ function animate() {
   if (!busy) {
     if (inCar) updateCar(dt); else updatePlayer(dt, t);
     updateVehicleCollisions(dt);
+    updateNpcHealthBars(dt);
     if (!inCar) updateWeapons(dt, { fireHeld, firePressed, reloadPressed });
     firePressed = false; reloadPressed = false;
     updatePolice(dt);
@@ -1848,7 +2293,10 @@ function animate() {
   } else {
     // keep camera framing the player while a menu/minigame is open
     if (!inCar && player) controls.update(player.group.position, player.eyeHeight, dt);
-    firePressed = false; reloadPressed = false;
+    updateNpcHealthBars(dt);
+    reloadPressed = false;
+    // NOTE: do NOT clear firePressed here — the eating loop consumes a click as a "bite".
+    if (!eating) firePressed = false;
   }
 
   if (eating) updateEating();

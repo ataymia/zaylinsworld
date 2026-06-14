@@ -88,6 +88,7 @@ export async function equipWeapon(id, { silent = false } = {}) {
   clearViewModel();
   if (!w.melee && w.slot) await buildViewModel(w);
   updateWeaponHUD();
+  if (deps.onEquip) deps.onEquip(w);          // let the host mount a 3rd-person hand model
   if (!silent) deps.notify(w.icon + ' ' + w.name);
   deps.saveNow();
 }
@@ -294,10 +295,18 @@ function meleeHit() {
   const origin = new THREE.Vector3(); deps.camera.getWorldPosition(origin);
   const dir = new THREE.Vector3(); deps.camera.getWorldDirection(dir);
   const targets = deps.getTargets ? deps.getTargets() : [];
+  let hit = false;
   for (const tg of targets) {
     const t = raySphere(origin, dir, tg.pos, (tg.r || 1.0) + 0.3);
-    if (t != null && t <= current.range) { applyDamage(tg, current.dmg, tg.pos); break; }
+    if (t != null && t <= current.range) { applyDamage(tg, meleeDamage(), tg.pos); hit = true; break; }
   }
+  // a thrown punch in public still draws attention (lighter than gunfire)
+  if (deps.onShotFired) deps.onShotFired(hit, true);
+}
+// fists scale with the player's fitness/strength stat (stronger → harder hits)
+function meleeDamage() {
+  const fit = (deps.state?.stats?.fitness) || 0;
+  return current.dmg + Math.round(fit * 0.45);   // 8 base → up to ~53 at 100 fitness
 }
 
 // ray vs sphere; returns distance along ray to first hit or null

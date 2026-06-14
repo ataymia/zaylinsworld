@@ -68,16 +68,24 @@ export const HAIRSTYLES = [
 // from landing across the eyes. The per-asset values below fine-tune that fit.
 //   anchor   : which head anchor to seat on (scalp_center | head_top | hairline_front | scalp_back)
 //   scaleMul : multiply the auto-fit scale (1 = exact head-width fit)
-//   yOffset  : raise(+)/lower(-) along the head's up axis, in meters
-//   zOffset  : push forward(+)/back(-), in meters
+//   seat     : fraction of the hair's own height to sink below the anchor so the
+//              cap WRAPS the skull (0 = perches on top, 0.5 = half-buried/hugging)
+//   yOffset  : raise(+)/lower(-) along the head's up axis, in meters (fine trim)
+//   zOffset  : push forward(+)/back(-), in meters (keep small so it never covers the face)
 //   rotX/Y/Z : extra rotation in radians
 //   fallback : procedural HAIRSTYLES id rendered if the glTF fails to load/attach
+// Values below are hand-tuned per style so each one sits ON the scalp — not
+// floating, not sunk through the face, not over the eyes.
 export const HAIR_GLTF = {
-  'gltf-buzzed':   { file: 'Hair_Buzzed.gltf',        name: 'Buzz Cut',  anchor: 'scalp_center', scaleMul: 1.06, yOffset: 0.02, zOffset: 0.00, rotX: 0, rotY: 0, rotZ: 0, fallback: 'low-fade' },
-  'gltf-parted':   { file: 'Hair_SimpleParted.gltf',  name: 'Side Part', anchor: 'scalp_center', scaleMul: 1.10, yOffset: 0.04, zOffset: 0.02, rotX: 0, rotY: 0, rotZ: 0, fallback: 'taper-fade' },
-  'gltf-long':     { file: 'Hair_Long.gltf',          name: 'Long Hair', anchor: 'scalp_center', scaleMul: 1.12, yOffset: 0.06, zOffset: -0.02, rotX: 0, rotY: 0, rotZ: 0, fallback: 'afro' },
-  'gltf-buns':     { file: 'Hair_Buns.gltf',          name: 'Space Buns',anchor: 'scalp_center', scaleMul: 1.04, yOffset: 0.04, zOffset: 0.00, rotX: 0, rotY: 0, rotZ: 0, fallback: 'mini-afro' },
-  'gltf-buzzed-f': { file: 'Hair_BuzzedFemale.gltf',  name: 'Tapered',   anchor: 'scalp_center', scaleMul: 1.06, yOffset: 0.02, zOffset: 0.00, rotX: 0, rotY: 0, rotZ: 0, fallback: 'taper-fade' },
+  // short caps hug close to the skull (higher seat), sit back a touch off the brow
+  'gltf-buzzed':   { file: 'Hair_Buzzed.gltf',        name: 'Buzz Cut',  anchor: 'scalp_center', scaleMul: 1.08, seat: 0.62, yOffset: 0.02, zOffset: -0.02, rotX: 0, rotY: 0, rotZ: 0, fallback: 'low-fade' },
+  'gltf-buzzed-f': { file: 'Hair_BuzzedFemale.gltf',  name: 'Tapered',   anchor: 'scalp_center', scaleMul: 1.08, seat: 0.60, yOffset: 0.02, zOffset: -0.02, rotX: 0, rotY: 0, rotZ: 0, fallback: 'taper-fade' },
+  // side part has volume up top → seat a bit higher, nudge back so it clears the face
+  'gltf-parted':   { file: 'Hair_SimpleParted.gltf',  name: 'Side Part', anchor: 'scalp_center', scaleMul: 1.10, seat: 0.50, yOffset: 0.03, zOffset: -0.03, rotX: 0, rotY: 0, rotZ: 0, fallback: 'taper-fade' },
+  // long hair drapes down the back → lower seat, pushed back so it falls behind the head
+  'gltf-long':     { file: 'Hair_Long.gltf',          name: 'Long Hair', anchor: 'scalp_center', scaleMul: 1.12, seat: 0.42, yOffset: 0.02, zOffset: -0.05, rotX: 0, rotY: 0, rotZ: 0, fallback: 'afro' },
+  // buns sit on top of the crown → smaller, perched higher
+  'gltf-buns':     { file: 'Hair_Buns.gltf',          name: 'Space Buns',anchor: 'scalp_center', scaleMul: 1.04, seat: 0.46, yOffset: 0.03, zOffset: -0.02, rotX: 0, rotY: 0, rotZ: 0, fallback: 'mini-afro' },
 };
 export function isGltfHair(id) { return typeof id === 'string' && id.startsWith('gltf-'); }
 

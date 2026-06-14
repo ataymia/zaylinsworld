@@ -12,7 +12,7 @@ export function defaultState() {
     custom: defaultCustom(),
     money: 500,
     // stats 0..100
-    stats: { energy: 100, hunger: 80, fitness: 20, smarts: 15, hygiene: 90, fun: 50 },
+    stats: { health: 100, energy: 100, hunger: 80, fitness: 20, smarts: 15, hygiene: 90, fun: 50 },
     job: 'Unemployed',
     wanted: 0,          // 0..5 stars
     heat: 0,            // long-term crime heat

@@ -139,12 +139,17 @@ export async function attachGltfHair(avatar, styleId, hairColorHex, renderer) {
     wrapper.add(baked);
     wrapper.scale.setScalar(scale);
 
-    // Seat on the chosen scalp anchor (head-local). Sink slightly so the cap
-    // hugs the skull; per-asset offsets fine-tune the fit.
+    // Seat on the chosen scalp anchor (head-local). The baked cap has its bottom
+    // at y=0, so to make it WRAP the skull (instead of perching on top like a hat
+    // or sinking through the face) we sink it below the anchor by a per-style
+    // fraction of its own height. `seat` larger ⇒ hair sits lower/hugs more;
+    // yOffset is the fine vertical trim, zOffset the forward/back trim.
+    const hairH = size.y * scale;
     const anchor = anchors[cfg.anchor] || anchors.scalp_center;
+    const seatFrac = cfg.seat ?? 0.5;
     wrapper.position.set(
       (cfg.xOffset ?? 0),
-      anchor.position.y + (cfg.yOffset ?? 0) - HEAD_R * 0.18,
+      anchor.position.y + (cfg.yOffset ?? 0) - hairH * seatFrac,
       anchor.position.z + (cfg.zOffset ?? 0),
     );
     wrapper.rotation.set(cfg.rotX ?? 0, cfg.rotY ?? 0, cfg.rotZ ?? 0);

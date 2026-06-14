@@ -145,11 +145,11 @@ const OFFS = {
 };
 
 export const DEALER_CARS = [
-  { id: 'cityhatch',  name: 'City Hatch',   price: 3500,  color: '#3a8d54', type: 'hatch', super: false, top: 120, assetSlot: 'car_starter' },
-  { id: 'sportcoupe', name: 'Sport Coupe',  price: 13000, color: '#c0392b', type: 'coupe', super: false, top: 165, assetSlot: 'car_supercar_01' },
-  { id: 'luxsedan',   name: 'Lux Sedan',    price: 26000, color: '#1c2433', type: 'sedan', super: false, top: 150, assetSlot: 'car_sedan' },
-  { id: 'phantomgt',  name: 'Phantom GT',   price: 68000, color: '#e7c14a', type: 'super', super: true,  top: 210, assetSlot: 'car_hypercar_01' },
-  { id: 'vipersx',    name: 'Viper SX',     price: 92000, color: '#1f8a6b', type: 'super', super: true,  top: 225, assetSlot: 'car_supercar_01' },
+  { id: 'cityhatch',  name: 'City Hatch',   price: 3500,  color: '#3a8d54', type: 'hatch', super: false, top: 120, assetSlot: 'car_starter',     kitModel: 'mobil' },
+  { id: 'sportcoupe', name: 'Sport Coupe',  price: 13000, color: '#c0392b', type: 'coupe', super: false, top: 165, assetSlot: 'car_supercar_01', kitModel: 'coupe' },
+  { id: 'luxsedan',   name: 'Lux Sedan',    price: 26000, color: '#1c2433', type: 'sedan', super: false, top: 150, assetSlot: 'car_sedan',      kitModel: 'kamaro' },
+  { id: 'phantomgt',  name: 'Phantom GT',   price: 68000, color: '#e7c14a', type: 'super', super: true,  top: 210, assetSlot: 'car_hypercar_01', kitModel: 'italia' },
+  { id: 'vipersx',    name: 'Viper SX',     price: 92000, color: '#1f8a6b', type: 'super', super: true,  top: 225, assetSlot: 'car_supercar_01', kitModel: 'lamb' },
 ];
 
 export const JEWELRY_STOCK = [
@@ -341,7 +341,7 @@ export function buildInteriors() {
       stations: [
         { id: 'food-buy', type: 'food-buy', pos: new THREE.Vector3(o.x + 2.5, 0, o.z - 1.4), label: 'Buy Chicken ($8)' },
         { id: 'food-eat', type: 'food-eat', pos: new THREE.Vector3(o.x + 3, 0, o.z + 2.5), label: 'Sit & Eat Chicken' },
-        { id: 'work-shift', type: 'work-shift', pos: new THREE.Vector3(o.x - 3, 0, o.z + 2.5), label: 'Work a Shift (+$55)' },
+        { id: 'work-shift', type: 'work-shift', pos: new THREE.Vector3(o.x - 3, 0, o.z + 2.5), label: 'Work a Shift (tasks)' },
       ],
     };
   }
@@ -590,6 +590,7 @@ export function buildInteriors() {
       npcs: [{ name: 'Dro', role: 'mechanic', pos: new THREE.Vector3(o.x + 5, 0, o.z + 2.6), dialogue: 'mechanic' }],
       stations: [
         { id: 'repair-bay', type: 'repair', pos: new THREE.Vector3(o.x - 3, 0, o.z + 3), label: 'Repair / Service Vehicle' },
+        { id: 'garage-shift', type: 'garage-work', pos: new THREE.Vector3(o.x + 3, 0, o.z + 3), label: 'Work a Garage Shift' },
       ],
     };
   }

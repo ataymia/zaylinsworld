@@ -103,7 +103,7 @@ export function buildCreator(state, handlers) {
 export function showCreator(show) { $('creator').classList.toggle('hidden', !show); }
 
 // ── HUD ───────────────────────────────────────────────────────────────────────
-const STAT_COLORS = { energy: '#4eff91', hunger: '#ffb14e', fitness: '#4ec3ff',
+const STAT_COLORS = { health: '#ff5a5a', energy: '#4eff91', hunger: '#ffb14e', fitness: '#4ec3ff',
   smarts: '#c98aff', hygiene: '#7affd1', fun: '#ff7ab0' };
 export function updateHUD(state, locationLabel) {
   $('money-box').textContent = '$' + Math.floor(state.money).toLocaleString();
