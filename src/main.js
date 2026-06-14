@@ -1187,7 +1187,8 @@ function getWeaponTargets() {
 }
 
 // Firing a gun in public is a crime → alerts police.
-function onWeaponShot(hitAny) {
+function onWeaponShot(hitAny, isMelee) {
+  if (isMelee) { if (hitAny) missionEvent('fight'); return; }
   if (area !== 'city') return;
   if ((state.wanted || 0) < 1) { state.wanted = 1; notify('🚨 Shots fired! Police alerted.'); }
   state.heat = Math.min(100, (state.heat || 0) + 6);
@@ -1402,7 +1403,7 @@ function updatePolice(dt) {
       state.wanted = Math.max(0, wanted - 1);
       state.heat = Math.max(0, (state.heat || 0) - 30);
       notify(state.wanted === 0 ? '🕶️ You lost the cops.' : 'Wanted dropped to ' + state.wanted);
-      if (state.wanted === 0) despawnAllPolice();
+      if (state.wanted === 0) { despawnAllPolice(); missionEvent('lost-cops'); }
       saveNow();
     }
   } else {
