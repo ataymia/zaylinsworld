@@ -23,6 +23,7 @@ export function defaultState() {
     pos: { x: SPAWN.x, z: SPAWN.z },
     facing: SPAWN.faceY,
     carDamage: 0,
+    fuel: 100,          // current vehicle fuel (0..100), refill at the gas station
     createdCharacter: false,
     // ownership
     ownedCars: [],      // car ids bought at dealership

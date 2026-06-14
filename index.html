@@ -145,6 +145,21 @@
   #weapon-hud .wp-ammo{font-size:16px;color:var(--gold);min-width:74px;text-align:right;
     font-variant-numeric:tabular-nums;}
 
+  /* ── minimap / radar (top-right) ── */
+  #minimap{position:fixed;right:14px;top:14px;z-index:90;display:none;
+    border-radius:12px;box-shadow:0 6px 22px rgba(0,0,0,.5);pointer-events:none;}
+
+  /* ── car HUD (speed / fuel / damage while driving) ── */
+  #car-hud{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:108;
+    display:flex;align-items:center;gap:16px;background:rgba(8,8,16,.78);
+    border:1px solid rgba(255,255,255,.16);border-radius:12px;padding:8px 16px;
+    font-weight:800;letter-spacing:.4px;}
+  #car-hud .ch-item{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:64px;}
+  #car-hud .ch-label{font-size:9px;text-transform:uppercase;letter-spacing:1.2px;color:#8a8aa0;}
+  #car-hud .ch-val{font-size:16px;color:#dfe7ff;font-variant-numeric:tabular-nums;}
+  #car-hud .ch-bar{width:64px;height:7px;border-radius:5px;background:rgba(255,255,255,.14);overflow:hidden;}
+  #car-hud .ch-fill{height:100%;width:100%;background:#4eff91;transition:width .2s;}
+
   /* ── mission tracker (left, under HUD) ── */
   #mission-tracker{position:fixed;left:14px;top:96px;z-index:60;max-width:300px;
     background:rgba(8,8,16,.74);border:1px solid rgba(255,255,255,.14);border-left:3px solid var(--accent);
@@ -194,10 +209,12 @@
   <div id="prompt"></div>
   <div id="notif"></div>
   <div id="weapon-hud" style="display:none;"></div>
+  <div id="car-hud" style="display:none;"></div>
+  <canvas id="minimap"></canvas>
   <div id="mission-tracker" style="display:none;"></div>
   <div id="hint">
     <b>WASD</b> move · <b>Mouse</b> look (click to lock) · <b>Shift</b> run · <b>Space</b> jump ·
-    <b>E</b> interact/talk · <b>F</b> enter car · <b>V</b> camera · <b>C</b> wardrobe · <b>M</b> monster
+    <b>E</b> interact/talk · <b>F</b> enter car · <b>N</b> map · <b>V</b> camera · <b>C</b> wardrobe · <b>M</b> monster
   </div>
 
   <!-- Character creator -->

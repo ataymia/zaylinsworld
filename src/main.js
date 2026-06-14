@@ -7,6 +7,9 @@ import { buildAvatar, isGltfHair, HAIRSTYLES, HAIR_COLORS, JEWELRY } from './ava
 import { attachGltfHair, attachedHairInfo } from './hairKit.js';
 import { buildDistrict } from './cityKit.js';
 import { placeStreetProps } from './props.js';
+import { placeWorldBuildings } from './worldBuildings.js';
+import { furnishInteriors } from './furnish.js';
+import { initMinimap, setMarkers } from './minimap.js';
 import { preloadVehicles, swapVehicleVisual, TRAFFIC_FLEET, DRIVABLE_DEFAULT, DEALER_FLEET } from './vehicleKit.js';
 import { buildCity, colliders as cityColliders } from './world.js';
 import { buildInteriors, DEALER_CARS, JEWELRY_STOCK, GEAR_STOCK } from './interiors.js';
@@ -32,7 +35,7 @@ import {
   initLoadingScreen, hideLoadingScreen, setStatus, setProgress, loadingManager,
 } from './loader.js';
 import {
-  buildCreator, showCreator, updateHUD, showPrompt, notify, SERVERS,
+  buildCreator, showCreator, updateHUD, updateCarHUD, showPrompt, notify, SERVERS,
   isUIOpen, onMenuClose, openDialogue, openShop, openChainBuilder, closeMenus,
 } from './ui.js';
 
@@ -162,6 +165,8 @@ let bustTimer = 0;             // seconds a cop has been on top of the player
 let drivenDist = 0, drivenFlagged = false;   // "Get Around Town" mission tracker
 let builderOpen = false;
 let wardrobeResume = false;      // creator opened from inside the game
+let refuelPoints = [];           // gas-station forecourts: { x, z, r, id }
+let minimap = null;              // corner radar API (initMinimap)
 
 const controls = new Controls(camera, canvas);
 const manager = new InteractionManager();
@@ -218,6 +223,7 @@ function enterWorld() {
     registerInteractables(cityInfo.entrances);
     graphics.applyToScene(scene, renderer);   // reflections + texture filtering
     started = true;
+    minimap = initMinimap();                   // corner radar / town map (before asset wiring)
     applyWorldAssets();                        // swap in real GLBs where available
     initGameSystems();                         // weapons + missions + police hooks
   }
@@ -310,6 +316,16 @@ function applyWorldAssets() {
   buildDistrict(scene, renderer)
     .then((placed) => { if (placed && placed.length) console.info('[district] landmarks:', placed.map(p => p.label).join(', ')); })
     .catch((e) => console.warn('[district] failed:', e));
+  // drop the uploaded GLB landmark buildings (gas station, diner, mini-market)
+  placeWorldBuildings(scene, renderer)
+    .then((res) => {
+      refuelPoints = res.refuels || [];
+      if (minimap) setMarkers(res.markers || []);
+    })
+    .catch((e) => console.warn('[worldbld] failed:', e));
+  // furnish the walkable interiors with uploaded furniture + food props
+  furnishInteriors(interiors, renderer)
+    .catch((e) => console.warn('[furnish] failed:', e));
 }
 
 // Swap the procedural traffic + drivable cars for real Kenney Car Kit models
@@ -954,6 +970,30 @@ function robNearestNpc() {
   missionEvent('rob-done');
   saveNow();
 }
+
+// ── fuel + gas-station refuel ───────────────────────────────────────────────────
+// Find the nearest gas-station forecourt within its radius of a position.
+function nearestRefuel(pos) {
+  for (const p of refuelPoints) {
+    if (Math.hypot(p.x - pos.x, p.z - pos.z) <= (p.r || 7)) return p;
+  }
+  return null;
+}
+function refuelCost(v) {
+  const missing = Math.max(0, 100 - (v.fuel ?? 100));
+  return Math.max(0, Math.ceil(missing * 1.2));   // ~$120 for a full tank
+}
+function refuelVehicle(v) {
+  const cost = refuelCost(v);
+  if (cost <= 0) return;
+  if (state.money < cost) { notify("⛽ Not enough cash to refuel."); return; }
+  state.money -= cost;
+  v.fuel = 100;
+  if (v === car) state.fuel = 100;
+  notify(`⛽ Tank filled — $${cost}`);
+  saveNow();
+}
+
 function exitCar() {
   const v = drivingVehicle || car;
   inCar = false;
@@ -970,8 +1010,11 @@ function updateCar(dt) {
   const v = drivingVehicle || car;
   const inp = controls.moveInput();
   const accel = 16, maxF = 24, maxR = 9, fric = 7;
-  if (inp.f > 0) v.speed += accel * dt;
-  else if (inp.f < 0) v.speed -= accel * dt;
+  // fuel: an empty tank sputters out (no throttle), so you must reach a gas station
+  if (v.fuel === undefined) v.fuel = (v === car) ? (state.fuel ?? 100) : 100;
+  const dry = v.fuel <= 0;
+  if (inp.f > 0 && !dry) v.speed += accel * dt;
+  else if (inp.f < 0 && !dry) v.speed -= accel * dt;
   else v.speed -= Math.sign(v.speed) * Math.min(Math.abs(v.speed), fric * dt);
   v.speed = Math.max(-maxR, Math.min(maxF, v.speed));
 
@@ -986,6 +1029,12 @@ function updateCar(dt) {
   // distance driven this session → feeds the "Get Around Town" mission
   drivenDist += Math.abs(v.speed) * dt;
   if (drivenDist > 120 && !drivenFlagged) { drivenFlagged = true; missionEvent('drive-checkpoint'); }
+  // burn fuel proportional to throttle/speed; warn once when it gets low/empty
+  const prevFuel = v.fuel;
+  v.fuel = Math.max(0, v.fuel - (Math.abs(v.speed) / maxF) * dt * 2.2 - (inp.f !== 0 ? dt * 0.25 : 0));
+  if (v === car) state.fuel = v.fuel;
+  if (prevFuel > 20 && v.fuel <= 20) notify('⛽ Low fuel — find a Gas-N-Go to refuel.');
+  if (prevFuel > 0 && v.fuel <= 0) notify('⛽ Out of fuel! Coast to a gas station to refuel.');
   if (v.g.position.distanceTo(before) > 0.02 && v.g.position.distanceTo(before) < Math.abs(v.speed * dt) * 0.6 && Math.abs(v.speed) > 7) {
     const sev = Math.abs(v.speed);
     v.damage = Math.min(100, (v.damage || 0) + sev * dt * 5);
@@ -2251,6 +2300,15 @@ function locationLabel() {
 // ── interaction dispatch each frame ────────────────────────────────────────────
 function handleInteraction() {
   if (inCar) {
+    // refuel at a gas-station forecourt when stopped (E), else show exit prompt (F)
+    const v = drivingVehicle || car;
+    const pump = nearestRefuel(v.g.position);
+    if (pump && Math.abs(v.speed || 0) < 1.5 && (v.fuel ?? 100) < 99.5) {
+      const cost = refuelCost(v);
+      showPrompt(`Refuel  ($${cost})`, 'e');
+      if (controls.consumePress('e')) refuelVehicle(v);
+      return;
+    }
     showPrompt('Exit vehicle', 'f');
     if (controls.consumePress('f')) exitCar();
     return;
@@ -2281,6 +2339,7 @@ window.addEventListener('keydown', e => {
     if (k === 'j') cycleJewelry();
   }
   if (k === 'm') { state.monsterMode = !state.monsterMode; notify('Monster Mode ' + (state.monsterMode ? 'ON 👹' : 'off')); }
+  if (k === 'n' && minimap) minimap.toggleExpand();   // expand / shrink the town map
   // weapons: reload, quick-switch, and 1–9 to equip from your OWNED list (a held
   // gun is never lost — press its number or open the inventory to draw it again).
   if (k === 'r') reloadPressed = true;
@@ -2361,6 +2420,34 @@ function animate() {
   if (hairGame) updateHairline();
 
   updateHUD(state, locationLabel());
+  // car HUD (speed / fuel / damage) while driving
+  if (inCar) {
+    const v = drivingVehicle || car;
+    updateCarHUD({ visible: true, speed: Math.abs(v.speed || 0) * 4, fuel: v.fuel ?? 100, damage: v.damage || 0 });
+  } else {
+    updateCarHUD({ visible: false });
+  }
+  // minimap / radar — only in the open city
+  if (minimap) {
+    const mm = document.getElementById('minimap');
+    if (area === 'city' && player) {
+      if (mm) mm.style.display = '';
+      let heading;
+      if (inCar) heading = (drivingVehicle || car).g.rotation.y;
+      else {
+        const fwd = new THREE.Vector3().subVectors(player.group.position, camera.position);
+        heading = Math.atan2(fwd.x, fwd.z);
+      }
+      const ppos = (inCar ? (drivingVehicle || car).g.position : player.group.position);
+      minimap.draw(
+        { x: ppos.x, z: ppos.z }, heading,
+        traffic.map(c => ({ x: c.g.position.x, z: c.g.position.z })),
+        cityNPCs.filter(n => !n.downed).map(n => ({ x: n.av.group.position.x, z: n.av.group.position.z })),
+      );
+    } else if (mm) {
+      mm.style.display = 'none';
+    }
+  }
   // show the reticle whenever a ranged weapon is out (so you can aim on foot)
   const cw = currentWeapon();
   const xh = document.getElementById('crosshair');

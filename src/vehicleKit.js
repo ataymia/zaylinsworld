@@ -36,7 +36,7 @@ export const VEHICLE_FILES = {
 const VEHICLE_RY = {};
 
 // Curated, road-appropriate fleets drawn from the pack above.
-export const TRAFFIC_FLEET = ['coupe', 'ghini', 'kamaro', 'van', 'jeep', 'rally', 'mobil', 'police'];
+export const TRAFFIC_FLEET = ['coupe', 'ghini', 'kamaro', 'van', 'jeep', 'rally', 'mobil', 'armor', 'police'];
 export const DRIVABLE_DEFAULT = 'kamaro';
 export const DEALER_FLEET = ['fenyr', 'lamb', 'italia', 'ghini'];
 
