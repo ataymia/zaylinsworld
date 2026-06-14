@@ -577,6 +577,7 @@ function depositTrash() {
 }
 
 function talkToSanitation() {
+  missionEvent('talk-sanitation');
   if (trashJob.active) {
     openDialogue({
       name: 'Sanitation Worker',

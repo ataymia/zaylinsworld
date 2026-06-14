@@ -101,6 +101,39 @@ export const MISSIONS = [
     ],
     reward: { money: 250, stat: ['fun', 5], note: 'First paycheck: +$250' },
   },
+  {
+    id: 'cleanup-crew', title: 'Cleanup Crew',
+    desc: 'The block is filthy — pick up litter and dump it.',
+    objectives: [
+      obj('Talk to the sanitation worker', 'talk-sanitation'),
+      obj('Finish a trash cleanup quota', 'trash-done'),
+    ],
+    reward: { money: 120, stat: ['hygiene', 8], note: 'Clean streets, +$120' },
+  },
+  {
+    id: 'street-trouble', title: 'Street Trouble',
+    desc: 'Somebody’s talking sideways. Handle it (stylized, no weapons needed).',
+    objectives: [
+      obj('Land a hit in a street fight', 'fight'),
+    ],
+    reward: { money: 60, stat: ['fitness', 8], note: 'You stood your ground, +$60' },
+  },
+  {
+    id: 'risky-choice', title: 'Risky Choice',
+    desc: 'Quick cash, real heat. Your call.',
+    objectives: [
+      obj('Mug someone for quick cash (press G near them)', 'rob-done'),
+    ],
+    reward: { money: 100, stat: ['fun', 4], note: 'Dirty money, +$100 — watch the heat' },
+  },
+  {
+    id: 'police-alert', title: 'Police Alert',
+    desc: 'You’ve got a wanted level. Shake the cops.',
+    objectives: [
+      obj('Lose the police (drop your wanted level to zero)', 'lost-cops'),
+    ],
+    reward: { money: 150, stat: ['fun', 6], note: 'Clean getaway, +$150' },
+  },
 ];
 
 let deps = null;     // { state, notify, saveNow, updateHUDStats }
