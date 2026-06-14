@@ -10,7 +10,8 @@
     "preview": "vite preview --host",
     "gen:gem": "node tools/make-sample-gem.mjs",
     "gen:assets": "node tools/build-assets.mjs",
-    "index:kits": "node tools/index-kits.mjs"
+    "index:kits": "node tools/index-kits.mjs",
+    "organize": "node tools/organize-assets.mjs"
   },
   "dependencies": {
     "three": "0.160.1"

@@ -19,3 +19,4 @@ dist/
 /*.zip
 /*.rar
 vendor/source-textures/
+.staging/

@@ -89,6 +89,37 @@ art packs are listed below.
 - **Location in repo:** `public/assets/models/props/`.
 - **Config:** placed via `src/props.js`.
 
+## Organized uploaded asset library (`tools/organize-assets.mjs`)
+
+The packs below were uploaded as source archives (FBX/OBJ/glTF), converted to
+web-ready glTF/GLB with embedded textures, and catalogued in
+`public/assets/models/asset-index-v2.json`. Code loads them through
+`loadAssetLibrary()` / `listAssets()` / `loadAsset(category, pack, name)` in
+`src/assets.js`. Re-run with `npm run organize`. Raw source archives stay out of
+git (see `.gitignore` / `.staging/`). **565 models** across these categories:
+
+| Category / pack | Models | Use |
+| --- | --- | --- |
+| `interiors/classroom` | 189 | School interior furniture + room demoscenes |
+| `characters/psx` | 79 | NPC roster (each carries a built-in animation clip) |
+| `interiors/gym` | 72 | Gym interior equipment |
+| `props/food` | 55 | Diner / fast-food food props |
+| `interiors/furniture` | 53 | KayKit furniture bits for building interiors |
+| `interiors/restaurant` | 49 | Low-poly fast-food restaurant fittings |
+| `weapons/styloo` | 40 | Additional fictional weapon models |
+| `characters/people` | 6 | Townsfolk character models |
+| `buildings/diner` | 4 | Diner exterior/interior building |
+| `buildings/gas-station` | 2 | Gas station building + fuel pumps |
+| `animations/ual-1`, `ual-2` | 3 | Universal Animation Library (45+ clips) |
+| `characters/spooky`, `creatures` | 3 | Reserved for monster mode |
+| `buildings/{mini-market,cabins,shop,misc}` | 4 | Extra building shells |
+| `props/{food-extra,trash,machines,trees,rocks,fishing}` | 6 | World dressing props |
+
+- **Licensing:** each pack ships under its author's free/commercial-use terms
+  (itch.io / CC0-style). Models are shipped only inside the game, never as
+  standalone redistributable files. Real-brand vehicle models (e.g. an "Audi R8"
+  pack) were intentionally excluded to keep the world original and kid-coded.
+
 CC0 assets may be used freely for any purpose. Attribution is not legally required
 but is given here as a courtesy and to support Kenney's and ambientCG's work. If you
 enjoy these assets, consider supporting https://kenney.nl/support and https://ambientcg.com.

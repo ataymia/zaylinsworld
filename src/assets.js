@@ -136,3 +136,44 @@ export async function loadKitModel(kitId, name, renderer) {
   if (!entry) return null;
   return loadModel('./' + entry.url, renderer);
 }
+
+// ── Organized asset library (tools/organize-assets.mjs → asset-index-v2.json) ─
+// Catalogs every uploaded pack converted to web-ready glTF/GLB, grouped as
+// index[category][packSlug] = [{ name, path, type, tex }]. This is the single
+// lookup the game uses to pull real furniture, food, characters, weapons,
+// building, and animation assets into live scenes.
+let _assetLib = null;
+export async function loadAssetLibrary(url = './assets/models/asset-index-v2.json') {
+  if (_assetLib) return _assetLib;
+  try {
+    const res = await fetch(url);
+    _assetLib = res.ok ? await res.json() : {};
+  } catch {
+    _assetLib = {};
+  }
+  return _assetLib;
+}
+
+// List entries in a category/pack, e.g. listAssets('interiors','furniture').
+export async function listAssets(category, pack) {
+  const lib = await loadAssetLibrary();
+  const cat = lib[category] || {};
+  if (pack) return cat[pack] || [];
+  return Object.values(cat).flat();
+}
+
+// Find an asset entry by (category, pack, name-substring) — case-insensitive.
+export async function findAsset(category, pack, nameLike) {
+  const list = await listAssets(category, pack);
+  if (!nameLike) return list[0] || null;
+  const q = nameLike.toLowerCase();
+  return list.find((e) => e.name.includes(q)) || null;
+}
+
+// Load an asset directly from the library by (category, pack, name-substring).
+// Returns { scene, animations } or null (caller falls back to procedural).
+export async function loadAsset(category, pack, nameLike, renderer) {
+  const entry = await findAsset(category, pack, nameLike);
+  if (!entry) return null;
+  return loadModel('./assets/' + entry.path, renderer);
+}

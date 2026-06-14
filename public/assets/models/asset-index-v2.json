@@ -1,0 +1,3110 @@
+{
+  "characters": {
+    "psx": [
+      {
+        "name": "character-17-female-police",
+        "path": "models/characters/psx/character-17-female-police.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-18-female-police",
+        "path": "models/characters/psx/character-18-female-police.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-19-female-police",
+        "path": "models/characters/psx/character-19-female-police.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-20-female-police",
+        "path": "models/characters/psx/character-20-female-police.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-21-female-firefighter",
+        "path": "models/characters/psx/character-21-female-firefighter.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-22-female-firefighter",
+        "path": "models/characters/psx/character-22-female-firefighter.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-23-female-doctor",
+        "path": "models/characters/psx/character-23-female-doctor.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-24-female-doctor",
+        "path": "models/characters/psx/character-24-female-doctor.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-25-female-police",
+        "path": "models/characters/psx/character-25-female-police.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-26-female-police",
+        "path": "models/characters/psx/character-26-female-police.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-27-female-hm",
+        "path": "models/characters/psx/character-27-female-hm.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-28-female-hm",
+        "path": "models/characters/psx/character-28-female-hm.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-29-female",
+        "path": "models/characters/psx/character-29-female.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-30-female",
+        "path": "models/characters/psx/character-30-female.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-31-female",
+        "path": "models/characters/psx/character-31-female.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-32-female",
+        "path": "models/characters/psx/character-32-female.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-33-female",
+        "path": "models/characters/psx/character-33-female.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-female-01",
+        "path": "models/characters/psx/character-female-01.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "character-female-02",
+        "path": "models/characters/psx/character-female-02.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-female-03",
+        "path": "models/characters/psx/character-female-03.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-female-04",
+        "path": "models/characters/psx/character-female-04.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-female-05",
+        "path": "models/characters/psx/character-female-05.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-female-06",
+        "path": "models/characters/psx/character-female-06.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-female-07",
+        "path": "models/characters/psx/character-female-07.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-female-08",
+        "path": "models/characters/psx/character-female-08.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-female-09",
+        "path": "models/characters/psx/character-female-09.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-female-10",
+        "path": "models/characters/psx/character-female-10.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-female-11",
+        "path": "models/characters/psx/character-female-11.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-female-12",
+        "path": "models/characters/psx/character-female-12.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-female-13",
+        "path": "models/characters/psx/character-female-13.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-female-14",
+        "path": "models/characters/psx/character-female-14.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-female-15",
+        "path": "models/characters/psx/character-female-15.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-female-16",
+        "path": "models/characters/psx/character-female-16.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-killer",
+        "path": "models/characters/psx/character-killer.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-killer-01",
+        "path": "models/characters/psx/character-killer-01.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-killer-02",
+        "path": "models/characters/psx/character-killer-02.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-killer-03",
+        "path": "models/characters/psx/character-killer-03.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-killer-04",
+        "path": "models/characters/psx/character-killer-04.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-killer-05",
+        "path": "models/characters/psx/character-killer-05.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-killer-06",
+        "path": "models/characters/psx/character-killer-06.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-killer-07",
+        "path": "models/characters/psx/character-killer-07.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-monster",
+        "path": "models/characters/psx/character-monster.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-monster-01",
+        "path": "models/characters/psx/character-monster-01.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-monster-02",
+        "path": "models/characters/psx/character-monster-02.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-monster-03",
+        "path": "models/characters/psx/character-monster-03.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-monster-04",
+        "path": "models/characters/psx/character-monster-04.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-monster-05",
+        "path": "models/characters/psx/character-monster-05.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-01",
+        "path": "models/characters/psx/character-01.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-02",
+        "path": "models/characters/psx/character-02.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-03",
+        "path": "models/characters/psx/character-03.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-04",
+        "path": "models/characters/psx/character-04.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-05",
+        "path": "models/characters/psx/character-05.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-06",
+        "path": "models/characters/psx/character-06.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-07",
+        "path": "models/characters/psx/character-07.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-08",
+        "path": "models/characters/psx/character-08.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-09",
+        "path": "models/characters/psx/character-09.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-10",
+        "path": "models/characters/psx/character-10.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-11",
+        "path": "models/characters/psx/character-11.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-12",
+        "path": "models/characters/psx/character-12.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-13",
+        "path": "models/characters/psx/character-13.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-14",
+        "path": "models/characters/psx/character-14.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-15",
+        "path": "models/characters/psx/character-15.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-16",
+        "path": "models/characters/psx/character-16.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-17-police",
+        "path": "models/characters/psx/character-17-police.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-18-police",
+        "path": "models/characters/psx/character-18-police.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-19-police",
+        "path": "models/characters/psx/character-19-police.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-20-police",
+        "path": "models/characters/psx/character-20-police.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-21-police",
+        "path": "models/characters/psx/character-21-police.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-22-police",
+        "path": "models/characters/psx/character-22-police.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-23-firefighter",
+        "path": "models/characters/psx/character-23-firefighter.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-24-firefighter",
+        "path": "models/characters/psx/character-24-firefighter.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-25-doctor",
+        "path": "models/characters/psx/character-25-doctor.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-26-doctor",
+        "path": "models/characters/psx/character-26-doctor.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-27-hm",
+        "path": "models/characters/psx/character-27-hm.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-28-hm",
+        "path": "models/characters/psx/character-28-hm.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-29",
+        "path": "models/characters/psx/character-29.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-30",
+        "path": "models/characters/psx/character-30.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-31",
+        "path": "models/characters/psx/character-31.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "character-32",
+        "path": "models/characters/psx/character-32.glb",
+        "type": "glb",
+        "tex": 1
+      }
+    ],
+    "people": [
+      {
+        "name": "characters",
+        "path": "models/characters/people/characters.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "characters",
+        "path": "models/characters/people/characters.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "characters-01",
+        "path": "models/characters/people/characters-01.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "characters-02",
+        "path": "models/characters/people/characters-02.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "characters-03",
+        "path": "models/characters/people/characters-03.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "characters-04",
+        "path": "models/characters/people/characters-04.glb",
+        "type": "glb",
+        "tex": 0
+      }
+    ],
+    "spooky": [
+      {
+        "name": "pesonajes-2",
+        "path": "models/characters/spooky/pesonajes-2.glb",
+        "type": "glb",
+        "tex": 13
+      },
+      {
+        "name": "pesonajes-2",
+        "path": "models/characters/spooky/pesonajes-2.glb",
+        "type": "glb",
+        "tex": 13
+      }
+    ],
+    "creatures": [
+      {
+        "name": "criaturas",
+        "path": "models/characters/creatures/criaturas.glb",
+        "type": "glb",
+        "tex": 2
+      }
+    ]
+  },
+  "buildings": {
+    "gas-station": [
+      {
+        "name": "gas-station",
+        "path": "models/buildings/gas-station/gas-station.glb",
+        "type": "glb",
+        "tex": 63
+      },
+      {
+        "name": "gas-station-props",
+        "path": "models/buildings/gas-station/gas-station-props.glb",
+        "type": "glb",
+        "tex": 55
+      }
+    ],
+    "diner": [
+      {
+        "name": "diner",
+        "path": "models/buildings/diner/diner.glb",
+        "type": "glb",
+        "tex": 33
+      },
+      {
+        "name": "diner",
+        "path": "models/buildings/diner/diner.glb",
+        "type": "glb",
+        "tex": 90
+      },
+      {
+        "name": "objects",
+        "path": "models/buildings/diner/objects.glb",
+        "type": "glb",
+        "tex": 54
+      },
+      {
+        "name": "objects",
+        "path": "models/buildings/diner/objects.glb",
+        "type": "glb",
+        "tex": 58
+      }
+    ],
+    "mini-market": [
+      {
+        "name": "market",
+        "path": "models/buildings/mini-market/market.glb",
+        "type": "glb",
+        "tex": 27
+      }
+    ],
+    "cabins": [
+      {
+        "name": "caba-as",
+        "path": "models/buildings/cabins/caba-as.glb",
+        "type": "glb",
+        "tex": 4
+      }
+    ],
+    "misc": [
+      {
+        "name": "edificios",
+        "path": "models/buildings/misc/edificios.glb",
+        "type": "glb",
+        "tex": 17
+      }
+    ],
+    "shop": [
+      {
+        "name": "shop",
+        "path": "models/buildings/shop/shop.glb",
+        "type": "glb"
+      }
+    ]
+  },
+  "interiors": {
+    "furniture": [
+      {
+        "name": "armchair",
+        "path": "models/interiors/furniture/armchair.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "armchair-pillows",
+        "path": "models/interiors/furniture/armchair_pillows.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "bed-double-a",
+        "path": "models/interiors/furniture/bed_double_A.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "bed-double-b",
+        "path": "models/interiors/furniture/bed_double_B.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "bed-single-a",
+        "path": "models/interiors/furniture/bed_single_A.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "bed-single-b",
+        "path": "models/interiors/furniture/bed_single_B.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "book-set",
+        "path": "models/interiors/furniture/book_set.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "book-single",
+        "path": "models/interiors/furniture/book_single.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "cabinet-medium",
+        "path": "models/interiors/furniture/cabinet_medium.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "cabinet-medium-decorated",
+        "path": "models/interiors/furniture/cabinet_medium_decorated.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "cabinet-small",
+        "path": "models/interiors/furniture/cabinet_small.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "cabinet-small-decorated",
+        "path": "models/interiors/furniture/cabinet_small_decorated.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "cactus-medium-a",
+        "path": "models/interiors/furniture/cactus_medium_A.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "cactus-medium-b",
+        "path": "models/interiors/furniture/cactus_medium_B.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "cactus-small-a",
+        "path": "models/interiors/furniture/cactus_small_A.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "cactus-small-b",
+        "path": "models/interiors/furniture/cactus_small_B.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "chair-a",
+        "path": "models/interiors/furniture/chair_A.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "chair-a-wood",
+        "path": "models/interiors/furniture/chair_A_wood.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "chair-b",
+        "path": "models/interiors/furniture/chair_B.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "chair-b-wood",
+        "path": "models/interiors/furniture/chair_B_wood.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "chair-c",
+        "path": "models/interiors/furniture/chair_C.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "chair-stool",
+        "path": "models/interiors/furniture/chair_stool.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "chair-stool-wood",
+        "path": "models/interiors/furniture/chair_stool_wood.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "couch",
+        "path": "models/interiors/furniture/couch.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "couch-pillows",
+        "path": "models/interiors/furniture/couch_pillows.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "lamp-standing",
+        "path": "models/interiors/furniture/lamp_standing.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "lamp-table",
+        "path": "models/interiors/furniture/lamp_table.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "pictureframe-large-a",
+        "path": "models/interiors/furniture/pictureframe_large_A.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "pictureframe-large-b",
+        "path": "models/interiors/furniture/pictureframe_large_B.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "pictureframe-medium",
+        "path": "models/interiors/furniture/pictureframe_medium.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "pictureframe-small-a",
+        "path": "models/interiors/furniture/pictureframe_small_A.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "pictureframe-small-b",
+        "path": "models/interiors/furniture/pictureframe_small_B.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "pictureframe-small-c",
+        "path": "models/interiors/furniture/pictureframe_small_C.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "pictureframe-standing-a",
+        "path": "models/interiors/furniture/pictureframe_standing_A.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "pictureframe-standing-b",
+        "path": "models/interiors/furniture/pictureframe_standing_B.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "pillow-a",
+        "path": "models/interiors/furniture/pillow_A.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "pillow-b",
+        "path": "models/interiors/furniture/pillow_B.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "rug-oval-a",
+        "path": "models/interiors/furniture/rug_oval_A.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "rug-oval-b",
+        "path": "models/interiors/furniture/rug_oval_B.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "rug-rectangle-a",
+        "path": "models/interiors/furniture/rug_rectangle_A.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "rug-rectangle-b",
+        "path": "models/interiors/furniture/rug_rectangle_B.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "rug-rectangle-stripes-a",
+        "path": "models/interiors/furniture/rug_rectangle_stripes_A.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "rug-rectangle-stripes-b",
+        "path": "models/interiors/furniture/rug_rectangle_stripes_B.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "shelf-a-big",
+        "path": "models/interiors/furniture/shelf_A_big.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "shelf-a-small",
+        "path": "models/interiors/furniture/shelf_A_small.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "shelf-b-large",
+        "path": "models/interiors/furniture/shelf_B_large.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "shelf-b-large-decorated",
+        "path": "models/interiors/furniture/shelf_B_large_decorated.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "shelf-b-small",
+        "path": "models/interiors/furniture/shelf_B_small.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "shelf-b-small-decorated",
+        "path": "models/interiors/furniture/shelf_B_small_decorated.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "table-low",
+        "path": "models/interiors/furniture/table_low.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "table-medium",
+        "path": "models/interiors/furniture/table_medium.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "table-medium-long",
+        "path": "models/interiors/furniture/table_medium_long.gltf",
+        "type": "gltf"
+      },
+      {
+        "name": "table-small",
+        "path": "models/interiors/furniture/table_small.gltf",
+        "type": "gltf"
+      }
+    ],
+    "restaurant": [
+      {
+        "name": "booth-full",
+        "path": "models/interiors/restaurant/booth-full.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "booth-half",
+        "path": "models/interiors/restaurant/booth-half.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "burner-stove",
+        "path": "models/interiors/restaurant/burner-stove.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "can-beefbroth",
+        "path": "models/interiors/restaurant/can-beefbroth.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "can-opener-machine",
+        "path": "models/interiors/restaurant/can-opener-machine.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "can-peach",
+        "path": "models/interiors/restaurant/can-peach.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "can-tomato",
+        "path": "models/interiors/restaurant/can-tomato.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "cash-register",
+        "path": "models/interiors/restaurant/cash-register.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "cash-recipt-roll",
+        "path": "models/interiors/restaurant/cash-recipt-roll.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "chair-red",
+        "path": "models/interiors/restaurant/chair-red.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "counter-closed",
+        "path": "models/interiors/restaurant/counter-closed.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "counter-cut",
+        "path": "models/interiors/restaurant/counter-cut.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "counter-front",
+        "path": "models/interiors/restaurant/counter-front.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "counter-front-cut",
+        "path": "models/interiors/restaurant/counter-front-cut.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "door-fire-exit",
+        "path": "models/interiors/restaurant/door-fire-exit.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "door-fire-exit-frame",
+        "path": "models/interiors/restaurant/door-fire-exit-frame.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "door-swing-1",
+        "path": "models/interiors/restaurant/door-swing-1.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "door-swing-2",
+        "path": "models/interiors/restaurant/door-swing-2.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "door-swing-double-frame",
+        "path": "models/interiors/restaurant/door-swing-double-frame.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "door-swing-frame",
+        "path": "models/interiors/restaurant/door-swing-frame.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "floor-mat",
+        "path": "models/interiors/restaurant/floor-mat.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "floor-tile-pattern-brick",
+        "path": "models/interiors/restaurant/floor-tile-pattern-brick.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "floor-tile-pattern-checkered",
+        "path": "models/interiors/restaurant/floor-tile-pattern-checkered.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "floor-tile-pattern-concrete",
+        "path": "models/interiors/restaurant/floor-tile-pattern-concrete.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "heat-lamp",
+        "path": "models/interiors/restaurant/heat-lamp.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "heat-lamp-tray",
+        "path": "models/interiors/restaurant/heat-lamp-tray.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "heat-lamp-tray-grill",
+        "path": "models/interiors/restaurant/heat-lamp-tray-grill.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "lamp-large",
+        "path": "models/interiors/restaurant/lamp-large.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "shelf-large",
+        "path": "models/interiors/restaurant/shelf-large.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "shelf-small",
+        "path": "models/interiors/restaurant/shelf-small.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "shelf-wheels-large",
+        "path": "models/interiors/restaurant/shelf-wheels-large.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "sink-handwash",
+        "path": "models/interiors/restaurant/sink-handwash.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "stove-burner",
+        "path": "models/interiors/restaurant/stove-burner.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "stove-griddle",
+        "path": "models/interiors/restaurant/stove-griddle.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "stove-griddle-burner",
+        "path": "models/interiors/restaurant/stove-griddle-burner.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "table-circle",
+        "path": "models/interiors/restaurant/table-circle.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "table-rectangle",
+        "path": "models/interiors/restaurant/table-rectangle.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "table-rectangle-high-table",
+        "path": "models/interiors/restaurant/table-rectangle-high-table.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "table-square",
+        "path": "models/interiors/restaurant/table-square.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "telephone-wall",
+        "path": "models/interiors/restaurant/telephone-wall.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "trash-bag",
+        "path": "models/interiors/restaurant/trash-bag.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "trash-can",
+        "path": "models/interiors/restaurant/trash-can.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "trash-can-decorative",
+        "path": "models/interiors/restaurant/trash-can-decorative.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "trash-can-decorative-swing-door",
+        "path": "models/interiors/restaurant/trash-can-decorative-swing-door.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "wall-medium",
+        "path": "models/interiors/restaurant/wall-medium.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "wall-outlet",
+        "path": "models/interiors/restaurant/wall-outlet.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "wall-pillar-brick",
+        "path": "models/interiors/restaurant/wall-pillar-brick.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "wall-pillar-orange",
+        "path": "models/interiors/restaurant/wall-pillar-orange.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "window-full",
+        "path": "models/interiors/restaurant/window-full.glb",
+        "type": "glb",
+        "tex": 0
+      }
+    ],
+    "gym": [
+      {
+        "name": "barbell-1",
+        "path": "models/interiors/gym/barbell-1.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "barbell-stand-1",
+        "path": "models/interiors/gym/barbell-stand-1.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "barbell-stand-2",
+        "path": "models/interiors/gym/barbell-stand-2.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "bench-a",
+        "path": "models/interiors/gym/bench-a.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "bench-b",
+        "path": "models/interiors/gym/bench-b.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "bench-c",
+        "path": "models/interiors/gym/bench-c.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "bench-d",
+        "path": "models/interiors/gym/bench-d.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "bench-press",
+        "path": "models/interiors/gym/bench-press.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "ctable-1",
+        "path": "models/interiors/gym/ctable-1.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "ctable-2",
+        "path": "models/interiors/gym/ctable-2.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "ctable-3",
+        "path": "models/interiors/gym/ctable-3.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "ctable-3-glass",
+        "path": "models/interiors/gym/ctable-3-glass.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
+        "name": "desk-1",
+        "path": "models/interiors/gym/desk-1.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "desk-2",
+        "path": "models/interiors/gym/desk-2.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "desk-3",
+        "path": "models/interiors/gym/desk-3.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "desk-drawer-1",
+        "path": "models/interiors/gym/desk-drawer-1.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "desk-drawer-2",
+        "path": "models/interiors/gym/desk-drawer-2.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "drawer-1",
+        "path": "models/interiors/gym/drawer-1.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "drawer-2",
+        "path": "models/interiors/gym/drawer-2.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "drawer-d",
+        "path": "models/interiors/gym/drawer-d.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "dumbbells-1",
+        "path": "models/interiors/gym/dumbbells-1.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "dumbbells-2",
+        "path": "models/interiors/gym/dumbbells-2.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "e-machine-1",
+        "path": "models/interiors/gym/e-machine-1.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "e-machine-2",
+        "path": "models/interiors/gym/e-machine-2.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "e-machine-3",
+        "path": "models/interiors/gym/e-machine-3.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "e-machine-4",
+        "path": "models/interiors/gym/e-machine-4.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "e-machine-5",
+        "path": "models/interiors/gym/e-machine-5.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "e-machine-ac-1",
+        "path": "models/interiors/gym/e-machine-ac-1.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "e-machine-ac-2",
+        "path": "models/interiors/gym/e-machine-ac-2.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "exercise-bike",
+        "path": "models/interiors/gym/exercise-bike.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "exercise-bike-pedal-a",
+        "path": "models/interiors/gym/exercise-bike-pedal-a.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "exercise-bike-pedal-b",
+        "path": "models/interiors/gym/exercise-bike-pedal-b.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "exercise-bike-seat",
+        "path": "models/interiors/gym/exercise-bike-seat.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "ezbar",
+        "path": "models/interiors/gym/ezbar.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "flat-bench",
+        "path": "models/interiors/gym/flat-bench.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "kettlebell",
+        "path": "models/interiors/gym/kettlebell.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "keyboard",
+        "path": "models/interiors/gym/keyboard.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "mounted-tv",
+        "path": "models/interiors/gym/mounted-tv.glb",
+        "type": "glb",
+        "tex": 2
+      },
+      {
+        "name": "mouse",
+        "path": "models/interiors/gym/mouse.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "pc-screen",
+        "path": "models/interiors/gym/pc-screen.glb",
+        "type": "glb",
+        "tex": 2
+      },
+      {
+        "name": "painting",
+        "path": "models/interiors/gym/painting.glb",
+        "type": "glb",
+        "tex": 2
+      },
+      {
+        "name": "painting-small",
+        "path": "models/interiors/gym/painting-small.glb",
+        "type": "glb",
+        "tex": 2
+      },
+      {
+        "name": "pecdeck-ac-1",
+        "path": "models/interiors/gym/pecdeck-ac-1.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "pecdeck-ac-2",
+        "path": "models/interiors/gym/pecdeck-ac-2.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "pec-machine-ac-1",
+        "path": "models/interiors/gym/pec-machine-ac-1.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "pec-machine-ac-2",
+        "path": "models/interiors/gym/pec-machine-ac-2.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "plant-deco",
+        "path": "models/interiors/gym/plant-deco.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "pulldown-ac-1",
+        "path": "models/interiors/gym/pulldown-ac-1.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "pulldown-ac-2",
+        "path": "models/interiors/gym/pulldown-ac-2.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "pullup-bar",
+        "path": "models/interiors/gym/pullup-bar.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "pullup-stand",
+        "path": "models/interiors/gym/pullup-stand.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "pullup-stand-2",
+        "path": "models/interiors/gym/pullup-stand-2.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "sm-machine",
+        "path": "models/interiors/gym/sm-machine.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "sofa-1",
+        "path": "models/interiors/gym/sofa-1.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "sofa-2",
+        "path": "models/interiors/gym/sofa-2.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "sofa-3",
+        "path": "models/interiors/gym/sofa-3.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "sp-mat-1",
+        "path": "models/interiors/gym/sp-mat-1.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "sp-mat-2",
+        "path": "models/interiors/gym/sp-mat-2.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "stationary-rowing-machine",
+        "path": "models/interiors/gym/stationary-rowing-machine.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "stationary-rowing-machine-a",
+        "path": "models/interiors/gym/stationary-rowing-machine-a.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "stationary-rowing-machine-seat",
+        "path": "models/interiors/gym/stationary-rowing-machine-seat.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "treadmill-1-main",
+        "path": "models/interiors/gym/treadmill-1-main.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "treadmill-2-main",
+        "path": "models/interiors/gym/treadmill-2-main.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "treadmill-r",
+        "path": "models/interiors/gym/treadmill-r.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "weight-a",
+        "path": "models/interiors/gym/weight-a.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "weight-b",
+        "path": "models/interiors/gym/weight-b.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "weight-bar-c",
+        "path": "models/interiors/gym/weight-bar-c.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "weight-c",
+        "path": "models/interiors/gym/weight-c.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "weight-d",
+        "path": "models/interiors/gym/weight-d.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "weight-stand-1",
+        "path": "models/interiors/gym/weight-stand-1.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "weight-stand-2",
+        "path": "models/interiors/gym/weight-stand-2.glb",
+        "type": "glb",
+        "tex": 1
+      },
+      {
+        "name": "weight-stand-3",
+        "path": "models/interiors/gym/weight-stand-3.glb",
+        "type": "glb",
+        "tex": 1
+      }
+    ],
+    "classroom": [
+      {
+        "name": "brush",
+        "path": "models/interiors/classroom/brush.glb",
+        "type": "glb"
+      },
+      {
+        "name": "brush-001",
+        "path": "models/interiors/classroom/brush-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "brush-002",
+        "path": "models/interiors/classroom/brush-002.glb",
+        "type": "glb"
+      },
+      {
+        "name": "demoscene",
+        "path": "models/interiors/classroom/demoscene.glb",
+        "type": "glb"
+      },
+      {
+        "name": "easel",
+        "path": "models/interiors/classroom/easel.glb",
+        "type": "glb"
+      },
+      {
+        "name": "easel-001",
+        "path": "models/interiors/classroom/easel-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "holder",
+        "path": "models/interiors/classroom/holder.glb",
+        "type": "glb"
+      },
+      {
+        "name": "holder-001",
+        "path": "models/interiors/classroom/holder-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "painting",
+        "path": "models/interiors/classroom/painting.glb",
+        "type": "glb"
+      },
+      {
+        "name": "painting-001",
+        "path": "models/interiors/classroom/painting-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "painting-002",
+        "path": "models/interiors/classroom/painting-002.glb",
+        "type": "glb"
+      },
+      {
+        "name": "paintingbig",
+        "path": "models/interiors/classroom/paintingbig.glb",
+        "type": "glb"
+      },
+      {
+        "name": "paintingreal",
+        "path": "models/interiors/classroom/paintingreal.glb",
+        "type": "glb"
+      },
+      {
+        "name": "paintingreal-001",
+        "path": "models/interiors/classroom/paintingreal-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "paintingreference",
+        "path": "models/interiors/classroom/paintingreference.glb",
+        "type": "glb"
+      },
+      {
+        "name": "paintingreference-001",
+        "path": "models/interiors/classroom/paintingreference-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "paintingreference-002",
+        "path": "models/interiors/classroom/paintingreference-002.glb",
+        "type": "glb"
+      },
+      {
+        "name": "paintingreference-003",
+        "path": "models/interiors/classroom/paintingreference-003.glb",
+        "type": "glb"
+      },
+      {
+        "name": "paintingreference-004",
+        "path": "models/interiors/classroom/paintingreference-004.glb",
+        "type": "glb"
+      },
+      {
+        "name": "paintingreference-005",
+        "path": "models/interiors/classroom/paintingreference-005.glb",
+        "type": "glb"
+      },
+      {
+        "name": "palette",
+        "path": "models/interiors/classroom/palette.glb",
+        "type": "glb"
+      },
+      {
+        "name": "statue",
+        "path": "models/interiors/classroom/statue.glb",
+        "type": "glb"
+      },
+      {
+        "name": "stool",
+        "path": "models/interiors/classroom/stool.glb",
+        "type": "glb"
+      },
+      {
+        "name": "stool-001",
+        "path": "models/interiors/classroom/stool-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "table",
+        "path": "models/interiors/classroom/table.glb",
+        "type": "glb"
+      },
+      {
+        "name": "table-001",
+        "path": "models/interiors/classroom/table-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriacake",
+        "path": "models/interiors/classroom/cafeteriacake.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriacake-001",
+        "path": "models/interiors/classroom/cafeteriacake-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriacake-002",
+        "path": "models/interiors/classroom/cafeteriacake-002.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriacaketray",
+        "path": "models/interiors/classroom/cafeteriacaketray.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriacan",
+        "path": "models/interiors/classroom/cafeteriacan.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriacan-001",
+        "path": "models/interiors/classroom/cafeteriacan-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriacan-002",
+        "path": "models/interiors/classroom/cafeteriacan-002.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriacan-003",
+        "path": "models/interiors/classroom/cafeteriacan-003.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriacarrot",
+        "path": "models/interiors/classroom/cafeteriacarrot.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriachair",
+        "path": "models/interiors/classroom/cafeteriachair.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriachair-001",
+        "path": "models/interiors/classroom/cafeteriachair-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriachair-002",
+        "path": "models/interiors/classroom/cafeteriachair-002.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriacoffemaker",
+        "path": "models/interiors/classroom/cafeteriacoffemaker.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriademoscene",
+        "path": "models/interiors/classroom/cafeteriademoscene.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriaonion",
+        "path": "models/interiors/classroom/cafeteriaonion.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriapingpongtable",
+        "path": "models/interiors/classroom/cafeteriapingpongtable.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriapotato",
+        "path": "models/interiors/classroom/cafeteriapotato.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriashowcasetable",
+        "path": "models/interiors/classroom/cafeteriashowcasetable.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriashowcasewood",
+        "path": "models/interiors/classroom/cafeteriashowcasewood.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriaspringonion",
+        "path": "models/interiors/classroom/cafeteriaspringonion.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriatable",
+        "path": "models/interiors/classroom/cafeteriatable.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriatomato",
+        "path": "models/interiors/classroom/cafeteriatomato.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriatraycafet",
+        "path": "models/interiors/classroom/cafeteriatraycafet.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriavendingmachine",
+        "path": "models/interiors/classroom/cafeteriavendingmachine.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cafeteriawallfloor",
+        "path": "models/interiors/classroom/cafeteriawallfloor.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chemestrytable",
+        "path": "models/interiors/classroom/chemestrytable.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chemistrybarrel",
+        "path": "models/interiors/classroom/chemistrybarrel.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chemistrycentrifuge",
+        "path": "models/interiors/classroom/chemistrycentrifuge.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chemistrychairwithwheels",
+        "path": "models/interiors/classroom/chemistrychairwithwheels.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chemistrycork",
+        "path": "models/interiors/classroom/chemistrycork.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chemistrycupboard-3",
+        "path": "models/interiors/classroom/chemistrycupboard-3.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chemistryfireextinguisher",
+        "path": "models/interiors/classroom/chemistryfireextinguisher.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chemistryglobe-1",
+        "path": "models/interiors/classroom/chemistryglobe-1.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chemistrylabdemoscene",
+        "path": "models/interiors/classroom/chemistrylabdemoscene.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chemistrymicroscope",
+        "path": "models/interiors/classroom/chemistrymicroscope.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chemistrysolarsystem-9",
+        "path": "models/interiors/classroom/chemistrysolarsystem-9.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chemistryvial",
+        "path": "models/interiors/classroom/chemistryvial.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chemistryvial-001",
+        "path": "models/interiors/classroom/chemistryvial-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chemistryvial-002",
+        "path": "models/interiors/classroom/chemistryvial-002.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chemistryvial-003",
+        "path": "models/interiors/classroom/chemistryvial-003.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chemistryvial-004",
+        "path": "models/interiors/classroom/chemistryvial-004.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chemistryvial-005",
+        "path": "models/interiors/classroom/chemistryvial-005.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chemistryvial-006",
+        "path": "models/interiors/classroom/chemistryvial-006.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chemistryvial-007",
+        "path": "models/interiors/classroom/chemistryvial-007.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chemistryvialholders",
+        "path": "models/interiors/classroom/chemistryvialholders.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chesmistryatoms",
+        "path": "models/interiors/classroom/chesmistryatoms.glb",
+        "type": "glb"
+      },
+      {
+        "name": "tv",
+        "path": "models/interiors/classroom/tv.glb",
+        "type": "glb"
+      },
+      {
+        "name": "tvnew",
+        "path": "models/interiors/classroom/tvnew.glb",
+        "type": "glb"
+      },
+      {
+        "name": "blackboardbig",
+        "path": "models/interiors/classroom/blackboardbig.glb",
+        "type": "glb"
+      },
+      {
+        "name": "blackboardbig-1",
+        "path": "models/interiors/classroom/blackboardbig-1.glb",
+        "type": "glb"
+      },
+      {
+        "name": "blackboardlittle",
+        "path": "models/interiors/classroom/blackboardlittle.glb",
+        "type": "glb"
+      },
+      {
+        "name": "book",
+        "path": "models/interiors/classroom/book.glb",
+        "type": "glb"
+      },
+      {
+        "name": "book",
+        "path": "models/interiors/classroom/book.glb",
+        "type": "glb"
+      },
+      {
+        "name": "book-001",
+        "path": "models/interiors/classroom/book-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "book-002",
+        "path": "models/interiors/classroom/book-002.glb",
+        "type": "glb"
+      },
+      {
+        "name": "book-003",
+        "path": "models/interiors/classroom/book-003.glb",
+        "type": "glb"
+      },
+      {
+        "name": "book-001",
+        "path": "models/interiors/classroom/book-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "book-002",
+        "path": "models/interiors/classroom/book-002.glb",
+        "type": "glb"
+      },
+      {
+        "name": "book-003",
+        "path": "models/interiors/classroom/book-003.glb",
+        "type": "glb"
+      },
+      {
+        "name": "book-004",
+        "path": "models/interiors/classroom/book-004.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chair",
+        "path": "models/interiors/classroom/chair.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chairtable",
+        "path": "models/interiors/classroom/chairtable.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chalk",
+        "path": "models/interiors/classroom/chalk.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chalk-001",
+        "path": "models/interiors/classroom/chalk-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chalk-002",
+        "path": "models/interiors/classroom/chalk-002.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chalkboard-sponge",
+        "path": "models/interiors/classroom/chalkboard-sponge.glb",
+        "type": "glb"
+      },
+      {
+        "name": "classroom-demoscene",
+        "path": "models/interiors/classroom/classroom-demoscene.glb",
+        "type": "glb"
+      },
+      {
+        "name": "compass-1",
+        "path": "models/interiors/classroom/compass-1.glb",
+        "type": "glb"
+      },
+      {
+        "name": "curtains",
+        "path": "models/interiors/classroom/curtains.glb",
+        "type": "glb"
+      },
+      {
+        "name": "curtains",
+        "path": "models/interiors/classroom/curtains.glb",
+        "type": "glb"
+      },
+      {
+        "name": "desk",
+        "path": "models/interiors/classroom/desk.glb",
+        "type": "glb"
+      },
+      {
+        "name": "lamp",
+        "path": "models/interiors/classroom/lamp.glb",
+        "type": "glb"
+      },
+      {
+        "name": "locker",
+        "path": "models/interiors/classroom/locker.glb",
+        "type": "glb"
+      },
+      {
+        "name": "locker-001",
+        "path": "models/interiors/classroom/locker-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "markers",
+        "path": "models/interiors/classroom/markers.glb",
+        "type": "glb"
+      },
+      {
+        "name": "markers-001",
+        "path": "models/interiors/classroom/markers-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "markers-002",
+        "path": "models/interiors/classroom/markers-002.glb",
+        "type": "glb"
+      },
+      {
+        "name": "pen",
+        "path": "models/interiors/classroom/pen.glb",
+        "type": "glb"
+      },
+      {
+        "name": "pen4colors",
+        "path": "models/interiors/classroom/pen4colors.glb",
+        "type": "glb"
+      },
+      {
+        "name": "pen-001",
+        "path": "models/interiors/classroom/pen-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "pen-002",
+        "path": "models/interiors/classroom/pen-002.glb",
+        "type": "glb"
+      },
+      {
+        "name": "pencil",
+        "path": "models/interiors/classroom/pencil.glb",
+        "type": "glb"
+      },
+      {
+        "name": "pencil-001",
+        "path": "models/interiors/classroom/pencil-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "pencil-002",
+        "path": "models/interiors/classroom/pencil-002.glb",
+        "type": "glb"
+      },
+      {
+        "name": "pencil-003",
+        "path": "models/interiors/classroom/pencil-003.glb",
+        "type": "glb"
+      },
+      {
+        "name": "pencil-004",
+        "path": "models/interiors/classroom/pencil-004.glb",
+        "type": "glb"
+      },
+      {
+        "name": "pencil-005",
+        "path": "models/interiors/classroom/pencil-005.glb",
+        "type": "glb"
+      },
+      {
+        "name": "pencil-006",
+        "path": "models/interiors/classroom/pencil-006.glb",
+        "type": "glb"
+      },
+      {
+        "name": "pencil-007",
+        "path": "models/interiors/classroom/pencil-007.glb",
+        "type": "glb"
+      },
+      {
+        "name": "pencilcase",
+        "path": "models/interiors/classroom/pencilcase.glb",
+        "type": "glb"
+      },
+      {
+        "name": "postit",
+        "path": "models/interiors/classroom/postit.glb",
+        "type": "glb"
+      },
+      {
+        "name": "postit-001",
+        "path": "models/interiors/classroom/postit-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "radio",
+        "path": "models/interiors/classroom/radio.glb",
+        "type": "glb"
+      },
+      {
+        "name": "schoolbus",
+        "path": "models/interiors/classroom/schoolbus.glb",
+        "type": "glb"
+      },
+      {
+        "name": "scissors-1",
+        "path": "models/interiors/classroom/scissors-1.glb",
+        "type": "glb"
+      },
+      {
+        "name": "shelf",
+        "path": "models/interiors/classroom/shelf.glb",
+        "type": "glb"
+      },
+      {
+        "name": "shelf-001",
+        "path": "models/interiors/classroom/shelf-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "shelfwithwheels",
+        "path": "models/interiors/classroom/shelfwithwheels.glb",
+        "type": "glb"
+      },
+      {
+        "name": "table",
+        "path": "models/interiors/classroom/table.glb",
+        "type": "glb"
+      },
+      {
+        "name": "wallsfloor",
+        "path": "models/interiors/classroom/wallsfloor.glb",
+        "type": "glb"
+      },
+      {
+        "name": "watch",
+        "path": "models/interiors/classroom/watch.glb",
+        "type": "glb"
+      },
+      {
+        "name": "computerchair",
+        "path": "models/interiors/classroom/computerchair.glb",
+        "type": "glb"
+      },
+      {
+        "name": "computerdemoscene",
+        "path": "models/interiors/classroom/computerdemoscene.glb",
+        "type": "glb"
+      },
+      {
+        "name": "computerkeyboard",
+        "path": "models/interiors/classroom/computerkeyboard.glb",
+        "type": "glb"
+      },
+      {
+        "name": "computermouse",
+        "path": "models/interiors/classroom/computermouse.glb",
+        "type": "glb"
+      },
+      {
+        "name": "computerpc",
+        "path": "models/interiors/classroom/computerpc.glb",
+        "type": "glb"
+      },
+      {
+        "name": "computerpcold",
+        "path": "models/interiors/classroom/computerpcold.glb",
+        "type": "glb"
+      },
+      {
+        "name": "computerprinter",
+        "path": "models/interiors/classroom/computerprinter.glb",
+        "type": "glb"
+      },
+      {
+        "name": "computerprojector",
+        "path": "models/interiors/classroom/computerprojector.glb",
+        "type": "glb"
+      },
+      {
+        "name": "computerrouter",
+        "path": "models/interiors/classroom/computerrouter.glb",
+        "type": "glb"
+      },
+      {
+        "name": "computerscreen",
+        "path": "models/interiors/classroom/computerscreen.glb",
+        "type": "glb"
+      },
+      {
+        "name": "computerscreenold",
+        "path": "models/interiors/classroom/computerscreenold.glb",
+        "type": "glb"
+      },
+      {
+        "name": "computertable",
+        "path": "models/interiors/classroom/computertable.glb",
+        "type": "glb"
+      },
+      {
+        "name": "computerusb",
+        "path": "models/interiors/classroom/computerusb.glb",
+        "type": "glb"
+      },
+      {
+        "name": "computerusb-001",
+        "path": "models/interiors/classroom/computerusb-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "principalofficebinderfolder",
+        "path": "models/interiors/classroom/principalofficebinderfolder.glb",
+        "type": "glb"
+      },
+      {
+        "name": "principalofficebinderfolder-001",
+        "path": "models/interiors/classroom/principalofficebinderfolder-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "principalofficebinderfolder-002",
+        "path": "models/interiors/classroom/principalofficebinderfolder-002.glb",
+        "type": "glb"
+      },
+      {
+        "name": "principalofficechair",
+        "path": "models/interiors/classroom/principalofficechair.glb",
+        "type": "glb"
+      },
+      {
+        "name": "principalofficedemoscene",
+        "path": "models/interiors/classroom/principalofficedemoscene.glb",
+        "type": "glb"
+      },
+      {
+        "name": "principalofficedesk",
+        "path": "models/interiors/classroom/principalofficedesk.glb",
+        "type": "glb"
+      },
+      {
+        "name": "principalofficedrawer",
+        "path": "models/interiors/classroom/principalofficedrawer.glb",
+        "type": "glb"
+      },
+      {
+        "name": "principalofficenotebook",
+        "path": "models/interiors/classroom/principalofficenotebook.glb",
+        "type": "glb"
+      },
+      {
+        "name": "principalofficenotebook-001",
+        "path": "models/interiors/classroom/principalofficenotebook-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "principalofficenotebook-002",
+        "path": "models/interiors/classroom/principalofficenotebook-002.glb",
+        "type": "glb"
+      },
+      {
+        "name": "principalofficepenholder",
+        "path": "models/interiors/classroom/principalofficepenholder.glb",
+        "type": "glb"
+      },
+      {
+        "name": "principalofficepicture",
+        "path": "models/interiors/classroom/principalofficepicture.glb",
+        "type": "glb"
+      },
+      {
+        "name": "principalofficeplant",
+        "path": "models/interiors/classroom/principalofficeplant.glb",
+        "type": "glb"
+      },
+      {
+        "name": "principalofficeprincipalchair",
+        "path": "models/interiors/classroom/principalofficeprincipalchair.glb",
+        "type": "glb"
+      },
+      {
+        "name": "principalofficeshelf",
+        "path": "models/interiors/classroom/principalofficeshelf.glb",
+        "type": "glb"
+      },
+      {
+        "name": "principalofficetelephone",
+        "path": "models/interiors/classroom/principalofficetelephone.glb",
+        "type": "glb"
+      },
+      {
+        "name": "principalofficewallsfloor",
+        "path": "models/interiors/classroom/principalofficewallsfloor.glb",
+        "type": "glb"
+      },
+      {
+        "name": "toiletbasictoilet",
+        "path": "models/interiors/classroom/toiletbasictoilet.glb",
+        "type": "glb"
+      },
+      {
+        "name": "toiletdemoscene",
+        "path": "models/interiors/classroom/toiletdemoscene.glb",
+        "type": "glb"
+      },
+      {
+        "name": "toiletdoor",
+        "path": "models/interiors/classroom/toiletdoor.glb",
+        "type": "glb"
+      },
+      {
+        "name": "toiletpaper",
+        "path": "models/interiors/classroom/toiletpaper.glb",
+        "type": "glb"
+      },
+      {
+        "name": "toiletpaperhandler",
+        "path": "models/interiors/classroom/toiletpaperhandler.glb",
+        "type": "glb"
+      },
+      {
+        "name": "toiletpartition",
+        "path": "models/interiors/classroom/toiletpartition.glb",
+        "type": "glb"
+      },
+      {
+        "name": "toiletpartition-001",
+        "path": "models/interiors/classroom/toiletpartition-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "toiletpipeforsink",
+        "path": "models/interiors/classroom/toiletpipeforsink.glb",
+        "type": "glb"
+      },
+      {
+        "name": "toiletpipteforurinal",
+        "path": "models/interiors/classroom/toiletpipteforurinal.glb",
+        "type": "glb"
+      },
+      {
+        "name": "toiletpoop",
+        "path": "models/interiors/classroom/toiletpoop.glb",
+        "type": "glb"
+      },
+      {
+        "name": "toiletsink",
+        "path": "models/interiors/classroom/toiletsink.glb",
+        "type": "glb"
+      },
+      {
+        "name": "toiletsoap",
+        "path": "models/interiors/classroom/toiletsoap.glb",
+        "type": "glb"
+      },
+      {
+        "name": "toiletsoap-001",
+        "path": "models/interiors/classroom/toiletsoap-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "toiletsoap-002",
+        "path": "models/interiors/classroom/toiletsoap-002.glb",
+        "type": "glb"
+      },
+      {
+        "name": "toiletsoapdish",
+        "path": "models/interiors/classroom/toiletsoapdish.glb",
+        "type": "glb"
+      },
+      {
+        "name": "toileturinal",
+        "path": "models/interiors/classroom/toileturinal.glb",
+        "type": "glb"
+      },
+      {
+        "name": "toiletwallsfloor",
+        "path": "models/interiors/classroom/toiletwallsfloor.glb",
+        "type": "glb"
+      },
+      {
+        "name": "toiletwater-1",
+        "path": "models/interiors/classroom/toiletwater-1.glb",
+        "type": "glb"
+      },
+      {
+        "name": "door",
+        "path": "models/interiors/classroom/door.glb",
+        "type": "glb"
+      },
+      {
+        "name": "floorpattern",
+        "path": "models/interiors/classroom/floorpattern.glb",
+        "type": "glb"
+      },
+      {
+        "name": "floorpattern-001",
+        "path": "models/interiors/classroom/floorpattern-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "wall-001",
+        "path": "models/interiors/classroom/wall-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "wall-002",
+        "path": "models/interiors/classroom/wall-002.glb",
+        "type": "glb"
+      },
+      {
+        "name": "wall-003",
+        "path": "models/interiors/classroom/wall-003.glb",
+        "type": "glb"
+      },
+      {
+        "name": "walldoor-001",
+        "path": "models/interiors/classroom/walldoor-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "walldoor-002",
+        "path": "models/interiors/classroom/walldoor-002.glb",
+        "type": "glb"
+      },
+      {
+        "name": "walldoor-003",
+        "path": "models/interiors/classroom/walldoor-003.glb",
+        "type": "glb"
+      },
+      {
+        "name": "wallwindow-001",
+        "path": "models/interiors/classroom/wallwindow-001.glb",
+        "type": "glb"
+      },
+      {
+        "name": "wallwindow-002",
+        "path": "models/interiors/classroom/wallwindow-002.glb",
+        "type": "glb"
+      },
+      {
+        "name": "wallwindow-003",
+        "path": "models/interiors/classroom/wallwindow-003.glb",
+        "type": "glb"
+      },
+      {
+        "name": "window",
+        "path": "models/interiors/classroom/window.glb",
+        "type": "glb"
+      }
+    ]
+  },
+  "props": {
+    "food": [
+      {
+        "name": "bottle-water-a",
+        "path": "models/props/food/bottle-water-a.glb",
+        "type": "glb"
+      },
+      {
+        "name": "bottle-water-b",
+        "path": "models/props/food/bottle-water-b.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chicken-cooking-a",
+        "path": "models/props/food/chicken-cooking-a.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chicken-cooking-b",
+        "path": "models/props/food/chicken-cooking-b.glb",
+        "type": "glb"
+      },
+      {
+        "name": "eggs",
+        "path": "models/props/food/eggs.glb",
+        "type": "glb"
+      },
+      {
+        "name": "fruits-salad",
+        "path": "models/props/food/fruits-salad.glb",
+        "type": "glb"
+      },
+      {
+        "name": "glass-milk",
+        "path": "models/props/food/glass-milk.glb",
+        "type": "glb"
+      },
+      {
+        "name": "hummus",
+        "path": "models/props/food/hummus.glb",
+        "type": "glb"
+      },
+      {
+        "name": "lentil-soup",
+        "path": "models/props/food/lentil-soup.glb",
+        "type": "glb"
+      },
+      {
+        "name": "meat-cooking",
+        "path": "models/props/food/meat-cooking.glb",
+        "type": "glb"
+      },
+      {
+        "name": "milk-pack",
+        "path": "models/props/food/milk-pack.glb",
+        "type": "glb"
+      },
+      {
+        "name": "natural-juice-cranberry",
+        "path": "models/props/food/natural-juice-cranberry.glb",
+        "type": "glb"
+      },
+      {
+        "name": "natural-juice-orange",
+        "path": "models/props/food/natural-juice-orange.glb",
+        "type": "glb"
+      },
+      {
+        "name": "oatmeal",
+        "path": "models/props/food/oatmeal.glb",
+        "type": "glb"
+      },
+      {
+        "name": "rice",
+        "path": "models/props/food/rice.glb",
+        "type": "glb"
+      },
+      {
+        "name": "salad-042",
+        "path": "models/props/food/salad-042.glb",
+        "type": "glb"
+      },
+      {
+        "name": "salmon",
+        "path": "models/props/food/salmon.glb",
+        "type": "glb"
+      },
+      {
+        "name": "scrambled-eggs",
+        "path": "models/props/food/scrambled-eggs.glb",
+        "type": "glb"
+      },
+      {
+        "name": "soup-vegetable",
+        "path": "models/props/food/soup-vegetable.glb",
+        "type": "glb"
+      },
+      {
+        "name": "yogurt-a",
+        "path": "models/props/food/yogurt-a.glb",
+        "type": "glb"
+      },
+      {
+        "name": "yogurt-b",
+        "path": "models/props/food/yogurt-b.glb",
+        "type": "glb"
+      },
+      {
+        "name": "barbecue-sauce",
+        "path": "models/props/food/barbecue-sauce.glb",
+        "type": "glb"
+      },
+      {
+        "name": "burger",
+        "path": "models/props/food/burger.glb",
+        "type": "glb"
+      },
+      {
+        "name": "candy-cane",
+        "path": "models/props/food/candy-cane.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chicken-ball",
+        "path": "models/props/food/chicken-ball.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chocolate-a",
+        "path": "models/props/food/chocolate-a.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chocolate-b",
+        "path": "models/props/food/chocolate-b.glb",
+        "type": "glb"
+      },
+      {
+        "name": "corndog",
+        "path": "models/props/food/corndog.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cupcake",
+        "path": "models/props/food/cupcake.glb",
+        "type": "glb"
+      },
+      {
+        "name": "doughnut-a",
+        "path": "models/props/food/doughnut-a.glb",
+        "type": "glb"
+      },
+      {
+        "name": "doughnut-b",
+        "path": "models/props/food/doughnut-b.glb",
+        "type": "glb"
+      },
+      {
+        "name": "doughnut-c",
+        "path": "models/props/food/doughnut-c.glb",
+        "type": "glb"
+      },
+      {
+        "name": "doughnut-d",
+        "path": "models/props/food/doughnut-d.glb",
+        "type": "glb"
+      },
+      {
+        "name": "french-fries",
+        "path": "models/props/food/french-fries.glb",
+        "type": "glb"
+      },
+      {
+        "name": "fried-chicken",
+        "path": "models/props/food/fried-chicken.glb",
+        "type": "glb"
+      },
+      {
+        "name": "hotdog",
+        "path": "models/props/food/hotdog.glb",
+        "type": "glb"
+      },
+      {
+        "name": "ice-cream-magnum-a",
+        "path": "models/props/food/ice-cream-magnum-a.glb",
+        "type": "glb"
+      },
+      {
+        "name": "ice-cream-magnum-b",
+        "path": "models/props/food/ice-cream-magnum-b.glb",
+        "type": "glb"
+      },
+      {
+        "name": "ice-cream-sprinkles",
+        "path": "models/props/food/ice-cream-sprinkles.glb",
+        "type": "glb"
+      },
+      {
+        "name": "ice-cream-sprinkles-cup",
+        "path": "models/props/food/ice-cream-sprinkles-cup.glb",
+        "type": "glb"
+      },
+      {
+        "name": "ketchup-pack",
+        "path": "models/props/food/ketchup-pack.glb",
+        "type": "glb"
+      },
+      {
+        "name": "ketchup-sauce",
+        "path": "models/props/food/ketchup-sauce.glb",
+        "type": "glb"
+      },
+      {
+        "name": "muffin",
+        "path": "models/props/food/muffin.glb",
+        "type": "glb"
+      },
+      {
+        "name": "onion",
+        "path": "models/props/food/onion.glb",
+        "type": "glb"
+      },
+      {
+        "name": "pancake",
+        "path": "models/props/food/pancake.glb",
+        "type": "glb"
+      },
+      {
+        "name": "pizza",
+        "path": "models/props/food/pizza.glb",
+        "type": "glb"
+      },
+      {
+        "name": "pizza-one-piece",
+        "path": "models/props/food/pizza-one-piece.glb",
+        "type": "glb"
+      },
+      {
+        "name": "popcorn",
+        "path": "models/props/food/popcorn.glb",
+        "type": "glb"
+      },
+      {
+        "name": "potato-chips",
+        "path": "models/props/food/potato-chips.glb",
+        "type": "glb"
+      },
+      {
+        "name": "potato-chips-pack",
+        "path": "models/props/food/potato-chips-pack.glb",
+        "type": "glb"
+      },
+      {
+        "name": "soda",
+        "path": "models/props/food/soda.glb",
+        "type": "glb"
+      },
+      {
+        "name": "soda-drink",
+        "path": "models/props/food/soda-drink.glb",
+        "type": "glb"
+      },
+      {
+        "name": "waffle",
+        "path": "models/props/food/waffle.glb",
+        "type": "glb"
+      },
+      {
+        "name": "waffle-one-piece",
+        "path": "models/props/food/waffle-one-piece.glb",
+        "type": "glb"
+      },
+      {
+        "name": "chicken-nuggets",
+        "path": "models/props/food/chicken-nuggets.glb",
+        "type": "glb"
+      }
+    ],
+    "food-extra": [
+      {
+        "name": "comida-low-poly",
+        "path": "models/props/food-extra/comida-low-poly.glb",
+        "type": "glb",
+        "tex": 21
+      }
+    ],
+    "trash": [
+      {
+        "name": "trashanddebris",
+        "path": "models/props/trash/trashanddebris.glb",
+        "type": "glb"
+      }
+    ],
+    "machines": [
+      {
+        "name": "maquinas",
+        "path": "models/props/machines/maquinas.glb",
+        "type": "glb",
+        "tex": 10
+      }
+    ],
+    "trees": [
+      {
+        "name": "arboles-low-poy",
+        "path": "models/props/trees/arboles-low-poy.glb",
+        "type": "glb",
+        "tex": 3
+      }
+    ],
+    "rocks": [
+      {
+        "name": "rock-low-poly",
+        "path": "models/props/rocks/rock-low-poly.glb",
+        "type": "glb",
+        "tex": 1
+      }
+    ],
+    "fishing": [
+      {
+        "name": "pesca",
+        "path": "models/props/fishing/pesca.glb",
+        "type": "glb",
+        "tex": 2
+      }
+    ]
+  },
+  "weapons": {
+    "styloo": [
+      {
+        "name": "ak47",
+        "path": "models/weapons/styloo/ak47.glb",
+        "type": "glb"
+      },
+      {
+        "name": "ak47variant",
+        "path": "models/weapons/styloo/ak47variant.glb",
+        "type": "glb"
+      },
+      {
+        "name": "ammobox-low",
+        "path": "models/weapons/styloo/ammobox-low.glb",
+        "type": "glb"
+      },
+      {
+        "name": "awp",
+        "path": "models/weapons/styloo/awp.glb",
+        "type": "glb"
+      },
+      {
+        "name": "board",
+        "path": "models/weapons/styloo/board.glb",
+        "type": "glb"
+      },
+      {
+        "name": "bullet1",
+        "path": "models/weapons/styloo/bullet1.glb",
+        "type": "glb"
+      },
+      {
+        "name": "bulletpew",
+        "path": "models/weapons/styloo/bulletpew.glb",
+        "type": "glb"
+      },
+      {
+        "name": "bulletshotgun",
+        "path": "models/weapons/styloo/bulletshotgun.glb",
+        "type": "glb"
+      },
+      {
+        "name": "bulletsniper",
+        "path": "models/weapons/styloo/bulletsniper.glb",
+        "type": "glb"
+      },
+      {
+        "name": "flashbang-low",
+        "path": "models/weapons/styloo/flashbang-low.glb",
+        "type": "glb"
+      },
+      {
+        "name": "incendiary-low",
+        "path": "models/weapons/styloo/incendiary-low.glb",
+        "type": "glb"
+      },
+      {
+        "name": "mac10",
+        "path": "models/weapons/styloo/mac10.glb",
+        "type": "glb"
+      },
+      {
+        "name": "nade-low",
+        "path": "models/weapons/styloo/nade-low.glb",
+        "type": "glb"
+      },
+      {
+        "name": "nadevariant-low",
+        "path": "models/weapons/styloo/nadevariant-low.glb",
+        "type": "glb"
+      },
+      {
+        "name": "pew",
+        "path": "models/weapons/styloo/pew.glb",
+        "type": "glb"
+      },
+      {
+        "name": "quadrocket",
+        "path": "models/weapons/styloo/quadrocket.glb",
+        "type": "glb"
+      },
+      {
+        "name": "rocketlaucher",
+        "path": "models/weapons/styloo/rocketlaucher.glb",
+        "type": "glb"
+      },
+      {
+        "name": "rocketlaunchervariant",
+        "path": "models/weapons/styloo/rocketlaunchervariant.glb",
+        "type": "glb"
+      },
+      {
+        "name": "shotgun",
+        "path": "models/weapons/styloo/shotgun.glb",
+        "type": "glb"
+      },
+      {
+        "name": "smoke-low",
+        "path": "models/weapons/styloo/smoke-low.glb",
+        "type": "glb"
+      },
+      {
+        "name": "ak47",
+        "path": "models/weapons/styloo/ak47.glb",
+        "type": "glb"
+      },
+      {
+        "name": "ak47variant",
+        "path": "models/weapons/styloo/ak47variant.glb",
+        "type": "glb"
+      },
+      {
+        "name": "ammobox-low",
+        "path": "models/weapons/styloo/ammobox-low.glb",
+        "type": "glb"
+      },
+      {
+        "name": "awp",
+        "path": "models/weapons/styloo/awp.glb",
+        "type": "glb"
+      },
+      {
+        "name": "board",
+        "path": "models/weapons/styloo/board.glb",
+        "type": "glb"
+      },
+      {
+        "name": "bullet1",
+        "path": "models/weapons/styloo/bullet1.glb",
+        "type": "glb"
+      },
+      {
+        "name": "bulletpew",
+        "path": "models/weapons/styloo/bulletpew.glb",
+        "type": "glb"
+      },
+      {
+        "name": "bulletshotgun",
+        "path": "models/weapons/styloo/bulletshotgun.glb",
+        "type": "glb"
+      },
+      {
+        "name": "bulletsniper",
+        "path": "models/weapons/styloo/bulletsniper.glb",
+        "type": "glb"
+      },
+      {
+        "name": "flashbang-low",
+        "path": "models/weapons/styloo/flashbang-low.glb",
+        "type": "glb"
+      },
+      {
+        "name": "incendiary-low",
+        "path": "models/weapons/styloo/incendiary-low.glb",
+        "type": "glb"
+      },
+      {
+        "name": "mac10",
+        "path": "models/weapons/styloo/mac10.glb",
+        "type": "glb"
+      },
+      {
+        "name": "nade-low",
+        "path": "models/weapons/styloo/nade-low.glb",
+        "type": "glb"
+      },
+      {
+        "name": "nadevariant-low",
+        "path": "models/weapons/styloo/nadevariant-low.glb",
+        "type": "glb"
+      },
+      {
+        "name": "pew",
+        "path": "models/weapons/styloo/pew.glb",
+        "type": "glb"
+      },
+      {
+        "name": "quadrocket",
+        "path": "models/weapons/styloo/quadrocket.glb",
+        "type": "glb"
+      },
+      {
+        "name": "rocketlaucher",
+        "path": "models/weapons/styloo/rocketlaucher.glb",
+        "type": "glb"
+      },
+      {
+        "name": "rocketlaunchervariant",
+        "path": "models/weapons/styloo/rocketlaunchervariant.glb",
+        "type": "glb"
+      },
+      {
+        "name": "shotgun",
+        "path": "models/weapons/styloo/shotgun.glb",
+        "type": "glb"
+      },
+      {
+        "name": "smoke-low",
+        "path": "models/weapons/styloo/smoke-low.glb",
+        "type": "glb"
+      }
+    ]
+  },
+  "animations": {
+    "ual-1": [
+      {
+        "name": "ual1-standard",
+        "path": "models/animations/ual-1/ual1-standard.glb",
+        "type": "glb"
+      }
+    ],
+    "ual-2": [
+      {
+        "name": "mannequin-f",
+        "path": "models/animations/ual-2/mannequin-f.glb",
+        "type": "glb"
+      },
+      {
+        "name": "ual2-standard",
+        "path": "models/animations/ual-2/ual2-standard.glb",
+        "type": "glb"
+      }
+    ]
+  }
+}
