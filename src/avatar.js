@@ -181,9 +181,17 @@ export function buildHair(styleId, colorHex) {
   const g = new THREE.Group();
   g.name = 'hair';
   // glTF hairstyles are attached asynchronously after the avatar is built
-  // (see hairKit.js). Return an empty, tagged group as the mount point.
+  // (see hairKit.js). Return a tagged mount point — but seat the configured
+  // PROCEDURAL fallback style inside it RIGHT NOW so the avatar is never bald
+  // (and never shows a floating asset) during/​after the async load. The
+  // attach routine clears this placeholder when the real glTF hair is ready.
   if (isGltfHair(styleId)) {
     g.userData.gltfHair = styleId;
+    const cfg = HAIR_GLTF[styleId];
+    const fallbackId = (cfg && cfg.fallback) || 'taper-fade';
+    const placeholder = buildHair(fallbackId, colorHex);
+    placeholder.name = 'hair-placeholder:' + styleId;
+    g.add(placeholder);
     return g;
   }
   const hm = mat(colorHex, { rough: 0.95 });
@@ -645,8 +653,23 @@ export function buildAvatar(custom) {
       pend.add(bail);
     }
     const chest = anchors.upper_chest.position;
-    pend.position.set(0, chest.y, chest.z + 0.02);
+    // Hang the pendant on the sternum (a touch below the chain's front dip) and
+    // push it out to follow the chest curve so it rests ON the chest, never
+    // buried in the middle of the torso.
+    const pendY = chest.y - 0.10;
+    const pendZ = chest.z + 0.04;
+    pend.position.set(0, pendY, pendZ);
     root.add(pend);
+
+    // Thin drop-cord linking the chain's front-center dip to the pendant bail so
+    // the piece visibly hangs instead of floating.
+    const cordTopY = collar.y - drop - 0.02;
+    const cordBotY = pendY + 0.06;
+    const cord = new THREE.Mesh(
+      new THREE.CylinderGeometry(tube * 0.4, tube * 0.4, Math.max(0.02, cordTopY - cordBotY), 6),
+      goldM);
+    cord.position.set(0, (cordTopY + cordBotY) / 2, (collar.z + radZ + pendZ) / 2);
+    root.add(cord);
   }
 
   // ── accessories ──

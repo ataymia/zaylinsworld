@@ -17,6 +17,8 @@ export class Controls {
     this.pointerLocked = false;
     this.justPressed = new Set();
     this.bounds = null;     // optional {min,max} AABB to keep the camera inside (interiors)
+    this.mouse = new Set();        // mouse buttons currently held (0=L,1=M,2=R)
+    this.justClicked = new Set();  // mouse buttons pressed this frame
     this._bind();
   }
 
@@ -47,14 +49,31 @@ export class Controls {
       this.distance = Math.max(2, Math.min(14, this.distance + Math.sign(e.deltaY) * 0.6));
       e.preventDefault();
     }, { passive: false });
+
+    // Mouse buttons (for shooting/aiming). Tracked only while pointer-locked so
+    // the lock-acquiring click doesn't immediately fire a shot.
+    this.dom.addEventListener('mousedown', e => {
+      if (!this.pointerLocked) return;
+      if (!this.mouse.has(e.button)) this.justClicked.add(e.button);
+      this.mouse.add(e.button);
+    });
+    window.addEventListener('mouseup', e => this.mouse.delete(e.button));
+    this.dom.addEventListener('contextmenu', e => e.preventDefault());
+  }
+
+  // True while a mouse button is held (0=left, 2=right). Used for auto-fire/aim.
+  mouseHeld(b = 0) { return this.mouse.has(b); }
+  // True once on the frame a mouse button is first pressed (semi-auto fire).
+  consumeClick(b = 0) {
+    if (this.justClicked.has(b)) { this.justClicked.delete(b); return true; }
+    return false;
   }
 
   consumePress(k) {
     if (this.justPressed.has(k)) { this.justPressed.delete(k); return true; }
     return false;
   }
-  endFrame() { this.justPressed.clear(); }
-
+  endFrame() { this.justPressed.clear(); this.justClicked.clear(); }
   cycleMode() {
     this.mode = this.mode === CAM.THIRD ? CAM.FIRST
       : this.mode === CAM.FIRST ? CAM.FREE : CAM.THIRD;

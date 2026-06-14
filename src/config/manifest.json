@@ -5,9 +5,9 @@
   },
   "characters": {
     "player_avatar": "models/characters/player_avatar.glb",
-    "npc_basic_01": "models/characters/npc_basic_01.glb",
-    "npc_basic_02": "models/characters/npc_basic_02.glb",
-    "npc_shopkeeper_frostbox": "models/characters/npc_shopkeeper_frostbox.glb"
+    "npc_basic_01": "models/characters/player_avatar.glb",
+    "npc_basic_02": "models/characters/player_avatar.glb",
+    "npc_shopkeeper_frostbox": "models/characters/player_avatar.glb"
   },
   "hair": {
     "hair_afro": "models/hair/hair_afro.glb",
@@ -41,6 +41,14 @@
     "frostbox_chain_cuban": "models/jewelry/frostbox_chain_cuban.glb",
     "frostbox_pendant_initial": "models/jewelry/frostbox_pendant_initial.glb",
     "frostbox_gem_diamond": { "file": "models/jewelry/frostbox_gem_diamond.glb", "scale": 1, "yOffset": 0, "rotationY": 0 }
+  },
+  "weapons": {
+    "pistol": "models/weapons/pew.glb",
+    "smg": "models/weapons/mac10.glb",
+    "rifle": "models/weapons/ak47.glb",
+    "shotgun": "models/weapons/shotgun.glb",
+    "sniper": "models/weapons/awp.glb",
+    "rocket": "models/weapons/rocketlaucher.glb"
   },
   "props": {}
 }

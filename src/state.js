@@ -28,7 +28,13 @@ export function defaultState() {
     ownedCars: [],      // car ids bought at dealership
     ownedJewelry: [],   // jewelry ids bought at Frostbox
     ownedGear: [],      // gear ids bought at Block Supply
+    ownedWeapons: ['fists'],   // weapon ids owned (Styloo Guns pack)
+    equippedWeapon: 'fists',   // currently held weapon
+    ammo: {},           // weaponId -> { mag, reserve }
+    missionIndex: 0,    // active mission in the chain
+    missionProgress: [],// done-flags for the active mission's objectives
     chicken: 0,         // pieces of chicken in inventory
+    gems: 0,            // collectible city gems picked up
     freshCut: false,    // lineup mini-game result
     npcMemory: {},      // id -> { greeted, timesTalked, lastDay }
     inventory: [],
@@ -51,6 +57,9 @@ export function loadState() {
       ownedCars: data.ownedCars || [],
       ownedJewelry: data.ownedJewelry || [],
       ownedGear: data.ownedGear || [],
+      ownedWeapons: data.ownedWeapons && data.ownedWeapons.length ? data.ownedWeapons : ['fists'],
+      ammo: { ...(data.ammo || {}) },
+      missionProgress: data.missionProgress || [],
     };
   } catch (e) {
     console.warn('Failed to load save:', e);

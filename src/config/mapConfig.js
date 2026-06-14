@@ -46,12 +46,18 @@ export const LANDMARKS = [
   { id: 'home',        name: "ZAYLEN'S HOME", interiorId: 'home',        x: 0,   z: 44,  w: 11, d: 10, h: 5, color: '#8a7a5a', sign: '#bfe3ff', face: [0, -1] },
   // West edge — just outside the perimeter (x = -30).
   { id: 'blocksupply', name: 'BLOCK SUPPLY',  interiorId: 'blocksupply', x: -44, z: 0,   w: 11, d: 10, h: 6, color: '#4b2c6b', sign: '#d9b3ff', face: [1, 0] },
+  // East edge — Iron City Gym fronts the perimeter ring road.
+  { id: 'gym',         name: 'IRON CITY GYM', interiorId: 'gym',         x: 44,  z: 0,   w: 11, d: 10, h: 7, color: '#6b2c2c', sign: '#ff9f9f', face: [-1, 0] },
+  // Auto Row neighbour — City Garage next to the dealership.
+  { id: 'garage',      name: 'CITY GARAGE',   interiorId: 'garage',      x: 15,  z: -44, w: 11, d: 10, h: 6, color: '#454a55', sign: '#cfd6e2', face: [0, 1] },
+  // West edge, north of Block Supply — the school.
+  { id: 'school',      name: 'ZAYLIN PREP',   interiorId: 'school',      x: -44, z: -24, w: 12, d: 10, h: 7, color: '#3a5a4a', sign: '#b9ffd6', face: [1, 0] },
+  // East edge, south of the gym — the job/office tower.
+  { id: 'office',      name: 'WORKTOWER',     interiorId: 'office',      x: 44,  z: 24,  w: 12, d: 10, h: 8, color: '#2c3a5a', sign: '#bcd8ff', face: [-1, 0] },
 ];
 
 // ── non-enterable landmarks (visible, labelled, no interior / no prompt) ─────
 export const FEATURES = [
-  { id: 'gym',    name: 'IRON CITY GYM', x: 44,  z: 0,   w: 11, d: 10, h: 7, color: '#6b2c2c', sign: '#ff9f9f', face: [-1, 0] },
-  { id: 'garage', name: 'CITY GARAGE',   x: 15,  z: -44, w: 11, d: 10, h: 6, color: '#454a55', sign: '#cfd6e2', face: [0, 1] },
 ];
 
 // ── decorative skyline buildings (Kenney Retro Urban Kit GLBs) ───────────────
@@ -110,6 +116,37 @@ export const PEDESTRIAN_ROUTES = [
   { name: 'residential', loop: [[-8, 23], [8, 23], [8, 24], [-8, 24]] },
 ];
 
+// ── street litter (Trash & Debris GLB clusters) ──────────────────────────────
+// Small, non-colliding clusters of trash scattered along gutters, sidewalk
+// edges and alley corners — placed off the driving lanes so they read as grime
+// without blocking the player or traffic. `n` items per cluster, spread within
+// `r` metres of the anchor; `scale` multiplies the (already small) props.
+export const LITTER = [
+  { x: -20, z: -9,  n: 5, r: 1.4 }, { x: -10, z: -9, n: 4, r: 1.2 },
+  { x: 10,  z: -9,  n: 5, r: 1.4 }, { x: 20,  z: -9, n: 4, r: 1.2 },
+  { x: -20, z: 9,   n: 4, r: 1.3 }, { x: 20,  z: 9,  n: 5, r: 1.4 },
+  { x: -9,  z: -20, n: 4, r: 1.2 }, { x: 9,   z: -20, n: 5, r: 1.4 },
+  { x: -9,  z: 20,  n: 4, r: 1.2 }, { x: 9,   z: 20,  n: 4, r: 1.3 },
+  { x: -26, z: -26, n: 6, r: 1.8, scale: 1.2 }, { x: 26, z: 26, n: 6, r: 1.8, scale: 1.2 },
+  { x: 26,  z: -26, n: 5, r: 1.6 }, { x: -26, z: 26,  n: 5, r: 1.6 },
+  { x: 38,  z: 5,   n: 5, r: 1.5 }, { x: -38, z: -5,  n: 5, r: 1.5 },
+];
+
+// ── collectible gems (Ultimate Gem Collection sprites) ───────────────────────
+// Floating, twinkling gem pickups the player walks over for cash. Anchors sit
+// on the sidewalks flanking Main St / Centre Ave and inside the park plaza —
+// always off the asphalt and clear of building footprints so they read as loot
+// without blocking movement. `value` overrides the default cash reward.
+export const GEMS = [
+  // Main Street sidewalks (z = ±6.5, just off the asphalt)
+  { x: -22, z: 6.5 }, { x: -11, z: 6.5 }, { x: 11, z: 6.5 }, { x: 22, z: 6.5 },
+  { x: -22, z: -6.5 }, { x: -11, z: -6.5 }, { x: 11, z: -6.5 }, { x: 22, z: -6.5 },
+  // Centre Avenue sidewalks (x = ±6.5)
+  { x: 6.5, z: -22 }, { x: -6.5, z: -22 }, { x: 6.5, z: 22 }, { x: -6.5, z: 22 },
+  // Park plaza (SE inner block) — the centre gem is worth more
+  { x: 15, z: 15, value: 150 }, { x: 11, z: 19 }, { x: 19, z: 11 },
+];
+
 // ── spawn (sidewalk corner by the central intersection, facing the park) ─────
 export const SPAWN = { x: 9, z: 9, faceY: Math.PI + Math.PI / 4 };
 
@@ -119,5 +156,5 @@ export const MISSION_MARKERS = [];
 export default {
   ROAD, ROAD_CLEAR, CROSSWALKS, LANDMARKS, FEATURES, DECOR,
   PARK, PARKING, STREET_LIGHTS, STREET_TREES,
-  TRAFFIC_ROUTES, PEDESTRIAN_ROUTES, SPAWN, MISSION_MARKERS,
+  TRAFFIC_ROUTES, PEDESTRIAN_ROUTES, LITTER, GEMS, SPAWN, MISSION_MARKERS,
 };

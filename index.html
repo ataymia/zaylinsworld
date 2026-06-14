@@ -136,6 +136,26 @@
   .corner-btn{position:fixed;top:10px;right:14px;z-index:50;pointer-events:auto;}
   small.dim{color:#8a8aa0;}
 
+  /* ── weapon HUD (bottom-right) ── */
+  #weapon-hud{position:fixed;right:16px;bottom:16px;z-index:110;display:flex;align-items:center;gap:10px;
+    background:rgba(8,8,16,.78);border:1px solid rgba(255,255,255,.16);border-radius:12px;
+    padding:8px 14px;font-weight:800;letter-spacing:.5px;}
+  #weapon-hud .wp-icon{font-size:20px;}
+  #weapon-hud .wp-name{font-size:13px;color:#dfe7ff;}
+  #weapon-hud .wp-ammo{font-size:16px;color:var(--gold);min-width:74px;text-align:right;
+    font-variant-numeric:tabular-nums;}
+
+  /* ── mission tracker (left, under HUD) ── */
+  #mission-tracker{position:fixed;left:14px;top:96px;z-index:60;max-width:300px;
+    background:rgba(8,8,16,.74);border:1px solid rgba(255,255,255,.14);border-left:3px solid var(--accent);
+    border-radius:10px;padding:10px 13px;}
+  #mission-tracker .mt-label{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:#8a8aa0;}
+  #mission-tracker .mt-title{font-size:14px;font-weight:800;color:#fff;margin:2px 0 4px;}
+  #mission-tracker .mt-obj{font-size:12px;color:#cfe8ff;display:flex;align-items:center;gap:7px;margin-top:3px;}
+  #mission-tracker .mt-obj.done{color:#6f7a90;text-decoration:line-through;}
+  #mission-tracker .mt-tick{width:13px;height:13px;border-radius:50%;border:1.5px solid #4a5570;flex:0 0 auto;}
+  #mission-tracker .mt-obj.done .mt-tick{background:var(--accent);border-color:var(--accent);}
+
   /* ── loading screen ── */
   #loading{position:fixed;inset:0;z-index:300;background:radial-gradient(circle at 50% 35%,#16162a,#06060d 70%);
     display:flex;align-items:center;justify-content:center;transition:opacity .6s ease;}
@@ -173,6 +193,8 @@
 
   <div id="prompt"></div>
   <div id="notif"></div>
+  <div id="weapon-hud" style="display:none;"></div>
+  <div id="mission-tracker" style="display:none;"></div>
   <div id="hint">
     <b>WASD</b> move · <b>Mouse</b> look (click to lock) · <b>Shift</b> run · <b>Space</b> jump ·
     <b>E</b> interact/talk · <b>F</b> enter car · <b>V</b> camera · <b>C</b> wardrobe · <b>M</b> monster

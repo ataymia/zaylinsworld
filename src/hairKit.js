@@ -115,6 +115,13 @@ export async function attachGltfHair(avatar, styleId, hairColorHex, renderer) {
     const size = box.getSize(new THREE.Vector3());
     if (!isFinite(size.x) || size.x <= 0 || size.y <= 0) throw new Error('empty hair bbox');
 
+    // Shape sanity: a hair cap is roughly as wide as it is tall. If the baked
+    // mesh is much taller than it is wide, the skin-bake produced a full body
+    // (not just the hair) — using it would float a giant asset above the head,
+    // so bail to the procedural fallback instead.
+    const aspect = size.y / (Math.max(size.x, size.z) || 0.0001);
+    if (aspect > 2.2) throw new Error('hair bbox not cap-shaped (aspect ' + aspect.toFixed(2) + ')');
+
     // Re-center by the baked bounding box: XZ centered, bottom at y=0. This
     // discards the asset's original head-space position so the hair seats on the
     // scalp instead of across the eyes.

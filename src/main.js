@@ -6,18 +6,25 @@ import { Sky } from 'three/addons/objects/Sky.js';
 import { buildAvatar, isGltfHair, HAIRSTYLES, HAIR_COLORS, JEWELRY } from './avatar.js';
 import { attachGltfHair, attachedHairInfo } from './hairKit.js';
 import { buildDistrict } from './cityKit.js';
+import { placeStreetProps } from './props.js';
 import { preloadVehicles, swapVehicleVisual, TRAFFIC_FLEET, DRIVABLE_DEFAULT, DEALER_FLEET } from './vehicleKit.js';
 import { buildCity, colliders as cityColliders } from './world.js';
 import { buildInteriors, DEALER_CARS, JEWELRY_STOCK, GEAR_STOCK } from './interiors.js';
 import {
   createCityNPCs, updateCityNPCs, createTraffic, updateTraffic, createDrivableCar,
 } from './npc.js';
+import {
+  initWeapons, updateWeapons, buyWeapon, equipWeapon, cycleWeapon,
+  WEAPONS, weaponById, currentWeapon,
+} from './weapons.js';
+import { initMissions, missionEvent, renderTracker } from './missions.js';
 import { Controls, CAM } from './controls.js';
 import { InteractionManager } from './interaction.js';
 import { loadState, saveState, defaultState, clearSave, hasSave } from './state.js';
+import { GEMS } from './config/mapConfig.js';
 import { loadHDRI } from './assets.js';
 import {
-  hdriUrl, loadSlotModel, updateMixers, enhanceAvatar, enhanceVehicle,
+  hdriUrl, loadSlotModel, updateMixers, enhanceAvatar, enhanceVehicle, assetUrl,
 } from './manifest.js';
 import { graphics } from './graphics.js';
 import { initSettingsMenu, isSettingsOpen, settingsTickFPS } from './settings.js';
@@ -147,6 +154,12 @@ let inCar = false;
 let drivingVehicle = null;     // the vehicle currently being driven (owned car or a stolen traffic car)
 let returnPos = new THREE.Vector3(0, 0, 12);
 let velY = 0, onGround = true;
+// ── police / crime runtime state ──────────────────────────────────────────────
+let policeUnits = [];          // foot cops: { av, health, busted }
+let policeCars = [];           // patrol cruisers (heavier mass, can be stolen)
+let policeAccum = 0;           // spawn pacing
+let bustTimer = 0;             // seconds a cop has been on top of the player
+let drivenDist = 0, drivenFlagged = false;   // "Get Around Town" mission tracker
 let builderOpen = false;
 let wardrobeResume = false;      // creator opened from inside the game
 
@@ -206,6 +219,7 @@ function enterWorld() {
     graphics.applyToScene(scene, renderer);   // reflections + texture filtering
     started = true;
     applyWorldAssets();                        // swap in real GLBs where available
+    initGameSystems();                         // weapons + missions + police hooks
   }
   rebuildPlayer();
   player.group.position.set(state.pos.x, 0, state.pos.z);
@@ -249,7 +263,13 @@ const extraSpinners = [];   // display models that idle-rotate (e.g. jewelry)
 function applyWorldAssets() {
   enhanceShopkeepers();
   placeFrostboxJewelry();
-  applyVehicleModels();                      // swap procedural cars → Kenney Car Kit GLBs (incl. dealership)
+  applyVehicleModels();                      // swap procedural cars → real Car Kit GLBs (incl. dealership)
+  // scatter street litter (Trash & Debris GLB) — decorative, non-colliding
+  placeStreetProps(scene, renderer)
+    .then((n) => { if (n) console.info('[props] litter items:', n); })
+    .catch((e) => console.warn('[props] failed:', e));
+  // scatter collectible gems across the city (Ultimate Gem Collection textures)
+  placeCityGems();
   // place Kenney Retro Urban Kit buildings into the district (async, fire-and-forget)
   buildDistrict(scene, renderer)
     .then((placed) => { if (placed && placed.length) console.info('[district] landmarks:', placed.map(p => p.label).join(', ')); })
@@ -318,7 +338,94 @@ async function placeFrostboxJewelry() {
   await place('jewelry', 'frostbox_pendant_initial', M.pendant, { scale: 0.5, spin: true });
   await place('jewelry', 'frostbox_gem_diamond', M.gem, { scale: 0.5, spin: true });
 
+  placeFrostboxGems(M.gemWall);
+
   graphics.applyToScene(scene, renderer);   // pick up envMap reflection intensity
+}
+
+// Fill the Frostbox back wall with a glowing rack of gems built from the 2D gem
+// texture set (Ultimate Gem Collection). Each gem is an unlit, alpha-cut plane
+// faced into the room so it reads as iced-out merchandise on the shelf.
+const GEM_TEXTURES = [
+  'gem6-diamond', 'gem2-emerald', 'gem3-pink', 'gem2-yellow', 'gem5-blue', 'gem8-gold',
+  'gem7-darkblue', 'gem10-green', 'gem9-green', 'gem3-orange', 'gem3-deepred', 'gem11-lightblue',
+];
+function placeFrostboxGems(wall) {
+  if (!wall || !interiors) return;
+  const texLoader = new THREE.TextureLoader(loadingManager);
+  const rows = wall.rows ?? 2;
+  const perRow = Math.ceil(GEM_TEXTURES.length / rows);
+  const spread = wall.spread ?? 9;
+  const step = spread / Math.max(1, perRow - 1);
+  const faceZ = wall.faceZ ?? 1;
+  GEM_TEXTURES.forEach((name, i) => {
+    const tex = texLoader.load(assetUrl('textures/gems/' + name + '.png'));
+    tex.colorSpace = THREE.SRGBColorSpace;
+    const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, alphaTest: 0.4, side: THREE.DoubleSide, toneMapped: false });
+    const gem = new THREE.Mesh(new THREE.PlaneGeometry(0.55, 0.55), mat);
+    const row = Math.floor(i / perRow);
+    const col = i % perRow;
+    gem.position.set(wall.x - spread / 2 + col * step, wall.y - row * 0.7, wall.z + faceZ * 0.05);
+    gem.rotation.y = faceZ > 0 ? 0 : Math.PI;
+    interiors.group.add(gem);
+  });
+}
+
+// ── collectible city gems (Ultimate Gem Collection textures) ─────────────────
+// Floating, twinkling gem sprites scattered on the sidewalks + park (anchors in
+// mapConfig.GEMS). Walk over one to collect it for cash. They are billboard
+// sprites with NO colliders, so they never block the player or traffic.
+let cityGems = [];
+let cityGemsGroup = null;
+const GEM_HOVER_Y = 1.1;
+const GEM_PICK_R = 1.4;
+function placeCityGems() {
+  cityGems = [];
+  const group = new THREE.Group();
+  group.name = 'city-gems';
+  const texLoader = new THREE.TextureLoader();
+  GEMS.forEach((spot, i) => {
+    const name = GEM_TEXTURES[i % GEM_TEXTURES.length];
+    const tex = texLoader.load(assetUrl('textures/gems/' + name + '.png'));
+    tex.colorSpace = THREE.SRGBColorSpace;
+    const spr = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: tex, transparent: true, toneMapped: false, depthWrite: false,
+    }));
+    const s = spot.scale ?? 0.7;
+    spr.scale.set(s, s, s);
+    spr.position.set(spot.x, GEM_HOVER_Y, spot.z);
+    group.add(spr);
+    cityGems.push({ sprite: spr, x: spot.x, z: spot.z, value: spot.value ?? 75, phase: i * 0.7, collected: false });
+  });
+  scene.add(group);
+  cityGemsGroup = group;
+  console.info('[gems] city gems placed:', cityGems.length);
+}
+// Bob + twinkle every frame; collect any gem the player walks onto.
+function updateCityGems(dt, t, playerPos) {
+  for (const it of cityGems) {
+    if (it.collected) continue;
+    it.sprite.position.y = GEM_HOVER_Y + Math.sin(t * 1.6 + it.phase) * 0.12;
+    it.sprite.material.rotation += dt * 0.6;
+    if (playerPos) {
+      const dx = playerPos.x - it.x, dz = playerPos.z - it.z;
+      if (dx * dx + dz * dz <= GEM_PICK_R * GEM_PICK_R) {
+        it.collected = true;
+        if (cityGemsGroup) cityGemsGroup.remove(it.sprite);
+        it.sprite.material.map?.dispose();
+        it.sprite.material.dispose();
+        collectGem(it.value);
+      }
+    }
+  }
+}
+function collectGem(value) {
+  state.money += value;
+  state.gems = (state.gems || 0) + 1;
+  state.stats.fun = Math.min(100, state.stats.fun + 3);
+  notify('💎 Gem collected! +$' + value);
+  missionEvent('gem');
+  saveNow();
 }
 
 // ── register ALL interactables (each has a real working action) ───────────────
@@ -417,6 +524,7 @@ function enterInterior(id) {
   controls.snapTo(player.group.position, player.eyeHeight);
 
   notify('Entered ' + intr.name);
+  missionEvent('enter', id);
   showPrompt(null);
   updateInteriorDebug();
   saveNow();
@@ -546,9 +654,10 @@ const OFFSCREEN = new THREE.Vector3(1e6, 1e6, 1e6);
 function nearestStealable() {
   if (!player || area !== 'city') return null;
   const pp = player.group.position;
-  let best = null, bestD = 3.0;
-  for (const c of traffic) {
-    if (Math.abs(c.speed || 0) > 6) continue;          // can't board fast-moving traffic (yet)
+  let best = null, bestD = 3.4;
+  // EVERY car on the street is stealable — traffic and patrol units alike.
+  const pool = [...traffic, ...policeCars];
+  for (const c of pool) {
     const d = c.g.position.distanceTo(pp);
     if (d < bestD) { bestD = d; best = c; }
   }
@@ -566,9 +675,17 @@ function enterCar(vehicle = car, opts = {}) {
   if (opts.steal) {
     const idx = traffic.indexOf(vehicle);
     if (idx >= 0) traffic.splice(idx, 1);
+    const pidx = policeCars.indexOf(vehicle);
+    if (pidx >= 0) policeCars.splice(pidx, 1);
     vehicle.stolen = true;
+    const copCar = !!vehicle.isCop;
     const witnessed = witnessesNear(vehicle.g.position, 16);
-    if (witnessed > 0) {
+    if (copCar) {
+      state.wanted = Math.min(5, (state.wanted || 0) + 2);
+      state.heat = Math.min(100, (state.heat || 0) + 20);
+      console.log(`[crime] STOLE A POLICE CRUISER → wanted=${state.wanted}`);
+      notify('🚨 You jacked a cop car! Wanted +2');
+    } else if (witnessed > 0) {
       state.wanted = Math.min(5, (state.wanted || 0) + 1);
       state.heat = Math.min(100, (state.heat || 0) + 8);
       console.log(`[crime] grand theft auto WITNESSED by ${witnessed} → wanted=${state.wanted}`);
@@ -586,6 +703,7 @@ function enterCar(vehicle = car, opts = {}) {
   vehicle.speed = 0;
   controls.bounds = null;
   showPrompt(null);
+  missionEvent('enter-car');
   saveNow();
 }
 // count NPCs (and the player's known witnesses) within a radius of a position
@@ -605,6 +723,7 @@ function exitCar() {
   v.speed = 0;
   drivingVehicle = null;
   notify('Stepped out of the vehicle');
+  missionEvent('exit-car');
   saveNow();
 }
 function updateCar(dt) {
@@ -624,11 +743,22 @@ function updateCar(dt) {
   const before = v.g.position.clone();
   v.g.position.addScaledVector(dir, v.speed * dt); v.g.position.y = 0;
   resolveCollision(v.g.position, 1.5, cityColliders);
+  // distance driven this session → feeds the "Get Around Town" mission
+  drivenDist += Math.abs(v.speed) * dt;
+  if (drivenDist > 120 && !drivenFlagged) { drivenFlagged = true; missionEvent('drive-checkpoint'); }
   if (v.g.position.distanceTo(before) > 0.02 && v.g.position.distanceTo(before) < Math.abs(v.speed * dt) * 0.6 && Math.abs(v.speed) > 7) {
-    v.damage = Math.min(100, (v.damage || 0) + Math.abs(v.speed) * dt * 5);
+    const sev = Math.abs(v.speed);
+    v.damage = Math.min(100, (v.damage || 0) + sev * dt * 5);
     if (v === car) state.carDamage = Math.floor(v.damage);
     v.speed *= 0.35;
+    applyCarDamageVisual(v);
     notify('💥 Crash! Car damage ' + Math.floor(v.damage) + '%');
+    // a hard wreck draws police attention
+    if (sev > 16) {
+      state.heat = Math.min(100, (state.heat || 0) + 6);
+      state.wanted = Math.min(5, (state.wanted || 0) + 1);
+      notify('🚨 Reckless driving reported! Wanted +1');
+    }
   }
   // roll wheels (GLB wheel meshes or procedural cylinders)
   (v.g.userData.wheels || []).forEach(w => { w.rotation.x += v.speed * dt; });
@@ -652,6 +782,7 @@ function updateVehicleCollisions(dt) {
 
   const cars = [];
   for (const c of traffic) cars.push(c);
+  for (const c of policeCars) cars.push(c);     // patrol cars collide & shove too
   if (car && !inCar) cars.push(car);           // parked drivable car is a solid obstacle
   if (inCar && drivingVehicle && !cars.includes(drivingVehicle)) cars.push(drivingVehicle);  // the car you drive collides too
   for (const c of cars) if (c._crashCD) c._crashCD = Math.max(0, c._crashCD - dt);
@@ -666,13 +797,19 @@ function updateVehicleCollisions(dt) {
       const minD = CAR_R * 2;
       if (d >= minD || d < 1e-4) continue;
       const nx = dx / d, nz = dz / d;
-      const push = (minD - d) / 2 + 0.01;
-      a.g.position.x -= nx * push; a.g.position.z -= nz * push;
-      b.g.position.x += nx * push; b.g.position.z += nz * push;
+      const overlap = (minD - d) + 0.01;
+      // mass-weighted separation — heavier cop cruisers barely budge and shove
+      // lighter cars out of the way (GTA-style ramming).
+      const ma = a.mass || 1, mb = b.mass || 1;
+      const aShare = mb / (ma + mb);            // a moves proportional to b's mass
+      const bShare = ma / (ma + mb);
+      a.g.position.x -= nx * overlap * aShare; a.g.position.z -= nz * overlap * aShare;
+      b.g.position.x += nx * overlap * bShare; b.g.position.z += nz * overlap * bShare;
       const rel = Math.abs(a.speed || 0) + Math.abs(b.speed || 0);
       if (rel > 4 && !a._crashCD && !b._crashCD) {
         a.damage = Math.min(100, (a.damage || 0) + rel * 0.6);
         b.damage = Math.min(100, (b.damage || 0) + rel * 0.6);
+        applyCarDamageVisual(a); applyCarDamageVisual(b);
         console.log(`[collision] car↔car  rel=${rel.toFixed(1)}  dmgA=${Math.floor(a.damage)}%  dmgB=${Math.floor(b.damage)}%`);
         if (a === car || b === car) state.carDamage = Math.floor(car.damage || 0);
         if (rel > 16) state.heat = Math.min(100, (state.heat || 0) + 3);   // heavy pileup raises heat
@@ -714,6 +851,238 @@ function updateVehicleCollisions(dt) {
     }
   }
 }
+
+// ── CRIME, WEAPONS & POLICE ─────────────────────────────────────────────────────
+// Hooked into the weapon controller (weapons.js) via initWeapons() callbacks and
+// driven each frame by updatePolice(). Wanted stars escalate from firing in
+// public, killing civilians/cops, stealing cars and reckless driving. Police
+// spawn around the player, chase on foot and in heavier cruisers, and "bust" you
+// (cash penalty) if they corner you on foot. Outrun/lose them to cool down.
+
+let copCoolTimer = 0;
+
+// Targets handed to the weapon raycaster: civilians + cops, each with onHit().
+function getWeaponTargets() {
+  const out = [];
+  if (area !== 'city') return out;
+  for (const n of cityNPCs) {
+    out.push({
+      pos: n.av.group.position.clone().setY(1.1), r: 0.95, kind: 'civ', ref: n,
+      onHit: (dmg) => { n.hp = (n.hp ?? 42) - dmg; n.hitT = 0.2; return n.hp <= 0; },
+    });
+  }
+  for (const u of policeUnits) {
+    out.push({
+      pos: u.av.group.position.clone().setY(1.1), r: 1.0, kind: 'cop', ref: u,
+      onHit: (dmg) => { u.health -= dmg; u.hitT = 0.2; return u.health <= 0; },
+    });
+  }
+  return out;
+}
+
+// Firing a gun in public is a crime → alerts police.
+function onWeaponShot() {
+  if (area !== 'city') return;
+  if ((state.wanted || 0) < 1) { state.wanted = 1; notify('🚨 Shots fired! Police alerted.'); }
+  state.heat = Math.min(100, (state.heat || 0) + 6);
+}
+
+// A target died from weapon damage.
+function onWeaponKill(tg) {
+  if (tg.kind === 'civ') {
+    state.wanted = Math.min(5, (state.wanted || 0) + 2);
+    state.heat = Math.min(100, (state.heat || 0) + 25);
+    const n = tg.ref;
+    scene.remove(n.av.group);
+    const idx = cityNPCs.indexOf(n);
+    if (idx >= 0) cityNPCs.splice(idx, 1);
+    registerInteractables(cityEntrances);     // drop its "Talk" interactable
+    notify('🚨 You killed a civilian! Wanted +2');
+  } else if (tg.kind === 'cop') {
+    state.wanted = Math.min(5, (state.wanted || 0) + 1);
+    state.heat = Math.min(100, (state.heat || 0) + 20);
+    const i = policeUnits.indexOf(tg.ref);
+    if (i >= 0) removeFootCop(i);
+    notify('🚓 Officer down! Wanted +1');
+  }
+  saveNow();
+}
+
+// Build a foot patrol officer (procedural avatar + navy vest & cap so it reads
+// clearly as police) and drop it on a ring around the player.
+function spawnFootCop() {
+  const av = buildAvatar({ ...defaultCustom(), top: 'hoodie-red', accessory: 'shades', jewelry: 'none' });
+  const navy = new THREE.MeshStandardMaterial({ color: '#16224d', roughness: 0.7, metalness: 0.1 });
+  const vest = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.66, 0.36), navy);
+  vest.position.y = 1.28; av.group.add(vest);
+  const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.19, 0.12, 12), navy);
+  cap.position.y = (av.eyeHeight || 1.6) + 0.2; av.group.add(cap);
+  const badge = new THREE.Mesh(new THREE.CircleGeometry(0.05, 6),
+    new THREE.MeshStandardMaterial({ color: '#ffd34d', emissive: '#5a4500', emissiveIntensity: 0.4 }));
+  badge.position.set(0.16, 1.36, 0.19); av.group.add(badge);
+  const pp = player.group.position;
+  const ang = Math.random() * Math.PI * 2, R = 16;
+  av.group.position.set(pp.x + Math.cos(ang) * R, 0, pp.z + Math.sin(ang) * R);
+  scene.add(av.group);
+  policeUnits.push({ av, health: 65, t: 0, hitT: 0 });
+}
+
+// Build a heavier patrol cruiser that chases the player's car/feet.
+function spawnCopCar() {
+  const pp = player.group.position;
+  const ang = Math.random() * Math.PI * 2, R = 28;
+  const c = createDrivableCar(scene, pp.x + Math.cos(ang) * R, pp.z + Math.sin(ang) * R, '#1b2a55');
+  c.isCop = true; c.mass = 2.6; c.speed = 0; c.damage = 0;
+  const bar = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.12, 0.22),
+    new THREE.MeshStandardMaterial({ color: 0x3060ff, emissive: 0x1a2f8a, emissiveIntensity: 0.7 }));
+  bar.position.set(0, 1.5, 0); c.g.add(bar); c.lightBar = bar;
+  policeCars.push(c);
+}
+
+function removeFootCop(i) {
+  const u = policeUnits[i];
+  if (u) scene.remove(u.av.group);
+  policeUnits.splice(i, 1);
+}
+function despawnAllPolice() {
+  for (const u of policeUnits) scene.remove(u.av.group);
+  policeUnits = [];
+  for (const c of policeCars) scene.remove(c.g);
+  policeCars = [];
+}
+
+// Cops corner you on foot → you get busted: lose half your cash, wanted clears.
+function bustPlayer() {
+  const lost = Math.floor((state.money || 0) * 0.5);
+  state.money -= lost;
+  state.wanted = 0; state.heat = 0; bustTimer = 0; copCoolTimer = 0;
+  despawnAllPolice();
+  if (inCar) exitCar();
+  player.group.position.set(state.pos.x = SPAWN_FALLBACK.x, 0, state.pos.z = SPAWN_FALLBACK.z);
+  notify(`🚔 Busted! Lost $${lost.toLocaleString()}.`);
+  saveNow();
+}
+const SPAWN_FALLBACK = { x: 9, z: 9 };
+
+function updatePolice(dt) {
+  if (area !== 'city' || !player) { if (policeUnits.length || policeCars.length) despawnAllPolice(); return; }
+  const wanted = state.wanted || 0;
+  if (wanted === 0) { if (policeUnits.length || policeCars.length) despawnAllPolice(); bustTimer = 0; return; }
+
+  // spawn pacing — more stars ⇒ more units, cruisers appear at 3★+
+  policeAccum += dt;
+  const wantFoot = Math.min(4, wanted + 1);
+  const wantCars = wanted >= 3 ? Math.min(2, wanted - 2) : 0;
+  if (policeAccum > 2.0) {
+    policeAccum = 0;
+    if (policeUnits.length < wantFoot) spawnFootCop();
+    if (policeCars.length < wantCars) spawnCopCar();
+  }
+
+  const pp = player.group.position;
+  let nearest = Infinity;
+
+  // foot cops chase + bust
+  for (let i = policeUnits.length - 1; i >= 0; i--) {
+    const u = policeUnits[i];
+    if (u.health <= 0) { removeFootCop(i); continue; }
+    if (u.hitT > 0) u.hitT -= dt;
+    const g = u.av.group;
+    const dx = pp.x - g.position.x, dz = pp.z - g.position.z;
+    const d = Math.hypot(dx, dz) || 1;
+    nearest = Math.min(nearest, d);
+    if (d > 1.3) { const sp = 3.8 * dt; g.position.x += dx / d * sp; g.position.z += dz / d * sp; }
+    g.rotation.y = Math.atan2(dx, dz);
+    u.t = (u.t || 0) + dt; g.position.y = Math.abs(Math.sin(u.t * 8)) * 0.04;
+    resolveCollision(g.position, 0.5, cityColliders); g.position.y = Math.abs(Math.sin(u.t * 8)) * 0.04;
+    if (!inCar && d < 1.9) { bustTimer += dt; if (bustTimer > 1.3) { bustPlayer(); return; } }
+  }
+  if (inCar) bustTimer = 0;
+
+  // cruisers chase (heavier, faster, flashing lights)
+  for (const c of policeCars) {
+    const target = (inCar && drivingVehicle) ? drivingVehicle.g.position : pp;
+    const dx = target.x - c.g.position.x, dz = target.z - c.g.position.z;
+    const d = Math.hypot(dx, dz) || 1;
+    nearest = Math.min(nearest, d);
+    c.g.rotation.y = lerpAngle(c.g.rotation.y, Math.atan2(dx, dz), Math.min(1, dt * 2.4));
+    const fwd = new THREE.Vector3(Math.sin(c.g.rotation.y), 0, Math.cos(c.g.rotation.y));
+    c.speed = Math.min(18, (c.speed || 0) + 11 * dt);
+    if (d < 6) c.speed *= 0.88;
+    c.g.position.addScaledVector(fwd, c.speed * dt); c.g.position.y = 0;
+    resolveCollision(c.g.position, 1.6, cityColliders);
+    (c.g.userData.wheels || []).forEach(w => { w.rotation.x += c.speed * dt; });
+    if (c.lightBar) c.lightBar.material.color.setHex((Math.floor(clock.elapsedTime * 6) % 2) ? 0xff3030 : 0x3060ff);
+  }
+
+  // de-escalation: lose them by distance over time
+  if (nearest > 48 || (policeUnits.length + policeCars.length) === 0) {
+    copCoolTimer += dt;
+    if (copCoolTimer > 9) {
+      copCoolTimer = 0;
+      state.wanted = Math.max(0, wanted - 1);
+      state.heat = Math.max(0, (state.heat || 0) - 30);
+      notify(state.wanted === 0 ? '🕶️ You lost the cops.' : 'Wanted dropped to ' + state.wanted);
+      if (state.wanted === 0) despawnAllPolice();
+      saveNow();
+    }
+  } else {
+    copCoolTimer = Math.max(0, copCoolTimer - dt * 0.6);
+  }
+}
+
+// Reflect accumulated damage on a vehicle: charred panels, a lean, and smoke.
+function applyCarDamageVisual(v) {
+  if (!v || !v.g) return;
+  const dmg = Math.min(100, v.damage || 0);
+  const f = dmg / 100;
+  v.g.traverse(o => {
+    if (o.isMesh && o.material && o.material.color && o.geometry?.type === 'BoxGeometry') {
+      if (!o.userData._baseColor) o.userData._baseColor = o.material.color.clone();
+      o.material.color.copy(o.userData._baseColor).lerp(new THREE.Color('#2e2c29'), f * 0.7);
+    }
+  });
+  v.g.rotation.z = -f * 0.05;
+  if (dmg > 55 && !v._smoke) {
+    const smoke = new THREE.Mesh(new THREE.SphereGeometry(0.4, 8, 6),
+      new THREE.MeshStandardMaterial({ color: '#555', transparent: true, opacity: 0.5 }));
+    smoke.position.set(0, 1.1, -1.2); v.g.add(smoke); v._smoke = smoke;
+  } else if (dmg <= 55 && v._smoke) { v.g.remove(v._smoke); v._smoke = null; }
+}
+
+// Weapons counter at Block Supply.
+function openWeaponShop() {
+  openShop({
+    title: 'Block Supply — Weapons Counter',
+    sub: 'Buy a piece, then press 1–7 to equip · R reloads · click to fire · Q/X switch.',
+    getMoney: () => state.money,
+    items: WEAPONS.filter(w => !w.melee).map(w => ({
+      id: w.id, name: w.icon + ' ' + w.name, price: w.price,
+      desc: `${w.dmg} dmg · ${w.mag === Infinity ? '∞' : w.mag} mag · ${w.auto ? 'auto' : 'semi'}`,
+      owned: state.ownedWeapons.includes(w.id),
+    })),
+    onBuy: (item) => {
+      const ok = buyWeapon(item.id);
+      if (ok) { equipWeapon(item.id); item.owned = true; }
+      return ok;
+    },
+  });
+}
+
+// One-time init for the weapon controller + mission tracker.
+function initGameSystems() {
+  initWeapons({
+    camera, scene, renderer, state, notify, saveNow,
+    getTargets: getWeaponTargets, onKill: onWeaponKill, onShotFired: onWeaponShot,
+  });
+  initMissions({ state, notify, saveNow });
+  renderTracker();
+}
+
+// ── weapon input (mouse fire / reload / quick-switch) ───────────────────────────
+let fireHeld = false, firePressed = false, reloadPressed = false;
+canvas.addEventListener('mousedown', e => { if (e.button === 0) { fireHeld = true; firePressed = true; } });
+window.addEventListener('mouseup', e => { if (e.button === 0) fireHeld = false; });
 
 // ── collisions ─────────────────────────────────────────────────────────────────
 function activeColliders() {
@@ -795,6 +1164,7 @@ const CITY_TIPS = [
 ];
 function talkTo(n) {
   n.talking = true;
+  missionEvent('talk-city');
   const mem = remember(n);
   const greet = mem.first
     ? `Ay, I'm ${n.name}. First time seeing you around here.`
@@ -814,6 +1184,7 @@ function endTalk(n) { n.talking = false; return undefined; }
 function talkToInterior(npc) {
   const memKey = { id: 'int-' + npc.name };
   remember(memKey);
+  missionEvent('talk-int', npc.dialogue);
   switch (npc.dialogue) {
     case 'dealer':
       openDialogue({ name: npc.name + ' · Auto Haus', text: 'Welcome to Auto Haus. We got whips from city hatchbacks to supercars. Walk the floor and tap a car to view it.',
@@ -852,6 +1223,34 @@ function talkToInterior(npc) {
           { label: 'Nah, just lookin', onPick: () => {} },
         ] });
       break;
+    case 'trainer':
+      openDialogue({ name: npc.name + ' · Iron City Gym', text: "Welcome to Iron City. You tryna get right? Hit the bench or the treadmill and put in work — your fitness goes up.",
+        choices: [
+          { label: 'Start a workout', onPick: () => { startWorkout(); return undefined; } },
+          { label: 'Just lookin around', onPick: () => {} },
+        ] });
+      break;
+    case 'teacher':
+      openDialogue({ name: npc.name + ' · Zaylin Prep', text: 'Knowledge is power out here. Take a seat and study — it sharpens your smarts.',
+        choices: [
+          { label: 'Sit and study', onPick: () => { startStudy(); return undefined; } },
+          { label: 'Maybe later', onPick: () => {} },
+        ] });
+      break;
+    case 'manager':
+      openDialogue({ name: npc.name + ' · WorkTower', text: "We always need hands. Clock in, run the shift, get paid. Easy money if your energy's up.",
+        choices: [
+          { label: 'Clock in (work a shift)', onPick: () => { doJobShift(); return undefined; } },
+          { label: 'Not right now', onPick: () => {} },
+        ] });
+      break;
+    case 'mechanic':
+      openDialogue({ name: npc.name + ' · City Garage', text: 'Whip looking beat up? I can patch the dents and get you running clean again.',
+        choices: [
+          { label: 'Repair my ride', onPick: () => { repairVehicle(); return undefined; } },
+          { label: 'Just browsing', onPick: () => {} },
+        ] });
+      break;
     default:
       openDialogue({ name: npc.name, text: 'What\'s good?', choices: [{ label: 'Later', onPick: () => {} }] });
   }
@@ -871,6 +1270,11 @@ function runStation(intr, st) {
     case 'wardrobe': openWardrobe(); break;
     case 'safe': openSafe(); break;
     case 'mirror-cut': startHairline(); break;
+    case 'workout': startWorkout(); break;
+    case 'study': startStudy(); break;
+    case 'job-work': doJobShift(); break;
+    case 'repair': repairVehicle(); break;
+    case 'weapon-shop': openWeaponShop(); break;
     default: notify('Nothing happens here.');
   }
 }
@@ -996,6 +1400,7 @@ function buyChicken() {
   if (state.money < 8) { notify('Not enough money'); return; }
   state.money -= 8; state.chicken++;
   notify('🍗 Bought chicken (' + state.chicken + ' in bag). Sit & eat to chow down.');
+  missionEvent('buy-chicken');
   saveNow();
 }
 function workShift() {
@@ -1015,7 +1420,7 @@ function restAtHome() {
 function openSafe() {
   openDialogue({
     name: 'Home Safe',
-    text: `Cash: $${Math.floor(state.money).toLocaleString()}\nCars owned: ${state.ownedCars.length}\nJewelry owned: ${state.ownedJewelry.length}\nGear owned: ${state.ownedGear.length}\nChicken in bag: ${state.chicken}`,
+    text: `Cash: $${Math.floor(state.money).toLocaleString()}\nCars owned: ${state.ownedCars.length}\nJewelry owned: ${state.ownedJewelry.length}\nGear owned: ${state.ownedGear.length}\nGems found: ${state.gems || 0}\nChicken in bag: ${state.chicken}`,
     choices: [{ label: 'Close', onPick: () => {} }],
   });
 }
@@ -1063,24 +1468,29 @@ function finishEating() {
   setTimeout(() => { if (eatPiece) { camera.remove(eatPiece); eatPiece = null; } }, 600);
   eating = false;
   showPrompt(null);
+  missionEvent('eat-done');
   saveNow();
 }
 
-// ── HAIRLINE MINI-GAME (timing at the mirror) ─────────────────────────────────
+// ── GENERIC TIMING MINI-GAME (mirror lineup, gym workout, study) ──────────────
+// One reusable "stop the marker in the zone" game. Each caller supplies a title,
+// number of rounds and an onFinish(hits, rounds) callback. The `hairGame` flag
+// name is kept because the main loop + busy guard already gate on it.
 let hairGame = false, hairState = null;
 const mgEl = () => document.getElementById('minigame');
-function startHairline() {
+function startTimingGame({ title, hintVerb = 'SPACE', rounds = 3, speedBase = 2.0, speedStep = 0.7, onFinish }) {
   hairGame = true;
-  hairState = { round: 0, hits: 0, speed: 2.2, zoneStart: 38, zoneW: 22, t0: clock.elapsedTime };
-  newHairRound();
-  document.getElementById('mg-title').textContent = '💈 Lineup — line up the fade';
-  document.getElementById('mg-hint').innerHTML = 'Press <b>SPACE</b> in the green zone (round 1/3)';
+  hairState = { round: 0, hits: 0, rounds, speedBase, speedStep, speed: speedBase,
+    zoneStart: 38, zoneW: 22, t0: clock.elapsedTime, onFinish, hintVerb };
+  newTimingRound();
+  document.getElementById('mg-title').textContent = title;
+  document.getElementById('mg-hint').innerHTML = `Press <b>${hintVerb}</b> in the green zone (round 1/${rounds})`;
   mgEl().style.display = 'flex';
 }
-function newHairRound() {
+function newTimingRound() {
   hairState.zoneW = 24 - hairState.round * 4;
   hairState.zoneStart = 20 + Math.random() * (70 - hairState.zoneW);
-  hairState.speed = 2.0 + hairState.round * 0.7;
+  hairState.speed = hairState.speedBase + hairState.round * hairState.speedStep;
   const zone = document.getElementById('mg-zone');
   zone.style.left = hairState.zoneStart + '%';
   zone.style.width = hairState.zoneW + '%';
@@ -1093,26 +1503,117 @@ function updateHairline() {
     const hit = pos >= hairState.zoneStart && pos <= hairState.zoneStart + hairState.zoneW;
     if (hit) hairState.hits++;
     hairState.round++;
-    if (hairState.round >= 3) finishHairline();
+    if (hairState.round >= hairState.rounds) finishTimingGame();
     else {
-      newHairRound();
+      newTimingRound();
       document.getElementById('mg-hint').innerHTML =
-        `${hit ? '✅ clean!' : '✂️ missed'} — Press <b>SPACE</b> (round ${hairState.round + 1}/3)`;
+        `${hit ? '✅ nice!' : '❌ missed'} — Press <b>${hairState.hintVerb}</b> (round ${hairState.round + 1}/${hairState.rounds})`;
     }
   }
 }
-function finishHairline() {
+function finishTimingGame() {
   hairGame = false; mgEl().style.display = 'none';
-  if (hairState.hits >= 2) {
-    state.freshCut = true;
-    state.stats.fun = Math.min(100, state.stats.fun + 12);
-    state.stats.hygiene = 100;
-    notify(`💈 Fresh lineup! ${hairState.hits}/3 clean — looking sharp`);
-  } else {
-    notify(`✂️ Rough cut (${hairState.hits}/3). Try again for a fresh lineup.`);
-  }
+  const fn = hairState && hairState.onFinish;
+  const hits = hairState ? hairState.hits : 0;
+  const rounds = hairState ? hairState.rounds : 0;
   showPrompt(null);
+  if (fn) fn(hits, rounds);
   saveNow();
+}
+
+// Mirror lineup — style + hygiene.
+function startHairline() {
+  startTimingGame({
+    title: '💈 Lineup — line up the fade', rounds: 3,
+    onFinish: (hits) => {
+      if (hits >= 2) {
+        state.freshCut = true;
+        state.stats.fun = Math.min(100, state.stats.fun + 12);
+        state.stats.hygiene = 100;
+        notify(`💈 Fresh lineup! ${hits}/3 clean — looking sharp`);
+        missionEvent('haircut-done');
+      } else {
+        notify(`✂️ Rough cut (${hits}/3). Try again for a fresh lineup.`);
+      }
+    },
+  });
+}
+
+// Gym workout — raises FITNESS, costs energy + time.
+function startWorkout() {
+  if (state.stats.energy < 15) { notify('Too gassed to train — rest or eat first.'); return; }
+  startTimingGame({
+    title: '🏋️ Workout — hit your reps in the zone', rounds: 4, speedBase: 2.4,
+    onFinish: (hits, rounds) => {
+      const gain = 4 + hits * 4;                    // up to +20 fitness
+      state.stats.fitness = Math.min(100, state.stats.fitness + gain);
+      state.stats.energy = Math.max(0, state.stats.energy - 22);
+      state.stats.hygiene = Math.max(0, state.stats.hygiene - 14);
+      state.stats.fun = Math.min(100, state.stats.fun + 4);
+      state.timeMin += 90;
+      notify(`💪 Solid session (${hits}/${rounds})! Fitness +${gain}`);
+      missionEvent('workout-done');
+    },
+  });
+}
+
+// School study — raises SMARTS, costs energy + time.
+function startStudy() {
+  if (state.stats.energy < 10) { notify('Too tired to focus — get some rest.'); return; }
+  startTimingGame({
+    title: '📚 Study — lock in when it’s highlighted', rounds: 4, speedBase: 2.2,
+    onFinish: (hits, rounds) => {
+      const gain = 4 + hits * 4;                    // up to +20 smarts
+      state.stats.smarts = Math.min(100, state.stats.smarts + gain);
+      state.stats.energy = Math.max(0, state.stats.energy - 14);
+      state.stats.fun = Math.max(0, state.stats.fun - 4);
+      state.timeMin += 120;
+      notify(`🧠 Studied up (${hits}/${rounds})! Smarts +${gain}`);
+      missionEvent('study-done');
+    },
+  });
+}
+
+// Office job shift — earns cash scaled by smarts, costs energy + time.
+function doJobShift() {
+  if (state.stats.energy < 20) { notify('No energy for a shift — rest first.'); return; }
+  const base = 70;
+  const bonus = Math.round((state.stats.smarts / 100) * 80);   // smarter → better pay
+  const pay = base + bonus;
+  state.money += pay;
+  state.job = 'WorkTower Associate';
+  state.stats.energy = Math.max(0, state.stats.energy - 30);
+  state.stats.hygiene = Math.max(0, state.stats.hygiene - 8);
+  state.stats.fun = Math.max(0, state.stats.fun - 6);
+  state.timeMin += 240;
+  notify(`💼 Shift done: +$${pay} (base $${base} + $${bonus} smarts bonus)`);
+  missionEvent('job-done');
+  saveNow();
+}
+
+// Garage repair — fixes the active/driven car's damage for a fee.
+function repairVehicle() {
+  const v = drivingVehicle || car;
+  const dmg = Math.floor(v?.damage || state.carDamage || 0);
+  if (dmg <= 0) { notify('🔧 Your ride is already clean — no repairs needed.'); return; }
+  const cost = 60 + dmg * 6;
+  openDialogue({
+    name: 'City Garage', text: `Your whip is at ${dmg}% damage. Full repair runs $${cost.toLocaleString()}.`,
+    choices: [
+      (state.money >= cost
+        ? { label: `Repair for $${cost.toLocaleString()}`, onPick: () => {
+            state.money -= cost;
+            if (v) v.damage = 0;
+            if (car) car.damage = 0;
+            state.carDamage = 0;
+            applyCarDamageVisual(car);
+            notify('🔧 Good as new — dents knocked out.');
+            saveNow();
+          } }
+        : { label: `Need $${(cost - Math.floor(state.money)).toLocaleString()} more`, onPick: () => 'keep' }),
+      { label: 'Not now', onPick: () => {} },
+    ],
+  });
 }
 
 // ── progression / time ─────────────────────────────────────────────────────────
@@ -1281,6 +1782,11 @@ window.addEventListener('keydown', e => {
     if (k === 'j') cycleJewelry();
   }
   if (k === 'm') { state.monsterMode = !state.monsterMode; notify('Monster Mode ' + (state.monsterMode ? 'ON 👹' : 'off')); }
+  // weapons: reload, quick-switch, and 1–7 to equip by catalog slot
+  if (k === 'r') reloadPressed = true;
+  if (k === 'q') cycleWeapon(-1);
+  if (k === 'x') cycleWeapon(1);
+  if (k >= '1' && k <= '7') { const w = WEAPONS[parseInt(k, 10) - 1]; if (w) equipWeapon(w.id); }
 });
 
 onMenuClose(() => { builderOpen = false; });
@@ -1324,20 +1830,37 @@ function animate() {
   if (interiors) Object.values(interiors.byId).forEach(intr => intr.stations.forEach(st => { if (st.mesh && st.mesh.userData.spin) st.mesh.rotation.y += 0.02; }));
 
   const busy = isUIOpen() || isSettingsOpen() || eating || hairGame;
+  // collectible gems: always bob/twinkle; only collectible while on foot in the city
+  if (cityGems.length) {
+    const pp = (!busy && !inCar && area === 'city' && player) ? player.group.position : null;
+    updateCityGems(dt, t, pp);
+  }
   if (!busy) {
     if (inCar) updateCar(dt); else updatePlayer(dt, t);
     updateVehicleCollisions(dt);
+    if (!inCar) updateWeapons(dt, { fireHeld, firePressed, reloadPressed });
+    firePressed = false; reloadPressed = false;
+    updatePolice(dt);
     handleInteraction();
     updateProgression(dt);
   } else {
     // keep camera framing the player while a menu/minigame is open
     if (!inCar && player) controls.update(player.group.position, player.eyeHeight, dt);
+    firePressed = false; reloadPressed = false;
   }
 
   if (eating) updateEating();
   if (hairGame) updateHairline();
 
   updateHUD(state, locationLabel());
+  // show the reticle whenever a ranged weapon is out (so you can aim on foot)
+  const cw = currentWeapon();
+  const xh = document.getElementById('crosshair');
+  if (xh) {
+    const armed = cw && !cw.melee && !inCar && area === 'city';
+    if (armed) xh.style.display = '';
+    else if (controls.mode !== CAM.FIRST) xh.style.display = 'none';
+  }
   if (interiorDebug) updateInteriorDebug();
   renderer.render(scene, camera);
   controls.endFrame();

@@ -16,13 +16,29 @@ import * as THREE from 'three';
 import { loadModel } from './assets.js';
 import { assetUrl } from './manifest.js';
 
-const KIT_DIR = 'models/vehicles/car-kit/';
 const TARGET_LEN = 4.4;  // metres along Z, matching the procedural cars
 
-// Curated, road-appropriate fleet (excludes karts / debris / cones / tractors).
-export const TRAFFIC_FLEET = ['sedan', 'suv', 'taxi', 'van', 'truck', 'hatchback-sports', 'police', 'delivery'];
-export const DRIVABLE_DEFAULT = 'hatchback-sports';
-export const DEALER_FLEET = ['suv-luxury', 'sedan-sports', 'race-future', 'race'];
+// id → GLB path (relative to assets/models/vehicles/). Mixes the Cosmo "Low Poly
+// Cars" pack (detailed bodies, separate wheel nodes named /wheel/i) with the
+// Kenney Car Kit fallbacks. Front of every model is +Z (matches the procedural
+// convention); per-id `ry` can flip a model whose nose points the other way.
+export const VEHICLE_FILES = {
+  // Cosmo Low Poly Cars (CC — free, no resale).
+  coupe:  'lowpoly-cars/coupe.glb',  ghini:  'lowpoly-cars/ghini.glb',
+  italia: 'lowpoly-cars/italia.glb', kamaro: 'lowpoly-cars/kamaro.glb',
+  mobil:  'lowpoly-cars/mobil.glb',  van:    'lowpoly-cars/van.glb',
+  jeep:   'lowpoly-cars/jeep.glb',   rally:  'lowpoly-cars/rally.glb',
+  armor:  'lowpoly-cars/armor.glb',  police: 'lowpoly-cars/police.glb',
+  fenyr:  'lowpoly-cars/fenyr.glb',  lamb:   'lowpoly-cars/lamb.glb',
+};
+
+// Optional per-id yaw correction (radians) if a model's nose points off +Z.
+const VEHICLE_RY = {};
+
+// Curated, road-appropriate fleets drawn from the pack above.
+export const TRAFFIC_FLEET = ['coupe', 'ghini', 'kamaro', 'van', 'jeep', 'rally', 'mobil', 'police'];
+export const DRIVABLE_DEFAULT = 'kamaro';
+export const DEALER_FLEET = ['fenyr', 'lamb', 'italia', 'ghini'];
 
 const _cache = new Map();   // id -> THREE.Object3D (source scene) | null
 
@@ -31,8 +47,10 @@ export async function preloadVehicles(renderer, ids) {
   const all = ids || [...new Set([...TRAFFIC_FLEET, DRIVABLE_DEFAULT, ...DEALER_FLEET])];
   await Promise.all(all.map(async (id) => {
     if (_cache.has(id)) return;
+    const rel = VEHICLE_FILES[id];
+    if (!rel) { _cache.set(id, null); return; }
     let m = null;
-    try { m = await loadModel(assetUrl(KIT_DIR + id + '.glb'), renderer); } catch { /* fallback below */ }
+    try { m = await loadModel(assetUrl('models/vehicles/' + rel), renderer); } catch { /* fallback below */ }
     _cache.set(id, m && m.scene ? m.scene : null);
   }));
   return [...TRAFFIC_FLEET, DRIVABLE_DEFAULT, ...DEALER_FLEET].filter((id) => _cache.get(id));
@@ -46,6 +64,7 @@ export function buildKitCar(id) {
   const src = _cache.get(id);
   if (!src) return null;
   const scene = src.clone(true);
+  if (VEHICLE_RY[id]) scene.rotation.y = VEHICLE_RY[id];
   // normalize length (Z) to ~4.4m
   let box = new THREE.Box3().setFromObject(scene);
   const len = box.getSize(new THREE.Vector3()).z;
