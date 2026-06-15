@@ -122,14 +122,18 @@ export function updateHUD(state, locationLabel) {
     Object.keys(state.stats).forEach(k => {
       const row = document.createElement('div'); row.className = 'sbar';
       row.innerHTML = `<span style="width:54px;text-transform:capitalize">${k}</span>
-        <span class="sbar-track"><span class="sbar-fill" id="sf-${k}"></span></span>`;
+        <span class="sbar-track"><span class="sbar-fill" id="sf-${k}"></span></span>
+        <span class="sbar-num" id="sn-${k}">0</span>`;
       bars.appendChild(row);
     });
     bars.dataset.built = '1';
   }
   Object.entries(state.stats).forEach(([k, v]) => {
+    const val = Math.max(0, Math.min(100, Math.round(v)));
     const fill = $('sf-' + k);
-    if (fill) { fill.style.width = Math.max(0, Math.min(100, v)) + '%'; fill.style.background = STAT_COLORS[k]; }
+    if (fill) { fill.style.width = val + '%'; fill.style.background = STAT_COLORS[k]; }
+    const num = $('sn-' + k);
+    if (num) num.textContent = val;
   });
   $('monster-badge').style.display = state.monsterMode ? '' : 'none';
 }

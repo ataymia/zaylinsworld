@@ -236,8 +236,8 @@ function enterWorld() {
     cityInfo.entrances.forEach(e => { entranceMap[e.interiorId] = { doorPos: e.doorPos, faceDir: e.faceDir }; });
     interiors = buildInteriors();
     scene.add(interiors.group);
-    cityNPCs = createCityNPCs(scene, Math.max(2, Math.round(9 * graphics.npcDensity)));
-    traffic = createTraffic(scene, Math.max(2, Math.round(7 * graphics.trafficDensity)));
+    cityNPCs = createCityNPCs(scene, Math.max(8, Math.round(22 * graphics.npcDensity)));
+    traffic = createTraffic(scene, Math.max(3, Math.round(10 * graphics.trafficDensity)));
     car = createDrivableCar(scene, 13, 3);
     registerInteractables(cityInfo.entrances);
     graphics.applyToScene(scene, renderer);   // reflections + texture filtering
@@ -702,13 +702,23 @@ function registerInteractables(entrances) {
     onInteract: () => enterCar(car),
   });
 
-  // steal the nearest slow/stopped NPC traffic car (F)
+  // steal the nearest slow/stopped NPC traffic car — or a patrol car (high-risk).
   manager.register({
     id: 'steal-car', area: 'city', key: 'f', radius: 3.0,
     getPosition: () => (nearestStealable()?.g.position) || OFFSCREEN,
     enabled: () => !inCar && !!nearestStealable(),
-    getPrompt: () => 'Steal vehicle',
-    onInteract: () => { const v = nearestStealable(); if (v) enterCar(v, { steal: true }); },
+    getPrompt: () => (policeCars.includes(nearestStealable()) ? '🚔 Steal POLICE car (risky!)' : 'Steal vehicle'),
+    onInteract: () => {
+      const v = nearestStealable();
+      if (!v) { notify('No vehicle close enough to take.'); return; }
+      const isCop = policeCars.includes(v);
+      if (isCop) {
+        state.wanted = Math.min(5, (state.wanted || 0) + 2);
+        state.heat = Math.min(100, (state.heat || 0) + 30);
+        notify('🚔 You jacked a police cruiser! Wanted level spiked.');
+      }
+      enterCar(v, { steal: true });
+    },
   });
 
   // building entrances (E)
@@ -1095,7 +1105,7 @@ function updateCar(dt) {
   if (drivenDist > 120 && !drivenFlagged) { drivenFlagged = true; missionEvent('drive-checkpoint'); }
   // burn fuel proportional to throttle/speed; warn once when it gets low/empty
   const prevFuel = v.fuel;
-  v.fuel = Math.max(0, v.fuel - (Math.abs(v.speed) / maxF) * dt * 2.2 - (inp.f !== 0 ? dt * 0.25 : 0));
+  v.fuel = Math.max(0, v.fuel - (Math.abs(v.speed) / maxF) * dt * 0.55 - (inp.f !== 0 ? dt * 0.05 : 0));
   if (v === car) state.fuel = v.fuel;
   if (prevFuel > 20 && v.fuel <= 20) notify('⛽ Low fuel — find a Gas-N-Go to refuel.');
   if (prevFuel > 0 && v.fuel <= 0) notify('⛽ Out of fuel! Coast to a gas station to refuel.');
@@ -1123,6 +1133,7 @@ function updateCar(dt) {
 // ── vehicle collision (cars ↔ player, cars ↔ cars) ──────────────────────────────
 let playerHitCD = 0;            // seconds of i-frames after being hit by a car
 let injuredTimer = 0;          // brief stumble/injured state (visual + lockout)
+let lastSprintWarn = -10;      // throttle the "too winded" sprint message
 const CAR_R = 1.8, PLAYER_R = 0.6;
 
 // Real vehicle collision: cars push the player (knockback + injury) and bounce
@@ -1680,8 +1691,12 @@ function updatePlayer(dt, t) {
   const pstats = state.stats;
   const pfit = pstats.fitness || 0;
   const canSprint = inp.run && moving && (pstats.energy || 0) > 2;
-  const speed = canSprint ? (5.6 + (pfit / 100) * 2.2) : 3.4;
+  const speed = canSprint ? (6.2 + (pfit / 100) * 2.4) : 3.4;
   if (canSprint) pstats.energy = Math.max(0, pstats.energy - (7 * (1 - pfit / 200)) * dt);
+  // feedback when you try to sprint with no stamina left (throttled)
+  if (inp.run && moving && (pstats.energy || 0) <= 2 && t - lastSprintWarn > 3) {
+    lastSprintWarn = t; notify('😮‍💨 Too winded to sprint — rest or eat to recover energy.');
+  }
   const p = player.group.position;
   p.addScaledVector(move, speed * dt);
 
@@ -2279,8 +2294,8 @@ function updateProgression(dt) {
 // ── graphics settings application ──────────────────────────────────────────────
 function rebuildDensity() {
   if (!started || area !== 'city') return;
-  const targetN = Math.max(2, Math.round(9 * graphics.npcDensity));
-  const targetT = Math.max(2, Math.round(7 * graphics.trafficDensity));
+  const targetN = Math.max(8, Math.round(22 * graphics.npcDensity));
+  const targetT = Math.max(3, Math.round(10 * graphics.trafficDensity));
   let changed = false;
   if (cityNPCs.length !== targetN) {
     cityNPCs.forEach(n => scene.remove(n.av.group));
@@ -2395,7 +2410,7 @@ function locationLabel() {
 }
 
 // ── interaction dispatch each frame ────────────────────────────────────────────
-function handleInteraction() {
+function handleInteraction(clicked = false) {
   if (inCar) {
     // refuel at a gas-station forecourt when stopped (E), else show exit prompt (F)
     const v = drivingVehicle || car;
@@ -2413,7 +2428,8 @@ function handleInteraction() {
   const near = manager.findNearest(player.group.position, area);
   if (near) {
     showPrompt(near.getPrompt(), near.key);
-    if (controls.consumePress(near.key)) near.onInteract();
+    // E (or a left-click while unarmed) activates the nearest interactable.
+    if (controls.consumePress(near.key) || clicked) near.onInteract();
   } else {
     showPrompt(null);
   }
@@ -2492,7 +2508,11 @@ window.addEventListener('keydown', e => {
   const k = kc;
   // robbery: shake down the nearest civilian for cash (risky — draws heat)
   if (k === 'g' && !inCar && area === 'city') robNearestNpc();
-  if (k === 'v') { const m = controls.cycleMode(); notify('Camera: ' + m.toUpperCase()); document.getElementById('crosshair').style.display = m === CAM.FIRST ? '' : 'none'; }
+  if (k === 'v') {
+    const m = controls.cycleMode();
+    const label = m === CAM.FIRST ? 'First-person' : m === CAM.OVERHEAD ? 'Overhead' : 'Third-person';
+    notify('📷 Camera: ' + label);
+  }
   if (k === 'c' && !inCar && area === 'city') { debug.markHandler('c'); openWardrobe(); }
   if (k === 'i') { debug.markHandler('i'); openInventory(); }   // 🎒 inventory — re-equip / holster weapons
   if (k === '`') toggleInteriorDebug();           // dev: interior debug overlay
@@ -2503,7 +2523,11 @@ window.addEventListener('keydown', e => {
     if (k === 'j') cycleJewelry();
   }
   if (k === 'm') { debug.markHandler('m'); toggleMonsterMode(); }
-  if (k === 'n') { debug.markHandler('n'); if (minimap) minimap.toggleExpand(); else notify('Minimap not initialised'); }   // expand / shrink the town map
+  if (k === 'n') {
+    debug.markHandler('n');
+    if (minimap) { minimap.toggleExpand(); console.debug('[map] toggled →', minimap.isExpanded() ? 'expanded' : 'compact'); }
+    else { notify('Minimap not initialised'); console.warn('[map] minimap is null'); }
+  }   // expand / shrink the town map
   // weapons: reload, quick-switch, and 1–9 to equip from your OWNED list (a held
   // gun is never lost — press its number or open the inventory to draw it again).
   if (k === 'r') reloadPressed = true;
@@ -2566,11 +2590,30 @@ function animate() {
     if (inCar) updateCar(dt); else updatePlayer(dt, t);
     updateVehicleCollisions(dt);
     updateNpcHealthBars(dt);
-    if (!inCar) updateWeapons(dt, { fireHeld, firePressed, reloadPressed });
+    // Unarmed left-click = interact / pick up the nearest object (trash etc.).
+    // Capture it BEFORE the weapon system so a pickup-click doesn't also melee.
+    let interactClick = false;
+    if (!inCar && player && currentWeapon().melee && firePressed) {
+      const nearNow = manager.findNearest(player.group.position, area);
+      if (nearNow) interactClick = true;
+    }
+    if (!inCar) updateWeapons(dt, { fireHeld, firePressed: firePressed && !interactClick, reloadPressed });
     firePressed = false; reloadPressed = false;
     updatePolice(dt);
-    if (state.monsterMode && monsters.length) updateMonsters(monsters, dt, t, player && player.group.position);
-    handleInteraction();
+    if (state.monsterMode && monsters.length) {
+      updateMonsters(monsters, dt, t, player && player.group.position, {
+        damagePlayer: (dmg) => {
+          if (playerHitCD > 0) return;
+          playerHitCD = 0.6;
+          const st = state.stats;
+          st.health = Math.max(0, (st.health ?? 100) - dmg);
+          injuredTimer = Math.max(injuredTimer, 0.5);
+          notify('👹 A monster hit you! (-' + dmg + ' health)');
+          if (st.health <= 0) downPlayer('A monster took you down.');
+        },
+      });
+    }
+    handleInteraction(interactClick);
     updateProgression(dt);
   } else {
     // keep camera framing the player while a menu/minigame is open

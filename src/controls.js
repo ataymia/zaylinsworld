@@ -3,7 +3,7 @@
 // ───────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 
-export const CAM = { THIRD: 'third', FIRST: 'first', FREE: 'free' };
+export const CAM = { THIRD: 'third', FIRST: 'first', OVERHEAD: 'overhead', FREE: 'free' };
 
 export class Controls {
   constructor(camera, domElement) {
@@ -76,7 +76,7 @@ export class Controls {
   endFrame() { this.justPressed.clear(); this.justClicked.clear(); }
   cycleMode() {
     this.mode = this.mode === CAM.THIRD ? CAM.FIRST
-      : this.mode === CAM.FIRST ? CAM.FREE : CAM.THIRD;
+      : this.mode === CAM.FIRST ? CAM.OVERHEAD : CAM.THIRD;
     return this.mode;
   }
 
@@ -124,6 +124,17 @@ export class Controls {
         Math.sin(this.pitch),
         Math.cos(this.yaw) * Math.cos(this.pitch));
       this.camera.lookAt(this.camera.position.clone().add(dir));
+    } else if (this.mode === CAM.OVERHEAD) {
+      // tactical top-down: high above the player, looking straight down with a
+      // slight backward tilt so you can read the streets around you.
+      desired.copy(targetPos);
+      desired.y += 26;
+      desired.z += Math.cos(this.yaw) * 5;
+      desired.x += Math.sin(this.yaw) * 5;
+      this._clampToBounds(desired);
+      this.camera.position.lerp(desired, Math.min(1, dt * 8));
+      const look = targetPos.clone(); look.y += 0.5;
+      this.camera.lookAt(look);
     } else {
       const dist = this.mode === CAM.FREE ? this.distance + 2 : this.distance;
       const offset = new THREE.Vector3(

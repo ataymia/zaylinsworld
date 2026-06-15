@@ -66,6 +66,7 @@ export function createMonster(scene, pos, renderer) {
     hp: 120, maxHp: 120,
     speed: 2.0 + Math.random() * 1.4,
     hitT: 0, phase: Math.random() * Math.PI * 2,
+    atkCd: 0, wander: null, wanderT: 0, stateLabel: 'roam',
     skin: null,
   };
 
@@ -107,21 +108,59 @@ export function spawnMonsters(scene, center, count, renderer) {
   return out;
 }
 
-// Chase the player, bob, face heading, keep the bar updated + billboard-flat.
-export function updateMonsters(monsters, dt, t, playerPos) {
+// Roam the city, chase the player only within an aggro radius, and bite when
+// adjacent (damage is applied via hooks.damagePlayer with a per-monster cooldown
+// so it doesn't drain you instantly). Far from the player, monsters wander toward
+// a random target so they terrorize the town instead of dogpiling the player.
+export function updateMonsters(monsters, dt, t, playerPos, hooks = {}) {
+  const AGGRO = 22;        // start chasing within this distance
+  const ATTACK = 1.8;      // bite range
   for (const m of monsters) {
     if (m.dead) continue;
     if (m.hitT > 0) m.hitT -= dt;
+    if (m.atkCd > 0) m.atkCd -= dt;
     const g = m.group;
+
+    let dToPlayer = Infinity, dirx = 0, dirz = 0;
     if (playerPos) {
       const dx = playerPos.x - g.position.x, dz = playerPos.z - g.position.z;
-      const d = Math.hypot(dx, dz) || 1;
-      if (d > 1.4) {                          // stop short so they don't shove into the player
-        g.position.x += (dx / d) * m.speed * dt;
-        g.position.z += (dz / d) * m.speed * dt;
-      }
-      g.rotation.y = Math.atan2(dx, dz);
+      dToPlayer = Math.hypot(dx, dz) || 1;
+      dirx = dx / dToPlayer; dirz = dz / dToPlayer;
     }
+
+    if (playerPos && dToPlayer < AGGRO) {
+      // CHASE
+      m.stateLabel = 'chase';
+      if (dToPlayer > ATTACK) {
+        g.position.x += dirx * m.speed * dt;
+        g.position.z += dirz * m.speed * dt;
+      } else if (m.atkCd <= 0) {
+        // ATTACK — bite the player
+        m.atkCd = 1.1;
+        m.hitT = 0.18;
+        if (hooks.damagePlayer) hooks.damagePlayer(8 + Math.floor(Math.random() * 6));
+      }
+      g.rotation.y = Math.atan2(dirx, dirz);
+    } else {
+      // WANDER toward a roaming target around the town
+      m.stateLabel = 'roam';
+      if (!m.wander || m.wanderT <= 0) {
+        const ang = Math.random() * Math.PI * 2;
+        const R = 14 + Math.random() * 26;
+        m.wander = { x: Math.cos(ang) * R, z: Math.sin(ang) * R };
+        m.wanderT = 4 + Math.random() * 4;
+      }
+      m.wanderT -= dt;
+      const wx = m.wander.x - g.position.x, wz = m.wander.z - g.position.z;
+      const wd = Math.hypot(wx, wz) || 1;
+      if (wd > 1) {
+        const sp = m.speed * 0.5;
+        g.position.x += (wx / wd) * sp * dt;
+        g.position.z += (wz / wd) * sp * dt;
+        g.rotation.y = Math.atan2(wx / wd, wz / wd);
+      } else { m.wanderT = 0; }
+    }
+
     // lumbering bob
     const ph = t * 4 + m.phase;
     g.position.y = Math.abs(Math.sin(ph)) * 0.12;

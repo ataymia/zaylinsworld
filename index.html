@@ -24,7 +24,8 @@
   #stat-bars{display:flex;flex-direction:column;gap:4px;min-width:172px;}
   .sbar{display:flex;align-items:center;gap:6px;font-size:11px;}
   .sbar-track{flex:1;height:7px;background:#2a2a38;border-radius:5px;overflow:hidden;}
-  .sbar-fill{height:100%;border-radius:5px;transition:width .3s;}
+  .sbar-fill{display:block;width:0;height:100%;border-radius:5px;transition:width .3s;}
+  .sbar-num{width:26px;text-align:right;color:#aab;font-variant-numeric:tabular-nums;}
   #wanted-stars{font-size:18px;letter-spacing:2px;}
   #monster-badge{background:#7a1fa0;border-color:#b46bd6;color:#fff;font-weight:700;}
   #right-stack{display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
@@ -213,8 +214,9 @@
   <canvas id="minimap"></canvas>
   <div id="mission-tracker" style="display:none;"></div>
   <div id="hint">
-    <b>WASD</b> move · <b>Mouse</b> look (click to lock) · <b>Shift</b> run · <b>Space</b> jump ·
-    <b>E</b> interact/talk · <b>F</b> enter car · <b>N</b> map · <b>V</b> camera · <b>C</b> wardrobe · <b>M</b> monster
+    <b>WASD</b> move · <b>Shift</b> run · <b>Space</b> jump · <b>V</b> camera (3rd/1st/overhead) ·
+    <b>E</b> / <b>click</b> interact · <b>F</b> enter/steal car · <b>N</b> map · <b>I</b> inventory ·
+    <b>Click</b> shoot (armed) · <b>R</b> reload · <b>C</b> wardrobe · <b>M</b> monster
   </div>
 
   <!-- Character creator -->
