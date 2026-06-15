@@ -3,7 +3,7 @@
 // ───────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 import { Sky } from 'three/addons/objects/Sky.js';
-import { buildAvatar, isGltfHair, HAIRSTYLES, HAIR_COLORS, JEWELRY } from './avatar.js';
+import { buildAvatar, isGltfHair, HAIRSTYLES, HAIR_COLORS, JEWELRY, defaultCustom } from './avatar.js';
 import { attachGltfHair, attachedHairInfo } from './hairKit.js';
 import { buildDistrict } from './cityKit.js';
 import { placeStreetProps } from './props.js';
