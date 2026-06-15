@@ -67,10 +67,11 @@ const FOOD = {
 };
 
 // Load + place one model into the interiors root group at world (ox+dx, *, dz).
+// Returns true on success, or a string asset-name on failure (for diagnostics).
 async function place(root, asset, ox, item, renderer, defaultS) {
   try {
     const m = await loadAsset(asset.cat, asset.pack, item.name, renderer);
-    if (!m || !m.scene) return false;
+    if (!m || !m.scene) return item.name;
     const obj = m.scene.clone(true);
     obj.scale.setScalar(item.s ?? defaultS);
     obj.rotation.y = item.ry ?? 0;
@@ -81,20 +82,22 @@ async function place(root, asset, ox, item, renderer, defaultS) {
     obj.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
     root.add(obj);
     return true;
-  } catch { return false; }
+  } catch { return item.name; }
 }
 
 // Furnish every configured interior. `interiors` = { group, byId } from buildInteriors().
+// Returns { items, interiors, failed[] } so the debug panel can prove placement.
 export async function furnishInteriors(interiors, renderer) {
-  if (!interiors || !interiors.group) return 0;
+  if (!interiors || !interiors.group) return { items: 0, interiors: 0, failed: [] };
   const root = interiors.group;
-  let n = 0;
+  let n = 0; const furnished = new Set(); const failed = [];
   for (const [id, items] of Object.entries(FURNITURE)) {
     const intr = interiors.byId[id];
     if (!intr || !intr.offset) continue;
     const ox = intr.offset.x;
     for (const it of items) {
-      if (await place(root, { cat: 'interiors', pack: 'furniture' }, ox, it, renderer, 0.9)) n++;
+      const r = await place(root, { cat: 'interiors', pack: 'furniture' }, ox, it, renderer, 0.9);
+      if (r === true) { n++; furnished.add(id); } else failed.push(`${id}/${r}`);
     }
   }
   for (const [id, items] of Object.entries(FOOD)) {
@@ -102,9 +105,11 @@ export async function furnishInteriors(interiors, renderer) {
     if (!intr || !intr.offset) continue;
     const ox = intr.offset.x;
     for (const it of items) {
-      if (await place(root, { cat: 'props', pack: 'food' }, ox, it, renderer, 3.0)) n++;
+      const r = await place(root, { cat: 'props', pack: 'food' }, ox, it, renderer, 3.0);
+      if (r === true) { n++; furnished.add(id); } else failed.push(`${id}/${r}`);
     }
   }
-  if (n) console.info('[furnish] placed', n, 'uploaded furniture/food pieces');
-  return n;
+  if (n) console.info('[furnish] placed', n, 'uploaded furniture/food pieces across', furnished.size, 'interiors');
+  if (failed.length) console.warn('[furnish] failed:', failed.join(', '));
+  return { items: n, interiors: furnished.size, failed };
 }

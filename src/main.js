@@ -21,6 +21,8 @@ import {
   WEAPONS, weaponById, currentWeapon,
 } from './weapons.js';
 import { initMissions, missionEvent, renderTracker } from './missions.js';
+import { spawnMonsters, updateMonsters, clearMonsters } from './monsters.js';
+import { applyNpcSkins, applyPlayerSkin } from './avatarSkin.js';
 import { Controls, CAM } from './controls.js';
 import { InteractionManager } from './interaction.js';
 import { loadState, saveState, defaultState, clearSave, hasSave } from './state.js';
@@ -34,6 +36,7 @@ import { initSettingsMenu, isSettingsOpen, settingsTickFPS } from './settings.js
 import {
   initLoadingScreen, hideLoadingScreen, setStatus, setProgress, loadingManager,
 } from './loader.js';
+import { initDebugBadge, debug } from './debug.js';
 import {
   buildCreator, showCreator, updateHUD, updateCarHUD, showPrompt, notify, SERVERS,
   isUIOpen, onMenuClose, openDialogue, openShop, openChainBuilder, closeMenus,
@@ -167,6 +170,8 @@ let builderOpen = false;
 let wardrobeResume = false;      // creator opened from inside the game
 let refuelPoints = [];           // gas-station forecourts: { x, z, r, id }
 let minimap = null;              // corner radar API (initMinimap)
+let debugBadge = null;           // debug panel API (initDebugBadge → { toggle })
+let monsters = [];               // active Monster Mode creatures
 
 const controls = new Controls(camera, canvas);
 const manager = new InteractionManager();
@@ -224,6 +229,8 @@ function enterWorld() {
     graphics.applyToScene(scene, renderer);   // reflections + texture filtering
     started = true;
     minimap = initMinimap();                   // corner radar / town map (before asset wiring)
+    debug.set('minimapInit', !!minimap);
+    if (!minimap) console.warn('[minimap] init FAILED — #minimap canvas missing');
     applyWorldAssets();                        // swap in real GLBs where available
     initGameSystems();                         // weapons + missions + police hooks
   }
@@ -255,9 +262,24 @@ function rebuildPlayer() {
     attachGltfHair(player, state.custom.hair, avatarHairColorHex(state.custom), renderer);
   }
   mountHeldWeapon();                          // re-attach the visible 3rd-person weapon prop
-  // NOTE: the player stays procedural so it keeps its walk animation AND honors
-  // every character-creator choice (skin, outfit, hair, jewelry). The player_avatar
-  // GLB slot is reserved for drop-in use; static interior NPCs use the GLB pack.
+  // Visible-skin pass: drop a real PSX humanoid GLB on top of the procedural rig
+  // (procedural body hidden, walk/facing still driven by the rig). Honors a
+  // toggle so the creator can fall back to the fully-customizable procedural body.
+  if (state.useRealSkin !== false) {
+    applyPlayerSkin(player, renderer, playerSkinSeed())
+      .then((ok) => { debug.set('playerRealSkin', !!ok); })
+      .catch((e) => debug.showError('applyPlayerSkin: ' + (e && e.message || e)));
+  } else {
+    debug.set('playerRealSkin', false);
+  }
+}
+
+// Stable per-save pick so the player's GLB model doesn't change every rebuild.
+function playerSkinSeed() {
+  const s = JSON.stringify(state.custom || {});
+  let h = 0;
+  for (let i = 0; i < s.length; i++) { h = (h * 31 + s.charCodeAt(i)) | 0; }
+  return h;
 }
 
 // ── visible held weapon (3rd person) ────────────────────────────────────────────
@@ -273,6 +295,7 @@ function mountHeldWeapon() {
   const w = currentWeapon();
   if (!w || w.melee) return;                  // fists → nothing in hand
   const g = new THREE.Group();
+  g.name = 'heldweapon';                       // kept visible even under a GLB skin
   const metal = new THREE.MeshStandardMaterial({ color: '#22262b', roughness: 0.5, metalness: 0.6 });
   const grip = new THREE.MeshStandardMaterial({ color: '#3a2c22', roughness: 0.8 });
   // sizes roughly scale with the weapon class so a pistol ≠ a rifle silhouette
@@ -304,6 +327,11 @@ function applyWorldAssets() {
   enhanceShopkeepers();
   placeFrostboxJewelry();
   applyVehicleModels();                      // swap procedural cars → real Car Kit GLBs (incl. dealership)
+  // swap the bubble city NPCs for PSX humanoid GLB skins (visible, animated)
+  debug.set('procNpcs', cityNPCs.length);
+  applyNpcSkins(cityNPCs, renderer)
+    .then((n) => { debug.set('realNpcs', n); debug.set('procNpcs', Math.max(0, cityNPCs.length - n)); })
+    .catch((e) => { console.warn('[skins] npc failed:', e); debug.showError('applyNpcSkins: ' + (e && e.message || e)); });
   // scatter street litter (Trash & Debris GLB) — decorative, non-colliding
   placeStreetProps(scene, renderer)
     .then((n) => { if (n) console.info('[props] litter items:', n); })
@@ -321,11 +349,20 @@ function applyWorldAssets() {
     .then((res) => {
       refuelPoints = res.refuels || [];
       if (minimap) setMarkers(res.markers || []);
+      debug.set('worldBuildingsPlaced', (res.placed || []).length);
+      debug.incr('glbBuildings', (res.placed || []).length);
     })
     .catch((e) => console.warn('[worldbld] failed:', e));
   // furnish the walkable interiors with uploaded furniture + food props
   furnishInteriors(interiors, renderer)
-    .catch((e) => console.warn('[furnish] failed:', e));
+    .then((res) => {
+      if (res && typeof res === 'object') {
+        debug.set('interiorsFurnished', res.interiors || 0);
+        debug.set('furniturePlaced', res.items || 0);
+        (res.failed || []).forEach((f) => debug.addFailedAsset(f));
+      }
+    })
+    .catch((e) => { console.warn('[furnish] failed:', e); debug.showError('furnishInteriors: ' + (e && e.message || e)); });
 }
 
 // Swap the procedural traffic + drivable cars for real Kenney Car Kit models
@@ -350,6 +387,8 @@ async function applyVehicleModels() {
     });
   }
   console.log('[vehicles] models applied — traffic:', traffic.length, 'dealer:', dealer?.displayCars?.length || 0);
+  debug.set('vehicleModels', traffic.length + (car ? 1 : 0) + (dealer?.displayCars?.length || 0));
+  debug.set('glbTraffic', traffic.length);
 }
 
 // static shop staff → GLB humanoids
@@ -1233,6 +1272,14 @@ function getWeaponTargets() {
       onHit: (dmg) => { u.health -= dmg; u.hitT = 0.25; return u.health <= 0; },
     });
   }
+  // Monster Mode creatures are also shootable
+  for (const m of monsters) {
+    if (m.dead) continue;
+    out.push({
+      pos: m.group.position.clone().setY(1.1), r: 1.1, kind: 'monster', ref: m,
+      onHit: (dmg) => { m.hp -= dmg; m.hitT = 0.25; if (m.hp <= 0) m.dead = true; return m.hp <= 0; },
+    });
+  }
   return out;
 }
 
@@ -1257,6 +1304,11 @@ function onWeaponKill(tg) {
     const i = policeUnits.indexOf(tg.ref);
     if (i >= 0) removeFootCop(i);
     notify('🚓 Officer down! Wanted +1');
+  } else if (tg.kind === 'monster') {
+    tg.ref.dead = true;
+    state.money = (state.money || 0) + 25;       // bounty for slaying a creature
+    debug.set('monsterCount', Math.max(0, monsters.filter(m => !m.dead).length - 1));
+    notify('👹 Monster slain! +$25');
   }
   saveNow();
 }
@@ -2322,15 +2374,82 @@ function handleInteraction() {
   }
 }
 
+// ── MONSTER MODE ────────────────────────────────────────────────────────────────
+// Toggling Monster Mode spawns a visible pack of creatures around the player
+// that chase you and can be shot. Toggling off despawns them. The HUD badge
+// reflects the current state.
+function toggleMonsterMode() {
+  state.monsterMode = !state.monsterMode;
+  const badge = document.getElementById('monster-badge');
+  if (state.monsterMode) {
+    if (area !== 'city' || !player) {
+      state.monsterMode = false;
+      notify('Monster Mode needs the open city');
+      return;
+    }
+    monsters = spawnMonsters(scene, player.group.position, 5, renderer);
+    debug.set('monsterCount', monsters.length);
+    if (badge) badge.style.display = '';
+    notify('👹 MONSTER MODE — ' + monsters.length + ' incoming! Shoot to survive.');
+  } else {
+    clearMonsters(scene, monsters);
+    debug.set('monsterCount', 0);
+    if (badge) badge.style.display = 'none';
+    notify('Monster Mode off');
+  }
+}
+
+// Move the player to a named landmark / interior (debug teleport buttons).
+function teleportTo(which) {
+  if (!player) return;
+  if (inCar) exitCar();
+  const goCity = (x, z) => {
+    area = 'city';
+    if (interiors) interiors.group.visible = false;
+    controls.bounds = null;
+    player.group.visible = true;
+    player.group.position.set(x, 0, z);
+    returnPos.set(x, 0, z);
+    controls.snapTo(player.group.position, player.eyeHeight);
+  };
+  if (which === 'gas') {
+    const p = refuelPoints[0];
+    if (p) { goCity(p.x, p.z + (p.r || 7) + 2); notify('Teleported to the gas station ⛽'); }
+    else { const lm = LANDMARKS.find(l => l.id === 'garage') || LANDMARKS[0]; goCity(lm.x, lm.z + 6); notify('Gas forecourt not placed — moved near garage'); }
+    return;
+  }
+  if (which === 'diner') {
+    const lm = LANDMARKS.find(l => l.id === 'chicken') || LANDMARKS[0];
+    goCity(lm.x, lm.z + 6); notify('Teleported toward the diner / chicken spot 🍔');
+    return;
+  }
+  if (which === 'home' || which === 'chicken') {
+    enterInterior(which);
+    notify('Teleported into ' + which + ' interior');
+    return;
+  }
+}
+
 // ── global hotkeys ─────────────────────────────────────────────────────────────
 window.addEventListener('keydown', e => {
-  if (mode !== 'play' || isUIOpen() || isSettingsOpen() || eating || hairGame) return;
-  const k = e.key.toLowerCase();
+  const kc = e.key.toLowerCase();
+  // debug panel toggle works at all times (even with a menu open)
+  if (e.key === 'F2' || kc === 'f2') { debugBadge && debugBadge.toggle(); e.preventDefault(); return; }
+  // record EVERY key + whether the guard will block it (and why) so the debug
+  // panel can prove if a stuck UI state is swallowing N/C/I/M.
+  const blockReason = (mode !== 'play') ? 'mode=' + mode
+    : isUIOpen() ? 'uiOpen'
+    : isSettingsOpen() ? 'settings'
+    : eating ? 'eating'
+    : hairGame ? 'hairGame' : '';
+  debug.logKey(blockReason ? `${kc} ✕(${blockReason})` : kc);
+  if (blockReason) return;
+  const k = kc;
   // robbery: shake down the nearest civilian for cash (risky — draws heat)
   if (k === 'g' && !inCar && area === 'city') robNearestNpc();
   if (k === 'v') { const m = controls.cycleMode(); notify('Camera: ' + m.toUpperCase()); document.getElementById('crosshair').style.display = m === CAM.FIRST ? '' : 'none'; }
-  if (k === 'c' && !inCar && area === 'city') openWardrobe();
-  if (k === 'i') openInventory();                 // 🎒 inventory — re-equip / holster weapons
+  if (k === 'c' && !inCar && area === 'city') { debug.markHandler('c'); openWardrobe(); }
+  if (k === 'i') { debug.markHandler('i'); openInventory(); }   // 🎒 inventory — re-equip / holster weapons
   if (k === '`') toggleInteriorDebug();           // dev: interior debug overlay
   if (k === 'h') toggleHairDebug();
   if (hairDebug) {
@@ -2338,8 +2457,8 @@ window.addEventListener('keydown', e => {
     if (k === '[') cycleHair(-1);
     if (k === 'j') cycleJewelry();
   }
-  if (k === 'm') { state.monsterMode = !state.monsterMode; notify('Monster Mode ' + (state.monsterMode ? 'ON 👹' : 'off')); }
-  if (k === 'n' && minimap) minimap.toggleExpand();   // expand / shrink the town map
+  if (k === 'm') { debug.markHandler('m'); toggleMonsterMode(); }
+  if (k === 'n') { debug.markHandler('n'); if (minimap) minimap.toggleExpand(); else notify('Minimap not initialised'); }   // expand / shrink the town map
   // weapons: reload, quick-switch, and 1–9 to equip from your OWNED list (a held
   // gun is never lost — press its number or open the inventory to draw it again).
   if (k === 'r') reloadPressed = true;
@@ -2405,6 +2524,7 @@ function animate() {
     if (!inCar) updateWeapons(dt, { fireHeld, firePressed, reloadPressed });
     firePressed = false; reloadPressed = false;
     updatePolice(dt);
+    if (state.monsterMode && monsters.length) updateMonsters(monsters, dt, t, player && player.group.position);
     handleInteraction();
     updateProgression(dt);
   } else {
@@ -2460,6 +2580,23 @@ function animate() {
   renderer.render(scene, camera);
   controls.endFrame();
   revealOnce();
+
+  // feed the debug panel live runtime values (cheap; the panel throttles redraw)
+  if (debugBadge) {
+    const mmEl = document.getElementById('minimap');
+    debug.update({
+      mode, area, inCar,
+      playerExists: !!player,
+      minimapCanvas: !!mmEl,
+      minimapVisible: !!(mmEl && mmEl.style.display !== 'none' && area === 'city'),
+      uiOpen: isUIOpen(), settingsOpen: isSettingsOpen(), eating, hairGame, builderOpen,
+      inventoryCount: (state.ownedWeapons || ['fists']).length,
+      weapon: cw ? (cw.name || cw.id) : '—',
+      monsterMode: !!state.monsterMode,
+      monsterCount: monsters.filter(m => !m.dead).length,
+      policeCount: policeUnits.length + policeCars.length,
+    });
+  }
 }
 
 // Hide the loading screen once the first real frame has been drawn.
@@ -2479,12 +2616,70 @@ setProgress(45, 'Preparing character creator…');
 initCreator();
 animate();
 
+// ── build/version proof + debug panel ─────────────────────────────────────────
+// Shows the exact deployed commit in-game so a stale cache is obvious, and
+// reports live integration state. The "Force update" button wipes every cache
+// and hard-reloads (cuts through Cloudflare/browser caching during demos).
+// Backup buttons (Map/Inventory/Wardrobe/Monster) + teleports work even if the
+// keyboard handlers are somehow blocked.
+debugBadge = initDebugBadge({
+  onForceUpdate: async () => {
+    try {
+      if ('serviceWorker' in navigator) {
+        const reg = await navigator.serviceWorker.getRegistration();
+        reg && reg.active && reg.active.postMessage({ type: 'CLEAR_CACHES' });
+        const keys = await (window.caches ? caches.keys() : Promise.resolve([]));
+        await Promise.all(keys.map((k) => caches.delete(k)));
+        reg && (await reg.unregister());
+      }
+    } catch (e) { console.warn('[sw] force-update failed', e); }
+    location.reload();
+  },
+  onMap: () => { if (minimap) minimap.toggleExpand(); else notify('Minimap not initialised'); },
+  onInventory: () => openInventory(),
+  onWardrobe: () => { if (area === 'city' && !inCar) openWardrobe(); else notify('Wardrobe: be on foot in the city'); },
+  onMonster: () => toggleMonsterMode(),
+  onTpGas: () => teleportTo('gas'),
+  onTpDiner: () => teleportTo('diner'),
+  onTpHome: () => teleportTo('home'),
+  onTpChicken: () => teleportTo('chicken'),
+});
+window.ZW = window.ZW || {};
+window.ZW.report = () => debug.report();
+window.ZW.commit = debug.commit;
+
 // Register the service worker for asset caching / offline replay (prod only).
+// The ?v=<commit> query makes each deploy a distinct script URL so the browser
+// always notices the update; we then auto-activate it and reload once.
 if (import.meta.env.PROD && 'serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register(new URL('sw.js', document.baseURI).href)
-      .catch(() => { /* caching is a progressive enhancement — ignore failures */ });
+    const swUrl = new URL('sw.js', document.baseURI);
+    swUrl.searchParams.set('v', debug.commit);
+    navigator.serviceWorker.register(swUrl.href).then((reg) => {
+      // ask the active worker for its cache version (proof of which build it is)
+      const ask = () => navigator.serviceWorker.controller
+        && navigator.serviceWorker.controller.postMessage({ type: 'GET_VERSION' });
+      ask();
+      // when a new SW is found, activate it immediately
+      reg.addEventListener('updatefound', () => {
+        const sw = reg.installing;
+        if (!sw) return;
+        sw.addEventListener('statechange', () => {
+          if (sw.state === 'installed' && navigator.serviceWorker.controller) {
+            sw.postMessage({ type: 'SKIP_WAITING' });
+          }
+        });
+      });
+    }).catch(() => { /* caching is a progressive enhancement — ignore failures */ });
+
+    navigator.serviceWorker.addEventListener('message', (e) => {
+      if (e.data && e.data.type === 'SW_VERSION') debug.set('swVersion', e.data.version);
+    });
+    // a brand-new controller took over (new deploy) → reload once to use it
+    let reloaded = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (reloaded) return; reloaded = true; location.reload();
+    });
   });
 }
 
