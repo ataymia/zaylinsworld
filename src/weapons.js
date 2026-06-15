@@ -80,17 +80,21 @@ export function buyWeapon(id) {
 
 // ── equip / cycle ────────────────────────────────────────────────────────────
 export async function equipWeapon(id, { silent = false } = {}) {
-  const w = weaponById(id);
-  if (!deps.state.ownedWeapons.includes(id)) { if (!silent) deps.notify("You don't own that weapon"); return; }
+  // Hard guards: never throw on a null deps/state, a bad id, or fists.
+  if (!deps || !deps.state) { console.warn('[weapons] equipWeapon called before initWeapons — ignored', id); return; }
+  const w = weaponById(id);                   // always returns a valid entry (fists fallback)
+  const owned = deps.state.ownedWeapons || (deps.state.ownedWeapons = ['fists']);
+  if (!owned.includes(w.id)) { if (!silent) deps.notify("You don't own that weapon"); return; }
+  console.debug('[weapons] equip', w.id, '| owned:', owned.join(','), '| was:', deps.state.equippedWeapon);
   current = w;
-  deps.state.equippedWeapon = id;
+  deps.state.equippedWeapon = w.id;
   reloading = 0; cooldown = 0;
   clearViewModel();
   if (!w.melee && w.slot) await buildViewModel(w);
   updateWeaponHUD();
-  if (deps.onEquip) deps.onEquip(w);          // let the host mount a 3rd-person hand model
+  if (deps.onEquip) { try { deps.onEquip(w); } catch (e) { console.warn('[weapons] onEquip threw', e); } }
   if (!silent) deps.notify(w.icon + ' ' + w.name);
-  deps.saveNow();
+  if (deps.saveNow) deps.saveNow();
 }
 
 export function cycleWeapon(dir = 1) {

@@ -46,20 +46,25 @@ function hideProceduralMeshes(group, skin) {
 }
 
 // Attach `glb.scene` as the visible skin of `avatar` (from buildAvatar).
-// Returns true on success. Keeps the procedural rig in the tree (hidden).
-function skinAvatar(avatar, glb, { height = 1.78, play = true } = {}) {
+// Validates the GLB bounds FIRST; only hides the procedural body if it passes.
+// Returns true on success, false (procedural kept visible) on reject.
+function skinAvatar(avatar, glb, { height = 1.78, play = true, label = 'skin' } = {}) {
   if (!avatar || !avatar.group || !glb || !glb.scene) return false;
   const skin = glb.scene.clone(true);
   skin.name = 'glb-skin';
-  skin.updateWorldMatrix(true, true);
-  const box = new THREE.Box3().setFromObject(skin);
-  const h = (box.max.y - box.min.y) || 1;
-  const s = height / h;
-  skin.scale.setScalar(s);
-  skin.position.y = -box.min.y * s;          // ground feet at root origin (y=0)
+  const v = validateHumanoidGlb(skin, height);
+  if (!v.ok) {
+    console.warn('[skin] REJECTED', label, '→', v.reason, '(procedural body kept)');
+    if (typeof window !== 'undefined' && window.__ZW_DEBUG__ && window.__ZW_DEBUG__.metrics) {
+      window.__ZW_DEBUG__.metrics.failedAssets.push(label + ': ' + v.reason);
+    }
+    return false;
+  }
+  skin.scale.setScalar(v.scale);
+  skin.position.y = -v.box.min.y * v.scale;   // ground feet at root origin (y=0)
   skin.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
 
-  hideProceduralMeshes(avatar.group, null);  // hide procedural body first
+  hideProceduralMeshes(avatar.group, skin);  // hide procedural body (validated GLB only)
   avatar.group.add(skin);                    // then add the visible skin
   avatar.skin = skin;
 
@@ -75,6 +80,27 @@ function skinAvatar(avatar, glb, { height = 1.78, play = true } = {}) {
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
+// Strict GLB sanity check BEFORE we hide the procedural body. Rejects empty /
+// tiny / huge / NaN bounding boxes and any final size outside a humanoid range,
+// so a bad asset can never become a giant blob or an invisible player.
+//  Returns { ok, reason, scale, size }.
+function validateHumanoidGlb(scene, targetHeight) {
+  scene.updateWorldMatrix(true, true);
+  const box = new THREE.Box3().setFromObject(scene);
+  const size = new THREE.Vector3();
+  box.getSize(size);
+  const { x: w, y: h, z: d } = size;
+  if (![w, h, d].every((v) => Number.isFinite(v))) return { ok: false, reason: 'non-finite bounds' };
+  if (w <= 0 || h <= 0 || d <= 0) return { ok: false, reason: 'empty bounds' };
+  if (h < 0.05) return { ok: false, reason: 'tiny height ' + h.toFixed(3) + ' (huge scale)' };
+  if (h > 60) return { ok: false, reason: 'huge height ' + h.toFixed(1) };
+  const scale = targetHeight / h;
+  const fw = w * scale, fd = d * scale, fh = h * scale;
+  if (fh < 1.2 || fh > 2.4) return { ok: false, reason: 'final height ' + fh.toFixed(2) + ' out of 1.2–2.4m' };
+  if (fw > 1.6 || fd > 1.6) return { ok: false, reason: 'final width/depth ' + fw.toFixed(2) + '/' + fd.toFixed(2) + ' > 1.6m' };
+  return { ok: true, scale, size, box };
+}
+
 // Replace every city NPC's bubble body with a PSX humanoid GLB.
 // `npcs` = array from createCityNPCs (each has `.av` = avatar). Returns count.
 export async function applyNpcSkins(npcs, renderer, max = 99) {
@@ -83,7 +109,7 @@ export async function applyNpcSkins(npcs, renderer, max = 99) {
     try {
       const name = CIVILIANS[i % CIVILIANS.length];
       const glb = await loadAsset('characters', 'psx', name, renderer);
-      if (glb && skinAvatar(n.av, glb, { height: 1.75 })) { n.realSkin = true; done++; }
+      if (glb && skinAvatar(n.av, glb, { height: 1.75, label: 'npc:' + name })) { n.realSkin = true; done++; }
     } catch { /* keep procedural */ }
   });
   await Promise.all(jobs);
@@ -97,7 +123,7 @@ export async function applyPlayerSkin(avatar, renderer, seed = 0) {
   try {
     const name = CIVILIANS[Math.abs(seed) % CIVILIANS.length];
     const glb = await loadAsset('characters', 'psx', name, renderer);
-    if (glb && skinAvatar(avatar, glb, { height: 1.8 })) {
+    if (glb && skinAvatar(avatar, glb, { height: 1.8, label: 'player:' + name })) {
       avatar.realSkin = true;
       console.info('[skins] player reskinned with', name);
       return true;

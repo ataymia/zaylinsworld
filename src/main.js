@@ -42,6 +42,19 @@ import {
   isUIOpen, onMenuClose, openDialogue, openShop, openChainBuilder, closeMenus,
 } from './ui.js';
 
+// ── EMERGENCY HOTFIX FEATURE FLAGS ───────────────────────────────────────────
+// Unstable GLB visible-skin swaps default OFF until each passes bounds + visual
+// testing. The procedural avatar/monster/buildings stay visible and stable, so
+// a bad asset can never become a giant blob or hide the player. Flip a flag (or
+// toggle via window.__ZW_FEATURES__ in the console / debug panel) to re-enable.
+const FEATURES = {
+  USE_REAL_PLAYER_SKIN: false,   // attach PSX GLB skin to the player
+  USE_REAL_NPC_SKINS: false,     // attach PSX GLB skins to city NPCs
+  USE_GLB_MONSTERS: false,       // swap procedural monster → PSX creature GLB
+  USE_GLB_WORLD_BUILDINGS: false, // place uploaded gas/diner/market GLB landmarks
+};
+if (typeof window !== 'undefined') window.__ZW_FEATURES__ = FEATURES;
+
 initLoadingScreen();
 setProgress(15, 'Starting engine…');
 
@@ -215,6 +228,7 @@ function resumeFromWardrobe() {
 
 // ── world bootstrap ────────────────────────────────────────────────────────────
 function enterWorld() {
+  console.debug('[creator] enterWorld: state.custom exists =', !!(state && state.custom), '| started =', started);
   if (!started) {
     setStatus('Building the city…');
     const cityInfo = buildCity(scene);
@@ -263,11 +277,12 @@ function rebuildPlayer() {
   }
   mountHeldWeapon();                          // re-attach the visible 3rd-person weapon prop
   // Visible-skin pass: drop a real PSX humanoid GLB on top of the procedural rig
-  // (procedural body hidden, walk/facing still driven by the rig). Honors a
-  // toggle so the creator can fall back to the fully-customizable procedural body.
-  if (state.useRealSkin !== false) {
+  // (procedural body hidden ONLY after the GLB passes bounds validation). Default
+  // OFF (USE_REAL_PLAYER_SKIN) so the player is never invisible / never a blob.
+  if (FEATURES.USE_REAL_PLAYER_SKIN && state.useRealSkin !== false) {
+    console.debug('[skin] applyPlayerSkin: attempting real player skin');
     applyPlayerSkin(player, renderer, playerSkinSeed())
-      .then((ok) => { debug.set('playerRealSkin', !!ok); })
+      .then((ok) => { debug.set('playerRealSkin', !!ok); console.debug('[skin] player real-skin applied =', !!ok); })
       .catch((e) => debug.showError('applyPlayerSkin: ' + (e && e.message || e)));
   } else {
     debug.set('playerRealSkin', false);
@@ -329,9 +344,14 @@ function applyWorldAssets() {
   applyVehicleModels();                      // swap procedural cars → real Car Kit GLBs (incl. dealership)
   // swap the bubble city NPCs for PSX humanoid GLB skins (visible, animated)
   debug.set('procNpcs', cityNPCs.length);
-  applyNpcSkins(cityNPCs, renderer)
-    .then((n) => { debug.set('realNpcs', n); debug.set('procNpcs', Math.max(0, cityNPCs.length - n)); })
-    .catch((e) => { console.warn('[skins] npc failed:', e); debug.showError('applyNpcSkins: ' + (e && e.message || e)); });
+  if (FEATURES.USE_REAL_NPC_SKINS) {
+    applyNpcSkins(cityNPCs, renderer)
+      .then((n) => { debug.set('realNpcs', n); debug.set('procNpcs', Math.max(0, cityNPCs.length - n)); })
+      .catch((e) => { console.warn('[skins] npc failed:', e); debug.showError('applyNpcSkins: ' + (e && e.message || e)); });
+  } else {
+    debug.set('realNpcs', 0);
+    console.info('[skins] NPC GLB skins disabled (USE_REAL_NPC_SKINS=false) — procedural NPCs stay visible');
+  }
   // scatter street litter (Trash & Debris GLB) — decorative, non-colliding
   placeStreetProps(scene, renderer)
     .then((n) => { if (n) console.info('[props] litter items:', n); })
@@ -345,14 +365,19 @@ function applyWorldAssets() {
     .then((placed) => { if (placed && placed.length) console.info('[district] landmarks:', placed.map(p => p.label).join(', ')); })
     .catch((e) => console.warn('[district] failed:', e));
   // drop the uploaded GLB landmark buildings (gas station, diner, mini-market)
-  placeWorldBuildings(scene, renderer)
-    .then((res) => {
-      refuelPoints = res.refuels || [];
-      if (minimap) setMarkers(res.markers || []);
-      debug.set('worldBuildingsPlaced', (res.placed || []).length);
-      debug.incr('glbBuildings', (res.placed || []).length);
-    })
-    .catch((e) => console.warn('[worldbld] failed:', e));
+  if (FEATURES.USE_GLB_WORLD_BUILDINGS) {
+    placeWorldBuildings(scene, renderer)
+      .then((res) => {
+        refuelPoints = res.refuels || [];
+        if (minimap) setMarkers(res.markers || []);
+        debug.set('worldBuildingsPlaced', (res.placed || []).length);
+        debug.incr('glbBuildings', (res.placed || []).length);
+      })
+      .catch((e) => console.warn('[worldbld] failed:', e));
+  } else {
+    debug.set('worldBuildingsPlaced', 0);
+    console.info('[worldbld] GLB landmarks disabled (USE_GLB_WORLD_BUILDINGS=false)');
+  }
   // furnish the walkable interiors with uploaded furniture + food props
   furnishInteriors(interiors, renderer)
     .then((res) => {
@@ -1556,19 +1581,33 @@ function openWeaponShop() {
 // Reachable any time with the I key, so a holstered gun can always be pulled back
 // out — no more "lost weapon" state.
 function inventoryOpts() {
-  const owned = (state.ownedWeapons || ['fists']).map(id => weaponById(id));
+  // Guard every entry: skip ids that don't resolve to a weapon, always include
+  // fists, and never assume an item has gun-only fields.
+  const ids = (state.ownedWeapons && state.ownedWeapons.length ? state.ownedWeapons : ['fists']);
+  const owned = ids.map(id => weaponById(id)).filter(Boolean);
+  if (!owned.some(w => w.id === 'fists')) owned.unshift(weaponById('fists'));
+  console.debug('[inventory] open | owned:', owned.map(w => w && w.id).join(','), '| equipped:', state.equippedWeapon);
   const choices = [];
   for (const w of owned) {
+    if (!w) continue;
     const eq = state.equippedWeapon === w.id;
     const a = w.melee ? null : (state.ammo && state.ammo[w.id]);
     const ammoStr = w.melee ? '' : (a ? `  (${a.mag}/${a.reserve === Infinity ? '∞' : a.reserve})` : '');
     choices.push({
       label: `${w.icon} ${w.name}${ammoStr}${eq ? '   ✓ equipped' : ''}`,
-      onPick: () => { if (!eq) equipWeapon(w.id); return inventoryOpts(); },
+      onPick: () => {
+        try { console.debug('[inventory] pick', w.id, '| was', state.equippedWeapon); if (!eq) equipWeapon(w.id); }
+        catch (e) { console.warn('[inventory] equip failed', e); notify('Could not equip that item'); }
+        return inventoryOpts();
+      },
     });
   }
   if (state.equippedWeapon !== 'fists') {
-    choices.unshift({ label: '✋ Holster weapon (back to fists)', onPick: () => { equipWeapon('fists'); return inventoryOpts(); } });
+    choices.unshift({ label: '✋ Holster weapon (back to fists)', onPick: () => {
+      try { console.debug('[inventory] holster → fists'); equipWeapon('fists'); }
+      catch (e) { console.warn('[inventory] holster failed', e); notify('Could not holster'); }
+      return inventoryOpts();
+    } });
   }
   choices.push({ label: 'Close', onPick: () => undefined });
   return {
@@ -1622,9 +1661,15 @@ function resolveCollision(pos, radius, list) {
 function updatePlayer(dt, t) {
   const inp = controls.moveInput();
   const yaw = controls.cameraYaw();
-  const forward = new THREE.Vector3(-Math.sin(yaw), 0, -Math.cos(yaw));
-  // screen-right = forward × up (Y-up, right-handed). For forward=(fx,0,fz) this
-  // is (-fz, 0, fx). The old (fz,0,-fx) was negated, which inverted A/D + arrows.
+  // The camera looks toward +(sin yaw, cos yaw) in FIRST person, but sits BEHIND
+  // the player looking toward -(sin yaw, cos yaw) in THIRD person. Movement forward
+  // must match where the camera is looking, so flip the sign per mode — otherwise
+  // first-person W/S (and A/D) feel inverted.
+  const fp = controls.mode === CAM.FIRST;
+  const forward = fp
+    ? new THREE.Vector3(Math.sin(yaw), 0, Math.cos(yaw))
+    : new THREE.Vector3(-Math.sin(yaw), 0, -Math.cos(yaw));
+  // screen-right = forward × up (Y-up, right-handed) = (-forward.z, 0, forward.x).
   const right = new THREE.Vector3(-forward.z, 0, forward.x);
   const move = new THREE.Vector3().addScaledVector(forward, inp.f).addScaledVector(right, inp.s);
   const moving = move.lengthSq() > 0.001;

@@ -69,22 +69,28 @@ export function createMonster(scene, pos, renderer) {
     skin: null,
   };
 
-  // swap in a real PSX creature model when it loads
-  const name = MON_NAMES[Math.floor(Math.random() * MON_NAMES.length)];
-  loadAsset('characters', 'psx', name, renderer).then((res) => {
-    if (!res || !res.scene) return;
-    const skin = res.scene.clone(true);
-    skin.updateWorldMatrix(true, true);
-    const box = new THREE.Box3().setFromObject(skin);
-    const h = (box.max.y - box.min.y) || 1;
-    const s = 1.95 / h;                       // normalise to ~1.95m tall
-    skin.scale.setScalar(s);
-    skin.position.y = -box.min.y * s;
-    skin.traverse((o) => { if (o.isMesh) { o.castShadow = true; } });
-    group.add(skin);
-    proc.visible = false;                     // hide the procedural stand-in
-    m.skin = skin;
-  }).catch(() => { /* keep procedural body */ });
+  // swap in a real PSX creature model when it loads — gated behind a feature flag
+  // so an unvalidated GLB can't break Monster Mode (procedural brute stays visible).
+  const useGlb = typeof window !== 'undefined' && window.__ZW_FEATURES__ && window.__ZW_FEATURES__.USE_GLB_MONSTERS;
+  if (useGlb) {
+    const name = MON_NAMES[Math.floor(Math.random() * MON_NAMES.length)];
+    loadAsset('characters', 'psx', name, renderer).then((res) => {
+      if (!res || !res.scene) return;
+      const skin = res.scene.clone(true);
+      skin.updateWorldMatrix(true, true);
+      const box = new THREE.Box3().setFromObject(skin);
+      const h = (box.max.y - box.min.y) || 1;
+      // reject unusable bounds → keep the procedural brute (never a giant blob)
+      if (!isFinite(h) || h < 0.2 || h > 40) { console.warn('[monster] GLB rejected, bad height', h, name); return; }
+      const s = 1.95 / h;                       // normalise to ~1.95m tall
+      skin.scale.setScalar(s);
+      skin.position.y = -box.min.y * s;
+      skin.traverse((o) => { if (o.isMesh) { o.castShadow = true; } });
+      group.add(skin);
+      proc.visible = false;                     // hide the procedural stand-in
+      m.skin = skin;
+    }).catch(() => { /* keep procedural body */ });
+  }
 
   return m;
 }
