@@ -26,7 +26,7 @@ import { applyNpcSkins, applyPlayerSkin } from './avatarSkin.js';
 import { Controls, CAM } from './controls.js';
 import { InteractionManager } from './interaction.js';
 import { loadState, saveState, defaultState, clearSave, hasSave } from './state.js';
-import { GEMS, LANDMARKS } from './config/mapConfig.js';
+import { GEMS, LANDMARKS, SPAWN } from './config/mapConfig.js';
 import { loadHDRI } from './assets.js';
 import {
   hdriUrl, loadSlotModel, updateMixers, enhanceAvatar, enhanceVehicle, assetUrl,
