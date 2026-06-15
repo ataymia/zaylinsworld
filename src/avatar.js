@@ -578,10 +578,6 @@ export function buildAvatar(custom) {
   };
   const leftArm = makeArm(-1), rightArm = makeArm(1);
   root.add(leftArm, rightArm);
-  // Dedicated grip anchor seated in the right fist so held weapons sit IN the
-  // hand instead of floating off the wrist. mountHeldWeapon() attaches here and
-  // applies the per-category grip transform relative to this point.
-  mkAnchor('right_hand', rightArm, 0.02, -0.66, 0.10);
 
   const shoeM = mat(shoeDef.color, { rough: 0.5, flat: false });
   const soleM = mat(shoeDef.sole, { rough: 0.5, flat: false });
