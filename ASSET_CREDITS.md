@@ -66,11 +66,15 @@ art packs are listed below.
 - **Author:** Styloo
 - **License:** Free asset pack (itch.io) — usable in free or commercial projects.
 - **Used for:** Purchasable / equippable / shootable weapons at the Block Supply
-  weapons counter (pistol, SMG, rifle, shotgun, sniper, rocket launcher).
-- **Original filenames:** `pew.glb`, `mac10.glb`, `ak47.glb`, `shotgun.glb`,
-  `awp.glb`, `rocketlaucher.glb`, `ammobox.glb`.
+  store (pistol, compact, two rifles, shotgun, precision, rocket launcher) plus a
+  wood-plank melee weapon. All in-game names are fictional/stylized.
+- **Original filenames:** `pew.glb`, `mac10.glb`, `ak47.glb`, `ak47variant.glb`,
+  `shotgun.glb`, `awp.glb`, `rocketlaucher.glb`, `board.glb`, `ammobox.glb`.
 - **Location in repo:** `public/assets/models/weapons/`.
-- **Config:** `weapons` slots in `src/config/manifest.json`; catalog in `src/weapons.js`.
+- **Config:** `weapons` slots in `src/config/manifest.json`; SCALABLE catalog in
+  `src/config/weaponCatalog.js` (source of truth) consumed by `src/weapons.js`;
+  placement in `src/config/weaponTransforms.js`; upgrades in
+  `src/config/weaponUpgrades.js`; store layout in `src/config/blockSupplyLayout.js`.
 
 ## Magory — Ultimate Gem Collection (64×64)
 - **Source:** https://magory.itch.io/ultimate-gem-collections

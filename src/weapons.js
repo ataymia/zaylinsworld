@@ -12,25 +12,23 @@
 // ───────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 import { loadSlotModel } from './manifest.js';
+import { WEAPON_CATALOG, weaponById as catWeaponById, AMMO_TYPES } from './config/weaponCatalog.js';
+import { applyUpgrades, upgradeById } from './config/weaponUpgrades.js';
 
 // ── catalog ──────────────────────────────────────────────────────────────────
-// slot     : manifest weapons.<slot> (GLB)
-// price    : cost at the Block Supply weapons counter
-// mag      : rounds per magazine        reserve: spare rounds granted on buy
-// rpm      : rounds per minute (fire cadence)   auto: hold-to-fire
-// dmg      : damage per hit             pellets: projectiles per shot (shotgun)
-// spread   : cone half-angle in radians reload: seconds
-// range    : max hit distance (m)
-export const WEAPONS = [
-  { id: 'fists',   name: 'Fists',         slot: null,      price: 0,     mag: Infinity, reserve: Infinity, rpm: 120, dmg: 8,   pellets: 1, spread: 0.00, reload: 0,   range: 2.4,  melee: true,  icon: '👊' },
-  { id: 'pistol',  name: 'Pistol',        slot: 'pistol',  price: 450,   mag: 12,  reserve: 48,  rpm: 360,  dmg: 18,  pellets: 1, spread: 0.012, reload: 1.3, range: 60,  auto: false, icon: '🔫' },
-  { id: 'smg',     name: 'MAC-10 SMG',    slot: 'smg',     price: 1800,  mag: 30,  reserve: 120, rpm: 900,  dmg: 14,  pellets: 1, spread: 0.04,  reload: 1.8, range: 55,  auto: true,  icon: '🔫' },
-  { id: 'rifle',   name: 'AK-47 Rifle',   slot: 'rifle',   price: 3600,  mag: 30,  reserve: 120, rpm: 600,  dmg: 26,  pellets: 1, spread: 0.02,  reload: 2.2, range: 90,  auto: true,  icon: '🔫' },
-  { id: 'shotgun', name: 'Shotgun',       slot: 'shotgun', price: 2400,  mag: 6,   reserve: 24,  rpm: 80,   dmg: 12,  pellets: 8, spread: 0.10,  reload: 2.6, range: 28,  auto: false, icon: '🔫' },
-  { id: 'sniper',  name: 'AWP Sniper',    slot: 'sniper',  price: 7800,  mag: 5,   reserve: 20,  rpm: 45,   dmg: 95,  pellets: 1, spread: 0.0,   reload: 3.0, range: 220, auto: false, icon: '🎯' },
-  { id: 'rocket',  name: 'Rocket Launcher',slot: 'rocket', price: 16000, mag: 1,   reserve: 5,   rpm: 30,   dmg: 140, pellets: 1, spread: 0.0,   reload: 3.6, range: 160, auto: false, splash: 6, icon: '🚀' },
-];
-export const weaponById = (id) => WEAPONS.find((w) => w.id === id) || WEAPONS[0];
+// The weapon list is now driven entirely by the SCALABLE catalog
+// (src/config/weaponCatalog.js). Adding a weapon there makes it appear in the
+// shop, inventory, hand and ammo systems with zero edits here. WEAPONS is kept
+// as a backward-compatible export so existing call-sites keep working.
+export const WEAPONS = WEAPON_CATALOG;
+export const weaponById = (id) => catWeaponById(id);
+export { AMMO_TYPES };
+
+// Legacy save ids → new catalog ids (so a player's old purchases carry over).
+const LEGACY_WEAPON_MAP = {
+  pistol: 'pistol_shortline', smg: 'compact_corner', rifle: 'rifle_blockside',
+  shotgun: 'shotgun_sweeper', sniper: 'precision_scope', rocket: 'rocket_blast',
+};
 
 let deps = null;            // { THREE, camera, scene, state, notify, getTargets, onKill, saveNow }
 let viewModel = null;       // GLB held in the camera's hand
@@ -43,19 +41,93 @@ const tracers = [];         // active tracer line segments {line, life}
 const raycaster = new THREE.Raycaster();
 
 // ── ammo state lives on the save (so it persists) ──────────────────────────────
-function ammoFor(id) {
-  const w = weaponById(id);
-  if (w.melee) return { mag: Infinity, reserve: Infinity };
+// SCALABLE model: a weapon's loaded magazine is per-weapon (state.ammo[id].mag),
+// but the spare reserve is a SHARED pool keyed by ammo type
+// (state.ammoReserve[ammoType]) — so two pistols share Light Ammo, three rifles
+// share Long Ammo, etc. Buying ammo once refills every weapon of that type.
+function ensureAmmo() {
   deps.state.ammo = deps.state.ammo || {};
-  if (!deps.state.ammo[id]) deps.state.ammo[id] = { mag: w.mag, reserve: w.reserve };
+  deps.state.ammoReserve = deps.state.ammoReserve || {};
+}
+function magState(id) {
+  const w = weaponById(id);
+  if (w.melee) return { mag: Infinity };
+  ensureAmmo();
+  if (!deps.state.ammo[id]) deps.state.ammo[id] = { mag: w.mag };
   return deps.state.ammo[id];
+}
+function reserveFor(type) {
+  if (!type) return Infinity;
+  ensureAmmo();
+  return deps.state.ammoReserve[type] || 0;
+}
+function addReserve(type, n) {
+  if (!type || !n) return;
+  ensureAmmo();
+  deps.state.ammoReserve[type] = (deps.state.ammoReserve[type] || 0) + n;
+}
+function takeReserve(type, n) {
+  if (!type) return n;                  // melee / unlimited
+  ensureAmmo();
+  const have = deps.state.ammoReserve[type] || 0;
+  const take = Math.min(have, n);
+  deps.state.ammoReserve[type] = have - take;
+  return take;
+}
+
+// ── upgrades (per-weapon, persisted) ───────────────────────────────────────────
+function equippedUpgradesFor(id) {
+  deps.state.equippedUpgrades = deps.state.equippedUpgrades || {};
+  return deps.state.equippedUpgrades[id] || [];
+}
+// Effective stats = base catalog stats with equipped upgrades applied.
+function effStats(w = current) {
+  return applyUpgrades(w, equippedUpgradesFor(w.id));
+}
+// Public: a snapshot of ammo for a weapon (used by the inventory UI).
+export function ammoInfo(id) {
+  const w = weaponById(id);
+  if (w.melee) return { mag: Infinity, reserve: Infinity, type: null, cap: Infinity };
+  return { mag: magState(id).mag, reserve: reserveFor(w.ammoType), type: w.ammoType, cap: effStats(w).mag };
+}
+
+// One-time migration of legacy (pre-catalog) saves into the new model.
+function migrateLegacy() {
+  ensureAmmo();
+  if (deps.state.weaponsV2) return;
+  const owned = deps.state.ownedWeapons || ['fists'];
+  const newOwned = [];
+  for (const id of owned) {
+    const mapped = LEGACY_WEAPON_MAP[id] || id;
+    if (weaponById(mapped) && !newOwned.includes(mapped)) newOwned.push(mapped);
+  }
+  if (!newOwned.includes('fists')) newOwned.unshift('fists');
+  deps.state.ownedWeapons = newOwned;
+  if (deps.state.equippedWeapon && LEGACY_WEAPON_MAP[deps.state.equippedWeapon]) {
+    deps.state.equippedWeapon = LEGACY_WEAPON_MAP[deps.state.equippedWeapon];
+  }
+  // fold old per-weapon {mag,reserve} into per-weapon mag + shared reserve pool
+  const oldAmmo = deps.state.ammo || {};
+  const newAmmo = {};
+  for (const [id, a] of Object.entries(oldAmmo)) {
+    const mapped = LEGACY_WEAPON_MAP[id] || id;
+    const w = weaponById(mapped);
+    if (!w || w.melee) continue;
+    newAmmo[mapped] = { mag: (a && Number.isFinite(a.mag)) ? a.mag : w.mag };
+    if (a && Number.isFinite(a.reserve) && w.ammoType) addReserve(w.ammoType, a.reserve);
+  }
+  deps.state.ammo = newAmmo;
+  deps.state.weaponsV2 = true;
 }
 
 export function initWeapons(d) {
   deps = d;
   deps.state.ownedWeapons = deps.state.ownedWeapons || ['fists'];
   if (!deps.state.ownedWeapons.includes('fists')) deps.state.ownedWeapons.unshift('fists');
-  deps.state.ammo = deps.state.ammo || {};
+  deps.state.ownedUpgrades = deps.state.ownedUpgrades || {};
+  deps.state.equippedUpgrades = deps.state.equippedUpgrades || {};
+  ensureAmmo();
+  migrateLegacy();
   equipWeapon(deps.state.equippedWeapon || 'fists', { silent: true });
 }
 
@@ -63,19 +135,77 @@ export function initWeapons(d) {
 export function buyWeapon(id) {
   const w = weaponById(id);
   if (deps.state.ownedWeapons.includes(id)) {
-    // top up reserve ammo on repurchase
-    const a = ammoFor(id); a.reserve += w.reserve;
-    deps.notify('📦 Restocked ' + w.name + ' ammo');
+    // already owned → top up the shared reserve for its ammo type
+    if (w.ammoType) { addReserve(w.ammoType, w.reserve); deps.notify('📦 Restocked ' + (AMMO_TYPES[w.ammoType]?.name || 'ammo')); }
+    else deps.notify(w.name + ' is melee — no ammo needed');
     deps.saveNow();
     return true;
   }
   if (deps.state.money < w.price) { deps.notify('Not enough cash for ' + w.name); return false; }
   deps.state.money -= w.price;
   deps.state.ownedWeapons.push(id);
-  ammoFor(id); // initialise ammo
+  magState(id);                                   // initialise loaded magazine
+  if (w.ammoType) addReserve(w.ammoType, w.reserve);   // grant starter reserve
   deps.notify('🛒 Bought ' + w.name);
   deps.saveNow();
   return true;
+}
+
+// Buy a batch of ammo of a given type into the shared pool.
+export function buyAmmo(typeId) {
+  const t = AMMO_TYPES[typeId];
+  if (!t) return false;
+  if (deps.state.money < t.price) { deps.notify('Not enough cash for ' + t.name); return false; }
+  deps.state.money -= t.price;
+  addReserve(typeId, t.amount);
+  deps.notify('🧰 +' + t.amount + ' ' + t.name);
+  updateWeaponHUD();
+  deps.saveNow();
+  return true;
+}
+
+// Buy (and auto-equip) a weapon upgrade. Ownership is per weapon.
+export function buyUpgrade(weaponId, upgradeId) {
+  const w = weaponById(weaponId);
+  const up = upgradeById(upgradeId);
+  if (!w || !up) return false;
+  if (!(w.upgrades || []).includes(upgradeId)) { deps.notify('That upgrade does not fit ' + w.name); return false; }
+  deps.state.ownedUpgrades = deps.state.ownedUpgrades || {};
+  const owned = deps.state.ownedUpgrades[weaponId] = deps.state.ownedUpgrades[weaponId] || [];
+  if (owned.includes(upgradeId)) { equipUpgrade(weaponId, upgradeId); return true; }
+  if (deps.state.money < up.price) { deps.notify('Not enough cash for ' + up.name); return false; }
+  deps.state.money -= up.price;
+  owned.push(upgradeId);
+  equipUpgrade(weaponId, upgradeId, true);        // auto-equip on purchase
+  deps.notify('🔧 Installed ' + up.name + ' on ' + w.name);
+  deps.saveNow();
+  return true;
+}
+
+// Toggle an owned upgrade on/off (one upgrade per slot).
+export function equipUpgrade(weaponId, upgradeId, forceOn = false) {
+  const w = weaponById(weaponId);
+  const up = upgradeById(upgradeId);
+  if (!w || !up) return;
+  deps.state.ownedUpgrades = deps.state.ownedUpgrades || {};
+  deps.state.equippedUpgrades = deps.state.equippedUpgrades || {};
+  if (!(deps.state.ownedUpgrades[weaponId] || []).includes(upgradeId)) return;  // must own
+  const eq = deps.state.equippedUpgrades[weaponId] = deps.state.equippedUpgrades[weaponId] || [];
+  const isOn = eq.includes(upgradeId);
+  // drop any upgrade already in this slot, then equip unless we're toggling off
+  let next = eq.filter(uid => { const u = upgradeById(uid); return u && u.slot !== up.slot; });
+  if (!isOn || forceOn) next.push(upgradeId);
+  deps.state.equippedUpgrades[weaponId] = next;
+  if (current && current.id === weaponId) { clampMag(); updateWeaponHUD(); }
+  deps.saveNow();
+}
+
+// If an upgrade change shrinks the magazine, clamp the loaded rounds to the cap.
+function clampMag() {
+  if (!current || current.melee) return;
+  const m = magState(current.id);
+  const cap = effStats().mag;
+  if (m.mag > cap) m.mag = cap;
 }
 
 // ── equip / cycle ────────────────────────────────────────────────────────────
@@ -198,39 +328,42 @@ export function updateWeapons(dt, input) {
 
 function reload() {
   if (current.melee || reloading > 0) return;
-  const a = ammoFor(current.id);
-  if (a.mag >= current.mag || a.reserve <= 0) return;
-  reloading = current.reload;
+  const eff = effStats();
+  const m = magState(current.id);
+  if (m.mag >= eff.mag || reserveFor(current.ammoType) <= 0) return;
+  reloading = eff.reload;
   deps.notify('🔄 Reloading…');
   updateWeaponHUD();
 }
 function finishReload() {
-  const a = ammoFor(current.id);
-  const need = current.mag - a.mag;
-  const take = Math.min(need, a.reserve);
-  a.mag += take; a.reserve -= take;
+  const eff = effStats();
+  const m = magState(current.id);
+  const need = eff.mag - m.mag;
+  const take = takeReserve(current.ammoType, need);
+  m.mag += take;
   reloading = 0;
   updateWeaponHUD();
   deps.saveNow();
 }
 
 function fire() {
-  const a = ammoFor(current.id);
-  cooldown = 60 / current.rpm;
+  const eff = effStats();
+  cooldown = 60 / eff.rpm;
 
-  if (current.melee) { meleeHit(); return; }
+  if (current.melee) { meleeHit(eff); return; }
 
-  if (a.mag <= 0) {
+  const m = magState(current.id);
+  if (m.mag <= 0) {
     // auto-reload if we have spare, else click
-    if (a.reserve > 0) reload();
-    else deps.notify('Empty — buy ammo at Block Supply');
+    if (reserveFor(current.ammoType) > 0) reload();
+    else deps.notify('Empty — buy ' + (AMMO_TYPES[current.ammoType]?.name || 'ammo') + ' at Block Supply');
     return;
   }
-  a.mag -= 1;
+  m.mag -= 1;
 
   // muzzle flash + recoil
-  if (muzzle) { const s = current.id === 'rocket' ? 0.5 : 0.28; muzzle.scale.set(s, s, s); }
-  if (viewModel) { viewModel.position.z += current.id === 'sniper' ? 0.12 : 0.06; viewModel.rotation.x -= 0.05; }
+  if (muzzle) { const s = current.id === 'rocket_blast' ? 0.5 : 0.28; muzzle.scale.set(s, s, s); }
+  if (viewModel) { viewModel.position.z += eff.scoped ? 0.12 : 0.06; viewModel.rotation.x -= 0.05; }
 
   // raycast one ray per pellet from camera center
   const origin = new THREE.Vector3();
@@ -239,38 +372,39 @@ function fire() {
   deps.camera.getWorldDirection(baseDir);
   const targets = deps.getTargets ? deps.getTargets() : [];
   let hitAny = false;
-  for (let p = 0; p < current.pellets; p++) {
+  for (let p = 0; p < (eff.pellets || 1); p++) {
     const dir = baseDir.clone();
-    if (current.spread > 0) {
-      dir.x += (Math.random() - 0.5) * current.spread * 2;
-      dir.y += (Math.random() - 0.5) * current.spread * 2;
-      dir.z += (Math.random() - 0.5) * current.spread * 2;
+    if (eff.spread > 0) {
+      dir.x += (Math.random() - 0.5) * eff.spread * 2;
+      dir.y += (Math.random() - 0.5) * eff.spread * 2;
+      dir.z += (Math.random() - 0.5) * eff.spread * 2;
       dir.normalize();
     }
-    const hit = castAt(origin, dir, targets);
+    const hit = castAt(origin, dir, targets, eff);
     if (hit) hitAny = true;
   }
-  if (current.splash) splashDamage(origin, baseDir, targets);
+  if (eff.splash) splashDamage(origin, baseDir, targets, eff);
 
   // wanted level for firing in public
   if (deps.onShotFired) deps.onShotFired(hitAny);
   updateWeaponHUD();
-  if (a.mag <= 0 && a.reserve > 0) reload();
+  if (m.mag <= 0 && reserveFor(current.ammoType) > 0) reload();
   deps.saveNow();
 }
 
 // returns true if a target was hit
-function castAt(origin, dir, targets) {
-  const end = origin.clone().add(dir.clone().multiplyScalar(current.range));
+function castAt(origin, dir, targets, eff) {
+  const range = eff.range, dmg = eff.dmg;
+  const end = origin.clone().add(dir.clone().multiplyScalar(range));
   // find nearest target sphere intersected
   let best = null, bestT = Infinity;
   for (const tg of targets) {
     const t = raySphere(origin, dir, tg.pos, tg.r || 1.0);
-    if (t != null && t < bestT && t <= current.range) { bestT = t; best = tg; }
+    if (t != null && t < bestT && t <= range) { bestT = t; best = tg; }
   }
   const hitPoint = best ? origin.clone().add(dir.clone().multiplyScalar(bestT)) : end;
   spawnTracer(muzzleWorld(origin), hitPoint);
-  if (best) { applyDamage(best, current.dmg, hitPoint); return true; }
+  if (best) { applyDamage(best, dmg, hitPoint); return true; }
   return false;
 }
 
@@ -279,11 +413,11 @@ function muzzleWorld(fallback) {
   return fallback;
 }
 
-function splashDamage(origin, dir, targets) {
-  const impact = origin.clone().add(dir.clone().multiplyScalar(Math.min(current.range, 30)));
+function splashDamage(origin, dir, targets, eff) {
+  const impact = origin.clone().add(dir.clone().multiplyScalar(Math.min(eff.range, 30)));
   for (const tg of targets) {
     const d = tg.pos.distanceTo(impact);
-    if (d <= current.splash) applyDamage(tg, current.dmg * (1 - d / current.splash), impact);
+    if (d <= eff.splash) applyDamage(tg, eff.dmg * (1 - d / eff.splash), impact);
   }
 }
 
@@ -294,23 +428,25 @@ function applyDamage(tg, dmg, point) {
   }
 }
 
-function meleeHit() {
+function meleeHit(eff) {
   if (viewModel) viewModel.rotation.x -= 0.2;
   const origin = new THREE.Vector3(); deps.camera.getWorldPosition(origin);
   const dir = new THREE.Vector3(); deps.camera.getWorldDirection(dir);
   const targets = deps.getTargets ? deps.getTargets() : [];
+  const range = (eff && eff.range) || current.range;
   let hit = false;
   for (const tg of targets) {
     const t = raySphere(origin, dir, tg.pos, (tg.r || 1.0) + 0.3);
-    if (t != null && t <= current.range) { applyDamage(tg, meleeDamage(), tg.pos); hit = true; break; }
+    if (t != null && t <= range) { applyDamage(tg, meleeDamage(eff), tg.pos); hit = true; break; }
   }
   // a thrown punch in public still draws attention (lighter than gunfire)
   if (deps.onShotFired) deps.onShotFired(hit, true);
 }
 // fists scale with the player's fitness/strength stat (stronger → harder hits)
-function meleeDamage() {
+function meleeDamage(eff) {
+  const base = (eff && eff.dmg) || current.dmg;
   const fit = (deps.state?.stats?.fitness) || 0;
-  let dmg = current.dmg + Math.round(fit * 0.45);   // 8 base → up to ~53 at 100 fitness
+  let dmg = base + Math.round(fit * 0.45);   // base → up to ~+45 at 100 fitness
   if (deps.state?.playerMonster) dmg = Math.round(dmg * 1.6);   // monster form hits noticeably harder
   return dmg;
 }
@@ -340,9 +476,10 @@ export function updateWeaponHUD() {
   if (!el) return;
   if (!current) { el.style.display = 'none'; return; }
   el.style.display = '';
-  const a = ammoFor(current.id);
+  const m = magState(current.id);
+  const reserve = current.melee ? Infinity : reserveFor(current.ammoType);
   const ammoStr = current.melee ? '∞'
-    : (reloading > 0 ? 'RELOADING' : `${a.mag} / ${a.reserve === Infinity ? '∞' : a.reserve}`);
+    : (reloading > 0 ? 'RELOADING' : `${m.mag} / ${reserve === Infinity ? '∞' : reserve}`);
   el.innerHTML = `<span class="wp-icon">${current.icon}</span>` +
     `<span class="wp-name">${current.name}</span>` +
     `<span class="wp-ammo">${ammoStr}</span>`;

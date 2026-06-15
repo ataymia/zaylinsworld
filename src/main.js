@@ -19,7 +19,11 @@ import {
 import {
   initWeapons, updateWeapons, buyWeapon, equipWeapon, cycleWeapon,
   WEAPONS, weaponById, currentWeapon,
+  buyAmmo, buyUpgrade, equipUpgrade, ammoInfo, AMMO_TYPES,
 } from './weapons.js';
+import { CATEGORIES, weaponsForTab, ownedAmmoTypes } from './config/weaponCatalog.js';
+import { upgradeById } from './config/weaponUpgrades.js';
+import { resolveTransform } from './config/weaponTransforms.js';
 import { initMissions, missionEvent, renderTracker } from './missions.js';
 import { spawnMonsters, updateMonsters, clearMonsters } from './monsters.js';
 import { applyNpcSkins, applyPlayerSkin } from './avatarSkin.js';
@@ -27,6 +31,7 @@ import { Controls, CAM } from './controls.js';
 import { InteractionManager } from './interaction.js';
 import { loadState, saveState, defaultState, clearSave, hasSave } from './state.js';
 import { GEMS, LANDMARKS, SPAWN } from './config/mapConfig.js';
+import { ROAD } from './config/mapConfig.js';
 import { loadHDRI, loadAsset } from './assets.js';
 import {
   hdriUrl, loadSlotModel, updateMixers, enhanceAvatar, enhanceVehicle, assetUrl,
@@ -311,37 +316,103 @@ function playerSkinSeed() {
 }
 
 // ── visible held weapon (3rd person) ────────────────────────────────────────────
-// A lightweight stylized prop mounted in the player's right hand so the equipped
-// weapon is actually visible on the avatar (the detailed first-person view-model
-// lives on the camera). Rebuilt whenever the weapon changes or the avatar rebuilds.
+// The REAL weapon model is mounted in the player's right hand so the equipped
+// weapon is actually visible on the avatar (not just a HUD label). It loads the
+// catalog GLB asynchronously with a procedural placeholder shown instantly, and
+// places it using the per-weapon HAND transform (weaponTransforms.js). Melee
+// weapons get a stylized procedural shape (bat / pipe / wrench / plank).
 let heldWeaponProp = null;
+let heldWeaponToken = 0;
 function mountHeldWeapon() {
   if (!player) return;
   const arm = player.parts && player.parts.rightArm;
   if (!arm) return;
   if (heldWeaponProp) { heldWeaponProp.parent?.remove(heldWeaponProp); heldWeaponProp = null; }
   const w = currentWeapon();
-  if (!w || w.melee) return;                  // fists → nothing in hand
-  const g = new THREE.Group();
-  g.name = 'heldweapon';                       // kept visible even under a GLB skin
-  const metal = new THREE.MeshStandardMaterial({ color: '#22262b', roughness: 0.5, metalness: 0.6 });
-  const grip = new THREE.MeshStandardMaterial({ color: '#3a2c22', roughness: 0.8 });
-  // sizes roughly scale with the weapon class so a pistol ≠ a rifle silhouette
-  const long = w.id === 'rifle' || w.id === 'smg' || w.id === 'sniper' || w.id === 'shotgun' || w.id === 'rocket';
-  const barrelLen = w.id === 'rocket' ? 0.95 : (w.id === 'sniper' ? 0.9 : long ? 0.7 : 0.34);
-  const body = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.12, barrelLen), metal);
-  body.position.z = barrelLen * 0.35; g.add(body);
-  const handle = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.16, 0.08), grip);
-  handle.position.set(0, -0.12, 0.02); g.add(handle);
-  if (w.id === 'rocket') {
-    const tube = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.95, 10), metal);
-    tube.rotation.x = Math.PI / 2; tube.position.z = 0.3; g.add(tube);
+  if (!w || w.id === 'fists') return;            // bare fists → nothing in hand
+  const holder = new THREE.Group();
+  holder.name = 'heldweapon';                    // kept visible even under a GLB skin
+  holder.position.set(0, -0.6, 0.06);            // seat at the hand end of the arm
+  arm.add(holder);
+  heldWeaponProp = holder;
+
+  const tf = resolveTransform(w, 'hand');
+  // instant procedural placeholder so the hand is never empty while the GLB loads
+  const placeholder = buildProceduralWeaponMesh(w, tf.fit);
+  applyHandTransform(placeholder, tf);
+  holder.add(placeholder);
+
+  // async swap to the real asset when one exists for this weapon
+  if (w.slot || w.asset) {
+    const token = ++heldWeaponToken;
+    loadHeldWeaponModel(w, tf.fit).then((model) => {
+      if (token !== heldWeaponToken || heldWeaponProp !== holder || !model) return;
+      holder.remove(placeholder);
+      applyHandTransform(model, tf);
+      holder.add(model);
+    }).catch((e) => console.debug('[heldweapon] GLB load failed, keeping placeholder', e && e.message));
   }
-  // mount at the hand end of the arm, pointing forward (+Z)
-  g.position.set(0, -0.45, 0.12);
-  g.scale.setScalar(1.0);
-  arm.add(g);
-  heldWeaponProp = g;
+}
+
+function applyHandTransform(obj, tf) {
+  obj.position.set(tf.pos[0], tf.pos[1], tf.pos[2]);
+  obj.rotation.set(tf.rot[0], tf.rot[1], tf.rot[2]);
+}
+
+// Normalize a loaded scene: longest axis → fit metres, recentred into a wrapper.
+function fitWeaponModel(scene, fit) {
+  const inst = scene.clone(true);
+  inst.traverse((o) => { if (o.isMesh) { o.castShadow = false; o.frustumCulled = false; } });
+  const box = new THREE.Box3().setFromObject(inst);
+  const size = box.getSize(new THREE.Vector3());
+  const longest = Math.max(size.x, size.y, size.z) || 1;
+  inst.scale.multiplyScalar(fit / longest);
+  const box2 = new THREE.Box3().setFromObject(inst);
+  const c = box2.getCenter(new THREE.Vector3());
+  inst.position.sub(c);
+  const wrap = new THREE.Group(); wrap.add(inst);
+  return wrap;
+}
+
+async function loadHeldWeaponModel(w, fit) {
+  let model = null;
+  try {
+    if (w.slot) model = await loadSlotModel('weapons', w.slot, renderer);
+    else if (w.asset) model = await loadAsset('weapons', w.asset.pack, w.asset.name, renderer);
+  } catch { model = null; }
+  const scene = model && (model.scene || (model.isObject3D ? model : null));
+  if (!scene) return null;
+  return fitWeaponModel(scene, fit);
+}
+
+// Stylized procedural weapon shapes (placeholder for ranged, primary for melee).
+function buildProceduralWeaponMesh(w, fit = 0.5) {
+  const metal = new THREE.MeshStandardMaterial({ color: '#22262b', roughness: 0.5, metalness: 0.6 });
+  const grip = new THREE.MeshStandardMaterial({ color: '#3a2c22', roughness: 0.85 });
+  const wood = new THREE.MeshStandardMaterial({ color: '#7a5a36', roughness: 0.9 });
+  const g = new THREE.Group();
+  const shape = w.shape || (w.melee ? 'bat' : 'gun');
+  if (shape === 'bat') {
+    const handle = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.03, 0.28, 8), wood); handle.position.y = -0.18; g.add(handle);
+    const head = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.045, 0.34, 10), wood); head.position.y = 0.12; g.add(head);
+  } else if (shape === 'pipe') {
+    const pipe = new THREE.Mesh(new THREE.CylinderGeometry(0.032, 0.032, 0.6, 10), metal); g.add(pipe);
+    const joint = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 0.08, 10), metal); joint.position.y = 0.24; g.add(joint);
+  } else if (shape === 'wrench') {
+    const shaft = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.42, 0.02), metal); g.add(shaft);
+    const head = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.1, 0.03), metal); head.position.y = 0.24; g.add(head);
+    const slot = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.06, 0.05), new THREE.MeshStandardMaterial({ color: '#11141a' })); slot.position.y = 0.27; g.add(slot);
+  } else if (shape === 'plank') {
+    const plank = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.7, 0.04), wood); g.add(plank);
+  } else {
+    // generic gun block
+    const long = ['rifles', 'compact', 'shotguns', 'precision', 'heavy'].includes(w.category);
+    const barrelLen = w.category === 'heavy' ? 0.95 : (w.category === 'precision' ? 0.9 : long ? 0.7 : 0.34);
+    const body = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.12, barrelLen), metal); body.position.z = -barrelLen * 0.2; g.add(body);
+    const handle = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.16, 0.08), grip); handle.position.set(0, -0.12, 0.04); g.add(handle);
+    if (w.category === 'heavy') { const tube = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.95, 10), metal); tube.rotation.x = Math.PI / 2; tube.position.z = -0.2; g.add(tube); }
+  }
+  return fitWeaponModel(g, fit);
 }
 
 // ── real 3D asset wiring (GLB swaps with procedural fallback) ─────────────────
@@ -686,38 +757,75 @@ let dumpster = null;                // { mesh, pos }
 let sanitationNpc = null;           // { av, pos }
 let trashJob = { active: false, need: 0, collected: 0, reward: 0, tier: '' };
 let trashCarried = 0;
+const TRASH_TARGET = 14;            // how many litter pieces exist at once
+let trashRespawnAccum = 0;         // real seconds since last respawn top-up
+
+// One litter mesh (alternating bag / can). Returned ungrounded at origin.
+function makeTrashPiece(i) {
+  const trashMat = new THREE.MeshStandardMaterial({ color: '#6b6f55', roughness: 0.9 });
+  const bagMat = new THREE.MeshStandardMaterial({ color: '#2b2f3a', roughness: 0.85 });
+  const piece = new THREE.Group();
+  if (i % 2 === 0) {
+    const bag = new THREE.Mesh(new THREE.DodecahedronGeometry(0.28, 0), bagMat);
+    bag.scale.set(1, 0.8, 1); bag.position.y = 0.24; piece.add(bag);
+  } else {
+    const can = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.1, 0.34, 8), trashMat);
+    can.rotation.z = 1.1; can.position.y = 0.14; piece.add(can);
+    const cup = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.07, 0.2, 7), trashMat);
+    cup.position.set(0.28, 0.1, 0.12); piece.add(cup);
+  }
+  return piece;
+}
+
+// Points to keep litter away from, so the pickup prompt is never shadowed by a
+// building door / NPC / dumpster (the interaction manager shows the NEAREST
+// prompt, so overlapping 'e' interactables would hide the trash one).
+function trashAvoidPoints() {
+  const pts = [];
+  for (const lm of LANDMARKS) {
+    const f = lm.face || [0, 1];
+    pts.push({ x: lm.x + f[0] * (lm.d / 2 + 1), z: lm.z + f[1] * (lm.d / 2 + 1), r: 7 }); // door
+    pts.push({ x: lm.x, z: lm.z, r: Math.max(lm.w, lm.d) / 2 + 2 });                       // body
+  }
+  pts.push({ x: SPAWN.x, z: SPAWN.z, r: 5 });
+  if (dumpster) pts.push({ x: dumpster.pos.x, z: dumpster.pos.z, r: 5 });
+  if (sanitationNpc) pts.push({ x: sanitationNpc.pos.x, z: sanitationNpc.pos.z, r: 5 });
+  return pts;
+}
+
+// Scatter `count` litter positions onto sidewalks, validated clear of avoid
+// points and of each other (and of any already-placed `existing` pieces).
+function genTrashPositions(count, existing = []) {
+  const avoid = trashAvoidPoints();
+  const all = existing.map(p => ({ x: p.x, z: p.z }));
+  const out = [];
+  const sideOff = ROAD.width / 2 + ROAD.walk / 2;     // centre of a sidewalk
+  let guard = 0;
+  while (out.length < count && guard < count * 80) {
+    guard++;
+    const horiz = Math.random() < 0.5;
+    const lines = horiz ? ROAD.hz : ROAD.vx;
+    const line = lines[(Math.random() * lines.length) | 0];
+    const along = (Math.random() * 2 - 1) * (ROAD.extent - 3);
+    const side = (Math.random() < 0.5 ? -1 : 1) * sideOff;
+    const x = horiz ? along : line + side;
+    const z = horiz ? line + side : along;
+    if (Math.abs(x) > ROAD.extent + 4 || Math.abs(z) > ROAD.extent + 4) continue;
+    let ok = true;
+    for (const a of avoid) { if (Math.hypot(x - a.x, z - a.z) < (a.r || 5)) { ok = false; break; } }
+    if (ok) for (const p of all) { if (Math.hypot(x - p.x, z - p.z) < 3.5) { ok = false; break; } }
+    if (!ok) continue;
+    out.push({ x, z }); all.push({ x, z });
+  }
+  return out;
+}
 
 function placeTrashJob() {
   cityTrash = [];
   trashGroup = new THREE.Group(); trashGroup.name = 'city-trash';
-  const trashMat = new THREE.MeshStandardMaterial({ color: '#6b6f55', roughness: 0.9 });
-  const bagMat = new THREE.MeshStandardMaterial({ color: '#2b2f3a', roughness: 0.85 });
-  // two curated litter spots beside each landmark, offset onto the sidewalk
-  // (toward the building, away from the road center).
-  const offs = [[2.6, 1.8], [-2.4, 2.2], [1.9, -2.6]];
-  let idx = 0;
-  for (const lm of LANDMARKS) {
-    const pick = offs[idx % offs.length]; idx++;
-    for (let k = 0; k < 2; k++) {
-      const ox = pick[0] + (k ? 1.1 : 0), oz = pick[1] + (k ? -0.8 : 0);
-      const x = lm.x + ox, z = lm.z + oz;
-      const piece = new THREE.Group();
-      const isBag = (idx + k) % 2 === 0;
-      if (isBag) {
-        const bag = new THREE.Mesh(new THREE.DodecahedronGeometry(0.28, 0), bagMat);
-        bag.scale.set(1, 0.8, 1); bag.position.y = 0.24; piece.add(bag);
-      } else {
-        const can = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.1, 0.34, 8), trashMat);
-        can.rotation.z = 1.1; can.position.y = 0.14; piece.add(can);
-        const cup = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.07, 0.2, 7), trashMat);
-        cup.position.set(0.28, 0.1, 0.12); piece.add(cup);
-      }
-      piece.position.set(x, 0, z);
-      trashGroup.add(piece);
-      cityTrash.push({ mesh: piece, x, z, collected: false });
-    }
-  }
-  // dumpster near spawn so deposits are convenient
+
+  // dumpster near spawn so deposits are convenient (built BEFORE trash so litter
+  // generation can avoid it).
   const dPos = new THREE.Vector3(SPAWN.x - 4, 0, SPAWN.z + 4);
   const dGrp = new THREE.Group();
   const body = new THREE.Mesh(new THREE.BoxGeometry(2.2, 1.3, 1.3),
@@ -730,6 +838,7 @@ function placeTrashJob() {
   { const l = makeLabel('DUMPSTER', '#bfe6c4'); l.position.y = 2.0; dGrp.add(l); }
   trashGroup.add(dGrp);
   dumpster = { mesh: dGrp, pos: dPos.clone().setY(0) };
+
   // sanitation worker near spawn offers the job
   const sPos = new THREE.Vector3(SPAWN.x - 2, 0, SPAWN.z + 5);
   const worker = buildAvatar({ ...defaultCustom(), top: 'hoodie-red' });
@@ -742,8 +851,42 @@ function placeTrashJob() {
   scene.add(worker.group);
   sanitationNpc = { av: worker, pos: sPos.clone().setY(0) };
 
+  // scatter litter on sidewalks, clear of doors/NPCs so every piece is grabbable
+  const positions = genTrashPositions(TRASH_TARGET);
+  positions.forEach((p, i) => {
+    const piece = makeTrashPiece(i);
+    piece.position.set(p.x, 0, p.z);
+    trashGroup.add(piece);
+    cityTrash.push({ mesh: piece, x: p.x, z: p.z, collected: false });
+  });
+
   scene.add(trashGroup);
+  trashRespawnAccum = 0;
   console.info('[trash] litter pieces:', cityTrash.length);
+}
+
+// Respawn litter back up to the target count at fresh random spots. Called on a
+// ~30-minute cadence and re-registers interactables so new pieces are grabbable.
+function respawnTrash() {
+  if (!trashGroup) return;
+  const live = cityTrash.filter(t => !t.collected);
+  const need = TRASH_TARGET - live.length;
+  if (need <= 0) return;
+  // a little randomness: respawn between half and all of the missing pieces
+  const count = Math.max(1, Math.round(need * (0.5 + Math.random() * 0.5)));
+  const fresh = genTrashPositions(count, live);
+  let n = cityTrash.length;
+  fresh.forEach((p) => {
+    const piece = makeTrashPiece(n++);
+    piece.position.set(p.x, 0, p.z);
+    trashGroup.add(piece);
+    cityTrash.push({ mesh: piece, x: p.x, z: p.z, collected: false });
+  });
+  if (fresh.length) {
+    registerInteractables(cityEntrances);
+    notify('🗑️ Fresh litter has appeared around the city.');
+    console.info('[trash] respawned', fresh.length, '| live now:', activeTrashCount());
+  }
 }
 
 function activeTrashCount() { return cityTrash.filter(t => !t.collected).length; }
@@ -1757,24 +1900,95 @@ function applyCarDamageVisual(v) {
   } else if (dmg <= 55 && v._smoke) { v.g.remove(v._smoke); v._smoke = null; }
 }
 
-// Weapons counter at Block Supply.
+// Weapons counter at Block Supply — tabbed, catalog-driven store. Scales to any
+// number of weapons/melee/ammo/upgrades with no edits here: tabs are built from
+// the catalog (Weapons/Melee), ammo from owned ammo types, upgrades from the
+// upgrades supported by owned weapons, and "Owned" lists what the player has.
 function openWeaponShop() {
+  const stat = (w) => `${w.dmg} dmg · ${w.melee ? 'melee' : (w.mag === Infinity ? '∞' : w.mag) + ' mag · ' + (w.auto ? 'auto' : 'semi')}`;
+  const weaponCard = (w) => {
+    const owned = state.ownedWeapons.includes(w.id);
+    const cat = CATEGORIES.find(c => c.id === w.category);
+    return {
+      id: w.id, kind: 'weapon', name: `${w.icon} ${w.name}`, price: w.price,
+      tag: cat ? cat.name : w.category, info: w.desc || '',
+      stats: stat(w) + (w.ammoType ? ` · ${AMMO_TYPES[w.ammoType]?.name || w.ammoType}` : ''),
+      owned, ownedLabel: w.melee ? '✓ Owned' : '✓ Owned · Restock', action: owned ? (w.melee ? null : 'Restock') : null,
+    };
+  };
+  const ammoCard = (t) => ({
+    id: t.id, kind: 'ammo', name: `🧰 ${t.name}`, price: t.price,
+    tag: 'Ammo', info: t.desc, stats: `+${t.amount} rounds · pool: ${ammoReserveOf(t.id)}`,
+    owned: false, action: 'Buy',
+  });
+  const upgradeCards = () => {
+    // every upgrade supported by a weapon the player owns
+    const cards = [];
+    for (const wid of state.ownedWeapons) {
+      const w = weaponById(wid);
+      if (!w || !(w.upgrades || []).length) continue;
+      for (const uid of w.upgrades) {
+        const up = upgradeById(uid); if (!up) continue;
+        const ownedUp = (state.ownedUpgrades?.[wid] || []).includes(uid);
+        const equipped = (state.equippedUpgrades?.[wid] || []).includes(uid);
+        cards.push({
+          id: uid + '@' + wid, kind: 'upgrade', weaponId: wid, upgradeId: uid,
+          name: `${up.name}`, price: ownedUp ? null : up.price,
+          tag: `${w.icon} ${w.name}`, info: up.desc, stats: `slot: ${up.slot}`,
+          owned: ownedUp, ownedLabel: equipped ? '✓ Equipped' : 'Owned · Equip',
+          action: ownedUp ? (equipped ? 'Unequip' : 'Equip') : null,
+        });
+      }
+    }
+    return cards;
+  };
+  const ownedCards = () => state.ownedWeapons.map(id => weaponById(id)).filter(Boolean).map(w => {
+    const info = w.melee ? null : ammoInfo(w.id);
+    const equipped = state.equippedWeapon === w.id;
+    return {
+      id: w.id, kind: 'equip', name: `${w.icon} ${w.name}`, price: null,
+      tag: equipped ? 'Equipped' : 'Owned', info: w.desc || '',
+      stats: info ? `${info.mag}/${info.reserve === Infinity ? '∞' : info.reserve} ${AMMO_TYPES[w.ammoType]?.name || ''}` : 'melee',
+      owned: true, ownedLabel: equipped ? '✓ Equipped' : 'Equip', action: equipped ? null : 'Equip',
+    };
+  });
+
   openShop({
-    title: 'Block Supply — Weapons Counter',
-    sub: 'Buy a piece, then press 1–7 to equip · R reloads · click to fire · Q/X switch.',
+    title: 'Block Supply',
+    sub: 'Pick a tab · buy weapons, ammo & upgrades · equip from Owned · 1–7 hotkeys · R reload · click fire.',
     getMoney: () => state.money,
-    items: WEAPONS.filter(w => !w.melee).map(w => ({
-      id: w.id, name: w.icon + ' ' + w.name, price: w.price,
-      desc: `${w.dmg} dmg · ${w.mag === Infinity ? '∞' : w.mag} mag · ${w.auto ? 'auto' : 'semi'}`,
-      owned: state.ownedWeapons.includes(w.id),
-    })),
+    tabs: [
+      { id: 'Weapons', label: '🔫 Weapons' },
+      { id: 'Melee', label: '🏏 Melee & Tools' },
+      { id: 'Ammo', label: '🧰 Ammo' },
+      { id: 'Upgrades', label: '🔧 Upgrades' },
+      { id: 'Owned', label: '🎒 Owned' },
+    ],
+    emptyText: 'Buy a weapon first to unlock this.',
+    getItems: (tab) => {
+      if (tab === 'Weapons') return weaponsForTab('Weapons').map(weaponCard);
+      if (tab === 'Melee') return weaponsForTab('Melee').map(weaponCard);
+      if (tab === 'Ammo') return ownedAmmoTypes(state.ownedWeapons).map(ammoCard);
+      if (tab === 'Upgrades') return upgradeCards();
+      if (tab === 'Owned') return ownedCards();
+      return [];
+    },
     onBuy: (item) => {
+      if (item.kind === 'ammo') return buyAmmo(item.id);
+      if (item.kind === 'upgrade') {
+        if (item.owned) { equipUpgrade(item.weaponId, item.upgradeId); return true; }
+        return buyUpgrade(item.weaponId, item.upgradeId);
+      }
+      if (item.kind === 'equip') { equipWeapon(item.id); return true; }
+      // weapon (buy new, or restock if owned)
       const ok = buyWeapon(item.id);
-      if (ok) { equipWeapon(item.id); item.owned = true; }
+      if (ok && !state.ownedWeapons.includes(item.id)) { /* unreachable */ }
+      if (ok && item.kind === 'weapon' && state.equippedWeapon === 'fists') equipWeapon(item.id);
       return ok;
     },
   });
 }
+function ammoReserveOf(typeId) { return (state.ammoReserve && state.ammoReserve[typeId]) || 0; }
 
 // ── inventory overlay ───────────────────────────────────────────────────────────
 // Shows everything the player owns and lets them re-equip / holster weapons.
@@ -1791,7 +2005,7 @@ function inventoryOpts() {
   for (const w of owned) {
     if (!w) continue;
     const eq = state.equippedWeapon === w.id;
-    const a = w.melee ? null : (state.ammo && state.ammo[w.id]);
+    const a = w.melee ? null : ammoInfo(w.id);
     const ammoStr = w.melee ? '' : (a ? `  (${a.mag}/${a.reserve === Infinity ? '∞' : a.reserve})` : '');
     choices.push({
       label: `${w.icon} ${w.name}${ammoStr}${eq ? '   ✓ equipped' : ''}`,
@@ -2498,6 +2712,9 @@ function updateProgression(dt) {
   if (state.wanted > 0) state.heat = Math.max(0, state.heat - dt * 0.1);
   vibeAccum += dt; if (vibeAccum > 6) { vibeAccum = 0; applyVibe(); }
   saveAccum += dt; if (saveAccum > 12) { saveAccum = 0; saveNow(); }
+  // litter respawns roughly every 30 minutes so the cleanup job never runs dry
+  trashRespawnAccum += dt;
+  if (trashRespawnAccum >= 1800) { trashRespawnAccum = 0; respawnTrash(); }
 }
 
 // ── graphics settings application ──────────────────────────────────────────────

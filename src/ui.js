@@ -198,21 +198,57 @@ export function openDialogue(opts) {
 
 // ── generic shop ───────────────────────────────────────────────────────────────
 // opts: { title, sub, items:[{id,name,price,info,owned}], getMoney, onBuy(item)->bool }
+//
+// Optional tabbed mode (used by Block Supply): pass
+//   tabs:    [{ id, label }]
+//   getItems(tabId) -> items[]    (called per render so contents stay live)
+// Each item may also carry { tag, stats, kind, action } for richer cards. When
+// `action` is present the card shows that button label and calls onBuy(item);
+// when `disabled` is true the button is greyed out.
 export function openShop(opts) {
   $('shop-title').textContent = opts.title;
   $('shop-sub').textContent = opts.sub || '';
+  const tabbed = Array.isArray(opts.tabs) && opts.tabs.length > 0;
+  let activeTab = tabbed ? opts.tabs[0].id : null;
+  const tabsEl = $('shop-tabs');
+
+  const renderTabs = () => {
+    if (!tabsEl) return;
+    if (!tabbed) { tabsEl.style.display = 'none'; tabsEl.innerHTML = ''; return; }
+    tabsEl.style.display = '';
+    tabsEl.innerHTML = '';
+    opts.tabs.forEach(t => {
+      const b = document.createElement('button');
+      b.className = 'stab' + (t.id === activeTab ? ' active' : '');
+      b.textContent = t.label;
+      b.onclick = () => { activeTab = t.id; render(); };
+      tabsEl.appendChild(b);
+    });
+  };
+
   const render = () => {
     $('shop-money').textContent = '$' + Math.floor(opts.getMoney()).toLocaleString();
+    renderTabs();
+    const items = tabbed ? (opts.getItems(activeTab) || []) : opts.items;
     const grid = $('shop-grid'); grid.innerHTML = '';
-    opts.items.forEach(item => {
+    if (!items.length) {
+      const empty = document.createElement('div'); empty.className = 'cinfo';
+      empty.style.opacity = '.7'; empty.textContent = opts.emptyText || 'Nothing here yet.';
+      grid.appendChild(empty);
+      return;
+    }
+    items.forEach(item => {
       const card = document.createElement('div'); card.className = 'card';
-      card.innerHTML = `<div class="cname">${item.name}</div>
-        <div class="cinfo">${item.info || ''}</div>
-        <div class="cprice">$${item.price.toLocaleString()}</div>`;
+      card.innerHTML = `<div class="cname">${item.name}</div>` +
+        (item.tag ? `<div class="ctag">${item.tag}</div>` : '') +
+        `<div class="cinfo">${item.info || ''}</div>` +
+        (item.stats ? `<div class="cstats">${item.stats}</div>` : '') +
+        (item.price != null ? `<div class="cprice">$${item.price.toLocaleString()}</div>` : '');
       const btn = document.createElement('button');
-      if (item.owned) { btn.className = 'btn secondary'; btn.textContent = 'Owned ✓'; btn.disabled = true; }
-      else if (opts.getMoney() < item.price) { btn.className = 'btn secondary'; btn.textContent = 'Need more $'; btn.disabled = true; }
-      else { btn.className = 'btn'; btn.textContent = 'Buy'; btn.onclick = () => { if (opts.onBuy(item)) render(); }; }
+      if (item.owned) { btn.className = 'btn secondary'; btn.textContent = item.ownedLabel || 'Owned ✓'; btn.disabled = !item.action; if (item.action) { btn.className = 'btn'; btn.textContent = item.action; btn.disabled = false; btn.onclick = () => { if (opts.onBuy(item)) render(); }; } }
+      else if (item.disabled) { btn.className = 'btn secondary'; btn.textContent = item.disabledLabel || 'Unavailable'; btn.disabled = true; }
+      else if (item.price != null && opts.getMoney() < item.price) { btn.className = 'btn secondary'; btn.textContent = 'Need more $'; btn.disabled = true; }
+      else { btn.className = 'btn'; btn.textContent = item.action || 'Buy'; btn.onclick = () => { if (opts.onBuy(item)) render(); }; }
       card.appendChild(btn);
       grid.appendChild(card);
     });

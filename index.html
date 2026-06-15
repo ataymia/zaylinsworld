@@ -134,6 +134,13 @@
   .card .owned{font-size:11px;color:var(--accent);font-weight:700;}
   .shop-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
   .shop-money{font-weight:800;color:var(--accent);font-size:18px;}
+  .shop-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 10px;}
+  .shop-tabs .stab{padding:7px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.14);
+    background:rgba(255,255,255,.05);color:#cfd6e4;font-weight:700;font-size:13px;cursor:pointer;}
+  .shop-tabs .stab.active{background:var(--accent);color:#0b0f17;border-color:var(--accent);}
+  .card .ctag{display:inline-block;margin-top:4px;padding:2px 7px;border-radius:6px;font-size:10px;
+    font-weight:700;background:rgba(255,255,255,.08);color:#9fb0c8;}
+  .card .cstats{font-size:11px;color:#8a93a6;line-height:1.5;margin-top:4px;}
 
   /* ── chain builder preview ── */
   #builder .panel{flex-direction:row;gap:20px;}
@@ -282,6 +289,7 @@
           <button class="btn secondary" id="shop-close" style="margin-top:8px;padding:8px 16px">Exit (Esc)</button>
         </div>
       </div>
+      <div class="shop-tabs" id="shop-tabs"></div>
       <div class="grid" id="shop-grid"></div>
     </div>
   </div>

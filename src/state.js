@@ -29,9 +29,13 @@ export function defaultState() {
     ownedCars: [],      // car ids bought at dealership
     ownedJewelry: [],   // jewelry ids bought at Frostbox
     ownedGear: [],      // gear ids bought at Block Supply
-    ownedWeapons: ['fists'],   // weapon ids owned (Styloo Guns pack)
+    ownedWeapons: ['fists'],   // weapon ids owned (from weaponCatalog.js)
     equippedWeapon: 'fists',   // currently held weapon
-    ammo: {},           // weaponId -> { mag, reserve }
+    ammo: {},           // weaponId -> { mag }  (loaded magazine, per weapon)
+    ammoReserve: {},    // ammoType -> count   (shared spare-ammo pool)
+    ownedUpgrades: {},  // weaponId -> [upgradeId]  (purchased upgrades)
+    equippedUpgrades: {}, // weaponId -> [upgradeId] (active upgrades)
+    weaponsV2: false,   // set true once a save is migrated to the catalog model
     missionIndex: 0,    // active mission in the chain
     missionProgress: [],// done-flags for the active mission's objectives
     chicken: 0,         // pieces of chicken in inventory
@@ -60,6 +64,9 @@ export function loadState() {
       ownedGear: data.ownedGear || [],
       ownedWeapons: data.ownedWeapons && data.ownedWeapons.length ? data.ownedWeapons : ['fists'],
       ammo: { ...(data.ammo || {}) },
+      ammoReserve: { ...(data.ammoReserve || {}) },
+      ownedUpgrades: { ...(data.ownedUpgrades || {}) },
+      equippedUpgrades: { ...(data.equippedUpgrades || {}) },
       missionProgress: data.missionProgress || [],
     };
   } catch (e) {
