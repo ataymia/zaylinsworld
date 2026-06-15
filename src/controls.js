@@ -31,29 +31,22 @@ export class Controls {
     });
     window.addEventListener('keyup', e => this.keys.delete(e.key.toLowerCase()));
 
-    this.dom.addEventListener('click', () => {
-      if (!this.pointerLocked) this.dom.requestPointerLock?.();
-    });
+    // Pointer lock + mouse-look are intentionally DISABLED. The mouse stays a
+    // free cursor for clicking objects, shooting and UI; the view is turned with
+    // A/D (or ←/→). This avoids the browser "pointer lock cannot be acquired
+    // immediately after exiting" error and stops the mouse fighting the camera
+    // while you try to click trash / NPCs.
     document.addEventListener('pointerlockchange', () => {
       this.pointerLocked = document.pointerLockElement === this.dom;
-    });
-    document.addEventListener('mousemove', e => {
-      if (!this.pointerLocked) return;
-      const sens = 0.0024;
-      this.yaw -= e.movementX * sens;
-      this.pitch -= e.movementY * sens;
-      const lim = Math.PI / 2 - 0.05;
-      this.pitch = Math.max(-lim, Math.min(lim, this.pitch));
     });
     this.dom.addEventListener('wheel', e => {
       this.distance = Math.max(2, Math.min(14, this.distance + Math.sign(e.deltaY) * 0.6));
       e.preventDefault();
     }, { passive: false });
 
-    // Mouse buttons (for shooting/aiming). Tracked only while pointer-locked so
-    // the lock-acquiring click doesn't immediately fire a shot.
+    // Mouse buttons drive shooting (left) and aim/zoom (right). Tracked without
+    // pointer lock now — the cursor is free, so any click on the canvas counts.
     this.dom.addEventListener('mousedown', e => {
-      if (!this.pointerLocked) return;
       if (!this.mouse.has(e.button)) this.justClicked.add(e.button);
       this.mouse.add(e.button);
     });

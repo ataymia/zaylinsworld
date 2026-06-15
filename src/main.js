@@ -178,6 +178,9 @@ let policeUnits = [];          // foot cops: { av, health, busted }
 let policeCars = [];           // patrol cruisers (heavier mass, can be stolen)
 let policeAccum = 0;           // spawn pacing
 let bustTimer = 0;             // seconds a cop has been on top of the player
+let policeGrace = 0;           // seconds before a bust can happen after wanted starts
+let policeWarned = false;      // showed the "you've been warned" message yet
+let wantedPrev = 0;            // detect the 0→wanted transition to start the grace
 let drivenDist = 0, drivenFlagged = false;   // "Get Around Town" mission tracker
 let builderOpen = false;
 let wardrobeResume = false;      // creator opened from inside the game
@@ -338,11 +341,69 @@ const extraSpinners = [];   // display models that idle-rotate (e.g. jewelry)
 // drivable car spin their wheels). Swap STATIC things to real GLBs — interior
 // shopkeepers, dealership showroom cars, and Frostbox jewelry — so the pack is
 // clearly visible in-game with no animation regressions.
+// Build a stable PROCEDURAL gas station (always present, no GLB needed) so the
+// fuel/refuel loop is visible and usable. Forecourt pad + canopy + two pumps +
+// a price sign, registers a refuel point and a minimap marker.
+function buildProceduralGasStation() {
+  const GX = -15, GZ = -22.5;                       // clear strip below Frostbox
+  const grp = new THREE.Group(); grp.name = 'gas-station';
+  // forecourt pad (decorative — no collider so it never blocks driving)
+  const pad = new THREE.Mesh(new THREE.BoxGeometry(10, 0.12, 8),
+    new THREE.MeshStandardMaterial({ color: '#2b2e36', roughness: 0.95 }));
+  pad.position.set(GX, 0.06, GZ); grp.add(pad);
+  // painted markings
+  const stripeMat = new THREE.MeshStandardMaterial({ color: '#c9b23a', roughness: 0.8 });
+  for (const dx of [-2, 2]) {
+    const s = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.14, 6), stripeMat);
+    s.position.set(GX + dx, 0.07, GZ); grp.add(s);
+  }
+  // canopy: two posts + a flat roof
+  const postMat = new THREE.MeshStandardMaterial({ color: '#9aa0aa', roughness: 0.6, metalness: 0.3 });
+  for (const dx of [-3.6, 3.6]) {
+    const post = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 4, 10), postMat);
+    post.position.set(GX + dx, 2, GZ - 2.6); grp.add(post);
+  }
+  const roof = new THREE.Mesh(new THREE.BoxGeometry(9, 0.4, 4),
+    new THREE.MeshStandardMaterial({ color: '#d23b3b', roughness: 0.5 }));
+  roof.position.set(GX, 4.1, GZ - 1.6); grp.add(roof);
+  const roofTrim = new THREE.Mesh(new THREE.BoxGeometry(9.1, 0.2, 0.3),
+    new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.6 }));
+  roofTrim.position.set(GX, 3.95, GZ - 3.55); grp.add(roofTrim);
+  // two pumps (solid — small colliders)
+  const pumpMat = new THREE.MeshStandardMaterial({ color: '#e6e9ef', roughness: 0.5, metalness: 0.2 });
+  const screenMat = new THREE.MeshStandardMaterial({ color: '#1b3a2b', emissive: '#0f5', emissiveIntensity: 0.25 });
+  for (const dx of [-2, 2]) {
+    const pump = new THREE.Group();
+    const box = new THREE.Mesh(new THREE.BoxGeometry(0.7, 1.5, 0.5), pumpMat);
+    box.position.y = 0.75; pump.add(box);
+    const screen = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.4, 0.06), screenMat);
+    screen.position.set(0, 1.15, 0.27); pump.add(screen);
+    const nozzle = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.5, 0.12), pumpMat);
+    nozzle.position.set(0.45, 0.9, 0); pump.add(nozzle);
+    pump.position.set(GX + dx, 0, GZ - 1.4);
+    grp.add(pump);
+    pump.updateWorldMatrix(true, true);
+    cityColliders.push(new THREE.Box3().setFromObject(pump).expandByScalar(0.1));
+  }
+  // tall price sign
+  const signPost = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 5, 8), postMat);
+  signPost.position.set(GX + 5.4, 2.5, GZ + 2.4); grp.add(signPost);
+  const board = new THREE.Mesh(new THREE.BoxGeometry(2.4, 1.4, 0.2),
+    new THREE.MeshStandardMaterial({ color: '#16224d', roughness: 0.5 }));
+  board.position.set(GX + 5.4, 4.6, GZ + 2.4); grp.add(board);
+  { const l = makeLabel('⛽ GAS  $1.20/u', '#ffd98a'); l.position.set(GX + 5.4, 4.6, GZ + 2.55); l.scale.multiplyScalar(1.1); grp.add(l); }
+  { const l = makeLabel('FUEL STOP', '#bfe3ff'); l.position.set(GX, 5.1, GZ - 1.6); grp.add(l); }
+  scene.add(grp);
+  // register the refuel forecourt + minimap marker
+  refuelPoints = [{ x: GX, z: GZ, r: 6, id: 'gas-proc', price: 1.2 }];
+  if (minimap) setMarkers([{ x: GX, z: GZ, color: '#ffd54a', icon: '⛽' }]);
+  console.info('[gas] procedural gas station placed at', GX, GZ);
+}
+
 function applyWorldAssets() {
   enhanceShopkeepers();
   placeFrostboxJewelry();
-  applyVehicleModels();                      // swap procedural cars → real Car Kit GLBs (incl. dealership)
-  // swap the bubble city NPCs for PSX humanoid GLB skins (visible, animated)
+  applyVehicleModels();                      // swap procedural cars → real Car Kit GLBs (incl. dealership)  // swap the bubble city NPCs for PSX humanoid GLB skins (visible, animated)
   debug.set('procNpcs', cityNPCs.length);
   if (FEATURES.USE_REAL_NPC_SKINS) {
     applyNpcSkins(cityNPCs, renderer)
@@ -360,6 +421,9 @@ function applyWorldAssets() {
   placeCityGems();
   // intentional sidewalk litter + sanitation worker + dumpster (cleanup side job)
   placeTrashJob();
+  // always-present procedural gas station (the refuel loop must be usable even
+  // with GLB world buildings disabled)
+  buildProceduralGasStation();
   // place Kenney Retro Urban Kit buildings into the district (async, fire-and-forget)
   buildDistrict(scene, renderer)
     .then((placed) => { if (placed && placed.length) console.info('[district] landmarks:', placed.map(p => p.label).join(', ')); })
@@ -713,10 +777,14 @@ function registerInteractables(entrances) {
       if (!v) { notify('No vehicle close enough to take.'); return; }
       const isCop = policeCars.includes(v);
       if (isCop) {
-        state.wanted = Math.min(5, (state.wanted || 0) + 2);
-        state.heat = Math.min(100, (state.heat || 0) + 30);
-        notify('🚔 You jacked a police cruiser! Wanted level spiked.');
+        // too many officers crowding the cruiser → you get grabbed before you can take it
+        const cp = v.g.position;
+        let nearCops = 0;
+        for (const u of policeUnits) if (u.av.group.position.distanceTo(cp) < 6) nearCops++;
+        if (nearCops >= 2) { notify('🚫 Too many cops by the cruiser — you got shoved off. Thin them out first.'); return; }
+        notify('🚔 Jacking a police cruiser — this is gonna draw heat!');
       }
+      // enterCar() applies the wanted/heat for the theft (cop car = +2 stars)
       enterCar(v, { steal: true });
     },
   });
@@ -744,7 +812,7 @@ function registerInteractables(entrances) {
   // trash cleanup side job: pickups, dumpster deposit, sanitation worker
   cityTrash.forEach((item, i) => {
     manager.register({
-      id: 'trash-' + i, area: 'city', key: 'e', radius: 2.0,
+      id: 'trash-' + i, area: 'city', key: 'e', radius: 2.8,
       getPosition: () => (item.collected ? OFFSCREEN : item.mesh.position),
       enabled: () => !item.collected && !inCar,
       getPrompt: () => 'Pick up trash',
@@ -1176,7 +1244,10 @@ function updateVehicleCollisions(dt) {
         applyCarDamageVisual(a); applyCarDamageVisual(b);
         console.log(`[collision] car↔car  rel=${rel.toFixed(1)}  dmgA=${Math.floor(a.damage)}%  dmgB=${Math.floor(b.damage)}%`);
         if (a === car || b === car) state.carDamage = Math.floor(car.damage || 0);
-        if (rel > 16) state.heat = Math.min(100, (state.heat || 0) + 3);   // heavy pileup raises heat
+        // only a pileup involving the car YOU'RE driving raises heat
+        if (rel > 16 && inCar && drivingVehicle && (a === drivingVehicle || b === drivingVehicle)) {
+          state.heat = Math.min(100, (state.heat || 0) + 3);
+        }
       }
       if ('speed' in a) a.speed *= -0.25;
       if ('speed' in b) b.speed *= -0.25;
@@ -1217,10 +1288,13 @@ function updateVehicleCollisions(dt) {
     }
   }
 
-  // car → pedestrian: moving cars injure (and can take out) civilians
+  // car → pedestrian: moving cars injure (and can take out) civilians. ONLY the
+  // car the player is driving counts as a crime — NPC traffic and police cars
+  // crashing into pedestrians must never make the player wanted.
   for (const c of cars) {
     const spd = Math.abs(c.speed || 0);
     if (spd < 3) continue;
+    const playerDriven = inCar && drivingVehicle && c === drivingVehicle;
     for (const n of cityNPCs) {
       if (n._hitCD > 0) continue;
       const g = n.av.group;
@@ -1232,10 +1306,13 @@ function updateVehicleCollisions(dt) {
       g.position.x += knx * 2.2; g.position.z += knz * 2.2;             // knock aside
       ensureNpcHp(n);
       n.hp -= spd > 12 ? 70 : 34; n.hitT = 0.25; n._hitCD = 0.7;
-      // a witnessed hit-and-run draws heat
-      state.heat = Math.min(100, (state.heat || 0) + 4);
-      if (n.hp <= 0) downNpc(n);
-      else if ((state.wanted || 0) < 1) { state.wanted = 1; notify('🚨 You hit someone! Police alerted.'); }
+      if (playerDriven) {
+        state.heat = Math.min(100, (state.heat || 0) + 4);             // your hit-and-run draws heat
+        if (n.hp <= 0) downNpc(n, true);
+        else if ((state.wanted || 0) < 1) { state.wanted = 1; notify('🚨 You hit someone with your car! Police alerted.'); }
+      } else if (n.hp <= 0) {
+        downNpc(n, false);                                             // traffic accident — not your fault
+      }
     }
   }
 }
@@ -1258,13 +1335,15 @@ function ensureNpcHp(n) {
 }
 // Stylized, non-graphic takedown: the NPC slumps (lies flat), stops walking, and
 // is cleaned up after a moment. No blood/gore — just a downed pose + fade.
-function downNpc(n) {
+function downNpc(n, byPlayer = true) {
   if (n.downed) return;
   n.downed = true; n.talking = true;            // talking flag halts its walk AI
   n.av.group.rotation.x = -Math.PI / 2;         // fall over
   n.av.group.position.y = 0.3;
   if (n.hpBar) { scene.remove(n.hpBar); n.hpBar = null; }
-  state.heat = Math.min(100, (state.heat || 0) + 10);
+  // Only a death the PLAYER caused raises heat — random NPC/traffic accidents
+  // must never make the player wanted.
+  if (byPlayer) state.heat = Math.min(100, (state.heat || 0) + 10);
   setTimeout(() => {
     scene.remove(n.av.group);
     const i = cityNPCs.indexOf(n); if (i >= 0) cityNPCs.splice(i, 1);
@@ -1313,7 +1392,7 @@ function getWeaponTargets() {
     if (m.dead) continue;
     out.push({
       pos: m.group.position.clone().setY(1.1), r: 1.1, kind: 'monster', ref: m,
-      onHit: (dmg) => { m.hp -= dmg; m.hitT = 0.25; if (m.hp <= 0) m.dead = true; return m.hp <= 0; },
+      onHit: (dmg) => { m.hp -= dmg; m.hitT = 0.25; m._provoked = 6; if (m.hp <= 0) m.dead = true; return m.hp <= 0; },
     });
   }
   return out;
@@ -1321,10 +1400,21 @@ function getWeaponTargets() {
 
 // Firing a gun in public is a crime → alerts police.
 function onWeaponShot(hitAny, isMelee) {
+  if (hitAny) flashHitMarker();                  // brief ✕ marker when a shot lands
   if (isMelee) { if (hitAny) missionEvent('fight'); return; }
   if (area !== 'city') return;
   if ((state.wanted || 0) < 1) { state.wanted = 1; notify('🚨 Shots fired! Police alerted.'); }
   state.heat = Math.min(100, (state.heat || 0) + 6);
+}
+// Flash the centre hit-marker for a moment so the player gets clear feedback that
+// their shot connected.
+let _hitMarkTO = null;
+function flashHitMarker() {
+  const hm = document.getElementById('hitmark');
+  if (!hm) return;
+  hm.style.display = 'block';
+  if (_hitMarkTO) clearTimeout(_hitMarkTO);
+  _hitMarkTO = setTimeout(() => { hm.style.display = 'none'; }, 130);
 }
 
 // A target died from weapon damage.
@@ -1478,20 +1568,35 @@ const SPAWN_FALLBACK = { x: 9, z: 9 };
 function updatePolice(dt) {
   if (area !== 'city' || !player) { if (policeUnits.length || policeCars.length) despawnAllPolice(); return; }
   const wanted = state.wanted || 0;
-  if (wanted === 0) { if (policeUnits.length || policeCars.length) despawnAllPolice(); bustTimer = 0; return; }
+  if (wanted === 0) {
+    if (policeUnits.length || policeCars.length) despawnAllPolice();
+    bustTimer = 0; policeGrace = 0; policeWarned = false; wantedPrev = 0;
+    return;
+  }
 
-  // first responder shows up instantly the moment you become wanted — no waiting
+  // The MOMENT you first become wanted, start a grace window so you can't be
+  // busted instantly — you get time to react and run. Severity scales the words.
+  if (wantedPrev === 0) {
+    policeGrace = wanted >= 2 ? 4 : 7;     // low wanted = longer warning window
+    policeWarned = false;
+    notify(wanted >= 2 ? '🚨 Police are chasing you — get distance to lose them!'
+                       : '🚓 Police are investigating — keep your distance.');
+  }
+  wantedPrev = wanted;
+  policeGrace = Math.max(0, policeGrace - dt);
+
+  // first responder appears — a single cop at 1★ (slow, investigating), two at 2★+
   if (policeUnits.length === 0 && policeCars.length === 0) {
     spawnFootCop();
     if (wanted >= 2) spawnFootCop();
-    notify('🚓 Police are responding!');
   }
 
-  // spawn pacing — more stars ⇒ more units, cruisers appear at 3★+
+  // spawn pacing — more stars ⇒ more units, cruisers appear at 3★+. At 1★ we keep
+  // it to a lone officer so a tiny mistake isn't an instant dogpile.
   policeAccum += dt;
-  const wantFoot = Math.min(4, wanted + 1);
+  const wantFoot = wanted <= 1 ? 1 : Math.min(4, wanted + 1);
   const wantCars = wanted >= 3 ? Math.min(2, wanted - 2) : 0;
-  if (policeAccum > 1.2) {
+  if (policeAccum > 1.6) {
     policeAccum = 0;
     if (policeUnits.length < wantFoot) spawnFootCop();
     if (policeCars.length < wantCars) spawnCopCar();
@@ -1499,8 +1604,12 @@ function updatePolice(dt) {
 
   const pp = player.group.position;
   let nearest = Infinity;
+  // foot cops are deliberately slower than a sprinting player (6.2) at low wanted
+  // so escape is always possible on this map; they speed up as stars climb.
+  const copSpeed = wanted <= 1 ? 2.6 : wanted === 2 ? 3.3 : 4.1;
+  const canBust = policeGrace <= 0;            // grace window must elapse first
 
-  // foot cops chase + bust
+  // foot cops chase + (eventually) bust
   for (let i = policeUnits.length - 1; i >= 0; i--) {
     const u = policeUnits[i];
     if (u.health <= 0) { removeFootCop(i); continue; }
@@ -1509,11 +1618,19 @@ function updatePolice(dt) {
     const dx = pp.x - g.position.x, dz = pp.z - g.position.z;
     const d = Math.hypot(dx, dz) || 1;
     nearest = Math.min(nearest, d);
-    if (d > 1.3) { const sp = 3.8 * dt; g.position.x += dx / d * sp; g.position.z += dz / d * sp; }
+    if (d > 1.3) { const sp = copSpeed * dt; g.position.x += dx / d * sp; g.position.z += dz / d * sp; }
     g.rotation.y = Math.atan2(dx, dz);
     u.t = (u.t || 0) + dt; g.position.y = Math.abs(Math.sin(u.t * 8)) * 0.04;
     resolveCollision(g.position, 0.5, cityColliders); g.position.y = Math.abs(Math.sin(u.t * 8)) * 0.04;
-    if (!inCar && d < 1.9) { bustTimer += dt; if (bustTimer > 1.3) { bustPlayer(); return; } }
+    // Busting takes a sustained corner (≈5s) and only after the grace window. At
+    // 1★ the player gets an explicit warning before the clock even starts.
+    if (!inCar && d < 1.9 && canBust) {
+      if (!policeWarned) { policeWarned = true; notify('⚠️ You were warned — keep moving or you’ll be busted!'); }
+      bustTimer += dt;
+      if (bustTimer > 5) { bustPlayer(); return; }
+    } else if (d >= 2.4) {
+      bustTimer = Math.max(0, bustTimer - dt * 0.8);   // breaking contact cools the bust clock
+    }
   }
   if (inCar) bustTimer = 0;
 
@@ -1671,18 +1788,21 @@ function resolveCollision(pos, radius, list) {
 // ── on-foot movement ───────────────────────────────────────────────────────────
 function updatePlayer(dt, t) {
   const inp = controls.moveInput();
+  // A/D (and ←/→) now TURN the view — the mouse no longer looks around, so it
+  // stays free to click trash / NPCs and to shoot. Apply the turn to the camera
+  // yaw BEFORE reading it so movement lines up with where you're facing.
+  if (inp.s) controls.yaw += inp.s * 2.4 * dt;
   const yaw = controls.cameraYaw();
   // The camera looks toward +(sin yaw, cos yaw) in FIRST person, but sits BEHIND
   // the player looking toward -(sin yaw, cos yaw) in THIRD person. Movement forward
   // must match where the camera is looking, so flip the sign per mode — otherwise
-  // first-person W/S (and A/D) feel inverted.
+  // first-person W/S feel inverted.
   const fp = controls.mode === CAM.FIRST;
   const forward = fp
     ? new THREE.Vector3(Math.sin(yaw), 0, Math.cos(yaw))
     : new THREE.Vector3(-Math.sin(yaw), 0, -Math.cos(yaw));
-  // screen-right = forward × up (Y-up, right-handed) = (-forward.z, 0, forward.x).
-  const right = new THREE.Vector3(-forward.z, 0, forward.x);
-  const move = new THREE.Vector3().addScaledVector(forward, inp.f).addScaledVector(right, inp.s);
+  // W/S move forward/back along the facing direction (no strafing — A/D turns).
+  const move = new THREE.Vector3().addScaledVector(forward, inp.f);
   const moving = move.lengthSq() > 0.001;
   if (moving) move.normalize();
 
@@ -1691,8 +1811,11 @@ function updatePlayer(dt, t) {
   const pstats = state.stats;
   const pfit = pstats.fitness || 0;
   const canSprint = inp.run && moving && (pstats.energy || 0) > 2;
-  const speed = canSprint ? (6.2 + (pfit / 100) * 2.4) : 3.4;
-  if (canSprint) pstats.energy = Math.max(0, pstats.energy - (7 * (1 - pfit / 200)) * dt);
+  const monsterForm = !!state.playerMonster;     // monster form moves faster & fiercer
+  const speed = (canSprint ? (6.2 + (pfit / 100) * 2.4) : 3.4) * (monsterForm ? 1.3 : 1);
+  // Sprint stamina drain is gentle now so you can actually outrun cops; fitness
+  // lowers it further (gym training pays off). ~3/s at 0 fitness, ~2.2/s at 100.
+  if (canSprint) pstats.energy = Math.max(0, pstats.energy - (3.0 * (1 - pfit / 250)) * dt);
   // feedback when you try to sprint with no stamina left (throttled)
   if (inp.run && moving && (pstats.energy || 0) <= 2 && t - lastSprintWarn > 3) {
     lastSprintWarn = t; notify('😮‍💨 Too winded to sprint — rest or eat to recover energy.');
@@ -1728,7 +1851,10 @@ function updatePlayer(dt, t) {
   }
 
   if (controls.mode === CAM.FIRST) player.group.rotation.y = yaw;
-  else if (moving) player.group.rotation.y = lerpAngle(player.group.rotation.y, Math.atan2(move.x, move.z), Math.min(1, dt * 12));
+  else if (moving || inp.s) {
+    const faceDir = moving ? move : forward;   // turn the model even while standing & turning
+    player.group.rotation.y = lerpAngle(player.group.rotation.y, Math.atan2(faceDir.x, faceDir.z), Math.min(1, dt * 12));
+  }
 
   const amp = moving ? (canSprint ? 0.95 : 0.62) : 0;
   const rate = canSprint ? 12 : 8.4;
@@ -2109,9 +2235,12 @@ function updateEating() {
   }
 }
 function finishEating() {
-  notify('🍗 Clean to the bone! +Hunger');
-  state.stats.hunger = Math.min(100, state.stats.hunger + 38);
-  state.stats.fun = Math.min(100, state.stats.fun + 8);
+  notify('🍗 Ate some chicken — hunger eased.');
+  // One piece is a moderate top-up, not an instant full meter. Also restores a
+  // little energy & fun so eating helps without trivialising the whole economy.
+  state.stats.hunger = Math.min(100, state.stats.hunger + 24);
+  state.stats.energy = Math.min(100, state.stats.energy + 6);
+  state.stats.fun = Math.min(100, state.stats.fun + 4);
   // remove the piece immediately so the loop can never get wedged on a stale node
   if (eatPiece) { camera.remove(eatPiece); eatPiece = null; }
   eatMeat = null;
@@ -2457,6 +2586,53 @@ function toggleMonsterMode() {
     debug.set('monsterCount', 0);
     if (badge) badge.style.display = 'none';
     notify('Monster Mode off');
+    if (state.playerMonster) transformPlayer();   // revert player form when mode ends
+  }
+}
+
+// Player monster form (basic, stable procedural transform). While Monster Mode is
+// active, press T to sprout horns, tint dark, grow slightly and move faster. Press
+// again (or end Monster Mode) to revert. Uploaded monster skins come later, after
+// bounds checks — this procedural form is the stable first pass the spec asked for.
+let playerMonsterFx = null;
+function transformPlayer() {
+  if (!player) return;
+  if (!state.monsterMode && !state.playerMonster) {
+    notify('Turn on Monster Mode (M) before you can transform.');
+    return;
+  }
+  state.playerMonster = !state.playerMonster;
+  if (state.playerMonster) {
+    const grp = new THREE.Group(); grp.name = 'player-monster-fx';
+    const hornMat = new THREE.MeshStandardMaterial({ color: 0xeae6dc, roughness: 0.4, metalness: 0.2 });
+    const eh = (player.eyeHeight || 1.6);
+    for (const sx of [-0.15, 0.15]) {
+      const horn = new THREE.Mesh(new THREE.ConeGeometry(0.07, 0.34, 7), hornMat);
+      horn.position.set(sx, eh + 0.28, 0.02); horn.rotation.z = sx > 0 ? -0.5 : 0.5; horn.rotation.x = -0.2;
+      grp.add(horn);
+    }
+    // dark aura tint (remember originals so we can fully restore)
+    player.group.traverse(o => {
+      if (o.isMesh && o.material && o.material.emissive) {
+        if (!o.userData._fxStash) o.userData._fxStash = { c: o.material.emissive.clone(), i: o.material.emissiveIntensity };
+        o.material.emissive.setHex(0x3a006a); o.material.emissiveIntensity = 0.55;
+      }
+    });
+    player.group.add(grp);
+    playerMonsterFx = grp;
+    player.group.scale.setScalar(1.18);
+    notify('😈 You transformed into a MONSTER — faster & fiercer! (T to revert)');
+  } else {
+    if (playerMonsterFx) { player.group.remove(playerMonsterFx); playerMonsterFx = null; }
+    player.group.traverse(o => {
+      if (o.isMesh && o.material && o.userData._fxStash) {
+        o.material.emissive.copy(o.userData._fxStash.c);
+        o.material.emissiveIntensity = o.userData._fxStash.i;
+        delete o.userData._fxStash;
+      }
+    });
+    player.group.scale.setScalar(1);
+    notify('🙂 Back to human form.');
   }
 }
 
@@ -2523,9 +2699,15 @@ window.addEventListener('keydown', e => {
     if (k === 'j') cycleJewelry();
   }
   if (k === 'm') { debug.markHandler('m'); toggleMonsterMode(); }
+  if (k === 't' && !inCar && area === 'city') transformPlayer();   // 😈 monster-form toggle
   if (k === 'n') {
     debug.markHandler('n');
-    if (minimap) { minimap.toggleExpand(); console.debug('[map] toggled →', minimap.isExpanded() ? 'expanded' : 'compact'); }
+    if (minimap) {
+      minimap.toggleExpand();
+      const ex = minimap.isExpanded();
+      notify(ex ? '🗺️ Town map opened (N to close)' : 'Map minimised');
+      console.debug('[map] toggled →', ex ? 'expanded' : 'compact');
+    }
     else { notify('Minimap not initialised'); console.warn('[map] minimap is null'); }
   }   // expand / shrink the town map
   // weapons: reload, quick-switch, and 1–9 to equip from your OWNED list (a held
@@ -2611,6 +2793,29 @@ function animate() {
           notify('👹 A monster hit you! (-' + dmg + ' health)');
           if (st.health <= 0) downPlayer('A monster took you down.');
         },
+        // monsters home in on the nearest standing civilian to terrorize them
+        nearestNpc: (pos, maxR) => {
+          let best = null, bd = maxR;
+          for (const n of cityNPCs) {
+            if (n.downed) continue;
+            const gp = n.av.group.position;
+            const d = Math.hypot(gp.x - pos.x, gp.z - pos.z);
+            if (d < bd) { bd = d; best = { x: gp.x, z: gp.z }; }
+          }
+          return best;
+        },
+        // scare civilians next to a monster → they panic and flee
+        terrorize: (pos, radius) => {
+          let any = false;
+          for (const n of cityNPCs) {
+            if (n.downed) continue;
+            const gp = n.av.group.position;
+            if (Math.hypot(gp.x - pos.x, gp.z - pos.z) <= radius) {
+              n.panic = Math.max(n.panic || 0, 2.4); any = true;
+            }
+          }
+          return any;
+        },
       });
     }
     handleInteraction(interactClick);
@@ -2639,7 +2844,9 @@ function animate() {
   if (minimap) {
     const mm = document.getElementById('minimap');
     if (area === 'city' && player) {
-      if (mm) mm.style.display = '';
+      // NOTE: must set an explicit 'block' — clearing to '' would fall back to the
+      // stylesheet rule (#minimap{display:none}) and the radar would never show.
+      if (mm && mm.style.display !== 'block') mm.style.display = 'block';
       let heading;
       if (inCar) heading = (drivingVehicle || car).g.rotation.y;
       else {
@@ -2656,14 +2863,25 @@ function animate() {
       mm.style.display = 'none';
     }
   }
-  // show the reticle whenever a ranged weapon is out (so you can aim on foot)
+  // ── reticle + aim/zoom + sniper scope ──────────────────────────────────────
   const cw = currentWeapon();
   const xh = document.getElementById('crosshair');
-  if (xh) {
-    const armed = cw && !cw.melee && !inCar && area === 'city';
-    if (armed) xh.style.display = '';
-    else if (controls.mode !== CAM.FIRST) xh.style.display = 'none';
+  const scopeEl = document.getElementById('scope');
+  const armed = cw && !cw.melee && !inCar && area === 'city';
+  // Right mouse aims: zoom the camera in (sniper zooms much further) and, for the
+  // sniper, drop a scope overlay. Releasing returns to the normal field of view.
+  const aiming = armed && controls.mouseHeld(2);
+  const isSniper = cw && (cw.id === 'sniper' || /sniper|scope/i.test(cw.id || ''));
+  const targetFov = aiming ? (isSniper ? 20 : 42) : 60;
+  if (Math.abs(camera.fov - targetFov) > 0.3) {
+    camera.fov += (targetFov - camera.fov) * Math.min(1, dt * 12);
+    camera.updateProjectionMatrix();
   }
+  if (xh) {
+    if (armed) { xh.style.display = 'block'; xh.classList.toggle('aim', aiming); }
+    else { xh.style.display = 'none'; xh.classList.remove('aim'); }
+  }
+  if (scopeEl) scopeEl.style.display = (aiming && isSniper) ? 'block' : 'none';
   if (interiorDebug) updateInteriorDebug();
   renderer.render(scene, camera);
   controls.endFrame();
