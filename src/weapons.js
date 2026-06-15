@@ -430,16 +430,25 @@ function applyDamage(tg, dmg, point) {
 
 function meleeHit(eff) {
   if (viewModel) viewModel.rotation.x -= 0.2;
-  const origin = new THREE.Vector3(); deps.camera.getWorldPosition(origin);
-  const dir = new THREE.Vector3(); deps.camera.getWorldDirection(dir);
   const targets = deps.getTargets ? deps.getTargets() : [];
   const range = (eff && eff.range) || current.range;
+  // Melee reaches from the PLAYER, not the camera — in third-person the camera
+  // sits several metres back, so a 2-3m reach measured from the camera would
+  // never connect. Cast from the player's chest along the (flattened) look
+  // direction so you hit whatever is in front of you.
+  const ppos = deps.getPlayerPos ? deps.getPlayerPos() : null;
+  const origin = (ppos ? ppos.clone() : new THREE.Vector3());
+  origin.y += 1.0;
+  const dir = new THREE.Vector3(); deps.camera.getWorldDirection(dir);
+  dir.y = 0;
+  if (dir.lengthSq() < 1e-4) dir.set(0, 0, -1);
+  dir.normalize();
   let hit = false;
   for (const tg of targets) {
-    const t = raySphere(origin, dir, tg.pos, (tg.r || 1.0) + 0.3);
+    const t = raySphere(origin, dir, tg.pos, (tg.r || 1.0) + 0.4);
     if (t != null && t <= range) { applyDamage(tg, meleeDamage(eff), tg.pos); hit = true; break; }
   }
-  // a thrown punch in public still draws attention (lighter than gunfire)
+  // a thrown punch / swing in public still draws attention (lighter than gunfire)
   if (deps.onShotFired) deps.onShotFired(hit, true);
 }
 // fists scale with the player's fitness/strength stat (stronger → harder hits)
@@ -487,3 +496,10 @@ export function updateWeaponHUD() {
 
 export function currentWeapon() { return current; }
 export function isReloading() { return reloading > 0; }
+// The camera-mounted first-person view model duplicates the avatar's in-hand
+// weapon, so it should only be visible in first-person. main.js calls this each
+// frame with the current camera mode. The muzzle still resolves its world
+// position while hidden, so tracers keep originating correctly.
+export function setFirstPersonView(on) {
+  if (viewModel) viewModel.visible = !!on;
+}
