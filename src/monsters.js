@@ -32,7 +32,10 @@ function setBar(grp, frac) {
   fill.position.x = -0.47 * (1 - frac);
 }
 
-// Build one monster at `pos`. Procedural first, GLB swapped in async.
+// Build one PROCEDURAL FALLBACK monster at `pos`. This procedural creature is the
+// stable default and is always used unless USE_GLB_MONSTERS is enabled AND the
+// GLB passes bounds checks — that swap is async and per-asset, so a bad GLB can
+// never replace the fallback or spawn a giant blob.
 export function createMonster(scene, pos, renderer) {
   const group = new THREE.Group();
   group.position.copy(pos);

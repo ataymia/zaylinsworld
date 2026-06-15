@@ -12,7 +12,7 @@ import { ROAD, LANDMARKS } from './config/mapConfig.js';
 let canvas = null, ctx = null, expanded = false;
 let markers = [];            // [{ x, z, color, icon }] extra points (gas/diner)
 
-const COMPACT = 200;         // px size of the corner radar
+const COMPACT = 168;         // px size of the corner radar (small so it never covers HUD)
 const EXPANDED = 460;        // px size of the expanded map
 const VIEW_COMPACT = 46;     // world-units radius shown when compact (player-centred)
 const VIEW_EXPANDED = 70;    // world-units radius shown when expanded (origin-centred)
@@ -35,6 +35,22 @@ function resize() {
   canvas.width = css * dpr;
   canvas.height = css * dpr;
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  // The compact radar lives bottom-left (clear of the stats/wanted HUD on the
+  // right). The expanded town map centres on screen so it never sits on top of
+  // gameplay HUD while open, and fully clears the corner when shrunk again.
+  if (expanded) {
+    canvas.style.left = '50%';
+    canvas.style.top = '50%';
+    canvas.style.right = 'auto';
+    canvas.style.bottom = 'auto';
+    canvas.style.transform = 'translate(-50%, -50%)';
+  } else {
+    canvas.style.left = '14px';
+    canvas.style.bottom = '46px';
+    canvas.style.top = 'auto';
+    canvas.style.right = 'auto';
+    canvas.style.transform = 'none';
+  }
 }
 
 export function toggleExpand() {

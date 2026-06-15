@@ -19,6 +19,8 @@ export class Controls {
     this.bounds = null;     // optional {min,max} AABB to keep the camera inside (interiors)
     this.mouse = new Set();        // mouse buttons currently held (0=L,1=M,2=R)
     this.justClicked = new Set();  // mouse buttons pressed this frame
+    this.shoulder = 0;             // over-the-shoulder camera offset (set by main when armed)
+    this._shoulder = 0;            // smoothed shoulder offset
     this._bind();
   }
 
@@ -137,10 +139,19 @@ export class Controls {
       desired.copy(targetPos)
         .add(offset.multiplyScalar(dist));
       desired.y = Math.max(0.6, targetPos.y + eyeHeight * 0.7 + this.pitch * 3 + dist * 0.35);
+      // Over-the-shoulder offset when a gun is up: slide the camera + look point
+      // to the right so the player body no longer sits under the centre crosshair
+      // (which is exactly where shots go). Smoothed so it eases in/out.
+      this._shoulder += ((this.shoulder || 0) - this._shoulder) * Math.min(1, dt * 8);
+      const look = targetPos.clone(); look.y += eyeHeight * 0.6;
+      if (Math.abs(this._shoulder) > 0.001) {
+        const right = new THREE.Vector3(Math.cos(this.yaw), 0, -Math.sin(this.yaw));
+        desired.addScaledVector(right, this._shoulder);
+        look.addScaledVector(right, this._shoulder);
+      }
       this._clampToBounds(desired);
       const a = Math.min(1, dt * 10);
       this.camera.position.lerp(desired, a);
-      const look = targetPos.clone(); look.y += eyeHeight * 0.6;
       this.camera.lookAt(look);
     }
   }

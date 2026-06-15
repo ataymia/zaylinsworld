@@ -27,7 +27,7 @@ import { Controls, CAM } from './controls.js';
 import { InteractionManager } from './interaction.js';
 import { loadState, saveState, defaultState, clearSave, hasSave } from './state.js';
 import { GEMS, LANDMARKS, SPAWN } from './config/mapConfig.js';
-import { loadHDRI } from './assets.js';
+import { loadHDRI, loadAsset } from './assets.js';
 import {
   hdriUrl, loadSlotModel, updateMixers, enhanceAvatar, enhanceVehicle, assetUrl,
 } from './manifest.js';
@@ -52,6 +52,7 @@ const FEATURES = {
   USE_REAL_NPC_SKINS: false,     // attach PSX GLB skins to city NPCs
   USE_GLB_MONSTERS: false,       // swap procedural monster → PSX creature GLB
   USE_GLB_WORLD_BUILDINGS: false, // place uploaded gas/diner/market GLB landmarks
+  USE_GLB_GAS_STATION_ONLY: true, // safe single-asset test: try the gas-station GLB only (bounds-checked)
 };
 if (typeof window !== 'undefined') window.__ZW_FEATURES__ = FEATURES;
 
@@ -249,6 +250,15 @@ function enterWorld() {
     debug.set('minimapInit', !!minimap);
     if (!minimap) console.warn('[minimap] init FAILED — #minimap canvas missing');
     applyWorldAssets();                        // swap in real GLBs where available
+    // applyWorldAssets() (via placeTrashJob) creates the sanitation worker,
+    // dumpster and litter AFTER the first registerInteractables() pass above, so
+    // those dynamic objects must be re-registered now or they'd never become
+    // interactable on first load (you couldn't talk to Sanitation / grab trash).
+    registerInteractables(cityEntrances);
+    debug.set('sanitationNpc', !!sanitationNpc);
+    debug.set('trashPieces', cityTrash.length);
+    console.info('[interact] re-registered dynamic objects — sanitation:', !!sanitationNpc,
+      '| dumpster:', !!dumpster, '| trashPieces:', cityTrash.length);
     initGameSystems();                         // weapons + missions + police hooks
   }
   rebuildPlayer();
@@ -346,7 +356,8 @@ const extraSpinners = [];   // display models that idle-rotate (e.g. jewelry)
 // a price sign, registers a refuel point and a minimap marker.
 function buildProceduralGasStation() {
   const GX = -15, GZ = -22.5;                       // clear strip below Frostbox
-  const grp = new THREE.Group(); grp.name = 'gas-station';
+  const grp = new THREE.Group(); grp.name = 'gas-station-proc';
+  const procColliders = [];                         // pump colliders (removed if a GLB takes over)
   // forecourt pad (decorative — no collider so it never blocks driving)
   const pad = new THREE.Mesh(new THREE.BoxGeometry(10, 0.12, 8),
     new THREE.MeshStandardMaterial({ color: '#2b2e36', roughness: 0.95 }));
@@ -383,7 +394,8 @@ function buildProceduralGasStation() {
     pump.position.set(GX + dx, 0, GZ - 1.4);
     grp.add(pump);
     pump.updateWorldMatrix(true, true);
-    cityColliders.push(new THREE.Box3().setFromObject(pump).expandByScalar(0.1));
+    const pc = new THREE.Box3().setFromObject(pump).expandByScalar(0.1);
+    cityColliders.push(pc); procColliders.push(pc);
   }
   // tall price sign
   const signPost = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 5, 8), postMat);
@@ -398,6 +410,56 @@ function buildProceduralGasStation() {
   refuelPoints = [{ x: GX, z: GZ, r: 6, id: 'gas-proc', price: 1.2 }];
   if (minimap) setMarkers([{ x: GX, z: GZ, color: '#ffd54a', icon: '⛽' }]);
   console.info('[gas] procedural gas station placed at', GX, GZ);
+  // P7: safe single-asset test — try ONLY the uploaded gas-station GLB. If it
+  // passes strict bounds checks it replaces the procedural box art; otherwise we
+  // keep the (already-working) procedural station. Refuel zone + marker are kept
+  // either way, so the fuel loop can never break.
+  if (FEATURES.USE_GLB_GAS_STATION_ONLY) tryGasStationGLB(GX, GZ, grp, procColliders);
+}
+
+// Attempt to load the single gas-station GLB and swap it in for the procedural
+// art ONLY if it passes finite/size/footprint checks (so a tiny-scaled-huge or
+// NaN asset can never become a blob). Async + fully guarded — any failure logs a
+// reason to the debug panel and leaves the procedural station untouched.
+async function tryGasStationGLB(GX, GZ, procGroup, procColliders) {
+  try {
+    const res = await loadAsset('buildings', 'gas-station', 'gas-station', renderer);
+    if (!res || !res.scene) { console.warn('[gas] GLB missing/decode-failed — keeping procedural'); debug.set('gasStationGLB', false); return; }
+    const obj = res.scene;
+    const box = new THREE.Box3().setFromObject(obj);
+    const size = new THREE.Vector3(); box.getSize(size);
+    if (![size.x, size.y, size.z].every(Number.isFinite)) {
+      debug.showError && debug.showError('gas GLB rejected: non-finite bounds'); return;
+    }
+    const maxDim = Math.max(size.x, size.y, size.z);
+    if (!(maxDim > 0.01)) { console.warn('[gas] GLB rejected: degenerate/zero size'); return; }
+    // normalize so the longest side is ~12 units (the intended footprint), then
+    // re-measure and reject anything still oversized.
+    const scale = 12 / maxDim;
+    if (!Number.isFinite(scale) || scale <= 0) { console.warn('[gas] GLB rejected: bad scale'); return; }
+    obj.scale.setScalar(scale);
+    obj.updateWorldMatrix(true, true);
+    const box2 = new THREE.Box3().setFromObject(obj);
+    const size2 = new THREE.Vector3(); box2.getSize(size2);
+    if (Math.max(size2.x, size2.z) > 24 || size2.y > 16) {
+      console.warn('[gas] GLB rejected: footprint too large after scale', size2);
+      debug.showError && debug.showError('gas GLB rejected: oversized footprint'); return;
+    }
+    // seat it on the ground at the station centre
+    obj.position.set(GX, -box2.min.y, GZ);
+    obj.name = 'gas-station-glb';
+    // SWAP: hide the procedural visuals + drop their pump colliders (the GLB is
+    // decorative so the forecourt stays drivable and the refuel zone stays clear).
+    procGroup.visible = false;
+    for (const c of procColliders) { const i = cityColliders.indexOf(c); if (i >= 0) cityColliders.splice(i, 1); }
+    scene.add(obj);
+    debug.set('gasStationGLB', true);
+    console.info('[gas] gas-station GLB placed (scale', scale.toFixed(3), '| footprint',
+      size2.x.toFixed(1) + '×' + size2.z.toFixed(1) + ')');
+  } catch (e) {
+    console.warn('[gas] GLB load threw — keeping procedural:', e);
+    debug.showError && debug.showError('gas GLB: ' + (e && e.message || e));
+  }
 }
 
 function applyWorldAssets() {
@@ -1195,6 +1257,16 @@ function updateCar(dt) {
   (v.g.userData.wheels || []).forEach(w => { w.rotation.x += v.speed * dt; });
   v.g.children.forEach(c => { if (c.geometry?.type === 'CylinderGeometry') c.rotation.x += v.speed * dt; });
   player.group.position.copy(v.g.position);
+  // Camera follows the car's heading so you can always see where you're driving.
+  // Chase/overhead sit BEHIND the car (yaw = heading + π); the hood/first-person
+  // cam looks forward (yaw = heading). Smoothly slew so turns track naturally and
+  // the mouse is never needed to steer the view.
+  const driveYaw = controls.mode === CAM.FIRST ? v.g.rotation.y : v.g.rotation.y + Math.PI;
+  let dyaw = driveYaw - controls.yaw;
+  while (dyaw > Math.PI) dyaw -= Math.PI * 2;
+  while (dyaw < -Math.PI) dyaw += Math.PI * 2;
+  controls.yaw += dyaw * Math.min(1, dt * 6);
+  controls.shoulder = 0;     // no over-shoulder offset while driving
   controls.update(v.g.position.clone().setY(0.9), 1.7, dt);
 }
 
@@ -1846,6 +1918,14 @@ function updatePlayer(dt, t) {
         p.z += uz * push * 0.7;
         g.position.x -= ux * push * 0.3;
         g.position.z -= uz * push * 0.3;
+      }
+    }
+    // Monster form terrifies nearby civilians — they panic and flee as you pass.
+    if (monsterForm) {
+      for (const n of cityNPCs) {
+        if (n.downed) continue;
+        const g = n.av.group;
+        if (Math.hypot(p.x - g.position.x, p.z - g.position.z) < 5) n.panic = Math.max(n.panic || 0, 1.6);
       }
     }
   }
@@ -2602,6 +2682,7 @@ function transformPlayer() {
     return;
   }
   state.playerMonster = !state.playerMonster;
+  const formBadge = document.getElementById('monster-form-badge');
   if (state.playerMonster) {
     const grp = new THREE.Group(); grp.name = 'player-monster-fx';
     const hornMat = new THREE.MeshStandardMaterial({ color: 0xeae6dc, roughness: 0.4, metalness: 0.2 });
@@ -2621,7 +2702,8 @@ function transformPlayer() {
     player.group.add(grp);
     playerMonsterFx = grp;
     player.group.scale.setScalar(1.18);
-    notify('😈 You transformed into a MONSTER — faster & fiercer! (T to revert)');
+    if (formBadge) formBadge.style.display = '';
+    notify('😈 MONSTER FORM — faster sprint, stronger melee, and nearby people flee in terror! (T to revert)');
   } else {
     if (playerMonsterFx) { player.group.remove(playerMonsterFx); playerMonsterFx = null; }
     player.group.traverse(o => {
@@ -2632,6 +2714,7 @@ function transformPlayer() {
       }
     });
     player.group.scale.setScalar(1);
+    if (formBadge) formBadge.style.display = 'none';
     notify('🙂 Back to human form.');
   }
 }
@@ -2872,6 +2955,10 @@ function animate() {
   // sniper, drop a scope overlay. Releasing returns to the normal field of view.
   const aiming = armed && controls.mouseHeld(2);
   const isSniper = cw && (cw.id === 'sniper' || /sniper|scope/i.test(cw.id || ''));
+  // Over-the-shoulder framing whenever a gun is out (tighter while zoomed): slides
+  // the third-person camera to the right so the player body stops sitting under
+  // the centre crosshair — which is exactly where shots are fired.
+  controls.shoulder = armed ? (aiming ? 1.05 : 0.8) : 0;
   const targetFov = aiming ? (isSniper ? 20 : 42) : 60;
   if (Math.abs(camera.fov - targetFov) > 0.3) {
     camera.fov += (targetFov - camera.fov) * Math.min(1, dt * 12);

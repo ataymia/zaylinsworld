@@ -310,7 +310,9 @@ function meleeHit() {
 // fists scale with the player's fitness/strength stat (stronger → harder hits)
 function meleeDamage() {
   const fit = (deps.state?.stats?.fitness) || 0;
-  return current.dmg + Math.round(fit * 0.45);   // 8 base → up to ~53 at 100 fitness
+  let dmg = current.dmg + Math.round(fit * 0.45);   // 8 base → up to ~53 at 100 fitness
+  if (deps.state?.playerMonster) dmg = Math.round(dmg * 1.6);   // monster form hits noticeably harder
+  return dmg;
 }
 
 // ray vs sphere; returns distance along ray to first hit or null

@@ -28,6 +28,7 @@
   .sbar-num{width:26px;text-align:right;color:#aab;font-variant-numeric:tabular-nums;}
   #wanted-stars{font-size:18px;letter-spacing:2px;}
   #monster-badge{background:#7a1fa0;border-color:#b46bd6;color:#fff;font-weight:700;}
+  #monster-form-badge{background:#3a006a;border-color:#c98bff;color:#fff;font-weight:800;letter-spacing:.5px;}
   #right-stack{display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
 
   /* ── interaction prompt ── */
@@ -166,8 +167,8 @@
   #weapon-hud .wp-ammo{font-size:16px;color:var(--gold);min-width:74px;text-align:right;
     font-variant-numeric:tabular-nums;}
 
-  /* ── minimap / radar (top-right) ── */
-  #minimap{position:fixed;right:14px;top:14px;z-index:90;display:none;
+  /* ── minimap / radar (bottom-left corner — clear of the stats/wanted HUD) ── */
+  #minimap{position:fixed;left:14px;bottom:46px;z-index:90;display:none;
     border-radius:12px;box-shadow:0 6px 22px rgba(0,0,0,.5);pointer-events:none;}
 
   /* ── car HUD (speed / fuel / damage while driving) ── */
@@ -226,6 +227,7 @@
       <div class="hud-box" id="stats-wrap"><h3>Stats</h3><div id="stat-bars"></div></div>
       <div class="hud-box"><h3>Wanted</h3><div id="wanted-stars">☆☆☆☆☆</div></div>
       <div class="hud-box" id="monster-badge" style="display:none;">👹 MONSTER MODE</div>
+      <div class="hud-box" id="monster-form-badge" style="display:none;">😈 MONSTER FORM</div>
     </div>
   </div>
 
@@ -238,7 +240,7 @@
   <div id="hint">
     <b>WASD</b> move · <b>A/D</b> turn · <b>Shift</b> run · <b>Space</b> jump · <b>V</b> camera ·
     <b>E</b> / <b>click</b> interact · <b>F</b> enter/steal car · <b>N</b> map · <b>I</b> inventory ·
-    <b>Click</b> shoot · <b>R-click</b> aim · <b>R</b> reload · <b>C</b> wardrobe · <b>M</b> monsters · <b>T</b> transform
+    <b>Click</b> shoot · <b>R-click</b> aim · <b>R</b> reload · <b>C</b> wardrobe · <b>M</b> Monster Mode · <b>T</b> transform
   </div>
 
   <!-- Character creator -->
