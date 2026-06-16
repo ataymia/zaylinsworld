@@ -48,7 +48,7 @@ export const WEAPON_CATALOG = [
   // fists are always owned; no asset, no ammo.
   {
     id: 'fists', name: 'Fists', category: 'melee', melee: true, price: 0, ammoType: null,
-    mag: Infinity, reserve: Infinity, rpm: 120, dmg: 8, pellets: 1, spread: 0, reload: 0, range: 2.4,
+    mag: Infinity, reserve: Infinity, rpm: 120, dmg: 10, pellets: 1, spread: 0, reload: 0, range: 2.4,
     icon: '👊', asset: null, upgrades: [], display: null, alwaysOwned: true,
     desc: 'Your bare hands. Always ready.',
   },
@@ -117,28 +117,28 @@ export const WEAPON_CATALOG = [
   // ── MELEE (procedural meshes built in weapons.js; board GLB optional) ──
   {
     id: 'bat_bolt', name: 'Bolt Bat', category: 'melee', melee: true, price: 200, ammoType: null,
-    mag: Infinity, reserve: Infinity, rpm: 110, dmg: 22, pellets: 1, spread: 0, reload: 0, range: 2.6,
+    mag: Infinity, reserve: Infinity, rpm: 95, dmg: 24, pellets: 1, spread: 0, reload: 0, range: 2.6,
     icon: '🏏', asset: null, shape: 'bat',
     upgrades: ['grip_wrap', 'swing_speed', 'impact_boost', 'skin_finish'],
     display: 'melee-rack', desc: 'Solid swinger. Reaches a little further.',
   },
   {
     id: 'pipe_iron', name: 'Iron Pipe', category: 'melee', melee: true, price: 150, ammoType: null,
-    mag: Infinity, reserve: Infinity, rpm: 100, dmg: 20, pellets: 1, spread: 0, reload: 0, range: 2.4,
+    mag: Infinity, reserve: Infinity, rpm: 80, dmg: 28, pellets: 1, spread: 0, reload: 0, range: 2.4,
     icon: '🪈', asset: null, shape: 'pipe',
     upgrades: ['grip_wrap', 'swing_speed', 'impact_boost'],
     display: 'melee-rack', desc: 'Heavy metal pipe. Hits hard.',
   },
   {
     id: 'wrench_work', name: 'Work Wrench', category: 'tools', melee: true, price: 120, ammoType: null,
-    mag: Infinity, reserve: Infinity, rpm: 115, dmg: 18, pellets: 1, spread: 0, reload: 0, range: 2.2,
+    mag: Infinity, reserve: Infinity, rpm: 78, dmg: 26, pellets: 1, spread: 0, reload: 0, range: 2.2,
     icon: '🔧', asset: null, shape: 'wrench',
     upgrades: ['grip_wrap', 'swing_speed'],
     display: 'melee-rack', desc: 'A worker tool that doubles as a bonker.',
   },
   {
     id: 'plank_bonker', name: 'Block Plank', category: 'melee', melee: true, price: 90, ammoType: null,
-    mag: Infinity, reserve: Infinity, rpm: 95, dmg: 16, pellets: 1, spread: 0, reload: 0, range: 2.6,
+    mag: Infinity, reserve: Infinity, rpm: 100, dmg: 18, pellets: 1, spread: 0, reload: 0, range: 2.6,
     icon: '🪵', asset: { pack: 'styloo', name: 'board' }, shape: 'plank',
     upgrades: ['grip_wrap', 'impact_boost'],
     display: 'melee-rack', desc: 'A sturdy wooden plank. Surprisingly effective.',

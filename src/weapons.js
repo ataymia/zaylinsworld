@@ -365,22 +365,21 @@ function fire() {
   if (muzzle) { const s = current.id === 'rocket_blast' ? 0.5 : 0.28; muzzle.scale.set(s, s, s); }
   if (viewModel) { viewModel.position.z += eff.scoped ? 0.12 : 0.06; viewModel.rotation.x -= 0.05; }
 
-  // Shot direction = the camera's centre ray, which is exactly the on-screen
-  // crosshair (over-the-shoulder framing keeps the body out from under it). When
-  // the player is AIMING (right mouse), a light aim-assist nudges the base ray
-  // onto the nearest target by the crosshair so a centred shot reliably connects;
-  // hip-fire (not aiming) gets wider spread and no assist, so aiming matters.
+  // Shot direction comes from the aim system: the cursor ray for normal guns
+  // (you shoot where you click) or the centred scope reticle for scoped weapons.
+  // A light aim-assist snaps the ray onto a target within a small cone so a shot
+  // placed on/near a target reliably connects.
+  const ray = deps.getShootRay ? deps.getShootRay() : null;
   const origin = new THREE.Vector3();
-  deps.camera.getWorldPosition(origin);
   const baseDir = new THREE.Vector3();
-  deps.camera.getWorldDirection(baseDir);
+  if (ray) { origin.copy(ray.origin); baseDir.copy(ray.dir); }
+  else { deps.camera.getWorldPosition(origin); deps.camera.getWorldDirection(baseDir); }
+  if (baseDir.lengthSq() < 1e-6) baseDir.set(0, 0, -1);
+  baseDir.normalize();
   const targets = deps.getTargets ? deps.getTargets() : [];
-  const aiming = deps.isAiming ? !!deps.isAiming() : false;
-  if (aiming) {
-    const snap = aimAssistDir(origin, baseDir, targets, eff.range);
-    if (snap) baseDir.copy(snap);
-  }
-  const spread = (eff.spread || 0) * (aiming ? 0.5 : 2.2);   // hip-fire is less accurate
+  const snap = aimAssistDir(origin, baseDir, targets, eff.range);
+  if (snap) baseDir.copy(snap);
+  const spread = eff.spread || 0;
   let hitAny = false;
   for (let p = 0; p < (eff.pellets || 1); p++) {
     const dir = baseDir.clone();
@@ -402,10 +401,11 @@ function fire() {
   deps.saveNow();
 }
 
-// Aim-assist: among targets within ~5° of the crosshair ray and within range,
-// return a direction pointing straight at the closest one's centre (else null).
+// Aim-assist: among targets within ~6° of the shot ray and within range, return
+// a direction pointing straight at the closest one's centre (else null). Small
+// cone so it only corrects shots already placed on/near a target.
 function aimAssistDir(origin, baseDir, targets, range) {
-  const COS_CONE = Math.cos(0.09);             // ~5.2° capture cone
+  const COS_CONE = Math.cos(0.11);             // ~6.3° capture cone
   let best = null, bestT = Infinity;
   for (const tg of targets) {
     const to = tg.pos.clone().sub(origin);
@@ -490,12 +490,14 @@ function meleeHit(eff) {
   // a thrown punch / swing in public still draws attention (lighter than gunfire)
   if (deps.onShotFired) deps.onShotFired(hit, true);
 }
-// fists scale with the player's fitness/strength stat (stronger → harder hits)
+// Melee damage = the weapon's base rating plus a SMALL fitness bonus, so no basic
+// melee weapon one-shots a healthy (60 HP) NPC. Heavier weapons hit harder via
+// their catalog dmg but swing slower via their rpm. Monster form adds +40%.
 function meleeDamage(eff) {
   const base = (eff && eff.dmg) || current.dmg;
   const fit = (deps.state?.stats?.fitness) || 0;
-  let dmg = base + Math.round(fit * 0.45);   // base → up to ~+45 at 100 fitness
-  if (deps.state?.playerMonster) dmg = Math.round(dmg * 1.6);   // monster form hits noticeably harder
+  let dmg = base + Math.round(fit * 0.08);   // gentle: up to ~+8 at 100 fitness
+  if (deps.state?.playerMonster) dmg = Math.round(dmg * 1.4);   // stronger, not an instant KO
   return dmg;
 }
 

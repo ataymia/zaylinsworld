@@ -2252,15 +2252,13 @@ function initGameSystems() {
     camera, scene, renderer, state, notify, saveNow,
     getTargets: getWeaponTargets, onKill: onWeaponKill, onShotFired: onWeaponShot,
     getPlayerPos: () => (player ? player.group.position : null),
-    // where the player is aiming on the ground plane = camera look direction
-    // flattened; melee swings and aim-facing both use this so they agree.
-    getAimDir: () => {
-      const d = new THREE.Vector3(); camera.getWorldDirection(d); d.y = 0;
-      if (d.lengthSq() < 1e-4) d.set(0, 0, -1);
-      return d.normalize();
-    },
-    // right mouse held (and a gun out) = aiming → enables aim-assist + tight spread
-    isAiming: () => controls.mouseHeld(2) && !inCar,
+    // melee swings + body facing aim where the cursor points
+    getAimDir: () => aimDirFromCursor(),
+    // the shot ray: cursor ray for normal guns, scope-centre for scoped weapons
+    getShootRay: () => shootRay(),
+    // only scoped weapons are "aiming" (tight, no aim-assist drift) — but normal
+    // guns still get light snap because the cursor itself is the aim.
+    isScoping: () => isScopingNow(),
     onEquip: () => mountHeldWeapon(),
   });
   initMissions({ state, notify, saveNow });
@@ -2271,6 +2269,59 @@ function initGameSystems() {
 let fireHeld = false, firePressed = false, reloadPressed = false;
 canvas.addEventListener('mousedown', e => { if (e.button === 0) { fireHeld = true; firePressed = true; } });
 window.addEventListener('mouseup', e => { if (e.button === 0) fireHeld = false; });
+
+// ── cursor aiming ──────────────────────────────────────────────────────────────
+// The mouse IS the aim for normal guns: we track the cursor in both pixels (to
+// position the crosshair) and normalized device coords (to cast a ray from the
+// camera through the cursor into the world). No pointer lock — the cursor stays
+// free so it can also click trash / NPCs / UI.
+const _mousePx = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+const _mouseNDC = new THREE.Vector2(0, 0);
+const _aimRaycaster = new THREE.Raycaster();
+canvas.addEventListener('mousemove', e => {
+  const r = canvas.getBoundingClientRect();
+  _mousePx.x = e.clientX; _mousePx.y = e.clientY;
+  _mouseNDC.x = ((e.clientX - r.left) / r.width) * 2 - 1;
+  _mouseNDC.y = -((e.clientY - r.top) / r.height) * 2 + 1;
+});
+// A weapon supports right-click scope only if it is explicitly scoped (sniper /
+// precision). Everything else ignores right-click.
+function weaponSupportsScope(w) { return !!(w && w.scoped); }
+// True while a scoped weapon is actually scoped in (right mouse held).
+function isScopingNow() {
+  const cw = currentWeapon();
+  return !!(cw && !cw.melee && weaponSupportsScope(cw) && controls.mouseHeld(2) && !inCar);
+}
+// The ray a shot travels along: scoped weapons fire through the centred scope
+// reticle (camera forward); every other gun fires where the cursor points.
+function shootRay() {
+  if (isScopingNow()) {
+    const o = new THREE.Vector3(); camera.getWorldPosition(o);
+    const d = new THREE.Vector3(); camera.getWorldDirection(d);
+    return { origin: o, dir: d.normalize() };
+  }
+  _aimRaycaster.setFromCamera(_mouseNDC, camera);
+  return { origin: _aimRaycaster.ray.origin.clone(), dir: _aimRaycaster.ray.direction.clone().normalize() };
+}
+// Where the cursor points on the ground/chest plane, as a flat facing direction
+// from the player — drives body facing and melee swing direction so the held
+// weapon points at the cursor target.
+function aimDirFromCursor() {
+  _aimRaycaster.setFromCamera(_mouseNDC, camera);
+  const ray = _aimRaycaster.ray;
+  const planeY = (player ? player.group.position.y : 0) + 1.0;
+  if (player && Math.abs(ray.direction.y) > 1e-4) {
+    const t = (planeY - ray.origin.y) / ray.direction.y;
+    if (t > 0) {
+      const gp = ray.origin.clone().add(ray.direction.clone().multiplyScalar(t));
+      const d = gp.sub(player.group.position); d.y = 0;
+      if (d.lengthSq() > 1e-4) return d.normalize();
+    }
+  }
+  const d = ray.direction.clone(); d.y = 0;
+  if (d.lengthSq() < 1e-4) d.set(0, 0, -1);
+  return d.normalize();
+}
 
 // ── collisions ─────────────────────────────────────────────────────────────────
 function activeColliders() {
@@ -2369,12 +2420,13 @@ function updatePlayer(dt, t) {
 
   if (controls.mode === CAM.FIRST) player.group.rotation.y = yaw;
   else if (combatFacingNow(fp)) {
-    // Combat stance: face exactly where the camera/crosshair points so the held
-    // weapon (and any shot or swing) lines up with the on-screen reticle. Tighter
-    // snap while aiming with right-mouse, quick snap during a melee swing.
-    const aimYaw = Math.atan2(forward.x, forward.z);
+    // Combat stance: face where the CURSOR points (the crosshair) so the held
+    // weapon — and any shot or swing — lines up with the target under the cursor.
+    // Scoped weapons fall back to camera-forward while scoped (centre reticle).
+    const ad = isScopingNow() ? forward : aimDirFromCursor();
+    const aimYaw = Math.atan2(ad.x, ad.z);
     const cwf = currentWeapon();
-    const k = (cwf && !cwf.melee) ? (controls.mouseHeld(2) ? 22 : 13) : 18;
+    const k = (cwf && !cwf.melee) ? (isScopingNow() ? 22 : 16) : 18;
     player.group.rotation.y = lerpAngle(player.group.rotation.y, aimYaw, Math.min(1, dt * k));
   }
   else if (moving || inp.s) {
@@ -3079,25 +3131,23 @@ function combatFacingNow(fp) {
   const cw = currentWeapon();
   return !!(cw && !cw.melee && area === 'city');
 }
-// True when the camera centre ray (the crosshair) passes through a weapon target
-// within range — used to flash the reticle red as a hit-confirm cue.
-const _aimOrigin = new THREE.Vector3();
-const _aimDir = new THREE.Vector3();
+// True when the active shot ray (the cursor ray, or the scope reticle) passes
+// through a weapon target within range — used to flash the reticle red as a
+// hit-confirm cue under the cursor.
 const _aimToTg = new THREE.Vector3();
 function aimRayOnTarget() {
   const cw = currentWeapon();
   if (!cw || cw.melee || inCar) return false;
-  camera.getWorldPosition(_aimOrigin);
-  camera.getWorldDirection(_aimDir);
+  const ray = shootRay();
   const range = cw.range || 80;
   const targets = getWeaponTargets();
   for (const tg of targets) {
-    _aimToTg.copy(tg.pos).sub(_aimOrigin);
-    const along = _aimToTg.dot(_aimDir);
+    _aimToTg.copy(tg.pos).sub(ray.origin);
+    const along = _aimToTg.dot(ray.dir);
     if (along < 0 || along > range) continue;
     // perpendicular distance from the ray to the target centre
     const perp2 = _aimToTg.lengthSq() - along * along;
-    const r = (tg.r || 1.0) + 0.25;
+    const r = (tg.r || 1.0) + 0.4;
     if (perp2 <= r * r) return true;
   }
   return false;
@@ -3459,7 +3509,7 @@ function animate() {
       mm.style.display = 'none';
     }
   }
-  // ── reticle + aim/zoom + sniper scope ──────────────────────────────────────
+  // ── reticle + cursor aim + scope (scoped weapons only) ─────────────────────
   const cw = currentWeapon();
   const xh = document.getElementById('crosshair');
   const scopeEl = document.getElementById('scope');
@@ -3467,15 +3517,16 @@ function animate() {
   // The first-person view model duplicates the in-hand weapon — only show it in
   // first-person so third-person doesn't render a second gun floating in-frame.
   setFirstPersonView(controls.mode === CAM.FIRST);
-  // Right mouse aims: zoom the camera in (sniper zooms much further) and, for the
-  // sniper, drop a scope overlay. Releasing returns to the normal field of view.
-  const aiming = armed && controls.mouseHeld(2);
-  const isSniper = cw && (cw.id === 'sniper' || /sniper|scope/i.test(cw.id || ''));
-  // Over-the-shoulder framing whenever a gun is out (tighter while zoomed): slides
-  // the third-person camera to the right so the player body stops sitting under
-  // the centre crosshair — which is exactly where shots are fired.
-  controls.shoulder = armed ? (aiming ? 1.05 : 0.8) : 0;
-  const targetFov = aiming ? (isSniper ? 20 : 42) : 60;
+  // Normal guns aim with the cursor and ignore right-click. Only scoped weapons
+  // (sniper / precision) use right-click to zoom + drop the scope overlay.
+  const canScope = armed && weaponSupportsScope(cw);
+  const scoping = canScope && controls.mouseHeld(2);
+  // Tell the player once when they right-click a gun that has no scope.
+  if (armed && !canScope && controls.consumeClick(2)) notify('🔭 No scope on this weapon — aim with the cursor.');
+  // Light over-the-shoulder offset so the body isn't dead-centre; tighter while
+  // scoped (centre reticle). Cursor guns keep a gentle offset.
+  controls.shoulder = armed ? (scoping ? 1.05 : 0.6) : 0;
+  const targetFov = scoping ? 20 : 60;
   if (Math.abs(camera.fov - targetFov) > 0.3) {
     camera.fov += (targetFov - camera.fov) * Math.min(1, dt * 12);
     camera.updateProjectionMatrix();
@@ -3483,14 +3534,26 @@ function animate() {
   if (xh) {
     if (armed) {
       xh.style.display = 'block';
-      xh.classList.toggle('aim', aiming);
-      // Reticle turns red when the centre ray is on a target, so the player gets
-      // clear feedback that a shot will connect under the crosshair.
+      if (scoping) {
+        // scope mode: reticle locked to screen centre
+        xh.style.left = '50%'; xh.style.top = '50%';
+        xh.classList.add('aim');
+      } else {
+        // normal guns: the crosshair rides the cursor (the cursor IS the aim)
+        xh.style.left = _mousePx.x + 'px'; xh.style.top = _mousePx.y + 'px';
+        xh.classList.remove('aim');
+      }
+      // Reticle turns red when the shot ray is on a target, so the player gets
+      // clear feedback a shot will connect where the cursor points.
       xh.classList.toggle('lock', aimRayOnTarget());
     }
-    else { xh.style.display = 'none'; xh.classList.remove('aim'); xh.classList.remove('lock'); }
+    else {
+      xh.style.display = 'none';
+      xh.classList.remove('aim'); xh.classList.remove('lock');
+      xh.style.left = '50%'; xh.style.top = '50%';
+    }
   }
-  if (scopeEl) scopeEl.style.display = (aiming && isSniper) ? 'block' : 'none';
+  if (scopeEl) scopeEl.style.display = scoping ? 'block' : 'none';
   if (interiorDebug) updateInteriorDebug();
   if (gripDebug) updateGripDebug();
   renderer.render(scene, camera);
