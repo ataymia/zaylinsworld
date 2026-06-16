@@ -105,7 +105,7 @@ export const BUILDING_PREFABS = {
     hooks: { officeShift: true, deliverDocs: true },
   },
   police: {
-    id: 'police', type: 'police_station', minimapIcon: '🚓', sign: { text: 'CIVIC SAFETY HQ', color: '#9fc8ff' },
+    id: 'police', type: 'police_station', minimapIcon: '🚓', sign: { text: 'POLICE STATION', color: '#9fc8ff' },
     exteriorPool: 'civic_ext', fallbackExterior: { kind: 'building', color: '#37496b' },
     footprint: { w: 13, d: 11, h: 7 }, entrance: { x: 0, z: 5.5 }, signAt: { x: 0, y: 4.6, z: 5.5 },
     collision: 'hard', interior: 'police_interior',

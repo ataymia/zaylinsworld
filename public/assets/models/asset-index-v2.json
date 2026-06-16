@@ -3084,6 +3084,123 @@
         "path": "models/weapons/styloo/smoke-low.glb",
         "type": "glb"
       }
+    ],
+    "maxwp": [
+      {
+        "name": "ahkn-lv",
+        "path": "models/weapons/maxwp/ahkn-lv.glb",
+        "type": "glb"
+      },
+      {
+        "name": "bazooka",
+        "path": "models/weapons/maxwp/bazooka.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cross-bow",
+        "path": "models/weapons/maxwp/cross-bow.glb",
+        "type": "glb"
+      },
+      {
+        "name": "cso",
+        "path": "models/weapons/maxwp/cso.glb",
+        "type": "glb"
+      },
+      {
+        "name": "gahtling",
+        "path": "models/weapons/maxwp/gahtling.glb",
+        "type": "glb"
+      },
+      {
+        "name": "lchstrgn",
+        "path": "models/weapons/maxwp/lchstrgn.glb",
+        "type": "glb"
+      },
+      {
+        "name": "melee-axe",
+        "path": "models/weapons/maxwp/melee-axe.glb",
+        "type": "glb"
+      },
+      {
+        "name": "melee-bat",
+        "path": "models/weapons/maxwp/melee-bat.glb",
+        "type": "glb"
+      },
+      {
+        "name": "melee-crewdriver",
+        "path": "models/weapons/maxwp/melee-crewdriver.glb",
+        "type": "glb"
+      },
+      {
+        "name": "melee-crowbar",
+        "path": "models/weapons/maxwp/melee-crowbar.glb",
+        "type": "glb"
+      },
+      {
+        "name": "melee-frying-pan",
+        "path": "models/weapons/maxwp/melee-frying-pan.glb",
+        "type": "glb"
+      },
+      {
+        "name": "melee-knife-a",
+        "path": "models/weapons/maxwp/melee-knife-a.glb",
+        "type": "glb"
+      },
+      {
+        "name": "melee-knife-b",
+        "path": "models/weapons/maxwp/melee-knife-b.glb",
+        "type": "glb"
+      },
+      {
+        "name": "melee-pickaxe",
+        "path": "models/weapons/maxwp/melee-pickaxe.glb",
+        "type": "glb"
+      },
+      {
+        "name": "melee-shovel",
+        "path": "models/weapons/maxwp/melee-shovel.glb",
+        "type": "glb"
+      },
+      {
+        "name": "ms-c96",
+        "path": "models/weapons/maxwp/ms-c96.glb",
+        "type": "glb"
+      },
+      {
+        "name": "pmpsg",
+        "path": "models/weapons/maxwp/pmpsg.glb",
+        "type": "glb"
+      },
+      {
+        "name": "ptsk",
+        "path": "models/weapons/maxwp/ptsk.glb",
+        "type": "glb"
+      },
+      {
+        "name": "r2014-2806",
+        "path": "models/weapons/maxwp/r2014-2806.glb",
+        "type": "glb"
+      },
+      {
+        "name": "revolver-a",
+        "path": "models/weapons/maxwp/revolver-a.glb",
+        "type": "glb"
+      },
+      {
+        "name": "rvolver-b",
+        "path": "models/weapons/maxwp/rvolver-b.glb",
+        "type": "glb"
+      },
+      {
+        "name": "sasg",
+        "path": "models/weapons/maxwp/sasg.glb",
+        "type": "glb"
+      },
+      {
+        "name": "tms-1909",
+        "path": "models/weapons/maxwp/tms-1909.glb",
+        "type": "glb"
+      }
     ]
   },
   "animations": {

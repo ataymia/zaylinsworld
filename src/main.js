@@ -28,7 +28,7 @@ import { resolveTransform } from './config/weaponTransforms.js';
 import { zoneSlot, SHOP_ZONES } from './config/blockSupplyLayout.js';
 import { initMissions, missionEvent, renderTracker } from './missions.js';
 import { spawnMonsters, updateMonsters, clearMonsters } from './monsters.js';
-import { applyNpcSkins, applyPlayerSkin } from './avatarSkin.js';
+import { applyNpcSkins, applyPlayerSkin, applyCopSkin } from './avatarSkin.js';
 import { Controls, CAM } from './controls.js';
 import { InteractionManager } from './interaction.js';
 import { loadState, saveState, defaultState, clearSave, hasSave } from './state.js';
@@ -550,6 +550,7 @@ function ensureBlockSupplyDisplays() {
   const plateMat = new THREE.MeshStandardMaterial({ color: '#10141c', roughness: 0.85, metalness: 0.2 });
   const zoneCounts = {};
   const zoneHeaderDone = {};
+  let displayCount = 0, glbSwaps = 0;
   for (const w of allWeapons()) {
     if (w.id === 'fists') continue;                       // fists are never a display
     const zone = SHOP_ZONES[w.display] ? w.display : 'featured';
@@ -569,11 +570,12 @@ function ensureBlockSupplyDisplays() {
     grp.add(mesh);
     if (w.slot || w.asset) {
       loadHeldWeaponModel(w, disp.fit).then((model) => {
-        if (!model) return;
+        if (!model) { console.debug('[blocksupply] no GLB for', w.id, '— procedural kept'); return; }
         grp.remove(mesh); mesh = model;
         model.rotation.set(disp.rot[0] || 0, 0, disp.rot[2] || 0);
         grp.add(model);
-      }).catch(() => { /* keep procedural */ });
+        glbSwaps++; debug.set('blockSupplyGlb', glbSwaps);
+      }).catch((e) => { console.debug('[blocksupply] GLB failed for', w.id, e && e.message); });
     }
     const owned = (state.ownedWeapons || []).includes(w.id);
     const label = makeLabel(owned ? `${w.name}  ✓` : `${w.name}  $${w.price}`, owned ? '#9fffa0' : '#ffd27f');
@@ -581,6 +583,7 @@ function ensureBlockSupplyDisplays() {
     grp.add(label);
     intr.group.add(grp);
     blockSupplyDisplays.push({ weapon: w, ipos: new THREE.Vector3(wx, 0, wz), label });
+    displayCount++;
     // zone header banner (once per zone)
     if (!zoneHeaderDone[zone]) {
       zoneHeaderDone[zone] = true;
@@ -591,6 +594,8 @@ function ensureBlockSupplyDisplays() {
       intr.group.add(head);
     }
   }
+  console.info('[blocksupply] built', displayCount, 'weapon displays across', Object.keys(zoneCounts).length, 'zones (GLBs swap in async)');
+  debug.set('blockSupplyDisplays', displayCount);
 }
 // Refresh a display's price/name marker after a purchase (owned → ✓).
 function refreshBlockSupplyLabel(entry) {
@@ -836,9 +841,14 @@ async function applyVehicleModels() {
       swapVehicleVisual(dc, (def && def.kitModel) || DEALER_FLEET[i % DEALER_FLEET.length]);
     });
   }
-  console.log('[vehicles] models applied — traffic:', traffic.length, 'dealer:', dealer?.displayCars?.length || 0);
+  // parked HQ cruisers → real POLICE GLB (preload is guaranteed done above, so
+  // they stop looking like white starter cars). Light bar livery is kept.
+  let cruiserGlb = 0;
+  (parkedCruisers || []).forEach((cr) => { if (swapVehicleVisual(cr, 'police')) cruiserGlb++; });
+  console.log('[vehicles] models applied — traffic:', traffic.length, 'dealer:', dealer?.displayCars?.length || 0, 'cruisers:', cruiserGlb);
   debug.set('vehicleModels', traffic.length + (car ? 1 : 0) + (dealer?.displayCars?.length || 0));
   debug.set('glbTraffic', traffic.length);
+  debug.set('glbCruisers', cruiserGlb);
 }
 
 // static shop staff → GLB humanoids
@@ -1251,8 +1261,8 @@ function setupPolicePost(info) {
 function talkToPoliceDesk() {
   missionEvent('talk-police-desk');
   openDialogue({
-    name: 'Civic Safety HQ — Front Desk',
-    text: `Welcome to Civic Safety HQ. Keep the streets clean and obey the lights and you'll never see us. Cause trouble and our patrols roll out. Cruisers out front are official property — don't even think about it.`,
+    name: 'Police Station — Front Desk',
+    text: `Welcome to the Police Station. Keep the streets clean and obey the lights and you'll never see us. Cause trouble and our patrols roll out. The cruisers out front are official police property — don't even think about it.`,
     choices: [
       { label: 'How do I lower my wanted level?', onPick: () => openDialogue({
         name: 'Front Desk',
@@ -1261,7 +1271,7 @@ function talkToPoliceDesk() {
       }) },
       { label: 'Tell me about the academy', onPick: () => openDialogue({
         name: 'Front Desk',
-        text: `The Civic Safety Academy trains the next class of responders — obstacle drills, pursuit driving, the works. Training grounds are coming soon.`,
+        text: `The Police Academy trains the next class of officers — obstacle drills, pursuit driving, the works. Training grounds are coming soon.`,
         choices: [{ label: 'Cool', onPick: () => {} }],
       }) },
       { label: 'Leave', onPick: () => {} },
@@ -1358,7 +1368,7 @@ function registerInteractables(entrances) {
       id: 'police-desk', area: 'city', key: 'e', radius: 2.6,
       getPosition: () => policePost.deskPos,
       enabled: () => !inCar,
-      getPrompt: () => 'Civic Safety front desk',
+      getPrompt: () => 'Police front desk',
       onInteract: () => talkToPoliceDesk(),
     });
   }
@@ -2133,7 +2143,28 @@ function updateNpcHealthBars(dt) {
 
 // Build a foot patrol officer (procedural avatar + navy vest & cap so it reads
 // clearly as police) and drop it on a ring around the player.
+// Where a foot cop ENTERS from: prefer the police station front, else a point
+// offscreen from the player (never on top of them). Returns a world {x,z}.
+function copSpawnPoint() {
+  const pp = player.group.position;
+  // Prefer the police HQ if it's a sensible distance away (so cops walk in from
+  // the station like a real patrol dispatch) — otherwise come in from offscreen.
+  if (policePost && policePost.deskPos) {
+    const d = Math.hypot(policePost.deskPos.x - pp.x, policePost.deskPos.z - pp.z);
+    if (d > 14 && d < 90) {
+      const jx = (Math.random() - 0.5) * 4, jz = (Math.random() - 0.5) * 4;
+      return { x: policePost.deskPos.x + jx, z: policePost.deskPos.z + 2 + jz };
+    }
+  }
+  // offscreen ring: far enough that they appear to arrive, never spawn-camping
+  const ang = Math.random() * Math.PI * 2, R = 30 + Math.random() * 8;
+  return { x: pp.x + Math.cos(ang) * R, z: pp.z + Math.sin(ang) * R };
+}
+
 function spawnFootCop() {
+  // Procedural uniformed base (instant + always valid). A real PSX POLICE GLB is
+  // swapped on top async via applyCopSkin so the officer reads clearly as police
+  // — the procedural body stays as a guaranteed fallback if the GLB fails.
   const av = buildAvatar({ ...defaultCustom(), top: 'hoodie-red', accessory: 'shades', jewelry: 'none' });
   const navy = new THREE.MeshStandardMaterial({ color: '#16224d', roughness: 0.7, metalness: 0.1 });
   const vest = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.66, 0.36), navy);
@@ -2143,11 +2174,15 @@ function spawnFootCop() {
   const badge = new THREE.Mesh(new THREE.CircleGeometry(0.05, 6),
     new THREE.MeshStandardMaterial({ color: '#ffd34d', emissive: '#5a4500', emissiveIntensity: 0.4 }));
   badge.position.set(0.16, 1.36, 0.19); av.group.add(badge);
-  const pp = player.group.position;
-  const ang = Math.random() * Math.PI * 2, R = 16;
-  av.group.position.set(pp.x + Math.cos(ang) * R, 0, pp.z + Math.sin(ang) * R);
+  const sp = copSpawnPoint();
+  av.group.position.set(sp.x, 0, sp.z);
   scene.add(av.group);
-  policeUnits.push({ av, health: 65, t: 0, hitT: 0 });
+  const unit = { av, health: 65, t: 0, hitT: 0 };
+  policeUnits.push(unit);
+  // swap to a real PSX police-officer GLB skin (validated; procedural kept on fail)
+  applyCopSkin(av, renderer)
+    .then((name) => { if (name) { unit.realSkin = name; debug.set('copSkin', name); } })
+    .catch(() => { /* keep procedural uniformed cop */ });
 }
 
 // Build a heavier patrol cruiser that chases the player's car/feet.

@@ -143,6 +143,159 @@ export const WEAPON_CATALOG = [
     upgrades: ['grip_wrap', 'impact_boost'],
     display: 'melee-rack', desc: 'A sturdy wooden plank. Surprisingly effective.',
   },
+
+  // ════════════════════════════════════════════════════════════════════════════
+  //  MAX WEAPON PACK — converted FBX→GLB (tools/convert-fbx.mjs), registered in
+  //  asset-index-v2.json under weapons/maxwp. These stock the Block Supply wall
+  //  with real, varied weapon models. No `slot` → loads straight from the GLB
+  //  asset (procedural placeholder only if the GLB ever fails to load).
+  // ════════════════════════════════════════════════════════════════════════════
+  // ── PISTOLS ──
+  {
+    id: 'mw_revolver_a', name: 'Range Revolver', category: 'pistols', price: 620, ammoType: 'light',
+    mag: 6, reserve: 48, rpm: 200, dmg: 30, pellets: 1, spread: 0.01, reload: 1.8, range: 65, auto: false,
+    icon: '🔫', asset: { pack: 'maxwp', name: 'revolver-a' },
+    upgrades: ['laser_sight', 'fast_trigger', 'quick_reload', 'skin_finish'],
+    display: 'pistol-wall', desc: 'Six-shot range revolver. Hits hard, light ammo.',
+  },
+  {
+    id: 'mw_revolver_b', name: 'Snub Revolver', category: 'pistols', price: 540, ammoType: 'light',
+    mag: 6, reserve: 48, rpm: 240, dmg: 26, pellets: 1, spread: 0.014, reload: 1.6, range: 55, auto: false,
+    icon: '🔫', asset: { pack: 'maxwp', name: 'rvolver-b' },
+    upgrades: ['laser_sight', 'fast_trigger', 'quick_reload', 'skin_finish'],
+    display: 'pistol-wall', desc: 'Compact snub revolver. Quick on the draw.',
+  },
+  {
+    id: 'mw_broom_pistol', name: 'Broomline Pistol', category: 'pistols', price: 700, ammoType: 'light',
+    mag: 10, reserve: 48, rpm: 380, dmg: 20, pellets: 1, spread: 0.012, reload: 1.4, range: 62, auto: false,
+    icon: '🔫', asset: { pack: 'maxwp', name: 'ms-c96' },
+    upgrades: ['ext_mag', 'laser_sight', 'fast_trigger', 'skin_finish'],
+    display: 'pistol-wall', desc: 'Long-barrel target pistol. Light ammo.',
+  },
+  // ── COMPACT (SMG) ──
+  {
+    id: 'mw_smg_lch', name: 'Latchstring SMG', category: 'compact', price: 2100, ammoType: 'compact',
+    mag: 32, reserve: 120, rpm: 850, dmg: 15, pellets: 1, spread: 0.045, reload: 1.9, range: 55, auto: true,
+    icon: '🔫', asset: { pack: 'maxwp', name: 'lchstrgn' },
+    upgrades: ['ext_mag', 'stability', 'recoil_ctrl', 'skin_finish'],
+    display: 'long-wall', desc: 'Rapid compact auto. Compact ammo.',
+  },
+  {
+    id: 'mw_smg_r2014', name: 'R-2014 Compact', category: 'compact', price: 1950, ammoType: 'compact',
+    mag: 28, reserve: 120, rpm: 780, dmg: 16, pellets: 1, spread: 0.05, reload: 1.8, range: 52, auto: true,
+    icon: '🔫', asset: { pack: 'maxwp', name: 'r2014-2806' },
+    upgrades: ['ext_mag', 'stability', 'recoil_ctrl', 'skin_finish'],
+    display: 'long-wall', desc: 'Boxy compact spray gun. Compact ammo.',
+  },
+  // ── RIFLES ──
+  {
+    id: 'mw_rifle_ahkn', name: 'AHKN Rifle', category: 'rifles', price: 3900, ammoType: 'long',
+    mag: 30, reserve: 120, rpm: 620, dmg: 27, pellets: 1, spread: 0.02, reload: 2.2, range: 92, auto: true,
+    icon: '🔫', asset: { pack: 'maxwp', name: 'ahkn-lv' },
+    upgrades: ['scope', 'stability', 'ext_mag', 'recoil_ctrl', 'skin_finish'],
+    display: 'long-wall', desc: 'Hard-hitting automatic rifle. Long ammo.',
+  },
+  {
+    id: 'mw_rifle_ptsk', name: 'PTSK Rifle', category: 'rifles', price: 4100, ammoType: 'long',
+    mag: 32, reserve: 140, rpm: 640, dmg: 25, pellets: 1, spread: 0.019, reload: 2.1, range: 95, auto: true,
+    icon: '🔫', asset: { pack: 'maxwp', name: 'ptsk' },
+    upgrades: ['scope', 'stability', 'ext_mag', 'recoil_ctrl', 'heavy_barrel', 'skin_finish'],
+    display: 'long-wall', desc: 'Balanced service rifle. Long ammo.',
+  },
+  {
+    id: 'mw_rifle_tms', name: 'TMS-1909 Rifle', category: 'rifles', price: 4600, ammoType: 'long',
+    mag: 20, reserve: 100, rpm: 300, dmg: 38, pellets: 1, spread: 0.014, reload: 2.4, range: 110, auto: false,
+    icon: '🔫', asset: { pack: 'maxwp', name: 'tms-1909' },
+    upgrades: ['scope', 'stability', 'dmg_tune', 'heavy_barrel', 'skin_finish'],
+    display: 'long-wall', desc: 'Classic marksman rifle. Long ammo.',
+  },
+  // ── SHOTGUNS ──
+  {
+    id: 'mw_shotgun_cso', name: 'CSO Shotgun', category: 'shotguns', price: 2600, ammoType: 'shells',
+    mag: 6, reserve: 24, rpm: 75, dmg: 13, pellets: 8, spread: 0.10, reload: 2.6, range: 28, auto: false,
+    icon: '🔫', asset: { pack: 'maxwp', name: 'cso' },
+    upgrades: ['quick_reload', 'tight_choke', 'heavy_barrel', 'skin_finish'],
+    display: 'long-wall', desc: 'Tactical scatter shotgun. Shells.',
+  },
+  {
+    id: 'mw_shotgun_sasg', name: 'SASG Auto Shotgun', category: 'shotguns', price: 3200, ammoType: 'shells',
+    mag: 8, reserve: 32, rpm: 120, dmg: 11, pellets: 7, spread: 0.12, reload: 2.8, range: 26, auto: true,
+    icon: '🔫', asset: { pack: 'maxwp', name: 'sasg' },
+    upgrades: ['ext_mag', 'tight_choke', 'recoil_ctrl', 'skin_finish'],
+    display: 'long-wall', desc: 'Semi-auto scatter blaster. Shells.',
+  },
+  // ── HEAVY / SPECIAL (featured wall) ──
+  {
+    id: 'mw_bazooka', name: 'Block Bazooka', category: 'heavy', price: 18000, ammoType: 'rocket',
+    mag: 1, reserve: 5, rpm: 28, dmg: 150, pellets: 1, spread: 0, reload: 3.8, range: 170, auto: false, splash: 6.5,
+    icon: '🚀', asset: { pack: 'maxwp', name: 'bazooka' },
+    upgrades: ['quick_reload', 'dmg_tune', 'skin_finish'],
+    display: 'featured', desc: 'Shoulder-fired arcade bazooka. Rocket rounds.',
+  },
+  {
+    id: 'mw_gatling', name: 'Gatling Cannon', category: 'heavy', price: 22000, ammoType: 'long',
+    mag: 100, reserve: 200, rpm: 1100, dmg: 18, pellets: 1, spread: 0.06, reload: 4.5, range: 100, auto: true,
+    icon: '🔫', asset: { pack: 'maxwp', name: 'gahtling' },
+    upgrades: ['stability', 'recoil_ctrl', 'dmg_tune', 'skin_finish'],
+    display: 'featured', desc: 'Spinning-barrel heavy auto. Long ammo.',
+  },
+  {
+    id: 'mw_crossbow', name: 'Bolt Crossbow', category: 'precision', price: 5200, ammoType: 'precision',
+    mag: 1, reserve: 20, rpm: 40, dmg: 80, pellets: 1, spread: 0, reload: 2.4, range: 140, auto: false,
+    icon: '🏹', asset: { pack: 'maxwp', name: 'cross-bow' },
+    upgrades: ['scope', 'precision', 'quick_reload', 'skin_finish'],
+    display: 'featured', desc: 'Silent precision crossbow. Precision ammo.',
+  },
+  // ── MELEE & TOOLS (melee rack) ──
+  {
+    id: 'mw_melee_bat', name: 'Slugger Bat', category: 'melee', melee: true, price: 180, ammoType: null,
+    mag: Infinity, reserve: Infinity, rpm: 95, dmg: 25, pellets: 1, spread: 0, reload: 0, range: 2.6,
+    icon: '🏏', asset: { pack: 'maxwp', name: 'melee-bat' }, shape: 'bat',
+    upgrades: ['grip_wrap', 'swing_speed', 'impact_boost', 'skin_finish'],
+    display: 'melee-rack', desc: 'A real wooden slugger. Solid swing.',
+  },
+  {
+    id: 'mw_melee_axe', name: 'Camp Axe', category: 'melee', melee: true, price: 260, ammoType: null,
+    mag: Infinity, reserve: Infinity, rpm: 70, dmg: 34, pellets: 1, spread: 0, reload: 0, range: 2.4,
+    icon: '🪓', asset: { pack: 'maxwp', name: 'melee-axe' }, shape: 'bat',
+    upgrades: ['grip_wrap', 'swing_speed', 'impact_boost'],
+    display: 'melee-rack', desc: 'A heavy camp axe. Big chops.',
+  },
+  {
+    id: 'mw_melee_crowbar', name: 'Pry Crowbar', category: 'tools', melee: true, price: 160, ammoType: null,
+    mag: Infinity, reserve: Infinity, rpm: 85, dmg: 26, pellets: 1, spread: 0, reload: 0, range: 2.4,
+    icon: '🪛', asset: { pack: 'maxwp', name: 'melee-crowbar' }, shape: 'pipe',
+    upgrades: ['grip_wrap', 'swing_speed'],
+    display: 'melee-rack', desc: 'Trusty steel crowbar. Opens things and bonks.',
+  },
+  {
+    id: 'mw_melee_knife', name: 'Camp Knife', category: 'melee', melee: true, price: 110, ammoType: null,
+    mag: Infinity, reserve: Infinity, rpm: 140, dmg: 18, pellets: 1, spread: 0, reload: 0, range: 2.0,
+    icon: '🔪', asset: { pack: 'maxwp', name: 'melee-knife-a' }, shape: 'plank',
+    upgrades: ['grip_wrap', 'swing_speed'],
+    display: 'melee-rack', desc: 'Quick camp knife. Fast, short reach.',
+  },
+  {
+    id: 'mw_melee_shovel', name: 'Dig Shovel', category: 'tools', melee: true, price: 140, ammoType: null,
+    mag: Infinity, reserve: Infinity, rpm: 65, dmg: 28, pellets: 1, spread: 0, reload: 0, range: 2.7,
+    icon: '🪏', asset: { pack: 'maxwp', name: 'melee-shovel' }, shape: 'pipe',
+    upgrades: ['grip_wrap', 'impact_boost'],
+    display: 'melee-rack', desc: 'A sturdy digging shovel. Long reach.',
+  },
+  {
+    id: 'mw_melee_pickaxe', name: 'Mine Pickaxe', category: 'tools', melee: true, price: 220, ammoType: null,
+    mag: Infinity, reserve: Infinity, rpm: 62, dmg: 32, pellets: 1, spread: 0, reload: 0, range: 2.6,
+    icon: '⛏️', asset: { pack: 'maxwp', name: 'melee-pickaxe' }, shape: 'pipe',
+    upgrades: ['grip_wrap', 'impact_boost'],
+    display: 'melee-rack', desc: 'Heavy mining pickaxe. Hard hits.',
+  },
+  {
+    id: 'mw_melee_pan', name: 'Frying Pan', category: 'tools', melee: true, price: 80, ammoType: null,
+    mag: Infinity, reserve: Infinity, rpm: 90, dmg: 22, pellets: 1, spread: 0, reload: 0, range: 2.2,
+    icon: '🍳', asset: { pack: 'maxwp', name: 'melee-frying-pan' }, shape: 'wrench',
+    upgrades: ['grip_wrap', 'impact_boost'],
+    display: 'melee-rack', desc: 'A clangy frying pan. Surprisingly effective.',
+  },
 ];
 
 // ── lookups / helpers (scalable; no hardcoded id lists elsewhere) ──────────────

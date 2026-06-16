@@ -87,7 +87,7 @@ export const FEATURES = [
 // interaction (academy info) and two parked cruisers the player can try to
 // steal (raises wanted). Fictional civic naming (no real agency).
 export const POLICE_POST = {
-  id: 'police', name: 'CIVIC SAFETY HQ',
+  id: 'police', name: 'POLICE STATION',
   x: 48, z: -24, w: 12, d: 10, h: 7,
   color: '#27324a', sign: '#9fd0ff', face: [-1, 0],
   lot: { cx: 41, cz: -24, w: 6, d: 9 },

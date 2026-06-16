@@ -117,6 +117,29 @@ export async function applyNpcSkins(npcs, renderer, max = 99) {
   return done;
 }
 
+// PSX police roster (uniformed officers, each with a built-in clip). Used for
+// foot-patrol cops so they read clearly as POLICE instead of a hooded civilian.
+const POLICE = [
+  'character-17-police', 'character-18-police', 'character-19-police',
+  'character-20-police', 'character-21-police', 'character-22-police',
+  'character-17-female-police', 'character-18-female-police', 'character-19-female-police',
+  'character-20-female-police', 'character-25-female-police', 'character-26-female-police',
+];
+
+// Replace a foot-cop's procedural body with a real PSX POLICE OFFICER GLB.
+// Validated like every other skin — if it fails, the procedural cop is kept.
+export async function applyCopSkin(avatar, renderer) {
+  try {
+    const name = pick(POLICE);
+    const glb = await loadAsset('characters', 'psx', name, renderer);
+    if (glb && skinAvatar(avatar, glb, { height: 1.82, label: 'cop:' + name })) {
+      avatar.realSkin = true;
+      return name;
+    }
+  } catch { /* keep procedural */ }
+  return null;
+}
+
 // Replace the player's procedural body with a PSX humanoid GLB skin.
 // seed picks a stable model per save so the player looks consistent.
 export async function applyPlayerSkin(avatar, renderer, seed = 0) {
