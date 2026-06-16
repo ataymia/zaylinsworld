@@ -711,10 +711,17 @@ function buildProceduralGasStation() {
   refuelPoints = [{ x: GX + 1.4, z: GZ, r: 7, id: 'gas-proc', price: 1.2 }];
   if (minimap) addTownMarkers([{ x: GX, z: GZ, color: '#ffd54a', icon: '⛽' }]);
   console.info('[gas] gas station placed at', GX, GZ, '(store door', doorPos.x, doorPos.z + ')');
-  // load the real 6twelve GLB and swap it in for the procedural box art if it
-  // passes finite/size/footprint checks; the refuel zone + store door are kept
-  // either way, so the fuel + shopping loops can never break.
-  tryGasStationGLB(GX, GZ, grp, procColliders);
+  // NOTE: the uploaded 6twelve gas-station.glb is a FULL station — it bakes the
+  // entire convenience-store INTERIOR (shelving, cereal/candy racks, fryers,
+  // boxes, checkout) inside a glass shell. Dropping it into the open city made
+  // that interior render through the glass as a "shelf maze" outside. With 961
+  // nodes there's no reliable exterior/interior split, so we DELIBERATELY keep
+  // the clean procedural station exterior above (canopy + pumps + store box +
+  // sign + price board) and serve the store as the separate walkable interior
+  // room (interiors.byId.gas). Do NOT re-enable the city GLB without a verified
+  // exterior-only node filter.
+  debug.set('gasStationGLB', false);
+  // tryGasStationGLB(GX, GZ, grp, procColliders);  // disabled: GLB includes interior clutter
 }
 
 // Attempt to load the 6twelve gas-station GLB and swap it in for the procedural
@@ -1301,7 +1308,34 @@ function talkToPoliceDesk() {
   });
 }
 
-// ── register ALL interactables (each has a real working action) ───────────────
+// Evidence locker (inside the police station). A real, gated interaction — it's
+// restricted, but it reports the player's current heat and what it holds rather
+// than being a dead prop. Tampering when you have heat bumps your wanted level.
+function openEvidenceLocker() {
+  missionEvent('police-evidence');
+  const heat = state.wanted || 0;
+  const held = state.evidenceSeized || 0;
+  openDialogue({
+    name: 'Evidence Locker — RESTRICTED',
+    text: held > 0
+      ? `Confiscated property is logged here. The shelves hold ${held} sealed bag${held === 1 ? '' : 's'} with your name on the tag. Access is restricted to officers.`
+      : `Sealed evidence bags line the shelves behind a locked cage. Access is restricted to officers — nothing of yours is in here right now.`,
+    choices: [
+      { label: 'Inspect the cage', onPick: () => openDialogue({
+        name: 'Evidence Locker',
+        text: `Steel mesh, biometric lock, camera overhead. You'd need real clearance — or a lot more trouble — to get in here. (Confiscated-item recovery is coming soon.)`,
+        choices: [{ label: 'Back off', onPick: () => {} }],
+      }) },
+      heat > 0
+        ? { label: 'Try the lock anyway', onPick: () => {
+            state.wanted = Math.min(5, (state.wanted || 0) + 1);
+            notify('The camera catches you — heat goes up!');
+          } }
+        : { label: 'Leave it alone', onPick: () => {} },
+      { label: 'Walk away', onPick: () => {} },
+    ],
+  });
+}
 function registerInteractables(entrances) {
   manager.clear();
 
@@ -2866,6 +2900,7 @@ function runStation(intr, st) {
     case 'repair': repairVehicle(); break;
     case 'weapon-shop': openWeaponShop(); break;
     case 'police-desk': talkToPoliceDesk(); break;
+    case 'evidence-locker': openEvidenceLocker(); break;
     default: notify('Nothing happens here.');
   }
 }

@@ -787,9 +787,11 @@ export function buildInteriors() {
       hair: 'low-fade', hairColor: 'jet', top: 'jersey-grn', bottom: 'jeans-black',
       shoes: 'boots-tan', accessory: 'none', jewelry: 'none' }, o.x - 5, o.z + 2.6, Math.PI);
     r.group.add(sergeant.group);
+    // patrol officer stands in the OPEN lobby (clear of the cell walls + desk) so
+    // he never clips into the holding-cell geometry along the back wall.
     const officer = staticNPC({ skin: 'umber', face: 'oval', body: 'athletic', height: 'tall',
       hair: 'taper-fade', hairColor: 'jet', top: 'jacket-tan', bottom: 'jeans-black',
-      shoes: 'boots-tan', accessory: 'shades', jewelry: 'none' }, o.x + 8.5, o.z - 3.8, Math.PI * 0.9);
+      shoes: 'boots-tan', accessory: 'shades', jewelry: 'none' }, o.x + 1.5, o.z + 3.2, Math.PI);
     r.group.add(officer.group);
 
     byId.police = {
@@ -798,10 +800,11 @@ export function buildInteriors() {
       avatars: [sergeant, officer], npcSlot: 'npc_basic_01',
       npcs: [
         { name: 'Sgt. Diaz', role: 'sergeant', pos: new THREE.Vector3(o.x - 5, 0, o.z + 2.2), dialogue: 'police-desk' },
-        { name: 'Officer Reed', role: 'officer', pos: new THREE.Vector3(o.x + 8.5, 0, o.z - 3.4), dialogue: 'police-desk' },
+        { name: 'Officer Reed', role: 'officer', pos: new THREE.Vector3(o.x + 1.5, 0, o.z + 2.6), dialogue: 'police-desk' },
       ],
       stations: [
         { id: 'police-desk-int', type: 'police-desk', pos: new THREE.Vector3(o.x - 5, 0, o.z + 3.0), label: 'Front Desk (Check Wanted / Academy)' },
+        { id: 'police-evidence', type: 'evidence-locker', pos: new THREE.Vector3(o.x - 9.6, 0, o.z - 3.8), label: 'Evidence Locker' },
         { id: 'police-academy', type: 'police-desk', pos: new THREE.Vector3(o.x + 9, 0, o.z - 3.6), label: 'Recruitment Desk' },
       ],
     };
