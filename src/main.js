@@ -20,10 +20,12 @@ import {
   initWeapons, updateWeapons, buyWeapon, equipWeapon, cycleWeapon,
   WEAPONS, weaponById, currentWeapon,
   buyAmmo, buyUpgrade, equipUpgrade, ammoInfo, AMMO_TYPES,
+  setFirstPersonView,
 } from './weapons.js';
-import { CATEGORIES, weaponsForTab, ownedAmmoTypes } from './config/weaponCatalog.js';
+import { CATEGORIES, weaponsForTab, ownedAmmoTypes, allWeapons } from './config/weaponCatalog.js';
 import { upgradeById } from './config/weaponUpgrades.js';
 import { resolveTransform } from './config/weaponTransforms.js';
+import { zoneSlot, SHOP_ZONES } from './config/blockSupplyLayout.js';
 import { initMissions, missionEvent, renderTracker } from './missions.js';
 import { spawnMonsters, updateMonsters, clearMonsters } from './monsters.js';
 import { applyNpcSkins, applyPlayerSkin } from './avatarSkin.js';
@@ -323,20 +325,48 @@ function playerSkinSeed() {
 // weapons get a stylized procedural shape (bat / pipe / wrench / plank).
 let heldWeaponProp = null;
 let heldWeaponToken = 0;
+// Drives the melee swing arc overlay on the right arm (seconds remaining).
+let meleeSwingT = 0;
+function triggerMeleeSwing() { meleeSwingT = 0.26; }
+// ── grip tuning (dev) ─────────────────────────────────────────────────────────
+// Live per-weapon hand-transform nudges, persisted to localStorage so a tuned
+// grip survives a reload. Press P to toggle the grip-debug overlay, then nudge
+// with I/K (forward/back), J/L (left/right), U/O (up/down), [ ] (rotate),
+// - / = (scale). The overlay shows the active id, category, anchor and live
+// pos/rot/fit + hand world position so the grip can be dialed in by eye.
+let gripDebug = false;
+let gripOverrides = {};
+try { gripOverrides = JSON.parse(localStorage.getItem('zw.gripOverrides') || '{}') || {}; } catch { gripOverrides = {}; }
+function saveGripOverrides() { try { localStorage.setItem('zw.gripOverrides', JSON.stringify(gripOverrides)); } catch { /* ignore */ } }
+// Merge a live override (if any) over the configured transform for a weapon.
+function gripTransformFor(w) {
+  const tf = resolveTransform(w, 'hand');
+  const ov = gripOverrides[w.id];
+  if (ov) {
+    if (ov.pos) tf.pos = ov.pos.slice();
+    if (ov.rot) tf.rot = ov.rot.slice();
+    if (ov.fit != null) tf.fit = ov.fit;
+  }
+  return tf;
+}
 function mountHeldWeapon() {
   if (!player) return;
   const arm = player.parts && player.parts.rightArm;
   if (!arm) return;
+  // Prefer the dedicated fist grip anchor so the weapon seats IN the hand rather
+  // than floating off the wrist; fall back to the arm if the anchor is missing.
+  const hand = (player.parts.anchors && player.parts.anchors.right_hand) || arm;
   if (heldWeaponProp) { heldWeaponProp.parent?.remove(heldWeaponProp); heldWeaponProp = null; }
   const w = currentWeapon();
   if (!w || w.id === 'fists') return;            // bare fists → nothing in hand
   const holder = new THREE.Group();
   holder.name = 'heldweapon';                    // kept visible even under a GLB skin
-  holder.position.set(0, -0.6, 0.06);            // seat at the hand end of the arm
-  arm.add(holder);
+  holder.position.set(0, 0, 0);                  // anchor is already at the fist
+  hand.add(holder);
   heldWeaponProp = holder;
+  holder.userData.anchorName = (hand === arm) ? 'rightArm' : 'right_hand';
 
-  const tf = resolveTransform(w, 'hand');
+  const tf = gripTransformFor(w);
   // instant procedural placeholder so the hand is never empty while the GLB loads
   const placeholder = buildProceduralWeaponMesh(w, tf.fit);
   applyHandTransform(placeholder, tf);
@@ -352,11 +382,79 @@ function mountHeldWeapon() {
       holder.add(model);
     }).catch((e) => console.debug('[heldweapon] GLB load failed, keeping placeholder', e && e.message));
   }
+  if (gripDebug) updateGripDebug();
 }
 
 function applyHandTransform(obj, tf) {
   obj.position.set(tf.pos[0], tf.pos[1], tf.pos[2]);
   obj.rotation.set(tf.rot[0], tf.rot[1], tf.rot[2]);
+}
+
+// ── grip-debug overlay + dev nudge controls ──────────────────────────────────
+function gripDebugEl() {
+  let el = document.getElementById('grip-debug');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'grip-debug';
+    el.style.cssText = 'position:fixed;left:12px;top:120px;z-index:200;font:12px/1.5 monospace;' +
+      'background:rgba(8,12,20,.86);color:#d8e6ff;padding:10px 12px;border:1px solid #2c4a6e;' +
+      'border-radius:8px;max-width:300px;pointer-events:none;white-space:pre;';
+    document.body.appendChild(el);
+  }
+  return el;
+}
+function toggleGripDebug() {
+  gripDebug = !gripDebug;
+  const el = gripDebugEl();
+  el.style.display = gripDebug ? 'block' : 'none';
+  if (gripDebug) updateGripDebug();
+  notify(gripDebug ? '🛠️ Grip debug ON — I/K J/L U/O move · [ ] rotate · -/= scale' : 'Grip debug off');
+}
+function updateGripDebug() {
+  if (!gripDebug) return;
+  const el = gripDebugEl();
+  const w = currentWeapon();
+  if (!w || w.id === 'fists') { el.textContent = 'Grip debug — equip a weapon (fists = none)'; return; }
+  const tf = gripTransformFor(w);
+  const r = (n) => (Math.round(n * 1000) / 1000).toFixed(3);
+  const deg = (n) => (Math.round((n * 180 / Math.PI) * 10) / 10);
+  let handWorld = '—';
+  const hand = player && player.parts && player.parts.anchors && player.parts.anchors.right_hand;
+  if (hand) { const v = new THREE.Vector3(); hand.getWorldPosition(v); handWorld = `${r(v.x)}, ${r(v.y)}, ${r(v.z)}`; }
+  const anchor = heldWeaponProp ? (heldWeaponProp.userData.anchorName || '?') : '—';
+  const tuned = gripOverrides[w.id] ? ' (tuned*)' : '';
+  el.textContent =
+    `GRIP DEBUG${tuned}\n` +
+    `id     : ${w.id}\n` +
+    `cat    : ${w.category}\n` +
+    `anchor : ${anchor}\n` +
+    `pos    : ${r(tf.pos[0])}, ${r(tf.pos[1])}, ${r(tf.pos[2])}\n` +
+    `rot°   : ${deg(tf.rot[0])}, ${deg(tf.rot[1])}, ${deg(tf.rot[2])}\n` +
+    `fit    : ${r(tf.fit)}\n` +
+    `hand→world: ${handWorld}`;
+}
+// Apply a nudge to the equipped weapon's live grip override, then remount.
+function nudgeGrip(dPos = [0, 0, 0], dRot = [0, 0, 0], dFit = 0) {
+  const w = currentWeapon();
+  if (!w || w.id === 'fists') return;
+  const tf = gripTransformFor(w);
+  const ov = gripOverrides[w.id] = gripOverrides[w.id] || {};
+  ov.pos = [tf.pos[0] + dPos[0], tf.pos[1] + dPos[1], tf.pos[2] + dPos[2]];
+  ov.rot = [tf.rot[0] + dRot[0], tf.rot[1] + dRot[1], tf.rot[2] + dRot[2]];
+  ov.fit = Math.max(0.05, tf.fit + dFit);
+  saveGripOverrides();
+  mountHeldWeapon();
+  updateGripDebug();
+  console.debug('[grip] override for', w.id, JSON.stringify(ov));
+}
+function resetGrip() {
+  const w = currentWeapon();
+  if (!w || gripOverrides[w.id] == null) return;
+  delete gripOverrides[w.id];
+  saveGripOverrides();
+  mountHeldWeapon();
+  updateGripDebug();
+  notify('↩️ Grip reset for ' + w.name);
 }
 
 // Normalize a loaded scene: longest axis → fit metres, recentred into a wrapper.
@@ -378,8 +476,12 @@ async function loadHeldWeaponModel(w, fit) {
   let model = null;
   try {
     if (w.slot) model = await loadSlotModel('weapons', w.slot, renderer);
-    else if (w.asset) model = await loadAsset('weapons', w.asset.pack, w.asset.name, renderer);
   } catch { model = null; }
+  // Fall back to the catalog's named asset if the manifest slot is missing, so a
+  // real GLB is used whenever one exists (rather than the procedural placeholder).
+  if (!(model && (model.scene || model.isObject3D)) && w.asset) {
+    try { model = await loadAsset('weapons', w.asset.pack, w.asset.name, renderer); } catch { model = null; }
+  }
   const scene = model && (model.scene || (model.isObject3D ? model : null));
   if (!scene) return null;
   return fitWeaponModel(scene, fit);
@@ -415,8 +517,92 @@ function buildProceduralWeaponMesh(w, fit = 0.5) {
   return fitWeaponModel(g, fit);
 }
 
-// ── real 3D asset wiring (GLB swaps with procedural fallback) ─────────────────
-const extraSpinners = [];   // display models that idle-rotate (e.g. jewelry)
+// ── Block Supply physical weapon displays (P4) ────────────────────────────────
+// Spreads every catalog weapon across the store's wall/rack zones as a real
+// model on a backing plate with a price/name marker. Each display is registered
+// as an interactable (built lazily once; interactables re-registered each pass).
+let blockSupplyBuilt = false;
+const blockSupplyDisplays = [];   // { weapon, ipos:Vector3, label, owned }
+function ensureBlockSupplyDisplays() {
+  if (blockSupplyBuilt) return;
+  const intr = interiors && interiors.byId && interiors.byId.blocksupply;
+  if (!intr || !intr.group) return;
+  blockSupplyBuilt = true;
+  const off = intr.offset || { x: 0, z: 0 };
+  const plateMat = new THREE.MeshStandardMaterial({ color: '#10141c', roughness: 0.85, metalness: 0.2 });
+  const zoneCounts = {};
+  const zoneHeaderDone = {};
+  for (const w of allWeapons()) {
+    if (w.id === 'fists') continue;                       // fists are never a display
+    const zone = SHOP_ZONES[w.display] ? w.display : 'featured';
+    const idx = (zoneCounts[zone] = (zoneCounts[zone] || 0));
+    zoneCounts[zone] = idx + 1;
+    const slot = zoneSlot(zone, idx);
+    const wx = off.x + slot.pos[0], wy = slot.pos[1], wz = off.z + slot.pos[2];
+    const disp = resolveTransform(w, 'display');
+    const grp = new THREE.Group();
+    grp.position.set(wx, wy, wz);
+    grp.rotation.y = slot.facing + (disp.rot[1] || 0);
+    const plate = new THREE.Mesh(new THREE.BoxGeometry(0.72, 0.72, 0.06), plateMat);
+    plate.position.set(0, 0, -0.14); grp.add(plate);
+    // instant procedural model, async-swap to the real GLB when present
+    let mesh = buildProceduralWeaponMesh(w, disp.fit);
+    mesh.rotation.set(disp.rot[0] || 0, 0, disp.rot[2] || 0);
+    grp.add(mesh);
+    if (w.slot || w.asset) {
+      loadHeldWeaponModel(w, disp.fit).then((model) => {
+        if (!model) return;
+        grp.remove(mesh); mesh = model;
+        model.rotation.set(disp.rot[0] || 0, 0, disp.rot[2] || 0);
+        grp.add(model);
+      }).catch(() => { /* keep procedural */ });
+    }
+    const owned = (state.ownedWeapons || []).includes(w.id);
+    const label = makeLabel(owned ? `${w.name}  ✓` : `${w.name}  $${w.price}`, owned ? '#9fffa0' : '#ffd27f');
+    label.position.set(0, 0.52, 0); label.scale.multiplyScalar(0.82);
+    grp.add(label);
+    intr.group.add(grp);
+    blockSupplyDisplays.push({ weapon: w, ipos: new THREE.Vector3(wx, 0, wz), label });
+    // zone header banner (once per zone)
+    if (!zoneHeaderDone[zone]) {
+      zoneHeaderDone[zone] = true;
+      const z = SHOP_ZONES[zone];
+      const head = makeLabel(z.label.toUpperCase(), '#7fd0ff');
+      head.position.set(off.x + z.origin[0], z.origin[1] + 0.85, off.z + z.origin[2]);
+      head.scale.multiplyScalar(1.05);
+      intr.group.add(head);
+    }
+  }
+}
+// Refresh a display's price/name marker after a purchase (owned → ✓).
+function refreshBlockSupplyLabel(entry) {
+  if (!entry || !entry.label) return;
+  const w = entry.weapon;
+  const owned = (state.ownedWeapons || []).includes(w.id);
+  const next = makeLabel(owned ? `${w.name}  ✓` : `${w.name}  $${w.price}`, owned ? '#9fffa0' : '#ffd27f');
+  entry.label.material.map = next.material.map;
+  entry.label.material.needsUpdate = true;
+}
+// Per-weapon purchase / details panel opened by clicking a wall display.
+function openWeaponDisplay(entry) {
+  const w = entry.weapon;
+  const owned = (state.ownedWeapons || []).includes(w.id);
+  const stat = w.melee
+    ? `Melee · dmg ${w.dmg} · reach ${w.range}m`
+    : `dmg ${w.dmg} · mag ${w.mag} · ${w.auto ? 'auto' : 'semi'} · ${w.rpm} rpm`;
+  const choices = [];
+  if (!owned) {
+    choices.push({ label: `Buy ${w.name}  ($${w.price})`, onPick: () => { if (buyWeapon(w.id)) { refreshBlockSupplyLabel(entry); equipWeapon(w.id); } return undefined; } });
+  } else {
+    choices.push({ label: `Equip ${w.name}`, onPick: () => { equipWeapon(w.id); } });
+    if (!w.melee) choices.push({ label: 'Restock ammo for this', onPick: () => { buyWeapon(w.id); return undefined; } });
+  }
+  choices.push({ label: 'Open full catalog', onPick: () => { openWeaponShop(); } });
+  choices.push({ label: 'Close', onPick: () => {} });
+  openDialogue({ name: `${w.icon} ${w.name}`, text: `${w.desc}\n${stat}`, choices });
+}
+
+
 
 // Strategy: keep MOVING things procedural (player + city NPCs animate, traffic &
 // drivable car spin their wheels). Swap STATIC things to real GLBs — interior
@@ -497,57 +683,36 @@ async function tryGasStationGLB(GX, GZ, procGroup, procColliders) {
     const res = await loadAsset('buildings', 'gas-station', 'gas-station', renderer);
     if (!res || !res.scene) { console.warn('[gas] GLB missing/decode-failed — keeping procedural'); debug.set('gasStationGLB', false); return; }
     const obj = res.scene;
-    // Measure MESH-ONLY bounds. Stray empty nodes / lights far from the model
-    // can inflate a full-object Box3 and make the scaled building look tiny — so
-    // only the visible geometry decides the size.
-    const box = new THREE.Box3();
-    let hasMesh = false;
-    obj.traverse((o) => { if (o.isMesh && o.geometry) { o.updateWorldMatrix(true, false); box.expandByObject(o); hasMesh = true; } });
-    if (!hasMesh) box.setFromObject(obj);
+    const box = new THREE.Box3().setFromObject(obj);
     const size = new THREE.Vector3(); box.getSize(size);
     if (![size.x, size.y, size.z].every(Number.isFinite)) {
-      console.warn('[gas] GLB rejected: non-finite bounds'); debug.showError && debug.showError('gas GLB rejected: non-finite bounds'); return;
+      debug.showError && debug.showError('gas GLB rejected: non-finite bounds'); return;
     }
-    const footprint = Math.max(size.x, size.z);
     const maxDim = Math.max(size.x, size.y, size.z);
     if (!(maxDim > 0.01)) { console.warn('[gas] GLB rejected: degenerate/zero size'); return; }
-    // Scale by the horizontal FOOTPRINT to a believable building width (~14u).
-    // Flooring on footprint (not longest axis) keeps a tall, narrow asset from
-    // shrinking to a speck. Clamp the scale so it can be neither tiny nor giant.
-    const TARGET_FOOTPRINT = 14;
-    let scale = TARGET_FOOTPRINT / (footprint || maxDim);
+    // normalize so the longest side is ~12 units (the intended footprint), then
+    // re-measure and reject anything still oversized.
+    const scale = 12 / maxDim;
     if (!Number.isFinite(scale) || scale <= 0) { console.warn('[gas] GLB rejected: bad scale'); return; }
-    scale = Math.max(0.05, Math.min(scale, 500));   // safe cap both ways
     obj.scale.setScalar(scale);
     obj.updateWorldMatrix(true, true);
-    const box2 = new THREE.Box3();
-    obj.traverse((o) => { if (o.isMesh && o.geometry) box2.expandByObject(o); });
-    if (box2.isEmpty()) box2.setFromObject(obj);
+    const box2 = new THREE.Box3().setFromObject(obj);
     const size2 = new THREE.Vector3(); box2.getSize(size2);
-    // Reject only the truly broken extremes; a believable building is ~6–22u wide.
-    if (Math.max(size2.x, size2.z) > 40 || size2.y > 24 || Math.max(size2.x, size2.z) < 3) {
-      console.warn('[gas] GLB rejected: implausible footprint after scale', size2);
-      debug.showError && debug.showError('gas GLB rejected: implausible footprint'); return;
+    if (Math.max(size2.x, size2.z) > 24 || size2.y > 16) {
+      console.warn('[gas] GLB rejected: footprint too large after scale', size2);
+      debug.showError && debug.showError('gas GLB rejected: oversized footprint'); return;
     }
     // seat it on the ground at the station centre
-    obj.position.set(GX - (box2.min.x + box2.max.x) / 2, -box2.min.y, GZ - (box2.min.z + box2.max.z) / 2);
+    obj.position.set(GX, -box2.min.y, GZ);
     obj.name = 'gas-station-glb';
-    obj.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; o.frustumCulled = false; } });
     // SWAP: hide the procedural visuals + drop their pump colliders (the GLB is
     // decorative so the forecourt stays drivable and the refuel zone stays clear).
     procGroup.visible = false;
     for (const c of procColliders) { const i = cityColliders.indexOf(c); if (i >= 0) cityColliders.splice(i, 1); }
     scene.add(obj);
-    // Collide the rear ~third of the building (the store shell) so you can't drive
-    // through it, while leaving the forecourt/pumps open for refuelling.
-    obj.updateWorldMatrix(true, true);
-    const bWorld = new THREE.Box3().setFromObject(obj);
-    const shell = bWorld.clone();
-    shell.min.z = shell.max.z - (bWorld.max.z - bWorld.min.z) * 0.34;
-    cityColliders.push(shell);
     debug.set('gasStationGLB', true);
     console.info('[gas] gas-station GLB placed (scale', scale.toFixed(3), '| footprint',
-      size2.x.toFixed(1) + '×' + size2.z.toFixed(1) + ' | height ' + size2.y.toFixed(1) + ')');
+      size2.x.toFixed(1) + '×' + size2.z.toFixed(1) + ')');
   } catch (e) {
     console.warn('[gas] GLB load threw — keeping procedural:', e);
     debug.showError && debug.showError('gas GLB: ' + (e && e.message || e));
@@ -782,37 +947,7 @@ const TRASH_TARGET = 14;            // how many litter pieces exist at once
 let trashRespawnAccum = 0;         // real seconds since last respawn top-up
 
 // One litter mesh (alternating bag / can). Returned ungrounded at origin.
-// Uses the REAL trash assets from the pack (restaurant trash-bag / trash-can)
-// and async-swaps them in over a clean procedural placeholder so litter looks
-// like proper props, not coded blobs. Falls back to the procedural shape only
-// if the GLB is missing or fails a basic size sanity check.
 function makeTrashPiece(i) {
-  const piece = new THREE.Group();
-  const ph = buildProceduralTrash(i);
-  piece.add(ph);
-  // alternate the two real props so the streets read with variety
-  const name = (i % 2 === 0) ? 'trash-bag' : 'trash-can';
-  loadAsset('interiors', 'restaurant', name, renderer).then((model) => {
-    const scene = model && (model.scene || (model.isObject3D ? model : null));
-    if (!scene) return;                          // keep clean procedural fallback
-    const inst = scene.clone(true);
-    inst.traverse(o => { if (o.isMesh) { o.castShadow = true; o.frustumCulled = false; } });
-    // normalize to a believable litter size (~0.4-0.5m) and ground it
-    const b = new THREE.Box3().setFromObject(inst);
-    const size = b.getSize(new THREE.Vector3());
-    const longest = Math.max(size.x, size.y, size.z) || 1;
-    if (!isFinite(longest) || longest <= 0) return;
-    inst.scale.multiplyScalar(0.5 / longest);
-    const b2 = new THREE.Box3().setFromObject(inst);
-    inst.position.y -= b2.min.y;                  // sit on the ground
-    piece.remove(ph);
-    piece.add(inst);
-  }).catch(() => { /* keep procedural fallback */ });
-  return piece;
-}
-// Clean procedural litter (fallback only): a tidy bag or a can + cup. No ugly
-// debug shapes — these read as believable street litter on their own.
-function buildProceduralTrash(i) {
   const trashMat = new THREE.MeshStandardMaterial({ color: '#6b6f55', roughness: 0.9 });
   const bagMat = new THREE.MeshStandardMaterial({ color: '#2b2f3a', roughness: 0.85 });
   const piece = new THREE.Group();
@@ -1119,6 +1254,22 @@ function registerInteractables(entrances) {
       });
     });
   });
+  // Block Supply physical weapon displays — each wall/rack item is interactable
+  // and opens its own purchase/details panel (built once, registered each pass).
+  if (interiors.byId.blocksupply) {
+    ensureBlockSupplyDisplays();
+    blockSupplyDisplays.forEach((entry, i) => {
+      manager.register({
+        id: `wdisp-${i}`, area: 'blocksupply', key: 'e', radius: 1.7,
+        getPosition: () => entry.ipos,
+        getPrompt: () => {
+          const owned = (state.ownedWeapons || []).includes(entry.weapon.id);
+          return owned ? `Inspect ${entry.weapon.name}` : `${entry.weapon.name} — $${entry.weapon.price}`;
+        },
+        onInteract: () => openWeaponDisplay(entry),
+      });
+    });
+  }
 }
 
 // ── interiors enter/leave ───────────────────────────────────────────────────
@@ -1667,7 +1818,7 @@ function getWeaponTargets() {
 // Firing a gun in public is a crime → alerts police.
 function onWeaponShot(hitAny, isMelee) {
   if (hitAny) flashHitMarker();                  // brief ✕ marker when a shot lands
-  if (isMelee) { if (hitAny) missionEvent('fight'); return; }
+  if (isMelee) { triggerMeleeSwing(); if (hitAny) missionEvent('fight'); return; }
   if (area !== 'city') return;
   if ((state.wanted || 0) < 1) { state.wanted = 1; notify('🚨 Shots fired! Police alerted.'); }
   state.heat = Math.min(100, (state.heat || 0) + 6);
@@ -2089,6 +2240,16 @@ function initGameSystems() {
   initWeapons({
     camera, scene, renderer, state, notify, saveNow,
     getTargets: getWeaponTargets, onKill: onWeaponKill, onShotFired: onWeaponShot,
+    getPlayerPos: () => (player ? player.group.position : null),
+    // where the player is aiming on the ground plane = camera look direction
+    // flattened; melee swings and aim-facing both use this so they agree.
+    getAimDir: () => {
+      const d = new THREE.Vector3(); camera.getWorldDirection(d); d.y = 0;
+      if (d.lengthSq() < 1e-4) d.set(0, 0, -1);
+      return d.normalize();
+    },
+    // right mouse held (and a gun out) = aiming → enables aim-assist + tight spread
+    isAiming: () => controls.mouseHeld(2) && !inCar,
     onEquip: () => mountHeldWeapon(),
   });
   initMissions({ state, notify, saveNow });
@@ -2196,6 +2357,15 @@ function updatePlayer(dt, t) {
   }
 
   if (controls.mode === CAM.FIRST) player.group.rotation.y = yaw;
+  else if (combatFacingNow(fp)) {
+    // Combat stance: face exactly where the camera/crosshair points so the held
+    // weapon (and any shot or swing) lines up with the on-screen reticle. Tighter
+    // snap while aiming with right-mouse, quick snap during a melee swing.
+    const aimYaw = Math.atan2(forward.x, forward.z);
+    const cwf = currentWeapon();
+    const k = (cwf && !cwf.melee) ? (controls.mouseHeld(2) ? 22 : 13) : 18;
+    player.group.rotation.y = lerpAngle(player.group.rotation.y, aimYaw, Math.min(1, dt * k));
+  }
   else if (moving || inp.s) {
     const faceDir = moving ? move : forward;   // turn the model even while standing & turning
     player.group.rotation.y = lerpAngle(player.group.rotation.y, Math.atan2(faceDir.x, faceDir.z), Math.min(1, dt * 12));
@@ -2208,6 +2378,15 @@ function updatePlayer(dt, t) {
   player.parts.leftLeg.rotation.x = sw; player.parts.rightLeg.rotation.x = -sw;
   player.parts.leftArm.rotation.x = -sw * 0.85; player.parts.rightArm.rotation.x = sw * 0.85;
   player.parts.leftArm.rotation.z = 0.08 * amp; player.parts.rightArm.rotation.z = -0.08 * amp;
+  // Melee swing overlay: a quick downward chop arc on the right arm so equipped
+  // bats / pipes / wrenches / planks visibly attack. Decays back to rest.
+  if (meleeSwingT > 0) {
+    meleeSwingT = Math.max(0, meleeSwingT - dt);
+    const phase = 1 - (meleeSwingT / 0.26);            // 0 → 1 over the swing
+    const arc = Math.sin(phase * Math.PI);             // ease up then down
+    player.parts.rightArm.rotation.x = -1.5 * arc;     // raise then chop forward
+    player.parts.rightArm.rotation.z = -0.35 * arc;
+  }
   if (player.parts.torso) {
     player.parts.torso.rotation.y = Math.sin(ph) * 0.06 * amp;
     player.parts.torso.rotation.z = Math.cos(ph) * 0.03 * amp;
@@ -2880,6 +3059,38 @@ function lerpAngle(a, b, f) {
   while (d < -Math.PI) d += Math.PI * 2;
   return a + d * f;
 }
+// True when the player should hold a combat stance facing the crosshair: a gun is
+// out, or a melee swing is mid-arc. Drives body/weapon rotation toward the aim
+// direction so shots and swings agree with the reticle.
+function combatFacingNow(fp) {
+  if (fp || inCar || !player) return false;
+  if (meleeSwingT > 0) return true;
+  const cw = currentWeapon();
+  return !!(cw && !cw.melee && area === 'city');
+}
+// True when the camera centre ray (the crosshair) passes through a weapon target
+// within range — used to flash the reticle red as a hit-confirm cue.
+const _aimOrigin = new THREE.Vector3();
+const _aimDir = new THREE.Vector3();
+const _aimToTg = new THREE.Vector3();
+function aimRayOnTarget() {
+  const cw = currentWeapon();
+  if (!cw || cw.melee || inCar) return false;
+  camera.getWorldPosition(_aimOrigin);
+  camera.getWorldDirection(_aimDir);
+  const range = cw.range || 80;
+  const targets = getWeaponTargets();
+  for (const tg of targets) {
+    _aimToTg.copy(tg.pos).sub(_aimOrigin);
+    const along = _aimToTg.dot(_aimDir);
+    if (along < 0 || along > range) continue;
+    // perpendicular distance from the ray to the target centre
+    const perp2 = _aimToTg.lengthSq() - along * along;
+    const r = (tg.r || 1.0) + 0.25;
+    if (perp2 <= r * r) return true;
+  }
+  return false;
+}
 function locationLabel() {
   if (inCar) return '🚗 Driving';
   if (area !== 'city') return interiors.byId[area].name;
@@ -3033,6 +3244,25 @@ window.addEventListener('keydown', e => {
   debug.logKey(blockReason ? `${kc} ✕(${blockReason})` : kc);
   if (blockReason) return;
   const k = kc;
+  // dev grip tuning (highest priority so its nudge keys aren't eaten by other
+  // single-key handlers). P toggles the overlay; while on, nudge the held weapon.
+  if (k === 'p') { toggleGripDebug(); return; }
+  if (gripDebug && !inCar) {
+    const S = 0.01, R = Math.PI / 90;            // 1cm / 2° steps
+    if (k === 'i') { nudgeGrip([0, 0, -S]); return; }
+    if (k === 'k') { nudgeGrip([0, 0, S]); return; }
+    if (k === 'j') { nudgeGrip([-S, 0, 0]); return; }
+    if (k === 'l') { nudgeGrip([S, 0, 0]); return; }
+    if (k === 'u') { nudgeGrip([0, S, 0]); return; }
+    if (k === 'o') { nudgeGrip([0, -S, 0]); return; }
+    if (k === '[') { nudgeGrip([0, 0, 0], [-R, 0, 0]); return; }
+    if (k === ']') { nudgeGrip([0, 0, 0], [R, 0, 0]); return; }
+    if (k === ';') { nudgeGrip([0, 0, 0], [0, -R, 0]); return; }
+    if (k === "'") { nudgeGrip([0, 0, 0], [0, R, 0]); return; }
+    if (k === '-') { nudgeGrip([0, 0, 0], [0, 0, 0], -0.02); return; }
+    if (k === '=') { nudgeGrip([0, 0, 0], [0, 0, 0], 0.02); return; }
+    if (k === 'backspace') { resetGrip(); return; }
+  }
   // robbery: shake down the nearest civilian for cash (risky — draws heat)
   if (k === 'g' && !inCar && area === 'city') robNearestNpc();
   if (k === 'v') {
@@ -3123,10 +3353,14 @@ function animate() {
     if (inCar) updateCar(dt); else updatePlayer(dt, t);
     updateVehicleCollisions(dt);
     updateNpcHealthBars(dt);
-    // Unarmed left-click = interact / pick up the nearest object (trash etc.).
-    // Capture it BEFORE the weapon system so a pickup-click doesn't also melee.
+    // BARE-FISTS left-click = interact / pick up the nearest object (trash etc.).
+    // Captured BEFORE the weapon system so a pickup-click doesn't also punch.
+    // IMPORTANT: this only applies to FISTS. A real melee weapon (bat / pipe /
+    // wrench / plank) must SWING on left-click, never be consumed as an interact —
+    // otherwise equipped melee weapons feel broken. Use the E key to interact
+    // while a melee weapon is out.
     let interactClick = false;
-    if (!inCar && player && currentWeapon().melee && firePressed) {
+    if (!inCar && player && currentWeapon().id === 'fists' && firePressed) {
       const nearNow = manager.findNearest(player.group.position, area);
       if (nearNow) interactClick = true;
     }
@@ -3219,6 +3453,9 @@ function animate() {
   const xh = document.getElementById('crosshair');
   const scopeEl = document.getElementById('scope');
   const armed = cw && !cw.melee && !inCar && area === 'city';
+  // The first-person view model duplicates the in-hand weapon — only show it in
+  // first-person so third-person doesn't render a second gun floating in-frame.
+  setFirstPersonView(controls.mode === CAM.FIRST);
   // Right mouse aims: zoom the camera in (sniper zooms much further) and, for the
   // sniper, drop a scope overlay. Releasing returns to the normal field of view.
   const aiming = armed && controls.mouseHeld(2);
@@ -3233,11 +3470,18 @@ function animate() {
     camera.updateProjectionMatrix();
   }
   if (xh) {
-    if (armed) { xh.style.display = 'block'; xh.classList.toggle('aim', aiming); }
-    else { xh.style.display = 'none'; xh.classList.remove('aim'); }
+    if (armed) {
+      xh.style.display = 'block';
+      xh.classList.toggle('aim', aiming);
+      // Reticle turns red when the centre ray is on a target, so the player gets
+      // clear feedback that a shot will connect under the crosshair.
+      xh.classList.toggle('lock', aimRayOnTarget());
+    }
+    else { xh.style.display = 'none'; xh.classList.remove('aim'); xh.classList.remove('lock'); }
   }
   if (scopeEl) scopeEl.style.display = (aiming && isSniper) ? 'block' : 'none';
   if (interiorDebug) updateInteriorDebug();
+  if (gripDebug) updateGripDebug();
   renderer.render(scene, camera);
   controls.endFrame();
   revealOnce();

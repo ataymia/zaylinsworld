@@ -365,19 +365,29 @@ function fire() {
   if (muzzle) { const s = current.id === 'rocket_blast' ? 0.5 : 0.28; muzzle.scale.set(s, s, s); }
   if (viewModel) { viewModel.position.z += eff.scoped ? 0.12 : 0.06; viewModel.rotation.x -= 0.05; }
 
-  // raycast one ray per pellet from camera center
+  // Shot direction = the camera's centre ray, which is exactly the on-screen
+  // crosshair (over-the-shoulder framing keeps the body out from under it). When
+  // the player is AIMING (right mouse), a light aim-assist nudges the base ray
+  // onto the nearest target by the crosshair so a centred shot reliably connects;
+  // hip-fire (not aiming) gets wider spread and no assist, so aiming matters.
   const origin = new THREE.Vector3();
   deps.camera.getWorldPosition(origin);
   const baseDir = new THREE.Vector3();
   deps.camera.getWorldDirection(baseDir);
   const targets = deps.getTargets ? deps.getTargets() : [];
+  const aiming = deps.isAiming ? !!deps.isAiming() : false;
+  if (aiming) {
+    const snap = aimAssistDir(origin, baseDir, targets, eff.range);
+    if (snap) baseDir.copy(snap);
+  }
+  const spread = (eff.spread || 0) * (aiming ? 0.5 : 2.2);   // hip-fire is less accurate
   let hitAny = false;
   for (let p = 0; p < (eff.pellets || 1); p++) {
     const dir = baseDir.clone();
-    if (eff.spread > 0) {
-      dir.x += (Math.random() - 0.5) * eff.spread * 2;
-      dir.y += (Math.random() - 0.5) * eff.spread * 2;
-      dir.z += (Math.random() - 0.5) * eff.spread * 2;
+    if (spread > 0) {
+      dir.x += (Math.random() - 0.5) * spread * 2;
+      dir.y += (Math.random() - 0.5) * spread * 2;
+      dir.z += (Math.random() - 0.5) * spread * 2;
       dir.normalize();
     }
     const hit = castAt(origin, dir, targets, eff);
@@ -390,6 +400,22 @@ function fire() {
   updateWeaponHUD();
   if (m.mag <= 0 && reserveFor(current.ammoType) > 0) reload();
   deps.saveNow();
+}
+
+// Aim-assist: among targets within ~5° of the crosshair ray and within range,
+// return a direction pointing straight at the closest one's centre (else null).
+function aimAssistDir(origin, baseDir, targets, range) {
+  const COS_CONE = Math.cos(0.09);             // ~5.2° capture cone
+  let best = null, bestT = Infinity;
+  for (const tg of targets) {
+    const to = tg.pos.clone().sub(origin);
+    const dist = to.length();
+    if (dist < 0.3 || dist > (range || 80)) continue;
+    to.multiplyScalar(1 / dist);
+    if (to.dot(baseDir) < COS_CONE) continue;  // outside the capture cone
+    if (dist < bestT) { bestT = dist; best = to; }
+  }
+  return best;
 }
 
 // returns true if a target was hit
@@ -430,16 +456,38 @@ function applyDamage(tg, dmg, point) {
 
 function meleeHit(eff) {
   if (viewModel) viewModel.rotation.x -= 0.2;
-  const origin = new THREE.Vector3(); deps.camera.getWorldPosition(origin);
-  const dir = new THREE.Vector3(); deps.camera.getWorldDirection(dir);
   const targets = deps.getTargets ? deps.getTargets() : [];
   const range = (eff && eff.range) || current.range;
-  let hit = false;
+  // Melee reaches from the PLAYER, not the camera — in third-person the camera
+  // sits several metres back, so a 2-3m reach measured from the camera would
+  // never connect. Sweep a forward ARC/CONE in front of the player: origin is the
+  // player's chest, direction is where the player is aiming (flattened look dir),
+  // and anything inside the swing cone within reach is struck.
+  const ppos = deps.getPlayerPos ? deps.getPlayerPos() : null;
+  const origin = (ppos ? ppos.clone() : new THREE.Vector3());
+  origin.y += 1.0;
+  const dir = deps.getAimDir ? deps.getAimDir() : (() => {
+    const d = new THREE.Vector3(); deps.camera.getWorldDirection(d); return d;
+  })();
+  dir.y = 0;
+  if (dir.lengthSq() < 1e-4) dir.set(0, 0, -1);
+  dir.normalize();
+  const COS_HALF = Math.cos(0.96);   // ~55° half-angle → ~110° total swing arc
+  let best = null, bestD = Infinity;
   for (const tg of targets) {
-    const t = raySphere(origin, dir, tg.pos, (tg.r || 1.0) + 0.3);
-    if (t != null && t <= range) { applyDamage(tg, meleeDamage(eff), tg.pos); hit = true; break; }
+    const to = tg.pos.clone().sub(origin); to.y = 0;
+    const dist = to.length();
+    const reach = range + (tg.r || 1.0);
+    if (dist > reach) continue;
+    if (dist > 1e-3) {
+      to.multiplyScalar(1 / dist);
+      if (to.dot(dir) < COS_HALF) continue;   // outside the swing arc
+    }
+    if (dist < bestD) { bestD = dist; best = tg; }
   }
-  // a thrown punch in public still draws attention (lighter than gunfire)
+  let hit = false;
+  if (best) { applyDamage(best, meleeDamage(eff), best.pos); hit = true; }
+  // a thrown punch / swing in public still draws attention (lighter than gunfire)
   if (deps.onShotFired) deps.onShotFired(hit, true);
 }
 // fists scale with the player's fitness/strength stat (stronger → harder hits)
@@ -487,3 +535,10 @@ export function updateWeaponHUD() {
 
 export function currentWeapon() { return current; }
 export function isReloading() { return reloading > 0; }
+// The camera-mounted first-person view model duplicates the avatar's in-hand
+// weapon, so it should only be visible in first-person. main.js calls this each
+// frame with the current camera mode. The muzzle still resolves its world
+// position while hidden, so tracers keep originating correctly.
+export function setFirstPersonView(on) {
+  if (viewModel) viewModel.visible = !!on;
+}

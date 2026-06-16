@@ -47,6 +47,9 @@
   #crosshair::before{left:50%;top:0;width:2px;height:100%;margin-left:-1px;}
   #crosshair::after{top:50%;left:0;height:2px;width:100%;margin-top:-1px;}
   #crosshair.aim{filter:drop-shadow(0 0 3px #58ff9d);}
+  /* on-target: reticle goes red + slightly larger so a hit reads clearly */
+  #crosshair.lock::before,#crosshair.lock::after{background:#ff4d4d;}
+  #crosshair.lock{filter:drop-shadow(0 0 4px #ff2d2d);transform:scale(1.18);}
 
   /* ── sniper scope overlay ── */
   #scope{position:fixed;inset:0;z-index:60;display:none;pointer-events:none;
