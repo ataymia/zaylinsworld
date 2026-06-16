@@ -651,64 +651,93 @@ function buildProceduralGasStation() {
   const GX = -46, GZ = 24;                          // standalone lot, west edge (south of Block Supply), set back off the ring road
   const grp = new THREE.Group(); grp.name = 'gas-station-proc';
   const procColliders = [];                         // pump colliders (removed if a GLB takes over)
-  // forecourt pad (decorative — no collider so it never blocks driving)
-  const pad = new THREE.Mesh(new THREE.BoxGeometry(11, 0.12, 9),
+  // forecourt pad (decorative — no collider so it never blocks driving). Sized
+  // to a believable full station: ~24×18 lot you can pull a car onto.
+  const pad = new THREE.Mesh(new THREE.BoxGeometry(24, 0.12, 18),
     new THREE.MeshStandardMaterial({ color: '#2b2e36', roughness: 0.95 }));
   pad.position.set(GX, 0.06, GZ); grp.add(pad);
-  // painted markings
+  // painted lane markings + parking stalls along the store front
   const stripeMat = new THREE.MeshStandardMaterial({ color: '#c9b23a', roughness: 0.8 });
-  for (const dz of [-2, 2]) {
-    const s = new THREE.Mesh(new THREE.BoxGeometry(6, 0.14, 0.18), stripeMat);
-    s.position.set(GX, 0.07, GZ + dz); grp.add(s);
+  for (const dz of [-3.4, 3.4]) {
+    const s = new THREE.Mesh(new THREE.BoxGeometry(13, 0.14, 0.2), stripeMat);
+    s.position.set(GX + 1, 0.07, GZ + dz); grp.add(s);
   }
-  // canopy: two posts + a flat roof
+  // three parking stalls in front of the store (left side of the lot)
+  for (const pz of [-4.5, -1.5, 1.5, 4.5]) {
+    const ln = new THREE.Mesh(new THREE.BoxGeometry(3.2, 0.13, 0.16), stripeMat);
+    ln.position.set(GX - 7.4, 0.07, GZ + pz); grp.add(ln);
+  }
+  // canopy: four posts + a big flat roof spanning the pump island
   const postMat = new THREE.MeshStandardMaterial({ color: '#9aa0aa', roughness: 0.6, metalness: 0.3 });
-  for (const dz of [-3.6, 3.6]) {
-    const post = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 4, 10), postMat);
-    post.position.set(GX + 2.6, 2, GZ + dz); grp.add(post);
+  for (const dx of [0.4, 4.8]) for (const dz of [-5.4, 5.4]) {
+    const post = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 5.4, 12), postMat);
+    post.position.set(GX + dx, 2.7, GZ + dz); grp.add(post);
   }
-  const roof = new THREE.Mesh(new THREE.BoxGeometry(4, 0.4, 9),
+  const roof = new THREE.Mesh(new THREE.BoxGeometry(7.2, 0.5, 13),
     new THREE.MeshStandardMaterial({ color: '#d23b3b', roughness: 0.5 }));
-  roof.position.set(GX + 2.6, 4.1, GZ); grp.add(roof);
-  const roofTrim = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.2, 9.1),
+  roof.position.set(GX + 2.6, 5.5, GZ); grp.add(roof);
+  const roofTrim = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.3, 13.2),
     new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.6 }));
-  roofTrim.position.set(GX + 4.55, 3.95, GZ); grp.add(roofTrim);
-  // two pumps (solid — small colliders)
+  roofTrim.position.set(GX + 6.3, 5.3, GZ); grp.add(roofTrim);
+  // four pumps under the canopy (solid — small colliders) on two islands
   const pumpMat = new THREE.MeshStandardMaterial({ color: '#e6e9ef', roughness: 0.5, metalness: 0.2 });
   const screenMat = new THREE.MeshStandardMaterial({ color: '#1b3a2b', emissive: '#0f5', emissiveIntensity: 0.25 });
-  for (const dz of [-2, 2]) {
+  // raised pump islands (kerbs) so the pumps read as a real forecourt
+  for (const dz of [-3, 3]) {
+    const island = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.18, 3.4),
+      new THREE.MeshStandardMaterial({ color: '#3a3d44', roughness: 0.9 }));
+    island.position.set(GX + 2.6, 0.12, GZ + dz); grp.add(island);
+  }
+  for (const dz of [-4, -2, 2, 4]) {
     const pump = new THREE.Group();
-    const pbox = new THREE.Mesh(new THREE.BoxGeometry(0.5, 1.5, 0.7), pumpMat);
-    pbox.position.y = 0.75; pump.add(pbox);
-    const screen = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.4, 0.5), screenMat);
-    screen.position.set(0.27, 1.15, 0); pump.add(screen);
-    const nozzle = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.5, 0.12), pumpMat);
-    nozzle.position.set(0, 0.9, 0.45); pump.add(nozzle);
-    pump.position.set(GX + 1.4, 0, GZ + dz);
+    const pbox = new THREE.Mesh(new THREE.BoxGeometry(0.6, 1.7, 0.8), pumpMat);
+    pbox.position.y = 0.85; pump.add(pbox);
+    const screen = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.45, 0.55), screenMat);
+    screen.position.set(0.32, 1.3, 0); pump.add(screen);
+    const nozzle = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.55, 0.14), pumpMat);
+    nozzle.position.set(0, 1.0, 0.5); pump.add(nozzle);
+    pump.position.set(GX + 2.6, 0.2, GZ + dz);
     grp.add(pump);
     pump.updateWorldMatrix(true, true);
     const pc = new THREE.Box3().setFromObject(pump).expandByScalar(0.1);
     cityColliders.push(pc); procColliders.push(pc);
   }
-  // store shell behind the canopy (so a door/entrance reads clearly)
-  const store = new THREE.Mesh(new THREE.BoxGeometry(4.4, 3.2, 7),
+  // full-sized store building behind the canopy (clear entrance facing the road)
+  const store = new THREE.Mesh(new THREE.BoxGeometry(10, 4.2, 9),
     new THREE.MeshStandardMaterial({ color: '#d8cdb4', roughness: 0.85 }));
-  store.position.set(GX - 3.4, 1.6, GZ); grp.add(store);
-  // tall price sign
-  const signPost = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 5, 8), postMat);
-  signPost.position.set(GX + 2.4, 2.5, GZ + 5.4); grp.add(signPost);
-  const board = new THREE.Mesh(new THREE.BoxGeometry(2.4, 1.4, 0.2),
+  store.position.set(GX - 6.5, 2.1, GZ); grp.add(store);
+  {
+    // store collider (solid building); leave a doorway gap on the +x (road) face
+    const sc = new THREE.Box3().setFromObject(store).expandByScalar(0.05);
+    cityColliders.push(sc); procColliders.push(sc);
+  }
+  // storefront fascia band + glass front
+  const fascia = new THREE.Mesh(new THREE.BoxGeometry(0.3, 1.0, 9.2),
     new THREE.MeshStandardMaterial({ color: '#16224d', roughness: 0.5 }));
-  board.position.set(GX + 2.4, 4.6, GZ + 5.4); grp.add(board);
-  { const l = makeLabel('⛽ GAS  $1.20/u', '#ffd98a'); l.position.set(GX + 2.4, 4.6, GZ + 5.55); l.scale.multiplyScalar(1.1); grp.add(l); }
-  { const l = makeLabel('6TWELVE', '#ff8a3a'); l.position.set(GX - 3.4, 3.6, GZ); grp.add(l); }
+  fascia.position.set(GX - 1.4, 3.6, GZ); grp.add(fascia);
+  const glassFront = new THREE.Mesh(new THREE.BoxGeometry(0.18, 2.2, 3.0),
+    new THREE.MeshPhysicalMaterial({ color: '#bfe0ff', transparent: true, opacity: 0.22,
+      roughness: 0.05, metalness: 0, transmission: 0.8, ior: 1.4, thickness: 0.2 }));
+  glassFront.position.set(GX - 1.45, 1.4, GZ - 2.6); grp.add(glassFront);
+  // entrance door panel
+  const door = new THREE.Mesh(new THREE.BoxGeometry(0.16, 2.4, 1.8),
+    new THREE.MeshStandardMaterial({ color: '#2a3550', roughness: 0.6, metalness: 0.2 }));
+  door.position.set(GX - 1.45, 1.3, GZ + 1.4); grp.add(door);
+  // tall price sign at the road edge
+  const signPost = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.16, 6, 8), postMat);
+  signPost.position.set(GX + 6.4, 3, GZ + 7); grp.add(signPost);
+  const board = new THREE.Mesh(new THREE.BoxGeometry(2.8, 1.7, 0.2),
+    new THREE.MeshStandardMaterial({ color: '#16224d', roughness: 0.5 }));
+  board.position.set(GX + 6.4, 5.4, GZ + 7); grp.add(board);
+  { const l = makeLabel('⛽ GAS  $1.20/u', '#ffd98a'); l.position.set(GX + 6.4, 5.4, GZ + 7.15); l.scale.multiplyScalar(1.2); grp.add(l); }
+  { const l = makeLabel('6TWELVE', '#ff8a3a'); l.position.set(GX - 1.5, 3.6, GZ); l.scale.multiplyScalar(1.3); grp.add(l); }
   scene.add(grp);
-  // the store door sits at the front-left of the store shell (faces the road, +x)
-  const doorPos = new THREE.Vector3(GX - 0.9, 0, GZ);
+  // the store door sits on the front (+x) face of the store, toward the road
+  const doorPos = new THREE.Vector3(GX - 1.4, 0, GZ + 1.4);
   gasStation = { doorPos };
-  // register the refuel forecourt + minimap marker (zone biased toward the road
-  // side so you can drive off the ring road onto the pumps)
-  refuelPoints = [{ x: GX + 1.4, z: GZ, r: 7, id: 'gas-proc', price: 1.2 }];
+  // register the refuel forecourt + minimap marker (zone covers the pump island
+  // so you can drive off the ring road onto the pumps)
+  refuelPoints = [{ x: GX + 2.6, z: GZ, r: 8.5, id: 'gas-proc', price: 1.2 }];
   if (minimap) addTownMarkers([{ x: GX, z: GZ, color: '#ffd54a', icon: '⛽' }]);
   console.info('[gas] gas station placed at', GX, GZ, '(store door', doorPos.x, doorPos.z + ')');
   // NOTE: the uploaded 6twelve gas-station.glb is a FULL station — it bakes the

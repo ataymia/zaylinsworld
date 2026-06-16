@@ -261,34 +261,97 @@ export function buildInteriors() {
     ped.position.set(o.x + 3, 0.5, o.z + 2.6); r.group.add(ped);
   }
 
-  // ── BLOCK SUPPLY (gear) ─────────────────────────────────────────────────
+  // ── BLOCK SUPPLY (gear + arms dealer) ───────────────────────────────────
   {
     const o = OFFS.blocksupply;
     const r = buildRoom(o.x, o.z, 16, 12, '#2a2230', '#1a1422', '#120c18');
     root.add(r.group);
-    r.group.add(shelf(o.x - 6, o.z - 4, 0));
-    r.group.add(shelf(o.x, o.z - 4, 0));
-    r.group.add(shelf(o.x + 6, o.z - 4, 0));
-    const counter = box(5, 1.1, 1.2, mat('#3a2c15', { rough: 0.6 }));
-    counter.position.set(o.x + 3, 0.55, o.z + 2); r.group.add(counter);
-    r.colliders.push(new THREE.Box3().setFromObject(counter));
-    // ── locked weapons display wall (right side) ──
-    const placeholderWeaponWall = new THREE.Group(); r.group.add(placeholderWeaponWall);
-    {
-      const rack = box(0.4, 2.6, 5, mat('#20242c', { metal: 0.3, rough: 0.5 }));
-      rack.position.set(o.x + 7.4, 1.3, o.z); r.group.add(rack);
-      r.colliders.push(new THREE.Box3().setFromObject(rack));
-      // silhouette weapons mounted on the wall (PLACEHOLDER — hidden once GLB
-      // weapon displays build, so the shop stops looking like grey blocks).
-      const steel = mat('#3a3f48', { metal: 0.8, rough: 0.35 });
-      for (let i = 0; i < 3; i++) {
-        const body = box(0.12, 0.18, 1.1 + i * 0.25, steel);
-        body.position.set(o.x + 7.15, 1.9 - i * 0.55, o.z); placeholderWeaponWall.add(body);
-        const grip = box(0.12, 0.32, 0.16, steel);
-        grip.position.set(o.x + 7.15, 1.72 - i * 0.55, o.z + 0.5 + i * 0.12); placeholderWeaponWall.add(grip);
+
+    // Retail shell materials — a real gun-store look (slatwall + steel racks +
+    // glass counter), not grey boxes. The floating weapon displays (built by
+    // main.js ensureBlockSupplyDisplays across SHOP_ZONES) sit ON these fixtures.
+    const slatMat   = mat('#1d2733', { rough: 0.7, metal: 0.15 });
+    const slatLine  = mat('#324354', { rough: 0.6, metal: 0.2 });
+    const steelMat  = mat('#3a3f48', { metal: 0.7, rough: 0.4 });
+    const woodMat   = mat('#3a2c15', { rough: 0.6 });
+    const glassMat  = new THREE.MeshPhysicalMaterial({ color: '#cfe8ff', transparent: true,
+      opacity: 0.16, roughness: 0.05, metalness: 0, transmission: 0.85, ior: 1.4,
+      thickness: 0.2, clearcoat: 1, side: THREE.DoubleSide });
+
+    // Wall-mounted slatwall panel: a flat board with a few horizontal grooves so
+    // a back/side wall reads as merchandised pegboard rather than a flat colour.
+    function slatPanel(x, y, z, w, h, ry = 0) {
+      const g = new THREE.Group();
+      const board = box(w, h, 0.12, slatMat); g.add(board);
+      const lines = Math.max(2, Math.round(h / 0.45));
+      for (let i = 1; i < lines; i++) {
+        const ln = box(w - 0.2, 0.05, 0.16, slatLine);
+        ln.position.set(0, h / 2 - (i / lines) * h, 0.02); g.add(ln);
       }
-      placeholderWeaponWall.add(tag('ARMS DEALER', '#ff9f6b').translateX(o.x + 6.6).translateY(2.75).translateZ(o.z));
+      g.position.set(x, y, z); g.rotation.y = ry; return g;
     }
+
+    // Back-wall slatwall behind the pistol + long-gun zones (z ≈ -3.9, facing 0).
+    r.group.add(slatPanel(o.x - 2.0, 1.6, o.z - 4.25, 9.4, 3.0));
+    // Left-wall slatwall behind the ammo zone (x ≈ -4.2, facing 0/left).
+    r.group.add(slatPanel(o.x - 7.75, 1.6, o.z + 0.5, 9.0, 3.0, Math.PI / 2));
+    // Right-wall slatwall (general merchandising backdrop).
+    r.group.add(slatPanel(o.x + 7.75, 1.6, o.z - 0.5, 9.0, 3.0, -Math.PI / 2));
+
+    // Steel long-gun rack frame standing just behind the long-wall display row.
+    {
+      const frame = box(9.2, 0.16, 0.6, steelMat); frame.position.set(o.x - 0.6, 2.55, o.z - 4.15); r.group.add(frame);
+      const base = box(9.2, 0.16, 0.6, steelMat); base.position.set(o.x - 0.6, 0.9, o.z - 4.15); r.group.add(base);
+    }
+
+    // Melee pegboard rack on the right-centre (melee-rack zone x ≈ 3.9, facing -x).
+    r.group.add(slatPanel(o.x + 4.45, 1.5, o.z + 0.7, 4.8, 2.4, -Math.PI / 2));
+
+    // Ammo shelving unit under the ammo-shelf zone (x ≈ -4.2, z 1.6→4.6).
+    {
+      const unit = new THREE.Group();
+      const postL = box(0.12, 1.8, 0.6, steelMat); postL.position.set(0, 0.9, -1.7); unit.add(postL);
+      const postR = box(0.12, 1.8, 0.6, steelMat); postR.position.set(0, 0.9, 1.7); unit.add(postR);
+      for (const sy of [0.5, 1.05, 1.6]) {
+        const sh = box(0.55, 0.06, 3.6, steelMat); sh.position.set(0, sy, 0); unit.add(sh);
+        // a few ammo cartons so the shelves never read empty before GLBs swap in
+        for (let k = -1; k <= 1; k++) {
+          const ammo = box(0.32, 0.22, 0.5, mat(['#5a4a2a', '#3a4a2a', '#4a2a2a'][(k + 1) % 3], { rough: 0.8 }));
+          ammo.position.set(0, sy + 0.14, k * 1.0); unit.add(ammo);
+        }
+      }
+      unit.position.set(o.x - 4.4, 0, o.z + 1.6); r.group.add(unit);
+    }
+
+    // Featured pedestal (lit) under the featured zone (centre-front, no collider
+    // so it never traps the entry corridor).
+    {
+      const ped = box(3.6, 1.4, 1.2, mat('#241826', { rough: 0.5, metal: 0.2 }));
+      ped.position.set(o.x + 1.2, 0.7, o.z + 3.9); r.group.add(ped);
+      const glassTop = box(3.6, 0.6, 1.2, glassMat); glassTop.position.set(o.x + 1.2, 1.7, o.z + 3.9); r.group.add(glassTop);
+      const spot = new THREE.PointLight('#ffe3a0', 5, 4, 2); spot.position.set(o.x + 1.2, 2.6, o.z + 3.9); r.group.add(spot);
+    }
+
+    // Upgrade workbench under the upgrade-counter zone (right-front).
+    {
+      const bench = box(3.2, 1.0, 1.1, woodMat); bench.position.set(o.x + 3.3, 0.5, o.z + 3.6); r.group.add(bench);
+      const top = box(3.2, 0.08, 1.1, steelMat); top.position.set(o.x + 3.3, 1.0, o.z + 3.6); r.group.add(top);
+      r.group.add(slatPanel(o.x + 3.3, 1.8, o.z + 4.55, 3.2, 1.4));
+    }
+
+    // Glass sales counter (cashier) — wood base + glass display top.
+    const counter = box(5, 1.1, 1.2, woodMat);
+    counter.position.set(o.x + 3, 0.55, o.z + 2); r.group.add(counter);
+    const counterGlass = box(5, 0.5, 1.2, glassMat); counterGlass.position.set(o.x + 3, 1.35, o.z + 2); r.group.add(counterGlass);
+    r.colliders.push(new THREE.Box3().setFromObject(counter));
+
+    // Neon storefront sign on the back wall.
+    r.group.add(tag('BLOCK SUPPLY', '#ff9f6b', 'ARMS & GEAR').translateX(o.x + 4.2).translateY(2.9).translateZ(o.z - 5.6));
+
+    // Compatibility: main.js hides this group once GLB weapon displays build.
+    // Kept (empty) so existing references stay valid without the old silhouettes.
+    const placeholderWeaponWall = new THREE.Group(); r.group.add(placeholderWeaponWall);
+
     const npc = staticNPC({ skin: 'umber', face: 'round', body: 'heavy', height: 'average',
       hair: 'cornrows', hairColor: 'jet', top: 'jersey-grn', bottom: 'cargo-tan',
       shoes: 'boots-tan', accessory: 'none', jewelry: 'chain' }, o.x + 3, o.z + 1.2, 0);

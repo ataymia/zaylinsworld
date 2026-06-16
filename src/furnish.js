@@ -86,20 +86,23 @@ const FURNITURE = {
   ],
   // CHICKEN SPOT — restaurant-pack ONLY (cm pack → unit 0.01). Counter + kitchen
   // along the back wall, booths down the left, tables + chairs in the seating area.
+  // `surface:true` pieces are support surfaces; `onSurface:true` pieces snap onto
+  // them (no more floating registers/trays). `tint` is the fallback colour used
+  // only when the GLB's texture failed to embed (flat-white restaurant pack).
   chicken: [
-    { name: 'counter-front',   dx: 0,    dz: -3.2, ry: 0,           s: 1.0 },
-    { name: 'cash-register',   dx: 1.8,  dz: -3.0, ry: Math.PI,     s: 1.0, y: 0.95 },
-    { name: 'heat-lamp-tray',  dx: -1.6, dz: -3.0, ry: 0,           s: 1.0, y: 0.95 },
-    { name: 'stove-griddle',   dx: -3,   dz: -4.4, ry: 0,           s: 1.0 },
-    { name: 'burner-stove',    dx: -5,   dz: -4.4, ry: 0,           s: 1.0 },
-    { name: 'booth-full',      dx: -5.6, dz: 2,    ry: Math.PI / 2, s: 1.0 },
-    { name: 'booth-half',      dx: -5.6, dz: 4.2,  ry: Math.PI / 2, s: 1.0 },
-    { name: 'table-square',    dx: 4.5,  dz: 1.6,  ry: 0,           s: 1.0 },
-    { name: 'chair-red',       dx: 4.5,  dz: 2.5,  ry: Math.PI,     s: 1.0 },
-    { name: 'chair-red',       dx: 4.5,  dz: 0.7,  ry: 0,           s: 1.0 },
-    { name: 'table-circle',    dx: 1.6,  dz: 3.8,  ry: 0,           s: 1.0 },
-    { name: 'chair-red',       dx: 0.7,  dz: 3.8,  ry: Math.PI / 2, s: 1.0 },
-    { name: 'chair-red',       dx: 2.5,  dz: 3.8,  ry: -Math.PI / 2, s: 1.0 },
+    { name: 'counter-front',   dx: 0,    dz: -3.2, ry: 0,           s: 1.0, surface: true, tint: '#b5651d' },
+    { name: 'cash-register',   dx: 1.8,  dz: -3.0, ry: Math.PI,     s: 1.0, onSurface: true, tint: '#2a2a2e' },
+    { name: 'heat-lamp-tray',  dx: -1.6, dz: -3.0, ry: 0,           s: 1.0, onSurface: true, tint: '#c0392b' },
+    { name: 'stove-griddle',   dx: -3,   dz: -4.4, ry: 0,           s: 1.0, surface: true, tint: '#8a9099' },
+    { name: 'burner-stove',    dx: -5,   dz: -4.4, ry: 0,           s: 1.0, surface: true, tint: '#8a9099' },
+    { name: 'booth-full',      dx: -5.6, dz: 2,    ry: Math.PI / 2, s: 1.0, tint: '#7a1f2b' },
+    { name: 'booth-half',      dx: -5.6, dz: 4.2,  ry: Math.PI / 2, s: 1.0, tint: '#7a1f2b' },
+    { name: 'table-square',    dx: 4.5,  dz: 1.6,  ry: 0,           s: 1.0, surface: true, tint: '#caa37a' },
+    { name: 'chair-red',       dx: 4.5,  dz: 2.5,  ry: Math.PI,     s: 1.0, tint: '#c0392b' },
+    { name: 'chair-red',       dx: 4.5,  dz: 0.7,  ry: 0,           s: 1.0, tint: '#c0392b' },
+    { name: 'table-circle',    dx: 1.6,  dz: 3.8,  ry: 0,           s: 1.0, surface: true, tint: '#caa37a' },
+    { name: 'chair-red',       dx: 0.7,  dz: 3.8,  ry: Math.PI / 2, s: 1.0, tint: '#c0392b' },
+    { name: 'chair-red',       dx: 2.5,  dz: 3.8,  ry: -Math.PI / 2, s: 1.0, tint: '#c0392b' },
   ],
 };
 
@@ -107,16 +110,36 @@ const FURNITURE = {
 const FOOD_UNIT = 1.0;
 const FOOD = {
   chicken: [
-    { name: 'chicken-cooking-a', dx: -3,  dz: -3.9, y: 1.0,  s: 2.0 },
-    { name: 'fried-chicken',     dx: 1.8, dz: -2.9, y: 0.98, s: 2.4 },
-    { name: 'french-fries',      dx: 4.5, dz: 1.6,  y: 0.78, s: 2.4 },
-    { name: 'chicken-nuggets',   dx: 1.6, dz: 3.8,  y: 0.78, s: 2.4 },
+    { name: 'chicken-cooking-a', dx: -3,  dz: -3.9, y: 1.0,  s: 2.0, onSurface: true },
+    { name: 'fried-chicken',     dx: 1.8, dz: -2.9, y: 0.98, s: 2.4, onSurface: true },
+    { name: 'french-fries',      dx: 4.5, dz: 1.6,  y: 0.78, s: 2.4, onSurface: true },
+    { name: 'chicken-nuggets',   dx: 1.6, dz: 3.8,  y: 0.78, s: 2.4, onSurface: true },
   ],
 };
 
+// When a pack's textures fail to embed, GLB meshes load as the default flat
+// white material. Detect that (no map + near-white colour) and apply the item's
+// `tint` so the restaurant reads as real surfaces instead of a white-out. Only
+// touches untextured near-white materials — properly textured packs are left
+// alone. Returns the number of materials recoloured (for diagnostics).
+function applyMaterialFallback(obj, item) {
+  if (!item.tint) return 0;
+  let n = 0;
+  obj.traverse((o) => {
+    if (!o.isMesh || !o.material) return;
+    const mats = Array.isArray(o.material) ? o.material : [o.material];
+    for (const mm of mats) {
+      const c = mm.color;
+      const white = c && c.r > 0.85 && c.g > 0.85 && c.b > 0.85;
+      if (!mm.map && white) { mm.color = new THREE.Color(item.tint); mm.needsUpdate = true; n++; }
+    }
+  });
+  return n;
+}
+
 // Load + place one model into the interiors root group at world (ox+dx, *, dz).
 // Returns { ok:true } on success, or { ok:false, reason } for diagnostics.
-async function place(root, asset, ox, item, renderer, unit, warnings) {
+async function place(root, asset, ox, item, renderer, unit, warnings, supports) {
   try {
     const m = await loadAsset(asset.cat, asset.pack, item.name, renderer);
     if (!m || !m.scene) return { ok: false, reason: 'load-failed' };
@@ -137,11 +160,28 @@ async function place(root, asset, ox, item, renderer, unit, warnings) {
     if (maxDim < SANE_MIN_DIM) {
       warnings.push(`${item.name}: degenerate ${maxDim.toFixed(3)}m`); return { ok: false, reason: 'degenerate' };
     }
-    const groundY = (item.y ?? 0) - box.min.y;
+    // material fallback for packs whose textures failed to embed (flat white)
+    const recoloured = applyMaterialFallback(obj, item);
+    if (recoloured) warnings.push(`${item.name}: ${recoloured} white→tint`);
+    // grounding: by default seat the piece on the floor (item.y). Items flagged
+    // onSurface snap onto the top of the nearest placed support surface so they
+    // never float above (or sink into) counters/tables.
+    let baseY = item.y ?? 0;
+    if (item.onSurface && supports && supports.length) {
+      const px = ox + item.dx, pz = item.dz;
+      let top = -Infinity;
+      for (const sb of supports) {
+        if (px >= sb.min.x && px <= sb.max.x && pz >= sb.min.z && pz <= sb.max.z) top = Math.max(top, sb.max.y);
+      }
+      if (top > -Infinity) baseY = top;
+    }
+    const groundY = baseY - box.min.y;
     obj.position.set(ox + item.dx, groundY, item.dz);
     obj.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
     root.add(obj);
-    return { ok: true };
+    obj.updateWorldMatrix(true, true);
+    const finalBox = new THREE.Box3().setFromObject(obj);
+    return { ok: true, box: finalBox };
   } catch (e) { return { ok: false, reason: (e && e.message) || 'threw' }; }
 }
 
@@ -162,15 +202,17 @@ export async function furnishInteriors(interiors, renderer) {
     if (!src) { rejected.push(`${id}: no approved pack`); continue; }
     const info = byInterior[id] = { pack: `${src.cat}/${src.pack}`, placed: [], failed: [], warnings: [], removed: 0 };
     const ox = intr.offset.x;
+    const supports = [];   // world boxes of placed surface pieces (counters/tables)
     for (const it of items) {
-      const r = await place(root, src, ox, it, renderer, src.unit, info.warnings);
-      if (r.ok) { n++; furnished.add(id); info.placed.push(it.name); }
+      const r = await place(root, src, ox, it, renderer, src.unit, info.warnings, supports);
+      if (r.ok) { n++; furnished.add(id); info.placed.push(it.name); if (it.surface && r.box) supports.push(r.box); }
       else { failed.push(`${id}/${it.name}:${r.reason}`); info.failed.push(`${it.name}(${r.reason})`); }
     }
-    // FOOD overlay for the chicken spot (separate metres-scale pack)
+    // FOOD overlay for the chicken spot (separate metres-scale pack); food snaps
+    // onto the same support surfaces placed above.
     if (FOOD[id]) {
       for (const it of FOOD[id]) {
-        const r = await place(root, { cat: 'props', pack: 'food' }, ox, it, renderer, FOOD_UNIT, info.warnings);
+        const r = await place(root, { cat: 'props', pack: 'food' }, ox, it, renderer, FOOD_UNIT, info.warnings, supports);
         if (r.ok) { n++; furnished.add(id); info.placed.push(it.name); }
         else { failed.push(`${id}/${it.name}:${r.reason}`); info.failed.push(`${it.name}(${r.reason})`); }
       }
