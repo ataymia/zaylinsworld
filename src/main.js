@@ -1743,6 +1743,35 @@ function updateVehicleCollisions(dt) {
       }
     }
   }
+
+  // car → foot cop: officers are NOT immovable. A moving car knocks them back and
+  // damages them so they can't stand inside the car collider and freeze driving.
+  // Ramming a cop with the car you drive escalates the chase hard.
+  for (const c of cars) {
+    const spd = Math.abs(c.speed || 0);
+    if (spd < 3) continue;
+    const playerDriven = inCar && drivingVehicle && c === drivingVehicle;
+    for (let i = policeUnits.length - 1; i >= 0; i--) {
+      const u = policeUnits[i];
+      if ((u._hitCD || 0) > 0) { u._hitCD -= dt; continue; }
+      const g = u.av.group;
+      const dx = g.position.x - c.g.position.x, dz = g.position.z - c.g.position.z;
+      const d = Math.hypot(dx, dz);
+      if (d >= CAR_R + 0.6) continue;
+      const nn = d < 1e-4 ? 1 : d;
+      const knx = dx / nn, knz = dz / nn;
+      g.position.x += knx * 2.6; g.position.z += knz * 2.6;            // shove the cop clear of the car
+      u.hitT = 0.25; u._hitCD = 0.6;
+      u.health -= spd > 12 ? 70 : 38;
+      if ('speed' in c) c.speed *= 0.7;                                // the car keeps moving, just sheds speed
+      if (playerDriven) {
+        state.wanted = Math.min(5, Math.max(state.wanted || 0, 3));    // running down a cop = serious heat
+        state.heat = Math.min(100, (state.heat || 0) + 18);
+        notify('🚔 You hit an officer with your car! Heavy police response.');
+      }
+      if (u.health <= 0) removeFootCop(i);
+    }
+  }
 }
 
 // ── CRIME, WEAPONS & POLICE ─────────────────────────────────────────────────────
@@ -1779,6 +1808,8 @@ function downNpc(n, byPlayer = true) {
   }, 4000);
 }
 // Player goes down: respawn at home, restore some health, lose a little cash.
+// Death ends the current police chase — you come back with a clean slate so you
+// never respawn still being hunted.
 let playerDownCD = 0;
 function downPlayer(reason) {
   if (playerDownCD > 0) return;
@@ -1786,7 +1817,7 @@ function downPlayer(reason) {
   const fine = Math.min(state.money, 150);
   state.money -= fine;
   state.stats.health = 60; state.stats.energy = Math.max(30, state.stats.energy);
-  state.wanted = Math.max(0, (state.wanted || 0) - 1);
+  clearWanted();                       // death = new life: wipe stars + end the chase
   if (inCar) exitCar();
   area = 'city';
   interiors && (interiors.group.visible = false);
@@ -1795,6 +1826,19 @@ function downPlayer(reason) {
   player.group.position.set(SPAWN_FALLBACK.x, 0, SPAWN_FALLBACK.z);
   notify('🏥 ' + (reason || 'You were downed') + ' — patched up at home (-$' + fine + ')');
   saveNow();
+}
+// Fully reset the active police chase: clear stars/heat, stop all bust/cooldown
+// timers, and send every officer + cruiser away. Used by both death and busted so
+// the player always respawns safe and is never chased after respawn.
+function clearWanted() {
+  state.wanted = 0;
+  state.heat = 0;
+  bustTimer = 0;
+  policeGrace = 0;
+  policeWarned = false;
+  wantedPrev = 0;
+  copCoolTimer = 0;
+  despawnAllPolice();
 }
 
 // Targets handed to the weapon raycaster: civilians + cops, each with onHit().
@@ -1980,12 +2024,12 @@ function despawnAllPolice() {
   policeCars = [];
 }
 
-// Cops corner you on foot → you get busted: lose half your cash, wanted clears.
+// Cops corner you on foot → you get busted: lose half your cash, chase fully
+// clears, and you respawn safe (no lingering pursuit).
 function bustPlayer() {
   const lost = Math.floor((state.money || 0) * 0.5);
   state.money -= lost;
-  state.wanted = 0; state.heat = 0; bustTimer = 0; copCoolTimer = 0;
-  despawnAllPolice();
+  clearWanted();                       // busted = chase resolved: stars + cops cleared
   if (inCar) exitCar();
   player.group.position.set(state.pos.x = SPAWN_FALLBACK.x, 0, state.pos.z = SPAWN_FALLBACK.z);
   notify(`🚔 Busted! Lost $${lost.toLocaleString()}.`);

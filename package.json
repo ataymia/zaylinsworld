@@ -10,6 +10,7 @@
     "preview": "vite preview --host",
     "gen:gem": "node tools/make-sample-gem.mjs",
     "gen:assets": "node tools/build-assets.mjs",
+    "gen:asset-report": "node scripts/gen-asset-report.mjs",
     "index:kits": "node tools/index-kits.mjs",
     "organize": "node tools/organize-assets.mjs"
   },
