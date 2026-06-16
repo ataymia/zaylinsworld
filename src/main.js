@@ -205,6 +205,7 @@ let drivenDist = 0, drivenFlagged = false;   // "Get Around Town" mission tracke
 let builderOpen = false;
 let wardrobeResume = false;      // creator opened from inside the game
 let refuelPoints = [];           // gas-station forecourts: { x, z, r, id }
+let gasStation = null;           // { doorPos } for the 6twelve store entrance (E)
 let minimap = null;              // corner radar API (initMinimap)
 let debugBadge = null;           // debug panel API (initDebugBadge → { toggle })
 let monsters = [];               // active Monster Mode creatures
@@ -631,73 +632,83 @@ function openWeaponDisplay(entry) {
 // drivable car spin their wheels). Swap STATIC things to real GLBs — interior
 // shopkeepers, dealership showroom cars, and Frostbox jewelry — so the pack is
 // clearly visible in-game with no animation regressions.
-// Build a stable PROCEDURAL gas station (always present, no GLB needed) so the
-// fuel/refuel loop is visible and usable. Forecourt pad + canopy + two pumps +
-// a price sign, registers a refuel point and a minimap marker.
+// Build the city gas station. The REAL uploaded 6twelve gas-station GLB (pumps +
+// canopy + storefront + signage) is the headline model; a compact procedural
+// station (canopy + two pumps + price sign) is built first as a guaranteed-
+// visible fallback and hidden once the GLB loads. Registers a drive-up refuel
+// forecourt, a minimap marker, and an on-foot store entrance that teleports the
+// player into the walkable 6twelve store interior.
 function buildProceduralGasStation() {
-  const GX = -15, GZ = -22.5;                       // clear strip below Frostbox
+  const GX = -46, GZ = 24;                          // standalone lot, west edge (south of Block Supply), set back off the ring road
   const grp = new THREE.Group(); grp.name = 'gas-station-proc';
   const procColliders = [];                         // pump colliders (removed if a GLB takes over)
   // forecourt pad (decorative — no collider so it never blocks driving)
-  const pad = new THREE.Mesh(new THREE.BoxGeometry(10, 0.12, 8),
+  const pad = new THREE.Mesh(new THREE.BoxGeometry(11, 0.12, 9),
     new THREE.MeshStandardMaterial({ color: '#2b2e36', roughness: 0.95 }));
   pad.position.set(GX, 0.06, GZ); grp.add(pad);
   // painted markings
   const stripeMat = new THREE.MeshStandardMaterial({ color: '#c9b23a', roughness: 0.8 });
-  for (const dx of [-2, 2]) {
-    const s = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.14, 6), stripeMat);
-    s.position.set(GX + dx, 0.07, GZ); grp.add(s);
+  for (const dz of [-2, 2]) {
+    const s = new THREE.Mesh(new THREE.BoxGeometry(6, 0.14, 0.18), stripeMat);
+    s.position.set(GX, 0.07, GZ + dz); grp.add(s);
   }
   // canopy: two posts + a flat roof
   const postMat = new THREE.MeshStandardMaterial({ color: '#9aa0aa', roughness: 0.6, metalness: 0.3 });
-  for (const dx of [-3.6, 3.6]) {
+  for (const dz of [-3.6, 3.6]) {
     const post = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 4, 10), postMat);
-    post.position.set(GX + dx, 2, GZ - 2.6); grp.add(post);
+    post.position.set(GX + 2.6, 2, GZ + dz); grp.add(post);
   }
-  const roof = new THREE.Mesh(new THREE.BoxGeometry(9, 0.4, 4),
+  const roof = new THREE.Mesh(new THREE.BoxGeometry(4, 0.4, 9),
     new THREE.MeshStandardMaterial({ color: '#d23b3b', roughness: 0.5 }));
-  roof.position.set(GX, 4.1, GZ - 1.6); grp.add(roof);
-  const roofTrim = new THREE.Mesh(new THREE.BoxGeometry(9.1, 0.2, 0.3),
+  roof.position.set(GX + 2.6, 4.1, GZ); grp.add(roof);
+  const roofTrim = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.2, 9.1),
     new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.6 }));
-  roofTrim.position.set(GX, 3.95, GZ - 3.55); grp.add(roofTrim);
+  roofTrim.position.set(GX + 4.55, 3.95, GZ); grp.add(roofTrim);
   // two pumps (solid — small colliders)
   const pumpMat = new THREE.MeshStandardMaterial({ color: '#e6e9ef', roughness: 0.5, metalness: 0.2 });
   const screenMat = new THREE.MeshStandardMaterial({ color: '#1b3a2b', emissive: '#0f5', emissiveIntensity: 0.25 });
-  for (const dx of [-2, 2]) {
+  for (const dz of [-2, 2]) {
     const pump = new THREE.Group();
-    const box = new THREE.Mesh(new THREE.BoxGeometry(0.7, 1.5, 0.5), pumpMat);
-    box.position.y = 0.75; pump.add(box);
-    const screen = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.4, 0.06), screenMat);
-    screen.position.set(0, 1.15, 0.27); pump.add(screen);
+    const pbox = new THREE.Mesh(new THREE.BoxGeometry(0.5, 1.5, 0.7), pumpMat);
+    pbox.position.y = 0.75; pump.add(pbox);
+    const screen = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.4, 0.5), screenMat);
+    screen.position.set(0.27, 1.15, 0); pump.add(screen);
     const nozzle = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.5, 0.12), pumpMat);
-    nozzle.position.set(0.45, 0.9, 0); pump.add(nozzle);
-    pump.position.set(GX + dx, 0, GZ - 1.4);
+    nozzle.position.set(0, 0.9, 0.45); pump.add(nozzle);
+    pump.position.set(GX + 1.4, 0, GZ + dz);
     grp.add(pump);
     pump.updateWorldMatrix(true, true);
     const pc = new THREE.Box3().setFromObject(pump).expandByScalar(0.1);
     cityColliders.push(pc); procColliders.push(pc);
   }
+  // store shell behind the canopy (so a door/entrance reads clearly)
+  const store = new THREE.Mesh(new THREE.BoxGeometry(4.4, 3.2, 7),
+    new THREE.MeshStandardMaterial({ color: '#d8cdb4', roughness: 0.85 }));
+  store.position.set(GX - 3.4, 1.6, GZ); grp.add(store);
   // tall price sign
   const signPost = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 5, 8), postMat);
-  signPost.position.set(GX + 5.4, 2.5, GZ + 2.4); grp.add(signPost);
+  signPost.position.set(GX + 2.4, 2.5, GZ + 5.4); grp.add(signPost);
   const board = new THREE.Mesh(new THREE.BoxGeometry(2.4, 1.4, 0.2),
     new THREE.MeshStandardMaterial({ color: '#16224d', roughness: 0.5 }));
-  board.position.set(GX + 5.4, 4.6, GZ + 2.4); grp.add(board);
-  { const l = makeLabel('⛽ GAS  $1.20/u', '#ffd98a'); l.position.set(GX + 5.4, 4.6, GZ + 2.55); l.scale.multiplyScalar(1.1); grp.add(l); }
-  { const l = makeLabel('FUEL STOP', '#bfe3ff'); l.position.set(GX, 5.1, GZ - 1.6); grp.add(l); }
+  board.position.set(GX + 2.4, 4.6, GZ + 5.4); grp.add(board);
+  { const l = makeLabel('⛽ GAS  $1.20/u', '#ffd98a'); l.position.set(GX + 2.4, 4.6, GZ + 5.55); l.scale.multiplyScalar(1.1); grp.add(l); }
+  { const l = makeLabel('6TWELVE', '#ff8a3a'); l.position.set(GX - 3.4, 3.6, GZ); grp.add(l); }
   scene.add(grp);
-  // register the refuel forecourt + minimap marker
-  refuelPoints = [{ x: GX, z: GZ, r: 6, id: 'gas-proc', price: 1.2 }];
+  // the store door sits at the front-left of the store shell (faces the road, +x)
+  const doorPos = new THREE.Vector3(GX - 0.9, 0, GZ);
+  gasStation = { doorPos };
+  // register the refuel forecourt + minimap marker (zone biased toward the road
+  // side so you can drive off the ring road onto the pumps)
+  refuelPoints = [{ x: GX + 1.4, z: GZ, r: 7, id: 'gas-proc', price: 1.2 }];
   if (minimap) addTownMarkers([{ x: GX, z: GZ, color: '#ffd54a', icon: '⛽' }]);
-  console.info('[gas] procedural gas station placed at', GX, GZ);
-  // P7: safe single-asset test — try ONLY the uploaded gas-station GLB. If it
-  // passes strict bounds checks it replaces the procedural box art; otherwise we
-  // keep the (already-working) procedural station. Refuel zone + marker are kept
-  // either way, so the fuel loop can never break.
-  if (FEATURES.USE_GLB_GAS_STATION_ONLY) tryGasStationGLB(GX, GZ, grp, procColliders);
+  console.info('[gas] gas station placed at', GX, GZ, '(store door', doorPos.x, doorPos.z + ')');
+  // load the real 6twelve GLB and swap it in for the procedural box art if it
+  // passes finite/size/footprint checks; the refuel zone + store door are kept
+  // either way, so the fuel + shopping loops can never break.
+  tryGasStationGLB(GX, GZ, grp, procColliders);
 }
 
-// Attempt to load the single gas-station GLB and swap it in for the procedural
+// Attempt to load the 6twelve gas-station GLB and swap it in for the procedural
 // art ONLY if it passes finite/size/footprint checks (so a tiny-scaled-huge or
 // NaN asset can never become a blob). Async + fully guarded — any failure logs a
 // reason to the debug panel and leaves the procedural station untouched.
@@ -711,30 +722,32 @@ async function tryGasStationGLB(GX, GZ, procGroup, procColliders) {
     if (![size.x, size.y, size.z].every(Number.isFinite)) {
       debug.showError && debug.showError('gas GLB rejected: non-finite bounds'); return;
     }
-    const maxDim = Math.max(size.x, size.y, size.z);
-    if (!(maxDim > 0.01)) { console.warn('[gas] GLB rejected: degenerate/zero size'); return; }
-    // normalize so the longest side is ~12 units (the intended footprint), then
-    // re-measure and reject anything still oversized.
-    const scale = 12 / maxDim;
+    const foot = Math.max(size.x, size.z);
+    if (!(foot > 0.01)) { console.warn('[gas] GLB rejected: degenerate/zero size'); return; }
+    // normalize so the longest FOOTPRINT side is ~16 units (fits the lot without
+    // poking into the ring-road sidewalk), then re-measure + reject if oversized.
+    const scale = 16 / foot;
     if (!Number.isFinite(scale) || scale <= 0) { console.warn('[gas] GLB rejected: bad scale'); return; }
     obj.scale.setScalar(scale);
     obj.updateWorldMatrix(true, true);
     const box2 = new THREE.Box3().setFromObject(obj);
     const size2 = new THREE.Vector3(); box2.getSize(size2);
-    if (Math.max(size2.x, size2.z) > 24 || size2.y > 16) {
+    const ctr = new THREE.Vector3(); box2.getCenter(ctr);
+    if (Math.max(size2.x, size2.z) > 30 || size2.y > 20) {
       console.warn('[gas] GLB rejected: footprint too large after scale', size2);
       debug.showError && debug.showError('gas GLB rejected: oversized footprint'); return;
     }
-    // seat it on the ground at the station centre
-    obj.position.set(GX, -box2.min.y, GZ);
+    // seat it on the ground, centred on the station lot
+    obj.position.set(GX - (ctr.x - obj.position.x), obj.position.y - box2.min.y, GZ - (ctr.z - obj.position.z));
     obj.name = 'gas-station-glb';
+    obj.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
     // SWAP: hide the procedural visuals + drop their pump colliders (the GLB is
     // decorative so the forecourt stays drivable and the refuel zone stays clear).
     procGroup.visible = false;
     for (const c of procColliders) { const i = cityColliders.indexOf(c); if (i >= 0) cityColliders.splice(i, 1); }
     scene.add(obj);
     debug.set('gasStationGLB', true);
-    console.info('[gas] gas-station GLB placed (scale', scale.toFixed(3), '| footprint',
+    console.info('[gas] 6twelve GLB placed (scale', scale.toFixed(3), '| footprint',
       size2.x.toFixed(1) + '×' + size2.z.toFixed(1) + ')');
   } catch (e) {
     console.warn('[gas] GLB load threw — keeping procedural:', e);
@@ -1370,6 +1383,16 @@ function registerInteractables(entrances) {
       enabled: () => !inCar,
       getPrompt: () => 'Police front desk',
       onInteract: () => talkToPoliceDesk(),
+    });
+  }
+  // gas-station store entrance (E on foot) → walkable 6twelve store interior
+  if (gasStation && gasStation.doorPos) {
+    manager.register({
+      id: 'enter-gas', area: 'city', key: 'e', radius: 2.8,
+      getPosition: () => gasStation.doorPos,
+      enabled: () => !inCar,
+      getPrompt: () => 'Enter 6twelve Store',
+      onInteract: () => enterInterior('gas'),
     });
   }
 
@@ -2794,6 +2817,14 @@ function talkToInterior(npc) {
           { label: 'Just browsing', onPick: () => {} },
         ] });
       break;
+    case 'clerk':
+      openDialogue({ name: npc.name + ' · 6twelve', text: 'Welcome to 6twelve! Grab a snack, cop a cold drink, or fill up at the pumps out front.',
+        choices: [
+          { label: 'Buy a snack ($5)', onPick: () => { buySnack(); return 'keep'; } },
+          { label: 'Grab a drink ($3)', onPick: () => { buyDrink(); return 'keep'; } },
+          { label: 'Just looking', onPick: () => {} },
+        ] });
+      break;
     default:
       openDialogue({ name: npc.name, text: 'What\'s good?', choices: [{ label: 'Later', onPick: () => {} }] });
   }
@@ -2808,6 +2839,8 @@ function runStation(intr, st) {
     case 'gear-shop': openGearShop(); break;
     case 'food-buy': buyChicken(); break;
     case 'food-eat': startEating(); break;
+    case 'buy-snack': buySnack(); break;
+    case 'buy-drink': buyDrink(); break;
     case 'work-shift': workShift(); break;
     case 'rest': restAtHome(); break;
     case 'wardrobe': openWardrobe(); break;
@@ -2952,6 +2985,29 @@ function buyChicken() {
   state.money -= 8; state.chicken++;
   notify('🍗 Bought chicken (' + state.chicken + ' in bag). Sit & eat to chow down.');
   missionEvent('buy-chicken');
+  saveNow();
+}
+// ── 6twelve convenience store (snacks + drinks) ─────────────────────────────
+// Instant consumables bought at the gas-station store: a snack tops up hunger +
+// a little fun; a drink restores energy + a little fun. Cheap pick-me-ups for
+// between jobs.
+function buySnack() {
+  if (state.money < 5) { notify('Not enough money for a snack ($5).'); return; }
+  state.money -= 5;
+  state.stats.hunger = Math.min(100, state.stats.hunger + 22);
+  state.stats.fun = Math.min(100, state.stats.fun + 4);
+  notify('🍫 Snack down — hunger restored.');
+  missionEvent('buy-snack');
+  saveNow();
+}
+function buyDrink() {
+  if (state.money < 3) { notify('Not enough money for a drink ($3).'); return; }
+  state.money -= 3;
+  state.stats.energy = Math.min(100, state.stats.energy + 18);
+  state.stats.hunger = Math.min(100, state.stats.hunger + 6);
+  state.stats.fun = Math.min(100, state.stats.fun + 4);
+  notify('🥤 Ice cold — energy up.');
+  missionEvent('buy-drink');
   saveNow();
 }
 // ── WORK SHIFTS (task loops — pay ONLY after completing the tasks) ──────────────

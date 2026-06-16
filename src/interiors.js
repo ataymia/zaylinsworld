@@ -142,6 +142,7 @@ const OFFS = {
   school:     new THREE.Vector3(2700, 0, 0),
   office:     new THREE.Vector3(2800, 0, 0),
   garage:     new THREE.Vector3(2900, 0, 0),
+  gas:        new THREE.Vector3(3000, 0, 0),
 };
 
 export const DEALER_CARS = [
@@ -591,6 +592,91 @@ export function buildInteriors() {
       stations: [
         { id: 'repair-bay', type: 'repair', pos: new THREE.Vector3(o.x - 3, 0, o.z + 3), label: 'Repair / Service Vehicle' },
         { id: 'garage-shift', type: 'garage-work', pos: new THREE.Vector3(o.x + 3, 0, o.z + 3), label: 'Work a Garage Shift' },
+      ],
+    };
+  }
+
+  // ── GAS STATION STORE (6twelve convenience store) ──────────────────────────
+  // The walkable inside of the city gas station — snack aisles, a drink cooler
+  // wall, a coffee/slush bar and a checkout counter with a clerk. Reached by the
+  // store door on the forecourt; you buy snacks & drinks here.
+  {
+    const o = OFFS.gas;
+    const r = buildRoom(o.x, o.z, 16, 12, '#d7d2c4', '#3a4654', '#101620');
+    root.add(r.group);
+    // bright tile aisle stripe down the middle
+    const aisle = box(3, 0.02, 9, mat('#e9eef4', { rough: 0.6 }));
+    aisle.position.set(o.x, 0.02, o.z); r.group.add(aisle);
+
+    // ── checkout counter (front-left), register + clerk ──
+    const counter = box(4.4, 1.05, 1.2, mat('#2c3e6b', { rough: 0.4 }));
+    counter.position.set(o.x - 4.6, 0.55, o.z + 2.4); r.group.add(counter);
+    r.colliders.push(new THREE.Box3().setFromObject(counter));
+    const register = box(0.7, 0.45, 0.5, mat('#15151c', { metal: 0.3, rough: 0.4 }));
+    register.position.set(o.x - 5.6, 1.28, o.z + 2.4); r.group.add(register);
+    // coffee + slush machine on the back counter
+    const coffee = box(0.6, 0.8, 0.5, mat('#5a2a1a', { rough: 0.5 }));
+    coffee.position.set(o.x - 3.4, 1.45, o.z + 2.4); r.group.add(coffee);
+    const slush = box(0.7, 0.9, 0.6, new THREE.MeshStandardMaterial({ color: '#1a3a6b', emissive: '#2255cc', emissiveIntensity: 0.4, roughness: 0.4 }));
+    slush.position.set(o.x - 2.4, 1.5, o.z + 2.4); r.group.add(slush);
+
+    // ── snack shelves (back wall + a centre gondola) ──
+    const snackColors = ['#e0b020', '#c83020', '#2a8a4a', '#3050b0', '#d05a18', '#9a3aa0'];
+    const buildSnackRack = (cx, cz, ry) => {
+      const g = new THREE.Group();
+      const frame = box(3.4, 2.2, 0.5, mat('#cfcfd8', { rough: 0.6 }));
+      frame.position.y = 1.1; g.add(frame);
+      for (let row = 0; row < 4; row++) for (let col = 0; col < 5; col++) {
+        const item = box(0.5, 0.32, 0.32, mat(snackColors[(row + col) % snackColors.length]));
+        item.position.set(-1.35 + col * 0.68, 0.45 + row * 0.5, 0.32); g.add(item);
+      }
+      g.position.set(cx, 0, cz); g.rotation.y = ry;
+      return g;
+    };
+    r.group.add(buildSnackRack(o.x - 3, o.z - 5.4, 0));
+    r.group.add(buildSnackRack(o.x + 1, o.z - 5.4, 0));
+    // centre gondola (double-sided snack island)
+    const gondola = box(4, 1.5, 1.2, mat('#cfcfd8', { rough: 0.6 }));
+    gondola.position.set(o.x + 1, 0.75, o.z); r.group.add(gondola);
+    r.colliders.push(new THREE.Box3().setFromObject(gondola));
+    for (let s = -1; s <= 1; s += 2) for (let col = 0; col < 5; col++) {
+      const item = box(0.42, 0.3, 0.3, mat(snackColors[(col + (s > 0 ? 2 : 0)) % snackColors.length]));
+      item.position.set(o.x + 1 - 1.3 + col * 0.65, 1.35, o.z + s * 0.62); r.group.add(item);
+    }
+
+    // ── drink cooler wall (right side) — glowing glass-front fridges ──
+    const coolerBack = box(0.4, 2.6, 8, new THREE.MeshStandardMaterial({ color: '#0c1620', emissive: '#0a2a4a', emissiveIntensity: 0.45, roughness: 0.4 }));
+    coolerBack.position.set(o.x + 7.4, 1.3, o.z); r.group.add(coolerBack);
+    r.colliders.push(new THREE.Box3().setFromObject(coolerBack));
+    const drinkColors = ['#d02020', '#1f8a4c', '#e0a010', '#2050c0', '#d040a0', '#10a0c0'];
+    for (let row = 0; row < 4; row++) for (let d = 0; d < 7; d++) {
+      const can = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.34, 10),
+        mat(drinkColors[(row + d) % drinkColors.length], { rough: 0.4, metal: 0.3 }));
+      can.position.set(o.x + 7.05, 0.55 + row * 0.6, o.z - 3 + d * 1.0); r.group.add(can);
+    }
+    // glass front (transparent)
+    const coolerGlass = new THREE.Mesh(new THREE.BoxGeometry(0.08, 2.4, 7.6), new THREE.MeshPhysicalMaterial({
+      color: '#cfe8ff', transparent: true, opacity: 0.14, roughness: 0.03, metalness: 0,
+      transmission: 0.9, ior: 1.5, thickness: 0.2, clearcoat: 1 }));
+    coolerGlass.position.set(o.x + 6.85, 1.3, o.z); r.group.add(coolerGlass);
+
+    // signage
+    r.group.add(tag('6TWELVE', '#ff8a3a', 'snacks · drinks · coffee').translateX(o.x).translateY(2.75).translateZ(o.z - 5.7));
+
+    const clerk = staticNPC({ skin: 'caramel', face: 'oval', body: 'average', height: 'average',
+      hair: 'low-fade', hairColor: 'jet', top: 'jersey-grn', bottom: 'jeans-black',
+      shoes: 'sneak-white', accessory: 'none', jewelry: 'none' }, o.x - 4.6, o.z + 3.3, Math.PI);
+    r.group.add(clerk.group);
+
+    byId.gas = {
+      id: 'gas', name: '6twelve Store', offset: o,
+      spawn: r.spawn, exit: r.exit, colliders: r.colliders,
+      avatars: [clerk], npcSlot: 'npc_basic_01',
+      npcs: [{ name: 'Sam', role: 'clerk', pos: new THREE.Vector3(o.x - 4.6, 0, o.z + 2.6), dialogue: 'clerk' }],
+      stations: [
+        { id: 'buy-snack', type: 'buy-snack', pos: new THREE.Vector3(o.x + 1, 0, o.z - 4.0), label: 'Buy a Snack ($5)' },
+        { id: 'buy-drink', type: 'buy-drink', pos: new THREE.Vector3(o.x + 5.6, 0, o.z), label: 'Grab a Drink ($3)' },
+        { id: 'gas-checkout', type: 'buy-snack', pos: new THREE.Vector3(o.x - 4.6, 0, o.z + 1.4), label: 'Checkout — Buy a Snack ($5)' },
       ],
     };
   }
