@@ -18,6 +18,13 @@ import * as THREE from 'three';
 import { loadAsset, makeMixer } from './assets.js';
 import { trackMixer } from './manifest.js';
 
+// Runtime-tunable skin config so facing/scale can be corrected LIVE from the
+// console without a rebuild (these PSX models vary in their authored forward
+// axis). `faceYaw` is added to every skin's Y rotation; flip it to Math.PI if a
+// roster reads back-to-front in-game. Kept additive + reversible.
+const SKIN_CFG = { faceYaw: 0 };
+if (typeof window !== 'undefined') window.__ZW_SKIN__ = SKIN_CFG;
+
 // PSX civilian roster (low-poly humanoids, each with a built-in clip).
 const CIVILIANS = [
   'character-01', 'character-02', 'character-03', 'character-04', 'character-05',
@@ -62,6 +69,7 @@ function skinAvatar(avatar, glb, { height = 1.78, play = true, label = 'skin' } 
   }
   skin.scale.setScalar(v.scale);
   skin.position.y = -v.box.min.y * v.scale;   // ground feet at root origin (y=0)
+  skin.rotation.y = SKIN_CFG.faceYaw;         // live-tunable forward-axis correction
   skin.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
 
   hideProceduralMeshes(avatar.group, skin);  // hide procedural body (validated GLB only)

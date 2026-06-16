@@ -59,8 +59,8 @@ import {
 // a bad asset can never become a giant blob or hide the player. Flip a flag (or
 // toggle via window.__ZW_FEATURES__ in the console / debug panel) to re-enable.
 const FEATURES = {
-  USE_REAL_PLAYER_SKIN: false,   // attach PSX GLB skin to the player
-  USE_REAL_NPC_SKINS: false,     // attach PSX GLB skins to city NPCs
+  USE_REAL_PLAYER_SKIN: true,    // attach PSX GLB skin to the player (validated + procedural fallback)
+  USE_REAL_NPC_SKINS: true,      // attach PSX GLB skins to city NPCs (validated + procedural fallback)
   USE_GLB_MONSTERS: false,       // swap procedural monster → PSX creature GLB
   USE_GLB_WORLD_BUILDINGS: false, // place uploaded gas/diner/market GLB landmarks
   USE_GLB_GAS_STATION_ONLY: false, // Phase 2: the gas-station GLB normalizes to a tiny prop in the
