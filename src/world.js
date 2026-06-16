@@ -5,7 +5,7 @@
 import * as THREE from 'three';
 import {
   ROAD, CROSSWALKS, LANDMARKS, FEATURES,
-  PARK, PARKING, STREET_LIGHTS, STREET_TREES, SPAWN,
+  PARK, PARKING, STREET_LIGHTS, STREET_TREES, SPAWN, POLICE_POST,
 } from './config/mapConfig.js';
 import { clearOfRoads } from './config/placementRules.js';
 import { registerWorldObject, clearWorldObjects } from './worldCollision.js';
@@ -68,7 +68,7 @@ function textSign(text, color) {
 
 // Build a detailed building. faceDir = unit vector the storefront/door faces.
 function makeBuilding(scene, opt) {
-  const { x, z, w, d, h, color, name, signColor, faceDir, door = true } = opt;
+  const { x, z, w, d, h, color, name, signColor, faceDir, door = true, kind = null } = opt;
   const g = new THREE.Group();
 
   const body = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat(color, { rough: 0.85 }));
@@ -127,9 +127,149 @@ function makeBuilding(scene, opt) {
     g.add(sign);
   }
 
+  // ── Phase 3D: storefront identity (awning + rooftop billboard + props) ──────
+  // Makes each business recognizable from the road without reading a label.
+  const along2 = Math.abs(fd.z) > Math.abs(fd.x);
+  const faceW2 = along2 ? w : d;
+  const rightV = along2 ? new THREE.Vector3(1, 0, 0) : new THREE.Vector3(0, 0, 1);
+  // awning over the storefront in the sign colour
+  if (door) {
+    const awn = new THREE.Mesh(new THREE.BoxGeometry(Math.min(faceW2 - 0.6, 6.5), 0.22, 1.5),
+      mat(signColor || '#cccccc', { rough: 0.6, emissive: signColor || '#888', emissiveIntensity: 0.18 }));
+    awn.position.copy(faceCenter).addScaledVector(fd, 0.9); awn.position.y = 3.0;
+    awn.rotation.y = Math.atan2(fd.x, fd.z); awn.rotation.x = -0.12;
+    g.add(awn);
+    // valance stripes under the awning
+    for (let s = -2; s <= 2; s++) {
+      const st = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.3, 0.04),
+        mat(s % 2 ? '#f4f4f4' : (color), { rough: 0.7 }));
+      st.position.copy(faceCenter).addScaledVector(fd, 1.6).addScaledVector(rightV, s * 0.95);
+      st.position.y = 2.78; st.rotation.y = Math.atan2(fd.x, fd.z);
+      g.add(st);
+    }
+  }
+  // rooftop billboard — a raised, lit nameplate readable from a block away
+  if (name) {
+    const board = textSign(name, signColor || '#ffffff');
+    board.scale.set(1.15, 1.15, 1);
+    board.position.copy(faceCenter).addScaledVector(fd, 0.3); board.position.y = h + 1.4;
+    board.lookAt(board.position.clone().add(fd));
+    g.add(board);
+    const post = new THREE.Mesh(new THREE.BoxGeometry(0.16, 1.4, 0.16), mat('#1a1a22'));
+    post.position.copy(faceCenter).addScaledVector(fd, 0.1); post.position.y = h + 0.6;
+    g.add(post);
+  }
+  // type-specific exterior props
+  if (kind) storefrontProps(g, kind, faceCenter, fd, rightV, signColor, color);
+
   scene.add(g);
   addCollider(body);
   return { doorPos, faceDir: fd, body };
+}
+
+// Cheap, reliable procedural props that signal what a building IS. Additive and
+// off to the sides of the entrance so they never block the door ring.
+function storefrontProps(g, kind, faceCenter, fd, rightV, signColor, color) {
+  const place = (mesh, fwd, side, y = 0) => {
+    mesh.position.copy(faceCenter).addScaledVector(fd, fwd).addScaledVector(rightV, side);
+    mesh.position.y = y; g.add(mesh);
+  };
+  const M = (c, o) => mat(c, o || {});
+  switch (kind) {
+    case 'chicken': {                       // outdoor menu board + stools
+      const board = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.6, 0.12), M('#1c1c22'));
+      board.position.y = 0.8; place(board, 1.4, 3.2, 0); board.position.y = 0.8;
+      const menu = new THREE.Mesh(new THREE.PlaneGeometry(1.0, 1.3), M('#ffcf3f', { emissive: '#caa23a', emissiveIntensity: 0.3 }));
+      menu.position.copy(board.position).addScaledVector(fd, 0.08); menu.position.y = 0.95;
+      menu.lookAt(menu.position.clone().add(fd)); g.add(menu);
+      for (let s = -1; s <= 1; s += 2) {
+        const stool = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.5, 10), M('#b5302a'));
+        place(stool, 2.2, s * 1.3, 0.25);
+      }
+      break;
+    }
+    case 'frostbox': {                      // glowing gem pedestal
+      const ped = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.5, 1.0, 12), M('#26406b'));
+      place(ped, 1.6, 2.6, 0.5);
+      const gem = new THREE.Mesh(new THREE.OctahedronGeometry(0.32, 0),
+        M('#9fe8ff', { emissive: '#5fd0ff', emissiveIntensity: 0.9, metal: 0.4, rough: 0.15 }));
+      place(gem, 1.6, 2.6, 1.25);
+      break;
+    }
+    case 'kicks': {                         // oversized shoe-box display
+      const box = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.6, 1.6), M('#2c6b4b'));
+      place(box, 1.5, 2.8, 0.3);
+      const lid = new THREE.Mesh(new THREE.BoxGeometry(1.05, 0.16, 1.65), M('#b3ffd1'));
+      place(lid, 1.5, 2.8, 0.66);
+      break;
+    }
+    case 'gym': {                           // dumbbell rack
+      for (let s = -1; s <= 1; s++) {
+        const bar = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.9, 8), M('#888'));
+        bar.rotation.z = Math.PI / 2; place(bar, 1.6, s * 0.5, 0.4 + (s + 1) * 0.18);
+        for (const e of [-0.45, 0.45]) {
+          const w8 = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.16, 0.12, 12), M('#222'));
+          w8.rotation.z = Math.PI / 2;
+          w8.position.copy(bar.position).addScaledVector(rightV, e); g.add(w8);
+        }
+      }
+      break;
+    }
+    case 'blocksupply': {                   // stacked supply crates
+      for (const [fwd, side, y, c] of [[1.4, 2.6, 0.4, '#5a3d2b'], [1.4, 2.6, 1.1, '#6b4a32'], [2.0, 3.1, 0.4, '#4b2c6b']]) {
+        const crate = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.7, 0.8), M(c, { rough: 0.85 }));
+        place(crate, fwd, side, y);
+      }
+      break;
+    }
+    case 'school': {                        // flagpole
+      const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 4.2, 8), M('#cfd6e2'));
+      place(pole, 1.8, 3.0, 2.1);
+      const flag = new THREE.Mesh(new THREE.PlaneGeometry(1.0, 0.6), M('#b9ffd6', { emissive: '#7fd0a8', emissiveIntensity: 0.3 }));
+      place(flag, 1.8, 3.55, 3.6); flag.rotation.y = Math.PI / 2;
+      break;
+    }
+    case 'office': {                        // entry planters
+      for (let s = -1; s <= 1; s += 2) {
+        const pot = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.26, 0.5, 10), M('#3a3f4a'));
+        place(pot, 1.4, s * 2.0, 0.25);
+        const bush = new THREE.Mesh(new THREE.IcosahedronGeometry(0.4, 1), M('#2f7d3a', { flat: true }));
+        place(bush, 1.4, s * 2.0, 0.7);
+      }
+      break;
+    }
+    case 'home': {                          // mailbox
+      const post = new THREE.Mesh(new THREE.BoxGeometry(0.1, 1.0, 0.1), M('#6b4a2a'));
+      place(post, 2.2, 2.4, 0.5);
+      const box = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.25, 0.5), M('#bfe3ff', { metal: 0.3 }));
+      place(box, 2.2, 2.4, 1.05);
+      break;
+    }
+    case 'garage': {                        // tire stack + tool sign
+      for (let i = 0; i < 3; i++) {
+        const tire = new THREE.Mesh(new THREE.TorusGeometry(0.32, 0.14, 8, 16), M('#1a1a1a', { rough: 0.95 }));
+        tire.rotation.x = Math.PI / 2; place(tire, 1.5, 2.8, 0.16 + i * 0.3);
+      }
+      break;
+    }
+    case 'dealership': {                    // showroom pennant pole
+      const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 4.0, 8), M('#9fe8ff'));
+      place(pole, 1.8, 3.4, 2.0);
+      break;
+    }
+    case 'police': {                        // flagpole + blue lamp + barrier
+      const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 4.2, 8), M('#cfd6e2'));
+      place(pole, 1.6, 3.2, 2.1);
+      const beacon = new THREE.Mesh(new THREE.SphereGeometry(0.22, 10, 8),
+        M('#3aa0ff', { emissive: '#1d6fd6', emissiveIntensity: 0.9 }));
+      place(beacon, 1.6, 3.2, 4.3);
+      // low barrier rail by the entrance
+      const rail = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.7, 2.6), M('#2b66c4', { emissive: '#16345f', emissiveIntensity: 0.35 }));
+      place(rail, 1.3, -1.6, 0.35);
+      break;
+    }
+    default: break;
+  }
 }
 
 function tree(scene, x, z) {
@@ -251,7 +391,7 @@ export function buildCity(scene) {
   LANDMARKS.forEach(b => {
     const r = makeBuilding(scene, {
       x: b.x, z: b.z, w: b.w, d: b.d, h: b.h, color: b.color,
-      name: b.name, signColor: b.sign, faceDir: dirOf(b.face), door: true,
+      name: b.name, signColor: b.sign, faceDir: dirOf(b.face), door: true, kind: b.id,
     });
     entrances.push({ id: b.id, name: b.name, interiorId: b.interiorId, doorPos: r.doorPos, faceDir: r.faceDir });
   });
@@ -275,5 +415,47 @@ export function buildCity(scene) {
   if (skippedLights) console.warn('[world] skipped', skippedLights, 'streetlight(s) that fell in a road lane');
   STREET_TREES.forEach(([x, z]) => { if (clearOfRoads(x, z, 0.3)) tree(scene, x, z); });
 
-  return { spawn: new THREE.Vector3(SPAWN.x, 0, SPAWN.z), spawnFaceY: SPAWN.faceY, entrances };
+  // ── police post (Phase 3J) ────────────────────────────────────────────────
+  const police = buildPolicePost(scene, walkM, stripeM);
+
+  return {
+    spawn: new THREE.Vector3(SPAWN.x, 0, SPAWN.z), spawnFaceY: SPAWN.faceY,
+    entrances, police,
+  };
+}
+
+// Visible civic-safety HQ: labelled building, a small cruiser lot, and two
+// parked cruiser pads. Returns { deskPos, faceDir, cruisers:[{x,z,ry}] } so the
+// game layer can wire a front-desk interaction and spawn stealable cruisers.
+function buildPolicePost(scene, walkM, stripeM) {
+  const P = POLICE_POST;
+  const fd = new THREE.Vector3(P.face[0], 0, P.face[1]).normalize();
+  const r = makeBuilding(scene, {
+    x: P.x, z: P.z, w: P.w, d: P.d, h: P.h, color: P.color,
+    name: P.name, signColor: P.sign, faceDir: fd, door: true, kind: 'police',
+  });
+
+  // cruiser lot pavement + stall lines
+  const lot = new THREE.Mesh(new THREE.PlaneGeometry(P.lot.w, P.lot.d),
+    new THREE.MeshStandardMaterial({ color: '#30323c', roughness: 0.95 }));
+  lot.rotation.x = -Math.PI / 2; lot.position.set(P.lot.cx, 0.018, P.lot.cz);
+  lot.receiveShadow = true; scene.add(lot);
+  const line = new THREE.Mesh(new THREE.PlaneGeometry(0.12, P.lot.d - 1.0), stripeM);
+  line.rotation.x = -Math.PI / 2; line.position.set(P.lot.cx, 0.03, P.lot.cz); scene.add(line);
+
+  // blue/white curb posts framing the lot entrance (decorative, registered)
+  [[-1], [1]].forEach(([s]) => {
+    const post = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.14, 1.0, 8),
+      mat('#2b66c4', { emissive: '#16345f', emissiveIntensity: 0.4 }));
+    post.position.set(P.lot.cx - P.lot.w / 2 - 0.3, 0.5, P.lot.cz + s * (P.lot.d / 2 - 0.4));
+    post.castShadow = true; scene.add(post);
+  });
+
+  // front desk sits just in front of the (non-opening) door
+  const deskPos = r.doorPos.clone().add(fd.clone().multiplyScalar(P.deskOffset));
+  return {
+    deskPos,
+    faceDir: fd.clone().multiplyScalar(-1),     // cars face out toward town
+    cruisers: P.cruisers.map(([x, z]) => ({ x, z })),
+  };
 }

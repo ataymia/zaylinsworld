@@ -6,7 +6,7 @@ import { Sky } from 'three/addons/objects/Sky.js';
 import { buildAvatar, isGltfHair, HAIRSTYLES, HAIR_COLORS, JEWELRY, defaultCustom } from './avatar.js';
 import { attachGltfHair, attachedHairInfo } from './hairKit.js';
 import { buildDistrict } from './cityKit.js';
-import { placeStreetProps } from './props.js';
+import { placeStreetProps, loadTrashTemplates, makeTrashItem, trashTemplatesReady } from './props.js';
 import { placeWorldBuildings } from './worldBuildings.js';
 import { furnishInteriors } from './furnish.js';
 import { initMinimap, setMarkers } from './minimap.js';
@@ -47,6 +47,7 @@ import { initDebugBadge, debug } from './debug.js';
 import { handlingFor, addVehicleDamage, applyDamageVisual, tickDamageSmoke } from './vehicleDamage.js';
 import { collideVehicle, breakableCount, worldObjectCount } from './worldCollision.js';
 import { dressTown } from './townBuilder.js';
+import { buildTrafficControl } from './traffic.js';
 import {
   buildCreator, showCreator, updateHUD, updateCarHUD, showPrompt, notify, SERVERS,
   isUIOpen, onMenuClose, openDialogue, openShop, openChainBuilder, closeMenus,
@@ -181,8 +182,10 @@ let mode = 'creator';            // 'creator' | 'play'
 let started = false;
 let player = null;
 let cityNPCs = [], traffic = [], car = null, interiors = null;
+let trafficControl = null;       // traffic lights + stop signs controller (traffic.js)
 let cityEntrances = [];           // saved for live density re-registration
 let entranceMap = {};            // interiorId -> { doorPos, faceDir }
+let townMarkers = [];            // accumulated minimap markers (gas, buildings, police, garage)
 let area = 'city';
 let inCar = false;
 let drivingVehicle = null;     // the vehicle currently being driven (owned car or a stolen traffic car)
@@ -191,6 +194,8 @@ let velY = 0, onGround = true;
 // ── police / crime runtime state ──────────────────────────────────────────────
 let policeUnits = [];          // foot cops: { av, health, busted }
 let policeCars = [];           // patrol cruisers (heavier mass, can be stolen)
+let parkedCruisers = [];       // HQ cruisers parked at the police post (stealable)
+let policePost = null;         // { deskPos, faceDir } from buildCity (Phase 3J)
 let policeAccum = 0;           // spawn pacing
 let bustTimer = 0;             // seconds a cop has been on top of the player
 let policeGrace = 0;           // seconds before a bust can happen after wanted starts
@@ -255,6 +260,10 @@ function enterWorld() {
     cityInfo.entrances.forEach(e => { entranceMap[e.interiorId] = { doorPos: e.doorPos, faceDir: e.faceDir }; });
     interiors = buildInteriors();
     scene.add(interiors.group);
+    trafficControl = buildTrafficControl(scene);   // lights + stop signs (Phase 3A/3B)
+    debug.set('trafficLights', trafficControl.lightCount);
+    debug.set('stopSigns', trafficControl.stopCount);
+    setupPolicePost(cityInfo.police);              // visible HQ + parked cruisers (Phase 3J)
     cityNPCs = createCityNPCs(scene, Math.max(8, Math.round(22 * graphics.npcDensity)));
     traffic = createTraffic(scene, Math.max(3, Math.round(10 * graphics.trafficDensity)));
     car = createDrivableCar(scene, 13, 3);
@@ -264,6 +273,7 @@ function enterWorld() {
     minimap = initMinimap();                   // corner radar / town map (before asset wiring)
     debug.set('minimapInit', !!minimap);
     if (!minimap) console.warn('[minimap] init FAILED — #minimap canvas missing');
+    if (minimap && townMarkers.length) setMarkers(townMarkers);   // flush queued markers (police/garage)
     applyWorldAssets();                        // swap in real GLBs where available
     // applyWorldAssets() (via placeTrashJob) creates the sanitation worker,
     // dumpster and litter AFTER the first registerInteractables() pass above, so
@@ -673,7 +683,7 @@ function buildProceduralGasStation() {
   scene.add(grp);
   // register the refuel forecourt + minimap marker
   refuelPoints = [{ x: GX, z: GZ, r: 6, id: 'gas-proc', price: 1.2 }];
-  if (minimap) setMarkers([{ x: GX, z: GZ, color: '#ffd54a', icon: '⛽' }]);
+  if (minimap) addTownMarkers([{ x: GX, z: GZ, color: '#ffd54a', icon: '⛽' }]);
   console.info('[gas] procedural gas station placed at', GX, GZ);
   // P7: safe single-asset test — try ONLY the uploaded gas-station GLB. If it
   // passes strict bounds checks it replaces the procedural box art; otherwise we
@@ -745,14 +755,16 @@ function applyWorldAssets() {
     debug.set('realNpcs', 0);
     console.info('[skins] NPC GLB skins disabled (USE_REAL_NPC_SKINS=false) — procedural NPCs stay visible');
   }
-  // scatter street litter (Trash & Debris GLB) — decorative, non-colliding
-  placeStreetProps(scene, renderer)
-    .then((n) => { if (n) console.info('[props] litter items:', n); })
-    .catch((e) => console.warn('[props] failed:', e));
   // scatter collectible gems across the city (Ultimate Gem Collection textures)
   placeCityGems();
-  // intentional sidewalk litter + sanitation worker + dumpster (cleanup side job)
-  placeTrashJob();
+  // Cleanup side job: the pickuppable litter now uses the REAL Trash & Debris
+  // models (Phase 3C) so the trash you see IS the trash you grab. Load the
+  // templates first, then place the job trash; a clean procedural bag is the
+  // only fallback if the GLB is unavailable. No separate decorative scatter
+  // (that produced real-looking-but-ungrabbable litter spread through streets).
+  loadTrashTemplates(renderer)
+    .catch(() => {})
+    .then(() => { placeTrashJob(); registerInteractables(cityEntrances); debug.set('trashTargets', activeTrashCount()); });
   // always-present procedural gas station (the refuel loop must be usable even
   // with GLB world buildings disabled)
   buildProceduralGasStation();
@@ -782,7 +794,7 @@ function applyWorldAssets() {
     placeWorldBuildings(scene, renderer)
       .then((res) => {
         refuelPoints = res.refuels || [];
-        if (minimap) setMarkers(res.markers || []);
+        if (minimap) addTownMarkers(res.markers || []);
         debug.set('worldBuildingsPlaced', (res.placed || []).length);
         debug.incr('glbBuildings', (res.placed || []).length);
       })
@@ -981,20 +993,20 @@ let trashCarried = 0;
 const TRASH_TARGET = 14;            // how many litter pieces exist at once
 let trashRespawnAccum = 0;         // real seconds since last respawn top-up
 
-// One litter mesh (alternating bag / can). Returned ungrounded at origin.
+// One litter piece. Uses the REAL Trash & Debris models when loaded (so the
+// trash you see is the trash you grab); otherwise a clean low-poly trash bag —
+// never a debug shape. Returned ungrounded at origin.
 function makeTrashPiece(i) {
-  const trashMat = new THREE.MeshStandardMaterial({ color: '#6b6f55', roughness: 0.9 });
-  const bagMat = new THREE.MeshStandardMaterial({ color: '#2b2f3a', roughness: 0.85 });
+  const real = trashTemplatesReady() ? makeTrashItem(Math.random) : null;
+  if (real) { real.userData.realAsset = true; return real; }
+  // clean procedural fallback: a tied-off dark trash bag (reads as litter)
   const piece = new THREE.Group();
-  if (i % 2 === 0) {
-    const bag = new THREE.Mesh(new THREE.DodecahedronGeometry(0.28, 0), bagMat);
-    bag.scale.set(1, 0.8, 1); bag.position.y = 0.24; piece.add(bag);
-  } else {
-    const can = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.1, 0.34, 8), trashMat);
-    can.rotation.z = 1.1; can.position.y = 0.14; piece.add(can);
-    const cup = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.07, 0.2, 7), trashMat);
-    cup.position.set(0.28, 0.1, 0.12); piece.add(cup);
-  }
+  const bagMat = new THREE.MeshStandardMaterial({ color: '#23252e', roughness: 0.78, metalness: 0.05 });
+  const bag = new THREE.Mesh(new THREE.IcosahedronGeometry(0.26, 1), bagMat);
+  bag.scale.set(1, 0.82, 0.95); bag.position.y = 0.22; bag.castShadow = true; piece.add(bag);
+  const knot = new THREE.Mesh(new THREE.ConeGeometry(0.1, 0.16, 6), bagMat);
+  knot.position.y = 0.42; piece.add(knot);
+  piece.userData.realAsset = false;
   return piece;
 }
 
@@ -1078,12 +1090,17 @@ function placeTrashJob() {
     const piece = makeTrashPiece(i);
     piece.position.set(p.x, 0, p.z);
     trashGroup.add(piece);
-    cityTrash.push({ mesh: piece, x: p.x, z: p.z, collected: false });
+    cityTrash.push({
+      id: `trash-${i}`, asset: piece.userData.realAsset ? 'trash-debris' : 'fallback-bag',
+      mesh: piece, x: p.x, z: p.z, r: 2.8, jobEligible: true,
+      collected: false, respawnTimer: 0, district: 'starter-town',
+    });
   });
 
   scene.add(trashGroup);
   trashRespawnAccum = 0;
-  console.info('[trash] litter pieces:', cityTrash.length);
+  console.info('[trash] litter pieces:', cityTrash.length,
+    '| real assets:', cityTrash.filter(t => t.asset === 'trash-debris').length);
 }
 
 // Respawn litter back up to the target count at fresh random spots. Called on a
@@ -1101,10 +1118,15 @@ function respawnTrash() {
     const piece = makeTrashPiece(n++);
     piece.position.set(p.x, 0, p.z);
     trashGroup.add(piece);
-    cityTrash.push({ mesh: piece, x: p.x, z: p.z, collected: false });
+    cityTrash.push({
+      id: `trash-${n}`, asset: piece.userData.realAsset ? 'trash-debris' : 'fallback-bag',
+      mesh: piece, x: p.x, z: p.z, r: 2.8, jobEligible: true,
+      collected: false, respawnTimer: 0, district: 'starter-town',
+    });
   });
   if (fresh.length) {
     registerInteractables(cityEntrances);
+    debug.set('trashTargets', activeTrashCount());
     notify('🗑️ Fresh litter has appeared around the city.');
     console.info('[trash] respawned', fresh.length, '| live now:', activeTrashCount());
   }
@@ -1179,6 +1201,74 @@ function startTrashJob(tier, need, reward) {
   saveNow();
 }
 
+// ── police post (Phase 3J) ───────────────────────────────────────────────────
+// Builds visible parked cruisers (stealable) at the HQ lot and stores the
+// front-desk position for an info interaction.
+// Add minimap markers without clobbering ones placed by other systems.
+function addTownMarkers(list) {
+  if (!list || !list.length) return;
+  for (const m of list) {
+    const dup = townMarkers.some(e => e.icon === m.icon &&
+      Math.round(e.x) === Math.round(m.x) && Math.round(e.z) === Math.round(m.z));
+    if (!dup) townMarkers.push(m);
+  }
+  if (minimap) setMarkers(townMarkers);
+}
+function addCruiserLivery(g) {
+  const bar = new THREE.Group();
+  const base = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.12, 0.32),
+    new THREE.MeshStandardMaterial({ color: '#111418' }));
+  const red = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.15, 0.34),
+    new THREE.MeshStandardMaterial({ color: '#ff2a2a', emissive: '#ff2a2a', emissiveIntensity: 0.8 }));
+  red.position.x = -0.18;
+  const blue = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.15, 0.34),
+    new THREE.MeshStandardMaterial({ color: '#2a5cff', emissive: '#2a5cff', emissiveIntensity: 0.8 }));
+  blue.position.x = 0.18;
+  bar.add(base, red, blue);
+  bar.position.set(0, 1.08, 0);
+  g.add(bar);
+}
+function setupPolicePost(info) {
+  parkedCruisers = [];
+  policePost = info || null;
+  if (!info) return;
+  for (const c of info.cruisers) {
+    const cruiser = createDrivableCar(scene, c.x, c.z, '#e9edf4');
+    if (info.faceDir) cruiser.g.rotation.y = Math.atan2(info.faceDir.x, info.faceDir.z);
+    addCruiserLivery(cruiser.g);
+    cruiser.isCop = true;
+    cruiser.parked = true;
+    parkedCruisers.push(cruiser);
+  }
+  debug.set('policeCruisers', parkedCruisers.length);
+  // minimap markers: police HQ + the city garage (repair shop)
+  const markers = [];
+  if (info.deskPos) markers.push({ x: info.deskPos.x, z: info.deskPos.z, color: '#3aa0ff', icon: '🚔' });
+  const garage = LANDMARKS.find(b => b.id === 'garage');
+  if (garage) markers.push({ x: garage.x, z: garage.z, color: '#ffb04a', icon: '🔧' });
+  addTownMarkers(markers);   // queued; flushed once the minimap initializes
+}
+function talkToPoliceDesk() {
+  missionEvent('talk-police-desk');
+  openDialogue({
+    name: 'Civic Safety HQ — Front Desk',
+    text: `Welcome to Civic Safety HQ. Keep the streets clean and obey the lights and you'll never see us. Cause trouble and our patrols roll out. Cruisers out front are official property — don't even think about it.`,
+    choices: [
+      { label: 'How do I lower my wanted level?', onPick: () => openDialogue({
+        name: 'Front Desk',
+        text: `Lose the heat: ditch any stolen ride, stop the trouble, and stay out of sight until the stars cool off. Getting busted clears your record the hard way.`,
+        choices: [{ label: 'Got it', onPick: () => {} }],
+      }) },
+      { label: 'Tell me about the academy', onPick: () => openDialogue({
+        name: 'Front Desk',
+        text: `The Civic Safety Academy trains the next class of responders — obstacle drills, pursuit driving, the works. Training grounds are coming soon.`,
+        choices: [{ label: 'Cool', onPick: () => {} }],
+      }) },
+      { label: 'Leave', onPick: () => {} },
+    ],
+  });
+}
+
 // ── register ALL interactables (each has a real working action) ───────────────
 function registerInteractables(entrances) {
   manager.clear();
@@ -1197,11 +1287,11 @@ function registerInteractables(entrances) {
     id: 'steal-car', area: 'city', key: 'f', radius: 3.0,
     getPosition: () => (nearestStealable()?.g.position) || OFFSCREEN,
     enabled: () => !inCar && !!nearestStealable(),
-    getPrompt: () => (policeCars.includes(nearestStealable()) ? '🚔 Steal POLICE car (risky!)' : 'Steal vehicle'),
+    getPrompt: () => (nearestStealable()?.isCop ? '🚔 Steal POLICE car (risky!)' : 'Steal vehicle'),
     onInteract: () => {
       const v = nearestStealable();
       if (!v) { notify('No vehicle close enough to take.'); return; }
-      const isCop = policeCars.includes(v);
+      const isCop = !!v.isCop;
       if (isCop) {
         // too many officers crowding the cruiser → you get grabbed before you can take it
         const cp = v.g.position;
@@ -1261,6 +1351,15 @@ function registerInteractables(entrances) {
       enabled: () => !inCar,
       getPrompt: () => 'Talk to Sanitation',
       onInteract: () => talkToSanitation(),
+    });
+  }
+  if (policePost) {
+    manager.register({
+      id: 'police-desk', area: 'city', key: 'e', radius: 2.6,
+      getPosition: () => policePost.deskPos,
+      enabled: () => !inCar,
+      getPrompt: () => 'Civic Safety front desk',
+      onInteract: () => talkToPoliceDesk(),
     });
   }
 
@@ -1465,8 +1564,9 @@ function nearestStealable() {
   if (!player || area !== 'city') return null;
   const pp = player.group.position;
   let best = null, bestD = 3.4;
-  // EVERY car on the street is stealable — traffic and patrol units alike.
-  const pool = [...traffic, ...policeCars];
+  // EVERY car on the street is stealable — traffic, patrol units, and the
+  // cruisers parked at the police post.
+  const pool = [...traffic, ...policeCars, ...parkedCruisers];
   for (const c of pool) {
     const d = c.g.position.distanceTo(pp);
     if (d < bestD) { bestD = d; best = c; }
@@ -1487,6 +1587,9 @@ function enterCar(vehicle = car, opts = {}) {
     if (idx >= 0) traffic.splice(idx, 1);
     const pidx = policeCars.indexOf(vehicle);
     if (pidx >= 0) policeCars.splice(pidx, 1);
+    const cidx = parkedCruisers.indexOf(vehicle);
+    if (cidx >= 0) parkedCruisers.splice(cidx, 1);
+    vehicle.parked = false;
     vehicle.stolen = true;
     const copCar = !!vehicle.isCop;
     const witnessed = witnessesNear(vehicle.g.position, 16);
@@ -3492,7 +3595,8 @@ function animate() {
   for (const c of traffic) trafficObstacles.push(c.g.position);
   if (player && !inCar && area === 'city') trafficObstacles.push(player.group.position);
   if (car && !inCar) trafficObstacles.push(car.g.position);
-  updateTraffic(traffic, dt, trafficObstacles);
+  if (trafficControl) trafficControl.update(dt);
+  updateTraffic(traffic, dt, trafficObstacles, trafficControl);
   updateMixers(dt);                                  // skinned GLB animations
   for (const g of extraSpinners) g.rotation.y += dt * 0.8;   // idle-spin display models
   // spin any dealership car flagged for preview

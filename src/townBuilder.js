@@ -27,20 +27,11 @@ export async function dressTown(scene, renderer, opts = {}) {
 
   const jobs = [];
 
-  // ── trash clusters (soft — cars drive over, no door/lane blocking) ─────────
-  const trashRule = PLACEMENT_RULES.trash;
-  const trashN = clamp(Math.round(poolCount('trash', { seed: seedN, key: 'trash-n' }) * density), 3, 10);
-  const trashPts = anchorPoints('trash', trashN, rng);
-  trashPts.forEach((p, i) => {
-    const useCan = rng() < 0.25;                 // mostly bags, a few cans
-    const prefab = useCan ? PROP_PREFABS.trash_can : PROP_PREFABS.trash_bag;
-    jobs.push(placeProp(scene, renderer, {
-      pool: prefab.pool, x: p.x, z: p.z, ry: rng() * Math.PI * 2,
-      scaleMax: prefab.scaleMax, collisionType: prefab.collisionType,
-      kind: useCan ? 'trash_can' : 'trash_bag', fallback: prefab.fallback,
-      seed: seedN, key: `trash-${i}`,
-    }).then(r => tally(stats, 'trash', r)));
-  });
+  // NOTE: loose litter is handled by the cleanup-job system in main.js (Phase
+  // 3C) using the REAL Trash & Debris models, so we do NOT scatter prefab trash
+  // here (that produced ungrabbable placeholder bits). townBuilder now only
+  // places solid dumpsters that read as "behind-the-store" dressing + give the
+  // cleanup loop a logical drop context.
 
   // ── dumpsters (hard — solid, behind the busier lots) ───────────────────────
   const dumpRule = PLACEMENT_RULES.dumpster;

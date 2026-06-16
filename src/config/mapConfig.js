@@ -33,6 +33,28 @@ export const CROSSWALKS = [
   [0, 0], [-30, 0], [30, 0], [0, -30], [0, 30],
 ];
 
+// ── traffic control (Phase 3A) ───────────────────────────────────────────────
+// Every grid intersection (ROAD.hz × ROAD.vx) is a control point. The five
+// crossings where a cross street actually meets another road get TRAFFIC LIGHTS;
+// the four perimeter corners (turn-only) get STOP SIGNS. `axisGreenFirst` just
+// staggers which direction starts green so the whole grid isn't synchronised.
+//   type: 'light' → red/yellow/green NS↔EW cycle
+//   type: 'stop'  → all-way stop (cars pause, check clearance, then go)
+export const INTERSECTIONS = [
+  { x: 0,   z: 0,   type: 'light', axisGreenFirst: 'NS' },
+  { x: -30, z: 0,   type: 'light', axisGreenFirst: 'EW' },
+  { x: 30,  z: 0,   type: 'light', axisGreenFirst: 'EW' },
+  { x: 0,   z: -30, type: 'light', axisGreenFirst: 'NS' },
+  { x: 0,   z: 30,  type: 'light', axisGreenFirst: 'NS' },
+  { x: -30, z: -30, type: 'stop' },
+  { x: 30,  z: -30, type: 'stop' },
+  { x: -30, z: 30,  type: 'stop' },
+  { x: 30,  z: 30,  type: 'stop' },
+];
+
+// Traffic-light phase timing (seconds). green → yellow → (other axis) green …
+export const TRAFFIC_TIMING = { green: 7.5, yellow: 2.0, allRed: 0.6 };
+
 // ── enterable landmarks (procedural buildings with working doors/interiors) ──
 // faceDir points from the building toward the road it fronts.
 export const LANDMARKS = [
@@ -59,6 +81,19 @@ export const LANDMARKS = [
 // ── non-enterable landmarks (visible, labelled, no interior / no prompt) ─────
 export const FEATURES = [
 ];
+
+// ── police post (Phase 3J) — visible HQ with a front desk + cruiser lot ──────
+// East edge, north of the gym. Non-enterable building with a front-desk
+// interaction (academy info) and two parked cruisers the player can try to
+// steal (raises wanted). Fictional civic naming (no real agency).
+export const POLICE_POST = {
+  id: 'police', name: 'CIVIC SAFETY HQ',
+  x: 48, z: -24, w: 12, d: 10, h: 7,
+  color: '#27324a', sign: '#9fd0ff', face: [-1, 0],
+  lot: { cx: 41, cz: -24, w: 6, d: 9 },
+  cruisers: [[41, -27.5], [41, -20.5]],
+  deskOffset: 2.4,                 // how far in front of the door the desk sits
+};
 
 // ── decorative skyline buildings (Kenney Retro Urban Kit GLBs) ───────────────
 // Non-enterable backdrop placed well beyond the outer landmarks so they never
@@ -165,4 +200,5 @@ export default {
   ROAD, ROAD_CLEAR, CROSSWALKS, LANDMARKS, FEATURES, DECOR,
   PARK, PARKING, STREET_LIGHTS, STREET_TREES,
   TRAFFIC_ROUTES, PEDESTRIAN_ROUTES, LITTER, GEMS, SPAWN, MISSION_MARKERS,
+  INTERSECTIONS, TRAFFIC_TIMING, POLICE_POST,
 };

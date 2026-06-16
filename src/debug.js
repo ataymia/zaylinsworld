@@ -36,6 +36,10 @@ const metrics = {
   glbTraffic: 0,
   realNpcs: 0,
   procNpcs: 0,
+  trafficLights: 0,
+  stopSigns: 0,
+  trashTargets: 0,
+  policeCruisers: 0,
   handlersFired: { n: false, c: false, i: false, m: false },
   failedAssets: [],
 };
@@ -118,6 +122,10 @@ function rows() {
     ['prefab seed', metrics.prefabSeed != null ? String(metrics.prefabSeed) : '—'],
     ['breakable objects', num(metrics.breakableObjects)],
     ['world objects', num(metrics.worldObjects)],
+    ['traffic lights', num(metrics.trafficLights, true)],
+    ['stop signs', num(metrics.stopSigns, true)],
+    ['trash targets', num(metrics.trashTargets)],
+    ['police cruisers', num(metrics.policeCruisers, true)],
     ['failed assets', metrics.failedAssets.length
       ? `<span style="color:#ff7676">${metrics.failedAssets.join(', ')}</span>` : '<span style="color:#4eff91">none</span>'],
 

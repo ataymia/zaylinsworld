@@ -104,3 +104,62 @@ export async function placeStreetProps(scene, renderer) {
   console.info('[props] street litter placed:', placed, 'items from', items.length, 'types');
   return placed;
 }
+
+// ── pickuppable trash (Phase 3C) ─────────────────────────────────────────────
+// The cleanup job must use the REAL trash models the player sees — not separate
+// placeholder bits. We load the same Trash & Debris GLB once and expose a small
+// curated set of hand-grabbable litter nodes (bags, cans, cups, bottles) as
+// reusable templates. makeTrashItem() clones one (occasionally two) into a
+// grounded group that becomes an actual cleanup target in main.js.
+const GRABBABLE = [
+  'TrashBag_1', 'TrashBag_2', 'Paper_Bag_1', 'Paper_Bag_2', 'Paper_Bag_3',
+  'Chip_Bag_1', 'Chip_Bag_2', 'Chip_Bag_3', 'Chip_Bag_4',
+  'Can_1', 'Can_2', 'Can_3', 'Can_4', 'Can_5',
+  'Soda_Cup', 'Coffee_Cup', 'Fry_Container',
+  'GlassBottle_1', 'GlassBottle_2', 'CardboardBox_1', 'CardboardBox_2',
+];
+
+let _trashTemplates = null;     // cached grounded source nodes (or [] if unavailable)
+
+// Load + cache the curated grabbable trash templates. Returns [] on failure so
+// callers fall back to a clean procedural bag (never a debug shape).
+export async function loadTrashTemplates(renderer) {
+  if (_trashTemplates) return _trashTemplates;
+  try {
+    const model = await loadModel(assetUrl(TRASH_GLB), renderer);
+    if (!model || !model.scene) { _trashTemplates = []; return _trashTemplates; }
+    const byName = new Map();
+    model.scene.traverse((o) => { if (o.name && o.isMesh) byName.set(o.name, o); });
+    // also accept group nodes (some packs wrap each prop in a named Object3D)
+    model.scene.traverse((o) => { if (o.name && !byName.has(o.name)) byName.set(o.name, o); });
+    _trashTemplates = GRABBABLE.map(n => byName.get(n)).filter(Boolean);
+  } catch (e) {
+    console.warn('[props] trash templates failed:', e);
+    _trashTemplates = [];
+  }
+  console.info('[props] grabbable trash templates:', _trashTemplates.length);
+  return _trashTemplates;
+}
+
+export function trashTemplatesReady() { return Array.isArray(_trashTemplates) && _trashTemplates.length > 0; }
+
+// Build one grounded trash item from the real templates. Normalizes the longest
+// horizontal span to ~0.45 m so every piece reads as street litter (never a
+// giant blob). Returns a Group at the origin; caller positions it.
+export function makeTrashItem(rng = Math.random) {
+  const g = new THREE.Group();
+  const tmpls = _trashTemplates || [];
+  if (!tmpls.length) return null;
+  const tmpl = tmpls[(rng() * tmpls.length) | 0];
+  const wrap = makeGroundedItem(tmpl);
+  // normalize size
+  wrap.updateMatrixWorld(true);
+  const box = new THREE.Box3().setFromObject(wrap);
+  const size = box.getSize(new THREE.Vector3());
+  const span = Math.max(size.x, size.z, 1e-3);
+  const scale = 0.45 / span;
+  if (Number.isFinite(scale) && scale > 0) wrap.scale.setScalar(Math.min(4, scale));
+  wrap.rotation.y = rng() * Math.PI * 2;
+  g.add(wrap);
+  return g;
+}

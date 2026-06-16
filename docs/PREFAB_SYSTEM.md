@@ -86,3 +86,46 @@ the prior behavior with zero side effects.
 Shows: prefab props placed, prefab real assets vs fallbacks, prefab seed,
 breakable objects, world objects, and failed assets — so you can prove the system
 is selecting assets (not just reading config) at runtime.
+
+## Phase 3 — Starter Town goes live (traffic, trash, storefronts, HQ)
+
+This phase wires the prefab/asset foundation into *visible* gameplay so the town
+reads as a real place, not a config layer:
+
+- **Traffic control** (`src/traffic.js`, `mapConfig.INTERSECTIONS` /
+  `TRAFFIC_TIMING`): real signal poles and stop signs built at intersections.
+  `buildTrafficControl(scene)` returns a controller; `updateTraffic()` in
+  `npc.js` now obeys red/yellow lights, pauses at stop signs, brakes for cars
+  ahead, and self-recovers from permanent jams (re-slots stuck cars).
+- **Real pickup trash** (`props.js` `loadTrashTemplates` / `makeTrashItem`): the
+  cleanup job now spawns the real *Trash & Debris* GLB nodes (with a clean bag
+  fallback). The old decorative scatter and prefab trash boxes were removed so
+  there is a single, asset-backed, pickuppable litter system.
+- **Storefront identity** (`world.js` `storefrontProps`): per-landmark awnings,
+  rooftop billboards, and type props (menu boards, gem pedestals, crates, tire
+  stacks…) so each building is recognizable, not a labelled box.
+- **Civic Safety HQ** (`mapConfig.POLICE_POST`, `world.js` `buildPolicePost`):
+  a visible police post with a cruiser lot, two parked (stealable) cruisers, a
+  flag/beacon, a front-desk info dialogue, and a minimap marker.
+
+### Expansion prep (next districts — NOT built yet)
+
+The systems above are intentionally data-driven so a second district can reuse
+them without new gameplay code:
+
+- **Layout**: `mapConfig` is pure data (roads, landmarks, intersections, routes,
+  police post). A new district = a sibling config object with the same shape.
+- **Traffic graph**: `TRAFFIC_ROUTES` / `PEDESTRIAN_ROUTES` are closed loops;
+  add loops for the new grid and `buildTrafficControl` + `createTraffic` handle
+  them unchanged.
+- **Seeding**: `dressTown({ seed })` already accepts a per-district seed, so
+  prop placement stays deterministic and varied per district.
+- Do **not** build a multi-town map until Starter Town is confirmed visually
+  working in a live session.
+
+### Roadmap — Obby / obstacle-course zone (future, do NOT implement yet)
+
+A planned challenge zone: jump/parkour platforms, moving hazards, checkpoints,
+and rewards. Intended variants: beginner, timed run, "monster" chase, vehicle
+course, and a police-academy training course (ties into Civic Safety HQ). This
+is recorded here only as a roadmap item — no implementation in this phase.

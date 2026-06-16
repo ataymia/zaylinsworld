@@ -165,6 +165,7 @@ export function createTraffic(scene, count = 6) {
         g, route, wp: at.nextWp,
         speed: 0, baseSpeed: 7 + Math.random() * 4, damage: 0,
         wheels: g.userData.wheels,
+        _stuckT: 0, _stopAt: null, _stopTimer: 0,
       });
       idx++;
     }
@@ -172,9 +173,29 @@ export function createTraffic(scene, count = 6) {
   return cars;
 }
 
-// Traffic AI: follow waypoints, roll wheels, and BRAKE for obstacles ahead.
-// `obstacles` is an array of THREE.Vector3 world positions (other cars + player).
-export function updateTraffic(cars, dt, obstacles = []) {
+// Find a clear arc-distance on `route` where no other car sits within MIN_GAP,
+// so a stuck car can be teleported back into flow instead of jittering forever.
+function findFreeSlot(route, cars, self) {
+  const total = loopLength(route) || 1;
+  const MIN = 7;
+  for (let tries = 0; tries < 16; tries++) {
+    const s = Math.random() * total;
+    const at = pointAtDistance(route, s);
+    let ok = true;
+    for (const c of cars) {
+      if (c === self || !c.g) continue;
+      if (c.g.position.distanceTo(at.pos) < MIN) { ok = false; break; }
+    }
+    if (ok) return at;
+  }
+  return null;
+}
+
+// Traffic AI: follow waypoints, keep following distance, OBEY traffic lights and
+// stop signs via the control layer, and recover/teleport cars that get stuck so
+// a jam can never become permanent. `obstacles` are world positions (other cars
+// + player); `control` is the traffic controller from traffic.js (optional).
+export function updateTraffic(cars, dt, obstacles = [], control = null) {
   const heading = new THREE.Vector3();
   for (const c of cars) {
     if (!c.route) continue;
@@ -194,12 +215,43 @@ export function updateTraffic(cars, dt, obstacles = []) {
       if (o === cpos) continue;
       const dx = o.x - cpos.x, dz = o.z - cpos.z;
       const ahead = dx * heading.x + dz * heading.z;          // forward distance
-      if (ahead <= 0.5 || ahead > 7.5) continue;
+      if (ahead <= 0.5 || ahead > 7.0) continue;
       const lateral = Math.abs(dx * heading.z - dz * heading.x); // perpendicular dist
-      if (lateral < 2.4) { brake = true; break; }
+      if (lateral < 2.2) { brake = true; break; }
     }
-    const tgtSpeed = brake ? 0 : c.baseSpeed;
+
+    // obey traffic lights / stop signs
+    let controlStop = false;
+    if (control) {
+      const r = control.mustStop(cpos, heading, c, dt);
+      controlStop = !!r.stop;
+    }
+
+    const tgtSpeed = (brake || controlStop) ? 0 : c.baseSpeed;
     c.speed += (tgtSpeed - c.speed) * Math.min(1, dt * 3.5);
+
+    // ── stuck recovery ──────────────────────────────────────────────────────
+    // Only count as "stuck" when we're NOT legitimately stopped at a light/sign
+    // or queued behind another car at one. If a car idles too long in open road,
+    // teleport it to a free slot on its route (or nudge its waypoint forward).
+    if (c.speed < 0.4 && !controlStop) {
+      c._stuckT += dt;
+      if (c._stuckT > 5.5) {
+        const slot = findFreeSlot(c.route, cars, c);
+        if (slot) {
+          cpos.copy(slot.pos);
+          c.wp = slot.nextWp;
+          const b = c.route[c.wp];
+          c.g.rotation.y = Math.atan2(b.x - cpos.x, b.z - cpos.z);
+          c.speed = 0;
+        } else {
+          c.wp = (c.wp + 1) % c.route.length;    // can't relocate → skip ahead
+        }
+        c._stuckT = 0;
+      }
+    } else {
+      c._stuckT = 0;
+    }
 
     const step = c.speed * dt;
     cpos.x += heading.x * step;
