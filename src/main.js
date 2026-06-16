@@ -2922,7 +2922,7 @@ function runStation(intr, st) {
     case 'wardrobe': openWardrobe(); break;
     case 'safe': openSafe(); break;
     case 'mirror-cut': startHairline(); break;
-    case 'workout': startWorkout(); break;
+    case 'workout': startWorkoutAt(st.equip); break;
     case 'study': startStudy(); break;
     case 'job-work': doJobShift(); break;
     case 'garage-work': doGarageShift(); break;
@@ -3272,23 +3272,36 @@ function startHairline() {
   });
 }
 
-// Gym workout — raises FITNESS, costs energy + time.
-function startWorkout() {
-  if (state.stats.energy < 15) { notify('Too gassed to train — rest or eat first.'); return; }
+// Gym workout — raises FITNESS, costs energy + time. Each equipment piece maps
+// to a `kind` with its own effort/effect profile (strength builds the most
+// fitness; cardio drains more energy + hygiene but adds fun; mobility is light).
+const WORKOUT_KINDS = {
+  strength:   { title: '🏋️ Strength Set', rounds: 4, speedBase: 2.4, fit: [5, 4], energy: 22, hygiene: 14, fun: 3, time: 90, minEnergy: 15 },
+  cardio:     { title: '🏃 Cardio',       rounds: 5, speedBase: 2.8, fit: [3, 4], energy: 26, hygiene: 18, fun: 6, time: 75, minEnergy: 15 },
+  resistance: { title: '💪 Machines',     rounds: 4, speedBase: 2.5, fit: [4, 4], energy: 20, hygiene: 12, fun: 3, time: 80, minEnergy: 15 },
+  mobility:   { title: '🧘 Mobility',     rounds: 3, speedBase: 1.8, fit: [2, 3], energy: 8,  hygiene: 6,  fun: 8, time: 45, minEnergy: 5 },
+};
+function startWorkoutAt(equip) {
+  const kind = (equip && WORKOUT_KINDS[equip.kind]) || WORKOUT_KINDS.strength;
+  if (state.stats.energy < kind.minEnergy) { notify('Too gassed to train — rest or eat first.'); return; }
+  const name = (equip && equip.label) ? equip.label : 'Workout';
   startTimingGame({
-    title: '🏋️ Workout — hit your reps in the zone', rounds: 4, speedBase: 2.4,
+    title: `${kind.title} — ${name}: hit your reps in the zone`,
+    rounds: kind.rounds, speedBase: kind.speedBase,
     onFinish: (hits, rounds) => {
-      const gain = 4 + hits * 4;                    // up to +20 fitness
+      const gain = kind.fit[0] + hits * kind.fit[1];
       state.stats.fitness = Math.min(100, state.stats.fitness + gain);
-      state.stats.energy = Math.max(0, state.stats.energy - 22);
-      state.stats.hygiene = Math.max(0, state.stats.hygiene - 14);
-      state.stats.fun = Math.min(100, state.stats.fun + 4);
-      state.timeMin += 90;
-      notify(`💪 Solid session (${hits}/${rounds})! Fitness +${gain}`);
+      state.stats.energy = Math.max(0, state.stats.energy - kind.energy);
+      state.stats.hygiene = Math.max(0, state.stats.hygiene - kind.hygiene);
+      state.stats.fun = Math.min(100, state.stats.fun + kind.fun);
+      state.timeMin += kind.time;
+      notify(`💪 ${name} (${hits}/${rounds})! Fitness +${gain}`);
       missionEvent('workout-done');
     },
   });
 }
+// No-arg entry kept for the trainer dialogue (defaults to a strength session).
+function startWorkout() { startWorkoutAt(null); }
 
 // School study — raises SMARTS, costs energy + time.
 function startStudy() {

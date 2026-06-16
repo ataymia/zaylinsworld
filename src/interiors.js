@@ -429,8 +429,20 @@ export function buildInteriors() {
     // divider wall creating a bathroom in the back-right (STRUCTURAL — kept)
     const div = box(0.3, 3.4, 6, mat('#5a4d2e')); div.position.set(o.x + 3, 1.7, o.z - 4); r.group.add(div);
     r.colliders.push(new THREE.Box3().setFromObject(div));
-    const div2 = box(6, 3.4, 0.3, mat('#5a4d2e')); div2.position.set(o.x + 6, 1.7, o.z - 1); r.group.add(div2);
-    r.colliders.push(new THREE.Box3().setFromObject(div2));
+    // front wall of the bathroom — split into two segments leaving a 1.6m doorway
+    // so the bathroom is actually WALK-IN (the clipper/mirror station sits inside).
+    const bathGapMin = o.x + 4.2, bathGapMax = o.x + 5.8;
+    const div2a = box(1.2, 3.4, 0.3, mat('#5a4d2e')); div2a.position.set(o.x + 3.6, 1.7, o.z - 1); r.group.add(div2a);
+    r.colliders.push(new THREE.Box3().setFromObject(div2a));
+    const div2b = box(3.2, 3.4, 0.3, mat('#5a4d2e')); div2b.position.set(o.x + 7.4, 1.7, o.z - 1); r.group.add(div2b);
+    r.colliders.push(new THREE.Box3().setFromObject(div2b));
+    // visible door frame + open door panel around the doorway (no collider on the
+    // gap so the player can step through into the bathroom)
+    const frameMat = mat('#7a5a32');
+    const bPostL = box(0.18, 2.6, 0.34, frameMat); bPostL.position.set(bathGapMin, 1.3, o.z - 1); r.group.add(bPostL);
+    const bPostR = box(0.18, 2.6, 0.34, frameMat); bPostR.position.set(bathGapMax, 1.3, o.z - 1); r.group.add(bPostR);
+    const bLintel = box(1.8, 0.25, 0.34, frameMat); bLintel.position.set(o.x + 5, 2.55, o.z - 1); r.group.add(bLintel);
+    const bDoor = box(0.08, 2.3, 1.5, mat('#6b4f2a')); bDoor.position.set(bathGapMin + 0.05, 1.25, o.z - 1.78); r.group.add(bDoor);
     // living area: couch + tv (decor)
     const couch = box(3, 0.8, 1.2, mat('#3a5a8a')); couch.position.set(o.x - 5, 0.4, o.z + 3); decor.add(couch);
     const tv = box(2.4, 1.4, 0.2, mat('#111', { emissive: '#1a3a6b', emissiveIntensity: 0.6 }));
@@ -449,6 +461,10 @@ export function buildInteriors() {
     const sink = box(1.0, 0.2, 0.6, mat('#fff')); sink.position.set(o.x + 8, 0.95, o.z - 4); r.group.add(sink);
     const sinkLeg = box(0.3, 0.95, 0.3, mat('#ddd')); sinkLeg.position.set(o.x + 8, 0.47, o.z - 4); r.group.add(sinkLeg);
     const toilet = box(0.7, 0.7, 0.9, mat('#f2f2f2')); toilet.position.set(o.x + 5, 0.35, o.z - 5.4); r.group.add(toilet);
+    // clipper resting on the sink + a vanity light (the lineup/haircut station)
+    const clipper = box(0.34, 0.12, 0.13, mat('#1e1e22', { metal: 0.4, rough: 0.4 }));
+    clipper.position.set(o.x + 8, 1.12, o.z - 3.6); r.group.add(clipper);
+    const vanityLight = new THREE.PointLight('#fff4dd', 4, 4, 2); vanityLight.position.set(o.x + 8.4, 2.4, o.z - 4); r.group.add(vanityLight);
     r.group.add(tag('BATHROOM', '#bfe3ff').translateX(o.x + 6).translateY(2.7).translateZ(o.z - 6));
 
     byId.home = {
@@ -460,7 +476,7 @@ export function buildInteriors() {
         { id: 'rest', type: 'rest', pos: new THREE.Vector3(o.x - 6, 0, o.z - 1), label: 'Sleep & Restore Energy' },
         { id: 'wardrobe', type: 'wardrobe', pos: new THREE.Vector3(o.x + 1, 0, o.z + 4.2), label: 'Open Closet / Wardrobe' },
         { id: 'safe', type: 'safe', pos: new THREE.Vector3(o.x - 8, 0, o.z + 4.2), label: 'Check Safe / Storage' },
-        { id: 'mirror-cut', type: 'mirror-cut', pos: new THREE.Vector3(o.x + 7.5, 0, o.z - 4), label: 'Use Clippers (Hairline Mini-game)' },
+        { id: 'mirror-cut', type: 'mirror-cut', pos: new THREE.Vector3(o.x + 7.5, 0, o.z - 4), label: 'Use Clippers — Line Up (Mini-game)' },
       ],
     };
   }
@@ -553,8 +569,27 @@ export function buildInteriors() {
       avatars: [trainer], npcSlot: 'npc_basic_01',
       npcs: [{ name: 'Coach Mray', role: 'trainer', pos: new THREE.Vector3(o.x + 5, 0, o.z + 2.2), dialogue: 'trainer' }],
       stations: [
-        { id: 'workout-weights', type: 'workout', pos: new THREE.Vector3(o.x - 2, 0, o.z + 2.6), label: 'Hit the Bench (Workout)' },
-        { id: 'workout-tread', type: 'workout', pos: new THREE.Vector3(o.x + 5, 0, o.z + 1.6), label: 'Run the Treadmill (Workout)' },
+        // Each major equipment piece is its own station. `equip.kind` drives the
+        // stat effects in main.js startWorkoutAt(); positions line up with the
+        // furnish.js gym equipment layout.
+        { id: 'workout-bench', type: 'workout', pos: new THREE.Vector3(o.x - 2, 0, o.z + 2.6),
+          label: 'Hit the Bench Press', equip: { kind: 'strength', label: 'Bench Press' } },
+        { id: 'workout-weights', type: 'workout', pos: new THREE.Vector3(o.x - 6.2, 0, o.z + 0.6),
+          label: 'Lift Free Weights', equip: { kind: 'strength', label: 'Free Weights' } },
+        { id: 'workout-pullup', type: 'workout', pos: new THREE.Vector3(o.x - 6, 0, o.z + 3.4),
+          label: 'Do Pull-ups', equip: { kind: 'strength', label: 'Pull-ups' } },
+        { id: 'workout-dumbbells', type: 'workout', pos: new THREE.Vector3(o.x + 4.2, 0, o.z + 3.4),
+          label: 'Curl Dumbbells', equip: { kind: 'strength', label: 'Dumbbells' } },
+        { id: 'workout-tread', type: 'workout', pos: new THREE.Vector3(o.x + 5, 0, o.z - 3.4),
+          label: 'Run the Treadmill', equip: { kind: 'cardio', label: 'Treadmill' } },
+        { id: 'workout-bike', type: 'workout', pos: new THREE.Vector3(o.x + 6.2, 0, o.z - 2),
+          label: 'Ride the Bike', equip: { kind: 'cardio', label: 'Exercise Bike' } },
+        { id: 'workout-row', type: 'workout', pos: new THREE.Vector3(o.x + 6.2, 0, o.z + 1.2),
+          label: 'Row the Machine', equip: { kind: 'cardio', label: 'Rowing Machine' } },
+        { id: 'workout-machines', type: 'workout', pos: new THREE.Vector3(o.x + 0.5, 0, o.z - 3.8),
+          label: 'Use the Weight Machines', equip: { kind: 'resistance', label: 'Weight Machines' } },
+        { id: 'workout-mat', type: 'workout', pos: new THREE.Vector3(o.x + 1, 0, o.z + 2.4),
+          label: 'Stretch on the Mat', equip: { kind: 'mobility', label: 'Stretch Mat' } },
       ],
     };
   }
