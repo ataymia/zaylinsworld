@@ -196,6 +196,7 @@ let refuelPoints = [];           // gas-station forecourts: { x, z, r, id }
 let minimap = null;              // corner radar API (initMinimap)
 let debugBadge = null;           // debug panel API (initDebugBadge → { toggle })
 let monsters = [];               // active Monster Mode creatures
+const extraSpinners = [];        // idle-spin display models (Frostbox jewelry, etc.)
 
 const controls = new Controls(camera, canvas);
 const manager = new InteractionManager();
@@ -721,7 +722,12 @@ async function tryGasStationGLB(GX, GZ, procGroup, procColliders) {
 
 function applyWorldAssets() {
   enhanceShopkeepers();
-  placeFrostboxJewelry();
+  // Frostbox jewelry is purely decorative — never let a load/placement failure
+  // black-screen startup. It's async + fire-and-forget, so swallow any rejection.
+  Promise.resolve().then(placeFrostboxJewelry).catch((e) => {
+    console.warn('[frostbox] jewelry placement failed — skipping:', e);
+    debug.showError && debug.showError('frostbox jewelry: ' + (e && e.message || e));
+  });
   applyVehicleModels();                      // swap procedural cars → real Car Kit GLBs (incl. dealership)  // swap the bubble city NPCs for PSX humanoid GLB skins (visible, animated)
   debug.set('procNpcs', cityNPCs.length);
   if (FEATURES.USE_REAL_NPC_SKINS) {
@@ -826,15 +832,20 @@ async function placeFrostboxJewelry() {
   const M = intr.jewelryMounts;
 
   const place = async (cat, slot, mount, { scale = 1, spin = false, y = 0 } = {}) => {
-    const model = await loadSlotModel(cat, slot, renderer);
-    if (!model) return;
-    const obj = model.scene;
-    obj.scale.multiplyScalar(scale);
-    obj.position.copy(mount).add(new THREE.Vector3(0, y, 0));
-    obj.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
-    interiors.group.add(obj);
-    if (spin) extraSpinners.push(obj);
-    return obj;
+    try {
+      const model = await loadSlotModel(cat, slot, renderer);
+      if (!model) return null;
+      const obj = model.scene;
+      obj.scale.multiplyScalar(scale);
+      obj.position.copy(mount).add(new THREE.Vector3(0, y, 0));
+      obj.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+      interiors.group.add(obj);
+      if (spin && obj) extraSpinners.push(obj);
+      return obj;
+    } catch (e) {
+      console.warn('[frostbox] failed to place ' + slot + ':', e);
+      return null;
+    }
   };
 
   await place('jewelry', 'frostbox_display_case', M.displayCase, { scale: 1 });
