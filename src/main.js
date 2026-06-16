@@ -201,6 +201,7 @@ let bustTimer = 0;             // seconds a cop has been on top of the player
 let policeGrace = 0;           // seconds before a bust can happen after wanted starts
 let policeWarned = false;      // showed the "you've been warned" message yet
 let wantedPrev = 0;            // detect the 0→wanted transition to start the grace
+let copHiddenTimer = 0;        // seconds the player has been out of police line-of-sight
 let drivenDist = 0, drivenFlagged = false;   // "Get Around Town" mission tracker
 let builderOpen = false;
 let wardrobeResume = false;      // creator opened from inside the game
@@ -2279,8 +2280,9 @@ function updateNpcHealthBars(dt) {
 function copSpawnPoint() {
   const pp = player.group.position;
   // Prefer the police HQ if it's a sensible distance away (so cops walk in from
-  // the station like a real patrol dispatch) — otherwise come in from offscreen.
-  if (policePost && policePost.deskPos) {
+  // the station like a real patrol dispatch) — but only ~55% of the time so the
+  // rest arrive from offscreen roads as if a nearby patrol was redirected.
+  if (policePost && policePost.deskPos && Math.random() < 0.55) {
     const d = Math.hypot(policePost.deskPos.x - pp.x, policePost.deskPos.z - pp.z);
     if (d > 14 && d < 90) {
       const jx = (Math.random() - 0.5) * 4, jz = (Math.random() - 0.5) * 4;
@@ -2355,12 +2357,45 @@ function bustPlayer() {
 }
 const SPAWN_FALLBACK = { x: 9, z: 9 };
 
+// Line-of-sight test for police evasion: sample points along the cop→player
+// segment at chest height and fail if any sample lands inside a city collider
+// (a building/wall). Lets the player break a chase by ducking behind cover.
+const _losA = new THREE.Vector3(), _losB = new THREE.Vector3(), _losP = new THREE.Vector3();
+function segmentClear(from, to) {
+  _losA.set(from.x, 1.0, from.z); _losB.set(to.x, 1.0, to.z);
+  const dist = _losA.distanceTo(_losB);
+  const steps = Math.max(2, Math.ceil(dist / 1.5));
+  for (let i = 1; i < steps; i++) {
+    _losP.copy(_losA).lerp(_losB, i / steps);
+    for (const c of cityColliders) {
+      if (_losP.x >= c.min.x && _losP.x <= c.max.x &&
+          _losP.z >= c.min.z && _losP.z <= c.max.z &&
+          1.0 >= c.min.y && 1.0 <= c.max.y) return false;
+    }
+  }
+  return true;
+}
+// True if ANY active officer/cruiser can see the player within the search radius.
+const COP_SEARCH_RADIUS = 60;
+function copsCanSeePlayer() {
+  const pp = player.group.position;
+  for (const u of policeUnits) {
+    const g = u.av.group.position;
+    if (Math.hypot(pp.x - g.x, pp.z - g.z) <= COP_SEARCH_RADIUS && segmentClear(g, pp)) return true;
+  }
+  for (const c of policeCars) {
+    const g = c.g.position;
+    if (Math.hypot(pp.x - g.x, pp.z - g.z) <= COP_SEARCH_RADIUS && segmentClear(g, pp)) return true;
+  }
+  return false;
+}
+
 function updatePolice(dt) {
   if (area !== 'city' || !player) { if (policeUnits.length || policeCars.length) despawnAllPolice(); return; }
   const wanted = state.wanted || 0;
   if (wanted === 0) {
     if (policeUnits.length || policeCars.length) despawnAllPolice();
-    bustTimer = 0; policeGrace = 0; policeWarned = false; wantedPrev = 0;
+    bustTimer = 0; policeGrace = 0; policeWarned = false; wantedPrev = 0; copHiddenTimer = 0;
     return;
   }
 
@@ -2381,12 +2416,21 @@ function updatePolice(dt) {
     if (wanted >= 2) spawnFootCop();
   }
 
+  // Line-of-sight evasion: track how long the player has been out of every cop's
+  // sight (behind cover or beyond the search radius). While hidden, the police
+  // stop calling in reinforcements and the heat cools off much faster.
+  const seen = (policeUnits.length + policeCars.length) > 0 ? copsCanSeePlayer() : false;
+  if (seen) copHiddenTimer = 0; else copHiddenTimer += dt;
+  const hidden = copHiddenTimer > 3;
+  debug.set('copHidden', hidden ? copHiddenTimer.toFixed(1) + 's' : 'seen');
+
   // spawn pacing — more stars ⇒ more units, cruisers appear at 3★+. At 1★ we keep
-  // it to a lone officer so a tiny mistake isn't an instant dogpile.
+  // it to a lone officer so a tiny mistake isn't an instant dogpile. While the
+  // player is hidden, hold reinforcements (the search has lost the trail).
   policeAccum += dt;
   const wantFoot = wanted <= 1 ? 1 : Math.min(4, wanted + 1);
   const wantCars = wanted >= 3 ? Math.min(2, wanted - 2) : 0;
-  if (policeAccum > 1.6) {
+  if (policeAccum > 1.6 && !hidden) {
     policeAccum = 0;
     if (policeUnits.length < wantFoot) spawnFootCop();
     if (policeCars.length < wantCars) spawnCopCar();
@@ -2440,10 +2484,14 @@ function updatePolice(dt) {
     if (c.lightBar) c.lightBar.material.color.setHex((Math.floor(clock.elapsedTime * 6) % 2) ? 0xff3030 : 0x3060ff);
   }
 
-  // de-escalation: lose them by distance over time
-  if (nearest > 48 || (policeUnits.length + policeCars.length) === 0) {
+  // de-escalation: lose them by getting distance OR by breaking line-of-sight.
+  // Distance still works (nearest > 48) but hiding behind cover now also cools
+  // the heat — once unseen for a few seconds the trail goes cold much quicker.
+  const cooling = nearest > 48 || hidden || (policeUnits.length + policeCars.length) === 0;
+  const coolNeed = hidden ? 5 : 9;             // hidden cools roughly twice as fast
+  if (cooling) {
     copCoolTimer += dt;
-    if (copCoolTimer > 9) {
+    if (copCoolTimer > coolNeed) {
       copCoolTimer = 0;
       state.wanted = Math.max(0, wanted - 1);
       state.heat = Math.max(0, (state.heat || 0) - 30);
