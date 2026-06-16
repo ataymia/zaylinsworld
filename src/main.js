@@ -265,6 +265,11 @@ function enterWorld() {
     debug.set('trafficLights', trafficControl.lightCount);
     debug.set('stopSigns', trafficControl.stopCount);
     setupPolicePost(cityInfo.police);              // visible HQ + parked cruisers (Phase 3J)
+    // the precinct is enterable like a building, but it's built by buildPolicePost
+    // (not a LANDMARK), so wire its door into the entranceMap for clean exits.
+    if (cityInfo.police && cityInfo.police.doorPos) {
+      entranceMap.police = { doorPos: cityInfo.police.doorPos, faceDir: cityInfo.police.entryFaceDir };
+    }
     cityNPCs = createCityNPCs(scene, Math.max(8, Math.round(22 * graphics.npcDensity)));
     traffic = createTraffic(scene, Math.max(3, Math.round(10 * graphics.trafficDensity)));
     car = createDrivableCar(scene, 13, 3);
@@ -547,6 +552,10 @@ function ensureBlockSupplyDisplays() {
   const intr = interiors && interiors.byId && interiors.byId.blocksupply;
   if (!intr || !intr.group) return;
   blockSupplyBuilt = true;
+  // Real GLB/procedural weapon displays now fill the shop walls — hide the old
+  // grey "ARMS DEALER" silhouette placeholder so the room no longer looks like
+  // a wall of blocks (P6).
+  if (intr.placeholderWeaponWall) intr.placeholderWeaponWall.visible = false;
   const off = intr.offset || { x: 0, z: 0 };
   const plateMat = new THREE.MeshStandardMaterial({ color: '#10141c', roughness: 0.85, metalness: 0.2 });
   const zoneCounts = {};
@@ -1376,13 +1385,14 @@ function registerInteractables(entrances) {
       onInteract: () => talkToSanitation(),
     });
   }
-  if (policePost) {
+  // police precinct entrance (E on foot at the front door) → walkable interior
+  if (policePost && policePost.doorPos) {
     manager.register({
-      id: 'police-desk', area: 'city', key: 'e', radius: 2.6,
-      getPosition: () => policePost.deskPos,
+      id: 'enter-police', area: 'city', key: 'e', radius: 2.8,
+      getPosition: () => policePost.doorPos,
       enabled: () => !inCar,
-      getPrompt: () => 'Police front desk',
-      onInteract: () => talkToPoliceDesk(),
+      getPrompt: () => 'Enter Police Station',
+      onInteract: () => enterInterior('police'),
     });
   }
   // gas-station store entrance (E on foot) → walkable 6twelve store interior
@@ -2825,6 +2835,9 @@ function talkToInterior(npc) {
           { label: 'Just looking', onPick: () => {} },
         ] });
       break;
+    case 'police-desk':
+      talkToPoliceDesk();
+      break;
     default:
       openDialogue({ name: npc.name, text: 'What\'s good?', choices: [{ label: 'Later', onPick: () => {} }] });
   }
@@ -2852,6 +2865,7 @@ function runStation(intr, st) {
     case 'garage-work': doGarageShift(); break;
     case 'repair': repairVehicle(); break;
     case 'weapon-shop': openWeaponShop(); break;
+    case 'police-desk': talkToPoliceDesk(); break;
     default: notify('Nothing happens here.');
   }
 }

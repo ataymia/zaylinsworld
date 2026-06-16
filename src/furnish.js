@@ -12,21 +12,27 @@ import * as THREE from 'three';
 import { loadAsset } from './assets.js';
 
 // ── STRICT per-interior allowlists ──────────────────────────────────────────
-// Each interior id maps to EXACTLY ONE approved asset pack (cat/pack). A gym may
-// ONLY pull from interiors.gym, a restaurant ONLY from interiors.restaurant, and
-// so on. This is the discipline fix: no more "small prop" leaking a nightstand
-// into a gym. Every item below names a real asset from its allowed pack.
+// Each interior id maps to EXACTLY ONE approved asset pack (cat/pack) plus a
+// `unit` factor that converts the pack's native units to METRES. The Restaurant
+// + Gym packs are authored in CENTIMETRES (1 unit ≈ 1 cm) — at scale 1 a stove
+// becomes a 180 m white blob — so they use unit 0.01. Furniture/food are metres.
 const INTERIOR_PACK = {
-  home:    { cat: 'interiors', pack: 'furniture' },
-  kicks:   { cat: 'interiors', pack: 'furniture' },
-  gym:     { cat: 'interiors', pack: 'gym' },
-  school:  { cat: 'interiors', pack: 'furniture' },
-  office:  { cat: 'interiors', pack: 'furniture' },
-  chicken: { cat: 'interiors', pack: 'restaurant' },
+  home:    { cat: 'interiors', pack: 'furniture',  unit: 1.0  },
+  kicks:   { cat: 'interiors', pack: 'furniture',  unit: 1.0  },
+  gym:     { cat: 'interiors', pack: 'gym',        unit: 0.01 },   // cm pack
+  school:  { cat: 'interiors', pack: 'furniture',  unit: 1.0  },
+  office:  { cat: 'interiors', pack: 'furniture',  unit: 1.0  },
+  chicken: { cat: 'interiors', pack: 'restaurant', unit: 0.01 },   // cm pack
 };
 
+// Reject any placed piece whose largest dimension falls outside this range after
+// unit+scale normalization (catches the giant-blob + degenerate-mesh cases).
+const SANE_MIN_DIM = 0.03;   // metres
+const SANE_MAX_DIM = 5.0;    // metres
+
 // Furniture/equipment set per interior id. dx/dz are offsets from the room
-// centre, ry is yaw (radians), s is a scale multiplier (furniture is ~1u = 1m).
+// centre, ry is yaw (radians), s is an OPTIONAL fine multiplier on top of the
+// pack `unit` (default 1). y is an optional base height (items on a counter).
 // Every name MUST exist in that interior's INTERIOR_PACK (enforced at load).
 const FURNITURE = {
   home: [
@@ -43,25 +49,25 @@ const FURNITURE = {
     { name: 'shelf-b-large',   dx: 7,  dz: -4, ry: -Math.PI / 2,  s: 0.9 },
     { name: 'lamp-table',      dx: 6,  dz: 2,  ry: 0,             s: 0.9 },
   ],
-  // GYM — gym-pack equipment ONLY (treadmill, benches, racks, dumbbells, mats).
-  // Positions complement the procedural gym base in interiors.js (which holds a
-  // weight rack at back-left, a bench at centre, a treadmill at the right) so
-  // the GLB pieces fill the open floor instead of overlapping them.
+  // GYM — gym-pack equipment ONLY (cm pack → unit 0.01). Lines the walls + back
+  // so the open centre and the spawn/door path (front, +z) stay clear. A bench
+  // sits at the weights station, a treadmill at the tread station.
   gym: [
-    { name: 'e-machine-1',      dx: -1,  dz: -5.4, ry: Math.PI,     s: 1.0 },
-    { name: 'e-machine-3',      dx: 1.6, dz: -5.4, ry: Math.PI,     s: 1.0 },
-    { name: 'pulldown-ac-1',    dx: 3.8, dz: -5.4, ry: Math.PI,     s: 1.0 },
-    { name: 'weight-stand-1',   dx: -8,  dz: -2,   ry: Math.PI / 2, s: 1.0 },
-    { name: 'weight-stand-2',   dx: -8,  dz: 0,    ry: Math.PI / 2, s: 1.0 },
-    { name: 'barbell-stand-1',  dx: -8,  dz: 2,    ry: Math.PI / 2, s: 1.0 },
-    { name: 'exercise-bike',    dx: 8,   dz: -2,   ry: -Math.PI / 2, s: 1.0 },
-    { name: 'stationary-rowing-machine', dx: 8, dz: 1, ry: -Math.PI / 2, s: 1.0 },
-    { name: 'dumbbells-1',      dx: 6.4, dz: 4.4,  ry: 0,           s: 1.0 },
-    { name: 'dumbbells-2',      dx: 5.2, dz: 4.4,  ry: 0,           s: 1.0 },
-    { name: 'kettlebell',       dx: 4.2, dz: 4.4,  ry: 0,           s: 1.0 },
-    { name: 'pullup-stand',     dx: -6,  dz: 4.6,  ry: Math.PI,     s: 1.0 },
-    { name: 'sp-mat-1',         dx: -1,  dz: 4,    ry: 0,           s: 1.0 },
-    { name: 'sp-mat-2',         dx: 1,   dz: 4,    ry: 0,           s: 1.0 },
+    { name: 'treadmill-1-main', dx: 5,    dz: -4.6, ry: Math.PI,      s: 1.0 },
+    { name: 'e-machine-1',      dx: 2,    dz: -5.0, ry: Math.PI,      s: 1.0 },
+    { name: 'e-machine-3',      dx: -1,   dz: -5.0, ry: Math.PI,      s: 1.0 },
+    { name: 'pec-machine-ac-1', dx: -4,   dz: -5.0, ry: Math.PI,      s: 1.0 },
+    { name: 'weight-stand-1',   dx: -7.6, dz: -2,   ry: Math.PI / 2,  s: 1.0 },
+    { name: 'weight-stand-2',   dx: -7.6, dz: 0.6,  ry: Math.PI / 2,  s: 1.0 },
+    { name: 'barbell-stand-1',  dx: -7.6, dz: 3.2,  ry: Math.PI / 2,  s: 1.0 },
+    { name: 'bench-press',      dx: -2,   dz: 1.4,  ry: 0,            s: 1.0 },
+    { name: 'exercise-bike',    dx: 7.6,  dz: -2,   ry: -Math.PI / 2, s: 1.0 },
+    { name: 'stationary-rowing-machine', dx: 7.6, dz: 1.2, ry: -Math.PI / 2, s: 1.0 },
+    { name: 'dumbbells-1',      dx: 3.6,  dz: 4.4,  ry: 0,            s: 1.0 },
+    { name: 'dumbbells-2',      dx: 4.8,  dz: 4.4,  ry: 0,            s: 1.0 },
+    { name: 'kettlebell',       dx: 6.0,  dz: 4.4,  ry: 0,            s: 1.0 },
+    { name: 'sp-mat-1',         dx: 1,    dz: 3.6,  ry: 0,            s: 1.0 },
+    { name: 'pullup-stand',     dx: -6,   dz: 4.6,  ry: Math.PI,      s: 1.0 },
   ],
   school: [
     { name: 'table-medium',    dx: -4, dz: 1,  ry: 0,             s: 0.85 },
@@ -78,86 +84,123 @@ const FURNITURE = {
     { name: 'shelf-b-large-decorated', dx: -8.2, dz: -3, ry: Math.PI / 2, s: 0.9 },
     { name: 'lamp-standing',   dx: 6,  dz: 4,  ry: 0,            s: 0.9 },
   ],
-  // CHICKEN SPOT — restaurant-pack ONLY (booths, counter, register, stove).
+  // CHICKEN SPOT — restaurant-pack ONLY (cm pack → unit 0.01). Counter + kitchen
+  // along the back wall, booths down the left, tables + chairs in the seating area.
   chicken: [
-    { name: 'counter-front',   dx: 2.5, dz: -3.4, ry: 0,          s: 1.0 },
-    { name: 'cash-register',   dx: 3.2, dz: -3.0, ry: Math.PI,    s: 1.0 },
-    { name: 'stove-griddle',   dx: 0.5, dz: -4.2, ry: 0,          s: 1.0 },
-    { name: 'booth-full',      dx: -5,  dz: 2,    ry: 0,          s: 1.0 },
-    { name: 'booth-half',      dx: -5,  dz: 4,    ry: 0,          s: 1.0 },
-    { name: 'table-square',    dx: 5,   dz: 2.5,  ry: 0,          s: 1.0 },
-    { name: 'chair-red',       dx: 5,   dz: 3.4,  ry: Math.PI,    s: 1.0 },
-    { name: 'table-circle',    dx: 2,   dz: 3.5,  ry: 0,          s: 1.0 },
+    { name: 'counter-front',   dx: 0,    dz: -3.2, ry: 0,           s: 1.0 },
+    { name: 'cash-register',   dx: 1.8,  dz: -3.0, ry: Math.PI,     s: 1.0, y: 0.95 },
+    { name: 'heat-lamp-tray',  dx: -1.6, dz: -3.0, ry: 0,           s: 1.0, y: 0.95 },
+    { name: 'stove-griddle',   dx: -3,   dz: -4.4, ry: 0,           s: 1.0 },
+    { name: 'burner-stove',    dx: -5,   dz: -4.4, ry: 0,           s: 1.0 },
+    { name: 'booth-full',      dx: -5.6, dz: 2,    ry: Math.PI / 2, s: 1.0 },
+    { name: 'booth-half',      dx: -5.6, dz: 4.2,  ry: Math.PI / 2, s: 1.0 },
+    { name: 'table-square',    dx: 4.5,  dz: 1.6,  ry: 0,           s: 1.0 },
+    { name: 'chair-red',       dx: 4.5,  dz: 2.5,  ry: Math.PI,     s: 1.0 },
+    { name: 'chair-red',       dx: 4.5,  dz: 0.7,  ry: 0,           s: 1.0 },
+    { name: 'table-circle',    dx: 1.6,  dz: 3.8,  ry: 0,           s: 1.0 },
+    { name: 'chair-red',       dx: 0.7,  dz: 3.8,  ry: Math.PI / 2, s: 1.0 },
+    { name: 'chair-red',       dx: 2.5,  dz: 3.8,  ry: -Math.PI / 2, s: 1.0 },
   ],
 };
 
-// Food props (small GLBs) laid out on the chicken-spot counter.
+// Food props (small GLBs, already in metres → unit 1) on the counter + tables.
+const FOOD_UNIT = 1.0;
 const FOOD = {
   chicken: [
-    { name: 'chicken-cooking-a', dx: 0.5, dz: -4.0, y: 1.05, s: 3.0 },
-    { name: 'fried-chicken',     dx: 2.5, dz: -2.8, y: 1.05, s: 3.5 },
-    { name: 'french-fries',      dx: 5,   dz: 2.5,  y: 0.75, s: 3.5 },
-    { name: 'chicken-nuggets',   dx: 2,   dz: 3.5,  y: 0.75, s: 3.5 },
+    { name: 'chicken-cooking-a', dx: -3,  dz: -3.9, y: 1.0,  s: 2.0 },
+    { name: 'fried-chicken',     dx: 1.8, dz: -2.9, y: 0.98, s: 2.4 },
+    { name: 'french-fries',      dx: 4.5, dz: 1.6,  y: 0.78, s: 2.4 },
+    { name: 'chicken-nuggets',   dx: 1.6, dz: 3.8,  y: 0.78, s: 2.4 },
   ],
 };
 
 // Load + place one model into the interiors root group at world (ox+dx, *, dz).
-// Returns true on success, or a string asset-name on failure (for diagnostics).
-async function place(root, asset, ox, item, renderer, defaultS) {
+// Returns { ok:true } on success, or { ok:false, reason } for diagnostics.
+async function place(root, asset, ox, item, renderer, unit, warnings) {
   try {
     const m = await loadAsset(asset.cat, asset.pack, item.name, renderer);
-    if (!m || !m.scene) return item.name;
+    if (!m || !m.scene) return { ok: false, reason: 'load-failed' };
     const obj = m.scene.clone(true);
-    obj.scale.setScalar(item.s ?? defaultS);
+    obj.scale.setScalar(unit * (item.s ?? 1));
     obj.rotation.y = item.ry ?? 0;
     obj.updateWorldMatrix(true, true);
     const box = new THREE.Box3().setFromObject(obj);
+    const size = new THREE.Vector3(); box.getSize(size);
+    // ── sanity validation (P7): reject blobs / NaN / degenerate meshes ──
+    if (![size.x, size.y, size.z].every(Number.isFinite)) {
+      warnings.push(`${item.name}: non-finite bounds`); return { ok: false, reason: 'non-finite' };
+    }
+    const maxDim = Math.max(size.x, size.y, size.z);
+    if (maxDim > SANE_MAX_DIM) {
+      warnings.push(`${item.name}: oversized ${maxDim.toFixed(1)}m`); return { ok: false, reason: 'oversized' };
+    }
+    if (maxDim < SANE_MIN_DIM) {
+      warnings.push(`${item.name}: degenerate ${maxDim.toFixed(3)}m`); return { ok: false, reason: 'degenerate' };
+    }
     const groundY = (item.y ?? 0) - box.min.y;
     obj.position.set(ox + item.dx, groundY, item.dz);
     obj.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
     root.add(obj);
-    return true;
-  } catch { return item.name; }
+    return { ok: true };
+  } catch (e) { return { ok: false, reason: (e && e.message) || 'threw' }; }
 }
 
 // Furnish every configured interior. `interiors` = { group, byId } from buildInteriors().
 // Returns { items, interiors, failed[], rejected[], byInterior{} } so the debug
-// panel can PROVE each interior pulled from its approved pack only.
+// panel can PROVE each interior pulled from its approved pack only AND that the
+// placeholder decor was removed once assets placed (no stacked old+new furniture).
 export async function furnishInteriors(interiors, renderer) {
   if (!interiors || !interiors.group) return { items: 0, interiors: 0, failed: [], rejected: [], byInterior: {} };
   const root = interiors.group;
   let n = 0; const furnished = new Set(); const failed = []; const rejected = [];
   const byInterior = {};
-  const record = (id, name, ok) => {
-    (byInterior[id] = byInterior[id] || { pack: '', placed: [], failed: [] });
-    if (ok) byInterior[id].placed.push(name); else byInterior[id].failed.push(name);
-  };
+
   for (const [id, items] of Object.entries(FURNITURE)) {
     const intr = interiors.byId[id];
-    if (!intr || !intr.offset) continue;
+    if (!intr || !intr.offset) { rejected.push(`${id}: missing interior`); continue; }
     const src = INTERIOR_PACK[id];
     if (!src) { rejected.push(`${id}: no approved pack`); continue; }
-    (byInterior[id] = byInterior[id] || { pack: '', placed: [], failed: [] }).pack = `${src.cat}/${src.pack}`;
+    const info = byInterior[id] = { pack: `${src.cat}/${src.pack}`, placed: [], failed: [], warnings: [], removed: 0 };
     const ox = intr.offset.x;
     for (const it of items) {
-      const r = await place(root, src, ox, it, renderer, 1.0);
-      if (r === true) { n++; furnished.add(id); record(id, it.name, true); }
-      else { failed.push(`${id}/${r}`); record(id, it.name, false); }
+      const r = await place(root, src, ox, it, renderer, src.unit, info.warnings);
+      if (r.ok) { n++; furnished.add(id); info.placed.push(it.name); }
+      else { failed.push(`${id}/${it.name}:${r.reason}`); info.failed.push(`${it.name}(${r.reason})`); }
+    }
+    // FOOD overlay for the chicken spot (separate metres-scale pack)
+    if (FOOD[id]) {
+      for (const it of FOOD[id]) {
+        const r = await place(root, { cat: 'props', pack: 'food' }, ox, it, renderer, FOOD_UNIT, info.warnings);
+        if (r.ok) { n++; furnished.add(id); info.placed.push(it.name); }
+        else { failed.push(`${id}/${it.name}:${r.reason}`); info.failed.push(`${it.name}(${r.reason})`); }
+      }
+    }
+    // ── REPLACEMENT: hide procedural decor ONLY if real assets actually placed ──
+    // (so assets REPLACE the placeholder furniture; on total failure the clean
+    //  procedural room stays — we never mix both at once).
+    if (info.placed.length > 0 && intr.decor) {
+      intr.decor.visible = false;
+      if (Array.isArray(intr.decorColliders) && Array.isArray(intr.colliders)) {
+        for (const c of intr.decorColliders) {
+          const i = intr.colliders.indexOf(c);
+          if (i >= 0) { intr.colliders.splice(i, 1); info.removed++; }
+        }
+      }
+      intr._decorHidden = true;
     }
   }
-  for (const [id, items] of Object.entries(FOOD)) {
-    const intr = interiors.byId[id];
-    if (!intr || !intr.offset) continue;
-    const ox = intr.offset.x;
-    for (const it of items) {
-      const r = await place(root, { cat: 'props', pack: 'food' }, ox, it, renderer, 3.0);
-      if (r === true) { n++; furnished.add(id); record(id, it.name, true); } else failed.push(`${id}/${r}`);
-    }
-  }
+
+  // ── per-interior validation log (P7) ──
   if (n) console.info('[furnish] placed', n, 'pack-matched pieces across', furnished.size, 'interiors');
   for (const [id, info] of Object.entries(byInterior)) {
-    console.info(`[furnish] ${id} ← ${info.pack}: ${info.placed.length} placed`, info.failed.length ? `(${info.failed.length} failed: ${info.failed.join(',')})` : '');
+    const assetMode = info.placed.length > 0;
+    console.info(
+      `[furnish] ${id} ← ${info.pack} | assets:${assetMode ? 'ON' : 'OFF(fallback)'}` +
+      ` | placed:${info.placed.length} | placeholders-removed:${info.removed} | failed:${info.failed.length}` +
+      (info.failed.length ? ` [${info.failed.join(', ')}]` : '') +
+      (info.warnings.length ? ` | ⚠ ${info.warnings.join('; ')}` : '')
+    );
   }
-  if (failed.length) console.warn('[furnish] failed:', failed.join(', '));
+  if (rejected.length) console.warn('[furnish] rejected:', rejected.join(', '));
   return { items: n, interiors: furnished.size, failed, rejected, byInterior };
 }

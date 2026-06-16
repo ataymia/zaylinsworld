@@ -455,6 +455,8 @@ function buildPolicePost(scene, walkM, stripeM) {
   const deskPos = r.doorPos.clone().add(fd.clone().multiplyScalar(P.deskOffset));
   return {
     deskPos,
+    doorPos: r.doorPos.clone(),                 // E here ENTERS the precinct interior
+    entryFaceDir: fd.clone(),                   // direction the player faces walking in
     faceDir: fd.clone().multiplyScalar(-1),     // cars face out toward town
     cruisers: P.cruisers.map(([x, z]) => ({ x, z })),
   };

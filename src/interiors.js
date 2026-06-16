@@ -143,6 +143,7 @@ const OFFS = {
   office:     new THREE.Vector3(2800, 0, 0),
   garage:     new THREE.Vector3(2900, 0, 0),
   gas:        new THREE.Vector3(3000, 0, 0),
+  police:     new THREE.Vector3(3100, 0, 0),
 };
 
 export const DEALER_CARS = [
@@ -272,19 +273,21 @@ export function buildInteriors() {
     counter.position.set(o.x + 3, 0.55, o.z + 2); r.group.add(counter);
     r.colliders.push(new THREE.Box3().setFromObject(counter));
     // ── locked weapons display wall (right side) ──
+    const placeholderWeaponWall = new THREE.Group(); r.group.add(placeholderWeaponWall);
     {
       const rack = box(0.4, 2.6, 5, mat('#20242c', { metal: 0.3, rough: 0.5 }));
       rack.position.set(o.x + 7.4, 1.3, o.z); r.group.add(rack);
       r.colliders.push(new THREE.Box3().setFromObject(rack));
-      // silhouette weapons mounted on the wall (decorative)
+      // silhouette weapons mounted on the wall (PLACEHOLDER — hidden once GLB
+      // weapon displays build, so the shop stops looking like grey blocks).
       const steel = mat('#3a3f48', { metal: 0.8, rough: 0.35 });
       for (let i = 0; i < 3; i++) {
         const body = box(0.12, 0.18, 1.1 + i * 0.25, steel);
-        body.position.set(o.x + 7.15, 1.9 - i * 0.55, o.z); r.group.add(body);
+        body.position.set(o.x + 7.15, 1.9 - i * 0.55, o.z); placeholderWeaponWall.add(body);
         const grip = box(0.12, 0.32, 0.16, steel);
-        grip.position.set(o.x + 7.15, 1.72 - i * 0.55, o.z + 0.5 + i * 0.12); r.group.add(grip);
+        grip.position.set(o.x + 7.15, 1.72 - i * 0.55, o.z + 0.5 + i * 0.12); placeholderWeaponWall.add(grip);
       }
-      r.group.add(tag('ARMS DEALER', '#ff9f6b').translateX(o.x + 6.6).translateY(2.75).translateZ(o.z));
+      placeholderWeaponWall.add(tag('ARMS DEALER', '#ff9f6b').translateX(o.x + 6.6).translateY(2.75).translateZ(o.z));
     }
     const npc = staticNPC({ skin: 'umber', face: 'round', body: 'heavy', height: 'average',
       hair: 'cornrows', hairColor: 'jet', top: 'jersey-grn', bottom: 'cargo-tan',
@@ -294,6 +297,7 @@ export function buildInteriors() {
     byId.blocksupply = {
       id: 'blocksupply', name: 'Block Supply', offset: o,
       spawn: r.spawn, exit: r.exit, colliders: r.colliders,
+      placeholderWeaponWall,
       avatars: [npc], npcSlot: 'npc_basic_01',
       npcs: [{ name: 'Gov', role: 'gear', pos: new THREE.Vector3(o.x + 3, 0, o.z + 1.4), dialogue: 'gear' }],
       stations: [
@@ -310,24 +314,27 @@ export function buildInteriors() {
     const o = OFFS.chicken;
     const r = buildRoom(o.x, o.z, 16, 12, '#caa37a', '#8a5a3a', '#3a2a1a');
     root.add(r.group);
+    // Removable PROCEDURAL decor (replaced by restaurant assets when they load).
+    const decor = new THREE.Group(); r.group.add(decor);
+    const decorColliders = [];
     // service counter
     const counter = box(7, 1.1, 1.3, mat('#b5302a', { rough: 0.5 }));
-    counter.position.set(o.x, 0.55, o.z - 2.5); r.group.add(counter);
-    r.colliders.push(new THREE.Box3().setFromObject(counter));
+    counter.position.set(o.x, 0.55, o.z - 2.5); decor.add(counter);
+    { const c = new THREE.Box3().setFromObject(counter); r.colliders.push(c); decorColliders.push(c); }
     // back kitchen: fryers + hood
-    const hood = box(7, 0.6, 1.4, mat('#444')); hood.position.set(o.x, 2.6, o.z - 4.6); r.group.add(hood);
+    const hood = box(7, 0.6, 1.4, mat('#444')); hood.position.set(o.x, 2.6, o.z - 4.6); decor.add(hood);
     for (let i = -1; i <= 1; i++) {
       const fryer = box(1.1, 1.0, 1.0, mat('#777', { metal: 0.4, rough: 0.4 }));
-      fryer.position.set(o.x + i * 1.8, 0.5, o.z - 4.4); r.group.add(fryer);
+      fryer.position.set(o.x + i * 1.8, 0.5, o.z - 4.4); decor.add(fryer);
     }
-    // menu board
+    // menu board (wall signage — kept in either mode)
     r.group.add(tag('CHICKEN — $8', '#ffcf3f').translateX(o.x).translateY(2.7).translateZ(o.z - 5.6));
     // tables + seats
     for (let i = -1; i <= 1; i++) {
       const t = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.7, 0.9, 14), mat('#caa', { rough: 0.6 }));
-      t.position.set(o.x + i * 3, 0.45, o.z + 2.5); r.group.add(t);
+      t.position.set(o.x + i * 3, 0.45, o.z + 2.5); decor.add(t);
       const seat = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.35, 0.5, 12), mat('#8a5a3a'));
-      seat.position.set(o.x + i * 3, 0.25, o.z + 3.6); r.group.add(seat);
+      seat.position.set(o.x + i * 3, 0.25, o.z + 3.6); decor.add(seat);
     }
     const npc = staticNPC({ skin: 'caramel', face: 'oval', body: 'average', height: 'short',
       hair: 'twists', hairColor: 'jet', top: 'tee-white', bottom: 'jeans-black',
@@ -337,6 +344,7 @@ export function buildInteriors() {
     byId.chicken = {
       id: 'chicken', name: 'Chicken Spot', offset: o,
       spawn: r.spawn, exit: r.exit, colliders: r.colliders,
+      decor, decorColliders,
       avatars: [npc], npcSlot: 'npc_basic_02',
       npcs: [{ name: 'Tasha', role: 'cashier', pos: new THREE.Vector3(o.x, 0, o.z - 1.4), dialogue: 'cashier' }],
       stations: [
@@ -352,24 +360,27 @@ export function buildInteriors() {
     const o = OFFS.home;
     const r = buildRoom(o.x, o.z, 18, 14, '#cfc4a8', '#6b5d3a', '#2a2418');
     root.add(r.group);
-    // divider wall creating a bathroom in the back-right
+    // Removable PROCEDURAL furniture (replaced by furniture assets when loaded).
+    const decor = new THREE.Group(); r.group.add(decor);
+    const decorColliders = [];
+    // divider wall creating a bathroom in the back-right (STRUCTURAL — kept)
     const div = box(0.3, 3.4, 6, mat('#5a4d2e')); div.position.set(o.x + 3, 1.7, o.z - 4); r.group.add(div);
     r.colliders.push(new THREE.Box3().setFromObject(div));
     const div2 = box(6, 3.4, 0.3, mat('#5a4d2e')); div2.position.set(o.x + 6, 1.7, o.z - 1); r.group.add(div2);
     r.colliders.push(new THREE.Box3().setFromObject(div2));
-    // living area: couch + tv
-    const couch = box(3, 0.8, 1.2, mat('#3a5a8a')); couch.position.set(o.x - 5, 0.4, o.z + 3); r.group.add(couch);
+    // living area: couch + tv (decor)
+    const couch = box(3, 0.8, 1.2, mat('#3a5a8a')); couch.position.set(o.x - 5, 0.4, o.z + 3); decor.add(couch);
     const tv = box(2.4, 1.4, 0.2, mat('#111', { emissive: '#1a3a6b', emissiveIntensity: 0.6 }));
-    tv.position.set(o.x - 5, 1.6, o.z - 5.8); r.group.add(tv);
-    // bed (spawn corner)
-    const bed = box(2.4, 0.5, 4, mat('#5a3a6b')); bed.position.set(o.x - 6, 0.25, o.z - 3); r.group.add(bed);
-    const pillow = box(2.2, 0.25, 0.9, mat('#eee')); pillow.position.set(o.x - 6, 0.55, o.z - 4.6); r.group.add(pillow);
-    // closet
-    const closet = box(2, 2.4, 1, mat('#7a5a32')); closet.position.set(o.x + 1, 1.2, o.z + 5.4); r.group.add(closet);
-    r.colliders.push(new THREE.Box3().setFromObject(closet));
-    // safe
-    const safe = box(1, 1, 1, mat('#2a2a30', { metal: 0.5, rough: 0.4 })); safe.position.set(o.x - 8, 0.5, o.z + 5.4); r.group.add(safe);
-    // bathroom: mirror, sink, toilet
+    tv.position.set(o.x - 5, 1.6, o.z - 5.8); decor.add(tv);
+    // bed (decor)
+    const bed = box(2.4, 0.5, 4, mat('#5a3a6b')); bed.position.set(o.x - 6, 0.25, o.z - 3); decor.add(bed);
+    const pillow = box(2.2, 0.25, 0.9, mat('#eee')); pillow.position.set(o.x - 6, 0.55, o.z - 4.6); decor.add(pillow);
+    // closet (decor)
+    const closet = box(2, 2.4, 1, mat('#7a5a32')); closet.position.set(o.x + 1, 1.2, o.z + 5.4); decor.add(closet);
+    { const c = new THREE.Box3().setFromObject(closet); r.colliders.push(c); decorColliders.push(c); }
+    // safe (decor)
+    const safe = box(1, 1, 1, mat('#2a2a30', { metal: 0.5, rough: 0.4 })); safe.position.set(o.x - 8, 0.5, o.z + 5.4); decor.add(safe);
+    // bathroom: mirror, sink, toilet (STRUCTURAL fixtures — kept; furniture pack has none)
     const mirror = box(1.6, 1.6, 0.1, new THREE.MeshStandardMaterial({ color: '#aee', metalness: 0.9, roughness: 0.05 }));
     mirror.position.set(o.x + 8.7, 1.7, o.z - 4); mirror.rotation.y = -Math.PI / 2; r.group.add(mirror);
     const sink = box(1.0, 0.2, 0.6, mat('#fff')); sink.position.set(o.x + 8, 0.95, o.z - 4); r.group.add(sink);
@@ -380,6 +391,7 @@ export function buildInteriors() {
     byId.home = {
       id: 'home', name: "Zaylen's Home", offset: o,
       spawn: r.spawn, exit: r.exit, colliders: r.colliders,
+      decor, decorColliders,
       npcs: [],
       stations: [
         { id: 'rest', type: 'rest', pos: new THREE.Vector3(o.x - 6, 0, o.z - 1), label: 'Sleep & Restore Energy' },
@@ -395,17 +407,20 @@ export function buildInteriors() {
     const o = OFFS.kicks;
     const r = buildRoom(o.x, o.z, 16, 12, '#2c3a32', '#1a2620', '#0e160f');
     root.add(r.group);
+    // Removable PROCEDURAL decor (replaced by furniture assets when loaded).
+    const decor = new THREE.Group(); r.group.add(decor);
+    const decorColliders = [];
     // sneaker wall (cubbies)
     for (let i = 0; i < 5; i++) for (let j = 0; j < 3; j++) {
       const shoe = box(0.7, 0.4, 0.5, mat(['#f0f0f0', '#c02626', '#161616', '#2b4fb2'][(i + j) % 4]));
-      shoe.position.set(o.x - 4 + i * 2, 0.6 + j * 0.9, o.z - 5.6); r.group.add(shoe);
+      shoe.position.set(o.x - 4 + i * 2, 0.6 + j * 0.9, o.z - 5.6); decor.add(shoe);
     }
     // clothing racks
     for (let i = -1; i <= 1; i++) {
-      const rack = box(2.4, 0.1, 0.1, mat('#999')); rack.position.set(o.x + i * 3, 1.8, o.z + 1); r.group.add(rack);
+      const rack = box(2.4, 0.1, 0.1, mat('#999')); rack.position.set(o.x + i * 3, 1.8, o.z + 1); decor.add(rack);
       for (let k = 0; k < 4; k++) {
         const shirt = box(0.5, 0.9, 0.2, mat(['#b22b2b', '#2b4fb2', '#1f8a4c', '#5a2b8a'][k]));
-        shirt.position.set(o.x + i * 3 - 0.9 + k * 0.6, 1.2, o.z + 1); r.group.add(shirt);
+        shirt.position.set(o.x + i * 3 - 0.9 + k * 0.6, 1.2, o.z + 1); decor.add(shirt);
       }
     }
     const npc = staticNPC({ skin: 'honey', face: 'oval', body: 'slim', height: 'tall',
@@ -416,6 +431,7 @@ export function buildInteriors() {
     byId.kicks = {
       id: 'kicks', name: 'Kicks & Fits', offset: o,
       spawn: r.spawn, exit: r.exit, colliders: r.colliders,
+      decor, decorColliders,
       avatars: [npc], npcSlot: 'npc_basic_02',
       npcs: [{ name: 'Drip', role: 'stylist', pos: new THREE.Vector3(o.x + 5, 0, o.z - 1.6), dialogue: 'stylist' }],
       stations: [
@@ -429,32 +445,36 @@ export function buildInteriors() {
     const o = OFFS.gym;
     const r = buildRoom(o.x, o.z, 18, 14, '#2a2c33', '#1a1c22', '#0f1014');
     root.add(r.group);
-    // rubber-mat workout floor
+    // Removable PROCEDURAL equipment (replaced by gym assets when they load) —
+    // this is the "fake dumbbells / placeholder" set the user wants gone.
+    const decor = new THREE.Group(); r.group.add(decor);
+    const decorColliders = [];
+    // rubber-mat workout floor (STRUCTURAL — kept)
     const matFloor = box(12, 0.04, 8, mat('#222630', { rough: 0.95 }));
     matFloor.position.set(o.x, 0.04, o.z); r.group.add(matFloor);
-    // weight rack with dumbbells
+    // weight rack with dumbbells (decor)
     const rack = box(4, 1.0, 0.6, mat('#33373f', { metal: 0.4, rough: 0.4 }));
-    rack.position.set(o.x - 6, 0.5, o.z - 5.4); r.group.add(rack);
-    r.colliders.push(new THREE.Box3().setFromObject(rack));
+    rack.position.set(o.x - 6, 0.5, o.z - 5.4); decor.add(rack);
+    { const c = new THREE.Box3().setFromObject(rack); r.colliders.push(c); decorColliders.push(c); }
     for (let i = -2; i <= 2; i++) {
       const bar = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.9, 8), mat('#888', { metal: 0.7, rough: 0.3 }));
-      bar.rotation.z = Math.PI / 2; bar.position.set(o.x - 6 + i * 0.7, 1.05, o.z - 5.4); r.group.add(bar);
+      bar.rotation.z = Math.PI / 2; bar.position.set(o.x - 6 + i * 0.7, 1.05, o.z - 5.4); decor.add(bar);
       [-0.45, 0.45].forEach(s => { const pl = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.16, 0.08, 14), mat('#15161a', { rough: 0.7 }));
-        pl.rotation.z = Math.PI / 2; pl.position.set(o.x - 6 + i * 0.7 + s, 1.05, o.z - 5.4); r.group.add(pl); });
+        pl.rotation.z = Math.PI / 2; pl.position.set(o.x - 6 + i * 0.7 + s, 1.05, o.z - 5.4); decor.add(pl); });
     }
-    // bench press
+    // bench press (decor)
     const bench = box(0.6, 0.5, 2.0, mat('#a02a2a', { rough: 0.6 }));
-    bench.position.set(o.x - 2, 0.5, o.z + 1); r.group.add(bench);
-    r.colliders.push(new THREE.Box3().setFromObject(bench));
+    bench.position.set(o.x - 2, 0.5, o.z + 1); decor.add(bench);
+    { const c = new THREE.Box3().setFromObject(bench); r.colliders.push(c); decorColliders.push(c); }
     const benchBar = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 1.6, 8), mat('#999', { metal: 0.7 }));
-    benchBar.rotation.z = Math.PI / 2; benchBar.position.set(o.x - 2, 1.05, o.z + 0.4); r.group.add(benchBar);
-    // treadmill
+    benchBar.rotation.z = Math.PI / 2; benchBar.position.set(o.x - 2, 1.05, o.z + 0.4); decor.add(benchBar);
+    // treadmill (decor)
     const tread = box(1.2, 0.4, 2.2, mat('#1a1c22', { rough: 0.8 }));
-    tread.position.set(o.x + 5, 0.2, o.z); r.group.add(tread);
-    r.colliders.push(new THREE.Box3().setFromObject(tread));
+    tread.position.set(o.x + 5, 0.2, o.z); decor.add(tread);
+    { const c = new THREE.Box3().setFromObject(tread); r.colliders.push(c); decorColliders.push(c); }
     const treadConsole = box(1.2, 1.0, 0.2, mat('#101218', { emissive: '#1b3a5a', emissiveIntensity: 0.5 }));
-    treadConsole.position.set(o.x + 5, 1.0, o.z - 1.0); r.group.add(treadConsole);
-    // mirror wall
+    treadConsole.position.set(o.x + 5, 1.0, o.z - 1.0); decor.add(treadConsole);
+    // mirror wall (STRUCTURAL — kept)
     const gmirror = box(8, 2.6, 0.1, new THREE.MeshStandardMaterial({ color: '#9fb6c9', metalness: 0.9, roughness: 0.08 }));
     gmirror.position.set(o.x, 1.5, o.z - 6.85); r.group.add(gmirror);
     r.group.add(tag('IRON CITY GYM', '#ff9f9f').translateX(o.x).translateY(2.75).translateZ(o.z - 6.6));
@@ -466,6 +486,7 @@ export function buildInteriors() {
     byId.gym = {
       id: 'gym', name: 'Iron City Gym', offset: o,
       spawn: r.spawn, exit: r.exit, colliders: r.colliders,
+      decor, decorColliders,
       avatars: [trainer], npcSlot: 'npc_basic_01',
       npcs: [{ name: 'Coach Mray', role: 'trainer', pos: new THREE.Vector3(o.x + 5, 0, o.z + 2.2), dialogue: 'trainer' }],
       stations: [
@@ -480,20 +501,23 @@ export function buildInteriors() {
     const o = OFFS.school;
     const r = buildRoom(o.x, o.z, 18, 14, '#cdbb94', '#7a6a4a', '#2a241a');
     root.add(r.group);
-    // chalkboard
+    // Removable PROCEDURAL desks (replaced by furniture assets when loaded).
+    const decor = new THREE.Group(); r.group.add(decor);
+    const decorColliders = [];
+    // chalkboard (STRUCTURAL wall fixture — kept)
     const board = box(6, 2.0, 0.12, mat('#1e3326', { rough: 0.9 }));
     board.position.set(o.x, 1.7, o.z - 6.85); r.group.add(board);
     r.group.add(tag('ZAYLIN PREP', '#b9ffd6').translateX(o.x).translateY(2.75).translateZ(o.z - 6.6));
-    // teacher desk
+    // teacher desk (decor)
     const tdesk = box(2.4, 1.0, 1.0, mat('#5a4326', { rough: 0.6 }));
-    tdesk.position.set(o.x, 0.5, o.z - 4.6); r.group.add(tdesk);
-    r.colliders.push(new THREE.Box3().setFromObject(tdesk));
-    // student desks grid
+    tdesk.position.set(o.x, 0.5, o.z - 4.6); decor.add(tdesk);
+    { const c = new THREE.Box3().setFromObject(tdesk); r.colliders.push(c); decorColliders.push(c); }
+    // student desks grid (decor)
     for (let gx = -1; gx <= 1; gx++) for (let gz = 0; gz < 3; gz++) {
       const d = box(1.0, 0.7, 0.7, mat('#8a6a3a', { rough: 0.6 }));
-      d.position.set(o.x + gx * 2.6, 0.35, o.z - 1.5 + gz * 2.0); r.group.add(d);
+      d.position.set(o.x + gx * 2.6, 0.35, o.z - 1.5 + gz * 2.0); decor.add(d);
       const ch = box(0.6, 0.5, 0.6, mat('#3a3f55'));
-      ch.position.set(o.x + gx * 2.6, 0.25, o.z - 0.7 + gz * 2.0); r.group.add(ch);
+      ch.position.set(o.x + gx * 2.6, 0.25, o.z - 0.7 + gz * 2.0); decor.add(ch);
     }
     const teacher = staticNPC({ skin: 'chestnut', face: 'oval', body: 'average', height: 'average',
       hair: 'twists', hairColor: 'darkbr', top: 'jacket-tan', bottom: 'jeans-black',
@@ -503,6 +527,7 @@ export function buildInteriors() {
     byId.school = {
       id: 'school', name: 'Zaylin Prep', offset: o,
       spawn: r.spawn, exit: r.exit, colliders: r.colliders,
+      decor, decorColliders,
       avatars: [teacher], npcSlot: 'npc_basic_02',
       npcs: [{ name: 'Ms. Okafor', role: 'teacher', pos: new THREE.Vector3(o.x, 0, o.z - 2.8), dialogue: 'teacher' }],
       stations: [
@@ -516,22 +541,25 @@ export function buildInteriors() {
     const o = OFFS.office;
     const r = buildRoom(o.x, o.z, 18, 14, '#3a4150', '#262b36', '#14171e');
     root.add(r.group);
-    // carpet
+    // Removable PROCEDURAL desks (replaced by furniture assets when loaded).
+    const decor = new THREE.Group(); r.group.add(decor);
+    const decorColliders = [];
+    // carpet (STRUCTURAL — kept)
     const carpet = box(14, 0.03, 10, mat('#2b3140', { rough: 0.95 }));
     carpet.position.set(o.x, 0.03, o.z); r.group.add(carpet);
-    // cubicle desks with monitors
+    // cubicle desks with monitors (decor)
     for (let i = 0; i < 4; i++) {
       const dx = o.x - 4.5 + (i % 2) * 9;
       const dz = o.z - 3 + Math.floor(i / 2) * 5;
       const desk = box(2.6, 0.9, 1.3, mat('#5a6172', { rough: 0.6 }));
-      desk.position.set(dx, 0.45, dz); r.group.add(desk);
-      r.colliders.push(new THREE.Box3().setFromObject(desk));
+      desk.position.set(dx, 0.45, dz); decor.add(desk);
+      { const c = new THREE.Box3().setFromObject(desk); r.colliders.push(c); decorColliders.push(c); }
       const mon = box(1.0, 0.6, 0.08, mat('#0b0e14', { emissive: '#1c6acc', emissiveIntensity: 0.55 }));
-      mon.position.set(dx, 1.2, dz - 0.4); r.group.add(mon);
+      mon.position.set(dx, 1.2, dz - 0.4); decor.add(mon);
       const chair = box(0.7, 0.9, 0.7, mat('#171a22'));
-      chair.position.set(dx, 0.45, dz + 1.1); r.group.add(chair);
+      chair.position.set(dx, 0.45, dz + 1.1); decor.add(chair);
     }
-    // job board on the wall
+    // job board on the wall (STRUCTURAL signage — kept)
     const jboard = box(3, 1.6, 0.1, mat('#caa468', { rough: 0.8 }));
     jboard.position.set(o.x + 7.4, 1.6, o.z); jboard.rotation.y = -Math.PI / 2; r.group.add(jboard);
     r.group.add(tag('WORKTOWER', '#bcd8ff').translateX(o.x).translateY(2.75).translateZ(o.z - 6.6));
@@ -543,6 +571,7 @@ export function buildInteriors() {
     byId.office = {
       id: 'office', name: 'WorkTower', offset: o,
       spawn: r.spawn, exit: r.exit, colliders: r.colliders,
+      decor, decorColliders,
       avatars: [manager], npcSlot: 'npc_basic_01',
       npcs: [{ name: 'Mr. Banks', role: 'manager', pos: new THREE.Vector3(o.x, 0, o.z - 3.8), dialogue: 'manager' }],
       stations: [
@@ -677,6 +706,103 @@ export function buildInteriors() {
         { id: 'buy-snack', type: 'buy-snack', pos: new THREE.Vector3(o.x + 1, 0, o.z - 4.0), label: 'Buy a Snack ($5)' },
         { id: 'buy-drink', type: 'buy-drink', pos: new THREE.Vector3(o.x + 5.6, 0, o.z), label: 'Grab a Drink ($3)' },
         { id: 'gas-checkout', type: 'buy-snack', pos: new THREE.Vector3(o.x - 4.6, 0, o.z + 1.4), label: 'Checkout — Buy a Snack ($5)' },
+      ],
+    };
+  }
+
+  // ── POLICE STATION (walkable precinct) ─────────────────────────────────────
+  // A real enterable interior: front lobby with a desk station, waiting area,
+  // a hallway leading back to walkable holding cells, plus an evidence room and
+  // a recruitment/academy desk placeholder. E at the door enters here; the desk
+  // inside is where you check your wanted level / ask about the academy.
+  {
+    const o = OFFS.police;
+    const r = buildRoom(o.x, o.z, 22, 16, '#9aa2ad', '#3b4654', '#141a22');
+    root.add(r.group);
+
+    // polished lobby floor stripe
+    const lobbyFloor = box(20, 0.02, 7, mat('#c2c8d2', { rough: 0.5 }));
+    lobbyFloor.position.set(o.x, 0.02, o.z + 3.5); r.group.add(lobbyFloor);
+
+    // ── front desk (the station) + sergeant behind it ──
+    const desk = box(5, 1.15, 1.4, mat('#26303f', { rough: 0.5 }));
+    desk.position.set(o.x - 5, 0.58, o.z + 1.5); r.group.add(desk);
+    r.colliders.push(new THREE.Box3().setFromObject(desk));
+    const deskTop = box(5.2, 0.08, 1.6, mat('#1a2230', { rough: 0.4 }));
+    deskTop.position.set(o.x - 5, 1.2, o.z + 1.5); r.group.add(deskTop);
+    const pc = box(0.7, 0.5, 0.1, mat('#0b0e14', { emissive: '#1c6acc', emissiveIntensity: 0.5 }));
+    pc.position.set(o.x - 5.8, 1.5, o.z + 1.2); r.group.add(pc);
+
+    // ── waiting area (benches, right of lobby) ──
+    for (let i = 0; i < 2; i++) {
+      const bench = box(3.2, 0.5, 0.8, mat('#3a4150', { rough: 0.7 }));
+      bench.position.set(o.x + 5, 0.25, o.z + 1.5 + i * 1.6); r.group.add(bench);
+    }
+
+    // ── divider wall separating lobby from the cell block (with a doorway gap) ──
+    const divL = box(8, 3.2, 0.3, mat('#2b3543')); divL.position.set(o.x - 6, 1.6, o.z - 1.5); r.group.add(divL);
+    r.colliders.push(new THREE.Box3().setFromObject(divL));
+    const divR = box(8, 3.2, 0.3, mat('#2b3543')); divR.position.set(o.x + 6, 1.6, o.z - 1.5); r.group.add(divR);
+    r.colliders.push(new THREE.Box3().setFromObject(divR));
+
+    // ── holding cells along the back wall (walkable, open-front bars) ──
+    const barMat = mat('#5a626e', { metal: 0.6, rough: 0.4 });
+    for (let cell = -1; cell <= 1; cell++) {
+      const cx = o.x + cell * 6;
+      // cell side walls
+      const wL = box(0.25, 3.0, 4, mat('#323b48')); wL.position.set(cx - 2.4, 1.5, o.z - 5.5); r.group.add(wL);
+      r.colliders.push(new THREE.Box3().setFromObject(wL));
+      const wR = box(0.25, 3.0, 4, mat('#323b48')); wR.position.set(cx + 2.4, 1.5, o.z - 5.5); r.group.add(wR);
+      r.colliders.push(new THREE.Box3().setFromObject(wR));
+      // vertical bars on the cell front (decorative — walk between the gaps blocked by side walls)
+      for (let b = -2; b <= 2; b++) {
+        const bar = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 3.0, 8), barMat);
+        bar.position.set(cx + b * 0.9, 1.5, o.z - 3.6); r.group.add(bar);
+      }
+      // a simple cot inside
+      const cot = box(1.6, 0.4, 3.2, mat('#46566a', { rough: 0.8 }));
+      cot.position.set(cx + 1.2, 0.2, o.z - 5.6); r.group.add(cot);
+    }
+
+    // ── evidence room placeholder (locked shelves, back-left) ──
+    const evidence = box(0.4, 3.0, 4, mat('#2a3240')); evidence.position.set(o.x - 10.6, 1.5, o.z - 5); r.group.add(evidence);
+    r.colliders.push(new THREE.Box3().setFromObject(evidence));
+    for (let s = 0; s < 3; s++) {
+      const crate = box(1.0, 0.7, 1.0, mat('#6a5a3a', { rough: 0.8 }));
+      crate.position.set(o.x - 9.6, 0.35 + s * 0.0, o.z - 6.2 + s * 1.2); r.group.add(crate);
+    }
+    r.group.add(tag('EVIDENCE', '#ffd27f').translateX(o.x - 9.6).translateY(2.5).translateZ(o.z - 6.6));
+
+    // ── recruitment / academy desk placeholder (back-right) ──
+    const acaDesk = box(2.6, 1.0, 1.2, mat('#26303f', { rough: 0.5 }));
+    acaDesk.position.set(o.x + 9, 0.5, o.z - 5); r.group.add(acaDesk);
+    r.colliders.push(new THREE.Box3().setFromObject(acaDesk));
+    r.group.add(tag('ACADEMY', '#bfe3ff').translateX(o.x + 9).translateY(2.5).translateZ(o.z - 6.6));
+
+    // signage over the lobby
+    r.group.add(tag('POLICE', '#9fd0ff', 'precinct · front desk').translateX(o.x).translateY(2.85).translateZ(o.z + 7.4));
+
+    // sergeant behind the desk + a patrol officer in the lobby
+    const sergeant = staticNPC({ skin: 'chestnut', face: 'square', body: 'athletic', height: 'average',
+      hair: 'low-fade', hairColor: 'jet', top: 'jersey-grn', bottom: 'jeans-black',
+      shoes: 'boots-tan', accessory: 'none', jewelry: 'none' }, o.x - 5, o.z + 2.6, Math.PI);
+    r.group.add(sergeant.group);
+    const officer = staticNPC({ skin: 'umber', face: 'oval', body: 'athletic', height: 'tall',
+      hair: 'taper-fade', hairColor: 'jet', top: 'jacket-tan', bottom: 'jeans-black',
+      shoes: 'boots-tan', accessory: 'shades', jewelry: 'none' }, o.x + 8.5, o.z - 3.8, Math.PI * 0.9);
+    r.group.add(officer.group);
+
+    byId.police = {
+      id: 'police', name: 'Police Station', offset: o,
+      spawn: r.spawn, exit: r.exit, colliders: r.colliders,
+      avatars: [sergeant, officer], npcSlot: 'npc_basic_01',
+      npcs: [
+        { name: 'Sgt. Diaz', role: 'sergeant', pos: new THREE.Vector3(o.x - 5, 0, o.z + 2.2), dialogue: 'police-desk' },
+        { name: 'Officer Reed', role: 'officer', pos: new THREE.Vector3(o.x + 8.5, 0, o.z - 3.4), dialogue: 'police-desk' },
+      ],
+      stations: [
+        { id: 'police-desk-int', type: 'police-desk', pos: new THREE.Vector3(o.x - 5, 0, o.z + 3.0), label: 'Front Desk (Check Wanted / Academy)' },
+        { id: 'police-academy', type: 'police-desk', pos: new THREE.Vector3(o.x + 9, 0, o.z - 3.6), label: 'Recruitment Desk' },
       ],
     };
   }
