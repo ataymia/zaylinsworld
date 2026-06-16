@@ -1318,21 +1318,56 @@ function setupPolicePost(info) {
 }
 function talkToPoliceDesk() {
   missionEvent('talk-police-desk');
+  const heat = state.wanted || 0;
+  const fee = 250 * heat;                  // escalating legal fee, one star at a time
+  const lowerChoice = heat > 0
+    ? { label: `Pay legal fee ($${fee}) to clear 1 star`, onPick: () => {
+        if ((state.money || 0) < fee) { notify(`Need $${fee} to settle that — come back with the cash.`); return 'keep'; }
+        state.money -= fee;
+        state.wanted = Math.max(0, (state.wanted || 0) - 1);
+        notify(`⚖️ Paid $${fee} — one star cleared (wanted ${state.wanted}).`);
+        saveNow();
+        return undefined;
+      } }
+    : { label: 'How do I lower my wanted level?', onPick: () => openDialogue({
+        name: 'Front Desk',
+        text: `You're clean right now — no active wanted level. Keep it that way: obey the lights, don't jack rides, and stay out of trouble.`,
+        choices: [{ label: 'Got it', onPick: () => {} }],
+      }) };
   openDialogue({
     name: 'Police Station — Front Desk',
-    text: `Welcome to the Police Station. Keep the streets clean and obey the lights and you'll never see us. Cause trouble and our patrols roll out. The cruisers out front are official police property — don't even think about it.`,
+    text: heat > 0
+      ? `You're showing ${heat} star${heat === 1 ? '' : 's'} of heat. You can settle it the legal way at the desk — a fee per star — or lay low until it cools. The cruisers out front are official property; hands off.`
+      : `Welcome to the Police Station. Keep the streets clean and obey the lights and you'll never see us. Cause trouble and our patrols roll out. The cruisers out front are official police property — don't even think about it.`,
     choices: [
-      { label: 'How do I lower my wanted level?', onPick: () => openDialogue({
-        name: 'Front Desk',
-        text: `Lose the heat: ditch any stolen ride, stop the trouble, and stay out of sight until the stars cool off. Getting busted clears your record the hard way.`,
-        choices: [{ label: 'Got it', onPick: () => {} }],
-      }) },
+      lowerChoice,
       { label: 'Tell me about the academy', onPick: () => openDialogue({
         name: 'Front Desk',
         text: `The Police Academy trains the next class of officers — obstacle drills, pursuit driving, the works. Training grounds are coming soon.`,
         choices: [{ label: 'Cool', onPick: () => {} }],
       }) },
       { label: 'Leave', onPick: () => {} },
+    ],
+  });
+}
+
+// Holding-cell block inspect (inside the precinct). A real interaction at the
+// cells rather than a dead prop — roleplay + a hook for future bust/visit flows.
+function inspectHoldingCells() {
+  missionEvent('police-cells');
+  const heat = state.wanted || 0;
+  openDialogue({
+    name: 'Holding Cells',
+    text: heat > 0
+      ? `Three holding cells line the back wall. With ${heat} star${heat === 1 ? '' : 's'} on you, an officer eyes you from the desk — loiter back here and you might end up on the wrong side of the bars.`
+      : `Three holding cells line the back wall, empty and quiet. This is where the night's troublemakers cool off before booking.`,
+    choices: [
+      { label: 'Peer into a cell', onPick: () => openDialogue({
+        name: 'Holding Cell',
+        text: `A steel cot, a barred door, a flickering light. Nothing to do in here but wait it out. (Jail/visitation flows are coming soon.)`,
+        choices: [{ label: 'Step back', onPick: () => {} }],
+      }) },
+      { label: 'Head back to the lobby', onPick: () => {} },
     ],
   });
 }
@@ -2930,6 +2965,7 @@ function runStation(intr, st) {
     case 'weapon-shop': openWeaponShop(); break;
     case 'police-desk': talkToPoliceDesk(); break;
     case 'evidence-locker': openEvidenceLocker(); break;
+    case 'inspect-cells': inspectHoldingCells(); break;
     default: notify('Nothing happens here.');
   }
 }

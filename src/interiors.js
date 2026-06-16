@@ -903,6 +903,7 @@ export function buildInteriors() {
       stations: [
         { id: 'police-desk-int', type: 'police-desk', pos: new THREE.Vector3(o.x - 5, 0, o.z + 3.0), label: 'Front Desk (Check Wanted / Academy)' },
         { id: 'police-evidence', type: 'evidence-locker', pos: new THREE.Vector3(o.x - 9.6, 0, o.z - 3.8), label: 'Evidence Locker' },
+        { id: 'police-cells', type: 'inspect-cells', pos: new THREE.Vector3(o.x, 0, o.z - 2.6), label: 'Inspect Holding Cells' },
         { id: 'police-academy', type: 'police-desk', pos: new THREE.Vector3(o.x + 9, 0, o.z - 3.6), label: 'Recruitment Desk' },
       ],
     };
