@@ -104,6 +104,23 @@ function carMesh(color, type) {
   return buildCar(type || pick(CAR_TYPES), color);
 }
 
+// A lightweight seated driver silhouette (head + torso) so traffic cars aren't
+// ghost-driven. Detached + made to flee when the car is stolen (see main.js).
+const DRIVER_SKINS = ['#6b4a2f', '#8a5a3a', '#a9744f', '#c68642', '#e0ac69', '#5a3a22'];
+const DRIVER_TOPS = ['#2c3e6b', '#7a1f2b', '#27543a', '#3a3f48', '#5a4a6b'];
+function makeDriver() {
+  const g = new THREE.Group();
+  const skin = new THREE.MeshStandardMaterial({ color: pick(DRIVER_SKINS), roughness: 0.8 });
+  const cloth = new THREE.MeshStandardMaterial({ color: pick(DRIVER_TOPS), roughness: 0.7 });
+  const torso = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.42, 0.24), cloth);
+  torso.position.y = 0.78; g.add(torso);
+  const head = new THREE.Mesh(new THREE.SphereGeometry(0.13, 12, 10), skin);
+  head.position.y = 1.08; g.add(head);
+  g.position.set(-0.3, 0, 0.28);          // driver seat: front-left
+  g.castShadow = true;
+  return g;
+}
+
 // Spawn cars onto the closed loops defined in mapConfig.TRAFFIC_ROUTES. Each car
 // drives toward its next waypoint, rotates to face its heading, brakes for
 // obstacles ahead, and loops forever. The {g,speed,damage,wheels} shape stays
@@ -161,10 +178,11 @@ export function createTraffic(scene, count = 6) {
       const b = route[at.nextWp];
       g.rotation.y = Math.atan2(b.x - at.pos.x, b.z - at.pos.z);
       scene.add(g);
+      const driver = makeDriver(); g.add(driver);
       cars.push({
         g, route, wp: at.nextWp,
         speed: 0, baseSpeed: 7 + Math.random() * 4, damage: 0,
-        wheels: g.userData.wheels,
+        wheels: g.userData.wheels, driver, hasDriver: true,
         _stuckT: 0, _stopAt: null, _stopTimer: 0,
       });
       idx++;

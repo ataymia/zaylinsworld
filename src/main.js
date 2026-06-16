@@ -202,6 +202,7 @@ let policeGrace = 0;           // seconds before a bust can happen after wanted 
 let policeWarned = false;      // showed the "you've been warned" message yet
 let wantedPrev = 0;            // detect the 0→wanted transition to start the grace
 let copHiddenTimer = 0;        // seconds the player has been out of police line-of-sight
+let ejectedPeople = [];        // drivers thrown out of stolen cars, fleeing on foot
 let drivenDist = 0, drivenFlagged = false;   // "Get Around Town" mission tracker
 let builderOpen = false;
 let wardrobeResume = false;      // creator opened from inside the game
@@ -1715,6 +1716,41 @@ function nearestStealable() {
   }
   return best;
 }
+// Eject the occupant of a vehicle being stolen. A civilian driver detaches from
+// the car and flees on foot (a witness who can raise the alarm); a police car's
+// officer bails out and immediately joins the foot pursuit.
+function ejectDriver(vehicle) {
+  if (!vehicle) return;
+  if (vehicle.isCop) {
+    spawnFootCop({ x: vehicle.g.position.x + 2, z: vehicle.g.position.z });
+    notify('🚔 The officer bailed out — and he\'s after you!');
+    return;
+  }
+  if (!vehicle.hasDriver || !vehicle.driver) return;
+  const d = vehicle.driver;
+  vehicle.hasDriver = false; vehicle.driver = null;
+  const wp = new THREE.Vector3(); d.getWorldPosition(wp);
+  vehicle.g.remove(d);
+  scene.add(d);
+  d.position.set(wp.x, 0, wp.z);
+  const away = new THREE.Vector3(wp.x - vehicle.g.position.x, 0, wp.z - vehicle.g.position.z);
+  if (away.lengthSq() < 0.01) away.set(Math.random() - 0.5, 0, Math.random() - 0.5);
+  away.normalize();
+  d.rotation.y = Math.atan2(away.x, away.z);
+  ejectedPeople.push({ group: d, vel: away.multiplyScalar(3.6), ttl: 6, phase: Math.random() * 6 });
+  notify('🏃 The driver bailed and ran!');
+}
+// Move + age out fleeing ejected drivers (despawn after their TTL).
+function updateEjectedPeople(dt, t) {
+  for (let i = ejectedPeople.length - 1; i >= 0; i--) {
+    const e = ejectedPeople[i];
+    e.ttl -= dt;
+    e.group.position.x += e.vel.x * dt;
+    e.group.position.z += e.vel.z * dt;
+    e.group.position.y = Math.abs(Math.sin((t + e.phase) * 9)) * 0.05;
+    if (e.ttl <= 0) { scene.remove(e.group); ejectedPeople.splice(i, 1); }
+  }
+}
 // Enter (or steal) a vehicle. `vehicle` is any object with { g, speed, damage }.
 // `opts.steal` flags an NPC-owned traffic car → witness/wanted logic.
 function enterCar(vehicle = car, opts = {}) {
@@ -1733,6 +1769,7 @@ function enterCar(vehicle = car, opts = {}) {
     if (cidx >= 0) parkedCruisers.splice(cidx, 1);
     vehicle.parked = false;
     vehicle.stolen = true;
+    ejectDriver(vehicle);                 // throw the occupant out (flees / joins chase)
     const copCar = !!vehicle.isCop;
     const witnessed = witnessesNear(vehicle.g.position, 16);
     if (copCar) {
@@ -2294,7 +2331,7 @@ function copSpawnPoint() {
   return { x: pp.x + Math.cos(ang) * R, z: pp.z + Math.sin(ang) * R };
 }
 
-function spawnFootCop() {
+function spawnFootCop(at) {
   // Procedural uniformed base (instant + always valid). A real PSX POLICE GLB is
   // swapped on top async via applyCopSkin so the officer reads clearly as police
   // — the procedural body stays as a guaranteed fallback if the GLB fails.
@@ -2307,7 +2344,7 @@ function spawnFootCop() {
   const badge = new THREE.Mesh(new THREE.CircleGeometry(0.05, 6),
     new THREE.MeshStandardMaterial({ color: '#ffd34d', emissive: '#5a4500', emissiveIntensity: 0.4 }));
   badge.position.set(0.16, 1.36, 0.19); av.group.add(badge);
-  const sp = copSpawnPoint();
+  const sp = at || copSpawnPoint();        // `at` lets a bailed-out driver become a cop on the spot
   av.group.position.set(sp.x, 0, sp.z);
   scene.add(av.group);
   const unit = { av, health: 65, t: 0, hitT: 0 };
@@ -3892,6 +3929,7 @@ function animate() {
     if (!inCar) updateWeapons(dt, { fireHeld, firePressed: firePressed && !interactClick, reloadPressed });
     firePressed = false; reloadPressed = false;
     updatePolice(dt);
+    updateEjectedPeople(dt, t);
     if (state.monsterMode && monsters.length) {
       updateMonsters(monsters, dt, t, player && player.group.position, {
         damagePlayer: (dmg) => {
