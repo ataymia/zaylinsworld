@@ -88,9 +88,17 @@ export const PARKING = {
 };
 
 // ── street furniture lining the cross streets ────────────────────────────────
+// Lights sit on the SIDEWALK strip (|z|≈6.5 beside Main St, |x|≈6.5 beside
+// Centre Ave) and never on a road centre-line. Anything within ROAD_CLEAR of a
+// road centre-line would land in a driving lane, so these are kept at mid-block
+// x/z values (±15, ±22) that are clear of the -30/0/30 road lines.
 export const STREET_LIGHTS = [
-  [-28, 8], [0, 8], [28, 8], [-28, -8], [0, -8], [28, -8],
-  [8, -28], [-8, -28], [8, 28], [-8, 28],
+  // Main Street — north & south sidewalks (z = ±6.5)
+  [-22, 6.5], [-15, 6.5], [15, 6.5], [22, 6.5],
+  [-22, -6.5], [-15, -6.5], [15, -6.5], [22, -6.5],
+  // Centre Avenue — east & west sidewalks (x = ±6.5)
+  [6.5, -22], [6.5, -15], [6.5, 15], [6.5, 22],
+  [-6.5, -22], [-6.5, -15], [-6.5, 15], [-6.5, 22],
 ];
 export const STREET_TREES = [
   [-23, -8], [-7, -8], [7, -8], [23, -8],

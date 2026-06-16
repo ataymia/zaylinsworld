@@ -189,8 +189,15 @@
   #car-hud .ch-item{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:64px;}
   #car-hud .ch-label{font-size:9px;text-transform:uppercase;letter-spacing:1.2px;color:#8a8aa0;}
   #car-hud .ch-val{font-size:16px;color:#dfe7ff;font-variant-numeric:tabular-nums;}
-  #car-hud .ch-bar{width:64px;height:7px;border-radius:5px;background:rgba(255,255,255,.14);overflow:hidden;}
-  #car-hud .ch-fill{height:100%;width:100%;background:#4eff91;transition:width .2s;}
+  #car-hud .ch-bar{display:block;width:72px;height:10px;border-radius:5px;
+    background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);overflow:hidden;}
+  /* the fill is a <span>; it MUST be display:block or width/height/background are ignored
+     (inline elements have no box) — that was the "fuel bar stays gray" bug. */
+  #car-hud .ch-fill{display:block;height:100%;width:100%;background:#4eff91;
+    border-radius:4px;transition:width .18s ease, background .2s;}
+  #car-hud .ch-sub{font-size:11px;color:#9fb0d6;font-variant-numeric:tabular-nums;margin-top:1px;}
+  #car-hud.ch-empty .ch-fill{background:#ff5a5a;}
+  #car-hud .ch-warn{color:#ff7676;font-size:11px;font-weight:800;}
 
   /* ── mission tracker (left, under HUD) ── */
   #mission-tracker{position:fixed;left:14px;top:96px;z-index:60;max-width:300px;

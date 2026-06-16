@@ -7,6 +7,8 @@ import {
   ROAD, CROSSWALKS, LANDMARKS, FEATURES,
   PARK, PARKING, STREET_LIGHTS, STREET_TREES, SPAWN,
 } from './config/mapConfig.js';
+import { clearOfRoads } from './config/placementRules.js';
+import { registerWorldObject, clearWorldObjects } from './worldCollision.js';
 
 function mat(color, opts = {}) {
   return new THREE.MeshStandardMaterial({
@@ -139,14 +141,20 @@ function tree(scene, x, z) {
   scene.add(trunk, leaves);
 }
 function streetLight(scene, x, z) {
+  const g = new THREE.Group();
   const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.08, 3.4, 6), mat('#3a3a44'));
-  pole.position.set(x, 1.7, z); pole.castShadow = true;
+  pole.position.set(0, 1.7, 0); pole.castShadow = true;
   const lamp = new THREE.Mesh(new THREE.SphereGeometry(0.16, 8, 6),
     new THREE.MeshStandardMaterial({ color: '#fff6cf', emissive: '#ffdf8a', emissiveIntensity: 1.4 }));
-  lamp.position.set(x, 3.4, z);
+  lamp.position.set(0, 3.4, 0);
   const glow = new THREE.PointLight('#ffe6a8', 3.2, 14, 1.8);
-  glow.position.set(x, 3.3, z);
-  scene.add(pole, lamp, glow);
+  glow.position.set(0, 3.3, 0);
+  g.add(pole, lamp, glow);
+  g.position.set(x, 0, z);
+  scene.add(g);
+  // breakable: a car ramming the post knocks it down + takes light damage.
+  registerWorldObject(g, x, z, { r: 0.5, kind: 'streetlight' });
+  return g;
 }
 function bench(scene, x, z, ry = 0) {
   const g = new THREE.Group();
@@ -160,6 +168,7 @@ function bench(scene, x, z, ry = 0) {
 
 export function buildCity(scene) {
   colliders.length = 0;
+  clearWorldObjects();
 
   const grassTex = noiseTexture('#3f7140', ['#356030', '#4c8048', '#2e5a2c', '#5a8a52'], 2600, 60);
   const ground = new THREE.Mesh(new THREE.PlaneGeometry(260, 260),
@@ -256,8 +265,15 @@ export function buildCity(scene) {
   });
 
   // ── street furniture lining Main Street ───────────────────────────────────
-  STREET_LIGHTS.forEach(([x, z]) => streetLight(scene, x, z));
-  STREET_TREES.forEach(([x, z]) => tree(scene, x, z));
+  // Guardrail: skip any configured light that would land in a driving lane
+  // (placement-rule check) so a lamp can never sit in the middle of a road.
+  let skippedLights = 0;
+  STREET_LIGHTS.forEach(([x, z]) => {
+    if (!clearOfRoads(x, z, 0.4)) { skippedLights++; return; }
+    streetLight(scene, x, z);
+  });
+  if (skippedLights) console.warn('[world] skipped', skippedLights, 'streetlight(s) that fell in a road lane');
+  STREET_TREES.forEach(([x, z]) => { if (clearOfRoads(x, z, 0.3)) tree(scene, x, z); });
 
   return { spawn: new THREE.Vector3(SPAWN.x, 0, SPAWN.z), spawnFaceY: SPAWN.faceY, entrances };
 }

@@ -44,6 +44,9 @@ import {
   initLoadingScreen, hideLoadingScreen, setStatus, setProgress, loadingManager,
 } from './loader.js';
 import { initDebugBadge, debug } from './debug.js';
+import { handlingFor, addVehicleDamage, applyDamageVisual, tickDamageSmoke } from './vehicleDamage.js';
+import { collideVehicle, breakableCount, worldObjectCount } from './worldCollision.js';
+import { dressTown } from './townBuilder.js';
 import {
   buildCreator, showCreator, updateHUD, updateCarHUD, showPrompt, notify, SERVERS,
   isUIOpen, onMenuClose, openDialogue, openShop, openChainBuilder, closeMenus,
@@ -59,7 +62,11 @@ const FEATURES = {
   USE_REAL_NPC_SKINS: false,     // attach PSX GLB skins to city NPCs
   USE_GLB_MONSTERS: false,       // swap procedural monster → PSX creature GLB
   USE_GLB_WORLD_BUILDINGS: false, // place uploaded gas/diner/market GLB landmarks
-  USE_GLB_GAS_STATION_ONLY: true, // safe single-asset test: try the gas-station GLB only (bounds-checked)
+  USE_GLB_GAS_STATION_ONLY: false, // Phase 2: the gas-station GLB normalizes to a tiny prop in the
+                                   // corner, so keep the full procedural station (canopy+pumps+sign).
+  USE_PREFAB_TOWN_PROPS: true,    // Phase 2: scatter asset-aware prop clusters (trash/dressing) via the
+                                  // prefab placement rules — additive, fallback-safe, never blocks doors/lanes.
+  USE_BREAKABLE_STREET_OBJECTS: true, // Phase 2: streetlights/signs break + damage cars when rammed.
 };
 if (typeof window !== 'undefined') window.__ZW_FEATURES__ = FEATURES;
 
@@ -749,6 +756,23 @@ function applyWorldAssets() {
   // always-present procedural gas station (the refuel loop must be usable even
   // with GLB world buildings disabled)
   buildProceduralGasStation();
+  // Phase 2: asset-aware town dressing (trash clusters + dumpsters) placed via
+  // the prefab/variation/placement system — additive, deterministic, fallback-safe.
+  if (FEATURES.USE_PREFAB_TOWN_PROPS) {
+    dressTown(scene, renderer, { seed: state.townSeed || 'starter-town' })
+      .then((s) => {
+        debug.set('prefabProps', s.prefabsPlaced);
+        debug.set('prefabAssets', s.assetsSelected);
+        debug.set('prefabFallbacks', s.fallbackCount);
+        debug.set('prefabSeed', s.seed);
+        debug.set('breakableObjects', breakableCount());
+        debug.set('worldObjects', worldObjectCount());
+        (s.failedAssets || []).forEach((f) => debug.addFailedAsset(f));
+      })
+      .catch((e) => { console.warn('[town] dressing failed:', e); debug.showError && debug.showError('dressTown: ' + (e && e.message || e)); });
+  } else {
+    debug.set('prefabProps', 0);
+  }
   // place Kenney Retro Urban Kit buildings into the district (async, fire-and-forget)
   buildDistrict(scene, renderer)
     .then((placed) => { if (placed && placed.length) console.info('[district] landmarks:', placed.map(p => p.label).join(', ')); })
@@ -1569,18 +1593,29 @@ function exitCar() {
 function updateCar(dt) {
   const v = drivingVehicle || car;
   const inp = controls.moveInput();
-  const accel = 16, maxF = 24, maxR = 9, fric = 7;
+  // Phase 2: damage worsens handling. A totaled car (100%) can't drive at all.
+  const h = handlingFor(v.damage || 0);
+  const accel = 16, maxR = 9, fric = 7;
+  const maxF = 24 * h.speedMult;
   // fuel: an empty tank sputters out (no throttle), so you must reach a gas station
   if (v.fuel === undefined) v.fuel = (v === car) ? (state.fuel ?? 100) : 100;
-  const dry = v.fuel <= 0;
+  const dry = v.fuel <= 0 || h.totaled;
+  if (h.totaled && inp.f !== 0 && !v._totaledWarned) {
+    v._totaledWarned = true; notify('🛑 Vehicle totaled — tow it to City Garage to repair.');
+  }
+  if (!h.totaled) v._totaledWarned = false;
   if (inp.f > 0 && !dry) v.speed += accel * dt;
   else if (inp.f < 0 && !dry) v.speed -= accel * dt;
   else v.speed -= Math.sign(v.speed) * Math.min(Math.abs(v.speed), fric * dt);
-  v.speed = Math.max(-maxR, Math.min(maxF, v.speed));
+  v.speed = Math.max(-maxR * h.speedMult, Math.min(maxF, v.speed));
 
   if (inp.s !== 0 && Math.abs(v.speed) > 0.2) {
-    const rate = 1.6 * (Math.abs(v.speed) / maxF + 0.18);
+    const rate = 1.6 * (Math.abs(v.speed) / Math.max(1, maxF) + 0.18) * h.steerMult;
     v.g.rotation.y -= inp.s * rate * dt * Math.sign(v.speed);
+  }
+  // damaged cars wobble: a small heading jitter that grows with damage
+  if (h.wobble > 0 && Math.abs(v.speed) > 3) {
+    v.g.rotation.y += Math.sin(performance.now() * 0.012) * h.wobble * dt;
   }
   const dir = new THREE.Vector3(Math.sin(v.g.rotation.y), 0, Math.cos(v.g.rotation.y));
   const before = v.g.position.clone();
@@ -1609,6 +1644,20 @@ function updateCar(dt) {
       notify('🚨 Reckless driving reported! Wanted +1');
     }
   }
+  // Phase 2: smash through breakable street objects (cones, lamps, cans).
+  // Soft litter is driven over; breakable props tip and add minor damage.
+  if (FEATURES.USE_BREAKABLE_STREET_OBJECTS && Math.abs(v.speed) > 3) {
+    const brk = collideVehicle(v.g.position, Math.abs(v.speed), (o) => {
+      notify('💥 Smashed a ' + (o.kind ? o.kind.replace(/_/g, ' ') : 'street object') + '!');
+    });
+    if (brk > 0) {
+      addVehicleDamage(v, brk);
+      if (v === car) state.carDamage = Math.floor(v.damage);
+      applyCarDamageVisual(v);
+      v.speed *= 0.9;
+    }
+  }
+  tickDamageSmoke(v, performance.now() * 0.001);
   // roll wheels (GLB wheel meshes or procedural cylinders)
   (v.g.userData.wheels || []).forEach(w => { w.rotation.x += v.speed * dt; });
   v.g.children.forEach(c => { if (c.geometry?.type === 'CylinderGeometry') c.rotation.x += v.speed * dt; });
@@ -3023,7 +3072,8 @@ function repairVehicle() {
             if (v) v.damage = 0;
             if (car) car.damage = 0;
             state.carDamage = 0;
-            applyCarDamageVisual(car);
+            if (v) { v._totaledWarned = false; applyCarDamageVisual(v); }
+            if (car && car !== v) applyCarDamageVisual(car);
             notify('🔧 Good as new — dents knocked out.');
             saveNow();
           } }

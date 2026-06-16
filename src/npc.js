@@ -108,26 +108,66 @@ function carMesh(color, type) {
 // drives toward its next waypoint, rotates to face its heading, brakes for
 // obstacles ahead, and loops forever. The {g,speed,damage,wheels} shape stays
 // compatible with main.js (drive/steal/collision) and vehicleKit visual swaps.
+//
+// Cars are spread EVENLY around their assigned loop (by arc-length) with a
+// minimum gap so they never spawn stacked in one clump behind town. A car is
+// assigned a route + a parametric distance `s` along it; we resolve that to an
+// (x,z) on the correct leg and the waypoint index just ahead.
+function loopLength(wps) {
+  let L = 0;
+  for (let i = 0; i < wps.length; i++) {
+    const a = wps[i], b = wps[(i + 1) % wps.length];
+    L += Math.hypot(b.x - a.x, b.z - a.z);
+  }
+  return L;
+}
+// Resolve arc-distance `s` (0..loopLength) → { pos, nextWp }.
+function pointAtDistance(wps, s) {
+  const total = loopLength(wps) || 1;
+  let d = ((s % total) + total) % total;
+  for (let i = 0; i < wps.length; i++) {
+    const a = wps[i], b = wps[(i + 1) % wps.length];
+    const seg = Math.hypot(b.x - a.x, b.z - a.z) || 1e-3;
+    if (d <= seg) {
+      const f = d / seg;
+      return { pos: new THREE.Vector3(a.x + (b.x - a.x) * f, 0, a.z + (b.z - a.z) * f), nextWp: (i + 1) % wps.length, a, b };
+    }
+    d -= seg;
+  }
+  return { pos: wps[0].clone(), nextWp: 1 % wps.length, a: wps[0], b: wps[1 % wps.length] };
+}
+
 export function createTraffic(scene, count = 6) {
   const colors = ['#c0392b', '#2980b9', '#27ae60', '#f1c40f', '#8e44ad', '#e67e22', '#ecf0f1', '#16a085'];
   const cars = [];
-  for (let i = 0; i < count; i++) {
-    const g = carMesh(pick(colors));
-    const routeDef = TRAFFIC_ROUTES[i % TRAFFIC_ROUTES.length];
+  const MIN_GAP = 9;                                   // metres between cars on the same loop
+  // bucket cars per route so we can evenly space each route's share around it
+  const perRoute = TRAFFIC_ROUTES.map(() => 0);
+  for (let i = 0; i < count; i++) perRoute[i % TRAFFIC_ROUTES.length]++;
+
+  let idx = 0;
+  for (let r = 0; r < TRAFFIC_ROUTES.length; r++) {
+    const routeDef = TRAFFIC_ROUTES[r];
     const route = toWaypoints(routeDef.loop);
-    // stagger cars along the loop so they don't stack at the first waypoint
-    const wp = (i * 2) % route.length;
-    const next = (wp + 1) % route.length;
-    const a = route[wp], b = route[next];
-    const f = (Math.floor(i / TRAFFIC_ROUTES.length) * 0.45) % 1; // fraction along the leg
-    g.position.set(a.x + (b.x - a.x) * f, 0, a.z + (b.z - a.z) * f);
-    g.rotation.y = Math.atan2(b.x - a.x, b.z - a.z);
-    scene.add(g);
-    cars.push({
-      g, route, wp: next,
-      speed: 0, baseSpeed: 7 + Math.random() * 4, damage: 0,
-      wheels: g.userData.wheels,
-    });
+    const n = perRoute[r];
+    if (!n) continue;
+    const total = loopLength(route);
+    const gap = Math.max(MIN_GAP, total / n);          // even spacing, but never tighter than MIN_GAP
+    for (let k = 0; k < n; k++) {
+      const g = carMesh(pick(colors));
+      const s = (k * gap) % total;
+      const at = pointAtDistance(route, s);
+      g.position.copy(at.pos);
+      const b = route[at.nextWp];
+      g.rotation.y = Math.atan2(b.x - at.pos.x, b.z - at.pos.z);
+      scene.add(g);
+      cars.push({
+        g, route, wp: at.nextWp,
+        speed: 0, baseSpeed: 7 + Math.random() * 4, damage: 0,
+        wheels: g.userData.wheels,
+      });
+      idx++;
+    }
   }
   return cars;
 }

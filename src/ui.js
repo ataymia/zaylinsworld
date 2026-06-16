@@ -148,8 +148,10 @@ export function updateCarHUD(info) {
     el.innerHTML = `
       <div class="ch-item"><span class="ch-label">Speed</span><span class="ch-val" id="ch-speed">0</span></div>
       <div class="ch-item"><span class="ch-label" id="ch-fuel-label">Fuel</span>
-        <span class="ch-bar"><span class="ch-fill" id="ch-fuel"></span></span></div>
-      <div class="ch-item"><span class="ch-label">Damage</span><span class="ch-val" id="ch-dmg">0%</span></div>`;
+        <span class="ch-bar"><span class="ch-fill" id="ch-fuel"></span></span>
+        <span class="ch-sub" id="ch-fuel-pct">100%</span></div>
+      <div class="ch-item"><span class="ch-label">Damage</span><span class="ch-val" id="ch-dmg">0%</span>
+        <span class="ch-sub" id="ch-dmg-state"></span></div>`;
     _carHudBuilt = true;
   }
   el.style.display = '';
@@ -157,10 +159,23 @@ export function updateCarHUD(info) {
   $('ch-speed').textContent = Math.round(info.speed || 0);
   const fill = $('ch-fuel');
   fill.style.width = fuel + '%';
-  fill.style.background = fuel < 15 ? '#ff5a5a' : fuel < 35 ? '#ffb14e' : '#4eff91';
+  fill.style.background = fuel <= 0 ? '#ff5a5a' : fuel < 15 ? '#ff5a5a' : fuel < 35 ? '#ffb14e' : '#4eff91';
+  el.classList.toggle('ch-empty', fuel <= 0);
+  const pct = $('ch-fuel-pct');
+  if (pct) {
+    pct.textContent = Math.round(fuel) + '%';
+    pct.classList.toggle('ch-warn', fuel < 15);
+  }
   const fl = $('ch-fuel-label');
-  if (fl) fl.textContent = fuel < 15 ? 'Fuel ⚠' : 'Fuel';
-  $('ch-dmg').textContent = Math.round(info.damage || 0) + '%';
+  if (fl) fl.textContent = fuel <= 0 ? 'Out of gas' : fuel < 15 ? 'Fuel ⚠' : 'Fuel';
+  const dmg = Math.round(info.damage || 0);
+  $('ch-dmg').textContent = dmg + '%';
+  const ds = $('ch-dmg-state');
+  if (ds) {
+    const label = dmg >= 100 ? 'TOTALED' : dmg >= 80 ? 'critical' : dmg >= 50 ? 'smoking' : dmg >= 20 ? 'dented' : 'clean';
+    ds.textContent = label;
+    ds.classList.toggle('ch-warn', dmg >= 50);
+  }
 }
 
 // ── prompt + notifications ─────────────────────────────────────────────────────

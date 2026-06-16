@@ -112,6 +112,12 @@ function rows() {
     ['GLB traffic cars', num(metrics.glbTraffic, true)],
     ['NPCs (real assets)', num(metrics.realNpcs)],
     ['NPCs (procedural)', num(metrics.procNpcs)],
+    ['prefab props', num(metrics.prefabProps)],
+    ['prefab real assets', num(metrics.prefabAssets, true)],
+    ['prefab fallbacks', num(metrics.prefabFallbacks)],
+    ['prefab seed', metrics.prefabSeed != null ? String(metrics.prefabSeed) : '—'],
+    ['breakable objects', num(metrics.breakableObjects)],
+    ['world objects', num(metrics.worldObjects)],
     ['failed assets', metrics.failedAssets.length
       ? `<span style="color:#ff7676">${metrics.failedAssets.join(', ')}</span>` : '<span style="color:#4eff91">none</span>'],
 
