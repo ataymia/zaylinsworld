@@ -202,9 +202,18 @@ export function openDialogue(opts) {
   choices.forEach(ch => {
     const b = document.createElement('button'); b.className = 'dchoice'; b.textContent = ch.label;
     b.onclick = () => {
+      const beforeName = $('dia-name').textContent;
+      const beforeText = $('dia-text').textContent;
       const next = ch.onPick?.();
       if (next && typeof next === 'object') openDialogue(next);
-      else if (next !== 'keep') closeMenus();
+      else if (next === 'keep') return;
+      else if (activeMenu === 'dialogue' && ($('dia-name').textContent !== beforeName || $('dia-text').textContent !== beforeText)) {
+        // Some older callbacks call openDialogue(...) directly instead of returning
+        // the new dialogue object. They already replaced the dialogue contents, so
+        // do NOT close the menu immediately after opening it.
+        return;
+      }
+      else closeMenus();
     };
     wrap.appendChild(b);
   });
