@@ -14,21 +14,28 @@
 //  Keep them tight to slatwall/backing plates, shrink the pitch between rows,
 //  and keep featured items off the exit path. If a new category is added, treat
 //  the walkable aisle and doorway as sacred ground. No shelf goblins in traffic.
+//
+//  V4 note: assets do not share the same authored long axis. Some models are
+//  long on X, some on Z, some nearly vertical. The current main.js display builder
+//  still uses one square backing plate. Until that builder is upgraded to measure
+//  each loaded GLB and create a rectangular/aspect-ratio plate, long/heavy items
+//  need extra spacing and smaller fits from weaponTransforms.js.
 // ───────────────────────────────────────────────────────────────────────────
 export const SHOP_ZONES = {
   // Back-left slatwall: compact sidearm plates in one clean row, second row only
   // if the catalog grows. Faces into the room with plates tucked against z=-4.
   'pistol-wall': {
     label: 'Pistols',
-    origin: [-6.05, 1.82, -4.02], step: [0.84, 0, 0], perRow: 5, rowStep: [0, -0.58, 0],
+    origin: [-6.15, 1.82, -4.02], step: [0.9, 0, 0], perRow: 5, rowStep: [0, -0.58, 0],
     facing: 0, plate: '#1b2a3a',
   },
 
-  // Back slatwall: long items get more horizontal spacing and a lower second row
-  // so barrels/stocks no longer stack into a visual knot.
+  // Back slatwall: long items need wide slots because GLBs disagree on whether
+  // their long axis is X or Z. Give every long item a full bay so even imperfect
+  // orientation does not overlap its neighbor.
   'long-wall': {
     label: 'Long Weapons',
-    origin: [-2.65, 2.02, -4.02], step: [0.92, 0, 0], perRow: 6, rowStep: [0, -0.68, 0],
+    origin: [-3.95, 2.05, -4.02], step: [1.18, 0, 0], perRow: 5, rowStep: [0, -0.72, 0],
     facing: 0, plate: '#22202e',
   },
 
@@ -36,15 +43,15 @@ export const SHOP_ZONES = {
   // z range stays near the rack panel and away from the EXIT opening.
   'melee-rack': {
     label: 'Melee & Tools',
-    origin: [4.35, 1.78, -1.25], step: [0, 0, 0.62], perRow: 6, rowStep: [0, -0.56, 0],
+    origin: [4.35, 1.78, -1.35], step: [0, 0, 0.66], perRow: 6, rowStep: [0, -0.56, 0],
     facing: -Math.PI / 2, plate: '#2a241a',
   },
 
-  // Center glass case: special/featured items sit on top of the case in two tidy
-  // rows. This used to drift toward the exit and block the visual lane.
+  // Center glass case: big/special items get one item per clear case bay. This
+  // intentionally uses a lower per-row count so bulky pieces do not crowd.
   'featured': {
     label: 'Featured',
-    origin: [-0.25, 1.88, 2.62], step: [0.88, 0, 0], perRow: 3, rowStep: [0, 0, 0.54],
+    origin: [-1.05, 1.88, 2.62], step: [1.18, 0, 0], perRow: 3, rowStep: [0, 0, 0.62],
     facing: Math.PI, plate: '#2a1a2a',
   },
 
