@@ -1,19 +1,22 @@
 # Town Roadmap
 
 Per-town content design for **Zaylin's World**. Starter Town is **one district of
-a larger world** (see [WORLD_MAP_DESIGN.md](WORLD_MAP_DESIGN.md) and
-[ZTA_WORLD_BLUEPRINT.md](ZTA_WORLD_BLUEPRINT.md)). Each town below is captured as
-data in [src/config/townThemes.js](../src/config/townThemes.js)
+a larger world** (see [WORLD_MAP_DESIGN.md](WORLD_MAP_DESIGN.md),
+[ZTA_WORLD_BLUEPRINT.md](ZTA_WORLD_BLUEPRINT.md), and
+[TOWN_SELF_SUSTAINING_SYSTEMS.md](TOWN_SELF_SUSTAINING_SYSTEMS.md)). Each town
+below is captured as data in [src/config/townThemes.js](../src/config/townThemes.js)
 (theme/palette/services/economy/minigame ids/npc profile ids) — **data only, not
 playable code**.
 
 For each town: **theme · purpose · stores · missions · minigames · economy ·
 legal/risk · base services.**
 
-Design rule: every town should have at least **3 to 4 specific minigames or
-repeatable activity loops**. Some loops are classic minigames. Some are town jobs,
-time trials, dungeon floors, appraisals, races, or service tasks. The point is
-that each town has its own gameplay vocabulary, not just different buildings.
+Design rules:
+
+- Every town should have at least **3 to 4 specific minigames or repeatable activity loops**.
+- Every town should have a police/security presence, buyable housing, a school/training path, local jobs, local skills, and town-specific crime/consequence behavior.
+- Each town should be able to sustain itself, while still belonging to the connected world.
+- Some loops are classic minigames. Some are town jobs, time trials, dungeon floors, appraisals, races, or service tasks. The point is that each town has its own gameplay vocabulary, not just different buildings.
 
 ---
 
@@ -172,12 +175,15 @@ that each town has its own gameplay vocabulary, not just different buildings.
 
 ## Cross-town systems
 
+- **Self-sustaining towns:** every town needs local housing, police/security, school/training, jobs, skills, shops/services, and local consequences. See [TOWN_SELF_SUSTAINING_SYSTEMS.md](TOWN_SELF_SUSTAINING_SYSTEMS.md).
 - **Travel:** roads/highways/bridges connect towns (see world map design); fast
   travel unlocks per town.
+- **Housing:** one primary residence controls default spawn/rest/storage, but players can later own homes in multiple towns for spawn options, storage, and status.
+- **Schools/skills:** each school teaches geographically appropriate skills — Starter basic academics, Hollywood performing arts, Tech STEM, Fishing marine skills, Rich business/status, Dungeon survival, Obby movement.
 - **Economy continuity:** one wallet + bank; town-specific currencies (fame,
   casino chips, tickets) convert at hubs only where appropriate.
 - **Reputation/legal:** wanted/heat is town-scoped but a global "notoriety" can
-  carry consequences.
+  carry consequences. Police/security exists in every town, with faster/stricter response in rich, casino, corporate, school, and restricted areas.
 - **NPC depth & missions:** see [NPC_MISSION_SYSTEM.md](NPC_MISSION_SYSTEM.md).
 - **Minigame framework:** see [MINIGAME_FRAMEWORK.md](MINIGAME_FRAMEWORK.md).
 
