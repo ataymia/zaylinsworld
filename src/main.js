@@ -195,6 +195,7 @@ let velY = 0, onGround = true;
 let policeUnits = [];          // foot cops: { av, health, busted }
 let policeCars = [];           // patrol cruisers (heavier mass, can be stolen)
 let parkedCruisers = [];       // HQ cruisers parked at the police post (stealable)
+let abandonedCars = [];        // cars the player stole then stepped out of (re-enterable)
 let policePost = null;         // { deskPos, faceDir } from buildCity (Phase 3J)
 let policeAccum = 0;           // spawn pacing
 let bustTimer = 0;             // seconds a cop has been on top of the player
@@ -274,6 +275,7 @@ function enterWorld() {
     }
     cityNPCs = createCityNPCs(scene, Math.max(8, Math.round(22 * graphics.npcDensity)));
     traffic = createTraffic(scene, Math.max(3, Math.round(10 * graphics.trafficDensity)));
+    abandonedCars = [];                       // fresh city → no previously-stolen parked cars
     car = createDrivableCar(scene, 13, 3);
     registerInteractables(cityInfo.entrances);
     graphics.applyToScene(scene, renderer);   // reflections + texture filtering
@@ -658,10 +660,14 @@ function buildProceduralGasStation() {
   const grp = new THREE.Group(); grp.name = 'gas-station-proc';
   const procColliders = [];                         // pump colliders (removed if a GLB takes over)
   // forecourt pad (decorative — no collider so it never blocks driving). Sized
-  // to a believable full station: ~24×18 lot you can pull a car onto.
+  // to a believable full station: ~24×18 lot you can pull a car onto. Light
+  // concrete so it reads as a forecourt, with a darker asphalt drive lane.
   const pad = new THREE.Mesh(new THREE.BoxGeometry(24, 0.12, 18),
-    new THREE.MeshStandardMaterial({ color: '#2b2e36', roughness: 0.95 }));
+    new THREE.MeshStandardMaterial({ color: '#9fa3ab', roughness: 0.95 }));
   pad.position.set(GX, 0.06, GZ); grp.add(pad);
+  const drive = new THREE.Mesh(new THREE.BoxGeometry(24, 0.13, 5.2),
+    new THREE.MeshStandardMaterial({ color: '#3a3d44', roughness: 0.96 }));
+  drive.position.set(GX, 0.065, GZ + 6.4); grp.add(drive);
   // painted lane markings + parking stalls along the store front
   const stripeMat = new THREE.MeshStandardMaterial({ color: '#c9b23a', roughness: 0.8 });
   for (const dz of [-3.4, 3.4]) {
@@ -674,34 +680,67 @@ function buildProceduralGasStation() {
     ln.position.set(GX - 7.4, 0.07, GZ + pz); grp.add(ln);
   }
   // canopy: four posts + a big flat roof spanning the pump island
-  const postMat = new THREE.MeshStandardMaterial({ color: '#9aa0aa', roughness: 0.6, metalness: 0.3 });
+  const postMat = new THREE.MeshStandardMaterial({ color: '#c4c8cf', roughness: 0.4, metalness: 0.5 });
   for (const dx of [0.4, 4.8]) for (const dz of [-5.4, 5.4]) {
-    const post = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 5.4, 12), postMat);
+    const post = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.26, 5.4, 16), postMat);
     post.position.set(GX + dx, 2.7, GZ + dz); grp.add(post);
+    // red post kerb collar (visual base)
+    const collar = new THREE.Mesh(new THREE.CylinderGeometry(0.34, 0.4, 0.6, 16),
+      new THREE.MeshStandardMaterial({ color: '#d23b3b', roughness: 0.6 }));
+    collar.position.set(GX + dx, 0.3, GZ + dz); grp.add(collar);
   }
   const roof = new THREE.Mesh(new THREE.BoxGeometry(7.2, 0.5, 13),
     new THREE.MeshStandardMaterial({ color: '#d23b3b', roughness: 0.5 }));
   roof.position.set(GX + 2.6, 5.5, GZ); grp.add(roof);
-  const roofTrim = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.3, 13.2),
-    new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.6 }));
-  roofTrim.position.set(GX + 6.3, 5.3, GZ); grp.add(roofTrim);
+  // lit canopy underside (the bright white ceiling glow every forecourt has) so
+  // the pumps read clearly day or night
+  const ceiling = new THREE.Mesh(new THREE.BoxGeometry(6.9, 0.08, 12.7),
+    new THREE.MeshStandardMaterial({ color: '#ffffff', emissive: '#fff7e0', emissiveIntensity: 0.55, roughness: 0.4 }));
+  ceiling.position.set(GX + 2.6, 5.22, GZ); grp.add(ceiling);
+  const canopyLight = new THREE.PointLight(0xfff2d6, 0.6, 22, 2);
+  canopyLight.position.set(GX + 2.6, 4.9, GZ); grp.add(canopyLight);
+  // wrap-around fascia band (red body + white accent stripe) on all four sides
+  const bandRed = new THREE.MeshStandardMaterial({ color: '#c62f2f', roughness: 0.5 });
+  const bandWhite = new THREE.MeshStandardMaterial({ color: '#f4f4f4', roughness: 0.6 });
+  for (const [w, d, x, z] of [[7.4, 0.45, GX + 2.6, GZ - 6.6], [7.4, 0.45, GX + 2.6, GZ + 6.6],
+                               [0.45, 13.4, GX - 1.1, GZ], [0.45, 13.4, GX + 6.3, GZ]]) {
+    const fb = new THREE.Mesh(new THREE.BoxGeometry(w, 0.7, d), bandRed); fb.position.set(x, 5.05, z); grp.add(fb);
+    const fs = new THREE.Mesh(new THREE.BoxGeometry(w + 0.02, 0.18, d + 0.02), bandWhite); fs.position.set(x, 4.78, z); grp.add(fs);
+  }
   // four pumps under the canopy (solid — small colliders) on two islands
-  const pumpMat = new THREE.MeshStandardMaterial({ color: '#e6e9ef', roughness: 0.5, metalness: 0.2 });
-  const screenMat = new THREE.MeshStandardMaterial({ color: '#1b3a2b', emissive: '#0f5', emissiveIntensity: 0.25 });
+  const pumpMat = new THREE.MeshStandardMaterial({ color: '#eef0f4', roughness: 0.45, metalness: 0.25 });
+  const pumpAccent = new THREE.MeshStandardMaterial({ color: '#c62f2f', roughness: 0.5 });
+  const hoseMat = new THREE.MeshStandardMaterial({ color: '#1a1a1e', roughness: 0.8 });
+  const screenMat = new THREE.MeshStandardMaterial({ color: '#0c241a', emissive: '#2dff8a', emissiveIntensity: 0.5 });
   // raised pump islands (kerbs) so the pumps read as a real forecourt
   for (const dz of [-3, 3]) {
     const island = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.18, 3.4),
-      new THREE.MeshStandardMaterial({ color: '#3a3d44', roughness: 0.9 }));
+      new THREE.MeshStandardMaterial({ color: '#43474f', roughness: 0.9 }));
     island.position.set(GX + 2.6, 0.12, GZ + dz); grp.add(island);
+    // yellow safety bollards at the island ends
+    for (const bz of [-1.5, 1.5]) {
+      const bol = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.14, 0.9, 12),
+        new THREE.MeshStandardMaterial({ color: '#e8c021', roughness: 0.55 }));
+      bol.position.set(GX + 2.6, 0.55, GZ + dz + bz); grp.add(bol);
+    }
   }
   for (const dz of [-4, -2, 2, 4]) {
     const pump = new THREE.Group();
     const pbox = new THREE.Mesh(new THREE.BoxGeometry(0.6, 1.7, 0.8), pumpMat);
     pbox.position.y = 0.85; pump.add(pbox);
+    // red header cap + body accent stripe
+    const cap = new THREE.Mesh(new THREE.BoxGeometry(0.66, 0.28, 0.86), pumpAccent);
+    cap.position.y = 1.72; pump.add(cap);
     const screen = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.45, 0.55), screenMat);
     screen.position.set(0.32, 1.3, 0); pump.add(screen);
-    const nozzle = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.55, 0.14), pumpMat);
-    nozzle.position.set(0, 1.0, 0.5); pump.add(nozzle);
+    const nozzle = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.5, 0.14), pumpMat);
+    nozzle.position.set(-0.34, 1.05, 0.18); pump.add(nozzle);
+    // curved fuel hose from pump body to the holstered nozzle
+    const hoseCurve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(-0.3, 1.3, 0), new THREE.Vector3(-0.5, 1.0, 0.1), new THREE.Vector3(-0.34, 1.2, 0.18),
+    ]);
+    const hose = new THREE.Mesh(new THREE.TubeGeometry(hoseCurve, 12, 0.04, 6), hoseMat);
+    pump.add(hose);
     pump.position.set(GX + 2.6, 0.2, GZ + dz);
     grp.add(pump);
     pump.updateWorldMatrix(true, true);
@@ -710,8 +749,12 @@ function buildProceduralGasStation() {
   }
   // full-sized store building behind the canopy (clear entrance facing the road)
   const store = new THREE.Mesh(new THREE.BoxGeometry(10, 4.2, 9),
-    new THREE.MeshStandardMaterial({ color: '#d8cdb4', roughness: 0.85 }));
+    new THREE.MeshStandardMaterial({ color: '#e3dac2', roughness: 0.85 }));
   store.position.set(GX - 6.5, 2.1, GZ); grp.add(store);
+  // parapet cap along the store roofline
+  const parapet = new THREE.Mesh(new THREE.BoxGeometry(10.3, 0.4, 9.3),
+    new THREE.MeshStandardMaterial({ color: '#b9ad8f', roughness: 0.8 }));
+  parapet.position.set(GX - 6.5, 4.35, GZ); grp.add(parapet);
   {
     // store collider (solid building); leave a doorway gap on the +x (road) face
     const sc = new THREE.Box3().setFromObject(store).expandByScalar(0.05);
@@ -721,21 +764,36 @@ function buildProceduralGasStation() {
   const fascia = new THREE.Mesh(new THREE.BoxGeometry(0.3, 1.0, 9.2),
     new THREE.MeshStandardMaterial({ color: '#16224d', roughness: 0.5 }));
   fascia.position.set(GX - 1.4, 3.6, GZ); grp.add(fascia);
-  const glassFront = new THREE.Mesh(new THREE.BoxGeometry(0.18, 2.2, 3.0),
-    new THREE.MeshPhysicalMaterial({ color: '#bfe0ff', transparent: true, opacity: 0.22,
-      roughness: 0.05, metalness: 0, transmission: 0.8, ior: 1.4, thickness: 0.2 }));
-  glassFront.position.set(GX - 1.45, 1.4, GZ - 2.6); grp.add(glassFront);
-  // entrance door panel
+  // storefront glazing: two big window panes flanking the door, with frames
+  const glassMat = new THREE.MeshPhysicalMaterial({ color: '#bfe0ff', transparent: true, opacity: 0.24,
+    roughness: 0.05, metalness: 0, transmission: 0.8, ior: 1.4, thickness: 0.2 });
+  const frameMat = new THREE.MeshStandardMaterial({ color: '#3a4658', roughness: 0.5, metalness: 0.3 });
+  for (const wz of [-2.6, 3.0]) {
+    const pane = new THREE.Mesh(new THREE.BoxGeometry(0.18, 2.2, 2.4), glassMat);
+    pane.position.set(GX - 1.45, 1.55, GZ + wz); grp.add(pane);
+    const frame = new THREE.Mesh(new THREE.BoxGeometry(0.12, 2.5, 2.7), frameMat);
+    frame.position.set(GX - 1.38, 1.55, GZ + wz); grp.add(frame);
+    // horizontal mullion bar
+    const mull = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.08, 2.4), frameMat);
+    mull.position.set(GX - 1.5, 1.7, GZ + wz); grp.add(mull);
+  }
+  // entrance door panel (glazed, framed)
   const door = new THREE.Mesh(new THREE.BoxGeometry(0.16, 2.4, 1.8),
     new THREE.MeshStandardMaterial({ color: '#2a3550', roughness: 0.6, metalness: 0.2 }));
   door.position.set(GX - 1.45, 1.3, GZ + 1.4); grp.add(door);
+  const doorGlass = new THREE.Mesh(new THREE.BoxGeometry(0.2, 1.5, 1.3), glassMat);
+  doorGlass.position.set(GX - 1.5, 1.55, GZ + 1.4); grp.add(doorGlass);
   // tall price sign at the road edge
   const signPost = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.16, 6, 8), postMat);
   signPost.position.set(GX + 6.4, 3, GZ + 7); grp.add(signPost);
   const board = new THREE.Mesh(new THREE.BoxGeometry(2.8, 1.7, 0.2),
     new THREE.MeshStandardMaterial({ color: '#16224d', roughness: 0.5 }));
   board.position.set(GX + 6.4, 5.4, GZ + 7); grp.add(board);
-  { const l = makeLabel('⛽ GAS  $1.20/u', '#ffd98a'); l.position.set(GX + 6.4, 5.4, GZ + 7.15); l.scale.multiplyScalar(1.2); grp.add(l); }
+  // lit price readout panel on the sign so it glows at night
+  const priceLit = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.9, 0.06),
+    new THREE.MeshStandardMaterial({ color: '#0c241a', emissive: '#2dff8a', emissiveIntensity: 0.45 }));
+  priceLit.position.set(GX + 6.4, 5.15, GZ + 7.12); grp.add(priceLit);
+  { const l = makeLabel('⛽ GAS  $1.20/u', '#ffd98a'); l.position.set(GX + 6.4, 5.7, GZ + 7.15); l.scale.multiplyScalar(1.2); grp.add(l); }
   { const l = makeLabel('6TWELVE', '#ff8a3a'); l.position.set(GX - 1.5, 3.6, GZ); l.scale.multiplyScalar(1.3); grp.add(l); }
   scene.add(grp);
   // the store door sits on the front (+x) face of the store, toward the road
@@ -1423,7 +1481,11 @@ function registerInteractables(entrances) {
     id: 'steal-car', area: 'city', key: 'f', radius: 3.0,
     getPosition: () => (nearestStealable()?.g.position) || OFFSCREEN,
     enabled: () => !inCar && !!nearestStealable(),
-    getPrompt: () => (nearestStealable()?.isCop ? '🚔 Steal POLICE car (risky!)' : 'Steal vehicle'),
+    getPrompt: () => {
+      const v = nearestStealable();
+      if (v?.stolen) return 'Enter vehicle';          // already yours — just hop back in
+      return v?.isCop ? '🚔 Steal POLICE car (risky!)' : 'Steal vehicle';
+    },
     onInteract: () => {
       const v = nearestStealable();
       if (!v) { notify('No vehicle close enough to take.'); return; }
@@ -1711,9 +1773,10 @@ function nearestStealable() {
   if (!player || area !== 'city') return null;
   const pp = player.group.position;
   let best = null, bestD = 3.4;
-  // EVERY car on the street is stealable — traffic, patrol units, and the
-  // cruisers parked at the police post.
-  const pool = [...traffic, ...policeCars, ...parkedCruisers];
+  // EVERY car on the street is stealable — traffic, patrol units, the cruisers
+  // parked at the police post, AND cars the player already stole and parked
+  // (so a stolen ride can be re-entered after stepping out).
+  const pool = [...traffic, ...policeCars, ...parkedCruisers, ...abandonedCars];
   for (const c of pool) {
     const d = c.g.position.distanceTo(pp);
     if (d < bestD) { bestD = d; best = c; }
@@ -1733,10 +1796,17 @@ function ejectDriver(vehicle) {
   if (!vehicle.hasDriver || !vehicle.driver) return;
   const d = vehicle.driver;
   vehicle.hasDriver = false; vehicle.driver = null;
+  // The GLB visual swap (swapVehicleVisual) hides every non-kit child of the car
+  // group — including this seated driver silhouette. Re-show it so the bailing
+  // civilian is actually visible as they detach and flee, otherwise the eject
+  // happens "invisibly" and looks like nothing happened.
+  d.visible = true;
+  d.traverse((o) => { o.visible = true; });
   const wp = new THREE.Vector3(); d.getWorldPosition(wp);
   vehicle.g.remove(d);
   scene.add(d);
   d.position.set(wp.x, 0, wp.z);
+  console.log(`[steal] civilian driver ejected at (${wp.x.toFixed(1)}, ${wp.z.toFixed(1)}) — fleeing on foot`);
   const away = new THREE.Vector3(wp.x - vehicle.g.position.x, 0, wp.z - vehicle.g.position.z);
   if (away.lengthSq() < 0.01) away.set(Math.random() - 0.5, 0, Math.random() - 0.5);
   away.normalize();
@@ -1765,6 +1835,12 @@ function enterCar(vehicle = car, opts = {}) {
   // If we're hijacking a traffic car, pull it out of the AI list so it stops
   // auto-driving and becomes fully player-controlled.
   if (opts.steal) {
+    // Re-entering a car the player already stole (now parked/abandoned) is NOT a
+    // fresh crime — pull it from the abandoned pool and skip the wanted penalty
+    // and the (already-gone) driver eject.
+    const aidx = abandonedCars.indexOf(vehicle);
+    const reEnter = aidx >= 0 || vehicle.stolen;
+    if (aidx >= 0) abandonedCars.splice(aidx, 1);
     const idx = traffic.indexOf(vehicle);
     if (idx >= 0) traffic.splice(idx, 1);
     const pidx = policeCars.indexOf(vehicle);
@@ -1773,6 +1849,18 @@ function enterCar(vehicle = car, opts = {}) {
     if (cidx >= 0) parkedCruisers.splice(cidx, 1);
     vehicle.parked = false;
     vehicle.stolen = true;
+    if (reEnter) {
+      console.log('[steal] re-entered a previously stolen car — no new crime');
+      notify('🚗 Back behind the wheel.');
+      inCar = true;
+      player.group.visible = false;
+      vehicle.speed = 0;
+      controls.bounds = null;
+      showPrompt(null);
+      missionEvent('enter-car');
+      saveNow();
+      return;
+    }
     ejectDriver(vehicle);                 // throw the occupant out (flees / joins chase)
     const copCar = !!vehicle.isCop;
     const witnessed = witnessesNear(vehicle.g.position, 16);
@@ -1872,6 +1960,12 @@ function exitCar() {
   player.group.position.copy(v.g.position).addScaledVector(side, 2.4); player.group.position.y = 0;
   v.speed = 0;
   drivingVehicle = null;
+  // A stolen traffic/police car (not the player's default ride) gets tracked as
+  // abandoned so nearestStealable() can find it again and the player can hop back
+  // in. The default `car` already has its own always-on 'drive-car' interaction.
+  if (v && v !== car && v.stolen && !abandonedCars.includes(v)) {
+    abandonedCars.push(v);
+  }
   notify('Stepped out of the vehicle');
   missionEvent('exit-car');
   saveNow();
