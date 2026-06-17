@@ -195,8 +195,8 @@
      (inline elements have no box) — that was the "fuel bar stays gray" bug. */
   #car-hud .ch-fill{display:block;height:100%;width:100%;background:#4eff91;
     border-radius:4px;transition:width .18s ease, background .2s;}
-  #car-hud .ch-sub{font-size:11px;color:#9fb0d6;font-variant-numeric:tabular-nums;margin-top:1px;}
   #car-hud.ch-empty .ch-fill{background:#ff5a5a;}
+  #car-hud .ch-sub{font-size:11px;color:#9fb0d6;font-variant-numeric:tabular-nums;margin-top:1px;}
   #car-hud .ch-warn{color:#ff7676;font-size:11px;font-weight:800;}
 
   /* ── mission tracker (left, under HUD) ── */
@@ -342,6 +342,34 @@
     </div>
   </div>
 
+  <script>
+    (() => {
+      const noisyShelfLabel = /\$\d|\b(FEATURED|PISTOLS|MELEE|TOOLS|LONG WEAPONS)\b/i;
+      const P = window.CanvasRenderingContext2D && CanvasRenderingContext2D.prototype;
+      if (!P || P.__zwStoreLabelGuard) return;
+      P.__zwStoreLabelGuard = true;
+      const fillText = P.fillText;
+      const strokeText = P.strokeText;
+      function shouldHide(ctx, text) {
+        const c = ctx && ctx.canvas;
+        return !!(c && c.width >= 256 && c.height <= 200 && noisyShelfLabel.test(String(text || '')));
+      }
+      function clearLabel(ctx) {
+        try { ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); } catch {}
+        ctx.canvas.__zwHiddenSpriteLabel = true;
+      }
+      P.fillText = function(text, ...args) {
+        if (shouldHide(this, text)) { clearLabel(this); return; }
+        if (this.canvas && this.canvas.__zwHiddenSpriteLabel) return;
+        return fillText.call(this, text, ...args);
+      };
+      P.strokeText = function(text, ...args) {
+        if (shouldHide(this, text)) { clearLabel(this); return; }
+        if (this.canvas && this.canvas.__zwHiddenSpriteLabel) return;
+        return strokeText ? strokeText.call(this, text, ...args) : undefined;
+      };
+    })();
+  </script>
   <script type="module" src="./src/main.js"></script>
 </body>
 </html>
