@@ -1,12 +1,11 @@
 // ───────────────────────────────────────────────────────────────────────────
-//  furnish.js — dress the walkable interiors with the uploaded KayKit Furniture
-//  Bits and food props (catalogued in asset-index-v2.json).
+//  furnish.js — dress the walkable interiors with uploaded GLB/glTF packs.
 //
 //  Each interior is a room centred on its offset (interiors.byId[id].offset)
-//  with the door on the +Z (front) wall. We add a curated set of GLB/glTF
-//  furniture toward the back/side walls (clear of the spawn + doorway) so the
-//  uploaded art is clearly visible without trapping the player. Pieces are
-//  decorative (no colliders). Failures are skipped — the procedural room stays.
+//  with the door on the +Z (front) wall. We add a curated set of models toward
+//  the back/side walls (clear of the spawn + doorway) so uploaded art is clearly
+//  visible without trapping the player. Pieces are decorative (no colliders).
+//  Failures are skipped — the procedural room stays.
 // ───────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 import { loadAsset } from './assets.js';
@@ -15,12 +14,13 @@ import { loadAsset } from './assets.js';
 // Each interior id maps to EXACTLY ONE approved asset pack (cat/pack) plus a
 // `unit` factor that converts the pack's native units to METRES. The Restaurant
 // + Gym packs are authored in CENTIMETRES (1 unit ≈ 1 cm) — at scale 1 a stove
-// becomes a 180 m white blob — so they use unit 0.01. Furniture/food are metres.
+// becomes a 180 m white blob — so they use unit 0.01. Furniture/classroom/food
+// are already close to metres.
 const INTERIOR_PACK = {
   home:    { cat: 'interiors', pack: 'furniture',  unit: 1.0  },
   kicks:   { cat: 'interiors', pack: 'furniture',  unit: 1.0  },
   gym:     { cat: 'interiors', pack: 'gym',        unit: 0.01 },   // cm pack
-  school:  { cat: 'interiors', pack: 'furniture',  unit: 1.0  },
+  school:  { cat: 'interiors', pack: 'classroom',  unit: 1.0  },   // real school pack, not kitchen/dining furniture
   office:  { cat: 'interiors', pack: 'furniture',  unit: 1.0  },
   chicken: { cat: 'interiors', pack: 'restaurant', unit: 0.01 },   // cm pack
 };
@@ -50,8 +50,7 @@ const FURNITURE = {
     { name: 'lamp-table',      dx: 6,  dz: 2,  ry: 0,             s: 0.9 },
   ],
   // GYM — gym-pack equipment ONLY (cm pack → unit 0.01). Lines the walls + back
-  // so the open centre and the spawn/door path (front, +z) stay clear. A bench
-  // sits at the weights station, a treadmill at the tread station.
+  // so the open centre and the spawn/door path (front, +z) stay clear.
   gym: [
     { name: 'treadmill-1-main', dx: 5,    dz: -4.6, ry: Math.PI,      s: 1.0 },
     { name: 'e-machine-1',      dx: 2,    dz: -5.0, ry: Math.PI,      s: 1.0 },
@@ -69,13 +68,31 @@ const FURNITURE = {
     { name: 'sp-mat-1',         dx: 1,    dz: 3.6,  ry: 0,            s: 1.0 },
     { name: 'pullup-stand',     dx: -6,   dz: 4.6,  ry: Math.PI,      s: 1.0 },
   ],
+  // SCHOOL — classroom-pack ONLY. No generic dining tables/chairs. The pack has
+  // real classroom pieces: chairtable combos, blackboards, lockers, books,
+  // pencil cases, chalk, markers, shelf, and a teacher desk.
   school: [
-    { name: 'table-medium',    dx: -4, dz: 1,  ry: 0,             s: 0.85 },
-    { name: 'chair-a',         dx: -4, dz: 2.2, ry: Math.PI,      s: 0.85 },
-    { name: 'table-medium',    dx: 4,  dz: 1,  ry: 0,             s: 0.85 },
-    { name: 'chair-a',         dx: 4,  dz: 2.2, ry: Math.PI,      s: 0.85 },
-    { name: 'shelf-a-big',     dx: 8.2, dz: -5, ry: -Math.PI / 2, s: 0.9 },
-    { name: 'book-set',        dx: -4, dz: 1,  ry: 0,             s: 0.9 },
+    { name: 'blackboardbig',       dx: 0,    dz: -6.45, ry: 0,           s: 1.0 },
+    { name: 'desk',                dx: 0,    dz: -4.5,  ry: Math.PI,     s: 1.0, surface: true },
+    { name: 'chair',               dx: 0,    dz: -3.35, ry: 0,           s: 1.0 },
+    { name: 'chairtable',          dx: -4.8, dz: -1.2,  ry: 0,           s: 1.0, surface: true },
+    { name: 'chairtable',          dx: -2.4, dz: -1.2,  ry: 0,           s: 1.0, surface: true },
+    { name: 'chairtable',          dx: 0,    dz: -1.2,  ry: 0,           s: 1.0, surface: true },
+    { name: 'chairtable',          dx: 2.4,  dz: -1.2,  ry: 0,           s: 1.0, surface: true },
+    { name: 'chairtable',          dx: 4.8,  dz: -1.2,  ry: 0,           s: 1.0, surface: true },
+    { name: 'chairtable',          dx: -4.8, dz: 1.2,   ry: 0,           s: 1.0, surface: true },
+    { name: 'chairtable',          dx: -2.4, dz: 1.2,   ry: 0,           s: 1.0, surface: true },
+    { name: 'chairtable',          dx: 0,    dz: 1.2,   ry: 0,           s: 1.0, surface: true },
+    { name: 'chairtable',          dx: 2.4,  dz: 1.2,   ry: 0,           s: 1.0, surface: true },
+    { name: 'chairtable',          dx: 4.8,  dz: 1.2,   ry: 0,           s: 1.0, surface: true },
+    { name: 'locker',              dx: -8.35, dz: -3.8, ry: Math.PI / 2, s: 1.0 },
+    { name: 'locker-001',          dx: -8.35, dz: -1.8, ry: Math.PI / 2, s: 1.0 },
+    { name: 'shelf',               dx: 8.15,  dz: -3.8, ry: -Math.PI / 2, s: 1.0 },
+    { name: 'book',                dx: -2.4, dz: -1.2, ry: 0,            s: 1.0, onSurface: true, surfaceFallback: 0.82 },
+    { name: 'book-001',            dx: 0,    dz: 1.2,  ry: 0,            s: 1.0, onSurface: true, surfaceFallback: 0.82 },
+    { name: 'pencilcase',          dx: 2.4,  dz: -1.2, ry: 0,            s: 1.0, onSurface: true, surfaceFallback: 0.82 },
+    { name: 'chalk',               dx: -1.2, dz: -4.5, ry: 0,            s: 1.0, onSurface: true, surfaceFallback: 0.9 },
+    { name: 'markers',             dx: 1.2,  dz: -4.5, ry: 0,            s: 1.0, onSurface: true, surfaceFallback: 0.9 },
   ],
   office: [
     { name: 'table-medium-long', dx: 0, dz: -2, ry: 0,           s: 0.9 },
@@ -90,21 +107,15 @@ const FURNITURE = {
   // them (no more floating registers/trays). `tint` is the fallback colour used
   // only when the GLB's texture failed to embed (flat-white restaurant pack).
   chicken: [
-    // Service counter — THREE segments side by side (each ~1.07m wide) form a
-    // continuous ~3.2m counter so the register + food tray have a real surface
-    // to sit on (a single segment was too narrow → items fell to the floor).
     { name: 'counter-front',   dx: -1.05, dz: -3.2, ry: 0,           s: 1.0, surface: true, tint: '#b5651d' },
     { name: 'counter-front',   dx: 0,     dz: -3.2, ry: 0,           s: 1.0, surface: true, tint: '#b5651d' },
     { name: 'counter-front',   dx: 1.05,  dz: -3.2, ry: 0,           s: 1.0, surface: true, tint: '#b5651d' },
     { name: 'cash-register',   dx: 0.9,   dz: -3.2, ry: Math.PI,     s: 1.0, onSurface: true, surfaceFallback: 0.96, tint: '#2a2a2e' },
     { name: 'heat-lamp-tray-grill', dx: -0.9, dz: -3.2, ry: 0,       s: 1.0, onSurface: true, surfaceFallback: 0.96, tint: '#c0392b' },
-    // Kitchen line along the back wall (appliances stand on the floor).
     { name: 'stove-griddle',   dx: -3.5,  dz: -4.4, ry: 0,           s: 1.0, surface: true, tint: '#8a9099' },
     { name: 'burner-stove',    dx: -5.6,  dz: -4.4, ry: 0,           s: 1.0, surface: true, tint: '#8a9099' },
-    // Booths down the left wall.
     { name: 'booth-full',      dx: -5.6,  dz: 2,    ry: Math.PI / 2, s: 1.0, tint: '#7a1f2b' },
     { name: 'booth-half',      dx: -5.6,  dz: 4.2,  ry: Math.PI / 2, s: 1.0, tint: '#7a1f2b' },
-    // Seating area — tables (surfaces) with chairs.
     { name: 'table-square',    dx: 4.5,   dz: 1.6,  ry: 0,           s: 1.0, surface: true, tint: '#caa37a' },
     { name: 'chair-red',       dx: 4.5,   dz: 2.5,  ry: Math.PI,     s: 1.0, tint: '#c0392b' },
     { name: 'chair-red',       dx: 4.5,   dz: 0.7,  ry: 0,           s: 1.0, tint: '#c0392b' },
@@ -140,12 +151,10 @@ function applyMaterialFallback(obj, item) {
     if (!o.isMesh || !o.material) return;
     const mats = Array.isArray(o.material) ? o.material : [o.material];
     for (const mm of mats) {
-      if (mm.map) continue;                     // textured → leave alone
+      if (mm.map) continue;
       const c = mm.color;
       if (!c) continue;
       const mx = Math.max(c.r, c.g, c.b), mn = Math.min(c.r, c.g, c.b);
-      // light (>=0.6) AND near-grey/white (low saturation) → it's the default
-      // untextured material, not an intentionally-coloured part.
       const lightGrey = mx >= 0.6 && (mx - mn) <= 0.12;
       if (lightGrey) { mm.color = new THREE.Color(item.tint); mm.needsUpdate = true; n++; }
     }
@@ -185,15 +194,13 @@ async function place(root, asset, ox, item, renderer, unit, warnings, supports) 
     let baseY = item.y ?? 0;
     if (item.onSurface && supports && supports.length) {
       const px = ox + item.dx, pz = item.dz;
-      const M = 0.4;   // forgiving margin so items near a surface edge still snap
+      const M = 0.4;
       let top = -Infinity;
       for (const sb of supports) {
         if (px >= sb.min.x - M && px <= sb.max.x + M && pz >= sb.min.z - M && pz <= sb.max.z + M) {
           top = Math.max(top, sb.max.y);
         }
       }
-      // If nothing overlapped, fall back to a sensible counter height instead of
-      // dropping the piece to the floor or floating at a guessed y.
       baseY = (top > -Infinity) ? top : (item.surfaceFallback ?? baseY);
     }
     const groundY = baseY - box.min.y;
@@ -223,7 +230,7 @@ export async function furnishInteriors(interiors, renderer) {
     if (!src) { rejected.push(`${id}: no approved pack`); continue; }
     const info = byInterior[id] = { pack: `${src.cat}/${src.pack}`, placed: [], failed: [], warnings: [], removed: 0 };
     const ox = intr.offset.x;
-    const supports = [];   // world boxes of placed surface pieces (counters/tables)
+    const supports = [];
     for (const it of items) {
       const r = await place(root, src, ox, it, renderer, src.unit, info.warnings, supports);
       if (r.ok) { n++; furnished.add(id); info.placed.push(it.name); if (it.surface && r.box) supports.push(r.box); }
@@ -239,8 +246,6 @@ export async function furnishInteriors(interiors, renderer) {
       }
     }
     // ── REPLACEMENT: hide procedural decor ONLY if real assets actually placed ──
-    // (so assets REPLACE the placeholder furniture; on total failure the clean
-    //  procedural room stays — we never mix both at once).
     if (info.placed.length > 0 && intr.decor) {
       intr.decor.visible = false;
       if (Array.isArray(intr.decorColliders) && Array.isArray(intr.colliders)) {
