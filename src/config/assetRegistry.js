@@ -105,6 +105,7 @@ const CATEGORY_SCALE_TARGET = {
   gas_pump: 2.4, dumpster: 1.8, streetlight: 4.0, sign: 2.2,
   chicken_piece: 0.18, chicken_bone: 0.12, plate: 0.22, drink: 0.22,
   ammo: 0.3, melee: 1.0, projectile: 0.1, monster: 2.2,
+  fryer: 1.1, cooking: 0.9,
 };
 
 // Default placement / collision / interactable per category.
@@ -124,6 +125,8 @@ const CATEGORY_BEHAVIOR = {
   cabinet: { placement: PLACEMENT.FURNITURE, collision: COLLISION.BLOCKER, interactable: false },
   fridge: { placement: PLACEMENT.FURNITURE, collision: COLLISION.BLOCKER, interactable: true },
   stove: { placement: PLACEMENT.FURNITURE, collision: COLLISION.BLOCKER, interactable: true },
+  fryer: { placement: PLACEMENT.FURNITURE, collision: COLLISION.BLOCKER, interactable: true },
+  cooking: { placement: PLACEMENT.FURNITURE, collision: COLLISION.BLOCKER, interactable: true },
   locker: { placement: PLACEMENT.WALL, collision: COLLISION.BLOCKER, interactable: true },
   // food
   __food: { placement: PLACEMENT.COUNTER_TOP, collision: COLLISION.PICKUP, interactable: true },
@@ -212,6 +215,11 @@ const CLASSIFY_RULES = [
   { re: /shop|store|building|edificios/, category: 'shop_generic' },
 
   // ── interiors (room kits) ──
+  // Chicken Spot cooking equipment: deep fryers + fryer baskets are the preferred
+  // fixtures for fryer_kitchen; classify them as `fryer`/`cooking` (NOT `stove`)
+  // so a fried-chicken kitchen never reads like a bakery/pizza oven.
+  { re: /deep[-_ ]?fryer|fryer[-_ ]?(basket|single|double)|drain[-_ ]?rack|splash[-_ ]?guard|oil[-_ ]?(splash|guard)/, category: 'fryer' },
+  { re: /heat[-_ ]?lamp|food[-_ ]?warmer|warming[-_ ]?lamp/, category: 'cooking' },
   { re: /classroom|chalkboard|whiteboard|easel|school-desk/, category: 'classroom' },
   { re: /gym|treadmill|barbell|dumbbell|bench-press|weight/, category: 'gym_floor' },
   { re: /kitchen|burner|fryer|stove-/, category: 'kitchen' },

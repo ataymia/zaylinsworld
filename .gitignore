@@ -16,6 +16,9 @@ dist/
 
 # raw asset source archives + high-res originals (extracted/processed into
 # public/assets/; keep the lean web copies in git, not the multi-100MB sources)
+# NOTE: loose root sources below are gitignored, so they are invisible to the
+# served game until routed under public/assets/models/**. Run `npm run audit:loose`
+# to list every loose/staged source + its destination, then `npm run organize`.
 /*.zip
 /*.rar
 /*.obj

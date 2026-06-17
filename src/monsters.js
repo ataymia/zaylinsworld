@@ -9,10 +9,33 @@
 //  when Monster Mode turns off.
 // ───────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
-import { loadAsset } from './assets.js';
+import { loadAsset, listAssets } from './assets.js';
 
-const MON_NAMES = ['character-monster-01', 'character-monster-02', 'character-monster-03',
-  'character-monster-04', 'character-monster-05'];
+// Monster Mode pulls its GLB skins from EVERY indexed monster source, not a
+// hardcoded PSX list: PSX characters whose name contains "monster", plus the
+// whole spooky and creatures packs. Built once from asset-index-v2.json and
+// cached. If the index is missing/empty the pool is empty and every monster
+// stays on its procedural fallback body (see createMonster).
+let _monsterPoolPromise = null;
+async function monsterCandidates() {
+  if (_monsterPoolPromise) return _monsterPoolPromise;
+  _monsterPoolPromise = (async () => {
+    const pool = [];
+    try {
+      for (const a of await listAssets('characters', 'psx')) {
+        if (/monster/i.test(a.name)) pool.push({ pack: 'psx', name: a.name });
+      }
+      for (const a of await listAssets('characters', 'spooky')) {
+        pool.push({ pack: 'spooky', name: a.name });
+      }
+      for (const a of await listAssets('characters', 'creatures')) {
+        pool.push({ pack: 'creatures', name: a.name });
+      }
+    } catch { /* missing index → empty pool, keep procedural fallback */ }
+    return pool;
+  })();
+  return _monsterPoolPromise;
+}
 
 function makeBar() {
   const grp = new THREE.Group();
@@ -119,22 +142,25 @@ export function createMonster(scene, pos, renderer) {
   // so an unvalidated GLB can't break Monster Mode (procedural brute stays visible).
   const useGlb = typeof window !== 'undefined' && window.__ZW_FEATURES__ && window.__ZW_FEATURES__.USE_GLB_MONSTERS;
   if (useGlb) {
-    const name = MON_NAMES[Math.floor(Math.random() * MON_NAMES.length)];
-    loadAsset('characters', 'psx', name, renderer).then((res) => {
-      if (!res || !res.scene) return;
-      const skin = res.scene.clone(true);
-      skin.updateWorldMatrix(true, true);
-      const box = new THREE.Box3().setFromObject(skin);
-      const h = (box.max.y - box.min.y) || 1;
-      // reject unusable bounds → keep the procedural brute (never a giant blob)
-      if (!isFinite(h) || h < 0.2 || h > 40) { console.warn('[monster] GLB rejected, bad height', h, name); return; }
-      const s = 1.95 / h;                       // normalise to ~1.95m tall
-      skin.scale.setScalar(s);
-      skin.position.y = -box.min.y * s;
-      skin.traverse((o) => { if (o.isMesh) { o.castShadow = true; } });
-      group.add(skin);
-      proc.visible = false;                     // hide the procedural stand-in
-      m.skin = skin;
+    monsterCandidates().then((pool) => {
+      if (!pool.length) return;                 // no indexed monster GLBs → procedural stays
+      const pick = pool[Math.floor(Math.random() * pool.length)];
+      return loadAsset('characters', pick.pack, pick.name, renderer).then((res) => {
+        if (!res || !res.scene) return;
+        const skin = res.scene.clone(true);
+        skin.updateWorldMatrix(true, true);
+        const box = new THREE.Box3().setFromObject(skin);
+        const h = (box.max.y - box.min.y) || 1;
+        // reject unusable bounds → keep the procedural brute (never a giant blob)
+        if (!isFinite(h) || h < 0.2 || h > 40) { console.warn('[monster] GLB rejected, bad height', h, pick.pack, pick.name); return; }
+        const s = 1.95 / h;                       // normalise to ~1.95m tall
+        skin.scale.setScalar(s);
+        skin.position.y = -box.min.y * s;
+        skin.traverse((o) => { if (o.isMesh) { o.castShadow = true; } });
+        group.add(skin);
+        proc.visible = false;                     // hide the procedural stand-in
+        m.skin = skin;
+      });
     }).catch(() => { /* keep procedural body */ });
   }
 

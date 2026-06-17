@@ -17,6 +17,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { routeFor } from './asset-routing.mjs';
 
 const ROOT = process.cwd();
 const STAGING = path.join(ROOT, '.staging');
@@ -59,6 +60,21 @@ const PACKS = [
 
 const IMG_EXT = ['.png', '.jpg', '.jpeg', '.tga', '.bmp', '.webp'];
 const mime = (e) => ({ '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp' }[e.toLowerCase()] || 'image/png');
+
+// Auto-discover any staged pack folders not already in PACKS and route them via
+// the shared routing map (tools/asset-routing.mjs) so newly-dropped Spanish /
+// creator packs land in the served tree without editing this file.
+function discoverStagedPacks() {
+  if (!fs.existsSync(STAGING)) return;
+  const known = new Set(PACKS.map((p) => p.dir));
+  for (const e of fs.readdirSync(STAGING, { withFileTypes: true })) {
+    if (!e.isDirectory() || known.has(e.name)) continue;
+    const route = routeFor(e.name);
+    if (!route) continue;     // unmatched packs are surfaced by `npm run audit:loose`
+    PACKS.push({ dir: e.name, cat: route.cat, slug: route.slug, mode: 'auto' });
+  }
+}
+discoverStagedPacks(); = (e) => ({ '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp' }[e.toLowerCase()] || 'image/png');
 
 const slugify = (s) => s.replace(/\.[^.]+$/, '').replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-+|-+$/g, '').toLowerCase();
 

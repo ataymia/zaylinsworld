@@ -52,8 +52,10 @@ export const VARIATION_POOLS = {
     fallbackCategory: 'plate', min: 2, max: 5, requireSafe: true,
   },
   fryer_kitchen: {
-    categories: ['fryer', 'cooking', 'stove'], tags: ['fryer', 'grill', 'stove', 'oven', 'kitchen'],
-    fallbackCategory: 'stove', min: 1, max: 2, requireSafe: true,
+    categories: ['fryer', 'cooking'],
+    tags: ['fryer', 'deep-fryer', 'fryer-basket', 'heat-lamp', 'food-warmer', 'drain-rack', 'splash-guard'],
+    excludeTags: ['oven', 'stove', 'burner', 'pizza', 'bakery', 'grill'],
+    fallbackCategory: 'fryer', min: 1, max: 2, requireSafe: true,
   },
 
   // ── furniture (homes / living rooms / offices) ────────────────────────────

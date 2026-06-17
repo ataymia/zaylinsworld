@@ -12,7 +12,9 @@
     "gen:assets": "node tools/build-assets.mjs",
     "gen:asset-report": "node scripts/gen-asset-report.mjs",
     "index:kits": "node tools/index-kits.mjs",
-    "organize": "node tools/organize-assets.mjs"
+    "organize": "node tools/organize-assets.mjs",
+    "audit:loose": "node tools/audit-loose-assets.mjs",
+    "audit:rigs": "node tools/audit-rigs.mjs"
   },
   "dependencies": {
     "three": "0.160.1"

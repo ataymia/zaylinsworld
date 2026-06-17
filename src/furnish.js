@@ -98,9 +98,24 @@ const FURNITURE = {
     { name: 'counter-front',   dx: 1.05,  dz: -3.2, ry: 0,           s: 1.0, surface: true, tint: '#b5651d' },
     { name: 'cash-register',   dx: 0.9,   dz: -3.2, ry: Math.PI,     s: 1.0, onSurface: true, surfaceFallback: 0.96, tint: '#2a2a2e' },
     { name: 'heat-lamp-tray-grill', dx: -0.9, dz: -3.2, ry: 0,       s: 1.0, onSurface: true, surfaceFallback: 0.96, tint: '#c0392b' },
-    // Kitchen line along the back wall (appliances stand on the floor).
-    { name: 'stove-griddle',   dx: -3.5,  dz: -4.4, ry: 0,           s: 1.0, surface: true, tint: '#8a9099' },
-    { name: 'burner-stove',    dx: -5.6,  dz: -4.4, ry: 0,           s: 1.0, surface: true, tint: '#8a9099' },
+    // Kitchen line along the back wall (appliances stand on the floor). Chicken
+    // Spot is a FRIED-CHICKEN kitchen: prefer deep-fryer assets and never an
+    // oven/pizza stove. Falls back to a flat-top griddle only if no fryer GLB
+    // exists yet (generic cooking surface, not a bakery oven).
+    { name: 'deep-fryer-double', dx: -3.5, dz: -4.4, ry: 0,        s: 1.0, surface: true, tint: '#8a9099',
+      candidates: [
+        { cat: 'props', pack: 'food-extra', name: 'deep-fryer-double' },
+        { cat: 'props', pack: 'food-extra', name: 'deep-fryer' },
+        { cat: 'interiors', pack: 'restaurant', name: 'deep-fryer' },
+        { cat: 'interiors', pack: 'restaurant', name: 'stove-griddle' },
+      ] },
+    { name: 'deep-fryer-single', dx: -5.6, dz: -4.4, ry: 0,        s: 1.0, surface: true, tint: '#8a9099',
+      candidates: [
+        { cat: 'props', pack: 'food-extra', name: 'deep-fryer-single' },
+        { cat: 'props', pack: 'food-extra', name: 'fryer-basket' },
+        { cat: 'interiors', pack: 'restaurant', name: 'fryer' },
+        { cat: 'interiors', pack: 'restaurant', name: 'stove-griddle' },
+      ] },
     // Booths down the left wall.
     { name: 'booth-full',      dx: -5.6,  dz: 2,    ry: Math.PI / 2, s: 1.0, tint: '#7a1f2b' },
     { name: 'booth-half',      dx: -5.6,  dz: 4.2,  ry: Math.PI / 2, s: 1.0, tint: '#7a1f2b' },
@@ -157,7 +172,17 @@ function applyMaterialFallback(obj, item) {
 // Returns { ok:true } on success, or { ok:false, reason } for diagnostics.
 async function place(root, asset, ox, item, renderer, unit, warnings, supports) {
   try {
-    const m = await loadAsset(asset.cat, asset.pack, item.name, renderer);
+    // Prefer a candidate list (fryer assets first for the Chicken Spot kitchen),
+    // falling back through the list until one actually loads. A plain item.name
+    // resolves against the interior's approved pack as before.
+    const candidates = (item.candidates && item.candidates.length)
+      ? item.candidates
+      : [{ cat: asset.cat, pack: asset.pack, name: item.name }];
+    let m = null;
+    for (const c of candidates) {
+      m = await loadAsset(c.cat || asset.cat, c.pack || asset.pack, c.name, renderer);
+      if (m && m.scene) break;
+    }
     if (!m || !m.scene) return { ok: false, reason: 'load-failed' };
     const obj = m.scene.clone(true);
     obj.scale.setScalar(unit * (item.s ?? 1));
