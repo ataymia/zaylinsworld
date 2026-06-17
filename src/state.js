@@ -25,6 +25,11 @@ export function defaultState() {
     carDamage: 0,
     fuel: 100,          // current vehicle fuel (0..100), refill at the gas station
     createdCharacter: false,
+    // visible-skin migration: do not let old saves silently suppress the newer
+    // GLB/procedural character polish pass. Users can still change cosmetics in
+    // the creator, but stale `useRealSkin:false` flags from earlier testing are
+    // ignored on load.
+    useRealSkin: true,
     // ownership
     ownedCars: [],      // car ids bought at dealership
     ownedJewelry: [],   // jewelry ids bought at Frostbox
@@ -55,6 +60,10 @@ export function loadState() {
     const base = defaultState();
     return {
       ...base, ...data,
+      // Migration: old local saves could contain useRealSkin:false from emergency
+      // debugging. That made the new skin work look like it did nothing because
+      // main.js skipped applyPlayerSkin entirely. Force it back on for this build.
+      useRealSkin: true,
       custom: { ...base.custom, ...(data.custom || {}) },
       stats: { ...base.stats, ...(data.stats || {}) },
       pos: { ...base.pos, ...(data.pos || {}) },
