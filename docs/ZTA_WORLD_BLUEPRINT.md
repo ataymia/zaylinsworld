@@ -1,10 +1,10 @@
 # ZTA World Buildout Blueprint
 
 Status: planning blueprint, not runtime code  
-Scope: world feel, map bones, roads, towns, neighborhoods, location purpose, and implementation order  
+Scope: world feel, map bones, roads, towns, neighborhoods, location purpose, minigame placement, and implementation order  
 Project: Zaylin's Kid World, also called ZTA
 
-This document turns the current playable city into a long-term world plan that can be handed to GitHub/Codex agents without making them burn tokens guessing the city. The goal is a kid-safe urban sandbox with freedom, jobs, choices, trouble, recovery, shopping, driving, and minigames. It should feel like a real little city, not a flat menu wearing asphalt shoes.
+This document turns the current playable city into a long-term world plan that can be handed to GitHub/Codex agents without making them burn tokens guessing the city. The goal is a kid-safe urban sandbox with freedom, jobs, choices, trouble, recovery, shopping, driving, and town-specific minigames. It should feel like a real little city, not a flat menu wearing asphalt shoes.
 
 ---
 
@@ -58,7 +58,7 @@ Current runtime extras:
 | 6twelve Gas Station | x -46, z 24 | fuel, gas store interior | Built procedurally in `main.js` because the GLB includes visible interior clutter. |
 | Mini Market | x 30, z 44 | store landmark | Exists in GLB landmark file but GLB world buildings are currently feature-flagged off. |
 | City Diner | x 44, z -26 | food landmark | Same as above. |
-| Park Plaza | x 15, z 15 | park, benches, gems | Currently overlaps the same inner block neighborhood as Kicks/Fits visually. |
+| Park Plaza | x 15, z 15 | park, benches, gems | Current public gathering space. |
 | Collectible Gems | sidewalks and park | quick cash and fun | Non-colliding pickups. |
 | Trash Cleanup | storefronts/alley edges | sanitation job | Uses placement rules so trash is visible and pickupable. |
 
@@ -66,14 +66,14 @@ Current runtime extras:
 
 Starter Town is playable, but the world is not yet spatially expressive enough. The existing map has a strong foundation but feels like a compact test district. We need to turn it into a city with neighborhoods, road identity, landmarks you can recognize from far away, and future routes to other towns.
 
-Key mismatch to fix soon:
+Key mismatch to fix later in the UI/bug/world-cleanup track:
 
 - `worldMapPlan.js` lists Starter Town landmarks like `mini-market` and `gas-station` as part of the town plan.
 - Runtime `mapConfig.js` landmarks do not include mini-market/gas station as normal `LANDMARKS`.
 - The gas station exists through procedural runtime code in `main.js`, not as regular map data.
 - `placementRules.js` still has a `gas_pump` forecourt rule that does not match the actual procedural gas station position.
 
-Do not bulldoze this. Fix the source-of-truth mismatch first.
+Do not bulldoze this in the world-design track. This blueprint records intent. Implementation cleanup can happen in a separate draft.
 
 ---
 
@@ -97,12 +97,13 @@ The world should never be explicit or adult. It can have edge, comedy, consequen
 ### World design commandments
 
 1. No fake prompts. If a marker or door exists, it needs a working handler or it stays decorative with no prompt.
-2. Every town needs a job loop, a money sink, a rest/service point, a minigame, and a reason to revisit.
-3. Roads must teach the player geography. Main roads should be memorable. Local roads can be slower and tighter.
-4. Each town should have a visual silhouette. You should know where you are before reading signs.
-5. The first city should be dense. Future towns can be larger and more specialized.
-6. Keep locations original. GTA is an energy reference, not an asset, brand, or content reference.
-7. Every future town ships data-first: map config, landmarks, interactions, minimap markers, assets, fallback plan.
+2. Every town needs at least 3 to 4 specific minigames or repeatable activity loops.
+3. Every town needs a job loop, a money sink, a rest/service point, and a reason to revisit.
+4. Roads must teach the player geography. Main roads should be memorable. Local roads can be slower and tighter.
+5. Each town should have a visual silhouette. You should know where you are before reading signs.
+6. The first city should be dense. Future towns can be larger and more specialized.
+7. Keep locations original. References guide structure and feel only, never assets, brands, names, or copied content.
+8. Every future town ships data-first: map config, landmarks, interactions, minimap markers, assets, fallback plan.
 
 ---
 
@@ -167,7 +168,7 @@ Road notes:
 - Needs a clear pull-in lane from the ring road.
 - Pump islands should not block traffic.
 - Add parking slots between store and road.
-- Gas station forecourt should be stored in one source of truth, not scattered between `main.js`, `worldMapPlan.js`, and `placementRules.js`.
+- Gas station forecourt should eventually be stored in one source of truth, not scattered between `main.js`, `worldMapPlan.js`, and `placementRules.js`.
 
 #### C. School & Civic Row
 
@@ -301,7 +302,7 @@ Immediate improvements without changing the road engine:
 3. Add stop-sign identity at perimeter corners.
 4. Add school crossing in front of Zaylin Prep.
 5. Add gas station driveway striping as decorative non-collider planes.
-6. Add minimap labels for gas, market, garage, police, home, school.
+6. Add minimap labels for gas, market, diner, garage, police, home, school.
 
 ### Next road engine upgrade
 
@@ -387,7 +388,7 @@ Starter Town (0,0)  ----  Rich Hills (700,0)
                             (1400,-1200)
 ```
 
-Note: the diagram is conceptual. Existing data places Obby Canyon north of Dungeon Outskirts by z coordinate, but the intended traversal should feel like a trail from the dungeon edge into a canyon challenge zone.
+Note: the diagram is conceptual. Existing data places Obby Canyon north/south by world z coordinate, but the intended traversal should feel like a trail from the dungeon edge into a canyon challenge zone.
 
 ### Road connections
 
@@ -404,6 +405,8 @@ Note: the diagram is conceptual. Existing data places Obby Canyon north of Dunge
 ---
 
 ## 6. Town-by-town blueprint
+
+Every town must have at least 3 to 4 specific minigames or repeatable activity loops. Some minigames are fully separate activities. Others are job loops, timed challenges, dungeon floors, races, or shop-service loops. This is intentional: every town should feel like it has its own controller vocabulary.
 
 ## Starter Town
 
@@ -432,9 +435,22 @@ Core loops:
 - Clean up trash for money.
 - Obey or break rules, police/wanted system responds.
 
+Starter Town minigames:
+
+| Minigame | Location | Gameplay |
+|---|---|---|
+| Chicken Eating | Chicken Spot tables | Pick flats/drums/wings, eat pieces, restore hunger using real hunger bridge. |
+| Kitchen Shift | Chicken Spot kitchen | Timed order prep, fry/plate/serve, earn cash based on accuracy. |
+| Line Up / Clippers | Home bathroom | Timing marks for haircut/hygiene boost. |
+| Gym Training | Iron City Gym | Timing-based reps for fitness progression. |
+| Road Test | Auto Row/Garage | Drive through markers without wrecking or running lights. |
+| Trash Cleanup | Storefronts/dumpster | Pick up real visible litter and deposit for pay. |
+| Study Sprint | Zaylin Prep | Short memory/timing quiz for smarts. |
+| Gas Pump Timing | 6twelve forecourt | Stop fuel at target amount/price for small savings or job task. |
+
 World design tasks:
 
-1. Normalize gas/market/diner into map data.
+1. Normalize gas/market/diner into map data later.
 2. Add Starter Town minimap labels.
 3. Add road-name signs and neighborhood signs.
 4. Add residential props around home.
@@ -469,12 +485,16 @@ Key locations:
 | Harbor Master | Permit/rules/missions |
 | Fuel Dock | Boat fuel and repair |
 
-Minigames:
+Fishing Harbor minigames:
 
-- Cast & Reel.
-- Rare fish transform.
-- Crab traps.
-- Boat route deliveries later.
+| Minigame | Location | Gameplay |
+|---|---|---|
+| Cast & Reel | Pier fishing spots | Cast, wait for bite, reel in green zone. Established fishing minigame. |
+| Catch of Legend | Rare-fish zone | Rare fish transforms into a creature/legend catch. Established rare fishing minigame. |
+| Crab Traps | Dock edge | Place traps, wait, pull at the correct time, sort catch. |
+| Seafood Market Rush | Seafood Market | Sort, weigh, and package fish orders under a timer. |
+| Boat Buoy Run | Boat Rental/Fuel Dock | Drive boat through buoy rings without missing route markers. |
+| Net Toss | Small dock | Aim/timing challenge to catch schools of fish from shore. |
 
 Signature landmarks:
 
@@ -517,12 +537,16 @@ Key locations:
 | Private Clinic | Premium recovery |
 | Marina | Yacht run, future boat storage |
 
-Minigames:
+Rich Hills minigames:
 
-- Golf.
-- Yacht run.
-- Car show judging.
-- Valet/concierge errands.
+| Minigame | Location | Gameplay |
+|---|---|---|
+| Golf Putt Challenge | Country Club green | Aim/power timing, sink putts, earn status/cash. |
+| Yacht Run | Marina | Boat race through buoys with luxury reward tiers. |
+| Car Show Judging | Luxury Cars lot | Present/park car, timed polish/detailing, score by vehicle quality. |
+| Valet Dash | Country Club driveway | Park rich NPC cars quickly without damage. |
+| Mansion Chore Run | Estate loop | Timed errands: package delivery, pool cleanup, garden help. |
+| Auction Spotter | Gallery/real estate event | Memory/pattern game to identify valuable items. |
 
 Signature landmarks:
 
@@ -564,11 +588,16 @@ Key locations:
 | Transit Hub | Fast travel unlock |
 | Charging Station | Electric vehicle support later |
 
-Minigames:
+Tech City minigames:
 
-- Coding/logic puzzle.
-- Drone piloting.
-- Hacking timing.
+| Minigame | Location | Gameplay |
+|---|---|---|
+| Debug It | Co-working Space | Logic puzzle under timer, earn cash/smarts. |
+| Drone Run | Drone Shop rooftop course | Fly through rings, avoid obstacles, time trial. |
+| Circuit Match | Gadget Lab | Rotate/connect circuit tiles before timer expires. |
+| Hack Trace | Gadget Lab/office | Kid-safe sequence/timing game, avoid trace bar. |
+| Delivery Drone Dispatch | Transit Hub | Route-planning puzzle to send packages efficiently. |
+| Robot Repair Bench | Electronics Store | Match parts, tighten bolts, test bot movement. |
 
 Signature landmarks:
 
@@ -610,13 +639,17 @@ Key locations:
 | Grand Hotel | Rest/save/social hub |
 | Bank/ATM | Cash/chips management |
 
-Minigames:
+Casino Strip minigames:
 
-- Slots.
-- Blackjack.
-- Roulette.
-- Prize wheel.
-- Arcade cabinets.
+| Minigame | Location | Gameplay |
+|---|---|---|
+| Slots | Casino floor | Luck spin with small/medium/rare outcomes. |
+| Blackjack | Casino table | Simple card decisions, kid-safe fake chips. |
+| Roulette | Casino table | Pick color/number group, manage bet size. |
+| Prize Wheel | Lobby | Cooldown spin for prizes, tickets, or cash. |
+| Arcade Cabinets | Arcade | Timing/memory games for tickets. |
+| Hotel Bellhop Rush | Grand Hotel | Deliver bags to room markers under a timer. |
+| Security Spotter | Casino entrance | Pattern game: spot banned items/cheaters using fictional cues. |
 
 Signature landmarks:
 
@@ -657,12 +690,16 @@ Key locations:
 | Wardrobe Shop | Fame cosmetics |
 | Talk Show Stage | Talk-show timing minigame |
 
-Minigames:
+Hollywood / Fame minigames:
 
-- Rhythm audition.
-- Dance battle.
-- Talk show timing.
-- Photo-shoot timing later.
+| Minigame | Location | Gameplay |
+|---|---|---|
+| Rhythm Audition | Studio | Hit beats/arrows to impress panel. |
+| Dance Battle | Outdoor stage | Rhythm combo challenge against NPC rival. |
+| Talk Show Timing | Talk-show stage | Choose/tap answers on rhythm for laughs/fame. |
+| Photo Shoot Pose | Studio lot | Match pose prompts before camera flash. |
+| Red Carpet Walk | Theater entrance | Timing/route game: wave, pose, avoid trip hazards. |
+| Music Studio Mix | Music Store/studio booth | Layer beats/samples in correct sequence. |
 
 Signature landmarks:
 
@@ -679,9 +716,20 @@ Implementation notes:
 
 ## Dungeon Outskirts
 
-Theme: ruins, wilderness edge, caves, monsters, loot.  
-Shape: small outpost plus dungeon entrance.  
-Primary mood: risky, darker, adventurous, not horror-gory.
+Theme: sparse outpost above ground, deep dungeon below ground.  
+Shape: bare surface hub plus dungeon gate; most gameplay happens in descending dungeon floors.  
+Primary mood: quiet, eerie, adventurous, loot-heavy, kid-safe dark fantasy.
+
+This town should not play like the city. The player pulls up and sees a mostly bare edge-of-world outpost: a few shops, a healer, a stash, a shrine, a blacksmith, and a big dungeon gate. The surface is intentionally minimal. The real gameplay begins when the player enters the dungeon and descends floor by floor.
+
+Reference structure:
+
+```txt
+Surface Outpost = services, quests, healing, selling, upgrades, stash.
+Dungeon Gate    = entrance into procedural floor run.
+Dungeon Floors  = combat, treasure, traps, keys, rooms, bosses.
+Return Loop     = sell loot, heal, upgrade, take deeper quest, go back down.
+```
 
 Road layout:
 
@@ -690,38 +738,62 @@ Dirt road from Tech City enters western checkpoint.
 Outpost Road loops around shops and healer.
 Ruin Trail leads to dungeon entrance.
 Canyon Trail branches toward Obby Canyon.
+No normal city traffic inside the dungeon zone.
 ```
 
-Key locations:
+Key surface locations:
 
 | Location | Purpose |
 |---|---|
-| Adventurer Supply | Gear and consumables |
-| Blacksmith | Weapon upgrades |
-| Potions | Healing/boosts |
-| Healer | Recovery |
-| Stash | Storage |
-| Shrine | Checkpoint/respawn |
-| Dungeon Gate | Dungeon crawl entry |
+| Adventurer Supply | Basic dungeon gear, torches, snacks, potions |
+| Blacksmith | Upgrade weapons/tools from loot |
+| Potion Stand | Healing, buffs, revive items |
+| Healer Tent | Recovery after failed runs |
+| Stash Chest | Store loot before diving deeper |
+| Shrine | Checkpoint/respawn/blessing |
+| Dungeon Gate | Main entrance to dungeon floors |
 
-Minigames:
+Dungeon gameplay modes/minigames:
 
-- Dungeon crawl.
-- Boss fight.
-- Trap/key room puzzles.
+| Minigame / Mode | Location | Gameplay |
+|---|---|---|
+| Floor Dive | Dungeon floors | Enter a generated floor, defeat enemies, find stairs down. |
+| Key & Door Rooms | Dungeon rooms | Find keys, solve lock patterns, choose risk/reward doors. |
+| Trap Timing | Hallways | Dodge spikes, floor tiles, swinging hazards, falling rocks. |
+| Treasure Appraisal | Surface outpost/shop | Identify loot rarity/value before selling or upgrading. |
+| Boss Gate | Every 5 or 10 floors | Pattern fight with tells, safe zones, and special loot. |
+| Pet Helper Run | Dungeon/outpost | Optional helper pet carries loot or fetches items back to town. |
+| Potion Craft | Potion Stand | Match ingredients from loot to craft buffs. |
+| Shrine Blessing | Shrine | Choose one temporary modifier before a run. |
 
-Signature landmarks:
+Dungeon progression concept:
 
-- Stone gate.
-- Glowing cave mouth.
-- Broken statues.
-- Torch trails.
+```txt
+Floor 1-4: beginner rooms, slime/bug creatures, simple traps.
+Floor 5: mini-boss gate.
+Floor 6-9: larger layouts, locked rooms, rare chest chance.
+Floor 10: boss gate + town upgrade unlock.
+Floor 11+: repeatable deeper floors, better loot, harder monsters.
+```
+
+Surface should look bare on purpose:
+
+- Empty dirt lots.
+- A few tents and crates.
+- One blacksmith forge glow.
+- Dungeon gate as the dominant landmark.
+- Minimal traffic.
+- No busy storefront row.
+- The quietness tells the player: the city is above, the game is below.
 
 Implementation notes:
 
 - No police here. Danger is PvE.
 - Downed player should respawn at shrine with a fair penalty.
 - Loot must route back into economy without inflating cash too hard.
+- Dungeon should be its own interior/world layer, not just another city building.
+- Use procedural/fallback rooms first, then replace room props with assets later.
+- Keep combat cartoony and kid-safe: knockback, stars, poofs, no gore.
 
 ## Obby Canyon
 
@@ -748,11 +820,16 @@ Key locations:
 | Respawn Beacon | Fall reset |
 | Course Gates | Difficulty tiers |
 
-Minigames:
+Obby Canyon minigames:
 
-- Obby course.
-- Time trial.
-- No-fall challenge later.
+| Minigame | Location | Gameplay |
+|---|---|---|
+| Beginner Obby | Course Gate 1 | Standard checkpoint platforming. |
+| Time Trial | Main course | Beat timer, earn bonus rewards. |
+| No-Fall Challenge | Advanced course | Finish without falling for rare cosmetic. |
+| Moving Platform Sprint | Canyon towers | Timed jumps across moving platforms. |
+| Lava/Floor Hazard Run | Lower canyon | Avoid hazard tiles, timed checkpoint race. |
+| Zipline Rings | Canyon bridge | Ride/steer through rings for score. |
 
 Signature landmarks:
 
@@ -773,26 +850,37 @@ Implementation notes:
 
 | Minigame | First location | World reason |
 |---|---|---|
-| Chicken eating | Chicken Spot | Food/hunger/fun loop |
-| Food shift | Chicken Spot kitchen | Early money job |
+| Chicken Eating | Chicken Spot | Food/hunger/fun loop |
+| Kitchen Shift | Chicken Spot kitchen | Early money job |
 | Hairline/clippers | Home bathroom mirror | Hygiene/customization |
-| Gym training | Iron City Gym | Fitness/stat progression |
-| Driving road test | Auto Row or Garage | Teaches vehicle control |
-| Trash cleanup | Starter storefronts/dumpster | Early money and visible city cleanup |
-| Fishing | Fishing Harbor pier | Travel unlock and chill grind |
-| Crab traps | Fishing Harbor dock edge | Puzzle/job variant |
+| Gym Training | Iron City Gym | Fitness/stat progression |
+| Road Test | Auto Row or Garage | Teaches vehicle control |
+| Trash Cleanup | Starter storefronts/dumpster | Early money and visible city cleanup |
+| Study Sprint | Zaylin Prep | Smarts progression |
+| Gas Pump Timing | 6twelve | Fuel/service loop |
+| Cast & Reel | Fishing Harbor pier | Travel unlock and chill grind |
+| Catch of Legend | Fishing rare zone | Special catch/creature loop |
+| Crab Traps | Fishing Harbor dock edge | Puzzle/job variant |
+| Boat Buoy Run | Fishing Harbor boat rental | Boat movement training |
 | Golf | Rich Hills country club | Wealth/status gameplay |
-| Yacht run | Rich Hills marina | Vehicle variety |
-| Coding puzzle | Tech City co-working | Skill pay/smarts |
-| Drone pilot | Tech City drone course | New movement challenge |
+| Yacht Run | Rich Hills marina | Vehicle variety |
+| Valet Dash | Rich Hills country club | Job loop with luxury traffic |
+| Debug It | Tech City co-working | Skill pay/smarts |
+| Drone Run | Tech City drone course | New movement challenge |
+| Circuit Match | Tech City gadget lab | Puzzle skill loop |
 | Slots/cards/roulette | Casino Strip casino floor | Money sink/spike |
 | Arcade | Casino Strip arcade | Safer ticket economy |
-| Rhythm audition | Hollywood studio | Fame progression |
-| Dance battle | Hollywood stage/plaza | Social/fun/fame |
-| Dungeon crawl | Dungeon Gate | Combat/loot |
-| Boss fight | Dungeon deep room | High-risk reward |
-| Obby course | Obby Canyon gate | Platform challenge |
-| Time trial | Obby Canyon course | Repeatable skill loop |
+| Hotel Bellhop Rush | Casino Strip hotel | Job loop |
+| Rhythm Audition | Hollywood studio | Fame progression |
+| Dance Battle | Hollywood stage/plaza | Social/fun/fame |
+| Photo Shoot Pose | Hollywood studio | Cosmetic/fame loop |
+| Floor Dive | Dungeon Gate | Combat/loot core loop |
+| Trap Timing | Dungeon hallways | Dungeon-specific hazard play |
+| Boss Gate | Dungeon deep room | High-risk reward |
+| Treasure Appraisal | Dungeon Outskirts shop | Loot economy loop |
+| Obby Course | Obby Canyon gate | Platform challenge |
+| Time Trial | Obby Canyon course | Repeatable skill loop |
+| No-Fall Challenge | Obby Canyon advanced gate | High-skill cosmetic reward |
 
 ---
 
@@ -828,7 +916,7 @@ Textures:
 | Tech City | glass towers, blue neon, transit hub, drone rings |
 | Casino Strip | neon arches, hotel tower, glowing signs |
 | Hollywood/Fame | studio gates, spotlights, red carpet, stage facades |
-| Dungeon Outskirts | ruins, torches, cave gate, dark terrain |
+| Dungeon Outskirts | bare outpost, dungeon gate, forge glow, shrine light |
 | Obby Canyon | vertical platforms, colored beams, canyon cliffs |
 
 ---
@@ -894,7 +982,7 @@ Recommended first expansion: Fishing Harbor.
 Reason:
 
 - It gives the world a dramatically different visual flavor.
-- Fishing minigame is lower-risk than combat/casino/economy-heavy systems.
+- Fishing minigames are lower-risk than combat/casino/economy-heavy systems.
 - It can teach travel, permits, selling, and town-specific economy.
 
 Tasks:
@@ -905,6 +993,19 @@ Tasks:
 4. Add fishing spot interaction zones.
 5. Add basic travel gate from Starter Town.
 6. Keep fast travel locked until the player visits once.
+
+### Pass 6: Dungeon prototype
+
+Goal: build a separate gameplay-feel prototype, not another city.
+
+Tasks:
+
+1. Create bare Dungeon Outskirts surface map.
+2. Add dungeon gate interaction.
+3. Build first procedural dungeon floor template.
+4. Add simple enemy, chest, stairs, and exit loop.
+5. Add loot sell/appraisal flow at surface shop.
+6. Add shrine respawn behavior.
 
 ---
 
@@ -921,7 +1022,7 @@ Road types needed:
 Landmarks:
 Enterable interiors:
 Decor-only features:
-Minigames:
+Minigames/activity loops:
 NPCs:
 Traffic behavior:
 Pedestrian routes:
@@ -948,16 +1049,19 @@ Current minimap: src/minimap.js
 
 ---
 
-## 11. Non-negotiable next move
+## 11. Non-negotiable design direction
 
-The next practical world-design task is not adding another town yet. The next move is to clean up Starter Town's source-of-truth problem.
+This world should not become one giant samey city with different paint colors. Every town needs a different reason to exist.
 
-Priority order:
+Priority identity rules:
 
-1. Make gas station, mini-market, and diner represented consistently in map data.
-2. Correct gas pump/forecourt placement rules.
-3. Add map labels/markers for all active services.
-4. Add neighborhood dressing so Starter Town feels intentional.
-5. Then start Fishing Harbor as the first second-town prototype.
+1. Starter Town = life sim tutorial city.
+2. Fishing Harbor = water/fishing/selling loop.
+3. Rich Hills = status/property/luxury jobs.
+4. Tech City = puzzles, drones, skill-pay jobs.
+5. Casino Strip = luck, arcade, entertainment economy.
+6. Hollywood/Fame = rhythm, style, reputation.
+7. Dungeon Outskirts = bare surface hub plus deep dungeon gameplay.
+8. Obby Canyon = pure platform skill zone.
 
-Do this in that order. Otherwise, the world will grow like a junk drawer with traffic lights.
+Build in that order only when the prior layer is stable. Otherwise the world will grow like a junk drawer with traffic lights.
