@@ -344,7 +344,7 @@
 
   <script>
     (() => {
-      const noisyShelfLabel = /\$\d|\b(FEATURED|PISTOLS|MELEE|TOOLS|LONG WEAPONS)\b/i;
+      const noisyShelfLabel = /\$\d|\u2713|\b(FEATURED|PISTOLS|MELEE|TOOLS|LONG WEAPONS)\b/i;
       const P = window.CanvasRenderingContext2D && CanvasRenderingContext2D.prototype;
       if (!P || P.__zwStoreLabelGuard) return;
       P.__zwStoreLabelGuard = true;
