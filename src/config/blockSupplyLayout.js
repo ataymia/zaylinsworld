@@ -10,31 +10,44 @@
 //  Each zone lays items out along a line (origin → step * index) with an upward
 //  row wrap so a wall can hold an arbitrary number of items.
 //
-//  V2 cleanup note: keep every display tight to a wall/counter and away from the
-//  exit lane. The old featured zone sat near the door and created overlapping
-//  nameplates + props in the player's path.
+//  V3 cleanup note: the visible GLB weapons are real 3D props, not text labels.
+//  Keep them tight to slatwall/backing plates, shrink the pitch between rows,
+//  and keep featured items off the exit path. If a new category is added, treat
+//  the walkable aisle and doorway as sacred ground. No shelf goblins in traffic.
 // ───────────────────────────────────────────────────────────────────────────
 export const SHOP_ZONES = {
+  // Back-left slatwall: compact sidearm plates in one clean row, second row only
+  // if the catalog grows. Faces into the room with plates tucked against z=-4.
   'pistol-wall': {
     label: 'Pistols',
-    origin: [-4.35, 1.55, -3.35], step: [0, 0, 1.05], perRow: 3, rowStep: [0, -0.55, 0],
-    facing: Math.PI / 2, plate: '#1b2a3a',
+    origin: [-6.05, 1.82, -4.02], step: [0.84, 0, 0], perRow: 5, rowStep: [0, -0.58, 0],
+    facing: 0, plate: '#1b2a3a',
   },
+
+  // Back slatwall: long items get more horizontal spacing and a lower second row
+  // so barrels/stocks no longer stack into a visual knot.
   'long-wall': {
     label: 'Long Weapons',
-    origin: [-2.7, 1.75, -4.12], step: [1.25, 0, 0], perRow: 4, rowStep: [0, -0.65, 0],
+    origin: [-2.65, 2.02, -4.02], step: [0.92, 0, 0], perRow: 6, rowStep: [0, -0.68, 0],
     facing: 0, plate: '#22202e',
   },
+
+  // Right-side pegboard: melee/tools live on the rack, not in the doorway. The
+  // z range stays near the rack panel and away from the EXIT opening.
   'melee-rack': {
     label: 'Melee & Tools',
-    origin: [4.35, 1.45, -3.15], step: [0, 0, 0.78], perRow: 5, rowStep: [0, -0.55, 0],
+    origin: [4.35, 1.78, -1.25], step: [0, 0, 0.62], perRow: 6, rowStep: [0, -0.56, 0],
     facing: -Math.PI / 2, plate: '#2a241a',
   },
+
+  // Center glass case: special/featured items sit on top of the case in two tidy
+  // rows. This used to drift toward the exit and block the visual lane.
   'featured': {
     label: 'Featured',
-    origin: [0.0, 1.45, 2.65], step: [1.45, 0, 0], perRow: 2, rowStep: [0, 0, 0.7],
+    origin: [-0.25, 1.88, 2.62], step: [0.88, 0, 0], perRow: 3, rowStep: [0, 0, 0.54],
     facing: Math.PI, plate: '#2a1a2a',
   },
+
   'ammo-shelf': {
     label: 'Ammo',
     origin: [-4.3, 0.82, 2.3], step: [0, 0, 0.72], perRow: 4, rowStep: [0, -0.48, 0],
