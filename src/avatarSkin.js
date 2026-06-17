@@ -38,13 +38,16 @@ const SKIN_CFG = { faceYaw: 0 };
 if (typeof window !== 'undefined') window.__ZW_SKIN__ = SKIN_CFG;
 
 // PSX civilian roster (low-poly humanoids, each with a built-in clip).
+// The newer character-27+ entries are prioritized because they carry stronger
+// visible styling and avoid the cloned placeholder look in the live town.
 const CIVILIANS = [
+  'character-29-female', 'character-30-female', 'character-31-female', 'character-32-female', 'character-33-female',
+  'character-27-female-hm', 'character-28-female-hm',
+  'character-female-02', 'character-female-03', 'character-female-04', 'character-female-05',
+  'character-female-06', 'character-female-07', 'character-female-08', 'character-female-09', 'character-female-10',
   'character-01', 'character-02', 'character-03', 'character-04', 'character-05',
   'character-06', 'character-07', 'character-08', 'character-09', 'character-10',
-  'character-11', 'character-12', 'character-13', 'character-14', 'character-15',
-  'character-16', 'character-female-01', 'character-female-02', 'character-female-03',
-  'character-female-04', 'character-female-05', 'character-female-06', 'character-female-07',
-  'character-female-08', 'character-female-09', 'character-female-10',
+  'character-11', 'character-12', 'character-13', 'character-14', 'character-15', 'character-16',
 ];
 
 function hideProceduralMeshes(group, skin) {
@@ -98,7 +101,19 @@ function skinAvatar(avatar, glb, { height = 1.78, play = true, label = 'skin' } 
   skin.scale.setScalar(v.scale);
   skin.position.y = -v.box.min.y * v.scale;   // ground feet at root origin (y=0)
   skin.rotation.y = SKIN_CFG.faceYaw;         // live-tunable forward-axis correction
-  skin.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+  skin.traverse((o) => {
+    if (o.isMesh) {
+      o.castShadow = true;
+      o.receiveShadow = true;
+      if (o.material) {
+        const mats = Array.isArray(o.material) ? o.material : [o.material];
+        for (const m of mats) {
+          if (m && m.map) m.map.colorSpace = THREE.SRGBColorSpace;
+          if (m && m.color) m.color.convertSRGBToLinear?.();
+        }
+      }
+    }
+  });
 
   hideProceduralMeshes(avatar.group, skin);  // hide procedural body (validated GLB only)
   avatar.group.add(skin);                    // then add the visible skin
@@ -134,10 +149,10 @@ function validateHumanoidGlb(scene, targetHeight) {
   if (h > 60) return { ok: false, reason: 'huge height ' + h.toFixed(1) };
   const scale = targetHeight / h;
   const fw = w * scale, fd = d * scale, fh = h * scale;
-  if (fh < 1.2 || fh > 2.4) return { ok: false, reason: 'final height ' + fh.toFixed(2) + ' out of 1.2–2.4m', size };
-  // A-pose/idle characters can be a touch wider; 1.9m keeps the giant-blob guard
-  // while no longer rejecting valid arms-out idle poses.
-  if (fw > 1.9 || fd > 1.9) return { ok: false, reason: 'final w/d ' + fw.toFixed(2) + '/' + fd.toFixed(2) + ' > 1.9m', size };
+  if (fh < 1.15 || fh > 2.45) return { ok: false, reason: 'final height ' + fh.toFixed(2) + ' out of 1.15–2.45m', size };
+  // Some valid uploaded humanoids have arms/outfits broader than 1.9m after
+  // normalization. 2.35m still rejects blobs while allowing real character skins.
+  if (fw > 2.35 || fd > 2.35) return { ok: false, reason: 'final w/d ' + fw.toFixed(2) + '/' + fd.toFixed(2) + ' > 2.35m', size };
   return { ok: true, scale, size, box };
 }
 
@@ -163,8 +178,7 @@ export async function applyNpcSkins(npcs, renderer, max = 99) {
 // PSX police roster (uniformed officers, each with a built-in clip). Used for
 // foot-patrol cops so they read clearly as POLICE instead of a hooded civilian.
 const POLICE = [
-  'character-17-police', 'character-18-police', 'character-19-police',
-  'character-20-police', 'character-21-police', 'character-22-police',
+  'character-17-police', 'character-18-police', 'character-19-police', 'character-20-police',
   'character-17-female-police', 'character-18-female-police', 'character-19-female-police',
   'character-20-female-police', 'character-25-female-police', 'character-26-female-police',
 ];
@@ -187,8 +201,13 @@ export async function applyCopSkin(avatar, renderer) {
 
 // Replace the player's procedural body with a PSX humanoid GLB skin.
 // seed picks a stable model per save so the player looks consistent.
+const PLAYER_CANDIDATES = [
+  'character-29-female', 'character-30-female', 'character-31-female', 'character-32-female', 'character-33-female',
+  'character-female-02', 'character-female-03', 'character-female-04', 'character-female-05',
+  'character-27-female-hm', 'character-28-female-hm',
+];
 export async function applyPlayerSkin(avatar, renderer, seed = 0) {
-  const name = CIVILIANS[Math.abs(seed) % CIVILIANS.length];
+  const name = PLAYER_CANDIDATES[Math.abs(seed) % PLAYER_CANDIDATES.length];
   SKIN_STATUS.player.label = name;
   try {
     const glb = await loadAsset('characters', 'psx', name, renderer);
