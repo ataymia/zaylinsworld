@@ -1,69 +1,58 @@
 // ───────────────────────────────────────────────────────────────────────────
 //  blockSupplyLayout.js — physical display layout for the Block Supply store.
 //
-//  Defines named display ZONES (walls/racks/shelves/counters) and where each
-//  zone sits in the interior. The shop builder spreads catalog weapons across
-//  these zones by their `display` field, so adding weapons auto-fills the walls
-//  without touching layout code. Designed to hold many weapons, not just a few.
+//  Wall-grid version: stop using floor/case-style display zones. Every weapon
+//  category now mounts to the walls like a gun-store pegboard/slatwall. This is
+//  intentionally closer to Ammu-Nation style browsing: walk up, hover/interact,
+//  buy/equip. No featured-floor islands, no glass-case clutter, no doorway props.
 //
 //  Coordinates are LOCAL to the Block Supply interior origin (see interiors.js).
-//  Each zone lays items out along a line (origin → step * index) with an upward
-//  row wrap so a wall can hold an arbitrary number of items.
-//
-//  V3 cleanup note: the visible GLB weapons are real 3D props, not text labels.
-//  Keep them tight to slatwall/backing plates, shrink the pitch between rows,
-//  and keep featured items off the exit path. If a new category is added, treat
-//  the walkable aisle and doorway as sacred ground. No shelf goblins in traffic.
-//
-//  V4 note: assets do not share the same authored long axis. Some models are
-//  long on X, some on Z, some nearly vertical. The current main.js display builder
-//  still uses one square backing plate. Until that builder is upgraded to measure
-//  each loaded GLB and create a rectangular/aspect-ratio plate, long/heavy items
-//  need extra spacing and smaller fits from weaponTransforms.js.
+//  The current main.js display builder still adds a small backing plate per item;
+//  this config keeps those plates flush to walls so they read as wall mounts, not
+//  boxes on the floor. Future builder pass should remove or merge individual
+//  plates into one continuous wall panel.
 // ───────────────────────────────────────────────────────────────────────────
 export const SHOP_ZONES = {
-  // Back-left slatwall: compact sidearm plates in one clean row, second row only
-  // if the catalog grows. Faces into the room with plates tucked against z=-4.
+  // Left section of the back wall: pistols/sidearms.
   'pistol-wall': {
     label: 'Pistols',
-    origin: [-6.15, 1.82, -4.02], step: [0.9, 0, 0], perRow: 5, rowStep: [0, -0.58, 0],
+    origin: [-4.35, 2.05, -4.08], step: [0.82, 0, 0], perRow: 5, rowStep: [0, -0.62, 0],
     facing: 0, plate: '#1b2a3a',
   },
 
-  // Back slatwall: long items need wide slots because GLBs disagree on whether
-  // their long axis is X or Z. Give every long item a full bay so even imperfect
-  // orientation does not overlap its neighbor.
+  // Center/right section of the back wall: long weapons. Wider slots, all flat
+  // against the wall so orientation issues are less obvious.
   'long-wall': {
     label: 'Long Weapons',
-    origin: [-3.95, 2.05, -4.02], step: [1.18, 0, 0], perRow: 5, rowStep: [0, -0.72, 0],
+    origin: [-4.35, 1.18, -4.08], step: [1.05, 0, 0], perRow: 5, rowStep: [0, -0.58, 0],
     facing: 0, plate: '#22202e',
   },
 
-  // Right-side pegboard: melee/tools live on the rack, not in the doorway. The
-  // z range stays near the rack panel and away from the EXIT opening.
+  // Right wall: melee/tools. Still wall-mounted, no floor rack.
   'melee-rack': {
     label: 'Melee & Tools',
-    origin: [4.35, 1.78, -1.35], step: [0, 0, 0.66], perRow: 6, rowStep: [0, -0.56, 0],
+    origin: [4.35, 2.02, -3.55], step: [0, 0, 0.68], perRow: 5, rowStep: [0, -0.58, 0],
     facing: -Math.PI / 2, plate: '#2a241a',
   },
 
-  // Center glass case: big/special items get one item per clear case bay. This
-  // intentionally uses a lower per-row count so bulky pieces do not crowd.
+  // Featured/heavy items are no longer on floor cases. They occupy the upper
+  // right/back wall like the rest of the catalog.
   'featured': {
     label: 'Featured',
-    origin: [-1.05, 1.88, 2.62], step: [1.18, 0, 0], perRow: 3, rowStep: [0, 0, 0.62],
-    facing: Math.PI, plate: '#2a1a2a',
+    origin: [0.95, 2.05, -4.08], step: [1.02, 0, 0], perRow: 4, rowStep: [0, -0.62, 0],
+    facing: 0, plate: '#2a1a2a',
   },
 
+  // Utility shelves stay on the back-right wall, above/near the counter.
   'ammo-shelf': {
     label: 'Ammo',
-    origin: [-4.3, 0.82, 2.3], step: [0, 0, 0.72], perRow: 4, rowStep: [0, -0.48, 0],
-    facing: Math.PI / 2, plate: '#1a2a1a',
+    origin: [1.0, 0.74, -4.08], step: [0.72, 0, 0], perRow: 4, rowStep: [0, -0.45, 0],
+    facing: 0, plate: '#1a2a1a',
   },
   'upgrade-counter': {
     label: 'Upgrade Bench',
-    origin: [2.9, 1.0, 2.75], step: [0.65, 0, 0], perRow: 3, rowStep: [0, 0, 0.5],
-    facing: Math.PI, plate: '#2a2a1a',
+    origin: [3.05, 0.74, -4.08], step: [0.62, 0, 0], perRow: 3, rowStep: [0, -0.45, 0],
+    facing: 0, plate: '#2a2a1a',
   },
 };
 
