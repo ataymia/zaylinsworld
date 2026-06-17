@@ -90,38 +90,49 @@ const FURNITURE = {
   // them (no more floating registers/trays). `tint` is the fallback colour used
   // only when the GLB's texture failed to embed (flat-white restaurant pack).
   chicken: [
-    { name: 'counter-front',   dx: 0,    dz: -3.2, ry: 0,           s: 1.0, surface: true, tint: '#b5651d' },
-    { name: 'cash-register',   dx: 1.8,  dz: -3.0, ry: Math.PI,     s: 1.0, onSurface: true, tint: '#2a2a2e' },
-    { name: 'heat-lamp-tray',  dx: -1.6, dz: -3.0, ry: 0,           s: 1.0, onSurface: true, tint: '#c0392b' },
-    { name: 'stove-griddle',   dx: -3,   dz: -4.4, ry: 0,           s: 1.0, surface: true, tint: '#8a9099' },
-    { name: 'burner-stove',    dx: -5,   dz: -4.4, ry: 0,           s: 1.0, surface: true, tint: '#8a9099' },
-    { name: 'booth-full',      dx: -5.6, dz: 2,    ry: Math.PI / 2, s: 1.0, tint: '#7a1f2b' },
-    { name: 'booth-half',      dx: -5.6, dz: 4.2,  ry: Math.PI / 2, s: 1.0, tint: '#7a1f2b' },
-    { name: 'table-square',    dx: 4.5,  dz: 1.6,  ry: 0,           s: 1.0, surface: true, tint: '#caa37a' },
-    { name: 'chair-red',       dx: 4.5,  dz: 2.5,  ry: Math.PI,     s: 1.0, tint: '#c0392b' },
-    { name: 'chair-red',       dx: 4.5,  dz: 0.7,  ry: 0,           s: 1.0, tint: '#c0392b' },
-    { name: 'table-circle',    dx: 1.6,  dz: 3.8,  ry: 0,           s: 1.0, surface: true, tint: '#caa37a' },
-    { name: 'chair-red',       dx: 0.7,  dz: 3.8,  ry: Math.PI / 2, s: 1.0, tint: '#c0392b' },
-    { name: 'chair-red',       dx: 2.5,  dz: 3.8,  ry: -Math.PI / 2, s: 1.0, tint: '#c0392b' },
+    // Service counter — THREE segments side by side (each ~1.07m wide) form a
+    // continuous ~3.2m counter so the register + food tray have a real surface
+    // to sit on (a single segment was too narrow → items fell to the floor).
+    { name: 'counter-front',   dx: -1.05, dz: -3.2, ry: 0,           s: 1.0, surface: true, tint: '#b5651d' },
+    { name: 'counter-front',   dx: 0,     dz: -3.2, ry: 0,           s: 1.0, surface: true, tint: '#b5651d' },
+    { name: 'counter-front',   dx: 1.05,  dz: -3.2, ry: 0,           s: 1.0, surface: true, tint: '#b5651d' },
+    { name: 'cash-register',   dx: 0.9,   dz: -3.2, ry: Math.PI,     s: 1.0, onSurface: true, surfaceFallback: 0.96, tint: '#2a2a2e' },
+    { name: 'heat-lamp-tray-grill', dx: -0.9, dz: -3.2, ry: 0,       s: 1.0, onSurface: true, surfaceFallback: 0.96, tint: '#c0392b' },
+    // Kitchen line along the back wall (appliances stand on the floor).
+    { name: 'stove-griddle',   dx: -3.5,  dz: -4.4, ry: 0,           s: 1.0, surface: true, tint: '#8a9099' },
+    { name: 'burner-stove',    dx: -5.6,  dz: -4.4, ry: 0,           s: 1.0, surface: true, tint: '#8a9099' },
+    // Booths down the left wall.
+    { name: 'booth-full',      dx: -5.6,  dz: 2,    ry: Math.PI / 2, s: 1.0, tint: '#7a1f2b' },
+    { name: 'booth-half',      dx: -5.6,  dz: 4.2,  ry: Math.PI / 2, s: 1.0, tint: '#7a1f2b' },
+    // Seating area — tables (surfaces) with chairs.
+    { name: 'table-square',    dx: 4.5,   dz: 1.6,  ry: 0,           s: 1.0, surface: true, tint: '#caa37a' },
+    { name: 'chair-red',       dx: 4.5,   dz: 2.5,  ry: Math.PI,     s: 1.0, tint: '#c0392b' },
+    { name: 'chair-red',       dx: 4.5,   dz: 0.7,  ry: 0,           s: 1.0, tint: '#c0392b' },
+    { name: 'table-circle',    dx: 1.6,   dz: 3.8,  ry: 0,           s: 1.0, surface: true, tint: '#caa37a' },
+    { name: 'chair-red',       dx: 0.7,   dz: 3.8,  ry: Math.PI / 2, s: 1.0, tint: '#c0392b' },
+    { name: 'chair-red',       dx: 2.5,   dz: 3.8,  ry: -Math.PI / 2, s: 1.0, tint: '#c0392b' },
   ],
 };
 
 // Food props (small GLBs, already in metres → unit 1) on the counter + tables.
+// Each snaps onto a placed support surface; surfaceFallback gives a safe resting
+// height so food never floats or dumps on the floor if the snap is missed.
 const FOOD_UNIT = 1.0;
 const FOOD = {
   chicken: [
-    { name: 'chicken-cooking-a', dx: -3,  dz: -3.9, y: 1.0,  s: 2.0, onSurface: true },
-    { name: 'fried-chicken',     dx: 1.8, dz: -2.9, y: 0.98, s: 2.4, onSurface: true },
-    { name: 'french-fries',      dx: 4.5, dz: 1.6,  y: 0.78, s: 2.4, onSurface: true },
-    { name: 'chicken-nuggets',   dx: 1.6, dz: 3.8,  y: 0.78, s: 2.4, onSurface: true },
+    { name: 'chicken-cooking-a', dx: -3.5, dz: -4.4, s: 2.0, onSurface: true, surfaceFallback: 1.1 },
+    { name: 'fried-chicken',     dx: 0.2,  dz: -3.2, s: 2.4, onSurface: true, surfaceFallback: 0.96 },
+    { name: 'french-fries',      dx: 4.5,  dz: 1.6,  s: 2.4, onSurface: true, surfaceFallback: 0.87 },
+    { name: 'chicken-nuggets',   dx: 1.6,  dz: 3.8,  s: 2.4, onSurface: true, surfaceFallback: 0.86 },
   ],
 };
 
-// When a pack's textures fail to embed, GLB meshes load as the default flat
-// white material. Detect that (no map + near-white colour) and apply the item's
-// `tint` so the restaurant reads as real surfaces instead of a white-out. Only
-// touches untextured near-white materials — properly textured packs are left
-// alone. Returns the number of materials recoloured (for diagnostics).
+// When a pack's textures fail to embed, GLB meshes load as a default flat
+// near-white/grey material (the Restaurant pack was converted to a single
+// `DefaultMaterial` at colour 0.8,0.8,0.8 with NO textures — so it renders as a
+// white-out). Detect that (no map + desaturated light colour) and apply the
+// item's `tint` so the restaurant reads as real surfaces. Properly textured
+// packs are left alone. Returns the number of materials recoloured.
 function applyMaterialFallback(obj, item) {
   if (!item.tint) return 0;
   let n = 0;
@@ -129,9 +140,14 @@ function applyMaterialFallback(obj, item) {
     if (!o.isMesh || !o.material) return;
     const mats = Array.isArray(o.material) ? o.material : [o.material];
     for (const mm of mats) {
+      if (mm.map) continue;                     // textured → leave alone
       const c = mm.color;
-      const white = c && c.r > 0.85 && c.g > 0.85 && c.b > 0.85;
-      if (!mm.map && white) { mm.color = new THREE.Color(item.tint); mm.needsUpdate = true; n++; }
+      if (!c) continue;
+      const mx = Math.max(c.r, c.g, c.b), mn = Math.min(c.r, c.g, c.b);
+      // light (>=0.6) AND near-grey/white (low saturation) → it's the default
+      // untextured material, not an intentionally-coloured part.
+      const lightGrey = mx >= 0.6 && (mx - mn) <= 0.12;
+      if (lightGrey) { mm.color = new THREE.Color(item.tint); mm.needsUpdate = true; n++; }
     }
   });
   return n;
@@ -169,11 +185,16 @@ async function place(root, asset, ox, item, renderer, unit, warnings, supports) 
     let baseY = item.y ?? 0;
     if (item.onSurface && supports && supports.length) {
       const px = ox + item.dx, pz = item.dz;
+      const M = 0.4;   // forgiving margin so items near a surface edge still snap
       let top = -Infinity;
       for (const sb of supports) {
-        if (px >= sb.min.x && px <= sb.max.x && pz >= sb.min.z && pz <= sb.max.z) top = Math.max(top, sb.max.y);
+        if (px >= sb.min.x - M && px <= sb.max.x + M && pz >= sb.min.z - M && pz <= sb.max.z + M) {
+          top = Math.max(top, sb.max.y);
+        }
       }
-      if (top > -Infinity) baseY = top;
+      // If nothing overlapped, fall back to a sensible counter height instead of
+      // dropping the piece to the floor or floating at a guessed y.
+      baseY = (top > -Infinity) ? top : (item.surfaceFallback ?? baseY);
     }
     const groundY = baseY - box.min.y;
     obj.position.set(ox + item.dx, groundY, item.dz);

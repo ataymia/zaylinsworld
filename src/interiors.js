@@ -359,6 +359,7 @@ export function buildInteriors() {
 
     byId.blocksupply = {
       id: 'blocksupply', name: 'Block Supply', offset: o,
+      group: r.group,                                   // room group — ensureBlockSupplyDisplays() mounts weapon displays here
       spawn: r.spawn, exit: r.exit, colliders: r.colliders,
       placeholderWeaponWall,
       avatars: [npc], npcSlot: 'npc_basic_01',

@@ -129,6 +129,9 @@ function rows() {
     ['failed assets', metrics.failedAssets.length
       ? `<span style="color:#ff7676">${metrics.failedAssets.join(', ')}</span>` : '<span style="color:#4eff91">none</span>'],
 
+    ['SECTION', 'CHARACTER SKINS'],
+    ...skinRows(),
+
     ['SECTION', 'UI BLOCKERS'],
     ['isUIOpen', yn(live.uiOpen)],
     ['isSettingsOpen', yn(live.settingsOpen)],
@@ -144,6 +147,25 @@ function rows() {
     ['monsterMode', yn(live.monsterMode)],
     ['monsters', num(live.monsterCount)],
     ['police', num(live.policeCount)],
+  ];
+}
+
+// Character-skin telemetry rows, read live from window.__ZW_SKIN_STATUS__
+// (populated by avatarSkin.js). Shows GLB-vs-fallback per character class so the
+// "skins not showing" state is visible in-game instead of silent.
+function skinRows() {
+  const s = (typeof window !== 'undefined' && window.__ZW_SKIN_STATUS__) || null;
+  if (!s) return [['skins', '<span style="color:#8a8aa0">not loaded yet</span>']];
+  const tag = (mode) => mode === 'glb'
+    ? '<span style="color:#4eff91">GLB</span>'
+    : (mode === 'pending' ? '<span style="color:#e7c14a">pending</span>' : '<span style="color:#ff7676">fallback</span>');
+  const pr = s.player || {};
+  return [
+    ['player', `${tag(pr.mode)} ${pr.label ? '(' + pr.label + ')' : ''}${pr.reason ? ' — ' + pr.reason : ''}`],
+    ['NPCs', `<span style="color:#4eff91">${s.npc.glb} GLB</span> / <span style="color:#ff7676">${s.npc.fallback} fallback</span>`],
+    ['cops', `<span style="color:#4eff91">${s.cop.glb} GLB</span> / <span style="color:#ff7676">${s.cop.fallback} fallback</span>`],
+    ['cop last', s.cop.last || '—'],
+    ['npc last', s.npc.last || '—'],
   ];
 }
 

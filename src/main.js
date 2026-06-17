@@ -596,6 +596,10 @@ function ensureBlockSupplyDisplays() {
     intr.group.add(grp);
     blockSupplyDisplays.push({ weapon: w, ipos: new THREE.Vector3(wx, 0, wz), label });
     displayCount++;
+    if (displayCount <= 8 || w.display === 'featured') {
+      console.debug('[blocksupply] display', zone, '·', w.id, '@', `(${wx.toFixed(1)},${wy.toFixed(1)},${wz.toFixed(1)})`,
+        'fit', disp.fit, 'procedural-now', (w.slot || w.asset) ? '(GLB pending)' : '(no GLB)');
+    }
     // zone header banner (once per zone)
     if (!zoneHeaderDone[zone]) {
       zoneHeaderDone[zone] = true;
@@ -3041,7 +3045,7 @@ function runStation(intr, st) {
     case 'rest': restAtHome(); break;
     case 'wardrobe': openWardrobe(); break;
     case 'safe': openSafe(); break;
-    case 'mirror-cut': startHairline(); break;
+    case 'mirror-cut': startLineupGame(); break;
     case 'workout': startWorkoutAt(st.equip); break;
     case 'study': startStudy(); break;
     case 'job-work': doJobShift(); break;
@@ -3329,6 +3333,111 @@ function finishEating() {
 // name is kept because the main loop + busy guard already gate on it.
 let hairGame = false, hairState = null;
 const mgEl = () => document.getElementById('minigame');
+
+// ── EXTERNAL MINI-GAME OVERLAY (designed standalone, embedded by iframe) ──────
+// Self-contained minigame builds (authored separately for cohesive gameplay)
+// are served from /minigames/*.html and embedded in a full-screen overlay. The
+// world is paused (lineupGame contributes to `busy`), the pointer is released so
+// the mouse drives the embedded game, and we listen for the game's completion
+// CustomEvent to apply the result and tear the overlay down. No dev panels /
+// JSON / payloads are surfaced to the player — only the result is consumed.
+let lineupGame = false;
+let lineupCleanup = null;
+function openExternalMinigame(src, onComplete, { eventName, resultProp }) {
+  if (lineupGame) return;
+  lineupGame = true;
+  document.exitPointerLock?.();
+  const overlay = document.createElement('div');
+  overlay.id = 'ext-minigame';
+  overlay.style.cssText =
+    'position:fixed;inset:0;z-index:9000;background:rgba(8,12,20,.86);' +
+    'display:flex;align-items:center;justify-content:center;';
+  const frame = document.createElement('iframe');
+  frame.src = src;
+  frame.style.cssText =
+    'width:100%;height:100%;border:0;background:transparent;';
+  frame.setAttribute('title', 'Mini-game');
+  overlay.appendChild(frame);
+
+  // Close affordance (Esc or the ✕ button) — counts as a cancelled/no-op result.
+  const closeBtn = document.createElement('button');
+  closeBtn.textContent = '✕';
+  closeBtn.setAttribute('aria-label', 'Close mini-game');
+  closeBtn.style.cssText =
+    'position:absolute;top:14px;right:18px;z-index:9001;width:42px;height:42px;' +
+    'border-radius:50%;border:0;background:rgba(17,24,39,.85);color:#fff;' +
+    'font-size:20px;font-weight:900;cursor:pointer;';
+  overlay.appendChild(closeBtn);
+  document.body.appendChild(overlay);
+
+  let done = false;
+  const finish = (result) => {
+    if (done) return;
+    done = true;
+    teardown();
+    try { if (result && onComplete) onComplete(result); } catch (e) { console.error('[minigame] onComplete failed', e); }
+    saveNow();
+  };
+  // The embedded game dispatches its completion event on its OWN window
+  // (same-origin, so we can subscribe to the iframe's contentWindow).
+  const onFrameLoad = () => {
+    try {
+      frame.contentWindow.addEventListener(eventName, (ev) => finish(ev.detail));
+    } catch (e) {
+      console.warn('[minigame] could not subscribe to iframe event; will poll', e);
+    }
+  };
+  frame.addEventListener('load', onFrameLoad);
+  // Fallback: poll the result property in case the event is missed.
+  const poll = setInterval(() => {
+    try {
+      const r = frame.contentWindow && frame.contentWindow[resultProp];
+      if (r) finish(r);
+    } catch { /* cross-origin or not ready */ }
+  }, 400);
+  const onKey = (e) => { if (e.key === 'Escape') finish(null); };
+  const onClose = () => finish(null);
+  closeBtn.addEventListener('click', onClose);
+  window.addEventListener('keydown', onKey, true);
+
+  function teardown() {
+    clearInterval(poll);
+    window.removeEventListener('keydown', onKey, true);
+    frame.removeEventListener('load', onFrameLoad);
+    closeBtn.removeEventListener('click', onClose);
+    overlay.remove();
+    lineupGame = false;
+    lineupCleanup = null;
+  }
+  lineupCleanup = teardown;
+}
+
+// Launch the externally-authored Lineup (haircut) mini-game and map its result
+// grade onto the player's fresh-cut / hygiene / fun stats + mission progress.
+function startLineupGame() {
+  openExternalMinigame('minigames/lineup-lab.html', (result) => {
+    const outcome = result && result.outcome;
+    const score = (result && typeof result.score === 'number') ? result.score : 0;
+    const good = outcome === 'clean-lineup' || outcome === 'solid-lineup' || score >= 70;
+    const ok = good || outcome === 'uneven-lineup' || score >= 50;
+    if (good) {
+      state.freshCut = true;
+      state.stats.hygiene = 100;
+      state.stats.fun = Math.min(100, state.stats.fun + 12);
+      notify(`💈 ${result.grade || 'Fresh lineup'} — looking sharp! (${score}/100)`);
+      missionEvent('haircut-done');
+    } else if (ok) {
+      state.freshCut = true;
+      state.stats.hygiene = Math.min(100, state.stats.hygiene + 30);
+      state.stats.fun = Math.min(100, state.stats.fun + 4);
+      notify(`✂️ ${result.grade || 'Touch-up'} — not bad (${score}/100)`);
+      missionEvent('haircut-done');
+    } else {
+      state.stats.hygiene = Math.min(100, state.stats.hygiene + 10);
+      notify(`😬 ${result.grade || 'Rough cut'} (${score}/100) — try again for a clean lineup.`);
+    }
+  }, { eventName: 'zaylin:haircut-complete', resultProp: 'ZW_LAST_HAIRCUT_RESULT' });
+}
 function startTimingGame({ title, hintVerb = 'SPACE', rounds = 3, speedBase = 2.0, speedStep = 0.7, onFinish, labels = null }) {
   hairGame = true;
   hairState = { round: 0, hits: 0, rounds, speedBase, speedStep, speed: speedBase,
@@ -3905,7 +4014,7 @@ function animate() {
   // spin any dealership car flagged for preview
   if (interiors) Object.values(interiors.byId).forEach(intr => intr.stations.forEach(st => { if (st.mesh && st.mesh.userData.spin) st.mesh.rotation.y += 0.02; }));
 
-  const busy = isUIOpen() || isSettingsOpen() || eating || hairGame;
+  const busy = isUIOpen() || isSettingsOpen() || eating || hairGame || lineupGame;
   // collectible gems: always bob/twinkle; only collectible while on foot in the city
   if (cityGems.length) {
     const pp = (!busy && !inCar && area === 'city' && player) ? player.group.position : null;

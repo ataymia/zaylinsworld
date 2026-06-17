@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Zaylin’s World — Lineup Lab</title>
+<style>
+  :root{
+    --ink:#111827; --muted:#536173; --panel:#ffffff; --soft:#f4f8fc;
+    --green:#47d45a; --blue:#209cff; --orange:#ffad42; --red:#ef4058;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;overflow:hidden;color:var(--ink);
+    font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;
+    background:linear-gradient(135deg,#fff4df,#dfeefa 55%,#e8f8ed);
+  }
+  body{display:flex;align-items:center;justify-content:center;padding:12px}
+  #shell{
+    width:min(1240px,100%);height:min(790px,100%);min-height:650px;
+    display:grid;grid-template-columns:306px 1fr 306px;gap:12px;padding:12px;
+    border-radius:24px;background:rgba(255,255,255,.76);
+    border:1px solid rgba(17,24,39,.13);
+    box-shadow:0 24px 85px rgba(32,40,58,.20);
+  }
+  .panel{
+    background:linear-gradient(180deg,#fff,#f6f9fd);
+    border:1px solid rgba(17,24,39,.13);border-radius:20px;padding:14px;overflow:auto;
+  }
+  h1{font-size:27px;line-height:1.02;margin:0 0 8px;letter-spacing:-.045em}
+  h2{font-size:12px;text-transform:uppercase;color:#64748b;letter-spacing:.1em;margin:18px 0 8px}
+  h3{font-size:16px;color:#1f7a3a;margin:0 0 6px}
+  p,li{color:var(--muted);line-height:1.36;font-size:14px}
+  ul{margin:8px 0 0 18px;padding:0}
+  button{
+    border:1px solid rgba(17,24,39,.16);background:linear-gradient(180deg,#fff,#edf2f7);
+    color:var(--ink);border-radius:13px;padding:10px 12px;font-weight:950;cursor:pointer;
+    box-shadow:0 7px 18px rgba(32,40,58,.13);
+  }
+  button:hover{filter:brightness(1.03)} button:active{transform:translateY(1px)}
+  button.primary{background:linear-gradient(180deg,#c8ff87,#62df62);color:#102011}
+  button.warn{background:linear-gradient(180deg,#ffda8a,#ffae4d);color:#251406}
+  .btnRow{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+  .toolGrid{display:grid;grid-template-columns:1fr;gap:8px}
+  .tool{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px;text-align:left}
+  .tool small{display:block;color:#64748b;font-weight:750}
+  .tool.active{outline:3px solid rgba(72,214,88,.72);background:#edffe8}
+  #stage{
+    border-radius:22px;position:relative;overflow:hidden;background:#eef7ff;
+    border:1px solid rgba(17,24,39,.14);box-shadow:inset 0 1px rgba(255,255,255,.8);
+  }
+  canvas{width:100%;height:100%;display:block;cursor:none;touch-action:none}
+  #toast{
+    position:absolute;top:18px;left:50%;transform:translate(-50%,-14px);
+    opacity:0;transition:.22s ease;background:rgba(17,24,39,.9);color:#fff;
+    border-radius:999px;padding:10px 14px;font-weight:950;pointer-events:none;
+  }
+  #toast.show{opacity:1;transform:translate(-50%,0)}
+  #resultOverlay{
+    position:absolute;left:18px;right:18px;bottom:18px;display:none;
+    background:rgba(255,255,255,.94);border:1px solid rgba(17,24,39,.14);
+    border-radius:18px;padding:14px;box-shadow:0 12px 38px rgba(32,40,58,.18);
+  }
+  #resultOverlay.show{display:block}
+  .stat{background:#f8fafc;border:1px solid rgba(17,24,39,.10);border-radius:14px;padding:10px;margin:8px 0}
+  .statTop{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+  .label{font-size:11px;text-transform:uppercase;color:#64748b;letter-spacing:.08em;font-weight:950}
+  .value{font-size:22px;font-weight:950}
+  .meter{height:10px;background:#dbe3ee;border-radius:999px;overflow:hidden;margin-top:8px}
+  .meter span{height:100%;display:block;width:0%;border-radius:999px;background:linear-gradient(90deg,var(--green),var(--blue));transition:width .12s linear}
+  code{background:#eef4f9;border-radius:6px;padding:2px 5px;color:#0f766e}
+  pre{white-space:pre-wrap;word-break:break-word;max-height:180px;overflow:auto;font-size:11px;color:#0f766e;background:#f8fafc;border-radius:12px;padding:10px;border:1px solid rgba(17,24,39,.10)}
+  .kbd{font-family:ui-monospace,Menlo,monospace;background:#111827;border-radius:7px;padding:2px 6px;color:#fff}
+  .callout{border:1px solid rgba(31,122,58,.20);background:#efffe9;border-radius:14px;padding:10px;margin-top:10px}
+  @media(max-width:980px){
+    html,body{overflow:auto;height:auto} body{align-items:flex-start}
+    #shell{grid-template-columns:1fr;height:auto;min-height:unset}
+    #stage{height:690px}
+  }
+</style>
+</head>
+<body>
+<div id="shell">
+  <section class="panel">
+    <h1>Lineup Lab ✂️</h1>
+    <p>Use the clippers to clean up the hairline. Follow the green guide, take your time, and try not to cut too far back.</p>
+
+    <div class="callout">
+      <h3>How to cut</h3>
+      <p>Move the <b>green dot</b> along the messy edge of the hair. Hold down to cut. Try to make the line clean and even.</p>
+    </div>
+
+    <div class="btnRow">
+      <button id="startBtn" class="primary">Start Clippers</button>
+      <button id="finishBtn" class="warn">Done</button>
+      <button id="resetBtn">Reset</button>
+    </div>
+
+    <h2>Clipper Guard</h2>
+    <div class="toolGrid">
+      <button class="tool active" data-tool="edge"><span>Detail Edger<small>tight line, tiny blade</small></span><b>T</b></button>
+      <button class="tool" data-tool="guard1"><span>#1 Guard<small>normal cleanup</small></span><b>#1</b></button>
+      <button class="tool" data-tool="fade"><span>Fade Guard<small>soft gradual cut</small></span><b>#2</b></button>
+      <button class="tool" data-tool="bald"><span>Zero Guard<small>wide hard cut</small></span><b>0</b></button>
+    </div>
+
+    <div class="btnRow">
+      <button id="guideBtn">Guide On/Off</button>
+      <button id="undoBtn">Undo</button>
+    </div>
+
+    <p><span class="kbd">Mouse/touch</span> move · <span class="kbd">Hold</span> cut · <span class="kbd">G</span> guide · <span class="kbd">Z</span> undo · <span class="kbd">Enter</span> finish</p>
+  </section>
+
+  <main id="stage">
+    <canvas id="game" width="900" height="730"></canvas>
+    <div id="toast"></div>
+    <div id="resultOverlay">
+      <h2>Lineup Result</h2>
+      <div id="resultText"></div>
+      <div class="btnRow">
+        <button id="retryBtn">Try Again</button>
+        <button id="applyBtn" class="primary">Keep This Cut</button>
+      </div>
+    </div>
+    <pre id="jsonOut" style="display:none">{}</pre>
+  </main>
+
+  <aside class="panel">
+    <h2>Live Score</h2>
+    <div class="stat"><div class="statTop"><span class="label">Time</span><span id="timeVal" class="value">75</span></div><div class="meter"><span id="timeMeter"></span></div></div>
+    <div class="stat"><div class="statTop"><span class="label">Clean Edge</span><span id="cleanVal" class="value">0%</span></div><div class="meter"><span id="cleanMeter"></span></div></div>
+    <div class="stat"><div class="statTop"><span class="label">Symmetry</span><span id="symVal" class="value">0%</span></div><div class="meter"><span id="symMeter"></span></div></div>
+    <div class="stat"><div class="statTop"><span class="label">Overcut</span><span id="overVal" class="value">0%</span></div><div class="meter"><span id="overMeter"></span></div></div>
+
+    <h2>Barber Notes</h2>
+    <p id="feedback">Press Start Clippers, then clean up the hairline.</p>
+  </aside>
+</div>
+
+<script>
+(() => {
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  const hairCanvas = document.createElement('canvas');
+  hairCanvas.width = W; hairCanvas.height = H;
+  const hair = hairCanvas.getContext('2d', {willReadFrequently:true});
+
+  const ui = Object.fromEntries([
+    'startBtn','finishBtn','resetBtn','guideBtn','undoBtn','retryBtn','applyBtn','toast','resultOverlay',
+    'resultText','timeVal','timeMeter','cleanVal','cleanMeter','symVal','symMeter','overVal','overMeter','feedback','jsonOut'
+  ].map(id => [id, document.getElementById(id)]));
+
+  const tools = {
+    edge:   {name:'Detail Edger', rx:5.5, ry:4.0, alpha:1.00, hardness:.92, color:'#16a34a'},
+    guard1: {name:'#1 Guard',      rx:10,  ry:7.0, alpha:.82, hardness:.72, color:'#65a30d'},
+    fade:   {name:'Fade Guard',    rx:18,  ry:11,  alpha:.24, hardness:.38, color:'#f59e0b'},
+    bald:   {name:'Zero Guard',    rx:25,  ry:17,  alpha:1.00, hardness:.86, color:'#e11d48'}
+  };
+
+  // V6 geometry: eyes lower, natural hairline between forehead and eyes.
+  const head = {
+    x: W/2,
+    y: 420,
+    rx: 142,
+    ry: 180,
+    topY: 236,
+    skin1:'#d18a59',
+    skin2:'#9c5d3f',
+    skin3:'#70402b',
+    hair:'#17100c',
+    hair2:'#3d2a20'
+  };
+
+  const state = {
+    running:false, finished:false, showGuide:true, tool:'edge',
+    time:75, maxTime:75, last:performance.now(),
+    pointer:{x:W/2,y:335,down:false,inside:false,lastX:W/2,lastY:335},
+    history:[], historyCooldown:0, particles:[], cuts:0, result:null
+  };
+
+  function idealY(x){
+    const dx = (x-head.x)/head.rx;
+    // Natural lineup: above eyebrows/eyes, below top cap.
+    const templeLift = Math.max(0, Math.abs(dx)-.76)*34;
+    return head.y - 82 + 5*dx*dx + templeLift;
+  }
+
+  function messyLineY(x){
+    const wave = Math.sin((x-head.x)*.070)*6 + Math.sin((x-head.x)*.155)*3;
+    return idealY(x) + 24 + wave;
+  }
+
+  function topHairY(x){
+    const dx = (x-head.x)/(head.rx+20);
+    return head.topY + 26*dx*dx;
+  }
+
+  function makeHairPath(c){
+    c.beginPath();
+
+    // Top cap. This intentionally covers the crown/upper forehead.
+    for(let i=0;i<=120;i++){
+      const x = head.x - head.rx - 20 + (head.rx*2+40)*i/120;
+      const y = topHairY(x);
+      if(i===0)c.moveTo(x,y); else c.lineTo(x,y);
+    }
+
+    // Right temple and sideburn.
+    c.lineTo(head.x + head.rx + 8, head.y - 62);
+    c.quadraticCurveTo(head.x + head.rx + 18, head.y - 24, head.x + head.rx - 8, head.y + 2);
+
+    // Messy lower edge, right to left.
+    for(let i=120;i>=0;i--){
+      const x = head.x - head.rx + (head.rx*2)*i/120;
+      c.lineTo(x, messyLineY(x));
+    }
+
+    // Left temple and sideburn.
+    c.quadraticCurveTo(head.x - head.rx - 18, head.y - 24, head.x - head.rx - 8, head.y - 62);
+    c.closePath();
+  }
+
+  function resetHair(){
+    hair.clearRect(0,0,W,H);
+
+    const hg = hair.createLinearGradient(head.x-150,head.topY,head.x+140,head.y-40);
+    hg.addColorStop(0, head.hair2);
+    hg.addColorStop(.48, head.hair);
+    hg.addColorStop(1, '#040201');
+
+    hair.fillStyle = hg;
+    makeHairPath(hair);
+    hair.fill();
+
+    // Mild texture only inside the actual hair layer.
+    hair.save();
+    hair.globalAlpha=.22;
+    hair.strokeStyle='#6b4a3b';
+    hair.lineWidth=4;
+    for(let i=0;i<13;i++){
+      hair.beginPath();
+      hair.arc(head.x-118+i*20, head.y-145 + Math.sin(i*.9)*6, 25+i*1.2, Math.PI*1.05, Math.PI*1.82);
+      hair.stroke();
+    }
+    hair.restore();
+
+    saveHistory(true);
+  }
+
+  function saveHistory(force=false){
+    if(!force && state.historyCooldown>0) return;
+    if(state.history.length>20) state.history.shift();
+    state.history.push(hair.getImageData(0,0,W,H));
+    state.historyCooldown=.12;
+  }
+
+  function resetGame(){
+    state.running=false; state.finished=false; state.time=75; state.cuts=0; state.result=null;
+    state.particles.length=0; state.history.length=0; state.historyCooldown=0;
+    ui.resultOverlay.classList.remove('show');
+    resetHair(); updateMeters();
+    ui.feedback.textContent='Press Start Clippers, then clean up the hairline.';
+    ui.jsonOut.textContent='{}';
+  }
+
+  function pointFromEvent(ev){
+    const rect=canvas.getBoundingClientRect();
+    const e=ev.touches ? ev.touches[0] : ev;
+    return {x:(e.clientX-rect.left)*W/rect.width, y:(e.clientY-rect.top)*H/rect.height};
+  }
+
+  function cutEllipse(x,y,t){
+    hair.save();
+    hair.globalCompositeOperation='destination-out';
+    hair.translate(x,y);
+    hair.rotate(-0.08);
+    const r=Math.max(t.rx,t.ry);
+    const g=hair.createRadialGradient(0,0,0,0,0,r);
+    g.addColorStop(0, `rgba(0,0,0,${t.alpha})`);
+    g.addColorStop(t.hardness, `rgba(0,0,0,${t.alpha})`);
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    hair.fillStyle=g;
+    hair.beginPath();
+    hair.ellipse(0,0,t.rx,t.ry,0,0,Math.PI*2);
+    hair.fill();
+    hair.restore();
+  }
+
+  function cutAt(x,y){
+    if(!state.running || state.finished) return;
+    const t=tools[state.tool];
+    saveHistory();
+    state.cuts++;
+
+    const dx=x-state.pointer.lastX, dy=y-state.pointer.lastY;
+    const dist=Math.hypot(dx,dy);
+    const step=Math.max(2,Math.min(t.rx,t.ry)*.72);
+    const steps=Math.max(1,Math.ceil(dist/step));
+
+    for(let i=0;i<=steps;i++){
+      const px=state.pointer.lastX+dx*i/steps;
+      const py=state.pointer.lastY+dy*i/steps;
+      cutEllipse(px,py,t);
+      if(i===steps || Math.random()<.22) addHairDust(px,py,t);
+    }
+    state.pointer.lastX=x; state.pointer.lastY=y;
+  }
+
+  function addHairDust(x,y,t){
+    for(let i=0;i<3;i++){
+      state.particles.push({
+        x:x+(Math.random()-.5)*t.rx*1.2,
+        y:y+(Math.random()-.5)*t.ry*1.2,
+        vx:(Math.random()-.5)*1.15,
+        vy:-Math.random()*1.05-.15,
+        a:.9,
+        s:Math.random()*2+1
+      });
+    }
+  }
+
+  function drawScene(dt){
+    drawBathroom();
+    drawBodyAndHead();
+    ctx.drawImage(hairCanvas,0,0);
+    drawGuide();
+    drawFaceDetails();
+    drawParticles(dt);
+    drawClipper();
+  }
+
+  function drawBathroom(){
+    const g=ctx.createLinearGradient(0,0,0,H);
+    g.addColorStop(0,'#ffffff'); g.addColorStop(.55,'#e7f2fb'); g.addColorStop(1,'#d9eaf5');
+    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+
+    ctx.strokeStyle='rgba(105,126,150,.18)'; ctx.lineWidth=1;
+    for(let x=0;x<W;x+=48){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    for(let y=0;y<H;y+=48){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+
+    ctx.fillStyle='rgba(255,255,255,.62)';
+    rr(92,50,716,638,30,true,false);
+    ctx.strokeStyle='rgba(42,61,89,.25)'; ctx.lineWidth=3; rr(92,50,716,638,30,false,true);
+
+    ctx.shadowColor='rgba(255,220,138,.95)'; ctx.shadowBlur=26;
+    ctx.fillStyle='#fff4c7'; rr(294,72,312,18,9,true,false);
+    ctx.shadowBlur=0;
+    ctx.fillStyle='rgba(42,61,89,.20)'; ctx.font='900 17px Inter, sans-serif';
+    ctx.fillText('BATHROOM MIRROR — HAIRLINE MODE',304,123);
+  }
+
+  function drawBodyAndHead(){
+    ctx.fillStyle='#77452f'; rr(head.x-38, head.y+100, 76, 112, 28, true, false);
+    ctx.fillStyle='#315bde';
+    ctx.beginPath(); ctx.ellipse(head.x, head.y+244, 166, 86, 0, Math.PI, 0, true); ctx.fill();
+
+    ctx.fillStyle='#8f5337';
+    ctx.beginPath(); ctx.ellipse(head.x-head.rx-3,head.y-18,21,42,0,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(head.x+head.rx+3,head.y-18,21,42,0,0,Math.PI*2); ctx.fill();
+
+    ctx.fillStyle='rgba(40,20,12,.18)';
+    ctx.beginPath(); ctx.ellipse(head.x+3,head.y+4,head.rx+4,head.ry+4,0,0,Math.PI*2); ctx.fill();
+
+    const sg=ctx.createLinearGradient(head.x-130,head.y-175,head.x+128,head.y+130);
+    sg.addColorStop(0,head.skin1); sg.addColorStop(.62,head.skin2); sg.addColorStop(1,head.skin3);
+    ctx.fillStyle=sg;
+    ctx.beginPath(); ctx.ellipse(head.x,head.y,head.rx,head.ry,0,0,Math.PI*2); ctx.fill();
+
+    // Subtle visible forehead/face boundary, not a hair ghost.
+    ctx.strokeStyle='rgba(255,255,255,.35)'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.ellipse(head.x,head.y,head.rx,head.ry,0,0,Math.PI*2); ctx.stroke();
+  }
+
+  function drawGuide(){
+    if(!state.showGuide || state.finished) return;
+    ctx.save();
+
+    // White under-stroke so the green target reads on dark hair and brown skin.
+    ctx.strokeStyle='rgba(255,255,255,.95)'; ctx.lineWidth=6;
+    ctx.beginPath();
+    for(let i=0;i<=150;i++){
+      const x=head.x-head.rx+(head.rx*2)*i/150, y=idealY(x);
+      if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+
+    ctx.strokeStyle='rgba(35,185,72,.98)'; ctx.lineWidth=3; ctx.setLineDash([9,7]);
+    ctx.beginPath();
+    for(let i=0;i<=150;i++){
+      const x=head.x-head.rx+(head.rx*2)*i/150, y=idealY(x);
+      if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
+  function drawFaceDetails(){
+    const eyeY = head.y - 22;
+
+    ctx.strokeStyle='rgba(38,18,12,.34)'; ctx.lineWidth=7; ctx.lineCap='round';
+    ctx.beginPath(); ctx.moveTo(head.x-72,eyeY-27); ctx.quadraticCurveTo(head.x-48,eyeY-38,head.x-25,eyeY-28); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(head.x+25,eyeY-28); ctx.quadraticCurveTo(head.x+48,eyeY-38,head.x+72,eyeY-27); ctx.stroke();
+
+    ctx.fillStyle='#fff';
+    ctx.beginPath(); ctx.ellipse(head.x-43,eyeY,17,23,0,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(head.x+43,eyeY,17,23,0,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#111827';
+    ctx.beginPath(); ctx.arc(head.x-40,eyeY+5,7,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(head.x+40,eyeY+5,7,0,Math.PI*2); ctx.fill();
+
+    ctx.strokeStyle='rgba(58,25,15,.45)'; ctx.lineWidth=4;
+    ctx.beginPath(); ctx.moveTo(head.x+1,head.y+2); ctx.quadraticCurveTo(head.x+12,head.y+30,head.x-5,head.y+40); ctx.stroke();
+    ctx.strokeStyle='#3a1b13'; ctx.lineWidth=5;
+    ctx.beginPath(); ctx.moveTo(head.x-29,head.y+82); ctx.quadraticCurveTo(head.x,head.y+94,head.x+29,head.y+82); ctx.stroke();
+  }
+
+  function drawClipper(){
+    const p=state.pointer, t=tools[state.tool];
+
+    ctx.save();
+    ctx.fillStyle=state.pointer.down ? '#facc15' : '#22c55e';
+    ctx.strokeStyle='#fff'; ctx.lineWidth=3;
+    ctx.beginPath(); ctx.arc(p.x,p.y,5.2,0,Math.PI*2); ctx.fill(); ctx.stroke();
+    ctx.restore();
+
+    ctx.save();
+    ctx.translate(p.x,p.y); ctx.rotate(-0.62);
+
+    ctx.fillStyle=t.color; rrLocal(-22,-8,44,16,5,true,false);
+    ctx.fillStyle='rgba(255,255,255,.92)';
+    for(let i=0;i<7;i++) ctx.fillRect(-17+i*5.7,-8,2,16);
+
+    const body=ctx.createLinearGradient(-20,8,30,94);
+    body.addColorStop(0,'#f8fafc'); body.addColorStop(.42,'#a9b4c2'); body.addColorStop(1,'#374151');
+    ctx.fillStyle=body; rrLocal(-18,7,40,92,13,true,false);
+    ctx.fillStyle='rgba(0,0,0,.20)'; rrLocal(-9,24,22,51,9,true,false);
+    ctx.fillStyle=t.color; rrLocal(-6,31,8,39,4,true,false);
+
+    ctx.strokeStyle='rgba(31,41,55,.55)'; ctx.lineWidth=4;
+    ctx.beginPath(); ctx.moveTo(7,98); ctx.quadraticCurveTo(60,146,126,110); ctx.stroke();
+
+    if(state.pointer.down){
+      ctx.globalAlpha=.28+.16*Math.sin(performance.now()/26);
+      ctx.strokeStyle=t.color; ctx.lineWidth=2;
+      ctx.beginPath(); ctx.ellipse(0,0,t.rx+3,t.ry+3,0,0,Math.PI*2); ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawParticles(dt){
+    for(let i=state.particles.length-1;i>=0;i--){
+      const p=state.particles[i];
+      p.x+=p.vx*dt*60; p.y+=p.vy*dt*60; p.vy+=.035*dt*60; p.a-=.032*dt*60;
+      if(p.a<=0){state.particles.splice(i,1);continue}
+      ctx.globalAlpha=p.a; ctx.fillStyle='#180f0a';
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.s,0,Math.PI*2); ctx.fill();
+      ctx.globalAlpha=1;
+    }
+  }
+
+  function getScores(){
+    const data=hair.getImageData(0,0,W,H).data;
+    let n=0, clean=0, over=0, left=0, right=0, leftN=0, rightN=0;
+
+    for(let i=0;i<=140;i++){
+      const x=Math.round(head.x-head.rx+(head.rx*2)*i/140);
+      let bottom=-999;
+
+      for(let y=Math.round(head.topY-20); y<Math.round(head.y+38); y++){
+        const a=data[(y*W+x)*4+3];
+        if(a>18) bottom=y;
+      }
+
+      const target=idealY(x);
+      if(bottom>-900){
+        const diff=bottom-target;
+        if(Math.abs(diff)<14) clean++;
+        else if(Math.abs(diff)<25) clean+=.70;
+        else if(diff>30) over+=Math.min(1.4,diff/48);
+        else clean+=.18;
+
+        if(x<head.x){left+=bottom;leftN++} else {right+=bottom;rightN++}
+      } else {
+        over+=.65;
+      }
+      n++;
+    }
+
+    const cleanPct=clamp(Math.round(clean/n*100),0,100);
+    const overPct=clamp(Math.round(over/n*100),0,100);
+    const l=left/(leftN||1), r=right/(rightN||1);
+    const sym=clamp(Math.round(100-Math.abs(l-r)*1.8),0,100);
+    const score=clamp(Math.round(cleanPct*.56+sym*.36-overPct*.65+10),0,100);
+
+    let grade='Patchy', outcome='rough-lineup';
+    if(score>=88){grade='Crispy';outcome='clean-lineup'}
+    else if(score>=74){grade='Clean enough';outcome='solid-lineup'}
+    else if(score>=56){grade='Needs touch-up';outcome='uneven-lineup'}
+    if(overPct>45){grade='Pushed back';outcome='pushed-back'}
+    if(overPct>68){grade='Bald rescue';outcome='bald-rescue'}
+
+    return {clean:cleanPct, symmetry:sym, overcut:overPct, score, grade, outcome};
+  }
+
+  function updateMeters(){
+    const s=getScores();
+    ui.timeVal.textContent=Math.max(0,Math.ceil(state.time));
+    ui.timeMeter.style.width=`${clamp(state.time/state.maxTime*100,0,100)}%`;
+    ui.cleanVal.textContent=`${s.clean}%`; ui.cleanMeter.style.width=`${s.clean}%`;
+    ui.symVal.textContent=`${s.symmetry}%`; ui.symMeter.style.width=`${s.symmetry}%`;
+    ui.overVal.textContent=`${s.overcut}%`; ui.overMeter.style.width=`${s.overcut}%`;
+    ui.overMeter.style.background=s.overcut>35?'linear-gradient(90deg,#ef4058,#ffbf47)':'linear-gradient(90deg,#48d658,#209cff)';
+
+    if(state.running && !state.finished){
+      if(s.overcut>50) ui.feedback.textContent='Back up. That line is starting to retreat.';
+      else if(s.clean>75 && s.symmetry>72) ui.feedback.textContent='This is getting crisp. Tiny touch-ups only.';
+      else if(s.clean<28) ui.feedback.textContent='Use the green blade dot on the messy lower hair edge.';
+      else ui.feedback.textContent='Good. Short passes. Keep both sides even.';
+    }
+    return s;
+  }
+
+  function friendlyOutcome(outcome){
+    const names = {
+      'clean-lineup': 'Crispy Lineup',
+      'solid-lineup': 'Clean Lineup',
+      'uneven-lineup': 'Needs a Touch-Up',
+      'rough-lineup': 'Practice Cut',
+      'pushed-back': 'Pushed Back',
+      'bald-rescue': 'Bald Rescue'
+    };
+    return names[outcome] || 'Finished Cut';
+  }
+
+  function finish(){
+    if(state.finished) return;
+    state.running=false; state.finished=true;
+    const s=updateMeters();
+    const result={
+      minigame:'hairline-clipper',
+      version:'lineup-lab-1.0',
+      score:s.score,
+      grade:s.grade,
+      styleOutcome:s.outcome,
+      clean:s.clean,
+      symmetry:s.symmetry,
+      overcut:s.overcut,
+      timeLeft:Math.max(0,Math.ceil(state.time)),
+      cuts:state.cuts,
+      recommendedGameEffects:{
+        hygieneDelta:s.score>=74?9:s.score>=56?4:-2,
+        funDelta:s.score>=74?6:2,
+        confidenceDelta:s.score>=88?6:s.score>=60?2:-4,
+        hairstyleOverride:s.outcome==='bald-rescue'?'bald-fade':null,
+        hairlineQuality:s.outcome
+      }
+    };
+
+    state.result=result;
+    window.ZW_LAST_HAIRCUT_RESULT=result;
+    window.dispatchEvent(new CustomEvent('zaylin:haircut-complete',{detail:result}));
+
+    ui.jsonOut.textContent=JSON.stringify(result,null,2);
+    ui.resultText.innerHTML=`<h3>${s.grade} — ${s.score}/100</h3>
+      <p>Clean Edge: <b>${s.clean}%</b> · Symmetry: <b>${s.symmetry}%</b> · Overcut: <b>${s.overcut}%</b></p>
+      <p><b>Style:</b> ${friendlyOutcome(s.outcome)}</p>`;
+    ui.resultOverlay.classList.add('show');
+    toast(`${s.grade}: ${s.score}/100`);
+  }
+
+  function tick(now){
+    const dt=Math.min(.05,(now-state.last)/1000); state.last=now;
+    state.historyCooldown=Math.max(0,state.historyCooldown-dt);
+
+    if(state.running && !state.finished){
+      state.time-=dt;
+      if(state.pointer.down) cutAt(state.pointer.x,state.pointer.y);
+      if(state.time<=0) finish();
+    }
+
+    drawScene(dt);
+    if((now|0)%5===0) updateMeters();
+    requestAnimationFrame(tick);
+  }
+
+  function toast(msg){
+    ui.toast.textContent=msg; ui.toast.classList.add('show');
+    clearTimeout(toast.t); toast.t=setTimeout(()=>ui.toast.classList.remove('show'),1100);
+  }
+
+  function undo(){
+    if(state.history.length>1){
+      state.history.pop();
+      hair.putImageData(state.history[state.history.length-1],0,0);
+      toast('Undo'); updateMeters();
+    }
+  }
+
+  function setTool(name){
+    if(!tools[name]) return;
+    state.tool=name;
+    document.querySelectorAll('.tool').forEach(b=>b.classList.toggle('active',b.dataset.tool===name));
+    toast(tools[name].name);
+  }
+
+  function rr(x,y,w,h,r,fill,stroke){
+    ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r);
+    ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
+    if(fill)ctx.fill(); if(stroke)ctx.stroke();
+  }
+  function rrLocal(x,y,w,h,r,fill,stroke){ rr(x,y,w,h,r,fill,stroke); }
+  function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+
+  canvas.addEventListener('pointermove', ev => {
+    const p=pointFromEvent(ev);
+    state.pointer.lastX=state.pointer.x; state.pointer.lastY=state.pointer.y;
+    state.pointer.x=clamp(p.x,0,W); state.pointer.y=clamp(p.y,0,H); state.pointer.inside=true;
+  });
+
+  canvas.addEventListener('pointerdown', ev => {
+    ev.preventDefault();
+    const p=pointFromEvent(ev);
+    state.pointer.x=p.x; state.pointer.y=p.y; state.pointer.lastX=p.x; state.pointer.lastY=p.y; state.pointer.down=true;
+    if(!state.running && !state.finished){state.running=true;toast('Clippers on')}
+    cutAt(p.x,p.y);
+  });
+
+  window.addEventListener('pointerup',()=>state.pointer.down=false);
+  canvas.addEventListener('pointerleave',()=>state.pointer.inside=false);
+
+  canvas.addEventListener('touchstart', ev => {
+    ev.preventDefault();
+    const p=pointFromEvent(ev);
+    state.pointer.x=p.x; state.pointer.y=p.y; state.pointer.lastX=p.x; state.pointer.lastY=p.y; state.pointer.down=true;
+    if(!state.running&&!state.finished){state.running=true;toast('Clippers on')}
+    cutAt(p.x,p.y);
+  }, {passive:false});
+
+  canvas.addEventListener('touchmove', ev => {
+    ev.preventDefault();
+    const p=pointFromEvent(ev);
+    state.pointer.lastX=state.pointer.x; state.pointer.lastY=state.pointer.y;
+    state.pointer.x=p.x; state.pointer.y=p.y;
+  }, {passive:false});
+
+  window.addEventListener('touchend',()=>state.pointer.down=false);
+
+  ui.startBtn.onclick=()=>{state.running=true;state.finished=false;ui.resultOverlay.classList.remove('show');toast('Clippers on')};
+  ui.finishBtn.onclick=finish;
+  ui.resetBtn.onclick=resetGame;
+  ui.retryBtn.onclick=resetGame;
+  ui.applyBtn.onclick=()=>toast('Cut saved');
+  ui.guideBtn.onclick=()=>{state.showGuide=!state.showGuide;toast(state.showGuide?'Guide on':'Guide off')};
+  ui.undoBtn.onclick=undo;
+  document.querySelectorAll('.tool').forEach(b=>b.onclick=()=>setTool(b.dataset.tool));
+
+  window.addEventListener('keydown', ev => {
+    if(ev.key.toLowerCase()==='g') ui.guideBtn.click();
+    if(ev.key.toLowerCase()==='z') undo();
+    if(ev.key==='Enter') finish();
+    if(ev.key==='1') setTool('edge');
+    if(ev.key==='2') setTool('guard1');
+    if(ev.key==='3') setTool('fade');
+    if(ev.key==='4') setTool('bald');
+  });
+
+  window.ZW_HAIRLINE_GAME={
+    version:'lineup-lab-1.0',
+    reset:resetGame,
+    finish,
+    getResult:()=>state.result || getScores(),
+    setTool,
+    setGuide:v=>state.showGuide=!!v
+  };
+
+  resetGame();
+  requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>

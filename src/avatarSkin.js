@@ -15,8 +15,20 @@
 //    procedural avatar remains — never a worse result than before.
 // ───────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
+import { clone as skeletonClone } from 'three/addons/utils/SkeletonUtils.js';
 import { loadAsset, makeMixer } from './assets.js';
 import { trackMixer } from './manifest.js';
+
+// Runtime skin telemetry — read by main.js to drive the on-screen debug HUD.
+// Each entry: { mode:'glb'|'fallback', label, reason, url, bounds, scale }.
+export const SKIN_STATUS = {
+  player: { mode: 'pending', label: '—', reason: '', url: '', bounds: '', scale: 0 },
+  npc: { glb: 0, fallback: 0, last: '' },
+  cop: { glb: 0, fallback: 0, last: '' },
+};
+if (typeof window !== 'undefined') window.__ZW_SKIN_STATUS__ = SKIN_STATUS;
+
+const slog = (...a) => console.info('[skin]', ...a);
 
 // Runtime-tunable skin config so facing/scale can be corrected LIVE from the
 // console without a rebuild (these PSX models vary in their authored forward
@@ -55,13 +67,29 @@ function hideProceduralMeshes(group, skin) {
 // Attach `glb.scene` as the visible skin of `avatar` (from buildAvatar).
 // Validates the GLB bounds FIRST; only hides the procedural body if it passes.
 // Returns true on success, false (procedural kept visible) on reject.
+//
+// CRITICAL: skinned-mesh GLBs must be cloned with SkeletonUtils.clone(), NOT
+// Object3D.clone(true) — the plain clone does not rebind the skeleton, so the
+// visible mesh collapses/goes invisible while the procedural body is hidden,
+// which is exactly the "skins not showing" bug. SkeletonUtils rebinds bones.
 function skinAvatar(avatar, glb, { height = 1.78, play = true, label = 'skin' } = {}) {
-  if (!avatar || !avatar.group || !glb || !glb.scene) return false;
-  const skin = glb.scene.clone(true);
+  if (!avatar || !avatar.group || !glb || !glb.scene) {
+    slog('REQUEST', label, '→ no avatar/glb (procedural kept)');
+    return false;
+  }
+  slog('REQUEST', label, 'height', height);
+  let skin;
+  try {
+    skin = skeletonClone(glb.scene);     // skeleton-aware clone (fixes invisible/broken rig)
+  } catch (e) {
+    slog('CLONE-FAIL', label, '→', e && e.message, '(falling back to shallow clone)');
+    skin = glb.scene.clone(true);
+  }
   skin.name = 'glb-skin';
   const v = validateHumanoidGlb(skin, height);
+  const boundsStr = v.size ? `${v.size.x.toFixed(2)}x${v.size.y.toFixed(2)}x${v.size.z.toFixed(2)}` : '?';
   if (!v.ok) {
-    console.warn('[skin] REJECTED', label, '→', v.reason, '(procedural body kept)');
+    slog('REJECTED', label, '→', v.reason, '| rawBounds', boundsStr, '(procedural body kept)');
     if (typeof window !== 'undefined' && window.__ZW_DEBUG__ && window.__ZW_DEBUG__.metrics) {
       window.__ZW_DEBUG__.metrics.failedAssets.push(label + ': ' + v.reason);
     }
@@ -75,6 +103,8 @@ function skinAvatar(avatar, glb, { height = 1.78, play = true, label = 'skin' } 
   hideProceduralMeshes(avatar.group, skin);  // hide procedural body (validated GLB only)
   avatar.group.add(skin);                    // then add the visible skin
   avatar.skin = skin;
+  slog('APPLIED', label, '| rawBounds', boundsStr, '| scale', v.scale.toFixed(3),
+    '| faceYaw', SKIN_CFG.faceYaw.toFixed(2), '| clips', (glb.animations && glb.animations.length) || 0);
 
   if (play && glb.animations && glb.animations.length) {
     const mm = makeMixer(skin, glb.animations);
@@ -104,24 +134,29 @@ function validateHumanoidGlb(scene, targetHeight) {
   if (h > 60) return { ok: false, reason: 'huge height ' + h.toFixed(1) };
   const scale = targetHeight / h;
   const fw = w * scale, fd = d * scale, fh = h * scale;
-  if (fh < 1.2 || fh > 2.4) return { ok: false, reason: 'final height ' + fh.toFixed(2) + ' out of 1.2–2.4m' };
-  if (fw > 1.6 || fd > 1.6) return { ok: false, reason: 'final width/depth ' + fw.toFixed(2) + '/' + fd.toFixed(2) + ' > 1.6m' };
+  if (fh < 1.2 || fh > 2.4) return { ok: false, reason: 'final height ' + fh.toFixed(2) + ' out of 1.2–2.4m', size };
+  // A-pose/idle characters can be a touch wider; 1.9m keeps the giant-blob guard
+  // while no longer rejecting valid arms-out idle poses.
+  if (fw > 1.9 || fd > 1.9) return { ok: false, reason: 'final w/d ' + fw.toFixed(2) + '/' + fd.toFixed(2) + ' > 1.9m', size };
   return { ok: true, scale, size, box };
 }
 
 // Replace every city NPC's bubble body with a PSX humanoid GLB.
 // `npcs` = array from createCityNPCs (each has `.av` = avatar). Returns count.
 export async function applyNpcSkins(npcs, renderer, max = 99) {
-  let done = 0;
+  let done = 0, fail = 0;
   const jobs = npcs.slice(0, max).map(async (n, i) => {
+    const name = CIVILIANS[i % CIVILIANS.length];
     try {
-      const name = CIVILIANS[i % CIVILIANS.length];
       const glb = await loadAsset('characters', 'psx', name, renderer);
-      if (glb && skinAvatar(n.av, glb, { height: 1.75, label: 'npc:' + name })) { n.realSkin = true; done++; }
-    } catch { /* keep procedural */ }
+      if (!glb) { slog('NPC load FAILED', name, '(no GLB at ./assets/models/characters/psx/' + name + '.glb)'); fail++; SKIN_STATUS.npc.last = name + ': load-failed'; return; }
+      if (skinAvatar(n.av, glb, { height: 1.75, label: 'npc:' + name })) { n.realSkin = true; done++; SKIN_STATUS.npc.last = name + ': glb'; }
+      else { fail++; SKIN_STATUS.npc.last = name + ': rejected'; }
+    } catch (e) { fail++; slog('NPC EXC', name, e && e.message); SKIN_STATUS.npc.last = name + ': ' + (e && e.message); }
   });
   await Promise.all(jobs);
-  if (done) console.info('[skins] NPCs reskinned with PSX models:', done);
+  SKIN_STATUS.npc.glb = done; SKIN_STATUS.npc.fallback = fail;
+  slog('NPC summary → glb:', done, 'fallback:', fail);
   return done;
 }
 
@@ -137,29 +172,33 @@ const POLICE = [
 // Replace a foot-cop's procedural body with a real PSX POLICE OFFICER GLB.
 // Validated like every other skin — if it fails, the procedural cop is kept.
 export async function applyCopSkin(avatar, renderer) {
+  const name = pick(POLICE);
   try {
-    const name = pick(POLICE);
     const glb = await loadAsset('characters', 'psx', name, renderer);
-    if (glb && skinAvatar(avatar, glb, { height: 1.82, label: 'cop:' + name })) {
-      avatar.realSkin = true;
+    if (!glb) { slog('COP load FAILED', name); SKIN_STATUS.cop.fallback++; SKIN_STATUS.cop.last = name + ': load-failed'; return null; }
+    if (skinAvatar(avatar, glb, { height: 1.82, label: 'cop:' + name })) {
+      avatar.realSkin = true; SKIN_STATUS.cop.glb++; SKIN_STATUS.cop.last = name + ': glb';
       return name;
     }
-  } catch { /* keep procedural */ }
+    SKIN_STATUS.cop.fallback++; SKIN_STATUS.cop.last = name + ': rejected';
+  } catch (e) { slog('COP EXC', name, e && e.message); SKIN_STATUS.cop.fallback++; SKIN_STATUS.cop.last = name + ': ' + (e && e.message); }
   return null;
 }
 
 // Replace the player's procedural body with a PSX humanoid GLB skin.
 // seed picks a stable model per save so the player looks consistent.
 export async function applyPlayerSkin(avatar, renderer, seed = 0) {
+  const name = CIVILIANS[Math.abs(seed) % CIVILIANS.length];
+  SKIN_STATUS.player.label = name;
   try {
-    const name = CIVILIANS[Math.abs(seed) % CIVILIANS.length];
     const glb = await loadAsset('characters', 'psx', name, renderer);
-    if (glb && skinAvatar(avatar, glb, { height: 1.8, label: 'player:' + name })) {
-      avatar.realSkin = true;
-      console.info('[skins] player reskinned with', name);
+    if (!glb) { slog('PLAYER load FAILED', name); SKIN_STATUS.player.mode = 'fallback'; SKIN_STATUS.player.reason = 'load-failed'; return false; }
+    if (skinAvatar(avatar, glb, { height: 1.8, label: 'player:' + name })) {
+      avatar.realSkin = true; SKIN_STATUS.player.mode = 'glb'; SKIN_STATUS.player.reason = '';
       return true;
     }
-  } catch { /* keep procedural */ }
+    SKIN_STATUS.player.mode = 'fallback'; SKIN_STATUS.player.reason = 'rejected';
+  } catch (e) { slog('PLAYER EXC', name, e && e.message); SKIN_STATUS.player.mode = 'fallback'; SKIN_STATUS.player.reason = e && e.message; }
   return false;
 }
 
