@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import '../skinRuntime.js';
 
 // ───────────────────────────────────────────────────────────────────────────
 //  blockSupplyLayout.js — physical display layout for the Block Supply store.
@@ -13,6 +14,10 @@ import * as THREE from 'three';
 //  The main display builder still tries to add one little square backing plate
 //  per weapon. This module is imported before that builder runs, so we suppress
 //  only those exact plate meshes. Result: weapons hang directly on the back wall.
+//
+//  It also imports skinRuntime.js here because main.js imports this config before
+//  building the creator/player/NPC avatars. That installs the visible-skin hook
+//  early without risky main.js surgery.
 // ───────────────────────────────────────────────────────────────────────────
 
 function installBlockSupplyPlateSuppressor() {
