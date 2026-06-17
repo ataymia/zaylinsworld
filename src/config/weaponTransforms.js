@@ -20,35 +20,35 @@
 export const CATEGORY_TRANSFORMS = {
   pistols: {
     hand:    { pos: [0.0, -0.02, 0.18], rot: [0, Math.PI, 0], fit: 0.34, muzzle: [0, 0.02, -0.22] },
-    display: { pos: [0, 0, 0], rot: [0, -Math.PI / 2, 0], fit: 0.42 },
+    display: { pos: [0, 0, 0.03], rot: [0, -Math.PI / 2, 0], fit: 0.34 },
   },
   compact: {
     hand:    { pos: [0.0, -0.03, 0.20], rot: [0, Math.PI, 0], fit: 0.46, muzzle: [0, 0.02, -0.30] },
-    display: { pos: [0, 0, 0], rot: [0, -Math.PI / 2, 0], fit: 0.55 },
+    display: { pos: [0, 0, 0.035], rot: [0, -Math.PI / 2, 0], fit: 0.46 },
   },
   rifles: {
     hand:    { pos: [0.02, -0.04, 0.26], rot: [0, Math.PI, 0], fit: 0.72, muzzle: [0, 0.02, -0.46] },
-    display: { pos: [0, 0, 0], rot: [0, -Math.PI / 2, 0], fit: 0.9 },
+    display: { pos: [0, 0, 0.04], rot: [0, -Math.PI / 2, 0], fit: 0.54 },
   },
   shotguns: {
     hand:    { pos: [0.02, -0.04, 0.24], rot: [0, Math.PI, 0], fit: 0.66, muzzle: [0, 0.02, -0.42] },
-    display: { pos: [0, 0, 0], rot: [0, -Math.PI / 2, 0], fit: 0.85 },
+    display: { pos: [0, 0, 0.04], rot: [0, -Math.PI / 2, 0], fit: 0.54 },
   },
   precision: {
     hand:    { pos: [0.02, -0.04, 0.30], rot: [0, Math.PI, 0], fit: 0.86, muzzle: [0, 0.02, -0.56] },
-    display: { pos: [0, 0, 0], rot: [0, -Math.PI / 2, 0], fit: 1.05 },
+    display: { pos: [0, 0, 0.04], rot: [0, -Math.PI / 2, 0], fit: 0.56 },
   },
   heavy: {
     hand:    { pos: [0.04, -0.02, 0.28], rot: [0, Math.PI, 0], fit: 0.8, muzzle: [0, 0.04, -0.5] },
-    display: { pos: [0, 0, 0], rot: [0, -Math.PI / 2, 0], fit: 1.0 },
+    display: { pos: [0, 0, 0.04], rot: [0, -Math.PI / 2, 0], fit: 0.58 },
   },
   melee: {
     hand:    { pos: [0.0, -0.08, 0.16], rot: [Math.PI * 0.15, 0, 0], fit: 0.6, muzzle: [0, -0.2, 0] },
-    display: { pos: [0, 0, 0], rot: [0, 0, Math.PI * 0.12], fit: 0.7 },
+    display: { pos: [0, 0, 0.035], rot: [0, 0, Math.PI * 0.12], fit: 0.50 },
   },
   tools: {
     hand:    { pos: [0.0, -0.06, 0.16], rot: [Math.PI * 0.1, 0, 0], fit: 0.5, muzzle: [0, -0.16, 0] },
-    display: { pos: [0, 0, 0], rot: [0, 0, 0], fit: 0.55 },
+    display: { pos: [0, 0, 0.035], rot: [0, 0, 0], fit: 0.46 },
   },
 };
 
@@ -56,9 +56,15 @@ export const CATEGORY_TRANSFORMS = {
 // here only when a specific asset needs nudging — most weapons just use the
 // category default.
 export const WEAPON_TRANSFORM_OVERRIDES = {
-  // example tuning hooks (kept conservative so nothing floats/clips by default)
-  rocket_blast:  { hand: { fit: 0.78 } },
-  plank_bonker:  { hand: { rot: [Math.PI * 0.2, 0, 0.1], fit: 0.7 } },
+  // hand tuning hooks stay independent of the display cleanup.
+  rocket_blast:  { hand: { fit: 0.78 }, display: { fit: 0.54 } },
+  plank_bonker:  { hand: { rot: [Math.PI * 0.2, 0, 0.1], fit: 0.7 }, display: { fit: 0.46 } },
+
+  // The heavier feature-case props were the main culprits for clipping through
+  // the case/door view. Keep them chunky enough to read, but inside the plates.
+  mw_bazooka:    { display: { fit: 0.54 } },
+  mw_gatling:    { display: { fit: 0.54 } },
+  mw_crossbow:   { display: { fit: 0.50 } },
 };
 
 // Resolve the final hand/display transform for a catalog weapon. Always returns
