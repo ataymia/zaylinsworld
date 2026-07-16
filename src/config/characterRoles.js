@@ -1,17 +1,11 @@
 // ───────────────────────────────────────────────────────────────────────────
 // characterRoles.js — authoritative visible-character role policy.
-//
-// Complete character GLBs work well for civilians and officers because their
-// outfit/body is authored as one model. They are NOT the correct player solution:
-// swapping a complete GLB over the creator avatar would erase the selected skin,
-// body, top, bottoms and shoes. The player therefore stays procedural-custom
-// until a modular rig/clothing pipeline is ready.
 // ───────────────────────────────────────────────────────────────────────────
-
 export const CHARACTER_ROLE_POLICY = Object.freeze({
   player: Object.freeze({
-    mode: 'procedural-custom',
-    reason: 'Preserves creator skin tone, body, height, clothes, shoes, hair and attachments.',
+    mode: 'modular-custom',
+    asset: 'sunbox-male-free',
+    reason: 'Editable shared rig with body/face morphs, modular wardrobe slots, texture variants and procedural fallback.',
   }),
   civilian: Object.freeze({
     mode: 'glb-capped',
@@ -26,8 +20,6 @@ export const CHARACTER_ROLE_POLICY = Object.freeze({
   }),
 });
 
-// Curated to ordinary kid-safe town residents. Emergency-service, killer and
-// monster variants are deliberately excluded from the civilian pool.
 export const CIVILIAN_CHARACTER_CANDIDATES = Object.freeze([
   'character-01', 'character-02', 'character-03', 'character-04',
   'character-05', 'character-06', 'character-07', 'character-08',
