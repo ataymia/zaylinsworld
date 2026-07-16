@@ -31,12 +31,13 @@ assert.match(wallBlob.reason, /width\/depth/);
 
 assert.equal(CHARACTER_ROLE_POLICY.player.mode, 'modular-custom');
 assert.equal(CHARACTER_ROLE_POLICY.player.asset, 'sunbox-male-free');
-assert.equal(CHARACTER_ROLE_POLICY.civilian.mode, 'procedural-functional');
-assert.equal(CHARACTER_ROLE_POLICY.civilian.maxLiveSkins, 0);
+assert.equal(CHARACTER_ROLE_POLICY.civilian.mode, 'glb-functional-direct');
+assert.ok(CHARACTER_ROLE_POLICY.civilian.maxLiveSkins >= 20);
 assert.equal(CHARACTER_ROLE_POLICY.civilian.playEmbeddedClip, false);
+assert.equal(CHARACTER_ROLE_POLICY.civilian.castShadows, false);
 assert.equal(CHARACTER_ROLE_POLICY.police.mode, 'procedural-functional');
 assert.equal(CHARACTER_ROLE_POLICY.police.playEmbeddedClip, false);
-assert.ok(CIVILIAN_CHARACTER_CANDIDATES.length >= 20);
+assert.ok(CIVILIAN_CHARACTER_CANDIDATES.length >= 40);
 assert.ok(POLICE_CHARACTER_CANDIDATES.every((name) => name.includes('police')));
 assert.equal(
   stableCharacterCandidate(CIVILIAN_CHARACTER_CANDIDATES, 'citynpc-4'),
@@ -62,4 +63,4 @@ assert.equal(clonePlayerAppearance(PLAYER_CUSTOM_DEFAULTS).modularTop, 'tshirt')
 assert.ok(PLAYER_AVATAR_CATALOG.bodySliders.find((slider) => slider.key === 'heightScale').min <= 0.82);
 assert.ok(PLAYER_AVATAR_CATALOG.bodySliders.find((slider) => slider.key === 'heightScale').max >= 1.18);
 
-console.log('[characters] role policy, modular catalog, legacy hair and bounds checks passed.');
+console.log('[characters] modular player, direct imported civilians, legacy hair and bounds checks passed.');
