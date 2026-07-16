@@ -10,14 +10,28 @@ import * as THREE from 'three';
 import { clone as skeletonClone } from 'three/addons/utils/SkeletonUtils.js';
 import { loadAsset, makeMixer } from './assets.js';
 import { trackMixer } from './manifest.js';
+import {
+  CHARACTER_PACK,
+  CHARACTER_POLICY,
+  CHARACTER_POOLS,
+  characterForRole,
+  randomCharacterForRole,
+} from './config/characterPools.js';
 
 export const SKIN_STATUS = {
   player: {
     mode: 'pending', attempted: 0, applied: 0, fallback: 0,
     label: '—', reason: '', url: '', bounds: '', scale: 0,
+    usableClips: 0, poseOnlyClips: 0,
   },
-  npc: { attempted: 0, loading: 0, glb: 0, fallback: 0, cap: 0, last: '' },
-  cop: { attempted: 0, loading: 0, glb: 0, fallback: 0, last: '' },
+  npc: {
+    attempted: 0, loading: 0, glb: 0, fallback: 0, cap: 0,
+    usableClips: 0, poseOnlyClips: 0, last: '',
+  },
+  cop: {
+    attempted: 0, loading: 0, glb: 0, fallback: 0,
+    usableClips: 0, poseOnlyClips: 0, last: '',
+  },
 };
 if (typeof window !== 'undefined') window.__ZW_SKIN_STATUS__ = SKIN_STATUS;
 
@@ -27,34 +41,8 @@ const slog = (...args) => console.info('[skin]', ...args);
 const SKIN_CFG = { faceYaw: 0 };
 if (typeof window !== 'undefined') window.__ZW_SKIN__ = SKIN_CFG;
 
-const CIVILIANS = [
-  'character-29-female', 'character-30-female', 'character-31-female', 'character-32-female', 'character-33-female',
-  'character-27-female-hm', 'character-28-female-hm',
-  'character-female-02', 'character-female-03', 'character-female-04', 'character-female-05',
-  'character-female-06', 'character-female-07', 'character-female-08', 'character-female-09', 'character-female-10',
-  'character-female-11', 'character-female-12', 'character-female-13', 'character-female-14', 'character-female-15', 'character-female-16',
-  'character-01', 'character-02', 'character-03', 'character-04', 'character-05',
-  'character-06', 'character-07', 'character-08', 'character-09', 'character-10',
-  'character-11', 'character-12', 'character-13', 'character-14', 'character-15', 'character-16',
-];
-
-const POLICE = [
-  'character-17-police', 'character-18-police', 'character-19-police', 'character-20-police',
-  'character-17-female-police', 'character-18-female-police', 'character-19-female-police',
-  'character-20-female-police', 'character-25-female-police', 'character-26-female-police',
-];
-
-const PLAYER_CANDIDATES = [
-  'character-29-female', 'character-30-female', 'character-31-female', 'character-32-female', 'character-33-female',
-  'character-female-02', 'character-female-03', 'character-female-04', 'character-female-05',
-  'character-female-11', 'character-female-12', 'character-female-13', 'character-female-14',
-  'character-27-female-hm', 'character-28-female-hm',
-];
-
-const pick = (list) => list[Math.floor(Math.random() * list.length)];
-
 function claimSkinAttempt(avatar, role) {
-  if (!avatar || !avatar.group) return false;
+  if (!avatar?.group) return false;
   const data = avatar.group.userData;
   if (data.skinAttempted) return false;
   data.skinAttempted = role;
@@ -103,6 +91,44 @@ function prepareSkinMaterials(skin) {
   });
 }
 
+function normalizeBoneName(value) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/^mixamorig[:_]?/, '')
+    .replace(/[^a-z0-9]/g, '');
+}
+
+function collectSkinBones(skin) {
+  const bones = {};
+  skin.traverse((node) => {
+    if (!node.isBone) return;
+    const key = normalizeBoneName(node.name);
+    if (key && !bones[key]) bones[key] = node;
+  });
+  return bones;
+}
+
+function clipKeyCount(clip) {
+  let maxKeys = 0;
+  for (const track of clip?.tracks || []) {
+    maxKeys = Math.max(maxKeys, track.times?.length || 0);
+  }
+  return maxKeys;
+}
+
+export function isUsableCharacterClip(clip) {
+  return !!clip && Number(clip.duration || 0) >= 0.2 && clipKeyCount(clip) >= 3;
+}
+
+function classifyRuntimeClips(animations) {
+  const all = Array.isArray(animations) ? animations : [];
+  const usable = all.filter(isUsableCharacterClip);
+  return {
+    usable,
+    poseOnly: all.filter((clip) => !isUsableCharacterClip(clip)),
+  };
+}
+
 // Public for the audit/test pipeline. Validation never mutates or hides the source.
 export function validateHumanoidGlb(scene, targetHeight = 1.78) {
   if (!scene) return { ok: false, reason: 'missing scene' };
@@ -116,7 +142,7 @@ export function validateHumanoidGlb(scene, targetHeight = 1.78) {
   if (![width, height, depth].every(Number.isFinite)) return { ok: false, reason: 'non-finite bounds' };
   if (width <= 0 || height <= 0 || depth <= 0) return { ok: false, reason: 'empty bounds' };
   if (height < 0.05) return { ok: false, reason: `tiny height ${height.toFixed(3)} (huge scale)` };
-  if (height > 80) return { ok: false, reason: `huge height ${height.toFixed(1)}` };
+  if (height > 1000) return { ok: false, reason: `huge height ${height.toFixed(1)}` };
 
   const scale = targetHeight / height;
   const finalWidth = width * scale;
@@ -180,16 +206,21 @@ function skinAvatar(avatar, glb, {
   hideProceduralMeshes(avatar.group, skin, { keepCustomHair });
 
   avatar.skin = skin;
+  avatar.skinBones = collectSkinBones(skin);
   avatar.realSkin = true;
   avatar.group.userData.skinApplied = label;
 
-  if (play && glb.animations?.length) {
-    const mixer = makeMixer(skin, glb.animations);
-    const first = glb.animations[0];
-    if (first) mixer.play(first.name, { loop: true, fade: 0.1 });
+  const clips = classifyRuntimeClips(glb.animations);
+  avatar.skinClipNames = clips.usable.map((clip) => clip.name);
+  avatar.poseOnlyClipNames = clips.poseOnly.map((clip) => clip.name);
+
+  // Do not play a one-frame/two-key Mixamo bind-pose track. Those tracks freeze
+  // the skeleton but add no visible motion. Real clips can still use the mixer.
+  if (play && clips.usable.length) {
+    const mixer = makeMixer(skin, clips.usable);
+    mixer.play(clips.usable[0].name, { loop: true, fade: 0.1 });
     trackMixer(mixer);
     avatar.skinMixer = mixer;
-    avatar.skinClipNames = glb.animations.map((clip) => clip.name);
   }
 
   slog(
@@ -197,10 +228,19 @@ function skinAvatar(avatar, glb, {
     '| rawBounds', bounds,
     '| scale', validation.scale.toFixed(3),
     '| keepHair', keepCustomHair,
-    '| clips', glb.animations?.length || 0,
+    '| usableClips', clips.usable.length,
+    '| poseOnlyClips', clips.poseOnly.length,
+    '| bones', Object.keys(avatar.skinBones).length,
   );
 
-  return { ok: true, bounds, scale: validation.scale, clips: glb.animations?.length || 0 };
+  return {
+    ok: true,
+    bounds,
+    scale: validation.scale,
+    usableClips: clips.usable.length,
+    poseOnlyClips: clips.poseOnly.length,
+    boneCount: Object.keys(avatar.skinBones).length,
+  };
 }
 
 const sleepFrame = () => new Promise((resolve) => {
@@ -210,7 +250,8 @@ const sleepFrame = () => new Promise((resolve) => {
 
 // Replace only the first capped set of city civilians. Distant/excess NPCs remain
 // procedural, which is deliberate for frame rate and draw-call control.
-export async function applyNpcSkins(npcs, renderer, max = 8) {
+export async function applyNpcSkins(npcs, renderer, max = CHARACTER_POLICY.civilian.maxLive) {
+  if (!CHARACTER_POLICY.civilian.enabled) return 0;
   const source = Array.isArray(npcs) ? npcs : [];
   const list = source.slice(0, Math.min(max, source.length));
   SKIN_STATUS.npc.cap = list.length;
@@ -222,22 +263,31 @@ export async function applyNpcSkins(npcs, renderer, max = 8) {
   for (let index = 0; index < list.length; index++) {
     const npc = list[index];
     const avatar = npc?.av;
-    const name = CIVILIANS[index % CIVILIANS.length];
+    const name = characterForRole('civilian', npc?.id ?? index);
 
-    if (!claimSkinAttempt(avatar, 'civilian')) continue;
+    if (!name || !claimSkinAttempt(avatar, 'civilian')) {
+      SKIN_STATUS.npc.loading = Math.max(0, SKIN_STATUS.npc.loading - 1);
+      continue;
+    }
     SKIN_STATUS.npc.attempted++;
     SKIN_STATUS.npc.last = `${name}: loading`;
 
     try {
-      const glb = await loadAsset('characters', 'psx', name, renderer);
+      const glb = await loadAsset('characters', CHARACTER_PACK, name, renderer);
       if (!glb) {
         fallback++;
         SKIN_STATUS.npc.last = `${name}: load-failed`;
       } else {
-        const result = skinAvatar(avatar, glb, { height: 1.75, label: `npc:${name}` });
+        const result = skinAvatar(avatar, glb, {
+          height: CHARACTER_POLICY.civilian.targetHeight,
+          label: `npc:${name}`,
+          keepCustomHair: CHARACTER_POLICY.civilian.keepCustomHair,
+        });
         if (result.ok) {
           npc.realSkin = name;
           applied++;
+          SKIN_STATUS.npc.usableClips += result.usableClips;
+          SKIN_STATUS.npc.poseOnlyClips += result.poseOnlyClips;
           SKIN_STATUS.npc.last = `${name}: glb`;
         } else {
           fallback++;
@@ -251,7 +301,7 @@ export async function applyNpcSkins(npcs, renderer, max = 8) {
     }
 
     SKIN_STATUS.npc.loading = Math.max(0, SKIN_STATUS.npc.loading - 1);
-    if (index % 2 === 1) await sleepFrame();
+    if ((index + 1) % CHARACTER_POLICY.civilian.staggerEvery === 0) await sleepFrame();
   }
 
   SKIN_STATUS.npc.glb += applied;
@@ -261,22 +311,27 @@ export async function applyNpcSkins(npcs, renderer, max = 8) {
 }
 
 export async function applyCopSkin(avatar, renderer) {
+  if (!CHARACTER_POLICY.police.enabled) return null;
   if (!claimSkinAttempt(avatar, 'police')) return avatar?.realSkin || null;
 
-  const name = pick(POLICE);
+  const name = randomCharacterForRole('police');
   SKIN_STATUS.cop.attempted++;
   SKIN_STATUS.cop.loading++;
   SKIN_STATUS.cop.last = `${name}: loading`;
 
   try {
-    const glb = await loadAsset('characters', 'psx', name, renderer);
+    const glb = await loadAsset('characters', CHARACTER_PACK, name, renderer);
     if (!glb) {
       SKIN_STATUS.cop.fallback++;
       SKIN_STATUS.cop.last = `${name}: load-failed`;
       return null;
     }
 
-    const result = skinAvatar(avatar, glb, { height: 1.82, label: `cop:${name}` });
+    const result = skinAvatar(avatar, glb, {
+      height: CHARACTER_POLICY.police.targetHeight,
+      label: `cop:${name}`,
+      keepCustomHair: CHARACTER_POLICY.police.keepCustomHair,
+    });
     if (!result.ok) {
       SKIN_STATUS.cop.fallback++;
       SKIN_STATUS.cop.last = `${name}: ${result.reason}`;
@@ -285,6 +340,8 @@ export async function applyCopSkin(avatar, renderer) {
 
     avatar.realSkin = name;
     SKIN_STATUS.cop.glb++;
+    SKIN_STATUS.cop.usableClips += result.usableClips;
+    SKIN_STATUS.cop.poseOnlyClips += result.poseOnlyClips;
     SKIN_STATUS.cop.last = `${name}: glb`;
     return name;
   } catch (error) {
@@ -298,16 +355,24 @@ export async function applyCopSkin(avatar, renderer) {
 }
 
 export async function applyPlayerSkin(avatar, renderer, seed = 0) {
+  if (!CHARACTER_POLICY.player.enabled) return false;
   if (!claimSkinAttempt(avatar, 'player')) return !!avatar?.realSkin;
 
-  const name = PLAYER_CANDIDATES[Math.abs(seed) % PLAYER_CANDIDATES.length];
+  const name = characterForRole('player', seed);
   SKIN_STATUS.player.mode = 'loading';
   SKIN_STATUS.player.attempted++;
-  SKIN_STATUS.player.label = name;
+  SKIN_STATUS.player.label = name || '—';
   SKIN_STATUS.player.reason = '';
 
+  if (!name) {
+    SKIN_STATUS.player.mode = 'fallback';
+    SKIN_STATUS.player.fallback++;
+    SKIN_STATUS.player.reason = 'empty player pool';
+    return false;
+  }
+
   try {
-    const glb = await loadAsset('characters', 'psx', name, renderer);
+    const glb = await loadAsset('characters', CHARACTER_PACK, name, renderer);
     if (!glb) {
       SKIN_STATUS.player.mode = 'fallback';
       SKIN_STATUS.player.fallback++;
@@ -316,9 +381,9 @@ export async function applyPlayerSkin(avatar, renderer, seed = 0) {
     }
 
     const result = skinAvatar(avatar, glb, {
-      height: 1.8,
+      height: CHARACTER_POLICY.player.targetHeight,
       label: `player:${name}`,
-      keepCustomHair: true,
+      keepCustomHair: CHARACTER_POLICY.player.keepCustomHair,
     });
 
     if (!result.ok) {
@@ -333,6 +398,8 @@ export async function applyPlayerSkin(avatar, renderer, seed = 0) {
     SKIN_STATUS.player.applied++;
     SKIN_STATUS.player.bounds = result.bounds;
     SKIN_STATUS.player.scale = result.scale;
+    SKIN_STATUS.player.usableClips = result.usableClips;
+    SKIN_STATUS.player.poseOnlyClips = result.poseOnlyClips;
     return true;
   } catch (error) {
     SKIN_STATUS.player.mode = 'fallback';
@@ -342,4 +409,6 @@ export async function applyPlayerSkin(avatar, renderer, seed = 0) {
   }
 }
 
-export { CIVILIANS, PLAYER_CANDIDATES, POLICE };
+export const CIVILIANS = CHARACTER_POOLS.civilian;
+export const PLAYER_CANDIDATES = CHARACTER_POOLS.player;
+export const POLICE = CHARACTER_POOLS.police;
