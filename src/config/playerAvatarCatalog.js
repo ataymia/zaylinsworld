@@ -5,7 +5,7 @@
 // meshes/textures behind those ids, so a later Genies/full-pack migration does
 // not require rebuilding the wardrobe or invalidating saved outfits.
 // ─────────────────────────────────────────────────────────────────────────────
-import { SKIN_TONES, JEWELRY } from '../avatar.js';
+import { SKIN_TONES, JEWELRY, HAIR_GLTF, HAIR_COLORS } from '../avatar.js';
 
 export const PLAYER_MODEL_URL = './assets/models/characters/player/sunbox-male-free.glb';
 export const PLAYER_TEXTURE_ROOT = './assets/models/characters/player/sunbox-male-free/textures/';
@@ -14,6 +14,12 @@ const item = (id, name, extra = {}) => Object.freeze({ id, name, owned: true, ..
 const variant = (id, name, path, swatch = null) => Object.freeze({
   id, name, path: PLAYER_TEXTURE_ROOT + path, swatch,
 });
+
+const LEGACY_ASSET_HAIR = Object.freeze(Object.entries(HAIR_GLTF).map(([id, cfg]) => item(id, cfg.name, {
+  source: 'legacy-gltf',
+  anchor: 'head',
+  fitContract: 'canonical-head-v1',
+})));
 
 export const PLAYER_AVATAR_CATALOG = Object.freeze({
   source: Object.freeze({
@@ -28,11 +34,13 @@ export const PLAYER_AVATAR_CATALOG = Object.freeze({
   ]),
   skinTones: SKIN_TONES,
   jewelry: JEWELRY,
+  hairColors: HAIR_COLORS,
   slots: Object.freeze({
     hair: Object.freeze([
       item('none', 'No Hair'),
-      item('crew-cut', 'Crew Cut', { node: 'ZW_Hair_CrewCut' }),
-      item('close-crop', 'Close Crop', { node: 'ZW_Hair_CloseCrop' }),
+      item('crew-cut', 'Crew Cut', { node: 'ZW_Hair_CrewCut', source: 'sunbox' }),
+      item('close-crop', 'Close Crop', { node: 'ZW_Hair_CloseCrop', source: 'sunbox' }),
+      ...LEGACY_ASSET_HAIR,
     ]),
     facialHair: Object.freeze([
       item('none', 'Clean Shave'),
@@ -133,7 +141,7 @@ export const PLAYER_AVATAR_CATALOG = Object.freeze({
     ]),
   }),
   bodySliders: Object.freeze([
-    Object.freeze({ key: 'heightScale', label: 'Height', min: 0.88, max: 1.12, step: 0.01, defaultValue: 1 }),
+    Object.freeze({ key: 'heightScale', label: 'Height', min: 0.82, max: 1.18, step: 0.01, defaultValue: 1 }),
     Object.freeze({ key: 'bodyMass', label: 'Body Build', min: -1, max: 1, step: 0.02, defaultValue: 0 }),
     Object.freeze({ key: 'bodyMuscle', label: 'Muscle', min: 0, max: 1, step: 0.02, defaultValue: 0.18 }),
     Object.freeze({ key: 'nailsLength', label: 'Nail Length', min: 0, max: 1, step: 0.02, defaultValue: 0 }),
@@ -174,6 +182,7 @@ export const PLAYER_CUSTOM_DEFAULTS = Object.freeze({
   eyelashTexture: '01',
   modularHair: 'crew-cut',
   hairTexture: 'natural',
+  hairColor: 'jet',
   facialHair: 'none',
   modularTop: 'tshirt',
   topTexture: 'white',
@@ -184,7 +193,7 @@ export const PLAYER_CUSTOM_DEFAULTS = Object.freeze({
   hat: 'none',
   hatTexture: 'black',
   glasses: 'none',
-  faceMorphs: Object.freeze(Object.fromEntries(PLAYER_AVATAR_CATALOG.faceSliders.map((s) => [s.key, 0]))),
+  faceMorphs: Object.freeze(Object.fromEntries(PLAYER_AVATAR_CATALOG.faceSliders.map((slider) => [slider.key, 0]))),
 });
 
 const BODY_MIGRATION = Object.freeze({
@@ -201,6 +210,9 @@ function hasItem(slot, id) {
 function hasVariant(group, id) {
   return (PLAYER_AVATAR_CATALOG.variants[group] || []).some((entry) => entry.id === id);
 }
+function hasHairColor(id) {
+  return PLAYER_AVATAR_CATALOG.hairColors.some((entry) => entry.id === id);
+}
 
 export function ensurePlayerCustom(custom = {}) {
   const out = custom;
@@ -211,6 +223,7 @@ export function ensurePlayerCustom(custom = {}) {
   }
   if (!PLAYER_AVATAR_CATALOG.jewelry.some((entry) => entry.id === out.jewelry)) out.jewelry = 'none';
   if (!Number.isFinite(out.heightScale)) out.heightScale = HEIGHT_MIGRATION[out.height] || PLAYER_CUSTOM_DEFAULTS.heightScale;
+  out.heightScale = Math.max(0.82, Math.min(1.18, out.heightScale));
   if (!Number.isFinite(out.bodyMass)) out.bodyMass = oldBody.bodyMass;
   if (!Number.isFinite(out.bodyMuscle)) out.bodyMuscle = oldBody.bodyMuscle;
   if (!Number.isFinite(out.nailsLength)) out.nailsLength = PLAYER_CUSTOM_DEFAULTS.nailsLength;
@@ -218,8 +231,16 @@ export function ensurePlayerCustom(custom = {}) {
   if (!out.avatarBase) out.avatarBase = PLAYER_CUSTOM_DEFAULTS.avatarBase;
   if (!hasVariant('eyes', out.eyeTexture)) out.eyeTexture = PLAYER_CUSTOM_DEFAULTS.eyeTexture;
   if (!hasVariant('eyelashes', out.eyelashTexture)) out.eyelashTexture = PLAYER_CUSTOM_DEFAULTS.eyelashTexture;
+
+  // Carry the five previously uploaded glTF hairstyles into the modular creator.
+  // Reset the old procedural `hair` field afterwards so main.js does not load a
+  // second hidden copy onto the fallback head before the modular body arrives.
+  if (!hasItem('hair', out.modularHair) && hasItem('hair', out.hair)) out.modularHair = out.hair;
   if (!hasItem('hair', out.modularHair)) out.modularHair = PLAYER_CUSTOM_DEFAULTS.modularHair;
+  if (HAIR_GLTF[out.hair]) out.hair = 'low-fade';
   if (!hasVariant('hair', out.hairTexture)) out.hairTexture = PLAYER_CUSTOM_DEFAULTS.hairTexture;
+  if (!hasHairColor(out.hairColor)) out.hairColor = PLAYER_CUSTOM_DEFAULTS.hairColor;
+
   if (!hasItem('facialHair', out.facialHair)) out.facialHair = PLAYER_CUSTOM_DEFAULTS.facialHair;
   if (!hasItem('top', out.modularTop)) out.modularTop = PLAYER_CUSTOM_DEFAULTS.modularTop;
   if (!hasVariant(out.modularTop, out.topTexture)) out.topTexture = PLAYER_CUSTOM_DEFAULTS.topTexture;
