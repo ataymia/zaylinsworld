@@ -14,6 +14,7 @@ import {
 import {
   isLegacyAssetHair,
   updateModularAttachments,
+  updateAttachmentTransforms,
   disposeModularAttachments,
 } from './modularAttachments.js';
 
@@ -99,7 +100,10 @@ function loadTexture(url, renderer) {
         texture.wrapS = THREE.RepeatWrapping;
         texture.wrapT = THREE.RepeatWrapping;
         texture.flipY = false;
-        texture.anisotropy = Math.min(12, renderer?.capabilities?.getMaxAnisotropy?.() || 4);
+        texture.magFilter = THREE.LinearFilter;
+        texture.minFilter = THREE.LinearMipmapLinearFilter;
+        texture.generateMipmaps = true;
+        texture.anisotropy = Math.min(16, renderer?.capabilities?.getMaxAnisotropy?.() || 4);
         texture.needsUpdate = true;
         return texture;
       })
@@ -152,7 +156,6 @@ function setSlotVisibility(root, custom) {
       if (node) node.visible = selected[slot] === id;
     }
   }
-  // Outside-pack hair owns the head slot, so both built-in Sunbox styles stay off.
   if (isLegacyAssetHair(custom.modularHair)) {
     root.getObjectByName('ZW_Hair_CrewCut')?.traverse((node) => { node.visible = false; });
     root.getObjectByName('ZW_Hair_CloseCrop')?.traverse((node) => { node.visible = false; });
@@ -212,8 +215,6 @@ async function applyMaterials(instance, custom, renderer) {
     }));
   }
 
-  // Texture jobs used to finish after the tint and reset skin to white. Wait for
-  // them first, then apply the chosen tone as the final layer.
   await Promise.all(jobs);
 
   const skin = instance.materials.get('ZW_Skin');
@@ -250,29 +251,21 @@ async function applyMaterials(instance, custom, renderer) {
   }
 }
 
-function normalizeVisibleModel(root, custom) {
-  const attachments = [];
-  root.traverse((node) => {
-    if (node.userData?.zwAttachment && node.visible) {
-      attachments.push(node);
-      node.visible = false;
-    }
-  });
-  root.scale.setScalar(1);
-  root.position.set(0, 0, 0);
-  root.updateWorldMatrix(true, true);
-  const box = new THREE.Box3().setFromObject(root);
+function normalizeVisibleModel(model, custom) {
+  model.scale.setScalar(1);
+  model.position.set(0, 0, 0);
+  model.updateWorldMatrix(true, true);
+  const box = new THREE.Box3().setFromObject(model);
   const size = new THREE.Vector3();
   const center = new THREE.Vector3();
   box.getSize(size);
   box.getCenter(center);
-  for (const attachment of attachments) attachment.visible = true;
   if (!Number.isFinite(size.y) || size.y < 0.05) return null;
   const targetHeight = 1.78 * THREE.MathUtils.clamp(Number(custom.heightScale) || 1, 0.82, 1.18);
   const scale = targetHeight / size.y;
-  root.scale.setScalar(scale);
-  root.position.set(-center.x * scale, -box.min.y * scale, -center.z * scale);
-  root.updateWorldMatrix(true, true);
+  model.scale.setScalar(scale);
+  model.position.set(-center.x * scale, -box.min.y * scale, -center.z * scale);
+  model.updateWorldMatrix(true, true);
   return { targetHeight, scale, sourceSize: size };
 }
 
@@ -301,19 +294,27 @@ export async function createModularPlayerVisual(customInput, renderer, options =
   const loaded = await loadModel(options.modelUrl || PLAYER_MODEL_URL, renderer);
   if (!loaded?.scene) return null;
 
-  let group;
-  try { group = skeletonClone(loaded.scene); }
-  catch { group = loaded.scene.clone(true); }
+  let model;
+  try { model = skeletonClone(loaded.scene); }
+  catch { model = loaded.scene.clone(true); }
+  model.name = 'ZW_ModularPlayerModel';
+  cloneMaterials(model);
+
+  // The wrapper stays at world scale 1. Imported model normalization happens on
+  // its child, giving hair/jewelry a clean meter-based layer independent of the
+  // source pack's centimeter scale and rotated bone axes.
+  const group = new THREE.Group();
   group.name = options.name || 'modular-player:Sunbox-male-free';
   group.userData.characterRole = 'player';
   group.userData.sourcePack = 'sunbox-male-free';
   group.userData.zwVisualOwner = 'modular';
-  cloneMaterials(group);
+  group.add(model);
 
-  const rig = findRig(group);
+  const rig = findRig(model);
   const instance = {
     group,
-    materials: materialsByName(group),
+    model,
+    materials: materialsByName(model),
     bones: rig.bones,
     anchors: rig.anchors,
     custom,
@@ -321,28 +322,29 @@ export async function createModularPlayerVisual(customInput, renderer, options =
     blinkPhase: Math.random() * 4,
     externalHairKey: null,
     jewelryKey: null,
+    attachmentLayer: null,
     updateToken: 0,
   };
-  setSlotVisibility(group, custom);
-  applyMorphs(group, custom);
+  setSlotVisibility(model, custom);
+  applyMorphs(model, custom);
   await applyMaterials(instance, custom, renderer);
-  instance.normalized = normalizeVisibleModel(group, custom);
+  instance.normalized = normalizeVisibleModel(model, custom);
   if (!instance.normalized) return null;
   await updateModularAttachments(instance, custom, renderer);
   return instance;
 }
 
 export async function updateModularPlayerVisual(instance, customInput, renderer) {
-  if (!instance?.group) return false;
+  if (!instance?.group || !instance.model) return false;
   const token = ++instance.updateToken;
   const custom = ensurePlayerCustom(customInput || {});
   instance.custom = custom;
-  setSlotVisibility(instance.group, custom);
-  applyMorphs(instance.group, custom);
+  setSlotVisibility(instance.model, custom);
+  applyMorphs(instance.model, custom);
   await applyMaterials(instance, custom, renderer);
   if (token !== instance.updateToken) return false;
   const previousScale = instance.normalized?.scale || 0;
-  instance.normalized = normalizeVisibleModel(instance.group, custom);
+  instance.normalized = normalizeVisibleModel(instance.model, custom);
   if (!instance.normalized) return false;
   if (Math.abs(previousScale - instance.normalized.scale) > 0.000001) {
     instance.externalHairKey = null;
@@ -357,7 +359,8 @@ export function tickModularPlayerVisual(instance, elapsed) {
   const cycle = (elapsed + instance.blinkPhase) % 4.6;
   let blink = 0;
   if (cycle > 4.25 && cycle < 4.38) blink = Math.sin(((cycle - 4.25) / 0.13) * Math.PI);
-  setMorph(instance.group, 'Expression_Blink', blink);
+  setMorph(instance.model || instance.group, 'Expression_Blink', blink);
+  updateAttachmentTransforms(instance);
 }
 
 export function disposeModularPlayerVisual(instance) {
