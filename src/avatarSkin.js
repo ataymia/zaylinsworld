@@ -9,6 +9,7 @@
 import * as THREE from 'three';
 import { clone as skeletonClone } from 'three/addons/utils/SkeletonUtils.js';
 import { loadAsset, makeMixer } from './assets.js';
+import { createCharacterMotionDriver } from './characterMotion.js';
 import { trackMixer } from './manifest.js';
 import {
   CHARACTER_PACK,
@@ -22,15 +23,15 @@ export const SKIN_STATUS = {
   player: {
     mode: 'pending', attempted: 0, applied: 0, fallback: 0,
     label: '—', reason: '', url: '', bounds: '', scale: 0,
-    usableClips: 0, poseOnlyClips: 0,
+    usableClips: 0, poseOnlyClips: 0, proceduralMotion: false,
   },
   npc: {
     attempted: 0, loading: 0, glb: 0, fallback: 0, cap: 0,
-    usableClips: 0, poseOnlyClips: 0, last: '',
+    usableClips: 0, poseOnlyClips: 0, proceduralMotion: 0, last: '',
   },
   cop: {
     attempted: 0, loading: 0, glb: 0, fallback: 0,
-    usableClips: 0, poseOnlyClips: 0, last: '',
+    usableClips: 0, poseOnlyClips: 0, proceduralMotion: 0, last: '',
   },
 };
 if (typeof window !== 'undefined') window.__ZW_SKIN_STATUS__ = SKIN_STATUS;
@@ -214,13 +215,19 @@ function skinAvatar(avatar, glb, {
   avatar.skinClipNames = clips.usable.map((clip) => clip.name);
   avatar.poseOnlyClipNames = clips.poseOnly.map((clip) => clip.name);
 
-  // Do not play a one-frame/two-key Mixamo bind-pose track. Those tracks freeze
-  // the skeleton but add no visible motion. Real clips can still use the mixer.
+  let proceduralMotion = false;
   if (play && clips.usable.length) {
     const mixer = makeMixer(skin, clips.usable);
     mixer.play(clips.usable[0].name, { loop: true, fade: 0.1 });
     trackMixer(mixer);
     avatar.skinMixer = mixer;
+  } else if (Object.keys(avatar.skinBones).length) {
+    // Current PSX assets are valid skinned characters with pose-only tracks.
+    // Drive their bones procedurally instead of looping the bind pose.
+    avatar.skinMotion = trackMixer(createCharacterMotionDriver(avatar, {
+      role: avatar.group.userData.skinRole,
+    }));
+    proceduralMotion = true;
   }
 
   slog(
@@ -231,6 +238,7 @@ function skinAvatar(avatar, glb, {
     '| usableClips', clips.usable.length,
     '| poseOnlyClips', clips.poseOnly.length,
     '| bones', Object.keys(avatar.skinBones).length,
+    '| proceduralMotion', proceduralMotion,
   );
 
   return {
@@ -240,6 +248,7 @@ function skinAvatar(avatar, glb, {
     usableClips: clips.usable.length,
     poseOnlyClips: clips.poseOnly.length,
     boneCount: Object.keys(avatar.skinBones).length,
+    proceduralMotion,
   };
 }
 
@@ -288,6 +297,7 @@ export async function applyNpcSkins(npcs, renderer, max = CHARACTER_POLICY.civil
           applied++;
           SKIN_STATUS.npc.usableClips += result.usableClips;
           SKIN_STATUS.npc.poseOnlyClips += result.poseOnlyClips;
+          if (result.proceduralMotion) SKIN_STATUS.npc.proceduralMotion++;
           SKIN_STATUS.npc.last = `${name}: glb`;
         } else {
           fallback++;
@@ -342,6 +352,7 @@ export async function applyCopSkin(avatar, renderer) {
     SKIN_STATUS.cop.glb++;
     SKIN_STATUS.cop.usableClips += result.usableClips;
     SKIN_STATUS.cop.poseOnlyClips += result.poseOnlyClips;
+    if (result.proceduralMotion) SKIN_STATUS.cop.proceduralMotion++;
     SKIN_STATUS.cop.last = `${name}: glb`;
     return name;
   } catch (error) {
@@ -400,6 +411,7 @@ export async function applyPlayerSkin(avatar, renderer, seed = 0) {
     SKIN_STATUS.player.scale = result.scale;
     SKIN_STATUS.player.usableClips = result.usableClips;
     SKIN_STATUS.player.poseOnlyClips = result.poseOnlyClips;
+    SKIN_STATUS.player.proceduralMotion = result.proceduralMotion;
     return true;
   } catch (error) {
     SKIN_STATUS.player.mode = 'fallback';
