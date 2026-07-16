@@ -85,10 +85,11 @@ export const SHOP_ZONES = {
     facing: -Math.PI / 2, plate: '#1a2a1a',
   },
 
-  // Low back-right wall, beside rather than inside the doorway lane.
+  // Back-right wall. The origin stays high enough that even a third wrapped row
+  // remains visibly mounted above the floor as the upgrade catalog grows.
   'upgrade-counter': {
     label: 'Upgrade Bench',
-    origin: [2.7, 0.78, BACK_Z], step: [0.64, 0, 0], perRow: 3, rowStep: [0, -0.42, 0],
+    origin: [2.7, 1.35, BACK_Z], step: [0.64, 0, 0], perRow: 3, rowStep: [0, -0.42, 0],
     facing: 0, plate: '#2a2a1a',
   },
 };
