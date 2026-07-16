@@ -14,6 +14,29 @@ import {
 
 const textureLoader = new THREE.TextureLoader();
 const textureCache = new Map();
+const PLAYER_TEXTURE_PREFIX = './assets/models/characters/player/sunbox-male-free/textures/';
+const PLAYER_TEXTURE_LIBRARY_URL = './assets/models/characters/player/sunbox-male-free/texture-library.json';
+let textureLibraryPromise = null;
+
+async function textureSource(url) {
+  if (!url?.startsWith(PLAYER_TEXTURE_PREFIX)) return url;
+  if (!textureLibraryPromise) {
+    textureLibraryPromise = fetch(PLAYER_TEXTURE_LIBRARY_URL)
+      .then((response) => {
+        if (!response.ok) throw new Error(`texture library ${response.status}`);
+        return response.json();
+      })
+      .then((library) => library.files || {})
+      .catch((error) => {
+        textureLibraryPromise = null;
+        throw error;
+      });
+  }
+  const files = await textureLibraryPromise;
+  const key = url.slice(PLAYER_TEXTURE_PREFIX.length);
+  if (!files[key]) throw new Error(`missing texture-library entry: ${key}`);
+  return files[key];
+}
 
 const SLOT_NODES = Object.freeze({
   hair: Object.freeze({
@@ -64,7 +87,7 @@ const MATERIAL_TEXTURES = Object.freeze({
 function loadTexture(url, renderer) {
   if (!url) return Promise.resolve(null);
   if (!textureCache.has(url)) {
-    const promise = textureLoader.loadAsync(url).then((texture) => {
+    const promise = textureSource(url).then((source) => textureLoader.loadAsync(source)).then((texture) => {
       texture.colorSpace = THREE.SRGBColorSpace;
       texture.wrapS = THREE.RepeatWrapping;
       texture.wrapT = THREE.RepeatWrapping;
@@ -220,8 +243,7 @@ function normalizeVisibleModel(root, custom) {
   const box = new THREE.Box3().setFromObject(root);
   const size = new THREE.Vector3();
   const center = new THREE.Vector3();
-  box.getSize(size);
-  box.getCenter(center);
+  box.getSize(size); box.getCenter(center);
   if (!Number.isFinite(size.y) || size.y < 0.05) return null;
   const targetHeight = 1.78 * THREE.MathUtils.clamp(Number(custom.heightScale) || 1, 0.82, 1.18);
   const scale = targetHeight / size.y;
