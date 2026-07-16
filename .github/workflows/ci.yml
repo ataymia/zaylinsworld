@@ -38,7 +38,25 @@ jobs:
       - name: Check project integrity
         run: npm run check:project
 
-      - name: Run regression tests
+      - name: Test animation state machine
+        run: node --test tests/animationStateMachine.test.mjs
+
+      - name: Test save-state migration
+        run: node --test tests/state.test.mjs
+
+      - name: Test asset resolution
+        run: node --test tests/assets.test.mjs
+
+      - name: Test character role pools
+        run: node --test tests/characterPools.test.mjs
+
+      - name: Test character skin adapter
+        run: node --test tests/avatarSkin.test.mjs
+
+      - name: Test procedural character motion
+        run: node --test tests/characterMotion.test.mjs
+
+      - name: Run complete regression suite
         run: npm test
 
       - name: Build production bundle
