@@ -21,15 +21,20 @@ test('validateHumanoidGlb accepts and normalizes a plausible humanoid', () => {
   assert.equal(Number((result.size.y * result.scale).toFixed(2)), 1.8);
 });
 
-test('validateHumanoidGlb rejects empty and extreme scenes without mutation', () => {
+test('validateHumanoidGlb rejects empty and extreme-proportion scenes', () => {
   const empty = new THREE.Group();
   const emptyResult = validateHumanoidGlb(empty, 1.8);
   assert.equal(emptyResult.ok, false);
 
-  const huge = new THREE.Group();
-  huge.add(new THREE.Mesh(new THREE.BoxGeometry(200, 200, 200)));
-  const hugeResult = validateHumanoidGlb(huge, 1.8);
-  assert.equal(hugeResult.ok, false);
+  // Large source units alone are fine because the adapter normalizes height.
+  // What must be rejected is a model whose normalized proportions remain a blob.
+  const wideBlob = new THREE.Group();
+  const mesh = new THREE.Mesh(new THREE.BoxGeometry(200, 1, 200));
+  mesh.position.y = 0.5;
+  wideBlob.add(mesh);
+  const blobResult = validateHumanoidGlb(wideBlob, 1.8);
+  assert.equal(blobResult.ok, false);
+  assert.match(blobResult.reason, /final w\/d/);
 });
 
 test('role pools contain distinct approved character candidates', () => {
