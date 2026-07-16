@@ -9,6 +9,7 @@
 // ───────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 import { loadAsset } from './assets.js';
+import { buildChickenFryerLine } from './chickenSpotKitchen.js';
 
 // ── STRICT per-interior allowlists ──────────────────────────────────────────
 // Each interior id maps to EXACTLY ONE approved asset pack (cat/pack) plus a
@@ -101,19 +102,15 @@ const FURNITURE = {
     { name: 'shelf-b-large-decorated', dx: -8.2, dz: -3, ry: Math.PI / 2, s: 0.9 },
     { name: 'lamp-standing',   dx: 6,  dz: 4,  ry: 0,            s: 0.9 },
   ],
-  // CHICKEN SPOT — restaurant-pack ONLY (cm pack → unit 0.01). Counter + kitchen
-  // along the back wall, booths down the left, tables + chairs in the seating area.
-  // `surface:true` pieces are support surfaces; `onSurface:true` pieces snap onto
-  // them (no more floating registers/trays). `tint` is the fallback colour used
-  // only when the GLB's texture failed to embed (flat-white restaurant pack).
+  // CHICKEN SPOT — restaurant pack for counter/seating, plus a lightweight
+  // purpose-built fryer line. Oven and burner-stove pieces are deliberately
+  // excluded so the kitchen reads as fried-chicken service.
   chicken: [
     { name: 'counter-front',   dx: -1.05, dz: -3.2, ry: 0,           s: 1.0, surface: true, tint: '#b5651d' },
     { name: 'counter-front',   dx: 0,     dz: -3.2, ry: 0,           s: 1.0, surface: true, tint: '#b5651d' },
     { name: 'counter-front',   dx: 1.05,  dz: -3.2, ry: 0,           s: 1.0, surface: true, tint: '#b5651d' },
     { name: 'cash-register',   dx: 0.9,   dz: -3.2, ry: Math.PI,     s: 1.0, onSurface: true, surfaceFallback: 0.96, tint: '#2a2a2e' },
     { name: 'heat-lamp-tray-grill', dx: -0.9, dz: -3.2, ry: 0,       s: 1.0, onSurface: true, surfaceFallback: 0.96, tint: '#c0392b' },
-    { name: 'stove-griddle',   dx: -3.5,  dz: -4.4, ry: 0,           s: 1.0, surface: true, tint: '#8a9099' },
-    { name: 'burner-stove',    dx: -5.6,  dz: -4.4, ry: 0,           s: 1.0, surface: true, tint: '#8a9099' },
     { name: 'booth-full',      dx: -5.6,  dz: 2,    ry: Math.PI / 2, s: 1.0, tint: '#7a1f2b' },
     { name: 'booth-half',      dx: -5.6,  dz: 4.2,  ry: Math.PI / 2, s: 1.0, tint: '#7a1f2b' },
     { name: 'table-square',    dx: 4.5,   dz: 1.6,  ry: 0,           s: 1.0, surface: true, tint: '#caa37a' },
@@ -131,7 +128,7 @@ const FURNITURE = {
 const FOOD_UNIT = 1.0;
 const FOOD = {
   chicken: [
-    { name: 'chicken-cooking-a', dx: -3.5, dz: -4.4, s: 2.0, onSurface: true, surfaceFallback: 1.1 },
+    { name: 'chicken-cooking-a', dx: -4.55, dz: -4.4, s: 2.0, onSurface: true, surfaceFallback: 1.1 },
     { name: 'fried-chicken',     dx: 0.2,  dz: -3.2, s: 2.4, onSurface: true, surfaceFallback: 0.96 },
     { name: 'french-fries',      dx: 4.5,  dz: 1.6,  s: 2.4, onSurface: true, surfaceFallback: 0.87 },
     { name: 'chicken-nuggets',   dx: 1.6,  dz: 3.8,  s: 2.4, onSurface: true, surfaceFallback: 0.86 },
@@ -139,11 +136,8 @@ const FOOD = {
 };
 
 // When a pack's textures fail to embed, GLB meshes load as a default flat
-// near-white/grey material (the Restaurant pack was converted to a single
-// `DefaultMaterial` at colour 0.8,0.8,0.8 with NO textures — so it renders as a
-// white-out). Detect that (no map + desaturated light colour) and apply the
-// item's `tint` so the restaurant reads as real surfaces. Properly textured
-// packs are left alone. Returns the number of materials recoloured.
+// near-white/grey material. Detect that (no map + desaturated light colour) and
+// apply the item's `tint`. Properly textured packs are left alone.
 function applyMaterialFallback(obj, item) {
   if (!item.tint) return 0;
   let n = 0;
@@ -174,7 +168,6 @@ async function place(root, asset, ox, item, renderer, unit, warnings, supports) 
     obj.updateWorldMatrix(true, true);
     const box = new THREE.Box3().setFromObject(obj);
     const size = new THREE.Vector3(); box.getSize(size);
-    // ── sanity validation (P7): reject blobs / NaN / degenerate meshes ──
     if (![size.x, size.y, size.z].every(Number.isFinite)) {
       warnings.push(`${item.name}: non-finite bounds`); return { ok: false, reason: 'non-finite' };
     }
@@ -185,12 +178,8 @@ async function place(root, asset, ox, item, renderer, unit, warnings, supports) 
     if (maxDim < SANE_MIN_DIM) {
       warnings.push(`${item.name}: degenerate ${maxDim.toFixed(3)}m`); return { ok: false, reason: 'degenerate' };
     }
-    // material fallback for packs whose textures failed to embed (flat white)
     const recoloured = applyMaterialFallback(obj, item);
     if (recoloured) warnings.push(`${item.name}: ${recoloured} white→tint`);
-    // grounding: by default seat the piece on the floor (item.y). Items flagged
-    // onSurface snap onto the top of the nearest placed support surface so they
-    // never float above (or sink into) counters/tables.
     let baseY = item.y ?? 0;
     if (item.onSurface && supports && supports.length) {
       const px = ox + item.dx, pz = item.dz;
@@ -214,9 +203,6 @@ async function place(root, asset, ox, item, renderer, unit, warnings, supports) 
 }
 
 // Furnish every configured interior. `interiors` = { group, byId } from buildInteriors().
-// Returns { items, interiors, failed[], rejected[], byInterior{} } so the debug
-// panel can PROVE each interior pulled from its approved pack only AND that the
-// placeholder decor was removed once assets placed (no stacked old+new furniture).
 export async function furnishInteriors(interiors, renderer) {
   if (!interiors || !interiors.group) return { items: 0, interiors: 0, failed: [], rejected: [], byInterior: {} };
   const root = interiors.group;
@@ -236,8 +222,19 @@ export async function furnishInteriors(interiors, renderer) {
       if (r.ok) { n++; furnished.add(id); info.placed.push(it.name); if (it.surface && r.box) supports.push(r.box); }
       else { failed.push(`${id}/${it.name}:${r.reason}`); info.failed.push(`${it.name}(${r.reason})`); }
     }
-    // FOOD overlay for the chicken spot (separate metres-scale pack); food snaps
-    // onto the same support surfaces placed above.
+
+    // Chicken Spot receives a real fryer-shaped prefab even when no licensed fryer
+    // GLBs are available. Its supports participate in food-prop placement.
+    if (id === 'chicken') {
+      const fryer = buildChickenFryerLine(root, ox, intr.offset.z || 0);
+      if (fryer.items) {
+        n += fryer.items;
+        furnished.add(id);
+        info.placed.push('procedural-fryer-line');
+        supports.push(...fryer.supports);
+      }
+    }
+
     if (FOOD[id]) {
       for (const it of FOOD[id]) {
         const r = await place(root, { cat: 'props', pack: 'food' }, ox, it, renderer, FOOD_UNIT, info.warnings, supports);
@@ -245,7 +242,6 @@ export async function furnishInteriors(interiors, renderer) {
         else { failed.push(`${id}/${it.name}:${r.reason}`); info.failed.push(`${it.name}(${r.reason})`); }
       }
     }
-    // ── REPLACEMENT: hide procedural decor ONLY if real assets actually placed ──
     if (info.placed.length > 0 && intr.decor) {
       intr.decor.visible = false;
       if (Array.isArray(intr.decorColliders) && Array.isArray(intr.colliders)) {
@@ -258,7 +254,6 @@ export async function furnishInteriors(interiors, renderer) {
     }
   }
 
-  // ── per-interior validation log (P7) ──
   if (n) console.info('[furnish] placed', n, 'pack-matched pieces across', furnished.size, 'interiors');
   for (const [id, info] of Object.entries(byInterior)) {
     const assetMode = info.placed.length > 0;
