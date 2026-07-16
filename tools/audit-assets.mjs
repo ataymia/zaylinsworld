@@ -20,8 +20,10 @@ async function walk(dir) {
   return out;
 }
 
+// asset-index-v2 paths start at models/, while files live under public/assets/.
+// Normalize disk, index, companion and source-reference paths to one models/ root.
 function relPublic(abs) {
-  return path.relative(PUBLIC, abs).split(path.sep).join('/');
+  return path.relative(PUBLIC, abs).split(path.sep).join('/').replace(/^assets\//, '');
 }
 
 function formatBytes(bytes) {
@@ -44,7 +46,7 @@ function flattenIndex(index) {
       if (!Array.isArray(entries)) continue;
       for (const entry of entries) {
         if (!entry || !entry.path) continue;
-        rows.push({ category, pack, name: entry.name || '', path: String(entry.path) });
+        rows.push({ category, pack, name: entry.name || '', path: String(entry.path).replace(/^assets\//, '') });
       }
     }
   }
@@ -86,7 +88,7 @@ async function sourceCorpus() {
 
 const index = JSON.parse(await readFile(INDEX_FILE, 'utf8'));
 const indexed = flattenIndex(index);
-const indexedPaths = new Set(indexed.map((row) => row.path.replace(/^assets\//, '')));
+const indexedPaths = new Set(indexed.map((row) => row.path));
 const allDisk = (await walk(MODELS)).filter((file) => MODEL_EXT.has(path.extname(file).toLowerCase()));
 const diskRows = [];
 for (const abs of allDisk) {
@@ -95,7 +97,7 @@ for (const abs of allDisk) {
 }
 
 const diskPaths = new Set(diskRows.map((row) => row.path));
-const missing = indexed.filter((row) => !diskPaths.has(row.path.replace(/^assets\//, '')));
+const missing = indexed.filter((row) => !diskPaths.has(row.path));
 const companions = await collectCompanions(diskRows.filter((row) => row.ext === '.gltf').map((row) => row.abs));
 const unindexed = diskRows.filter((row) => {
   if (indexedPaths.has(row.path)) return false;
