@@ -11,6 +11,15 @@ on:
       - 'public/assets/models/characters/**'
       - 'package.json'
       - '.github/workflows/character-audit.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'tools/audit-characters.mjs'
+      - 'public/assets/models/asset-index-v2.json'
+      - 'public/assets/models/characters/**'
+      - 'package.json'
+      - '.github/workflows/character-audit.yml'
 
 permissions:
   contents: read
