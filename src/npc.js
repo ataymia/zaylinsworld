@@ -3,14 +3,30 @@
 // ───────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 import { buildAvatar, SKIN_TONES, HAIRSTYLES, OUTFIT_TOPS, OUTFIT_BOTTOMS, SHOES } from './avatar.js';
+import { applyNpcSkins } from './avatarSkin.js';
 import { buildCar, CAR_TYPES } from './vehicles.js';
 import { TRAFFIC_ROUTES, PEDESTRIAN_ROUTES } from './config/mapConfig.js';
 
 const pick = arr => arr[Math.floor(Math.random() * arr.length)];
 const NAMES = ['Marcus', 'Tre', 'Jaylen', 'Keisha', 'Dee', 'Andre', 'Nia', 'Malik', 'Zara', 'Cam', 'Imani', 'Quan'];
+const CIVILIAN_SKIN_CAP = 8;
 
 // turn a [[x,z],…] config loop into THREE.Vector3 waypoints
 const toWaypoints = loop => loop.map(([x, z]) => new THREE.Vector3(x, 0, z));
+
+function scheduleCivilianSkins(npcs) {
+  if (typeof window === 'undefined' || !window.__ZW_FEATURES__?.USE_REAL_NPC_SKINS) return;
+  const run = () => {
+    const cap = Math.min(CIVILIAN_SKIN_CAP, npcs.length);
+    applyNpcSkins(npcs, null, cap)
+      .then((done) => console.info('[npc] explicit civilian skin pass:', done, '/', cap))
+      .catch((error) => console.warn('[npc] civilian skin pass failed; procedural avatars kept', error));
+  };
+  // Character GLBs are cosmetic. Let the city become playable first, then stream
+  // a small capped set during idle time so the old all-at-once lag never returns.
+  if ('requestIdleCallback' in window) window.requestIdleCallback(run, { timeout: 1800 });
+  else window.setTimeout(run, 300);
+}
 
 export function createCityNPCs(scene, count = 8) {
   const npcs = [];
@@ -43,6 +59,7 @@ export function createCityNPCs(scene, count = 8) {
       phase: Math.random() * Math.PI * 2,
     });
   }
+  scheduleCivilianSkins(npcs);
   return npcs;
 }
 
