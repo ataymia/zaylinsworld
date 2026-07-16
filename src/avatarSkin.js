@@ -1,9 +1,9 @@
 // ───────────────────────────────────────────────────────────────────────────
 // avatarSkin.js — role-aware visible-character adapter.
 //
-// Exactly one visible body owns each character. The modular player replaces the
-// procedural body only after validation. Civilians/police stay on their complete
-// procedural rigs until imported animation retargeting passes visual QA.
+// Exactly one visible body owns each character. The player uses an editable
+// modular rig. Civilians use complete imported PSX bodies with lightweight direct
+// bone drivers, never imported animation scale tracks layered over bubble limbs.
 // ───────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 import { clone as skeletonClone } from 'three/addons/utils/SkeletonUtils.js';
@@ -85,6 +85,23 @@ function showProceduralMeshes(group) {
   });
 }
 
+function retireProceduralMeshes(group, visibleOwner) {
+  const retired = [];
+  group.traverse((node) => {
+    if (!node.isMesh && !node.isSprite) return;
+    if (isDescendantOf(node, visibleOwner)) return;
+    if (isUnderName(node, 'heldweapon')) return;
+    if (node.userData.zwHiddenByVisualOwner) retired.push(node);
+  });
+  for (const node of retired) {
+    node.parent?.remove(node);
+    node.geometry?.dispose?.();
+    const materials = Array.isArray(node.material) ? node.material : [node.material];
+    for (const material of materials) material?.dispose?.();
+  }
+  return retired.length;
+}
+
 function rememberProceduralParts(avatar) {
   if (!avatar?._proceduralParts && avatar?.parts) {
     avatar._proceduralParts = {
@@ -100,9 +117,13 @@ function rememberProceduralParts(avatar) {
   }
 }
 
-function makeRotationDriver(bone) {
+function makeRotationDriver(bone, base = {}) {
   if (!bone) return null;
   const rest = bone.rotation.clone();
+  rest.x += base.x || 0;
+  rest.y += base.y || 0;
+  rest.z += base.z || 0;
+  bone.rotation.copy(rest);
   const offset = { x: 0, y: 0, z: 0 };
   const rotation = {
     get x() { return offset.x; },
@@ -116,18 +137,54 @@ function makeRotationDriver(bone) {
   return { rotation, userData: { modularBone: bone.name }, bone };
 }
 
+function normalizeBoneName(name) {
+  return String(name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+function boneEntries(root) {
+  const entries = [];
+  root.traverse((node) => {
+    if (node.isBone) entries.push({ node, key: normalizeBoneName(node.name) });
+  });
+  return entries;
+}
+
+function findBone(entries, patterns, excludes = []) {
+  for (const pattern of patterns) {
+    const found = entries.find(({ key }) => key.includes(pattern) && !excludes.some((exclude) => key.includes(exclude)));
+    if (found) return found.node;
+  }
+  return null;
+}
+
+function importedRig(root) {
+  const entries = boneEntries(root);
+  return {
+    leftArm: findBone(entries, ['mixamorigleftarm', 'leftupperarm', 'upperarmleft', 'upperarml', 'leftarm'], ['forearm', 'lowerarm', 'hand']),
+    rightArm: findBone(entries, ['mixamorigrightarm', 'rightupperarm', 'upperarmright', 'upperarmr', 'rightarm'], ['forearm', 'lowerarm', 'hand']),
+    leftLeg: findBone(entries, ['mixamorigleftupleg', 'leftupleg', 'leftupperleg', 'upperlegleft', 'upperlegl', 'leftthigh'], ['lowerleg', 'calf', 'foot']),
+    rightLeg: findBone(entries, ['mixamorigrightupleg', 'rightupleg', 'rightupperleg', 'upperlegright', 'upperlegr', 'rightthigh'], ['lowerleg', 'calf', 'foot']),
+    head: findBone(entries, ['mixamorighead', 'head'], ['headtopend']),
+    torso: findBone(entries, ['mixamorigspine2', 'spine2', 'upperchest', 'chest', 'mixamorigspine1', 'spine1', 'spine']),
+    rightHand: findBone(entries, ['mixamorigrighthand', 'righthand', 'handr']),
+    leftHand: findBone(entries, ['mixamoriglefthand', 'lefthand', 'handl']),
+  };
+}
+
 function remapPlayerRig(avatar, modular) {
   if (!avatar?.parts || !modular) return;
   rememberProceduralParts(avatar);
-  const leftArm = makeRotationDriver(modular.bones.leftArm);
-  const rightArm = makeRotationDriver(modular.bones.rightArm);
+  // Imported rigs arrive in a wardrobe-friendly T pose. The live game uses a
+  // relaxed base pose, then existing walk/punch code adds its small offsets.
+  const leftArm = makeRotationDriver(modular.bones.leftArm, { z: -1.18 });
+  const rightArm = makeRotationDriver(modular.bones.rightArm, { z: 1.18 });
   const leftLeg = makeRotationDriver(modular.bones.leftLeg);
   const rightLeg = makeRotationDriver(modular.bones.rightLeg);
   if (leftArm) avatar.parts.leftArm = leftArm;
   if (rightArm) avatar.parts.rightArm = rightArm;
   if (leftLeg) avatar.parts.leftLeg = leftLeg;
   if (rightLeg) avatar.parts.rightLeg = rightLeg;
-  if (modular.bones.head) avatar.parts.headGroup = modular.bones.head;
+  if (modular.bones.head) avatar.parts.headGroup = makeRotationDriver(modular.bones.head) || modular.bones.head;
   avatar.parts.anchors = { ...(avatar.parts.anchors || {}) };
   if (modular.anchors.head) {
     avatar.parts.anchors.head_top = modular.anchors.head;
@@ -147,6 +204,44 @@ function remapPlayerRig(avatar, modular) {
   }
 }
 
+function remapImportedRig(avatar, skin) {
+  if (!avatar?.parts || !skin) return false;
+  rememberProceduralParts(avatar);
+  const rig = importedRig(skin);
+  const leftArm = makeRotationDriver(rig.leftArm, { z: -1.14 });
+  const rightArm = makeRotationDriver(rig.rightArm, { z: 1.14 });
+  const leftLeg = makeRotationDriver(rig.leftLeg);
+  const rightLeg = makeRotationDriver(rig.rightLeg);
+  const head = makeRotationDriver(rig.head);
+  const torso = makeRotationDriver(rig.torso);
+  if (leftArm) avatar.parts.leftArm = leftArm;
+  if (rightArm) avatar.parts.rightArm = rightArm;
+  if (leftLeg) avatar.parts.leftLeg = leftLeg;
+  if (rightLeg) avatar.parts.rightLeg = rightLeg;
+  if (head) avatar.parts.headGroup = head;
+  if (torso) avatar.parts.torso = torso;
+  avatar.parts.anchors = { ...(avatar.parts.anchors || {}) };
+  if (rig.head) {
+    avatar.parts.anchors.head_top = rig.head;
+    avatar.parts.anchors.scalp_center = rig.head;
+  }
+  if (rig.torso) {
+    avatar.parts.anchors.upper_chest = rig.torso;
+    avatar.parts.anchors.neck = rig.torso;
+  }
+  if (rig.rightHand) avatar.parts.anchors.right_hand = rig.rightHand;
+  if (rig.leftHand) avatar.parts.anchors.left_hand = rig.leftHand;
+  skin.userData.zwDirectRig = {
+    leftArm: !!rig.leftArm,
+    rightArm: !!rig.rightArm,
+    leftLeg: !!rig.leftLeg,
+    rightLeg: !!rig.rightLeg,
+    head: !!rig.head,
+    torso: !!rig.torso,
+  };
+  return !!(rig.leftArm && rig.rightArm && rig.leftLeg && rig.rightLeg);
+}
+
 function restoreProceduralRig(avatar) {
   const original = avatar?._proceduralParts;
   if (!original || !avatar.parts) return;
@@ -162,17 +257,19 @@ function restoreProceduralRig(avatar) {
   avatar.group.userData.zwVisualOwner = 'procedural';
 }
 
-function styleImportedSkin(skin) {
+function styleImportedSkin(skin, role) {
+  const civilian = role === 'civilian';
   skin.traverse((node) => {
     if (!node.isMesh) return;
-    node.castShadow = true;
+    // Twenty-two low-poly civilians do not each need a dynamic shadow map draw.
+    node.castShadow = civilian ? false : true;
     node.receiveShadow = true;
-    node.frustumCulled = false;
+    node.frustumCulled = true;
     const materials = Array.isArray(node.material) ? node.material : [node.material];
     for (const material of materials) {
       if (!material) continue;
       if (material.map) material.map.colorSpace = THREE.SRGBColorSpace;
-      material.envMapIntensity = Math.max(0.7, material.envMapIntensity ?? 1);
+      material.envMapIntensity = Math.max(0.55, material.envMapIntensity ?? 1);
     }
   });
 }
@@ -224,14 +321,18 @@ function skinAvatar(avatar, glb, opts = {}) {
     -validation.center.z * validation.scale,
   );
   skin.rotation.y = SKIN_CFG.faceYaw;
-  styleImportedSkin(skin);
+  styleImportedSkin(skin, role);
   avatar.group.add(skin);
   hideProceduralMeshes(avatar.group, skin);
+  const directRig = role === 'civilian' ? remapImportedRig(avatar, skin) : false;
+  const retiredMeshes = role === 'civilian' ? retireProceduralMeshes(avatar.group, skin) : 0;
   avatar.group.userData.zwVisualOwner = 'imported-complete';
   avatar.skin = skin;
   avatar.realSkin = true;
   avatar.skinAsset = assetName;
   avatar.skinRole = role;
+  avatar.directImportedRig = directRig;
+  avatar.retiredProceduralMeshes = retiredMeshes;
   let activeClip = '';
   if (playEmbeddedClip && glb.animations?.length) {
     const mixer = makeMixer(skin, glb.animations);
@@ -244,12 +345,12 @@ function skinAvatar(avatar, glb, opts = {}) {
     avatar.skinMixer = mixer;
     avatar.skinClipNames = mixer.clipNames;
   }
-  return { ok: true, bounds: boundsStr, scale: validation.scale, clip: activeClip };
+  return { ok: true, bounds: boundsStr, scale: validation.scale, clip: activeClip, directRig, retiredMeshes };
 }
 
 const nextFrame = () => new Promise((resolve) => requestAnimationFrame(resolve));
 
-export async function applyNpcSkins(npcs, renderer, max = CHARACTER_ROLE_POLICY.civilian.maxLiveSkins) {
+export async function applyNpcSkins(npcs, renderer) {
   const policyMax = CHARACTER_ROLE_POLICY.civilian.maxLiveSkins;
   if (policyMax <= 0 || CHARACTER_ROLE_POLICY.civilian.mode === 'procedural-functional') {
     Object.assign(SKIN_STATUS.npc, {
@@ -258,7 +359,9 @@ export async function applyNpcSkins(npcs, renderer, max = CHARACTER_ROLE_POLICY.
     });
     return 0;
   }
-  const limit = Math.min(max, policyMax, npcs.length);
+  // npc.js used to pass a legacy 12-character cap. The current policy owns the
+  // live count so every spawned pedestrian can become a complete imported NPC.
+  const limit = Math.min(policyMax, npcs.length);
   const list = npcs.slice(0, limit);
   let applied = 0;
   let failed = 0;
@@ -288,7 +391,7 @@ export async function applyNpcSkins(npcs, renderer, max = CHARACTER_ROLE_POLICY.
         if (result.ok) {
           applied++;
           npc.realSkin = name;
-          npc.skinState = 'glb';
+          npc.skinState = result.directRig ? 'glb-direct-rig' : 'glb-root-motion';
         } else {
           failed++;
           npc.skinState = `procedural-${result.reason}`;
@@ -302,6 +405,7 @@ export async function applyNpcSkins(npcs, renderer, max = CHARACTER_ROLE_POLICY.
     SKIN_STATUS.npc.loading = list.length - index - 1;
     SKIN_STATUS.npc.glb = applied;
     SKIN_STATUS.npc.fallback = failed + Math.max(0, npcs.length - list.length);
+    SKIN_STATUS.npc.last = `${name}: ${npc.skinState}`;
     await nextFrame();
   }
   return applied;
