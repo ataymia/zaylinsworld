@@ -28,7 +28,7 @@ test('Starter Town is registered with all shared service categories', () => {
 test('Starter Town registry exposes landmarks and public safety', () => {
   assert.equal(landmarkById(STARTER_TOWN, 'school')?.interiorId, 'school');
   assert.equal(landmarkById(STARTER_TOWN, 'blocksupply')?.interiorId, 'blocksupply');
-  assert.equal(landmarkById(STARTER_TOWN, 'police')?.name, 'POLICE STATION');
+  assert.equal(landmarkById(STARTER_TOWN, 'police')?.name, 'Police Station');
   assert.equal(landmarkById(STARTER_TOWN, 'missing'), null);
 });
 
