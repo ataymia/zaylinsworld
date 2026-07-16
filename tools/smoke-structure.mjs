@@ -19,7 +19,9 @@ const requiredFiles = [
   'src/config/mapConfig.js',
 ];
 for (const rel of requiredFiles) await access(path.join(ROOT, rel));
-const sources = Object.fromEntries(await Promise.all(requiredFiles.map(async (rel) => [rel, await readFile(path.join(ROOT, rel), 'utf8')])));
+const sources = Object.fromEntries(await Promise.all(requiredFiles.map(async (rel) => [rel, await readFile(path.join(ROOT, rel), 'utf8')]));
+const chickenFurniture = sources['src/furnish.js'].match(/chicken:\s*\[([\s\S]*?)\n\s*\],\n\};/)?.[1] || '';
+const blockLayout = sources['src/config/blockSupplyLayout.js'];
 const checks = [
   ['entry module', sources['index.html'].includes('src/main.js')],
   ['player builder', /buildAvatar\s*\(/.test(sources['src/main.js'])],
@@ -32,7 +34,10 @@ const checks = [
   ['interior furnishing', /furnishInteriors\s*\(/.test(sources['src/main.js'])],
   ['interaction manager', /new\s+InteractionManager\s*\(/.test(sources['src/main.js'])],
   ['school classroom pack', /school:\s*\{[^}]*pack:\s*['"]classroom['"]/s.test(sources['src/furnish.js'])],
-  ['Block Supply zones', /SHOP_ZONES/.test(sources['src/config/blockSupplyLayout.js'])],
+  ['Chicken Spot has no stove/griddle assets', !/(?:stove-griddle|burner-stove|stove-burner)/.test(chickenFurniture)],
+  ['Chicken Spot preserves fryer fallback', /procedural fryer bank/.test(sources['src/furnish.js'])],
+  ['Block Supply zones', /SHOP_ZONES/.test(blockLayout)],
+  ['Block Supply uses multiple walls', /wall:\s*['"]left['"]/.test(blockLayout) && /wall:\s*['"]right['"]/.test(blockLayout) && /wall:\s*['"]back['"]/.test(blockLayout)],
   ['weapon catalog', /export\s+(?:const|function).*WEAPON|allWeapons|weaponsForTab/.test(sources['src/config/weaponCatalog.js'])],
   ['player spawn config', /SPAWN/.test(sources['src/config/mapConfig.js'])],
 ];
