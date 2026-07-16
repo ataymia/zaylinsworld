@@ -88,21 +88,28 @@ async function hairPrototype(styleId, renderer) {
   if (!cfg) return null;
   if (!hairPrototypeCache.has(styleId)) {
     hairPrototypeCache.set(styleId, (async () => {
-      const model = await loadModel(assetUrl(KIT_DIR + cfg.file), renderer);
-      if (!model?.scene) return null;
-      const cloned = skeletonClone(model.scene);
-      const baked = bakeToStatic(cloned);
-      const box = new THREE.Box3().setFromObject(baked);
-      const size = box.getSize(new THREE.Vector3());
-      const width = Math.max(size.x, size.z);
-      if (![size.x, size.y, size.z].every(Number.isFinite) || width <= 0 || size.y <= 0) return null;
-      const center = box.getCenter(new THREE.Vector3());
-      baked.position.set(-center.x, -box.min.y, -center.z);
-      baked.updateMatrixWorld(true);
-      return baked;
+      try {
+        const model = await loadModel(assetUrl(KIT_DIR + cfg.file), renderer);
+        if (!model?.scene) return null;
+        const cloned = skeletonClone(model.scene);
+        const baked = bakeToStatic(cloned);
+        const box = new THREE.Box3().setFromObject(baked);
+        const size = box.getSize(new THREE.Vector3());
+        const width = Math.max(size.x, size.z);
+        if (![size.x, size.y, size.z].every(Number.isFinite) || width <= 0 || size.y <= 0) return null;
+        const center = box.getCenter(new THREE.Vector3());
+        baked.position.set(-center.x, -box.min.y, -center.z);
+        baked.updateMatrixWorld(true);
+        return baked;
+      } catch (error) {
+        console.warn('[modular-attachments] hair prototype failed', styleId, error);
+        return null;
+      }
     })());
   }
-  return hairPrototypeCache.get(styleId);
+  const result = await hairPrototypeCache.get(styleId);
+  if (!result) hairPrototypeCache.delete(styleId);
+  return result;
 }
 
 function colorForHair(custom) {
@@ -120,8 +127,12 @@ function attachmentLayer(instance) {
   return layer;
 }
 
+function findNamed(parent, name) {
+  return parent?.children?.find((child) => child.name === name) || null;
+}
+
 function removeNamed(parent, name) {
-  const existing = parent?.children?.find((child) => child.name === name);
+  const existing = findNamed(parent, name);
   if (existing) disposeTree(existing);
 }
 
@@ -182,9 +193,50 @@ function measuredBodySockets(instance, custom = instance?.custom || {}) {
     headSize: head.getSize(new THREE.Vector3()),
     headCenter: head.getCenter(new THREE.Vector3()),
     chestCenter: chest.getCenter(new THREE.Vector3()),
+    fallback: false,
   };
   instance.socketMetrics = metrics;
   return metrics;
+}
+
+function fallbackBodySockets(instance, custom = instance?.custom || {}) {
+  const key = socketMetricKey(custom);
+  const targetHeight = instance?.normalized?.targetHeight
+    || 1.78 * THREE.MathUtils.clamp(Number(custom.heightScale) || 1, 0.82, 1.18);
+  const headCenter = anchorPosition(instance, instance?.anchors?.head, new THREE.Vector3());
+  const chestCenter = anchorPosition(instance, instance?.anchors?.chest, new THREE.Vector3());
+  const headSize = new THREE.Vector3(targetHeight * 0.115, targetHeight * 0.145, targetHeight * 0.105);
+  const chestSize = new THREE.Vector3(targetHeight * 0.23, targetHeight * 0.22, targetHeight * 0.13);
+  const head = new THREE.Box3(
+    headCenter.clone().addScaledVector(headSize, -0.5),
+    headCenter.clone().addScaledVector(headSize, 0.5),
+  );
+  const chest = new THREE.Box3(
+    chestCenter.clone().addScaledVector(chestSize, -0.5),
+    chestCenter.clone().addScaledVector(chestSize, 0.5),
+  );
+  const bodySize = new THREE.Vector3(targetHeight * 0.34, targetHeight, targetHeight * 0.20);
+  const body = new THREE.Box3(
+    new THREE.Vector3(-bodySize.x * 0.5, 0, -bodySize.z * 0.5),
+    new THREE.Vector3(bodySize.x * 0.5, targetHeight, bodySize.z * 0.5),
+  );
+  const metrics = {
+    key,
+    body,
+    head,
+    chest,
+    bodySize,
+    headSize,
+    headCenter,
+    chestCenter,
+    fallback: true,
+  };
+  instance.socketMetrics = metrics;
+  return metrics;
+}
+
+function bodySockets(instance, custom) {
+  return measuredBodySockets(instance, custom) || fallbackBodySockets(instance, custom);
 }
 
 export function updateAttachmentTransforms(instance) {
@@ -211,65 +263,90 @@ export function isLegacyAssetHair(styleId) {
 export async function updateLegacyHair(instance, custom, renderer) {
   if (!instance?.anchors?.head) return false;
   const styleId = custom.modularHair;
-  const desiredKey = isLegacyAssetHair(styleId) ? `${styleId}:${custom.hairColor || 'jet'}` : 'none';
-  if (instance.externalHairKey === desiredKey) return desiredKey !== 'none';
-  instance.externalHairKey = desiredKey;
+  const fitKey = socketMetricKey(custom);
+  const desiredKey = isLegacyAssetHair(styleId)
+    ? `${styleId}:${custom.hairColor || 'jet'}:${fitKey}`
+    : 'none';
   const layer = attachmentLayer(instance);
+  const existing = findNamed(layer, 'ZW_ExternalHairMount');
+
+  if (desiredKey === 'none') {
+    instance.externalHairRequest = (instance.externalHairRequest || 0) + 1;
+    removeNamed(layer, 'ZW_ExternalHairMount');
+    instance.externalHairKey = 'none';
+    return false;
+  }
+  if (instance.externalHairKey === desiredKey && existing) return true;
+
+  const request = (instance.externalHairRequest || 0) + 1;
+  instance.externalHairRequest = request;
   removeNamed(layer, 'ZW_ExternalHairMount');
-  if (desiredKey === 'none') return false;
+  instance.externalHairKey = null;
 
-  const prototype = await hairPrototype(styleId, renderer);
-  if (!prototype || instance.externalHairKey !== desiredKey) return false;
-  const metrics = measuredBodySockets(instance, custom);
-  if (!metrics) return false;
-  const cfg = HAIR_GLTF[styleId];
-  const modularFit = MODULAR_HAIR_FIT[styleId] || { widthMul: 1.07, heightMul: 1, crownSeat: 0.84, z: 0 };
-  const baked = cloneStaticGroup(prototype);
-  const box = new THREE.Box3().setFromObject(baked);
-  const size = box.getSize(new THREE.Vector3());
-  const targetWidth = Math.max(0.18, metrics.headSize.x * modularFit.widthMul);
-  const maxHeight = Math.max(0.18, metrics.headSize.y * modularFit.heightMul);
-  const widthFit = targetWidth / Math.max(size.x, size.z, 0.0001);
-  const heightFit = maxHeight / Math.max(size.y, 0.0001);
-  const fit = Math.min(widthFit, heightFit);
-  const hairHeight = size.y * fit;
+  try {
+    const prototype = await hairPrototype(styleId, renderer);
+    if (!prototype || instance.externalHairRequest !== request) return false;
+    const metrics = bodySockets(instance, custom);
+    const cfg = HAIR_GLTF[styleId];
+    const modularFit = MODULAR_HAIR_FIT[styleId] || { widthMul: 1.07, heightMul: 1, crownSeat: 0.84, z: 0 };
+    const baked = cloneStaticGroup(prototype);
+    const box = new THREE.Box3().setFromObject(baked);
+    const size = box.getSize(new THREE.Vector3());
+    const targetWidth = Math.max(0.18, metrics.headSize.x * modularFit.widthMul);
+    const maxHeight = Math.max(0.18, metrics.headSize.y * modularFit.heightMul);
+    const widthFit = targetWidth / Math.max(size.x, size.z, 0.0001);
+    const heightFit = maxHeight / Math.max(size.y, 0.0001);
+    const fit = Math.min(widthFit, heightFit);
+    const hairHeight = size.y * fit;
 
-  const mount = new THREE.Group();
-  mount.name = 'ZW_ExternalHairMount';
-  mount.userData.zwAttachment = 'hair';
-  mount.userData.zwItemId = styleId;
-  // The original mini-kit orientation already matches the Sunbox face. The prior
-  // extra PI rotation made every hairstyle face the character's back.
-  mount.rotation.set(cfg.rotX ?? 0, cfg.rotY ?? 0, cfg.rotZ ?? 0);
-  anchorPosition(instance, instance.anchors.head, tempWorld);
-  const targetBase = {
-    x: metrics.headCenter.x + (cfg.xOffset ?? 0),
-    y: metrics.head.max.y - hairHeight * modularFit.crownSeat + (cfg.yOffset ?? 0),
-    z: metrics.headCenter.z + modularFit.z + (cfg.zOffset ?? 0),
-  };
-  mount.userData.zwOffset = {
-    x: targetBase.x - tempWorld.x,
-    y: targetBase.y - tempWorld.y,
-    z: targetBase.z - tempWorld.z,
-  };
+    const mount = new THREE.Group();
+    mount.name = 'ZW_ExternalHairMount';
+    mount.userData.zwAttachment = 'hair';
+    mount.userData.zwItemId = styleId;
+    mount.userData.zwFitKey = fitKey;
+    mount.userData.zwFallbackSocket = metrics.fallback;
+    mount.rotation.set(cfg.rotX ?? 0, cfg.rotY ?? 0, cfg.rotZ ?? 0);
+    anchorPosition(instance, instance.anchors.head, tempWorld);
+    const targetBase = {
+      x: metrics.headCenter.x + (cfg.xOffset ?? 0),
+      y: metrics.head.max.y - hairHeight * modularFit.crownSeat + (cfg.yOffset ?? 0),
+      z: metrics.headCenter.z + modularFit.z + (cfg.zOffset ?? 0),
+    };
+    mount.userData.zwOffset = {
+      x: targetBase.x - tempWorld.x,
+      y: targetBase.y - tempWorld.y,
+      z: targetBase.z - tempWorld.z,
+    };
 
-  const wrapper = new THREE.Group();
-  wrapper.name = `ZW_ExternalHair_${styleId}`;
-  wrapper.add(baked);
-  wrapper.scale.setScalar(fit);
-  const tint = colorForHair(custom);
-  baked.traverse((node) => {
-    if (!node.isMesh) return;
-    const materials = Array.isArray(node.material) ? node.material : [node.material];
-    for (const material of materials) {
-      if (material?.color) material.color.copy(tint);
-      if (material) material.needsUpdate = true;
+    const wrapper = new THREE.Group();
+    wrapper.name = `ZW_ExternalHair_${styleId}`;
+    wrapper.add(baked);
+    wrapper.scale.setScalar(fit);
+    const tint = colorForHair(custom);
+    baked.traverse((node) => {
+      if (!node.isMesh) return;
+      const materials = Array.isArray(node.material) ? node.material : [node.material];
+      for (const material of materials) {
+        if (material?.color) material.color.copy(tint);
+        if (material) material.needsUpdate = true;
+      }
+    });
+    mount.add(wrapper);
+
+    if (instance.externalHairRequest !== request) {
+      disposeTree(mount);
+      return false;
     }
-  });
-  mount.add(wrapper);
-  layer.add(mount);
-  updateAttachmentTransforms(instance);
-  return true;
+    layer.add(mount);
+    instance.externalHairKey = desiredKey;
+    updateAttachmentTransforms(instance);
+    return true;
+  } catch (error) {
+    console.warn('[modular-attachments] hair mount failed', styleId, error);
+    removeNamed(layer, 'ZW_ExternalHairMount');
+    instance.externalHairKey = null;
+    return false;
+  }
 }
 
 function jewelryMaterial(kind) {
@@ -338,34 +415,49 @@ function buildJewelry(kind) {
 export function updateJewelry(instance, custom) {
   if (!instance?.anchors?.chest) return false;
   const kind = custom.jewelry || 'none';
-  if (instance.jewelryKey === kind) return kind !== 'none';
-  instance.jewelryKey = kind;
+  const fitKey = socketMetricKey(custom);
+  const desiredKey = kind === 'none' ? 'none' : `${kind}:${fitKey}`;
   const layer = attachmentLayer(instance);
+  const existing = findNamed(layer, 'ZW_ModularJewelryMount');
+
+  if (kind === 'none') {
+    removeNamed(layer, 'ZW_ModularJewelryMount');
+    instance.jewelryKey = 'none';
+    return false;
+  }
+  if (instance.jewelryKey === desiredKey && existing) return true;
+
   removeNamed(layer, 'ZW_ModularJewelryMount');
-  if (kind === 'none') return false;
-  const metrics = measuredBodySockets(instance, custom);
-  if (!metrics) return false;
-  const mount = buildJewelry(kind);
-  anchorPosition(instance, instance.anchors.chest, tempWorld);
-  // Screenshots confirmed Sunbox's visible front is +Z. Seat the necklace just
-  // beyond the measured chest surface instead of guessing from the bone axis.
-  const target = {
-    x: metrics.chestCenter.x,
-    y: metrics.chest.max.y - metrics.headSize.y * 0.18,
-    z: metrics.chest.max.z + 0.018,
-  };
-  mount.userData.zwOffset = {
-    x: target.x - tempWorld.x,
-    y: target.y - tempWorld.y,
-    z: target.z - tempWorld.z,
-  };
-  layer.add(mount);
-  updateAttachmentTransforms(instance);
-  return true;
+  instance.jewelryKey = null;
+  try {
+    const metrics = bodySockets(instance, custom);
+    const mount = buildJewelry(kind);
+    mount.userData.zwFitKey = fitKey;
+    mount.userData.zwFallbackSocket = metrics.fallback;
+    anchorPosition(instance, instance.anchors.chest, tempWorld);
+    const target = {
+      x: metrics.chestCenter.x,
+      y: metrics.chest.max.y - metrics.headSize.y * 0.18,
+      z: metrics.chest.max.z + 0.018,
+    };
+    mount.userData.zwOffset = {
+      x: target.x - tempWorld.x,
+      y: target.y - tempWorld.y,
+      z: target.z - tempWorld.z,
+    };
+    layer.add(mount);
+    instance.jewelryKey = desiredKey;
+    updateAttachmentTransforms(instance);
+    return true;
+  } catch (error) {
+    console.warn('[modular-attachments] jewelry mount failed', kind, error);
+    removeNamed(layer, 'ZW_ModularJewelryMount');
+    instance.jewelryKey = null;
+    return false;
+  }
 }
 
 export async function updateModularAttachments(instance, custom, renderer) {
-  instance.socketMetrics = null;
   await updateLegacyHair(instance, custom, renderer);
   updateJewelry(instance, custom);
   updateAttachmentTransforms(instance);
@@ -380,6 +472,7 @@ export function disposeModularAttachments(instance) {
   }
   if (instance) {
     instance.externalHairKey = null;
+    instance.externalHairRequest = 0;
     instance.jewelryKey = null;
     instance.socketMetrics = null;
   }
