@@ -8,6 +8,7 @@ Master planning references:
 - [WORLD_MAP_DESIGN.md](WORLD_MAP_DESIGN.md)
 - [ZTA_WORLD_BLUEPRINT.md](ZTA_WORLD_BLUEPRINT.md)
 - [TOWN_SELF_SUSTAINING_SYSTEMS.md](TOWN_SELF_SUSTAINING_SYSTEMS.md)
+- [WATER_ECOSYSTEM_BLUEPRINT.md](WATER_ECOSYSTEM_BLUEPRINT.md)
 - [TECH_TOWN_BLUEPRINT.md](TECH_TOWN_BLUEPRINT.md)
 - [STARLINE_CITY_BLUEPRINT.md](STARLINE_CITY_BLUEPRINT.md)
 - [FISHING_HARBOR_BLUEPRINT.md](FISHING_HARBOR_BLUEPRINT.md)
@@ -15,6 +16,7 @@ Master planning references:
 - [OBBY_CANYON_BLUEPRINT.md](OBBY_CANYON_BLUEPRINT.md)
 - [RICH_HILLS_BLUEPRINT.md](RICH_HILLS_BLUEPRINT.md)
 - [CASINO_STRIP_BLUEPRINT.md](CASINO_STRIP_BLUEPRINT.md)
+- [AQUALUME_BLUEPRINT.md](AQUALUME_BLUEPRINT.md)
 
 Each town is also represented as forward-looking data in
 [src/config/townThemes.js](../src/config/townThemes.js). Those entries are design/data skeletons, not complete playable implementations.
@@ -27,6 +29,8 @@ Each town is also represented as forward-looking data in
 - Each town must sustain itself while belonging to the connected world.
 - A town needs its own gameplay vocabulary, not only different buildings and colors.
 - Detailed implementation must follow the town's standalone blueprint rather than inventing missing civic systems.
+- Water is a shared traversable ecosystem, not a decorative map boundary.
+- Aqualume is earned through the Gillyfish progression path and may never be converted into a premium-store unlock.
 
 ---
 
@@ -43,12 +47,15 @@ Each town is also represented as forward-looking data in
 ## 2. Fishing Harbor
 
 - **Deeper spec:** [FISHING_HARBOR_BLUEPRINT.md](FISHING_HARBOR_BLUEPRINT.md)
+- **Shared-water spec:** [WATER_ECOSYSTEM_BLUEPRINT.md](WATER_ECOSYSTEM_BLUEPRINT.md)
 - **Theme:** working coastal town with docks, boats, seafood market, lighthouse, village, academy, and protected waters.
-- **Purpose:** fishing, boating, marine education, market trading, and harbor employment.
+- **Purpose:** fishing, boating, marine education, market trading, harbor employment, and discovery of the final underwater-town progression path.
 - **Activity loops:** Cast & Reel, Catch of Legend, Crab Traps, Seafood Market Rush, Boat Buoy Run, Net Toss, knot/navigation lessons, repair and rescue work.
+- **Expanded catches:** ordinary fish, rare fish, temporary power fish, junk, cash, gear, loot crates, quest items, contraband/weapon cases, and the Gillyfish.
+- **Gillyfish:** rare but pity-protected fish. Consuming one permanently grants gills and begins the Aqualume discovery mission. Duplicate catches can be sold, stored, traded, or gifted.
 - **Housing:** dock rooms, village apartments, fisher cottages, marina condos, houseboats, waterfront homes.
-- **School:** Harbor Academy teaches fish identification, ecology, knots, navigation, weather/tides, market math, and boat safety.
-- **Law:** Harbor Patrol handles land/water response, permits, protected catches, boat theft, and water rescue.
+- **School:** Harbor Academy teaches fish identification, ecology, knots, navigation, weather/tides, market math, boat safety, and supports the Gillyfish/Aqualume discovery lore.
+- **Law:** Harbor Patrol handles land/water response, permits, protected catches, boat theft, unusual contraband catches, and water rescue.
 - **Fuel:** TideFuel serves cars, EVs, and boats.
 
 ## 3. Dungeon Outskirts
@@ -88,9 +95,11 @@ Each town is also represented as forward-looking data in
 ## 6. Rich Hills
 
 - **Deeper spec:** [RICH_HILLS_BLUEPRINT.md](RICH_HILLS_BLUEPRINT.md)
+- **Shared-water spec:** [WATER_ECOSYSTEM_BLUEPRINT.md](WATER_ECOSYSTEM_BLUEPRINT.md)
 - **Theme:** hillside estates, country club, marina, luxury retail, civic crest, service village, and visible worker economy.
-- **Purpose:** property ownership, negotiation, hospitality, luxury vehicles, golf, marina life, and high-pay service work.
+- **Purpose:** property ownership, negotiation, hospitality, luxury vehicles, golf, marina life, yacht ownership, and high-pay service work.
 - **Activity loops:** Golf, Yacht Run, Car Show Judging, Valet Dash, Mansion Chore Run, Auction Spotter, Negotiation Challenge, Property Match, Concierge Rush, Detail Challenge.
+- **Water role:** Rich Hills Marina opens the luxury side of Crownwater Basin through speedboats, yachts, marina homes, charter routes, and a later pressure-sub route toward Aqualume.
 - **Housing:** affordable worker apartments, academy dorms, townhouses, marina condos, ridge houses, estates, yacht-club residences, penthouses.
 - **School:** Legacy Preparatory Academy teaches finance, business, real estate, negotiation, hospitality, leadership, appraisal, golf/club rules, and ethics.
 - **Law:** Rich Hills Police plus private estate, club, and marina security. Rich/restricted areas have denser patrols, faster response, and higher fines.
@@ -119,14 +128,31 @@ Each town is also represented as forward-looking data in
 - **Law:** Starline Police plus studio, venue, school, and hill security. Legal heat, scandal/reputation, and venue bans remain separate consequence layers.
 - **Fuel:** StarStop Fuel & Charge supports residents, event traffic, production vans, and deliveries.
 
+## 9. Aqualume *(final unlockable underwater town)*
+
+- **Official working name:** Aqualume.
+- **Deeper spec:** [AQUALUME_BLUEPRINT.md](AQUALUME_BLUEPRINT.md)
+- **Unlock/system spec:** [WATER_ECOSYSTEM_BLUEPRINT.md](WATER_ECOSYSTEM_BLUEPRINT.md)
+- **Theme:** luminous underwater city combining ancient coral-and-stone foundations, pressure glass, current-powered technology, pearl architecture, sea-life sanctuaries, and modern civic life.
+- **Unlock:** catch and consume the Gillyfish to gain permanent gills, then complete the Lighthouse Trench discovery route. This unlock is earned, permanent, and not sold.
+- **Purpose:** advanced aquatic movement, high-pay certified jobs, underwater vehicles, rare goods, sea-life partnerships, salvage, current engineering, premium housing, and Abyssal exploration.
+- **Activity loops:** Current Surf, Sea-Scooter Slalom, Mini-Sub Docking, Sonar Mapping, Pearl Dive, Salvage Scanner, Coral Restoration, Sea-Life Rescue, Dolphin Guide Dash, Manta Glide, Pressure Seal, Turbine Balance, Bubble Taxi Dispatch, Abyss Courier.
+- **Housing:** student bubble pods, Reefside shell pods/apartments, glass-tunnel condos, coral villas, pearl penthouses, workshop sub-lofts, and mobile house-subs.
+- **School:** Tideglass Academy teaches current navigation, sonar, submarine engineering, coral ecology, sea-life care, salvage appraisal, pressure science, underwater law, trade, and current energy.
+- **Law:** Current Guard, Sanctuary Wardens, Pearlworks Security, sonar scanners, patrol subs, bubble barriers, salvage permits, and stronger protection around wildlife and premium districts.
+- **Vehicle service:** Bluecore Transit & Charge supports sea scooters, personal/cargo subs, bubble taxis, energy cores, pressure repairs, rescue, and cargo.
+- **Economy:** jobs generally pay more because access, skills, certification, and risk are higher; local costs and equipment also scale upward so the global economy remains intact.
+
 ---
 
 ## Cross-town systems
 
-- **Travel:** roads, highways, bridges, tunnels, dirt routes, transit nodes, boats, and special pedestrian paths connect towns.
-- **Housing:** one primary residence controls default spawn/rest/storage; players can own homes in multiple towns.
+- **Travel:** roads, highways, bridges, tunnels, dirt routes, transit nodes, boats, yachts, current lanes, submarines, and special pedestrian/swim paths connect towns.
+- **Water:** Crownwater Basin links Fishing Harbor, Rich Hills Marina, the Casino bridge coast, and Aqualume through surface and underwater routes.
+- **Swimming:** non-gilled players have a breath meter and return safely to shore/rescue when they run out. Gillyfish adaptation permanently removes normal underwater breath limits.
+- **Housing:** one primary residence controls default spawn/rest/storage; players can own homes in multiple towns, including boats/houseboats and underwater property where supported.
 - **Schools/skills:** each school teaches geographically appropriate skills with town-specific learning mechanics.
-- **Economy:** global cash and bank; tightly scoped local values such as Fame, game-hall chips, arcade tickets, and course cosmetics.
-- **Law:** wanted/heat is town-aware; local bans, permits, reputation, confiscation, impound, and community-repair tasks add geographic consequences.
+- **Economy:** global cash and bank; tightly scoped local values/materials such as Fame, game-hall chips, arcade tickets, course cosmetics, and Lumen Shards.
+- **Law:** wanted/heat is town-aware; local bans, permits, reputation, confiscation, impound, water patrol, sonar pursuit, and community-repair tasks add geographic consequences.
 - **No fake prompts:** every interaction requires a working handler and fallback.
-- **Implementation:** every town must ship asset, interaction, UI, collision, fallback, performance, civic, housing, school, job, and crime plans before becoming playable.
+- **Implementation:** every town must ship asset, interaction, UI, collision, fallback, performance, civic, housing, school, job, crime, and supported-travel plans before becoming playable.
