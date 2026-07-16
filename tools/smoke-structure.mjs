@@ -29,21 +29,34 @@ const chickenFurniture = sources['src/furnish.js'].match(/chicken:\s*\[([\s\S]*?
 const blockLayout = sources['src/config/blockSupplyLayout.js'];
 const skinTextureAwait = sources['src/modularPlayer.js'].indexOf('await Promise.all(jobs)');
 const skinTint = sources['src/modularPlayer.js'].indexOf("const skin = instance.materials.get('ZW_Skin')");
+const attachments = sources['src/modularAttachments.js'];
+const studio = sources['src/characterStudio.js'];
+const avatarSkin = sources['src/avatarSkin.js'];
+const rolePolicy = sources['src/config/characterRoles.js'];
 const checks = [
   ['entry module', sources['index.html'].includes('src/main.js')],
   ['player builder', /buildAvatar\s*\(/.test(sources['src/main.js'])],
-  ['modular player adapter', /createModularPlayerVisual/.test(sources['src/avatarSkin.js'])],
-  ['character studio', /mountCharacterStudio/.test(sources['src/characterStudio.js'])],
+  ['modular player adapter', /createModularPlayerVisual/.test(avatarSkin)],
+  ['character studio', /mountCharacterStudio/.test(studio)],
   ['pack-agnostic catalog', /PLAYER_AVATAR_CATALOG/.test(sources['src/config/playerAvatarCatalog.js'])],
-  ['procedural player fallback', /procedural fallback/.test(sources['src/avatarSkin.js'])],
-  ['single player visual owner', /hideProceduralMeshes\(avatar\.group, modular\.group\)/.test(sources['src/avatarSkin.js'])],
+  ['procedural player fallback', /procedural fallback/.test(avatarSkin)],
+  ['single player visual owner', /hideProceduralMeshes\(avatar\.group, modular\.group\)/.test(avatarSkin)],
   ['skin tint happens after texture jobs', skinTextureAwait >= 0 && skinTint > skinTextureAwait],
+  ['world-scale modular wrapper', /const group = new THREE\.Group\(\)/.test(sources['src/modularPlayer.js']) && /model\.scale\.setScalar/.test(sources['src/modularPlayer.js'])],
   ['modular attachment bridge', /updateModularAttachments/.test(sources['src/modularPlayer.js'])],
-  ['chain chest attachment', /ZW_ModularJewelryMount/.test(sources['src/modularAttachments.js']) && /anchors\?\.chest/.test(sources['src/modularAttachments.js'])],
-  ['legacy asset hair bridge', /HAIR_GLTF/.test(sources['src/modularAttachments.js']) && /ZW_ExternalHairMount/.test(sources['src/modularAttachments.js'])],
-  ['functional civilian policy', /mode:\s*['"]procedural-functional['"]/.test(sources['src/config/characterRoles.js']) && /maxLiveSkins:\s*0/.test(sources['src/config/characterRoles.js'])],
+  ['chain uses player front', /ZW_ModularJewelryMount/.test(attachments) && /Sunbox front is negative Z/.test(attachments) && /-0\.018 - drop \* 0\.055/.test(attachments)],
+  ['legacy asset hair bridge', /HAIR_GLTF/.test(attachments) && /ZW_ExternalHairMount/.test(attachments)],
+  ['legacy hair faces modular forward', /Math\.PI \+ \(cfg\.rotY/.test(attachments)],
+  ['legacy hair size caps', /maxHeight/.test(attachments) && /Math\.min\(widthFit, heightFit\)/.test(attachments)],
+  ['direct imported civilian policy', /mode:\s*['"]glb-functional-direct['"]/.test(rolePolicy) && /maxLiveSkins:\s*24/.test(rolePolicy)],
+  ['direct NPC bone drivers', /remapImportedRig/.test(avatarSkin) && /zwDirectRig/.test(avatarSkin)],
+  ['bubble meshes retire after NPC swap', /retireProceduralMeshes/.test(avatarSkin)],
+  ['civilian mixers disabled', /playEmbeddedClip:\s*false/.test(rolePolicy)],
   ['legacy creator canvas hidden', /canvas:not\(\.zw-studio-canvas\)/.test(sources['src/characterStudioTheme.js'])],
-  ['studio preview throttled', /timestamp - this\.lastRenderMs < 32/.test(sources['src/characterStudio.js'])],
+  ['legacy creator GPU draw gated', /zaylins\.characterStudioRenderGate/.test(studio) && /isLegacyCreator/.test(studio)],
+  ['studio preview throttled', /timestamp - this\.lastRenderMs < 32/.test(studio)],
+  ['studio uses true drawing-buffer dimensions', /canvas\.width !== expectedWidth/.test(studio) && /setSize\(width, height, false\)/.test(studio)],
+  ['studio face close-up', /fov:\s*27/.test(studio) && /z:\s*1\.92/.test(studio)],
   ['city NPC creation', /createCityNPCs\s*\(/.test(sources['src/main.js'])],
   ['interior construction', /buildInteriors\s*\(/.test(sources['src/main.js'])],
   ['interior furnishing', /furnishInteriors\s*\(/.test(sources['src/main.js'])],
