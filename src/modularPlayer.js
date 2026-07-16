@@ -11,6 +11,11 @@ import {
   ensurePlayerCustom,
   variantFor,
 } from './config/playerAvatarCatalog.js';
+import {
+  isLegacyAssetHair,
+  updateModularAttachments,
+  disposeModularAttachments,
+} from './modularAttachments.js';
 
 const textureLoader = new THREE.TextureLoader();
 const textureCache = new Map();
@@ -71,34 +76,37 @@ const SLOT_NODES = Object.freeze({
 
 const MATERIAL_TEXTURES = Object.freeze({
   ZW_Skin: () => './assets/models/characters/player/sunbox-male-free/textures/skin-male/male-avatar-diffuse.webp',
-  ZW_Eyes: (c) => variantFor('eyes', c.eyeTexture)?.path,
-  ZW_Eyelashes: (c) => variantFor('eyelashes', c.eyelashTexture)?.path,
-  ZW_Hair: (c) => variantFor('hair', c.hairTexture)?.path,
-  ZW_TShirt: (c) => variantFor('tshirt', c.topTexture)?.path,
-  ZW_Hoodie: (c) => variantFor('hoodie', c.topTexture)?.path,
-  ZW_Jeans: (c) => variantFor('jeans', c.bottomTexture)?.path,
-  ZW_CargoShorts: (c) => variantFor('cargo-shorts', c.bottomTexture)?.path,
-  ZW_BasketballShoes: (c) => variantFor('basketball', c.shoesTexture)?.path,
-  ZW_FlipFlops: (c) => variantFor('flipflops', c.shoesTexture)?.path,
-  ZW_Beanie: (c) => variantFor('beanie', c.hatTexture)?.path,
-  ZW_BaseballCap: (c) => variantFor('baseball-cap', c.hatTexture)?.path,
+  ZW_Eyes: (custom) => variantFor('eyes', custom.eyeTexture)?.path,
+  ZW_Eyelashes: (custom) => variantFor('eyelashes', custom.eyelashTexture)?.path,
+  ZW_Hair: (custom) => variantFor('hair', custom.hairTexture)?.path,
+  ZW_TShirt: (custom) => variantFor('tshirt', custom.topTexture)?.path,
+  ZW_Hoodie: (custom) => variantFor('hoodie', custom.topTexture)?.path,
+  ZW_Jeans: (custom) => variantFor('jeans', custom.bottomTexture)?.path,
+  ZW_CargoShorts: (custom) => variantFor('cargo-shorts', custom.bottomTexture)?.path,
+  ZW_BasketballShoes: (custom) => variantFor('basketball', custom.shoesTexture)?.path,
+  ZW_FlipFlops: (custom) => variantFor('flipflops', custom.shoesTexture)?.path,
+  ZW_Beanie: (custom) => variantFor('beanie', custom.hatTexture)?.path,
+  ZW_BaseballCap: (custom) => variantFor('baseball-cap', custom.hatTexture)?.path,
 });
 
 function loadTexture(url, renderer) {
   if (!url) return Promise.resolve(null);
   if (!textureCache.has(url)) {
-    const promise = textureSource(url).then((source) => textureLoader.loadAsync(source)).then((texture) => {
-      texture.colorSpace = THREE.SRGBColorSpace;
-      texture.wrapS = THREE.RepeatWrapping;
-      texture.wrapT = THREE.RepeatWrapping;
-      texture.flipY = false;
-      texture.anisotropy = Math.min(8, renderer?.capabilities?.getMaxAnisotropy?.() || 4);
-      texture.needsUpdate = true;
-      return texture;
-    }).catch((error) => {
-      console.warn('[player-avatar] texture failed', url, error);
-      return null;
-    });
+    const promise = textureSource(url)
+      .then((source) => textureLoader.loadAsync(source))
+      .then((texture) => {
+        texture.colorSpace = THREE.SRGBColorSpace;
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        texture.flipY = false;
+        texture.anisotropy = Math.min(12, renderer?.capabilities?.getMaxAnisotropy?.() || 4);
+        texture.needsUpdate = true;
+        return texture;
+      })
+      .catch((error) => {
+        console.warn('[player-avatar] texture failed', url, error);
+        return null;
+      });
     textureCache.set(url, promise);
   }
   return textureCache.get(url);
@@ -144,17 +152,22 @@ function setSlotVisibility(root, custom) {
       if (node) node.visible = selected[slot] === id;
     }
   }
+  // Outside-pack hair owns the head slot, so both built-in Sunbox styles stay off.
+  if (isLegacyAssetHair(custom.modularHair)) {
+    root.getObjectByName('ZW_Hair_CrewCut')?.traverse((node) => { node.visible = false; });
+    root.getObjectByName('ZW_Hair_CloseCrop')?.traverse((node) => { node.visible = false; });
+  }
   const body = root.getObjectByName('ZW_Player_Body');
   if (body) body.visible = true;
 }
 
 function setMorph(root, name, value) {
-  const v = THREE.MathUtils.clamp(Number(value) || 0, 0, 1);
+  const amount = THREE.MathUtils.clamp(Number(value) || 0, 0, 1);
   root.traverse((node) => {
     if (!node.isMesh || !node.morphTargetDictionary || !node.morphTargetInfluences) return;
     const index = node.morphTargetDictionary[name];
     if (index == null) return;
-    node.morphTargetInfluences[index] = v;
+    node.morphTargetInfluences[index] = amount;
   });
 }
 
@@ -180,17 +193,15 @@ function applyMorphs(root, custom) {
     if (value > 0) setMorph(root, slider.maxTarget, value);
   }
 
-  // Hide covered body regions. Flip-flops keep feet visible; shorts keep lower legs.
   setMorph(root, 'OutfitHide_Tshirt', custom.modularTop ? 1 : 0);
   setMorph(root, 'OutfitHide_Jeans', custom.modularBottom === 'jeans' ? 1 : 0);
   setMorph(root, 'OutfitHide_Sneakers', custom.modularShoes === 'basketball' ? 1 : 0);
 }
 
 async function applyMaterials(instance, custom, renderer) {
-  const materials = instance.materials;
   const jobs = [];
   for (const [materialName, resolveUrl] of Object.entries(MATERIAL_TEXTURES)) {
-    const material = materials.get(materialName);
+    const material = instance.materials.get(materialName);
     if (!material) continue;
     const url = resolveUrl(custom);
     jobs.push(loadTexture(url, renderer).then((texture) => {
@@ -201,22 +212,26 @@ async function applyMaterials(instance, custom, renderer) {
     }));
   }
 
-  const skin = materials.get('ZW_Skin');
+  // Texture jobs used to finish after the tint and reset skin to white. Wait for
+  // them first, then apply the chosen tone as the final layer.
+  await Promise.all(jobs);
+
+  const skin = instance.materials.get('ZW_Skin');
   const tone = SKIN_TONES.find((entry) => entry.id === custom.skin) || SKIN_TONES[4] || SKIN_TONES[0];
   if (skin && tone) {
-    // Preserve the authored skin detail while tinting across the inclusive tone range.
-    skin.color.set(tone.color).lerp(new THREE.Color('#ffffff'), 0.38);
-    skin.roughness = 0.78;
+    const tint = new THREE.Color(tone.color).lerp(new THREE.Color('#ffffff'), 0.3);
+    skin.color.copy(tint);
+    skin.roughness = 0.76;
     skin.metalness = 0;
     skin.needsUpdate = true;
   }
-  const nails = materials.get('ZW_Nails');
+  const nails = instance.materials.get('ZW_Nails');
   if (nails && tone) {
-    nails.color.set(tone.color).lerp(new THREE.Color('#f5c8c8'), 0.52);
+    nails.color.set(tone.color).lerp(new THREE.Color('#f5c8c8'), 0.5);
     nails.roughness = 0.45;
     nails.needsUpdate = true;
   }
-  const lashes = materials.get('ZW_Eyelashes');
+  const lashes = instance.materials.get('ZW_Eyelashes');
   if (lashes) {
     lashes.transparent = true;
     lashes.alphaTest = 0.25;
@@ -224,7 +239,7 @@ async function applyMaterials(instance, custom, renderer) {
     lashes.side = THREE.DoubleSide;
     lashes.needsUpdate = true;
   }
-  const lenses = materials.get('ZW_GlassesLens');
+  const lenses = instance.materials.get('ZW_GlassesLens');
   if (lenses) {
     lenses.transparent = true;
     lenses.opacity = 0.42;
@@ -233,17 +248,25 @@ async function applyMaterials(instance, custom, renderer) {
     lenses.depthWrite = false;
     lenses.needsUpdate = true;
   }
-  await Promise.all(jobs);
 }
 
 function normalizeVisibleModel(root, custom) {
+  const attachments = [];
+  root.traverse((node) => {
+    if (node.userData?.zwAttachment && node.visible) {
+      attachments.push(node);
+      node.visible = false;
+    }
+  });
   root.scale.setScalar(1);
   root.position.set(0, 0, 0);
   root.updateWorldMatrix(true, true);
   const box = new THREE.Box3().setFromObject(root);
   const size = new THREE.Vector3();
   const center = new THREE.Vector3();
-  box.getSize(size); box.getCenter(center);
+  box.getSize(size);
+  box.getCenter(center);
+  for (const attachment of attachments) attachment.visible = true;
   if (!Number.isFinite(size.y) || size.y < 0.05) return null;
   const targetHeight = 1.78 * THREE.MathUtils.clamp(Number(custom.heightScale) || 1, 0.82, 1.18);
   const scale = targetHeight / size.y;
@@ -265,10 +288,10 @@ function findRig(root) {
       hips: get('Hips'),
     },
     anchors: {
-      head: get('ZW_Anchor_Head'),
+      head: get('ZW_Anchor_Head') || get('Head'),
       rightHand: get('ZW_Anchor_RightHand') || get('Hand_Prop_R') || get('Hand_R'),
       leftHand: get('ZW_Anchor_LeftHand') || get('Hand_Prop_L') || get('Hand_L'),
-      chest: get('ZW_Anchor_Chest') || get('UpperChest'),
+      chest: get('ZW_Anchor_Chest') || get('UpperChest') || get('Chest'),
     },
   };
 }
@@ -284,6 +307,7 @@ export async function createModularPlayerVisual(customInput, renderer, options =
   group.name = options.name || 'modular-player:Sunbox-male-free';
   group.userData.characterRole = 'player';
   group.userData.sourcePack = 'sunbox-male-free';
+  group.userData.zwVisualOwner = 'modular';
   cloneMaterials(group);
 
   const rig = findRig(group);
@@ -295,30 +319,41 @@ export async function createModularPlayerVisual(customInput, renderer, options =
     custom,
     normalized: null,
     blinkPhase: Math.random() * 4,
+    externalHairKey: null,
+    jewelryKey: null,
+    updateToken: 0,
   };
   setSlotVisibility(group, custom);
   applyMorphs(group, custom);
   await applyMaterials(instance, custom, renderer);
   instance.normalized = normalizeVisibleModel(group, custom);
   if (!instance.normalized) return null;
+  await updateModularAttachments(instance, custom, renderer);
   return instance;
 }
 
 export async function updateModularPlayerVisual(instance, customInput, renderer) {
   if (!instance?.group) return false;
+  const token = ++instance.updateToken;
   const custom = ensurePlayerCustom(customInput || {});
   instance.custom = custom;
   setSlotVisibility(instance.group, custom);
   applyMorphs(instance.group, custom);
   await applyMaterials(instance, custom, renderer);
+  if (token !== instance.updateToken) return false;
+  const previousScale = instance.normalized?.scale || 0;
   instance.normalized = normalizeVisibleModel(instance.group, custom);
-  return !!instance.normalized;
+  if (!instance.normalized) return false;
+  if (Math.abs(previousScale - instance.normalized.scale) > 0.000001) {
+    instance.externalHairKey = null;
+    instance.jewelryKey = null;
+  }
+  await updateModularAttachments(instance, custom, renderer);
+  return token === instance.updateToken;
 }
 
 export function tickModularPlayerVisual(instance, elapsed) {
   if (!instance?.group) return;
-  // Lightweight autonomous blink. Gameplay locomotion is driven by the existing
-  // player controller after avatarSkin remaps its limb pivots to imported bones.
   const cycle = (elapsed + instance.blinkPhase) % 4.6;
   let blink = 0;
   if (cycle > 4.25 && cycle < 4.38) blink = Math.sin(((cycle - 4.25) / 0.13) * Math.PI);
@@ -327,6 +362,7 @@ export function tickModularPlayerVisual(instance, elapsed) {
 
 export function disposeModularPlayerVisual(instance) {
   if (!instance?.group) return;
+  disposeModularAttachments(instance);
   instance.group.traverse((node) => {
     if (!node.isMesh) return;
     const materials = Array.isArray(node.material) ? node.material : [node.material];
