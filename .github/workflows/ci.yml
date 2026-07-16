@@ -56,6 +56,15 @@ jobs:
       - name: Test procedural character motion
         run: node --test tests/characterMotion.test.mjs
 
+      - name: Test Police Station conversations
+        run: node --test tests/conversations.test.mjs
+
+      - name: Test Starter Town interior structure
+        run: node --test tests/starterTown.test.mjs
+
+      - name: Test town registry and streaming policy
+        run: node --test tests/townRegistry.test.mjs
+
       - name: Run complete regression suite
         run: npm test
 
