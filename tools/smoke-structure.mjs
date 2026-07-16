@@ -8,8 +8,11 @@ const requiredFiles = [
   'src/avatar.js',
   'src/avatarSkin.js',
   'src/modularPlayer.js',
+  'src/modularAttachments.js',
   'src/characterStudio.js',
+  'src/characterStudioTheme.js',
   'src/config/playerAvatarCatalog.js',
+  'src/config/characterRoles.js',
   'src/npc.js',
   'src/interiors.js',
   'src/furnish.js',
@@ -24,6 +27,8 @@ const sources = Object.fromEntries(await Promise.all(
 ));
 const chickenFurniture = sources['src/furnish.js'].match(/chicken:\s*\[([\s\S]*?)\n\s*\],\n\};/)?.[1] || '';
 const blockLayout = sources['src/config/blockSupplyLayout.js'];
+const skinTextureAwait = sources['src/modularPlayer.js'].indexOf('await Promise.all(jobs)');
+const skinTint = sources['src/modularPlayer.js'].indexOf("const skin = instance.materials.get('ZW_Skin')");
 const checks = [
   ['entry module', sources['index.html'].includes('src/main.js')],
   ['player builder', /buildAvatar\s*\(/.test(sources['src/main.js'])],
@@ -31,6 +36,14 @@ const checks = [
   ['character studio', /mountCharacterStudio/.test(sources['src/characterStudio.js'])],
   ['pack-agnostic catalog', /PLAYER_AVATAR_CATALOG/.test(sources['src/config/playerAvatarCatalog.js'])],
   ['procedural player fallback', /procedural fallback/.test(sources['src/avatarSkin.js'])],
+  ['single player visual owner', /hideProceduralMeshes\(avatar\.group, modular\.group\)/.test(sources['src/avatarSkin.js'])],
+  ['skin tint happens after texture jobs', skinTextureAwait >= 0 && skinTint > skinTextureAwait],
+  ['modular attachment bridge', /updateModularAttachments/.test(sources['src/modularPlayer.js'])],
+  ['chain chest attachment', /ZW_ModularJewelryMount/.test(sources['src/modularAttachments.js']) && /anchors\?\.chest/.test(sources['src/modularAttachments.js'])],
+  ['legacy asset hair bridge', /HAIR_GLTF/.test(sources['src/modularAttachments.js']) && /ZW_ExternalHairMount/.test(sources['src/modularAttachments.js'])],
+  ['functional civilian policy', /mode:\s*['"]procedural-functional['"]/.test(sources['src/config/characterRoles.js']) && /maxLiveSkins:\s*0/.test(sources['src/config/characterRoles.js'])],
+  ['legacy creator canvas hidden', /canvas:not\(\.zw-studio-canvas\)/.test(sources['src/characterStudioTheme.js'])],
+  ['studio preview throttled', /timestamp - this\.lastRenderMs < 32/.test(sources['src/characterStudio.js'])],
   ['city NPC creation', /createCityNPCs\s*\(/.test(sources['src/main.js'])],
   ['interior construction', /buildInteriors\s*\(/.test(sources['src/main.js'])],
   ['interior furnishing', /furnishInteriors\s*\(/.test(sources['src/main.js'])],
