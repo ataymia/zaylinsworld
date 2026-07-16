@@ -5,6 +5,8 @@ import {
   SKIN_TONES, FACES, BODY_SHAPES, HEIGHTS, HAIRSTYLES, HAIR_COLORS,
   OUTFIT_TOPS, OUTFIT_BOTTOMS, SHOES, ACCESSORIES, JEWELRY,
 } from './avatar.js';
+import { applyDialogueEnhancers } from './conversationRegistry.js';
+import './config/policeConversations.js';
 
 export const SERVERS = [
   { id: 'sunside',  name: 'Sunside',  vibe: 'Bright, busy daytime city' },
@@ -195,6 +197,7 @@ export function notify(text) {
 // ── dialogue ───────────────────────────────────────────────────────────────────
 // opts: { name, text, choices:[{label, onPick}] }  (onPick may return a new opts to continue)
 export function openDialogue(opts) {
+  opts = applyDialogueEnhancers(opts);
   $('dia-name').textContent = opts.name || '';
   $('dia-text').textContent = opts.text || '';
   const wrap = $('dia-choices'); wrap.innerHTML = '';
@@ -210,7 +213,7 @@ export function openDialogue(opts) {
       else if (activeMenu === 'dialogue' && ($('dia-name').textContent !== beforeName || $('dia-text').textContent !== beforeText)) {
         // Some older callbacks call openDialogue(...) directly instead of returning
         // the new dialogue object. They already replaced the dialogue contents, so
-        // do NOT close the menu immediately after opening it.
+        // do not close the menu immediately after opening it.
         return;
       }
       else closeMenus();
