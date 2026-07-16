@@ -31,7 +31,11 @@ assert.match(wallBlob.reason, /width\/depth/);
 
 assert.equal(CHARACTER_ROLE_POLICY.player.mode, 'modular-custom');
 assert.equal(CHARACTER_ROLE_POLICY.player.asset, 'sunbox-male-free');
-assert.ok(CHARACTER_ROLE_POLICY.civilian.maxLiveSkins <= 12);
+assert.equal(CHARACTER_ROLE_POLICY.civilian.mode, 'procedural-functional');
+assert.equal(CHARACTER_ROLE_POLICY.civilian.maxLiveSkins, 0);
+assert.equal(CHARACTER_ROLE_POLICY.civilian.playEmbeddedClip, false);
+assert.equal(CHARACTER_ROLE_POLICY.police.mode, 'procedural-functional');
+assert.equal(CHARACTER_ROLE_POLICY.police.playEmbeddedClip, false);
 assert.ok(CIVILIAN_CHARACTER_CANDIDATES.length >= 20);
 assert.ok(POLICE_CHARACTER_CANDIDATES.every((name) => name.includes('police')));
 assert.equal(
@@ -43,12 +47,19 @@ assert.equal(
 for (const slot of ['hair', 'facialHair', 'top', 'bottom', 'shoes', 'hat', 'glasses']) {
   assert.ok(PLAYER_AVATAR_CATALOG.slots[slot]?.length, `missing modular slot ${slot}`);
 }
+assert.ok(PLAYER_AVATAR_CATALOG.slots.hair.some((entry) => entry.id === 'gltf-long'), 'legacy asset hair must remain available');
+assert.ok(PLAYER_AVATAR_CATALOG.slots.hair.some((entry) => entry.id === 'gltf-buns'), 'legacy asset hair must remain available');
+assert.ok(PLAYER_AVATAR_CATALOG.hairColors.length >= 8, 'asset hair needs the existing color palette');
 assert.ok(PLAYER_AVATAR_CATALOG.faceSliders.length >= 15, 'full face sculpt controls must stay available');
 assert.ok(PLAYER_AVATAR_CATALOG.variants.eyes.length >= 17, 'all free eye textures must remain catalogued');
 assert.equal(PLAYER_AVATAR_CATALOG.variants.eyelashes.length, 4);
-const migrated = ensurePlayerCustom({ body: 'heavy', height: 'tall' });
+const migrated = ensurePlayerCustom({ body: 'heavy', height: 'tall', hair: 'gltf-long' });
 assert.ok(migrated.bodyMass > 0.5);
 assert.ok(migrated.heightScale > 1);
+assert.equal(migrated.modularHair, 'gltf-long');
+assert.equal(migrated.hair, 'low-fade', 'legacy fallback must not double-load a hidden glTF hair');
 assert.equal(clonePlayerAppearance(PLAYER_CUSTOM_DEFAULTS).modularTop, 'tshirt');
+assert.ok(PLAYER_AVATAR_CATALOG.bodySliders.find((slider) => slider.key === 'heightScale').min <= 0.82);
+assert.ok(PLAYER_AVATAR_CATALOG.bodySliders.find((slider) => slider.key === 'heightScale').max >= 1.18);
 
-console.log('[characters] role policy, modular catalog and bounds checks passed.');
+console.log('[characters] role policy, modular catalog, legacy hair and bounds checks passed.');
