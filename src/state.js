@@ -1,53 +1,50 @@
 // ───────────────────────────────────────────────────────────────────────────
-//  state.js — game state + save/load (localStorage)
+// state.js — game state + save/load (localStorage)
 // ───────────────────────────────────────────────────────────────────────────
 import { defaultCustom } from './avatar.js';
+import { ensurePlayerCustom } from './config/playerAvatarCatalog.js';
 import { SPAWN } from './config/mapConfig.js';
 
 const SAVE_KEY = 'zaylinsworld.save.v2';
 
 export function defaultState() {
   return {
-    version: 2,
-    custom: defaultCustom(),
+    version: 3,
+    custom: ensurePlayerCustom(defaultCustom()),
     money: 500,
-    // stats 0..100
     stats: { health: 100, energy: 100, hunger: 80, fitness: 20, smarts: 15, hygiene: 90, fun: 50 },
     job: 'Unemployed',
-    wanted: 0,          // 0..5 stars
-    heat: 0,            // long-term crime heat
+    wanted: 0,
+    heat: 0,
     monsterMode: false,
-    timeMin: 8 * 60,    // in-game minutes (08:00)
+    timeMin: 8 * 60,
     day: 1,
-    server: 'sunside',  // city/server vibe
+    server: 'sunside',
     pos: { x: SPAWN.x, z: SPAWN.z },
     facing: SPAWN.faceY,
     carDamage: 0,
-    fuel: 100,          // current vehicle fuel (0..100), refill at the gas station
+    fuel: 100,
     createdCharacter: false,
-    // visible-skin migration: do not let old saves silently suppress the newer
-    // GLB/procedural character polish pass. Users can still change cosmetics in
-    // the creator, but stale `useRealSkin:false` flags from earlier testing are
-    // ignored on load.
     useRealSkin: true,
-    // ownership
-    ownedCars: [],      // car ids bought at dealership
-    ownedJewelry: [],   // jewelry ids bought at Frostbox
-    ownedGear: [],      // gear ids bought at Block Supply
-    ownedWeapons: ['fists'],   // weapon ids owned (from weaponCatalog.js)
-    equippedWeapon: 'fists',   // currently held weapon
-    ammo: {},           // weaponId -> { mag }  (loaded magazine, per weapon)
-    ammoReserve: {},    // ammoType -> count   (shared spare-ammo pool)
-    ownedUpgrades: {},  // weaponId -> [upgradeId]  (purchased upgrades)
-    equippedUpgrades: {}, // weaponId -> [upgradeId] (active upgrades)
-    weaponsV2: false,   // set true once a save is migrated to the catalog model
-    missionIndex: 0,    // active mission in the chain
-    missionProgress: [],// done-flags for the active mission's objectives
-    chicken: 0,         // pieces of chicken in inventory
-    gems: 0,            // collectible city gems picked up
-    freshCut: false,    // lineup mini-game result
-    npcMemory: {},      // id -> { greeted, timesTalked, lastDay }
+    ownedCars: [],
+    ownedJewelry: [],
+    ownedGear: [],
+    ownedWeapons: ['fists'],
+    equippedWeapon: 'fists',
+    ammo: {},
+    ammoReserve: {},
+    ownedUpgrades: {},
+    equippedUpgrades: {},
+    weaponsV2: false,
+    missionIndex: 0,
+    missionProgress: [],
+    chicken: 0,
+    gems: 0,
+    freshCut: false,
+    npcMemory: {},
     inventory: [],
+    savedOutfits: [],
+    ownedWardrobe: { freeStarterPack: true },
   };
 }
 
@@ -56,27 +53,26 @@ export function loadState() {
     const raw = localStorage.getItem(SAVE_KEY);
     if (!raw) return null;
     const data = JSON.parse(raw);
-    // shallow merge over defaults so new fields stay valid
     const base = defaultState();
     return {
       ...base, ...data,
-      // Migration: old local saves could contain useRealSkin:false from emergency
-      // debugging. That made the new skin work look like it did nothing because
-      // main.js skipped applyPlayerSkin entirely. Force it back on for this build.
+      version: 3,
       useRealSkin: true,
-      custom: { ...base.custom, ...(data.custom || {}) },
+      custom: ensurePlayerCustom({ ...base.custom, ...(data.custom || {}), faceMorphs: { ...base.custom.faceMorphs, ...(data.custom?.faceMorphs || {}) } }),
       stats: { ...base.stats, ...(data.stats || {}) },
       pos: { ...base.pos, ...(data.pos || {}) },
       npcMemory: { ...(data.npcMemory || {}) },
       ownedCars: data.ownedCars || [],
       ownedJewelry: data.ownedJewelry || [],
       ownedGear: data.ownedGear || [],
-      ownedWeapons: data.ownedWeapons && data.ownedWeapons.length ? data.ownedWeapons : ['fists'],
+      ownedWeapons: data.ownedWeapons?.length ? data.ownedWeapons : ['fists'],
       ammo: { ...(data.ammo || {}) },
       ammoReserve: { ...(data.ammoReserve || {}) },
       ownedUpgrades: { ...(data.ownedUpgrades || {}) },
       equippedUpgrades: { ...(data.equippedUpgrades || {}) },
       missionProgress: data.missionProgress || [],
+      savedOutfits: Array.isArray(data.savedOutfits) ? data.savedOutfits : [],
+      ownedWardrobe: { freeStarterPack: true, ...(data.ownedWardrobe || {}) },
     };
   } catch (e) {
     console.warn('Failed to load save:', e);
@@ -85,19 +81,8 @@ export function loadState() {
 }
 
 export function saveState(state) {
-  try {
-    localStorage.setItem(SAVE_KEY, JSON.stringify(state));
-    return true;
-  } catch (e) {
-    console.warn('Failed to save:', e);
-    return false;
-  }
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); return true; }
+  catch (e) { console.warn('Failed to save:', e); return false; }
 }
-
-export function clearSave() {
-  localStorage.removeItem(SAVE_KEY);
-}
-
-export function hasSave() {
-  return !!localStorage.getItem(SAVE_KEY);
-}
+export function clearSave() { localStorage.removeItem(SAVE_KEY); }
+export function hasSave() { return !!localStorage.getItem(SAVE_KEY); }
