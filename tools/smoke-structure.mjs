@@ -33,6 +33,11 @@ const attachments = sources['src/modularAttachments.js'];
 const studio = sources['src/characterStudio.js'];
 const avatarSkin = sources['src/avatarSkin.js'];
 const rolePolicy = sources['src/config/characterRoles.js'];
+const hairMountAdd = attachments.indexOf('layer.add(mount);', attachments.indexOf('export async function updateLegacyHair'));
+const hairCacheCommit = attachments.indexOf('instance.externalHairKey = desiredKey;', attachments.indexOf('export async function updateLegacyHair'));
+const jewelrySection = attachments.indexOf('export function updateJewelry');
+const jewelryMountAdd = attachments.indexOf('layer.add(mount);', jewelrySection);
+const jewelryCacheCommit = attachments.indexOf('instance.jewelryKey = desiredKey;', jewelrySection);
 const checks = [
   ['entry module', sources['index.html'].includes('src/main.js')],
   ['player builder', /buildAvatar\s*\(/.test(sources['src/main.js'])],
@@ -50,6 +55,15 @@ const checks = [
   ['legacy hair uses original forward', /mount\.rotation\.set\(cfg\.rotX \?\? 0, cfg\.rotY \?\? 0/.test(attachments)],
   ['legacy hair seats on measured crown', /metrics\.head\.max\.y - hairHeight \* modularFit\.crownSeat/.test(attachments)],
   ['legacy hair fits measured head bounds', /metrics\.headSize\.x \* modularFit\.widthMul/.test(attachments) && /Math\.min\(widthFit, heightFit\)/.test(attachments)],
+  ['attachment socket fallback exists', /function fallbackBodySockets/.test(attachments) && /measuredBodySockets\(instance, custom\) \|\| fallbackBodySockets/.test(attachments)],
+  ['attachment fit cache includes body shape', /const fitKey = socketMetricKey\(custom\)/.test(attachments) && /zwFitKey/.test(attachments)],
+  ['hair cache requires a real mount', /instance\.externalHairKey === desiredKey && existing/.test(attachments)],
+  ['hair cache commits after mount', hairMountAdd >= 0 && hairCacheCommit > hairMountAdd],
+  ['failed hair mount can retry', /externalHairRequest/.test(attachments) && /instance\.externalHairKey = null/.test(attachments) && /hairPrototypeCache\.delete/.test(attachments)],
+  ['jewelry cache requires a real mount', /instance\.jewelryKey === desiredKey && existing/.test(attachments)],
+  ['jewelry cache commits after mount', jewelryMountAdd >= 0 && jewelryCacheCommit > jewelryMountAdd],
+  ['failed jewelry mount can retry', /jewelry mount failed/.test(attachments) && /instance\.jewelryKey = null/.test(attachments)],
+  ['socket metrics are not reset every update', !/updateModularAttachments[\s\S]{0,120}instance\.socketMetrics = null/.test(attachments)],
   ['direct imported civilian policy', /mode:\s*['"]glb-functional-direct['"]/.test(rolePolicy) && /maxLiveSkins:\s*24/.test(rolePolicy)],
   ['directional arm solver', /makeDirectionalArmDriver/.test(avatarSkin) && /setFromUnitVectors/.test(avatarSkin)],
   ['player relaxed arms', /zwRelaxedArmPose/.test(avatarSkin) && /new THREE\.Vector3\(-0\.08, -1, 0\.07\)/.test(avatarSkin)],
