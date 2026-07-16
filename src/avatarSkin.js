@@ -1,48 +1,65 @@
 // ───────────────────────────────────────────────────────────────────────────
-//  avatarSkin.js — visible-skin adapter.
+//  avatarSkin.js — role-aware visible-character adapter.
 //
-//  The player + city NPCs are built as PROCEDURAL avatars (good controller,
-//  walk animation, collision, customization). This adapter can attach an uploaded
-//  humanoid GLB as the VISIBLE skin and hide the procedural body meshes, while
-//  the procedural rig underneath keeps driving movement, anchors, combat and
-//  interactions.
+//  Player, civilians and police do NOT use the same visual strategy:
+//    • player    → procedural-custom until modular body/clothing assets exist
+//    • civilians → curated complete-character GLBs, capped and staged
+//    • police    → police GLBs with a procedural uniformed fallback
 //
-//  Important rules:
-//  • Validate the GLB before hiding anything.
-//  • Center the GLB on X/Z and ground it at the feet. Some uploaded characters
-//    have off-center origins, so scaling + grounding alone is not enough.
-//  • Keep the player's custom procedural hair visible over the GLB body so the
-//    creator still matters. NPCs/cops can fully swap to GLB.
-//  • Always fall back to the procedural avatar. Never invisible player. Never blob.
+//  Complete GLBs are validated before the procedural body is hidden. Source-unit
+//  scale is intentionally unrestricted: the PSX roster is roughly 400–590 source
+//  units tall and is supposed to normalize down to ~1.8 metres.
 // ───────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 import { clone as skeletonClone } from 'three/addons/utils/SkeletonUtils.js';
 import { loadAsset, makeMixer } from './assets.js';
 import { trackMixer } from './manifest.js';
+import {
+  CHARACTER_ROLE_POLICY,
+  CIVILIAN_CHARACTER_CANDIDATES,
+  POLICE_CHARACTER_CANDIDATES,
+  stableCharacterCandidate,
+} from './config/characterRoles.js';
 
 export const SKIN_STATUS = {
-  player: { mode: 'pending', label: '—', reason: '', url: '', bounds: '', scale: 0 },
-  npc: { glb: 0, fallback: 0, last: '' },
-  cop: { glb: 0, fallback: 0, last: '' },
+  player: {
+    mode: CHARACTER_ROLE_POLICY.player.mode,
+    label: 'creator-avatar',
+    reason: CHARACTER_ROLE_POLICY.player.reason,
+    bounds: 'procedural',
+    scale: 1,
+  },
+  npc: {
+    mode: CHARACTER_ROLE_POLICY.civilian.mode,
+    requested: 0,
+    loading: 0,
+    glb: 0,
+    fallback: 0,
+    last: '',
+  },
+  cop: {
+    mode: CHARACTER_ROLE_POLICY.police.mode,
+    requested: 0,
+    loading: 0,
+    glb: 0,
+    fallback: 0,
+    last: '',
+  },
 };
-if (typeof window !== 'undefined') window.__ZW_SKIN_STATUS__ = SKIN_STATUS;
 
-const slog = (...a) => console.info('[skin]', ...a);
+function debugSnapshot() {
+  return JSON.parse(JSON.stringify(SKIN_STATUS));
+}
+if (typeof window !== 'undefined') {
+  window.__ZW_SKIN_STATUS__ = SKIN_STATUS;
+  window.__ZW_CHARACTER_REPORT__ = debugSnapshot;
+}
 
-// Runtime-tunable skin config so facing/scale can be corrected live from console.
+const slog = (...args) => console.info('[skin]', ...args);
+
+// Runtime-tunable facing correction for imported complete-character models.
 const SKIN_CFG = { faceYaw: 0 };
 if (typeof window !== 'undefined') window.__ZW_SKIN__ = SKIN_CFG;
-
-const CIVILIANS = [
-  'character-29-female', 'character-30-female', 'character-31-female', 'character-32-female', 'character-33-female',
-  'character-27-female-hm', 'character-28-female-hm',
-  'character-female-02', 'character-female-03', 'character-female-04', 'character-female-05',
-  'character-female-06', 'character-female-07', 'character-female-08', 'character-female-09', 'character-female-10',
-  'character-female-11', 'character-female-12', 'character-female-13', 'character-female-14', 'character-female-15', 'character-female-16',
-  'character-01', 'character-02', 'character-03', 'character-04', 'character-05',
-  'character-06', 'character-07', 'character-08', 'character-09', 'character-10',
-  'character-11', 'character-12', 'character-13', 'character-14', 'character-15', 'character-16',
-];
 
 function isUnderNamed(node, names) {
   let p = node;
@@ -58,179 +75,273 @@ function hideProceduralMeshes(group, skin, opts = {}) {
   if (opts.keepCustomHair) keepNames.add('hair');
 
   group.traverse((o) => {
-    if (o === skin) return;
-    if (o.isMesh || o.isSprite) {
-      // Keep anything under the GLB skin we just added, plus explicitly preserved
-      // procedural overlays like held weapons and the player's custom hair.
-      let p = o;
-      let keep = false;
-      while (p) {
-        if (p === skin) { keep = true; break; }
-        p = p.parent;
-      }
-      if (!keep && isUnderNamed(o, keepNames)) keep = true;
-      if (!keep) o.visible = false;
+    if (!o.isMesh && !o.isSprite) return;
+    let p = o;
+    while (p) {
+      if (p === skin) return;
+      p = p.parent;
     }
+    if (isUnderNamed(o, keepNames)) return;
+    o.visible = false;
   });
 }
 
-function tintMapsAndShadows(skin) {
+function styleImportedSkin(skin) {
   skin.traverse((o) => {
-    if (o.isMesh) {
-      o.castShadow = true;
-      o.receiveShadow = true;
-      o.frustumCulled = false;
-      if (o.material) {
-        const mats = Array.isArray(o.material) ? o.material : [o.material];
-        for (const m of mats) {
-          if (m && m.map) m.map.colorSpace = THREE.SRGBColorSpace;
-          if (m && m.color) m.color.convertSRGBToLinear?.();
-        }
-      }
+    if (!o.isMesh) return;
+    o.castShadow = true;
+    o.receiveShadow = true;
+    o.frustumCulled = false;
+    const mats = Array.isArray(o.material) ? o.material : [o.material];
+    for (const material of mats) {
+      if (!material) continue;
+      if (material.map) material.map.colorSpace = THREE.SRGBColorSpace;
+      material.envMapIntensity = Math.max(0.7, material.envMapIntensity ?? 1);
     }
   });
 }
 
-// Attach `glb.scene` as the visible skin of `avatar` (from buildAvatar).
-function skinAvatar(avatar, glb, { height = 1.78, play = true, label = 'skin', keepCustomHair = false } = {}) {
+function removeExistingImportedSkin(avatar) {
+  if (!avatar || !avatar.skin) return;
+  avatar.group.remove(avatar.skin);
+  avatar.skin = null;
+  avatar.realSkin = false;
+}
+
+// Attach `glb.scene` as the visible skin of a procedural avatar. Returns a
+// structured result so role callers can report the exact fallback reason.
+function skinAvatar(avatar, glb, opts = {}) {
+  const {
+    height = 1.78,
+    playEmbeddedClip = true,
+    label = 'skin',
+    role = 'civilian',
+    assetName = '',
+    keepCustomHair = false,
+  } = opts;
+
   if (!avatar || !avatar.group || !glb || !glb.scene) {
-    slog('REQUEST', label, '→ no avatar/glb (procedural kept)');
-    return false;
+    return { ok: false, reason: 'missing avatar or GLB' };
   }
 
   let skin;
   try {
     skin = skeletonClone(glb.scene);
-  } catch (e) {
-    slog('CLONE-FAIL', label, '→', e && e.message, '(falling back to shallow clone)');
+  } catch (error) {
+    slog('clone fallback', label, error && error.message);
     skin = glb.scene.clone(true);
   }
-  skin.name = 'glb-skin';
+  skin.name = `glb-skin:${role}:${assetName || 'unknown'}`;
+  skin.userData.characterRole = role;
+  skin.userData.assetName = assetName;
 
-  const v = validateHumanoidGlb(skin, height);
-  const boundsStr = v.size ? `${v.size.x.toFixed(2)}x${v.size.y.toFixed(2)}x${v.size.z.toFixed(2)}` : '?';
-  if (!v.ok) {
-    slog('REJECTED', label, '→', v.reason, '| rawBounds', boundsStr, '(procedural body kept)');
-    if (typeof window !== 'undefined' && window.__ZW_DEBUG__ && window.__ZW_DEBUG__.metrics) {
-      window.__ZW_DEBUG__.metrics.failedAssets.push(label + ': ' + v.reason);
+  const validation = validateHumanoidGlb(skin, height);
+  const boundsStr = validation.size
+    ? `${validation.size.x.toFixed(2)}x${validation.size.y.toFixed(2)}x${validation.size.z.toFixed(2)}`
+    : '?';
+  if (!validation.ok) {
+    slog('rejected', label, validation.reason, '| raw bounds', boundsStr);
+    if (typeof window !== 'undefined' && window.__ZW_DEBUG__?.metrics?.failedAssets) {
+      window.__ZW_DEBUG__.metrics.failedAssets.push(`${label}: ${validation.reason}`);
     }
-    return false;
+    return { ok: false, reason: validation.reason, bounds: boundsStr };
   }
 
-  // Scale, CENTER on X/Z, and ground feet. This was the missing piece: GLB origins
-  // are not guaranteed to be centered, so old skins could be offset even when the
-  // load succeeded.
-  skin.scale.setScalar(v.scale);
-  skin.position.set(-v.center.x * v.scale, -v.box.min.y * v.scale, -v.center.z * v.scale);
+  removeExistingImportedSkin(avatar);
+  skin.scale.setScalar(validation.scale);
+  skin.position.set(
+    -validation.center.x * validation.scale,
+    -validation.box.min.y * validation.scale,
+    -validation.center.z * validation.scale,
+  );
   skin.rotation.y = SKIN_CFG.faceYaw;
-  tintMapsAndShadows(skin);
+  styleImportedSkin(skin);
 
-  hideProceduralMeshes(avatar.group, skin, { keepCustomHair });
   avatar.group.add(skin);
+  hideProceduralMeshes(avatar.group, skin, { keepCustomHair });
   avatar.skin = skin;
   avatar.realSkin = true;
+  avatar.skinAsset = assetName;
+  avatar.skinRole = role;
 
-  slog('APPLIED', label, '| rawBounds', boundsStr, '| center',
-    `${v.center.x.toFixed(2)},${v.center.y.toFixed(2)},${v.center.z.toFixed(2)}`,
-    '| scale', v.scale.toFixed(3), '| keepHair', keepCustomHair,
-    '| clips', (glb.animations && glb.animations.length) || 0);
-
-  if (play && glb.animations && glb.animations.length) {
-    const mm = makeMixer(skin, glb.animations);
+  let activeClip = '';
+  if (playEmbeddedClip && glb.animations?.length) {
+    const mixer = makeMixer(skin, glb.animations);
     const first = glb.animations[0];
-    if (first) mm.play(first.name, { loop: true, fade: 0.1 });
-    trackMixer(mm);
-    avatar.skinMixer = mm;
+    if (first) {
+      mixer.play(first.name, { loop: true, fade: 0.1 });
+      activeClip = first.name;
+    }
+    trackMixer(mixer);
+    avatar.skinMixer = mixer;
+    avatar.skinClipNames = mixer.clipNames;
   }
-  return true;
+
+  slog('applied', label, '| scale', validation.scale.toFixed(5), '| clip', activeClip || 'none');
+  return {
+    ok: true,
+    bounds: boundsStr,
+    scale: validation.scale,
+    clip: activeClip,
+  };
 }
 
-function validateHumanoidGlb(scene, targetHeight) {
+// Validate final normalized dimensions, not arbitrary source-unit magnitude.
+// The old raw-height >80 rule rejected the entire PSX roster, whose valid source
+// heights are approximately 400–590 units.
+export function validateHumanoidGlb(scene, targetHeight) {
   scene.updateWorldMatrix(true, true);
   const box = new THREE.Box3().setFromObject(scene);
-  const size = new THREE.Vector3();
-  const center = new THREE.Vector3();
-  box.getSize(size);
-  box.getCenter(center);
-  const { x: w, y: h, z: d } = size;
-  if (![w, h, d].every((v) => Number.isFinite(v))) return { ok: false, reason: 'non-finite bounds' };
-  if (w <= 0 || h <= 0 || d <= 0) return { ok: false, reason: 'empty bounds' };
-  if (h < 0.05) return { ok: false, reason: 'tiny height ' + h.toFixed(3) + ' (huge scale)' };
-  if (h > 80) return { ok: false, reason: 'huge height ' + h.toFixed(1) };
-  const scale = targetHeight / h;
-  const fw = w * scale, fd = d * scale, fh = h * scale;
-  if (fh < 1.1 || fh > 2.55) return { ok: false, reason: 'final height ' + fh.toFixed(2) + ' out of 1.1–2.55m', size, center };
-  // Looser than before: stylized characters, coats, arms, and accessories can be
-  // wide after normalization. Still rejects true blobs.
-  if (fw > 3.1 || fd > 3.1) return { ok: false, reason: 'final w/d ' + fw.toFixed(2) + '/' + fd.toFixed(2) + ' > 3.1m', size, center };
-  return { ok: true, scale, size, box, center };
+  const size = box.getSize(new THREE.Vector3());
+  const center = box.getCenter(new THREE.Vector3());
+  const { x: width, y: height, z: depth } = size;
+
+  if (![width, height, depth].every(Number.isFinite)) {
+    return { ok: false, reason: 'non-finite bounds', size, center, box };
+  }
+  if (width <= 0 || height <= 0 || depth <= 0) {
+    return { ok: false, reason: 'empty bounds', size, center, box };
+  }
+  if (height < 0.001) {
+    return { ok: false, reason: `degenerate source height ${height.toFixed(5)}`, size, center, box };
+  }
+
+  const scale = targetHeight / height;
+  if (!Number.isFinite(scale) || scale < 0.00005 || scale > 100) {
+    return { ok: false, reason: `unsafe normalization scale ${scale}`, size, center, box };
+  }
+
+  const finalWidth = width * scale;
+  const finalDepth = depth * scale;
+  const finalHeight = height * scale;
+  if (finalHeight < 1.1 || finalHeight > 2.55) {
+    return { ok: false, reason: `final height ${finalHeight.toFixed(2)}m outside 1.1–2.55m`, size, center, box };
+  }
+  if (finalWidth > 2.2 || finalDepth > 2.2) {
+    return {
+      ok: false,
+      reason: `final width/depth ${finalWidth.toFixed(2)}/${finalDepth.toFixed(2)}m too large`,
+      size, center, box,
+    };
+  }
+
+  return { ok: true, scale, size, box, center, finalWidth, finalDepth, finalHeight };
 }
 
-const sleepFrame = () => new Promise((resolve) => requestAnimationFrame(resolve));
+const nextFrame = () => new Promise((resolve) => requestAnimationFrame(resolve));
 
-// Replace city NPC bubble bodies with PSX humanoid GLBs. Small batches avoid the
-// old "load everything at once" lag spike.
-export async function applyNpcSkins(npcs, renderer, max = 16) {
-  let done = 0, fail = 0;
-  const list = npcs.slice(0, Math.min(max, npcs.length));
+// Replace only the nearest/capped civilian set. Excess pedestrians remain the
+// lightweight procedural models, protecting frame time and texture memory.
+export async function applyNpcSkins(npcs, renderer, max = CHARACTER_ROLE_POLICY.civilian.maxLiveSkins) {
+  const limit = Math.min(max, CHARACTER_ROLE_POLICY.civilian.maxLiveSkins, npcs.length);
+  const list = npcs.slice(0, limit);
+  let applied = 0;
+  let failed = 0;
+
+  SKIN_STATUS.npc.requested = list.length;
+  SKIN_STATUS.npc.loading = list.length;
+  SKIN_STATUS.npc.glb = 0;
+  SKIN_STATUS.npc.fallback = Math.max(0, npcs.length - list.length);
+
   for (let i = 0; i < list.length; i++) {
-    const n = list[i];
-    const name = CIVILIANS[i % CIVILIANS.length];
+    const npc = list[i];
+    const name = stableCharacterCandidate(CIVILIAN_CHARACTER_CANDIDATES, npc.id || i);
+    npc.skinState = 'loading';
+    SKIN_STATUS.npc.last = `${name}: loading`;
+
     try {
       const glb = await loadAsset('characters', 'psx', name, renderer);
-      if (!glb) { fail++; SKIN_STATUS.npc.last = name + ': load-failed'; continue; }
-      if (skinAvatar(n.av, glb, { height: 1.75, label: 'npc:' + name })) { n.realSkin = true; done++; SKIN_STATUS.npc.last = name + ': glb'; }
-      else { fail++; SKIN_STATUS.npc.last = name + ': rejected'; }
-    } catch (e) {
-      fail++; slog('NPC EXC', name, e && e.message); SKIN_STATUS.npc.last = name + ': ' + (e && e.message);
+      if (!glb) {
+        failed++;
+        npc.skinState = 'procedural-load-failed';
+        SKIN_STATUS.npc.last = `${name}: load-failed`;
+      } else {
+        const result = skinAvatar(npc.av, glb, {
+          height: CHARACTER_ROLE_POLICY.civilian.height,
+          playEmbeddedClip: CHARACTER_ROLE_POLICY.civilian.playEmbeddedClip,
+          label: `npc:${npc.id || i}:${name}`,
+          role: 'civilian',
+          assetName: name,
+        });
+        if (result.ok) {
+          applied++;
+          npc.realSkin = name;
+          npc.skinState = 'glb';
+          SKIN_STATUS.npc.last = `${name}: glb`;
+        } else {
+          failed++;
+          npc.skinState = `procedural-${result.reason}`;
+          SKIN_STATUS.npc.last = `${name}: ${result.reason}`;
+        }
+      }
+    } catch (error) {
+      failed++;
+      npc.skinState = 'procedural-exception';
+      SKIN_STATUS.npc.last = `${name}: ${error && error.message}`;
+      slog('NPC exception', name, error && error.message);
     }
-    if (i % 4 === 3) await sleepFrame();
+
+    SKIN_STATUS.npc.loading = list.length - i - 1;
+    SKIN_STATUS.npc.glb = applied;
+    SKIN_STATUS.npc.fallback = failed + Math.max(0, npcs.length - list.length);
+    // One character per frame keeps decoding and scene insertion from clumping.
+    await nextFrame();
   }
-  SKIN_STATUS.npc.glb = done; SKIN_STATUS.npc.fallback = fail + Math.max(0, npcs.length - list.length);
-  slog('NPC summary → glb:', done, 'fallback:', SKIN_STATUS.npc.fallback);
-  return done;
+
+  slog('NPC summary', debugSnapshot().npc);
+  return applied;
 }
 
-const POLICE = [
-  'character-17-police', 'character-18-police', 'character-19-police', 'character-20-police',
-  'character-17-female-police', 'character-18-female-police', 'character-19-female-police',
-  'character-20-female-police', 'character-25-female-police', 'character-26-female-police',
-];
-const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
-
+let policeSkinSequence = 0;
 export async function applyCopSkin(avatar, renderer) {
-  const name = pick(POLICE);
+  const name = POLICE_CHARACTER_CANDIDATES[policeSkinSequence++ % POLICE_CHARACTER_CANDIDATES.length];
+  SKIN_STATUS.cop.requested++;
+  SKIN_STATUS.cop.loading++;
+  SKIN_STATUS.cop.last = `${name}: loading`;
+
   try {
     const glb = await loadAsset('characters', 'psx', name, renderer);
-    if (!glb) { SKIN_STATUS.cop.fallback++; SKIN_STATUS.cop.last = name + ': load-failed'; return null; }
-    if (skinAvatar(avatar, glb, { height: 1.82, label: 'cop:' + name })) {
-      avatar.realSkin = true; SKIN_STATUS.cop.glb++; SKIN_STATUS.cop.last = name + ': glb';
+    if (!glb) {
+      SKIN_STATUS.cop.fallback++;
+      SKIN_STATUS.cop.last = `${name}: load-failed`;
+      return null;
+    }
+    const result = skinAvatar(avatar, glb, {
+      height: CHARACTER_ROLE_POLICY.police.height,
+      playEmbeddedClip: CHARACTER_ROLE_POLICY.police.playEmbeddedClip,
+      label: `cop:${name}`,
+      role: 'police',
+      assetName: name,
+    });
+    if (result.ok) {
+      SKIN_STATUS.cop.glb++;
+      SKIN_STATUS.cop.last = `${name}: glb`;
       return name;
     }
-    SKIN_STATUS.cop.fallback++; SKIN_STATUS.cop.last = name + ': rejected';
-  } catch (e) { slog('COP EXC', name, e && e.message); SKIN_STATUS.cop.fallback++; SKIN_STATUS.cop.last = name + ': ' + (e && e.message); }
+    SKIN_STATUS.cop.fallback++;
+    SKIN_STATUS.cop.last = `${name}: ${result.reason}`;
+  } catch (error) {
+    SKIN_STATUS.cop.fallback++;
+    SKIN_STATUS.cop.last = `${name}: ${error && error.message}`;
+    slog('COP exception', name, error && error.message);
+  } finally {
+    SKIN_STATUS.cop.loading = Math.max(0, SKIN_STATUS.cop.loading - 1);
+  }
   return null;
 }
 
-const PLAYER_CANDIDATES = [
-  'character-29-female', 'character-30-female', 'character-31-female', 'character-32-female', 'character-33-female',
-  'character-female-02', 'character-female-03', 'character-female-04', 'character-female-05',
-  'character-female-11', 'character-female-12', 'character-female-13', 'character-female-14',
-  'character-27-female-hm', 'character-28-female-hm',
-];
-export async function applyPlayerSkin(avatar, renderer, seed = 0) {
-  const name = PLAYER_CANDIDATES[Math.abs(seed) % PLAYER_CANDIDATES.length];
-  SKIN_STATUS.player.label = name;
-  try {
-    const glb = await loadAsset('characters', 'psx', name, renderer);
-    if (!glb) { SKIN_STATUS.player.mode = 'fallback'; SKIN_STATUS.player.reason = 'load-failed'; return false; }
-    if (skinAvatar(avatar, glb, { height: 1.8, label: 'player:' + name, keepCustomHair: true })) {
-      SKIN_STATUS.player.mode = 'glb'; SKIN_STATUS.player.reason = ''; SKIN_STATUS.player.bounds = 'centered';
-      return true;
-    }
-    SKIN_STATUS.player.mode = 'fallback'; SKIN_STATUS.player.reason = 'rejected';
-  } catch (e) { SKIN_STATUS.player.mode = 'fallback'; SKIN_STATUS.player.reason = e && e.message; }
+// Kept for API compatibility because main.js calls this after every creator
+// rebuild. A complete GLB is deliberately NOT applied to the player: doing so
+// would hide the creator-selected body, skin, outfit and shoes. Returning false
+// correctly tells the existing debug key that no complete imported body is active.
+export async function applyPlayerSkin(avatar) {
+  removeExistingImportedSkin(avatar);
+  SKIN_STATUS.player.mode = CHARACTER_ROLE_POLICY.player.mode;
+  SKIN_STATUS.player.label = 'creator-avatar';
+  SKIN_STATUS.player.reason = CHARACTER_ROLE_POLICY.player.reason;
+  SKIN_STATUS.player.bounds = 'procedural';
+  SKIN_STATUS.player.scale = 1;
   return false;
 }
 
-export { CIVILIANS };
+export { CIVILIAN_CHARACTER_CANDIDATES as CIVILIANS };
