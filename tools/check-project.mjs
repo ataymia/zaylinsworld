@@ -142,10 +142,11 @@ function checkAssetIndex() {
   const rows = flattenAssetIndex(index);
   let missing = 0;
   for (const entry of rows) {
-    const absolute = join(ROOT, 'public', normalize(entry.path));
+    // Index paths are relative to /public/assets, matching assets.js loadAsset().
+    const absolute = join(ROOT, 'public', 'assets', normalize(entry.path));
     if (!existsSync(absolute)) {
       missing++;
-      fail(`Indexed asset is missing: ${entry.category}/${entry.pack}/${entry.name} -> public/${entry.path}`);
+      fail(`Indexed asset is missing: ${entry.category}/${entry.pack}/${entry.name} -> public/assets/${entry.path}`);
     }
   }
   if (!missing) pass(`Asset index paths verified (${rows.length} assets)`);
@@ -168,6 +169,25 @@ function checkAssetIndex() {
     }
   }
   pass('Starter Town critical asset groups checked');
+}
+
+function checkCharacterArchitecture() {
+  const runtimeHook = join(ROOT, 'src/skinRuntime.js');
+  const blockSupply = readFileSync(join(ROOT, 'src/config/blockSupplyLayout.js'), 'utf8');
+  const skinAdapter = readFileSync(join(ROOT, 'src/avatarSkin.js'), 'utf8');
+  const npc = readFileSync(join(ROOT, 'src/npc.js'), 'utf8');
+  const main = readFileSync(join(ROOT, 'src/main.js'), 'utf8');
+
+  if (existsSync(runtimeHook)) fail('Legacy src/skinRuntime.js global avatar hook must stay removed');
+  if (blockSupply.includes('skinRuntime')) fail('Block Supply config must not import character runtime code');
+  if (skinAdapter.includes('Object3D.prototype.add')) fail('Character adapter must not intercept Object3D.prototype.add');
+  if (!npc.includes('applyNpcSkins(')) fail('Civilian creation must own an explicit applyNpcSkins call');
+  if (!main.includes('applyPlayerSkin(')) fail('Player rebuild must own an explicit applyPlayerSkin call');
+  if (!main.includes('applyCopSkin(')) fail('Police spawn must own an explicit applyCopSkin call');
+
+  if (!failures.some((message) => /skinRuntime|Block Supply config|Character adapter|applyNpcSkins|applyPlayerSkin|applyCopSkin/.test(message))) {
+    pass('Character skin architecture boundaries verified');
+  }
 }
 
 function checkProjectShape() {
@@ -201,6 +221,7 @@ function main() {
   checkSyntax(files);
   checkRelativeImports(files);
   checkAssetIndex();
+  checkCharacterArchitecture();
 
   if (notes.length) {
     console.log('\nNotes:');
