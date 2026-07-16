@@ -10,7 +10,7 @@ import * as THREE from 'three';
 import { clone as skeletonClone } from 'three/addons/utils/SkeletonUtils.js';
 import { loadAsset, makeMixer } from './assets.js';
 import { createCharacterMotionDriver } from './characterMotion.js';
-import { trackMixer } from './manifest.js';
+import { trackMixer } from './updateRegistry.js';
 import {
   CHARACTER_PACK,
   CHARACTER_POLICY,
