@@ -2,9 +2,10 @@
 
 Per-town content design for **Zaylin's World**. Starter Town is **one district of
 a larger world** (see [WORLD_MAP_DESIGN.md](WORLD_MAP_DESIGN.md),
-[ZTA_WORLD_BLUEPRINT.md](ZTA_WORLD_BLUEPRINT.md), and
-[TOWN_SELF_SUSTAINING_SYSTEMS.md](TOWN_SELF_SUSTAINING_SYSTEMS.md)). Each town
-below is captured as data in [src/config/townThemes.js](../src/config/townThemes.js)
+[ZTA_WORLD_BLUEPRINT.md](ZTA_WORLD_BLUEPRINT.md),
+[TOWN_SELF_SUSTAINING_SYSTEMS.md](TOWN_SELF_SUSTAINING_SYSTEMS.md), and
+[TECH_TOWN_BLUEPRINT.md](TECH_TOWN_BLUEPRINT.md)). Each town below is captured as
+data in [src/config/townThemes.js](../src/config/townThemes.js)
 (theme/palette/services/economy/minigame ids/npc profile ids) — **data only, not
 playable code**.
 
@@ -137,12 +138,15 @@ Design rules:
 - **Legal/risk:** trespassing/private security; status gating.
 - **Base services:** private clinic, valet, estate agent.
 
-## 7. Tech City
+## 7. Tech City / TechTown
 
-- **Theme:** futuristic downtown, startups, labs, transit.
-- **Purpose:** modern jobs + coding/automation minigames.
-- **Stores:** electronics, drone shop, gadget lab, co-working.
-- **Missions:** debug/build contracts, delivery drones, data runs, robot repairs.
+- **Theme:** futuristic downtown, startups, labs, transit, neon smart-city infrastructure.
+- **Purpose:** modern jobs + coding/automation minigames + tech-specific crime/security.
+- **Deeper spec:** see [TECH_TOWN_BLUEPRINT.md](TECH_TOWN_BLUEPRINT.md).
+- **Stores/services:** electronics, drone shop, gadget lab, co-working, transit hub,
+  VoltFuel Station, Synapse Clinic, Metro Security Precinct, The Stack Apartments.
+- **Missions:** debug/build contracts, delivery drones, data runs, robot repairs,
+  VoltFuel shifts, transit maintenance, security monitoring.
 - **Minigames / activity loops:**
   - **Debug It** — logic puzzle under timer for cash/smarts.
   - **Drone Run** — fly through rings and avoid obstacles.
@@ -150,9 +154,12 @@ Design rules:
   - **Hack Trace** — kid-safe sequence/timing game with trace bar.
   - **Delivery Drone Dispatch** — route-planning puzzle.
   - **Robot Repair Bench** — match parts and test movement.
-- **Economy:** skill-based high pay; gear upgrades.
-- **Legal/risk:** corporate security; cybercrime heat only as abstract puzzle consequences.
-- **Base services:** clinic, transit hub, charging stations.
+  - **Charge Timing** — VoltFuel Station gas/charge timing loop.
+  - **Security Monitor Challenge** — pattern recognition across fictional camera feeds.
+- **Economy:** skill-based high pay; gear upgrades; vehicle charging; smart-home upgrades.
+- **Legal/risk:** metro police plus corporate security; camera-heavy zones; gadget theft,
+  restricted lab access, drone misuse, charge-station tampering, abstract cyber heat.
+- **Base services:** clinic, transit hub, charging/fuel station, police/security, housing.
 
 ## 8. Hollywood / Fame
 
