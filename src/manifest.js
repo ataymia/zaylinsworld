@@ -11,6 +11,12 @@
 import * as THREE from 'three';
 import manifest from './config/manifest.json';
 import { loadModel, makeMixer } from './assets.js';
+import {
+  trackMixer,
+  untrackMixer,
+  updateMixers,
+  trackedMixerCount,
+} from './updateRegistry.js';
 
 const BASE = (import.meta.env && import.meta.env.BASE_URL) || './';
 
@@ -72,23 +78,6 @@ export async function loadSlotModel(category, slot, renderer) {
   return { ...model, meta };
 }
 
-// ── animation/update drivers ──────────────────────────────────────────────────
-// The set accepts both real AnimationMixer wrappers and lightweight procedural
-// drivers. Returning exactly `false` from update() removes a driver, which lets
-// character motion unregister itself after an avatar is removed/rebuilt.
-const _mixers = new Set();
-export function trackMixer(m) {
-  if (m && typeof m.update === 'function') _mixers.add(m);
-  return m;
-}
-export function untrackMixer(m) { return _mixers.delete(m); }
-export function updateMixers(dt) {
-  for (const mixer of [..._mixers]) {
-    if (mixer.update(dt) === false) _mixers.delete(mixer);
-  }
-}
-export function trackedMixerCount() { return _mixers.size; }
-
 // ── swap helpers ──────────────────────────────────────────────────────────────
 function boxOf(obj) { return new THREE.Box3().setFromObject(obj); }
 
@@ -147,4 +136,11 @@ export async function enhanceInterior(parentGroup, addedMeshes, slot, renderer) 
   return true;
 }
 
-export { manifest, assetUrl };
+export {
+  manifest,
+  assetUrl,
+  trackMixer,
+  untrackMixer,
+  updateMixers,
+  trackedMixerCount,
+};
