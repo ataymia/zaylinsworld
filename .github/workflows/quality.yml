@@ -25,7 +25,12 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      - run: npm run check
+      - name: Run quality checks
+        shell: bash
+        run: |
+          mkdir -p reports
+          set -o pipefail
+          npm run check 2>&1 | tee reports/quality-gate.log
       - run: npm run audit:characters
       - run: npm run audit:assets
       - uses: actions/upload-artifact@v4
