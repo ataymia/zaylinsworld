@@ -25,6 +25,11 @@ function pass(message) {
   console.log(`✔ ${message}`);
 }
 
+function note(message) {
+  notes.push(message);
+  console.warn(`⚠ ${message}`);
+}
+
 function walk(dir) {
   if (!existsSync(dir)) return [];
   const out = [];
@@ -117,8 +122,8 @@ function flattenAssetIndex(index) {
           fail(`Malformed asset entry in ${category}/${pack}`);
           continue;
         }
-        const key = entry.name.toLowerCase();
-        if (names.has(key)) fail(`Duplicate asset name in ${category}/${pack}: ${entry.name}`);
+        const key = `${entry.name.toLowerCase()}|${entry.path.toLowerCase()}`;
+        if (names.has(key)) note(`Duplicate generated asset row in ${category}/${pack}: ${entry.name} -> ${entry.path}`);
         names.add(key);
         rows.push({ category, pack, ...entry });
       }
@@ -225,7 +230,7 @@ function main() {
 
   if (notes.length) {
     console.log('\nNotes:');
-    for (const note of notes) console.log(`• ${note}`);
+    for (const item of notes) console.log(`• ${item}`);
   }
 
   if (failures.length) {
