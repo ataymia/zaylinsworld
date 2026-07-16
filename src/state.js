@@ -2,7 +2,11 @@
 //  state.js — game state + save/load (localStorage)
 // ───────────────────────────────────────────────────────────────────────────
 import { defaultCustom } from './avatar.js';
-import { SPAWN } from './config/mapConfig.js';
+import {
+  STARTER_TOWN,
+  STARTER_TOWN_ID,
+  townById,
+} from './config/townRegistry.js';
 
 const SAVE_KEY = 'zaylinsworld.save.v2';
 
@@ -20,8 +24,10 @@ export function defaultState() {
     timeMin: 8 * 60,    // in-game minutes (08:00)
     day: 1,
     server: 'sunside',  // city/server vibe
-    pos: { x: SPAWN.x, z: SPAWN.z },
-    facing: SPAWN.faceY,
+    townId: STARTER_TOWN_ID,
+    townLoadStates: { [STARTER_TOWN_ID]: 'active' },
+    pos: { x: STARTER_TOWN.spawn.x, z: STARTER_TOWN.spawn.z },
+    facing: STARTER_TOWN.spawn.faceY,
     carDamage: 0,
     fuel: 100,          // current vehicle fuel (0..100), refill at the gas station
     createdCharacter: false,
@@ -58,15 +64,22 @@ export function loadState() {
     const data = JSON.parse(raw);
     // shallow merge over defaults so new fields stay valid
     const base = defaultState();
+    const town = townById(data.townId) || STARTER_TOWN;
     return {
       ...base, ...data,
+      townId: town.id,
+      townLoadStates: {
+        ...base.townLoadStates,
+        ...(data.townLoadStates || {}),
+        [town.id]: data.townLoadStates?.[town.id] || 'active',
+      },
       // Migration: old local saves could contain useRealSkin:false from emergency
       // debugging. That made the new skin work look like it did nothing because
       // main.js skipped applyPlayerSkin entirely. Force it back on for this build.
       useRealSkin: true,
       custom: { ...base.custom, ...(data.custom || {}) },
       stats: { ...base.stats, ...(data.stats || {}) },
-      pos: { ...base.pos, ...(data.pos || {}) },
+      pos: { x: town.spawn.x, z: town.spawn.z, ...(data.pos || {}) },
       npcMemory: { ...(data.npcMemory || {}) },
       ownedCars: data.ownedCars || [],
       ownedJewelry: data.ownedJewelry || [],
