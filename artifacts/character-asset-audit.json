@@ -1,0 +1,2907 @@
+{
+  "generatedAt": "2026-07-16T22:22:29.762Z",
+  "totals": {
+    "valid-skin-no-clips": 3,
+    "rigged-with-clips": 85
+  },
+  "rows": [
+    {
+      "pack": "creatures",
+      "name": "criaturas",
+      "path": "public/assets/models/characters/creatures/criaturas.glb",
+      "type": "glb",
+      "bytes": 1274036,
+      "meshes": 3,
+      "nodes": 155,
+      "skins": 1,
+      "animations": 0,
+      "clips": [],
+      "bounds": {
+        "min": [
+          -4.7805280685424805,
+          -5.669432163238525,
+          -15.244993209838867
+        ],
+        "max": [
+          10.89057445526123,
+          5.66179895401001,
+          7.702425003051758
+        ],
+        "size": [
+          15.671102523803711,
+          11.331231117248535,
+          22.947418212890625
+        ]
+      },
+      "error": "",
+      "classification": "valid-skin-no-clips"
+    },
+    {
+      "pack": "people",
+      "name": "characters",
+      "path": "public/assets/models/characters/people/characters.glb",
+      "type": "glb",
+      "bytes": 98064,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -1.3223011493682861,
+          -4.945513725280762,
+          -0.26629638671875
+        ],
+        "max": [
+          1.1250344514846802,
+          4.945451736450195,
+          10.77752685546875
+        ],
+        "size": [
+          2.4473356008529663,
+          9.890965461730957,
+          11.0438232421875
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "people",
+      "name": "characters",
+      "path": "public/assets/models/characters/people/characters.glb",
+      "type": "glb",
+      "bytes": 98064,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -1.3223011493682861,
+          -4.945513725280762,
+          -0.26629638671875
+        ],
+        "max": [
+          1.1250344514846802,
+          4.945451736450195,
+          10.77752685546875
+        ],
+        "size": [
+          2.4473356008529663,
+          9.890965461730957,
+          11.0438232421875
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "people",
+      "name": "characters-01",
+      "path": "public/assets/models/characters/people/characters-01.glb",
+      "type": "glb",
+      "bytes": 539304,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -1.2633696794509888,
+          -4.725103378295898,
+          -0.03486919403076172
+        ],
+        "max": [
+          1.0748945474624634,
+          4.725044250488281,
+          9.687386512756348
+        ],
+        "size": [
+          2.338264226913452,
+          9.45014762878418,
+          9.72225570678711
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "people",
+      "name": "characters-02",
+      "path": "public/assets/models/characters/people/characters-02.glb",
+      "type": "glb",
+      "bytes": 88724,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -1.4073818922042847,
+          -4.955784320831299,
+          -0.21369600296020508
+        ],
+        "max": [
+          1.045051097869873,
+          4.955782413482666,
+          10.01037883758545
+        ],
+        "size": [
+          2.4524329900741577,
+          9.911566734313965,
+          10.224074840545654
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "people",
+      "name": "characters-03",
+      "path": "public/assets/models/characters/people/characters-03.glb",
+      "type": "glb",
+      "bytes": 88228,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -8.03145980834961,
+          -5.973141193389893,
+          -1.3371939659118652
+        ],
+        "max": [
+          0.6476411819458008,
+          3.3775477409362793,
+          5.832279205322266
+        ],
+        "size": [
+          8.67910099029541,
+          9.350688934326172,
+          7.169473171234131
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "people",
+      "name": "characters-04",
+      "path": "public/assets/models/characters/people/characters-04.glb",
+      "type": "glb",
+      "bytes": 93256,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -1.3223015069961548,
+          -4.945513725280762,
+          -0.2662978172302246
+        ],
+        "max": [
+          1.1250346899032593,
+          4.945451736450195,
+          10.17751407623291
+        ],
+        "size": [
+          2.447336196899414,
+          9.890965461730957,
+          10.443811893463135
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-01",
+      "path": "public/assets/models/characters/psx/character-01.glb",
+      "type": "glb",
+      "bytes": 404144,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -49.6101188659668,
+          -1.7632626295089722,
+          -82.13407135009766
+        ],
+        "max": [
+          41.59169387817383,
+          468.2401123046875,
+          82.13407135009766
+        ],
+        "size": [
+          91.20181274414062,
+          470.0033749341965,
+          164.2681427001953
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-02",
+      "path": "public/assets/models/characters/psx/character-02.glb",
+      "type": "glb",
+      "bytes": 378312,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -50.48985290527344,
+          -1.7901861667633057,
+          -92.14517211914062
+        ],
+        "max": [
+          42.31227111816406,
+          458.542724609375,
+          92.14517211914062
+        ],
+        "size": [
+          92.8021240234375,
+          460.3329107761383,
+          184.29034423828125
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-03",
+      "path": "public/assets/models/characters/psx/character-03.glb",
+      "type": "glb",
+      "bytes": 429212,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -46.031986236572266,
+          -1.73172926902771,
+          -80.66497039794922
+        ],
+        "max": [
+          40.84775924682617,
+          458.2017822265625,
+          80.66497039794922
+        ],
+        "size": [
+          86.87974548339844,
+          459.9335114955902,
+          161.32994079589844
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-04",
+      "path": "public/assets/models/characters/psx/character-04.glb",
+      "type": "glb",
+      "bytes": 444476,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -49.63467788696289,
+          -2.0022449493408203,
+          -83.12907409667969
+        ],
+        "max": [
+          42.68285369873047,
+          463.9794921875,
+          83.12907409667969
+        ],
+        "size": [
+          92.31753158569336,
+          465.9817371368408,
+          166.25814819335938
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-05",
+      "path": "public/assets/models/characters/psx/character-05.glb",
+      "type": "glb",
+      "bytes": 375004,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -42.977996826171875,
+          -4.438815116882324,
+          -83.25248718261719
+        ],
+        "max": [
+          33.37452697753906,
+          460.5766906738281,
+          83.25248718261719
+        ],
+        "size": [
+          76.35252380371094,
+          465.01550579071045,
+          166.50497436523438
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-06",
+      "path": "public/assets/models/characters/psx/character-06.glb",
+      "type": "glb",
+      "bytes": 397700,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -42.47916030883789,
+          -3.0716841220855713,
+          -81.70033264160156
+        ],
+        "max": [
+          31.230953216552734,
+          446.89398193359375,
+          81.68622589111328
+        ],
+        "size": [
+          73.71011352539062,
+          449.9656660556793,
+          163.38655853271484
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-07",
+      "path": "public/assets/models/characters/psx/character-07.glb",
+      "type": "glb",
+      "bytes": 414672,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -42.12968444824219,
+          -1.72649085521698,
+          -83.3772964477539
+        ],
+        "max": [
+          33.03371047973633,
+          453.91253662109375,
+          83.3628921508789
+        ],
+        "size": [
+          75.16339492797852,
+          455.63902747631073,
+          166.7401885986328
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-08",
+      "path": "public/assets/models/characters/psx/character-08.glb",
+      "type": "glb",
+      "bytes": 366280,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -43.21720504760742,
+          -2.5673274993896484,
+          -85.52957153320312
+        ],
+        "max": [
+          35.121131896972656,
+          465.58795166015625,
+          85.51480102539062
+        ],
+        "size": [
+          78.33833694458008,
+          468.1552791595459,
+          171.04437255859375
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-09",
+      "path": "public/assets/models/characters/psx/character-09.glb",
+      "type": "glb",
+      "bytes": 444908,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -43.962825775146484,
+          -2.0993309020996094,
+          -87.00521087646484
+        ],
+        "max": [
+          35.727073669433594,
+          460.7291259765625,
+          86.99018096923828
+        ],
+        "size": [
+          79.68989944458008,
+          462.8284568786621,
+          173.99539184570312
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-10",
+      "path": "public/assets/models/characters/psx/character-10.glb",
+      "type": "glb",
+      "bytes": 415208,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -42.13934326171875,
+          -2.3507936000823975,
+          -83.39641571044922
+        ],
+        "max": [
+          34.24518966674805,
+          454.2662658691406,
+          83.38201141357422
+        ],
+        "size": [
+          76.3845329284668,
+          456.617059469223,
+          166.77842712402344
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-11",
+      "path": "public/assets/models/characters/psx/character-11.glb",
+      "type": "glb",
+      "bytes": 419476,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -40.52104187011719,
+          -1.5221223831176758,
+          -81.46916961669922
+        ],
+        "max": [
+          42.21059036254883,
+          448.9391784667969,
+          81.45524597167969
+        ],
+        "size": [
+          82.73163223266602,
+          450.46130084991455,
+          162.9244155883789
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-12",
+      "path": "public/assets/models/characters/psx/character-12.glb",
+      "type": "glb",
+      "bytes": 374196,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -41.863704681396484,
+          -2.353177309036255,
+          -81.53019714355469
+        ],
+        "max": [
+          39.26054000854492,
+          448.13653564453125,
+          81.5162353515625
+        ],
+        "size": [
+          81.1242446899414,
+          450.4897129535675,
+          163.0464324951172
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-13",
+      "path": "public/assets/models/characters/psx/character-13.glb",
+      "type": "glb",
+      "bytes": 461304,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -50.14104080200195,
+          -1.2322008609771729,
+          -84.78677368164062
+        ],
+        "max": [
+          43.03434371948242,
+          474.01531982421875,
+          84.78677368164062
+        ],
+        "size": [
+          93.17538452148438,
+          475.2475206851959,
+          169.57354736328125
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-14",
+      "path": "public/assets/models/characters/psx/character-14.glb",
+      "type": "glb",
+      "bytes": 430076,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -50.22793960571289,
+          -2.0277748107910156,
+          -84.3113021850586
+        ],
+        "max": [
+          43.193023681640625,
+          461.8442077636719,
+          84.3113021850586
+        ],
+        "size": [
+          93.42096328735352,
+          463.8719825744629,
+          168.6226043701172
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-15",
+      "path": "public/assets/models/characters/psx/character-15.glb",
+      "type": "glb",
+      "bytes": 390544,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -50.11872100830078,
+          -2.0233654975891113,
+          -84.12797546386719
+        ],
+        "max": [
+          43.09910583496094,
+          468.5042724609375,
+          84.12797546386719
+        ],
+        "size": [
+          93.21782684326172,
+          470.5276379585266,
+          168.25595092773438
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-16",
+      "path": "public/assets/models/characters/psx/character-16.glb",
+      "type": "glb",
+      "bytes": 440344,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -47.010440826416016,
+          1.2942484617233276,
+          -82.50556945800781
+        ],
+        "max": [
+          41.63642120361328,
+          463.9794921875,
+          82.50556945800781
+        ],
+        "size": [
+          88.6468620300293,
+          462.6852437257767,
+          165.01113891601562
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-17-female-police",
+      "path": "public/assets/models/characters/psx/character-17-female-police.glb",
+      "type": "glb",
+      "bytes": 442740,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -35.326080322265625,
+          -2.053725004196167,
+          -112.03013610839844
+        ],
+        "max": [
+          47.314064025878906,
+          445.3313903808594,
+          112.03013610839844
+        ],
+        "size": [
+          82.64014434814453,
+          447.38511538505554,
+          224.06027221679688
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-17-police",
+      "path": "public/assets/models/characters/psx/character-17-police.glb",
+      "type": "glb",
+      "bytes": 396464,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -44.63943862915039,
+          -2.1273281574249268,
+          -86.93598175048828
+        ],
+        "max": [
+          40.992820739746094,
+          475.3412170410156,
+          86.92110443115234
+        ],
+        "size": [
+          85.63225936889648,
+          477.46854519844055,
+          173.85708618164062
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-18-female-police",
+      "path": "public/assets/models/characters/psx/character-18-female-police.glb",
+      "type": "glb",
+      "bytes": 455376,
+      "meshes": 1,
+      "nodes": 105,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -36.44078826904297,
+          -2.784130096435547,
+          -126.59640502929688
+        ],
+        "max": [
+          32.520721435546875,
+          433.376708984375,
+          126.59640502929688
+        ],
+        "size": [
+          68.96150970458984,
+          436.16083908081055,
+          253.19281005859375
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-18-police",
+      "path": "public/assets/models/characters/psx/character-18-police.glb",
+      "type": "glb",
+      "bytes": 393316,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -49.63467788696289,
+          -2.00382399559021,
+          -83.31546783447266
+        ],
+        "max": [
+          42.68285369873047,
+          463.9794921875,
+          83.31546783447266
+        ],
+        "size": [
+          92.31753158569336,
+          465.9833161830902,
+          166.6309356689453
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-19-female-police",
+      "path": "public/assets/models/characters/psx/character-19-female-police.glb",
+      "type": "glb",
+      "bytes": 438152,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -37.350101470947266,
+          -2.000084638595581,
+          -109.10406494140625
+        ],
+        "max": [
+          40.15934753417969,
+          433.699951171875,
+          109.10406494140625
+        ],
+        "size": [
+          77.50944900512695,
+          435.7000358104706,
+          218.2081298828125
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-19-police",
+      "path": "public/assets/models/characters/psx/character-19-police.glb",
+      "type": "glb",
+      "bytes": 406964,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -42.69582748413086,
+          -2.0347037315368652,
+          -83.15077209472656
+        ],
+        "max": [
+          39.20798873901367,
+          461.04742431640625,
+          83.13653564453125
+        ],
+        "size": [
+          81.90381622314453,
+          463.0821280479431,
+          166.2873077392578
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-20-female-police",
+      "path": "public/assets/models/characters/psx/character-20-female-police.glb",
+      "type": "glb",
+      "bytes": 450292,
+      "meshes": 1,
+      "nodes": 105,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -37.14131546020508,
+          -2.837651252746582,
+          -129.030029296875
+        ],
+        "max": [
+          33.543453216552734,
+          441.707763671875,
+          129.030029296875
+        ],
+        "size": [
+          70.68476867675781,
+          444.5454149246216,
+          258.06005859375
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-20-police",
+      "path": "public/assets/models/characters/psx/character-20-police.glb",
+      "type": "glb",
+      "bytes": 405320,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -48.34079360961914,
+          -1.9515881538391113,
+          -81.14358520507812
+        ],
+        "max": [
+          41.570194244384766,
+          451.8843994140625,
+          81.14358520507812
+        ],
+        "size": [
+          89.9109878540039,
+          453.8359875679016,
+          162.28717041015625
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-21-female-firefighter",
+      "path": "public/assets/models/characters/psx/character-21-female-firefighter.glb",
+      "type": "glb",
+      "bytes": 457504,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -40.3759765625,
+          -2.8341734409332275,
+          -114.99691009521484
+        ],
+        "max": [
+          43.89398193359375,
+          457.1246032714844,
+          114.99691009521484
+        ],
+        "size": [
+          84.26995849609375,
+          459.9587767124176,
+          229.9938201904297
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-21-police",
+      "path": "public/assets/models/characters/psx/character-21-police.glb",
+      "type": "glb",
+      "bytes": 325908,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -49.63467788696289,
+          -2.00382399559021,
+          -83.31546783447266
+        ],
+        "max": [
+          42.68285369873047,
+          457.891845703125,
+          83.31546783447266
+        ],
+        "size": [
+          92.31753158569336,
+          459.8956696987152,
+          166.6309356689453
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-22-female-firefighter",
+      "path": "public/assets/models/characters/psx/character-22-female-firefighter.glb",
+      "type": "glb",
+      "bytes": 472160,
+      "meshes": 1,
+      "nodes": 105,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -39.81529235839844,
+          -3.8706541061401367,
+          -132.69252014160156
+        ],
+        "max": [
+          38.08382034301758,
+          458.4172668457031,
+          132.69252014160156
+        ],
+        "size": [
+          77.89911270141602,
+          462.28792095184326,
+          265.3850402832031
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-22-police",
+      "path": "public/assets/models/characters/psx/character-22-police.glb",
+      "type": "glb",
+      "bytes": 369172,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -42.75218200683594,
+          -2.0373892784118652,
+          -83.2605209350586
+        ],
+        "max": [
+          39.25973892211914,
+          457.4895935058594,
+          83.24626922607422
+        ],
+        "size": [
+          82.01192092895508,
+          459.52698278427124,
+          166.5067901611328
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-23-female-doctor",
+      "path": "public/assets/models/characters/psx/character-23-female-doctor.glb",
+      "type": "glb",
+      "bytes": 418688,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -41.989646911621094,
+          -2.086820363998413,
+          -113.83548736572266
+        ],
+        "max": [
+          41.900901794433594,
+          452.5078430175781,
+          113.83548736572266
+        ],
+        "size": [
+          83.89054870605469,
+          454.59466338157654,
+          227.6709747314453
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-23-firefighter",
+      "path": "public/assets/models/characters/psx/character-23-firefighter.glb",
+      "type": "glb",
+      "bytes": 477352,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -52.12648010253906,
+          -4.503224849700928,
+          -88.82916259765625
+        ],
+        "max": [
+          44.96952438354492,
+          463.9794921875,
+          88.82916259765625
+        ],
+        "size": [
+          97.09600448608398,
+          468.4827170372009,
+          177.6583251953125
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-24-female-doctor",
+      "path": "public/assets/models/characters/psx/character-24-female-doctor.glb",
+      "type": "glb",
+      "bytes": 440152,
+      "meshes": 1,
+      "nodes": 105,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -38.152099609375,
+          -2.898324489593506,
+          -131.78887939453125
+        ],
+        "max": [
+          34.26066207885742,
+          451.1521301269531,
+          131.78887939453125
+        ],
+        "size": [
+          72.41276168823242,
+          454.05045461654663,
+          263.5777587890625
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-24-firefighter",
+      "path": "public/assets/models/characters/psx/character-24-firefighter.glb",
+      "type": "glb",
+      "bytes": 472792,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -44.232975006103516,
+          -3.4582462310791016,
+          -90.92084503173828
+        ],
+        "max": [
+          40.52863311767578,
+          462.447509765625,
+          90.92084503173828
+        ],
+        "size": [
+          84.7616081237793,
+          465.9057559967041,
+          181.84169006347656
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-25-doctor",
+      "path": "public/assets/models/characters/psx/character-25-doctor.glb",
+      "type": "glb",
+      "bytes": 406900,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -48.587642669677734,
+          -1.961553692817688,
+          -81.55794525146484
+        ],
+        "max": [
+          41.782466888427734,
+          454.19195556640625,
+          81.55794525146484
+        ],
+        "size": [
+          90.37010955810547,
+          456.15350925922394,
+          163.1158905029297
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-25-female-police",
+      "path": "public/assets/models/characters/psx/character-25-female-police.glb",
+      "type": "glb",
+      "bytes": 435672,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -34.168392181396484,
+          -2.524411201477051,
+          -108.3587417602539
+        ],
+        "max": [
+          40.59865951538086,
+          430.7372131347656,
+          108.3587417602539
+        ],
+        "size": [
+          74.76705169677734,
+          433.2616243362427,
+          216.7174835205078
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-26-doctor",
+      "path": "public/assets/models/characters/psx/character-26-doctor.glb",
+      "type": "glb",
+      "bytes": 384688,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -42.874088287353516,
+          -3.4716434478759766,
+          -82.09822845458984
+        ],
+        "max": [
+          39.27549362182617,
+          446.89398193359375,
+          82.08415222167969
+        ],
+        "size": [
+          82.14958190917969,
+          450.3656253814697,
+          164.18238067626953
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-26-female-police",
+      "path": "public/assets/models/characters/psx/character-26-female-police.glb",
+      "type": "glb",
+      "bytes": 428668,
+      "meshes": 1,
+      "nodes": 105,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -37.1961784362793,
+          -2.841843366622925,
+          -129.2206573486328
+        ],
+        "max": [
+          33.5930061340332,
+          442.36029052734375,
+          129.2206573486328
+        ],
+        "size": [
+          70.7891845703125,
+          445.2021338939667,
+          258.4413146972656
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-27-female-hm",
+      "path": "public/assets/models/characters/psx/character-27-female-hm.glb",
+      "type": "glb",
+      "bytes": 480352,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -34.52232360839844,
+          -2.00699782371521,
+          -109.4811782836914
+        ],
+        "max": [
+          40.29815673828125,
+          435.19903564453125,
+          109.4811782836914
+        ],
+        "size": [
+          74.82048034667969,
+          437.20603346824646,
+          218.9623565673828
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-27-hm",
+      "path": "public/assets/models/characters/psx/character-27-hm.glb",
+      "type": "glb",
+      "bytes": 488088,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -51.34540939331055,
+          -2.00382399559021,
+          -83.31546783447266
+        ],
+        "max": [
+          42.68285369873047,
+          463.9794921875,
+          83.31546783447266
+        ],
+        "size": [
+          94.02826309204102,
+          465.9833161830902,
+          166.6309356689453
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-28-female-hm",
+      "path": "public/assets/models/characters/psx/character-28-female-hm.glb",
+      "type": "glb",
+      "bytes": 470408,
+      "meshes": 1,
+      "nodes": 105,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -39.83290481567383,
+          -2.8275094032287598,
+          -128.56890869140625
+        ],
+        "max": [
+          36.20497131347656,
+          442.9719543457031,
+          128.56890869140625
+        ],
+        "size": [
+          76.03787612915039,
+          445.7994637489319,
+          257.1378173828125
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-28-hm",
+      "path": "public/assets/models/characters/psx/character-28-hm.glb",
+      "type": "glb",
+      "bytes": 431888,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -62.761634826660156,
+          -0.9601287841796875,
+          -85.76396179199219
+        ],
+        "max": [
+          30.955604553222656,
+          479.6038513183594,
+          87.8841552734375
+        ],
+        "size": [
+          93.71723937988281,
+          480.56398010253906,
+          173.6481170654297
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-29",
+      "path": "public/assets/models/characters/psx/character-29.glb",
+      "type": "glb",
+      "bytes": 414916,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -46.029541015625,
+          -1.8582794666290283,
+          -77.26398468017578
+        ],
+        "max": [
+          39.5826530456543,
+          436.37738037109375,
+          77.26398468017578
+        ],
+        "size": [
+          85.6121940612793,
+          438.2356598377228,
+          154.52796936035156
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-29-female",
+      "path": "public/assets/models/characters/psx/character-29-female.glb",
+      "type": "glb",
+      "bytes": 468276,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -35.3848762512207,
+          -3.008802890777588,
+          -103.17471313476562
+        ],
+        "max": [
+          39.15104293823242,
+          412.9017333984375,
+          103.17471313476562
+        ],
+        "size": [
+          74.53591918945312,
+          415.9105362892151,
+          206.34942626953125
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-30",
+      "path": "public/assets/models/characters/psx/character-30.glb",
+      "type": "glb",
+      "bytes": 453512,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -39.89548110961914,
+          -1.9012508392333984,
+          -77.6970443725586
+        ],
+        "max": [
+          36.63639831542969,
+          430.8080749511719,
+          77.68374633789062
+        ],
+        "size": [
+          76.53187942504883,
+          432.7093257904053,
+          155.38079071044922
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-30-female",
+      "path": "public/assets/models/characters/psx/character-30-female.glb",
+      "type": "glb",
+      "bytes": 449460,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -35.9796028137207,
+          -4.587522029876709,
+          -114.8926010131836
+        ],
+        "max": [
+          36.307098388671875,
+          393.7838134765625,
+          114.8926010131836
+        ],
+        "size": [
+          72.28670120239258,
+          398.3713355064392,
+          229.7852020263672
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-31",
+      "path": "public/assets/models/characters/psx/character-31.glb",
+      "type": "glb",
+      "bytes": 447992,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -45.642704010009766,
+          -1.8426620960235596,
+          -76.6146469116211
+        ],
+        "max": [
+          39.249996185302734,
+          425.2119140625,
+          76.6146469116211
+        ],
+        "size": [
+          84.8927001953125,
+          427.05457615852356,
+          153.2292938232422
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-31-female",
+      "path": "public/assets/models/characters/psx/character-31-female.glb",
+      "type": "glb",
+      "bytes": 468364,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -36.12064743041992,
+          -5.411020755767822,
+          -108.07669067382812
+        ],
+        "max": [
+          41.91211700439453,
+          410.93377685546875,
+          108.07669067382812
+        ],
+        "size": [
+          78.03276443481445,
+          416.3447976112366,
+          216.15338134765625
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-32",
+      "path": "public/assets/models/characters/psx/character-32.glb",
+      "type": "glb",
+      "bytes": 437752,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -39.31943893432617,
+          -1.873799204826355,
+          -76.57520294189453
+        ],
+        "max": [
+          36.10741424560547,
+          424.5877380371094,
+          76.56209564208984
+        ],
+        "size": [
+          75.42685317993164,
+          426.46153724193573,
+          153.13729858398438
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-32-female",
+      "path": "public/assets/models/characters/psx/character-32-female.glb",
+      "type": "glb",
+      "bytes": 473656,
+      "meshes": 1,
+      "nodes": 105,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -36.36092758178711,
+          -2.566324472427368,
+          -116.692626953125
+        ],
+        "max": [
+          37.11799240112305,
+          402.2621765136719,
+          116.692626953125
+        ],
+        "size": [
+          73.47891998291016,
+          404.82850098609924,
+          233.38525390625
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-33-female",
+      "path": "public/assets/models/characters/psx/character-33-female.glb",
+      "type": "glb",
+      "bytes": 463896,
+      "meshes": 1,
+      "nodes": 105,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -35.37076950073242,
+          -2.702378988265991,
+          -122.87909698486328
+        ],
+        "max": [
+          31.94441795349121,
+          426.43011474609375,
+          122.87909698486328
+        ],
+        "size": [
+          67.31518745422363,
+          429.13249373435974,
+          245.75819396972656
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-female-01",
+      "path": "public/assets/models/characters/psx/character-female-01.glb",
+      "type": "glb",
+      "bytes": 140428,
+      "meshes": 1,
+      "nodes": 105,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -36.94987869262695,
+          -3.5509514808654785,
+          -128.364990234375
+        ],
+        "max": [
+          33.37056350708008,
+          427.0884094238281,
+          128.364990234375
+        ],
+        "size": [
+          70.32044219970703,
+          430.6393609046936,
+          256.72998046875
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-female-02",
+      "path": "public/assets/models/characters/psx/character-female-02.glb",
+      "type": "glb",
+      "bytes": 516540,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -40.219451904296875,
+          -2.297888994216919,
+          -109.4666748046875
+        ],
+        "max": [
+          41.464691162109375,
+          442.4991149902344,
+          109.4666748046875
+        ],
+        "size": [
+          81.68414306640625,
+          444.7970039844513,
+          218.933349609375
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-female-03",
+      "path": "public/assets/models/characters/psx/character-female-03.glb",
+      "type": "glb",
+      "bytes": 445976,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -36.086360931396484,
+          -1.0339975357055664,
+          -114.44123840332031
+        ],
+        "max": [
+          42.12386703491211,
+          455.97967529296875,
+          114.44123840332031
+        ],
+        "size": [
+          78.2102279663086,
+          457.0136728286743,
+          228.88247680664062
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-female-04",
+      "path": "public/assets/models/characters/psx/character-female-04.glb",
+      "type": "glb",
+      "bytes": 418740,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -41.06612777709961,
+          -3.187025785446167,
+          -119.42863464355469
+        ],
+        "max": [
+          43.95964431762695,
+          476.32330322265625,
+          119.42863464355469
+        ],
+        "size": [
+          85.02577209472656,
+          479.5103290081024,
+          238.85726928710938
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-female-05",
+      "path": "public/assets/models/characters/psx/character-female-05.glb",
+      "type": "glb",
+      "bytes": 443924,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -32.05026626586914,
+          -1.0871995687484741,
+          -105.42850494384766
+        ],
+        "max": [
+          37.81536102294922,
+          422.1082763671875,
+          105.42850494384766
+        ],
+        "size": [
+          69.86562728881836,
+          423.195475935936,
+          210.8570098876953
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-female-06",
+      "path": "public/assets/models/characters/psx/character-female-06.glb",
+      "type": "glb",
+      "bytes": 477688,
+      "meshes": 1,
+      "nodes": 105,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -38.08903503417969,
+          -4.890877723693848,
+          -127.68397521972656
+        ],
+        "max": [
+          34.5084114074707,
+          437.09979248046875,
+          127.68397521972656
+        ],
+        "size": [
+          72.59744644165039,
+          441.9906702041626,
+          255.36795043945312
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-female-07",
+      "path": "public/assets/models/characters/psx/character-female-07.glb",
+      "type": "glb",
+      "bytes": 438892,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -40.182334899902344,
+          -2.004318952560425,
+          -111.84147644042969
+        ],
+        "max": [
+          40.24436569213867,
+          433.6240234375,
+          111.84147644042969
+        ],
+        "size": [
+          80.42670059204102,
+          435.6283423900604,
+          223.68295288085938
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-female-08",
+      "path": "public/assets/models/characters/psx/character-female-08.glb",
+      "type": "glb",
+      "bytes": 496844,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -33.88093566894531,
+          -1.9697096347808838,
+          -107.4471206665039
+        ],
+        "max": [
+          39.5494499206543,
+          427.1134338378906,
+          107.4471206665039
+        ],
+        "size": [
+          73.43038558959961,
+          429.0831434726715,
+          214.8942413330078
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-female-09",
+      "path": "public/assets/models/characters/psx/character-female-09.glb",
+      "type": "glb",
+      "bytes": 413980,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -34.56241226196289,
+          -2.0093283653259277,
+          -109.60830688476562
+        ],
+        "max": [
+          51.350318908691406,
+          435.7043762207031,
+          109.60830688476562
+        ],
+        "size": [
+          85.9127311706543,
+          437.71370458602905,
+          219.21661376953125
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-female-10",
+      "path": "public/assets/models/characters/psx/character-female-10.glb",
+      "type": "glb",
+      "bytes": 462248,
+      "meshes": 1,
+      "nodes": 105,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -37.33380889892578,
+          -3.2352302074432373,
+          -129.6987762451172
+        ],
+        "max": [
+          33.71730041503906,
+          443.9970397949219,
+          129.6987762451172
+        ],
+        "size": [
+          71.05110931396484,
+          447.2322700023651,
+          259.3975524902344
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-female-11",
+      "path": "public/assets/models/characters/psx/character-female-11.glb",
+      "type": "glb",
+      "bytes": 474372,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -36.18799591064453,
+          -3.9611146450042725,
+          -111.32948303222656
+        ],
+        "max": [
+          49.61217498779297,
+          432.9920349121094,
+          111.32948303222656
+        ],
+        "size": [
+          85.8001708984375,
+          436.95314955711365,
+          222.65896606445312
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-female-12",
+      "path": "public/assets/models/characters/psx/character-female-12.glb",
+      "type": "glb",
+      "bytes": 476484,
+      "meshes": 1,
+      "nodes": 105,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -37.81928634643555,
+          -3.9169423580169678,
+          -121.25498962402344
+        ],
+        "max": [
+          32.37668991088867,
+          415.81109619140625,
+          121.25498962402344
+        ],
+        "size": [
+          70.19597625732422,
+          419.7280385494232,
+          242.50997924804688
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-female-13",
+      "path": "public/assets/models/characters/psx/character-female-13.glb",
+      "type": "glb",
+      "bytes": 445724,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -35.00986099243164,
+          -2.335200548171997,
+          -115.95592498779297
+        ],
+        "max": [
+          47.149139404296875,
+          441.34503173828125,
+          115.95592498779297
+        ],
+        "size": [
+          82.15900039672852,
+          443.68023228645325,
+          231.91184997558594
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-female-14",
+      "path": "public/assets/models/characters/psx/character-female-14.glb",
+      "type": "glb",
+      "bytes": 438080,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -36.48725128173828,
+          -3.559560775756836,
+          -123.7169418334961
+        ],
+        "max": [
+          32.51932907104492,
+          427.85015869140625,
+          123.7169418334961
+        ],
+        "size": [
+          69.0065803527832,
+          431.4097194671631,
+          247.4338836669922
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-female-15",
+      "path": "public/assets/models/characters/psx/character-female-15.glb",
+      "type": "glb",
+      "bytes": 468140,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -39.88743591308594,
+          -1.9623664617538452,
+          -107.04654693603516
+        ],
+        "max": [
+          39.402008056640625,
+          425.5211486816406,
+          107.04654693603516
+        ],
+        "size": [
+          79.28944396972656,
+          427.48351514339447,
+          214.0930938720703
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-female-16",
+      "path": "public/assets/models/characters/psx/character-female-16.glb",
+      "type": "glb",
+      "bytes": 453124,
+      "meshes": 1,
+      "nodes": 105,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -37.598724365234375,
+          -2.7856225967407227,
+          -126.66426086425781
+        ],
+        "max": [
+          32.928428649902344,
+          433.6090087890625,
+          126.66426086425781
+        ],
+        "size": [
+          70.52715301513672,
+          436.3946313858032,
+          253.32852172851562
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-killer",
+      "path": "public/assets/models/characters/psx/character-killer.glb",
+      "type": "glb",
+      "bytes": 454416,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -50.00289535522461,
+          -4.9556450843811035,
+          -91.31097412109375
+        ],
+        "max": [
+          45.60578155517578,
+          495.26495361328125,
+          91.31097412109375
+        ],
+        "size": [
+          95.60867691040039,
+          500.22059869766235,
+          182.6219482421875
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-killer-01",
+      "path": "public/assets/models/characters/psx/character-killer-01.glb",
+      "type": "glb",
+      "bytes": 460348,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -45.51275634765625,
+          -4.79263162612915,
+          -85.4322738647461
+        ],
+        "max": [
+          43.0751953125,
+          473.6977233886719,
+          85.41764831542969
+        ],
+        "size": [
+          88.58795166015625,
+          478.490355014801,
+          170.84992218017578
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-killer-02",
+      "path": "public/assets/models/characters/psx/character-killer-02.glb",
+      "type": "glb",
+      "bytes": 453124,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -46.430747985839844,
+          -3.5277276039123535,
+          -97.45757293701172
+        ],
+        "max": [
+          43.96239471435547,
+          487.418212890625,
+          97.53313446044922
+        ],
+        "size": [
+          90.39314270019531,
+          490.94594049453735,
+          194.99070739746094
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-killer-03",
+      "path": "public/assets/models/characters/psx/character-killer-03.glb",
+      "type": "glb",
+      "bytes": 416796,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -50.78143310546875,
+          -6.554064750671387,
+          -92.4837417602539
+        ],
+        "max": [
+          46.29957580566406,
+          502.1921691894531,
+          92.51661682128906
+        ],
+        "size": [
+          97.08100891113281,
+          508.7462339401245,
+          185.00035858154297
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-killer-04",
+      "path": "public/assets/models/characters/psx/character-killer-04.glb",
+      "type": "glb",
+      "bytes": 454364,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -46.89771270751953,
+          -4.0783185958862305,
+          -93.90428161621094
+        ],
+        "max": [
+          43.02735900878906,
+          486.242919921875,
+          93.90523529052734
+        ],
+        "size": [
+          89.9250717163086,
+          490.32123851776123,
+          187.80951690673828
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-killer-05",
+      "path": "public/assets/models/characters/psx/character-killer-05.glb",
+      "type": "glb",
+      "bytes": 489088,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -53.816871643066406,
+          -1.3552206754684448,
+          -88.41971588134766
+        ],
+        "max": [
+          43.05036544799805,
+          491.7616882324219,
+          85.72682189941406
+        ],
+        "size": [
+          96.86723709106445,
+          493.1169089078903,
+          174.14653778076172
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-killer-06",
+      "path": "public/assets/models/characters/psx/character-killer-06.glb",
+      "type": "glb",
+      "bytes": 491064,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -45.41908645629883,
+          -4.365984916687012,
+          -87.04447174072266
+        ],
+        "max": [
+          44.06443405151367,
+          476.01666259765625,
+          87.02953338623047
+        ],
+        "size": [
+          89.4835205078125,
+          480.38264751434326,
+          174.07400512695312
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-killer-07",
+      "path": "public/assets/models/characters/psx/character-killer-07.glb",
+      "type": "glb",
+      "bytes": 459276,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -46.173065185546875,
+          -5.7648539543151855,
+          -87.95458984375
+        ],
+        "max": [
+          44.03420639038086,
+          483.53863525390625,
+          87.93949127197266
+        ],
+        "size": [
+          90.20727157592773,
+          489.30348920822144,
+          175.89408111572266
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-monster",
+      "path": "public/assets/models/characters/psx/character-monster.glb",
+      "type": "glb",
+      "bytes": 515680,
+      "meshes": 1,
+      "nodes": 163,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -26.262638092041016,
+          -0.11566399037837982,
+          -179.0116729736328
+        ],
+        "max": [
+          70.92047119140625,
+          592.7789916992188,
+          179.0116729736328
+        ],
+        "size": [
+          97.18310928344727,
+          592.8946556895971,
+          358.0233459472656
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-monster-01",
+      "path": "public/assets/models/characters/psx/character-monster-01.glb",
+      "type": "glb",
+      "bytes": 515796,
+      "meshes": 1,
+      "nodes": 103,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -53.49972152709961,
+          -1.1303902864456177,
+          -96.77725219726562
+        ],
+        "max": [
+          60.34962463378906,
+          518.23583984375,
+          96.77737426757812
+        ],
+        "size": [
+          113.84934616088867,
+          519.3662301301956,
+          193.55462646484375
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-monster-02",
+      "path": "public/assets/models/characters/psx/character-monster-02.glb",
+      "type": "glb",
+      "bytes": 488328,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -59.1883544921875,
+          -0.0035425752867013216,
+          -82.4179458618164
+        ],
+        "max": [
+          26.524290084838867,
+          442.9502868652344,
+          80.57942199707031
+        ],
+        "size": [
+          85.71264457702637,
+          442.9538294405211,
+          162.99736785888672
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-monster-03",
+      "path": "public/assets/models/characters/psx/character-monster-03.glb",
+      "type": "glb",
+      "bytes": 448456,
+      "meshes": 1,
+      "nodes": 75,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -44.51421356201172,
+          -0.02831951715052128,
+          -154.29019165039062
+        ],
+        "max": [
+          47.16609191894531,
+          505.60345458984375,
+          154.29031372070312
+        ],
+        "size": [
+          91.68030548095703,
+          505.63177410699427,
+          308.58050537109375
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-monster-04",
+      "path": "public/assets/models/characters/psx/character-monster-04.glb",
+      "type": "glb",
+      "bytes": 489140,
+      "meshes": 1,
+      "nodes": 163,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -55.67894744873047,
+          -0.12428276240825653,
+          -192.35580444335938
+        ],
+        "max": [
+          144.39645385742188,
+          585.6786499023438,
+          192.35580444335938
+        ],
+        "size": [
+          200.07540130615234,
+          585.802932664752,
+          384.71160888671875
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "psx",
+      "name": "character-monster-05",
+      "path": "public/assets/models/characters/psx/character-monster-05.glb",
+      "type": "glb",
+      "bytes": 516848,
+      "meshes": 1,
+      "nodes": 77,
+      "skins": 1,
+      "animations": 1,
+      "clips": [
+        "mixamo.com"
+      ],
+      "bounds": {
+        "min": [
+          -42.71463394165039,
+          -0.014528028666973114,
+          -125.56985473632812
+        ],
+        "max": [
+          47.04766082763672,
+          546.5755615234375,
+          125.56985473632812
+        ],
+        "size": [
+          89.76229476928711,
+          546.5900895521045,
+          251.13970947265625
+        ]
+      },
+      "error": "",
+      "classification": "rigged-with-clips"
+    },
+    {
+      "pack": "spooky",
+      "name": "pesonajes-2",
+      "path": "public/assets/models/characters/spooky/pesonajes-2.glb",
+      "type": "glb",
+      "bytes": 1524860,
+      "meshes": 15,
+      "nodes": 380,
+      "skins": 1,
+      "animations": 0,
+      "clips": [],
+      "bounds": {
+        "min": [
+          -1.3223015069961548,
+          -4.9455132484436035,
+          -5.192732810974121
+        ],
+        "max": [
+          3.5003714561462402,
+          4.94545316696167,
+          5.318543910980225
+        ],
+        "size": [
+          4.822672963142395,
+          9.890966415405273,
+          10.511276721954346
+        ]
+      },
+      "error": "",
+      "classification": "valid-skin-no-clips"
+    },
+    {
+      "pack": "spooky",
+      "name": "pesonajes-2",
+      "path": "public/assets/models/characters/spooky/pesonajes-2.glb",
+      "type": "glb",
+      "bytes": 1524860,
+      "meshes": 15,
+      "nodes": 380,
+      "skins": 1,
+      "animations": 0,
+      "clips": [],
+      "bounds": {
+        "min": [
+          -1.3223015069961548,
+          -4.9455132484436035,
+          -5.192732810974121
+        ],
+        "max": [
+          3.5003714561462402,
+          4.94545316696167,
+          5.318543910980225
+        ],
+        "size": [
+          4.822672963142395,
+          9.890966415405273,
+          10.511276721954346
+        ]
+      },
+      "error": "",
+      "classification": "valid-skin-no-clips"
+    }
+  ]
+}
