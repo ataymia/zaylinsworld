@@ -3,16 +3,10 @@ import * as THREE from 'three';
 // ───────────────────────────────────────────────────────────────────────────
 //  blockSupplyLayout.js — physical display layout for the Block Supply store.
 //
-//  Back-wall version: every visible item is mounted to the same back wall. The
-//  right-wall / floor-case layouts looked like floating objects once the bad
-//  per-item backing boxes were removed, so the store now uses one clean visual
-//  rule: weapons hang on the wall, player walks up, interaction prompt/shop menu
-//  handles the details.
-//
-//  Coordinates are LOCAL to the Block Supply interior origin (see interiors.js).
-//  The main display builder still tries to add one little square backing plate
-//  per weapon. This module is imported before that builder runs, so we suppress
-//  only those exact plate meshes. Result: weapons hang directly on the back wall.
+//  The registered prefab is a 10 × 9 room with its entrance centered on the
+//  right wall. Displays therefore use the back wall, the full left wall, and only
+//  the rear section of the right wall. The doorway lane and floor stay empty.
+//  Weapons hang directly on real room surfaces and remain hover/interact targets.
 // ───────────────────────────────────────────────────────────────────────────
 
 function installBlockSupplyPlateSuppressor() {
@@ -39,53 +33,62 @@ function isBlockSupplyDisplayPlate(obj) {
     && Math.abs((p.height || 0) - 0.72) < 0.002
     && Math.abs((p.depth || 0) - 0.06) < 0.002;
   if (!isPlateSize) return false;
-  const mat = Array.isArray(obj.material) ? obj.material[0] : obj.material;
-  const hex = mat && mat.color && mat.color.getHexString && mat.color.getHexString();
+  const material = Array.isArray(obj.material) ? obj.material[0] : obj.material;
+  const hex = material?.color?.getHexString?.();
   return hex === '10141c';
 }
 
 installBlockSupplyPlateSuppressor();
 
 const BACK_Z = -4.08;
+const LEFT_X = -4.58;
+const RIGHT_X = 4.58;
 
 export const SHOP_ZONES = {
-  // Row 1: pistols/sidearms across the upper-left back wall.
+  // Left wall, upper/rear section. Sidearms get compact vertical bays and face
+  // into the room. The second row grows downward rather than toward the doorway.
   'pistol-wall': {
     label: 'Pistols',
-    origin: [-4.45, 2.08, BACK_Z], step: [0.82, 0, 0], perRow: 6, rowStep: [0, -0.48, 0],
-    facing: 0, plate: '#1b2a3a',
+    origin: [LEFT_X, 2.08, -3.25], step: [0, 0, 0.82], perRow: 5, rowStep: [0, -0.58, 0],
+    facing: Math.PI / 2, plate: '#1b2a3a',
   },
 
-  // Row 2/3: long weapons across the middle back wall with wider spacing.
+  // Main long-gun wall. Wider bays preserve readable silhouettes across rifles,
+  // shotguns, and precision weapons with different authored long axes.
   'long-wall': {
     label: 'Long Weapons',
-    origin: [-4.45, 1.42, BACK_Z], step: [1.08, 0, 0], perRow: 5, rowStep: [0, -0.52, 0],
+    origin: [-4.15, 1.72, BACK_Z], step: [1.08, 0, 0], perRow: 5, rowStep: [0, -0.64, 0],
     facing: 0, plate: '#22202e',
   },
 
-  // Row 4: melee/tools also mounted on the back wall. No side-wall floating.
+  // Left wall, front section. Melee/tools stay attached to a real wall but remain
+  // visually separate from the pistol section.
   'melee-rack': {
     label: 'Melee & Tools',
-    origin: [-4.45, 0.72, BACK_Z], step: [0.88, 0, 0], perRow: 6, rowStep: [0, -0.42, 0],
-    facing: 0, plate: '#2a241a',
+    origin: [LEFT_X, 1.82, 0.95], step: [0, 0, 0.72], perRow: 4, rowStep: [0, -0.58, 0],
+    facing: Math.PI / 2, plate: '#2a241a',
   },
 
-  // Featured/heavy items share the upper-right back wall.
+  // Upper-right portion of the back wall. Heavy/featured pieces receive the most
+  // breathing room and never return to floor cases.
   'featured': {
     label: 'Featured',
-    origin: [0.9, 2.08, BACK_Z], step: [0.98, 0, 0], perRow: 4, rowStep: [0, -0.58, 0],
+    origin: [1.15, 2.1, BACK_Z], step: [1.02, 0, 0], perRow: 4, rowStep: [0, -0.66, 0],
     facing: 0, plate: '#2a1a2a',
   },
 
-  // Utility rows stay small and low on the right side of the same back wall.
+  // Rear segment of the right wall. This stops well before the centered entrance
+  // at z=0, preserving a wide arrival/exit lane.
   'ammo-shelf': {
     label: 'Ammo',
-    origin: [1.1, 0.82, BACK_Z], step: [0.68, 0, 0], perRow: 4, rowStep: [0, -0.4, 0],
-    facing: 0, plate: '#1a2a1a',
+    origin: [RIGHT_X, 1.65, -3.35], step: [0, 0, 0.68], perRow: 4, rowStep: [0, -0.48, 0],
+    facing: -Math.PI / 2, plate: '#1a2a1a',
   },
+
+  // Low back-right wall, beside rather than inside the doorway lane.
   'upgrade-counter': {
     label: 'Upgrade Bench',
-    origin: [3.05, 0.82, BACK_Z], step: [0.58, 0, 0], perRow: 3, rowStep: [0, -0.4, 0],
+    origin: [2.7, 0.78, BACK_Z], step: [0.64, 0, 0], perRow: 3, rowStep: [0, -0.42, 0],
     facing: 0, plate: '#2a2a1a',
   },
 };
@@ -93,13 +96,13 @@ export const SHOP_ZONES = {
 export const SHOP_TABS = ['Weapons', 'Melee', 'Ammo', 'Upgrades', 'Owned'];
 
 export function zoneSlot(zoneId, index) {
-  const z = SHOP_ZONES[zoneId] || SHOP_ZONES['featured'];
-  const row = Math.floor(index / z.perRow);
-  const col = index % z.perRow;
+  const zone = SHOP_ZONES[zoneId] || SHOP_ZONES.featured;
+  const row = Math.floor(index / zone.perRow);
+  const col = index % zone.perRow;
   const pos = [
-    z.origin[0] + z.step[0] * col + z.rowStep[0] * row,
-    z.origin[1] + z.step[1] * col + z.rowStep[1] * row,
-    z.origin[2] + z.step[2] * col + z.rowStep[2] * row,
+    zone.origin[0] + zone.step[0] * col + zone.rowStep[0] * row,
+    zone.origin[1] + zone.step[1] * col + zone.rowStep[1] * row,
+    zone.origin[2] + zone.step[2] * col + zone.rowStep[2] * row,
   ];
-  return { pos, facing: z.facing };
+  return { pos, facing: zone.facing };
 }
