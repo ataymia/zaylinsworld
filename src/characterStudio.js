@@ -31,8 +31,27 @@ const $ = (id) => document.getElementById(id);
 const clone = (value) => JSON.parse(JSON.stringify(value));
 let activeStudio = null;
 
+// main.js still owns a legacy creator renderer that the chain builder also uses.
+// Skip only its hidden Character Studio draw calls while leaving the game canvas
+// and chain-builder preview untouched. This removes a second GPU render every
+// frame without sacrificing the chain gameplay.
+const RENDER_GATE = Symbol.for('zaylins.characterStudioRenderGate');
+function installLegacyPreviewGate() {
+  const proto = THREE.WebGLRenderer.prototype;
+  if (proto[RENDER_GATE]) return;
+  const originalRender = proto.render;
+  proto[RENDER_GATE] = originalRender;
+  proto.render = function gatedCharacterStudioRender(scene, camera) {
+    const parentId = this.domElement?.parentElement?.id;
+    const isLegacyCreator = parentId === 'creator-canvas-wrap' && !this.domElement.classList.contains('zw-studio-canvas');
+    if (globalThis.__ZW_CHARACTER_STUDIO_ACTIVE__ && isLegacyCreator) return;
+    return originalRender.call(this, scene, camera);
+  };
+}
+
 class CharacterStudio {
   constructor(state, handlers) {
+    installLegacyPreviewGate();
     injectCharacterStudioStyles();
     ensureCloset(state);
     this.state = state;
@@ -51,6 +70,8 @@ class CharacterStudio {
     this.previewUpdating = false;
     this.previewScheduled = false;
     this.lastRenderMs = 0;
+    this.previewWidth = 0;
+    this.previewHeight = 0;
     this.buildShell();
     this.buildPreview();
     this.renderPanel();
@@ -99,16 +120,33 @@ class CharacterStudio {
     }
   }
 
+  sizePreview(force = false) {
+    const wrap = $('creator-canvas-wrap');
+    if (!wrap || !this.renderer) return;
+    const width = Math.max(1, Math.round(wrap.clientWidth || 1));
+    const height = Math.max(1, Math.round(wrap.clientHeight || 1));
+    const ratio = this.renderer.getPixelRatio();
+    const expectedWidth = Math.max(1, Math.round(width * ratio));
+    const expectedHeight = Math.max(1, Math.round(height * ratio));
+    const canvas = this.renderer.domElement;
+    if (force || this.previewWidth !== width || this.previewHeight !== height || canvas.width !== expectedWidth || canvas.height !== expectedHeight) {
+      this.previewWidth = width;
+      this.previewHeight = height;
+      this.renderer.setSize(width, height, false);
+      this.camera.aspect = width / height;
+      this.camera.updateProjectionMatrix();
+    }
+  }
+
   buildPreview() {
     const wrap = $('creator-canvas-wrap');
     if (!wrap) return;
     wrap.querySelectorAll('.zw-studio-canvas,.zw-studio-loading').forEach((node) => node.remove());
     wrap.dataset.characterStudio = 'active';
-    this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
-    // Force modest supersampling on ordinary 1x desktop displays. The preview is
-    // capped at 30fps below, so facial features become clearer without doubling
-    // the full game's render cost.
-    const ratio = Math.min(2.25, Math.max(1.5, devicePixelRatio || 1));
+    this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance', precision: 'highp' });
+    // The previous condition compared CSS width to CSS width, so setSize never ran
+    // and a 300x150 default buffer was stretched across the entire preview panel.
+    const ratio = Math.min(2.5, Math.max(2, devicePixelRatio || 1));
     this.renderer.setPixelRatio(ratio);
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -130,6 +168,9 @@ class CharacterStudio {
     const rim = new THREE.DirectionalLight('#78b8ff', 1.5);
     rim.position.set(-4, 2.8, -2);
     this.scene.add(rim);
+    const faceFill = new THREE.DirectionalLight('#ffd8c8', 0.65);
+    faceFill.position.set(0, 1.8, 4);
+    this.scene.add(faceFill);
     const floor = new THREE.Mesh(
       new THREE.CircleGeometry(2.4, 48),
       new THREE.MeshStandardMaterial({ color: '#252838', roughness: 0.82 }),
@@ -140,6 +181,7 @@ class CharacterStudio {
     this.camera = new THREE.PerspectiveCamera(32, 1, 0.05, 30);
     this.camera.position.set(0, 1.25, 4.65);
     this.camera.lookAt(0, 0.98, 0);
+    this.sizePreview(true);
 
     const canvas = this.renderer.domElement;
     canvas.onpointerdown = (event) => {
@@ -161,25 +203,22 @@ class CharacterStudio {
     canvas.onwheel = (event) => {
       event.preventDefault();
       this.autoRotate = false;
-      this.camera.position.z = THREE.MathUtils.clamp(this.camera.position.z + event.deltaY * 0.003, 1.85, 6.2);
+      this.camera.position.z = THREE.MathUtils.clamp(this.camera.position.z + event.deltaY * 0.003, 1.65, 6.2);
     };
     this.clock = new THREE.Clock();
     this.animate(0);
   }
 
-  framePreviewForTab(immediate = false) {
+  framePreviewForTab() {
     if (!this.camera) return;
     const close = ['face', 'skin', 'hair'].includes(this.activeTab);
     const target = close
-      ? { x: 0, y: 1.48, z: 2.15, lookY: 1.48 }
-      : { x: 0, y: 1.24, z: 4.65, lookY: 0.98 };
-    if (immediate) {
-      this.camera.position.set(target.x, target.y, target.z);
-      this.camera.lookAt(0, target.lookY, 0);
-    } else {
-      this.camera.position.set(target.x, target.y, target.z);
-      this.camera.lookAt(0, target.lookY, 0);
-    }
+      ? { x: 0, y: 1.48, z: 1.92, lookY: 1.49, fov: 27 }
+      : { x: 0, y: 1.24, z: 4.65, lookY: 0.98, fov: 32 };
+    this.camera.position.set(target.x, target.y, target.z);
+    this.camera.fov = target.fov;
+    this.camera.lookAt(0, target.lookY, 0);
+    this.camera.updateProjectionMatrix();
   }
 
   animate(timestamp) {
@@ -189,14 +228,7 @@ class CharacterStudio {
     // 30fps preview cap. The city renderer does not share this budget.
     if (timestamp - this.lastRenderMs < 32) return;
     this.lastRenderMs = timestamp;
-    const wrap = $('creator-canvas-wrap');
-    const width = Math.max(1, wrap?.clientWidth || 1);
-    const height = Math.max(1, wrap?.clientHeight || 1);
-    if (this.renderer.domElement.clientWidth !== width || this.renderer.domElement.clientHeight !== height) {
-      this.renderer.setSize(width, height, false);
-      this.camera.aspect = width / height;
-      this.camera.updateProjectionMatrix();
-    }
+    this.sizePreview();
     const elapsed = this.clock.getElapsedTime();
     if (this.autoRotate) this.rotation += 0.0048;
     if (this.preview?.group) {
@@ -247,6 +279,7 @@ class CharacterStudio {
         await updateModularPlayerVisual(this.preview, this.custom, this.renderer);
       }
       if (token === this.previewToken) {
+        this.sizePreview(true);
         this.renderer.domElement.style.visibility = 'visible';
         this.loading.style.display = 'none';
         $('zw-studio-status').textContent = 'Live modular preview';
@@ -266,8 +299,6 @@ class CharacterStudio {
 
   markChanged() {
     window.__ZW_ACTIVE_CUSTOM__ = this.custom;
-    // Deliberately do not call the legacy onChange callback. In main.js that
-    // callback rebuilds a second hidden procedural avatar for every slider tick.
     this.handlers.onStudioChange?.(this.custom);
   }
 
