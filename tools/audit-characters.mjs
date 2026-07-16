@@ -98,7 +98,8 @@ function guessRole(name, pack) {
 }
 
 function auditEntry(pack, entry) {
-  const absolute = join(ROOT, 'public', entry.path);
+  // Asset-index paths are relative to /public/assets, matching assets.js.
+  const absolute = join(ROOT, 'public', 'assets', entry.path);
   const base = {
     pack,
     name: entry.name,
