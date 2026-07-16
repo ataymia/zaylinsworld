@@ -1,10 +1,7 @@
 // ───────────────────────────────────────────────────────────────────────────
-//  ui.js — HUD, character creator, dialogue, shop menus, chain builder
+// ui.js — HUD, character studio, dialogue, shop menus, chain builder
 // ───────────────────────────────────────────────────────────────────────────
-import {
-  SKIN_TONES, FACES, BODY_SHAPES, HEIGHTS, HAIRSTYLES, HAIR_COLORS,
-  OUTFIT_TOPS, OUTFIT_BOTTOMS, SHOES, ACCESSORIES, JEWELRY,
-} from './avatar.js';
+import { mountCharacterStudio, setCharacterStudioVisible } from './characterStudio.js';
 
 export const SERVERS = [
   { id: 'sunside',  name: 'Sunside',  vibe: 'Bright, busy daytime city' },
@@ -13,11 +10,10 @@ export const SERVERS = [
 ];
 
 const $ = id => document.getElementById(id);
-
-// ── global UI-open flag (game pauses movement while a menu is open) ───────────
 let uiOpen = false;
-let activeMenu = null;        // 'dialogue' | 'shop' | 'builder'
+let activeMenu = null;
 let onCloseCb = null;
+let creatorStudio = null;
 export function isUIOpen() { return uiOpen; }
 export function onMenuClose(cb) { onCloseCb = cb; }
 
@@ -33,76 +29,25 @@ export function closeMenus() {
   uiOpen = false; activeMenu = null;
   if (wasOpen && onCloseCb) onCloseCb();
 }
-
-// Esc closes the active menu
 window.addEventListener('keydown', e => {
   if (e.key === 'Escape' && uiOpen) { e.preventDefault(); closeMenus(); }
 });
 
-// ── Character creator ─────────────────────────────────────────────────────────
+// ── Character studio ─────────────────────────────────────────────────────────
 export function buildCreator(state, handlers) {
-  const root = $('creator-options');
-  root.innerHTML = '';
-  const sections = [
-    { key: 'skin',      label: 'Skin Tone',  list: SKIN_TONES,   swatch: true },
-    { key: 'face',      label: 'Face Shape', list: FACES },
-    { key: 'body',      label: 'Body Shape', list: BODY_SHAPES },
-    { key: 'height',    label: 'Height',     list: HEIGHTS },
-    { key: 'hair',      label: 'Hairstyle',  list: HAIRSTYLES },
-    { key: 'hairColor', label: 'Hair Color', list: HAIR_COLORS,  swatch: true },
-    { key: 'top',       label: 'Top',        list: OUTFIT_TOPS,  swatch: true },
-    { key: 'bottom',    label: 'Bottoms',    list: OUTFIT_BOTTOMS, swatch: true },
-    { key: 'shoes',     label: 'Shoes',      list: SHOES,        swatch: true },
-    { key: 'accessory', label: 'Accessory',  list: ACCESSORIES },
-    { key: 'jewelry',   label: 'Jewelry',    list: JEWELRY },
-  ];
-  sections.forEach(sec => {
-    const wrap = document.createElement('div'); wrap.className = 'opt-row';
-    const h = document.createElement('div'); h.className = 'opt-label'; h.textContent = sec.label;
-    const chips = document.createElement('div'); chips.className = 'opt-chips';
-    sec.list.forEach(item => {
-      const chip = document.createElement('button'); chip.className = 'chip';
-      if (sec.swatch && item.color) {
-        const sw = document.createElement('span'); sw.className = 'sw'; sw.style.background = item.color;
-        chip.appendChild(sw);
-      }
-      chip.appendChild(document.createTextNode(item.name));
-      if (state.custom[sec.key] === item.id) chip.classList.add('active');
-      chip.onclick = () => {
-        state.custom[sec.key] = item.id;
-        chips.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-        chip.classList.add('active'); handlers.onChange();
-      };
-      chips.appendChild(chip);
-    });
-    wrap.appendChild(h); wrap.appendChild(chips); root.appendChild(wrap);
-  });
-  // server / vibe
-  const srvWrap = document.createElement('div'); srvWrap.className = 'opt-row';
-  srvWrap.innerHTML = '<div class="opt-label">City / Server Vibe</div>';
-  const srvChips = document.createElement('div'); srvChips.className = 'opt-chips';
-  SERVERS.forEach(s => {
-    const chip = document.createElement('button'); chip.className = 'chip';
-    chip.innerHTML = `<b>${s.name}</b>&nbsp;<small style="opacity:.6">${s.vibe}</small>`;
-    if (state.server === s.id) chip.classList.add('active');
-    chip.onclick = () => {
-      state.server = s.id;
-      srvChips.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-      chip.classList.add('active'); handlers.onServer?.(s.id);
-    };
-    srvChips.appendChild(chip);
-  });
-  srvWrap.appendChild(srvChips); root.appendChild(srvWrap);
-
+  creatorStudio = mountCharacterStudio(state, handlers);
   $('creator-enter').onclick = handlers.onEnter;
   const cont = $('creator-continue');
   if (handlers.hasSave) { cont.style.display = ''; cont.onclick = handlers.onContinue; }
   else cont.style.display = 'none';
   $('creator-reset').onclick = handlers.onReset;
 }
-export function showCreator(show) { $('creator').classList.toggle('hidden', !show); }
+export function showCreator(show) {
+  $('creator').classList.toggle('hidden', !show);
+  setCharacterStudioVisible(show);
+}
 
-// ── HUD ───────────────────────────────────────────────────────────────────────
+// ── HUD ──────────────────────────────────────────────────────────────────────
 const STAT_COLORS = { health: '#ff5a5a', energy: '#4eff91', hunger: '#ffb14e', fitness: '#4ec3ff',
   smarts: '#c98aff', hygiene: '#7affd1', fun: '#ff7ab0' };
 export function updateHUD(state, locationLabel) {
@@ -138,7 +83,7 @@ export function updateHUD(state, locationLabel) {
   $('monster-badge').style.display = state.monsterMode ? '' : 'none';
 }
 
-// ── car HUD (speed / fuel / damage shown while driving) ─────────────────────────
+// ── car HUD ──────────────────────────────────────────────────────────────────
 let _carHudBuilt = false;
 export function updateCarHUD(info) {
   const el = $('car-hud');
@@ -162,10 +107,7 @@ export function updateCarHUD(info) {
   fill.style.background = fuel <= 0 ? '#ff5a5a' : fuel < 15 ? '#ff5a5a' : fuel < 35 ? '#ffb14e' : '#4eff91';
   el.classList.toggle('ch-empty', fuel <= 0);
   const pct = $('ch-fuel-pct');
-  if (pct) {
-    pct.textContent = Math.round(fuel) + '%';
-    pct.classList.toggle('ch-warn', fuel < 15);
-  }
+  if (pct) { pct.textContent = Math.round(fuel) + '%'; pct.classList.toggle('ch-warn', fuel < 15); }
   const fl = $('ch-fuel-label');
   if (fl) fl.textContent = fuel <= 0 ? 'Out of gas' : fuel < 15 ? 'Fuel ⚠' : 'Fuel';
   const dmg = Math.round(info.damage || 0);
@@ -173,18 +115,15 @@ export function updateCarHUD(info) {
   const ds = $('ch-dmg-state');
   if (ds) {
     const label = dmg >= 100 ? 'TOTALED' : dmg >= 80 ? 'critical' : dmg >= 50 ? 'smoking' : dmg >= 20 ? 'dented' : 'clean';
-    ds.textContent = label;
-    ds.classList.toggle('ch-warn', dmg >= 50);
+    ds.textContent = label; ds.classList.toggle('ch-warn', dmg >= 50);
   }
 }
 
-// ── prompt + notifications ─────────────────────────────────────────────────────
+// ── prompt + notifications ───────────────────────────────────────────────────
 export function showPrompt(html, key) {
   const p = $('prompt');
-  if (html) {
-    p.innerHTML = key ? `<span class="key">${key.toUpperCase()}</span>${html}` : html;
-    p.style.display = '';
-  } else p.style.display = 'none';
+  if (html) { p.innerHTML = key ? `<span class="key">${key.toUpperCase()}</span>${html}` : html; p.style.display = ''; }
+  else p.style.display = 'none';
 }
 let notifTimer;
 export function notify(text) {
@@ -192,8 +131,7 @@ export function notify(text) {
   clearTimeout(notifTimer); notifTimer = setTimeout(() => { n.style.opacity = '0'; }, 2600);
 }
 
-// ── dialogue ───────────────────────────────────────────────────────────────────
-// opts: { name, text, choices:[{label, onPick}] }  (onPick may return a new opts to continue)
+// ── dialogue ─────────────────────────────────────────────────────────────────
 export function openDialogue(opts) {
   $('dia-name').textContent = opts.name || '';
   $('dia-text').textContent = opts.text || '';
@@ -207,12 +145,7 @@ export function openDialogue(opts) {
       const next = ch.onPick?.();
       if (next && typeof next === 'object') openDialogue(next);
       else if (next === 'keep') return;
-      else if (activeMenu === 'dialogue' && ($('dia-name').textContent !== beforeName || $('dia-text').textContent !== beforeText)) {
-        // Some older callbacks call openDialogue(...) directly instead of returning
-        // the new dialogue object. They already replaced the dialogue contents, so
-        // do NOT close the menu immediately after opening it.
-        return;
-      }
+      else if (activeMenu === 'dialogue' && ($('dia-name').textContent !== beforeName || $('dia-text').textContent !== beforeText)) return;
       else closeMenus();
     };
     wrap.appendChild(b);
@@ -220,89 +153,61 @@ export function openDialogue(opts) {
   openMenu('dialogue');
 }
 
-// ── generic shop ───────────────────────────────────────────────────────────────
-// opts: { title, sub, items:[{id,name,price,info,owned}], getMoney, onBuy(item)->bool }
-//
-// Optional tabbed mode (used by Block Supply): pass
-//   tabs:    [{ id, label }]
-//   getItems(tabId) -> items[]    (called per render so contents stay live)
-// Each item may also carry { tag, stats, kind, action } for richer cards. When
-// `action` is present the card shows that button label and calls onBuy(item);
-// when `disabled` is true the button is greyed out.
+// ── generic shop ─────────────────────────────────────────────────────────────
 export function openShop(opts) {
   $('shop-title').textContent = opts.title;
   $('shop-sub').textContent = opts.sub || '';
   const tabbed = Array.isArray(opts.tabs) && opts.tabs.length > 0;
   let activeTab = tabbed ? opts.tabs[0].id : null;
   const tabsEl = $('shop-tabs');
-
   const renderTabs = () => {
     if (!tabsEl) return;
     if (!tabbed) { tabsEl.style.display = 'none'; tabsEl.innerHTML = ''; return; }
-    tabsEl.style.display = '';
-    tabsEl.innerHTML = '';
+    tabsEl.style.display = ''; tabsEl.innerHTML = '';
     opts.tabs.forEach(t => {
-      const b = document.createElement('button');
-      b.className = 'stab' + (t.id === activeTab ? ' active' : '');
-      b.textContent = t.label;
-      b.onclick = () => { activeTab = t.id; render(); };
-      tabsEl.appendChild(b);
+      const b = document.createElement('button'); b.className = 'stab' + (t.id === activeTab ? ' active' : ''); b.textContent = t.label;
+      b.onclick = () => { activeTab = t.id; render(); }; tabsEl.appendChild(b);
     });
   };
-
   const render = () => {
     $('shop-money').textContent = '$' + Math.floor(opts.getMoney()).toLocaleString();
     renderTabs();
     const items = tabbed ? (opts.getItems(activeTab) || []) : opts.items;
     const grid = $('shop-grid'); grid.innerHTML = '';
     if (!items.length) {
-      const empty = document.createElement('div'); empty.className = 'cinfo';
-      empty.style.opacity = '.7'; empty.textContent = opts.emptyText || 'Nothing here yet.';
-      grid.appendChild(empty);
-      return;
+      const empty = document.createElement('div'); empty.className = 'cinfo'; empty.style.opacity = '.7'; empty.textContent = opts.emptyText || 'Nothing here yet.'; grid.appendChild(empty); return;
     }
     items.forEach(item => {
       const card = document.createElement('div'); card.className = 'card';
-      card.innerHTML = `<div class="cname">${item.name}</div>` +
-        (item.tag ? `<div class="ctag">${item.tag}</div>` : '') +
-        `<div class="cinfo">${item.info || ''}</div>` +
-        (item.stats ? `<div class="cstats">${item.stats}</div>` : '') +
+      card.innerHTML = `<div class="cname">${item.name}</div>` + (item.tag ? `<div class="ctag">${item.tag}</div>` : '') +
+        `<div class="cinfo">${item.info || ''}</div>` + (item.stats ? `<div class="cstats">${item.stats}</div>` : '') +
         (item.price != null ? `<div class="cprice">$${item.price.toLocaleString()}</div>` : '');
       const btn = document.createElement('button');
-      if (item.owned) { btn.className = 'btn secondary'; btn.textContent = item.ownedLabel || 'Owned ✓'; btn.disabled = !item.action; if (item.action) { btn.className = 'btn'; btn.textContent = item.action; btn.disabled = false; btn.onclick = () => { if (opts.onBuy(item)) render(); }; } }
-      else if (item.disabled) { btn.className = 'btn secondary'; btn.textContent = item.disabledLabel || 'Unavailable'; btn.disabled = true; }
+      if (item.owned) {
+        btn.className = 'btn secondary'; btn.textContent = item.ownedLabel || 'Owned ✓'; btn.disabled = !item.action;
+        if (item.action) { btn.className = 'btn'; btn.textContent = item.action; btn.disabled = false; btn.onclick = () => { if (opts.onBuy(item)) render(); }; }
+      } else if (item.disabled) { btn.className = 'btn secondary'; btn.textContent = item.disabledLabel || 'Unavailable'; btn.disabled = true; }
       else if (item.price != null && opts.getMoney() < item.price) { btn.className = 'btn secondary'; btn.textContent = 'Need more $'; btn.disabled = true; }
       else { btn.className = 'btn'; btn.textContent = item.action || 'Buy'; btn.onclick = () => { if (opts.onBuy(item)) render(); }; }
-      card.appendChild(btn);
-      grid.appendChild(card);
+      card.appendChild(btn); grid.appendChild(card);
     });
   };
-  render();
-  $('shop-close').onclick = () => closeMenus();
-  openMenu('shop');
+  render(); $('shop-close').onclick = () => closeMenus(); openMenu('shop');
 }
 
 // ── chain builder ────────────────────────────────────────────────────────────
-// opts: { chains, pendants, materials, getMoney, onChange(sel,total), onBuy(sel,total)->bool }
 export function openChainBuilder(opts) {
   const sel = { chain: opts.chains[0], pendant: opts.pendants[0], material: opts.materials[0] };
   const root = $('builder-opts');
-
   const total = () => Math.round((sel.chain.price + sel.pendant.price) * sel.material.mult);
-
   function group(label, list, key) {
-    const wrap = document.createElement('div'); wrap.className = 'opt-row';
-    wrap.innerHTML = `<div class="opt-label">${label}</div>`;
+    const wrap = document.createElement('div'); wrap.className = 'opt-row'; wrap.innerHTML = `<div class="opt-label">${label}</div>`;
     const chips = document.createElement('div'); chips.className = 'opt-chips';
     list.forEach(item => {
       const chip = document.createElement('button'); chip.className = 'chip';
       chip.textContent = `${item.name}  ($${item.price ? item.price.toLocaleString() : (item.mult + 'x')})`;
       if (sel[key].id === item.id) chip.classList.add('active');
-      chip.onclick = () => {
-        sel[key] = item;
-        chips.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-        chip.classList.add('active'); refresh();
-      };
+      chip.onclick = () => { sel[key] = item; chips.querySelectorAll('.chip').forEach(c => c.classList.remove('active')); chip.classList.add('active'); refresh(); };
       chips.appendChild(chip);
     });
     wrap.appendChild(chips); return wrap;
@@ -310,19 +215,15 @@ export function openChainBuilder(opts) {
   function refresh() {
     $('builder-money').textContent = '$' + Math.floor(opts.getMoney()).toLocaleString();
     $('builder-price').textContent = '$' + total().toLocaleString();
-    const buyBtn = $('builder-buy');
-    buyBtn.disabled = opts.getMoney() < total();
+    const buyBtn = $('builder-buy'); buyBtn.disabled = opts.getMoney() < total();
     buyBtn.textContent = opts.getMoney() < total() ? 'Need more $' : 'Buy & Wear';
     opts.onChange?.(sel, total());
   }
-
   root.innerHTML = '';
   root.appendChild(group('Chain', opts.chains, 'chain'));
   root.appendChild(group('Pendant', opts.pendants, 'pendant'));
   root.appendChild(group('Material / Ice', opts.materials, 'material'));
-
-  $('builder-buy').onclick = () => { if (opts.onBuy(sel, total())) { refresh(); } };
+  $('builder-buy').onclick = () => { if (opts.onBuy(sel, total())) refresh(); };
   $('builder-close').onclick = () => closeMenus();
-  refresh();
-  openMenu('builder');
+  refresh(); openMenu('builder');
 }
