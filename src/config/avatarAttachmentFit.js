@@ -43,23 +43,26 @@ const sourceCage = (overrides = {}) => Object.freeze(Object.fromEntries(
   HEAD_CAGE_POINTS.map(({ name, source }) => [name, Object.freeze(overrides[name] || source)]),
 ));
 
-const profile = (values = {}) => Object.freeze({
-  widthMul: 1.06,
-  depthMul: 1.06,
-  maxHeightMul: 1.10,
-  topLiftMul: 0.04,
-  bottomDropMul: 0.08,
-  frontClearance: 0.018,
-  backClearance: 0.018,
-  sideClearance: 0.012,
-  earClearance: 0.010,
-  napeDropMul: 0.08,
-  napeBackMul: 0.06,
-  influencePower: 2.65,
-  sourceLandmarks: sourceCage(values.sourceLandmarks || {}),
-  targetOffsets: Object.freeze(values.targetOffsets || {}),
-  ...values,
-});
+const profile = (values = {}) => {
+  const { sourceLandmarks = {}, targetOffsets = {}, ...overrides } = values;
+  return Object.freeze({
+    widthMul: 1.06,
+    depthMul: 1.06,
+    maxHeightMul: 1.10,
+    topLiftMul: 0.04,
+    bottomDropMul: 0.08,
+    frontClearance: 0.018,
+    backClearance: 0.018,
+    sideClearance: 0.012,
+    earClearance: 0.010,
+    napeDropMul: 0.08,
+    napeBackMul: 0.06,
+    influencePower: 2.65,
+    ...overrides,
+    sourceLandmarks: sourceCage(sourceLandmarks),
+    targetOffsets: Object.freeze(targetOffsets),
+  });
+};
 
 export const DEFAULT_HAIR_FIT_PROFILE = profile({});
 
