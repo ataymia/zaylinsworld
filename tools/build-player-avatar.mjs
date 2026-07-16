@@ -18,7 +18,8 @@ const WORK = path.join(ROOT, '.player-avatar-work');
 const PUBLIC_ROOT = path.join(ROOT, 'public/assets/models/characters/player');
 const MODEL_OUT = path.join(PUBLIC_ROOT, 'sunbox-male-free.glb');
 const PACK_OUT = path.join(PUBLIC_ROOT, 'sunbox-male-free');
-const TEXTURES_OUT = path.join(PACK_OUT, 'textures');
+const TEXTURES_WORK = path.join(WORK, 'textures-runtime');
+const TEXTURE_LIBRARY = path.join(PACK_OUT, 'texture-library.json');
 const TEXTURE_MANIFEST = path.join(PACK_OUT, 'texture-manifest.json');
 const RUNTIME_MANIFEST = path.join(PUBLIC_ROOT, 'sunbox-male-free.runtime.json');
 const REPORT = path.join(ROOT, 'reports/modular-player-build.md');
@@ -154,11 +155,18 @@ async function main() {
   run('python3', [
     path.join(ROOT, 'tools/optimize-player-textures.py'),
     '--source-root', extracted,
-    '--output', TEXTURES_OUT,
+    '--output', TEXTURES_WORK,
     '--manifest', TEXTURE_MANIFEST,
   ]);
 
   const textureData = JSON.parse(await readFile(TEXTURE_MANIFEST, 'utf8'));
+  const textureLibrary = { format: 'data-uri-library-v1', files: {} };
+  for (const entry of textureData.files) {
+    const file = path.join(TEXTURES_WORK, entry.path);
+    textureLibrary.files[entry.path] = `data:image/webp;base64,${(await readFile(file)).toString('base64')}`;
+  }
+  await writeFile(TEXTURE_LIBRARY, JSON.stringify(textureLibrary) + '\n');
+  const textureLibraryBytes = (await stat(TEXTURE_LIBRARY)).size;
   const runtime = {
     source: 'Sunbox Games / CGTrader 3901952',
     license: 'Royalty Free License (no AI)',
@@ -167,7 +175,7 @@ async function main() {
       ...model,
     },
     textureCount: textureData.files.length,
-    textureBytes: textureData.totalBytes,
+    textureBytes: textureLibraryBytes,
     generatedAt: new Date().toISOString(),
   };
   await writeFile(RUNTIME_MANIFEST, JSON.stringify(runtime, null, 2) + '\n');
@@ -180,14 +188,14 @@ async function main() {
     `- Runtime GLB: \`${path.relative(ROOT, MODEL_OUT)}\` (${model.bytes.toLocaleString()} bytes)\n` +
     `- Runtime SHA-256: \`${model.sha256}\`\n` +
     `- Modular nodes: ${model.nodes}\n- Meshes: ${model.meshes}\n- Materials: ${model.materials}\n` +
-    `- Runtime textures: ${runtime.textureCount} (${runtime.textureBytes.toLocaleString()} bytes)\n` +
+    `- Runtime texture library: ${runtime.textureCount} variants (${runtime.textureBytes.toLocaleString()} bytes)\n` +
     `- Required extension: EXT_meshopt_compression\n\n` +
     `The raw Blender file and texture archive were not copied into the runtime tree.\n`);
 
   await rm(WORK, { recursive: true, force: true });
   console.log('\n[player-avatar] build complete');
   console.log(`  model: ${path.relative(ROOT, MODEL_OUT)} (${model.bytes} bytes)`);
-  console.log(`  textures: ${textureData.files.length} files (${textureData.totalBytes} bytes)`);
+  console.log(`  textures: ${textureData.files.length} variants packed in ${textureLibraryBytes} bytes`);
   console.log(`  report: ${path.relative(ROOT, REPORT)}`);
   console.log('\n[player-avatar] Next: npm run check, inspect git status, then commit only public runtime outputs and reports.');
 }
