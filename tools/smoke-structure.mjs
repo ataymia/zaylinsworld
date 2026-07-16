@@ -45,7 +45,7 @@ const checks = [
   ['world-scale modular wrapper', /const group = new THREE\.Group\(\)/.test(sources['src/modularPlayer.js']) && /model\.scale\.setScalar/.test(sources['src/modularPlayer.js'])],
   ['modular attachment bridge', /updateModularAttachments/.test(sources['src/modularPlayer.js'])],
   ['chain uses measured front chest', /metrics\.chest\.max\.z \+ 0\.018/.test(attachments) && /ZW_ModularJewelryMount/.test(attachments)],
-  ['pendant is connected by bail', /ZW_PendantBail_/.test(attachments) && /dropMax \+ 0\.038/.test(attachments)],
+  ['pendant is connected by bail', /ZW_PendantBail_/.test(attachments) && /-dropMax - 0\.038/.test(attachments)],
   ['legacy asset hair bridge', /HAIR_GLTF/.test(attachments) && /ZW_ExternalHairMount/.test(attachments)],
   ['legacy hair uses original forward', /mount\.rotation\.set\(cfg\.rotX \?\? 0, cfg\.rotY \?\? 0/.test(attachments)],
   ['legacy hair seats on measured crown', /metrics\.head\.max\.y - hairHeight \* modularFit\.crownSeat/.test(attachments)],
