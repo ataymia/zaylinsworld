@@ -2,8 +2,8 @@
 // avatarSkin.js — role-aware visible-character adapter.
 //
 // Exactly one visible body owns each character. The player uses an editable
-// modular rig. Civilians use complete imported PSX bodies with lightweight direct
-// bone drivers, never imported animation scale tracks layered over bubble limbs.
+// modular rig. Civilians use complete imported PSX bodies with direct bone
+// drivers whose relaxed pose is solved from shoulder-to-hand geometry.
 // ───────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 import { clone as skeletonClone } from 'three/addons/utils/SkeletonUtils.js';
@@ -117,7 +117,7 @@ function rememberProceduralParts(avatar) {
   }
 }
 
-function makeRotationDriver(bone, base = {}) {
+function makeEulerDriver(bone, base = {}) {
   if (!bone) return null;
   const rest = bone.rotation.clone();
   rest.x += base.x || 0;
@@ -134,7 +134,93 @@ function makeRotationDriver(bone, base = {}) {
     set z(value) { offset.z = Number(value) || 0; bone.rotation.z = rest.z + offset.z; },
     set(x = 0, y = 0, z = 0) { this.x = x; this.y = y; this.z = z; return this; },
   };
-  return { rotation, userData: { modularBone: bone.name }, bone };
+  return { rotation, userData: { modularBone: bone.name, driver: 'euler' }, bone };
+}
+
+function farthestBoneDescendant(bone) {
+  const queue = [...(bone?.children || [])];
+  let chosen = null;
+  let bestDepth = -1;
+  while (queue.length) {
+    const node = queue.shift();
+    const depth = node.userData?.zwBoneDepth || 1;
+    if (node.isBone && depth > bestDepth) {
+      chosen = node;
+      bestDepth = depth;
+    }
+    for (const child of node.children || []) {
+      child.userData.zwBoneDepth = depth + 1;
+      queue.push(child);
+    }
+  }
+  return chosen;
+}
+
+function makeDirectionalArmDriver(bone, endNode, root, desiredRootDirection) {
+  if (!bone || !root) return null;
+  const end = endNode || farthestBoneDescendant(bone);
+  if (!end) return makeEulerDriver(bone);
+
+  root.updateWorldMatrix(true, true);
+  bone.updateWorldMatrix(true, true);
+  end.updateWorldMatrix(true, true);
+
+  const shoulder = new THREE.Vector3();
+  const hand = new THREE.Vector3();
+  const currentDirection = new THREE.Vector3();
+  const desiredWorldDirection = desiredRootDirection.clone().normalize();
+  const rootWorldQuaternion = new THREE.Quaternion();
+  const boneWorldQuaternion = new THREE.Quaternion();
+  const parentWorldQuaternion = new THREE.Quaternion();
+  const inverseParentWorld = new THREE.Quaternion();
+  const deltaWorld = new THREE.Quaternion();
+  const desiredWorldQuaternion = new THREE.Quaternion();
+
+  bone.getWorldPosition(shoulder);
+  end.getWorldPosition(hand);
+  currentDirection.copy(hand).sub(shoulder).normalize();
+  root.getWorldQuaternion(rootWorldQuaternion);
+  desiredWorldDirection.applyQuaternion(rootWorldQuaternion).normalize();
+  deltaWorld.setFromUnitVectors(currentDirection, desiredWorldDirection);
+  bone.getWorldQuaternion(boneWorldQuaternion);
+  desiredWorldQuaternion.copy(deltaWorld).multiply(boneWorldQuaternion);
+  bone.parent?.getWorldQuaternion(parentWorldQuaternion);
+  inverseParentWorld.copy(parentWorldQuaternion).invert();
+  const baseLocalQuaternion = inverseParentWorld.clone().multiply(desiredWorldQuaternion).normalize();
+
+  const axisX = new THREE.Vector3(1, 0, 0).applyQuaternion(rootWorldQuaternion).applyQuaternion(inverseParentWorld).normalize();
+  const axisY = new THREE.Vector3(0, 1, 0).applyQuaternion(rootWorldQuaternion).applyQuaternion(inverseParentWorld).normalize();
+  const axisZ = new THREE.Vector3(0, 0, 1).applyQuaternion(rootWorldQuaternion).applyQuaternion(inverseParentWorld).normalize();
+  const qx = new THREE.Quaternion();
+  const qy = new THREE.Quaternion();
+  const qz = new THREE.Quaternion();
+  const composed = new THREE.Quaternion();
+  const offset = { x: 0, y: 0, z: 0 };
+
+  const apply = () => {
+    qx.setFromAxisAngle(axisX, offset.x);
+    qy.setFromAxisAngle(axisY, offset.y);
+    qz.setFromAxisAngle(axisZ, offset.z);
+    composed.copy(qx).multiply(qy).multiply(qz).multiply(baseLocalQuaternion);
+    bone.quaternion.copy(composed).normalize();
+  };
+  apply();
+
+  const rotation = {
+    get x() { return offset.x; },
+    set x(value) { offset.x = Number(value) || 0; apply(); },
+    get y() { return offset.y; },
+    set y(value) { offset.y = Number(value) || 0; apply(); },
+    get z() { return offset.z; },
+    set z(value) { offset.z = Number(value) || 0; apply(); },
+    set(x = 0, y = 0, z = 0) { offset.x = Number(x) || 0; offset.y = Number(y) || 0; offset.z = Number(z) || 0; apply(); return this; },
+  };
+  return {
+    rotation,
+    userData: { modularBone: bone.name, driver: 'directional-arm', relaxed: true },
+    bone,
+    end,
+  };
 }
 
 function normalizeBoneName(name) {
@@ -174,17 +260,25 @@ function importedRig(root) {
 function remapPlayerRig(avatar, modular) {
   if (!avatar?.parts || !modular) return;
   rememberProceduralParts(avatar);
-  // Imported rigs arrive in a wardrobe-friendly T pose. The live game uses a
-  // relaxed base pose, then existing walk/punch code adds its small offsets.
-  const leftArm = makeRotationDriver(modular.bones.leftArm, { z: -1.18 });
-  const rightArm = makeRotationDriver(modular.bones.rightArm, { z: 1.18 });
-  const leftLeg = makeRotationDriver(modular.bones.leftLeg);
-  const rightLeg = makeRotationDriver(modular.bones.rightLeg);
+  const leftArm = makeDirectionalArmDriver(
+    modular.bones.leftArm,
+    modular.anchors.leftHand,
+    avatar.group,
+    new THREE.Vector3(-0.08, -1, 0.07),
+  );
+  const rightArm = makeDirectionalArmDriver(
+    modular.bones.rightArm,
+    modular.anchors.rightHand,
+    avatar.group,
+    new THREE.Vector3(0.08, -1, 0.07),
+  );
+  const leftLeg = makeEulerDriver(modular.bones.leftLeg);
+  const rightLeg = makeEulerDriver(modular.bones.rightLeg);
   if (leftArm) avatar.parts.leftArm = leftArm;
   if (rightArm) avatar.parts.rightArm = rightArm;
   if (leftLeg) avatar.parts.leftLeg = leftLeg;
   if (rightLeg) avatar.parts.rightLeg = rightLeg;
-  if (modular.bones.head) avatar.parts.headGroup = makeRotationDriver(modular.bones.head) || modular.bones.head;
+  if (modular.bones.head) avatar.parts.headGroup = makeEulerDriver(modular.bones.head) || modular.bones.head;
   avatar.parts.anchors = { ...(avatar.parts.anchors || {}) };
   if (modular.anchors.head) {
     avatar.parts.anchors.head_top = modular.anchors.head;
@@ -202,18 +296,29 @@ function remapPlayerRig(avatar, modular) {
     try { modular.anchors.rightHand.attach(held); }
     catch { modular.anchors.rightHand.add(held); }
   }
+  modular.group.userData.zwRelaxedArmPose = !!(leftArm && rightArm);
 }
 
 function remapImportedRig(avatar, skin) {
   if (!avatar?.parts || !skin) return false;
   rememberProceduralParts(avatar);
   const rig = importedRig(skin);
-  const leftArm = makeRotationDriver(rig.leftArm, { z: -1.14 });
-  const rightArm = makeRotationDriver(rig.rightArm, { z: 1.14 });
-  const leftLeg = makeRotationDriver(rig.leftLeg);
-  const rightLeg = makeRotationDriver(rig.rightLeg);
-  const head = makeRotationDriver(rig.head);
-  const torso = makeRotationDriver(rig.torso);
+  const leftArm = makeDirectionalArmDriver(
+    rig.leftArm,
+    rig.leftHand,
+    avatar.group,
+    new THREE.Vector3(-0.10, -1, 0.05),
+  );
+  const rightArm = makeDirectionalArmDriver(
+    rig.rightArm,
+    rig.rightHand,
+    avatar.group,
+    new THREE.Vector3(0.10, -1, 0.05),
+  );
+  const leftLeg = makeEulerDriver(rig.leftLeg);
+  const rightLeg = makeEulerDriver(rig.rightLeg);
+  const head = makeEulerDriver(rig.head);
+  const torso = makeEulerDriver(rig.torso);
   if (leftArm) avatar.parts.leftArm = leftArm;
   if (rightArm) avatar.parts.rightArm = rightArm;
   if (leftLeg) avatar.parts.leftLeg = leftLeg;
@@ -238,6 +343,7 @@ function remapImportedRig(avatar, skin) {
     rightLeg: !!rig.rightLeg,
     head: !!rig.head,
     torso: !!rig.torso,
+    relaxedArms: !!(leftArm && rightArm),
   };
   return !!(rig.leftArm && rig.rightArm && rig.leftLeg && rig.rightLeg);
 }
@@ -261,7 +367,6 @@ function styleImportedSkin(skin, role) {
   const civilian = role === 'civilian';
   skin.traverse((node) => {
     if (!node.isMesh) return;
-    // Twenty-two low-poly civilians do not each need a dynamic shadow map draw.
     node.castShadow = civilian ? false : true;
     node.receiveShadow = true;
     node.frustumCulled = true;
@@ -359,8 +464,6 @@ export async function applyNpcSkins(npcs, renderer) {
     });
     return 0;
   }
-  // npc.js used to pass a legacy 12-character cap. The current policy owns the
-  // live count so every spawned pedestrian can become a complete imported NPC.
   const limit = Math.min(policyMax, npcs.length);
   const list = npcs.slice(0, limit);
   let applied = 0;
@@ -481,7 +584,7 @@ export async function applyPlayerSkin(avatar, renderer) {
     avatar.eyeHeight = modular.normalized.targetHeight * 0.91;
     remapPlayerRig(avatar, modular);
     const size = modular.normalized.sourceSize;
-    SKIN_STATUS.player.reason = 'editable modular player active';
+    SKIN_STATUS.player.reason = 'editable modular player active with relaxed arm rig';
     SKIN_STATUS.player.bounds = `${size.x.toFixed(2)}x${size.y.toFixed(2)}x${size.z.toFixed(2)}`;
     SKIN_STATUS.player.scale = modular.normalized.scale;
     return true;
