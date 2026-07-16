@@ -1,11 +1,9 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// modularAttachments.js — landmark-fitted cross-pack hair + draped jewelry.
+// modularAttachments.js — dense landmark hair fitting + surface-draped jewelry.
 //
-// Hair is not treated as one rigid helmet. Every supported asset has normalized
-// source landmarks (forehead, crown, temples, ears, back scalp and nape) that are
-// warped onto the current player's measured head landmarks. Jewelry is generated
-// as individual alternating links along a chest-surface curve, with a connected
-// bail and pendant, rather than a flat tube intersecting the torso.
+// Hair vertices are deformed through a reusable head cage rather than scaling one
+// rigid helmet. Necklaces are projected over sampled neck/chest surfaces, loop
+// behind the nape, and descend through a front drape made from individual links.
 // ─────────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 import { clone as skeletonClone } from 'three/addons/utils/SkeletonUtils.js';
@@ -13,8 +11,11 @@ import { loadModel } from './assets.js';
 import { assetUrl } from './manifest.js';
 import { HAIR_GLTF, HAIR_COLORS } from './avatar.js';
 import {
+  CHEST_DRAPE_SEGMENTS,
+  HEAD_CAGE_POINTS,
   HEAD_LANDMARK_NAMES,
   JEWELRY_FIT,
+  NECK_RING_SEGMENTS,
   hairFitProfile,
 } from './config/avatarAttachmentFit.js';
 
@@ -27,6 +28,7 @@ const tempGroupQuaternion = new THREE.Quaternion();
 const tempAnchorQuaternion = new THREE.Quaternion();
 const tempLocalQuaternion = new THREE.Quaternion();
 const X_AXIS = new THREE.Vector3(1, 0, 0);
+const Z_AXIS = new THREE.Vector3(0, 0, 1);
 
 function disposeTree(root) {
   if (!root) return;
@@ -131,7 +133,7 @@ function anchorLocalPose(instance, anchor, positionTarget, quaternionTarget) {
     return false;
   }
   instance.group.updateMatrixWorld(true);
-  anchor.updateWorldMatrix(true, false);
+  anchor.updateMatrixWorld(true);
   if (positionTarget) {
     anchor.getWorldPosition(tempWorldPosition);
     positionTarget.copy(tempWorldPosition);
@@ -157,7 +159,25 @@ function captureAnchorRest(instance, mount, anchor, kind) {
 
 function socketMetricKey(custom = {}) {
   const face = Object.values(custom.faceMorphs || {}).map((value) => Number(value || 0).toFixed(2)).join(',');
-  return [custom.heightScale, custom.bodyMass, custom.bodyMuscle, face].join('|');
+  return [custom.heightScale, custom.bodyMass, custom.bodyMuscle, custom.modularTop, face].join('|');
+}
+
+function vertexInInstanceSpace(instance, mesh, index, target) {
+  const position = mesh.geometry?.attributes?.position;
+  if (!position) return null;
+  if (typeof mesh.getVertexPosition === 'function') mesh.getVertexPosition(index, target);
+  else {
+    target.fromBufferAttribute(position, index);
+    if (mesh.isSkinnedMesh) mesh.applyBoneTransform(index, target);
+  }
+  mesh.localToWorld(target);
+  instance.group.worldToLocal(target);
+  return target;
+}
+
+function isTorsoSurfaceMesh(node) {
+  if (!node?.isMesh || node.visible === false) return false;
+  return /(ZW_Player_Body|ZW_Top_|TShirt|Hoodie|Shirt|Jacket)/i.test(node.name || '');
 }
 
 function measuredBodySockets(instance, custom = instance?.custom || {}) {
@@ -170,42 +190,55 @@ function measuredBodySockets(instance, custom = instance?.custom || {}) {
   instance.group.updateMatrixWorld(true);
   body.updateMatrixWorld(true);
   const all = new THREE.Box3().makeEmpty();
-  const sample = (index) => {
-    if (typeof body.getVertexPosition === 'function') body.getVertexPosition(index, tempVertex);
-    else {
-      tempVertex.fromBufferAttribute(position, index);
-      if (body.isSkinnedMesh) body.applyBoneTransform(index, tempVertex);
-    }
-    body.localToWorld(tempVertex);
-    instance.group.worldToLocal(tempVertex);
-    return tempVertex;
-  };
-  for (let index = 0; index < position.count; index++) all.expandByPoint(sample(index));
+  for (let index = 0; index < position.count; index++) {
+    const vertex = vertexInInstanceSpace(instance, body, index, tempVertex);
+    if (vertex) all.expandByPoint(vertex);
+  }
   const size = all.getSize(new THREE.Vector3());
   const center = all.getCenter(new THREE.Vector3());
   const head = new THREE.Box3().makeEmpty();
   const chest = new THREE.Box3().makeEmpty();
   const headFloor = all.min.y + size.y * 0.75;
-  const chestFloor = all.min.y + size.y * 0.53;
+  const chestFloor = all.min.y + size.y * 0.52;
   const chestCeil = all.min.y + size.y * 0.79;
   for (let index = 0; index < position.count; index++) {
-    const vertex = sample(index);
+    const vertex = vertexInInstanceSpace(instance, body, index, tempVertex);
+    if (!vertex) continue;
     const central = Math.abs(vertex.x - center.x) < size.y * 0.22;
     if (central && vertex.y >= headFloor) head.expandByPoint(vertex);
     if (central && vertex.y >= chestFloor && vertex.y <= chestCeil) chest.expandByPoint(vertex);
   }
   if (head.isEmpty()) head.copy(all);
   if (chest.isEmpty()) chest.copy(all);
+
+  const surfaceSamples = [];
+  instance.model.traverse((mesh) => {
+    if (!isTorsoSurfaceMesh(mesh)) return;
+    const meshPosition = mesh.geometry?.attributes?.position;
+    if (!meshPosition) return;
+    mesh.updateMatrixWorld(true);
+    const stride = Math.max(1, Math.ceil(meshPosition.count / 4500));
+    for (let index = 0; index < meshPosition.count; index += stride) {
+      const vertex = vertexInInstanceSpace(instance, mesh, index, tempVertex);
+      if (!vertex) continue;
+      if (vertex.y < chestFloor - size.y * 0.05 || vertex.y > head.min.y + size.y * 0.08) continue;
+      if (Math.abs(vertex.x - center.x) > chest.getSize(new THREE.Vector3()).x * 0.72) continue;
+      surfaceSamples.push(vertex.clone());
+    }
+  });
+
   const metrics = {
     key,
     body: all,
     head,
     chest,
     bodySize: size,
+    bodyCenter: center,
     headSize: head.getSize(new THREE.Vector3()),
     headCenter: head.getCenter(new THREE.Vector3()),
     chestSize: chest.getSize(new THREE.Vector3()),
     chestCenter: chest.getCenter(new THREE.Vector3()),
+    surfaceSamples,
     fallback: false,
   };
   instance.socketMetrics = metrics;
@@ -235,7 +268,10 @@ function fallbackBodySockets(instance, custom = instance?.custom || {}) {
     new THREE.Vector3(-bodySize.x * 0.5, 0, -bodySize.z * 0.5),
     new THREE.Vector3(bodySize.x * 0.5, targetHeight, bodySize.z * 0.5),
   );
-  const metrics = { key, body, head, chest, bodySize, headSize, headCenter, chestSize, chestCenter, fallback: true };
+  const metrics = {
+    key, body, head, chest, bodySize, bodyCenter: body.getCenter(new THREE.Vector3()),
+    headSize, headCenter, chestSize, chestCenter, surfaceSamples: [], fallback: true,
+  };
   instance.socketMetrics = metrics;
   return metrics;
 }
@@ -244,30 +280,54 @@ function bodySockets(instance, custom) {
   return measuredBodySockets(instance, custom) || fallbackBodySockets(instance, custom);
 }
 
-function targetHeadLandmarks(metrics, profile) {
-  const center = metrics.headCenter;
-  const size = metrics.headSize;
-  const halfWidth = Math.max(size.x * 0.5 * profile.widthMul, 0.12);
-  const halfDepth = Math.max(size.z * 0.5 * profile.depthMul, 0.105);
-  const crownY = metrics.head.max.y + size.y * profile.topLift;
-  const foreheadY = center.y + size.y * 0.10;
-  const templeY = center.y + size.y * 0.02;
-  const earY = center.y - size.y * 0.08;
-  const napeY = metrics.head.min.y - size.y * profile.bottomDrop;
-  const frontZ = center.z + halfDepth + profile.frontClearance;
-  const backZ = center.z - halfDepth - profile.backClearance;
-  const leftX = center.x - halfWidth - profile.templeClearance;
-  const rightX = center.x + halfWidth + profile.templeClearance;
-  return Object.freeze({
-    crown: new THREE.Vector3(center.x, crownY, center.z - size.z * 0.03),
-    forehead: new THREE.Vector3(center.x, foreheadY, frontZ),
-    leftTemple: new THREE.Vector3(leftX, templeY, center.z + size.z * 0.12),
-    rightTemple: new THREE.Vector3(rightX, templeY, center.z + size.z * 0.12),
-    leftEar: new THREE.Vector3(leftX - profile.earClearance, earY, center.z),
-    rightEar: new THREE.Vector3(rightX + profile.earClearance, earY, center.z),
-    backScalp: new THREE.Vector3(center.x, center.y, backZ),
-    nape: new THREE.Vector3(center.x, napeY, backZ - profile.napeBack),
-  });
+function hairTargetBounds(metrics, sourceSize, profile) {
+  const targetWidth = Math.max(metrics.headSize.x * profile.widthMul, 0.16);
+  const targetDepth = Math.max(metrics.headSize.z * profile.depthMul, 0.14);
+  const naturalScale = Math.min(targetWidth / Math.max(sourceSize.x, 0.0001), targetDepth / Math.max(sourceSize.z, 0.0001));
+  const naturalHeight = sourceSize.y * naturalScale;
+  const cappedHeight = Math.min(naturalHeight, metrics.headSize.y * profile.maxHeightMul);
+  const topY = metrics.head.max.y + metrics.headSize.y * profile.topLiftMul;
+  const requestedBottom = metrics.head.min.y - metrics.headSize.y * profile.bottomDropMul;
+  const height = Math.min(metrics.headSize.y * profile.maxHeightMul, Math.max(cappedHeight, topY - requestedBottom));
+  const bottomY = topY - height;
+  return new THREE.Box3(
+    new THREE.Vector3(metrics.headCenter.x - targetWidth * 0.5, bottomY, metrics.headCenter.z - targetDepth * 0.5),
+    new THREE.Vector3(metrics.headCenter.x + targetWidth * 0.5, topY, metrics.headCenter.z + targetDepth * 0.5),
+  );
+}
+
+function baseMapToBounds(normalized, box, target = new THREE.Vector3()) {
+  return target.set(
+    THREE.MathUtils.lerp(box.min.x, box.max.x, (normalized.x + 1) * 0.5),
+    THREE.MathUtils.lerp(box.min.y, box.max.y, normalized.y),
+    THREE.MathUtils.lerp(box.min.z, box.max.z, (normalized.z + 1) * 0.5),
+  );
+}
+
+function targetHeadCage(metrics, profile, targetBounds) {
+  const landmarks = {};
+  const targetSize = targetBounds.getSize(new THREE.Vector3());
+  for (const cagePoint of HEAD_CAGE_POINTS) {
+    const normalized = new THREE.Vector3(...cagePoint.source);
+    const target = baseMapToBounds(normalized, targetBounds, new THREE.Vector3());
+    const name = cagePoint.name;
+    if (normalized.z > 0.45) target.z += profile.frontClearance * normalized.z;
+    if (normalized.z < -0.45) target.z += profile.backClearance * normalized.z;
+    if (Math.abs(normalized.x) > 0.72) target.x += Math.sign(normalized.x) * profile.sideClearance;
+    if (/Ear/.test(name)) target.x += Math.sign(normalized.x || 1) * profile.earClearance;
+    if (/nape/i.test(name)) {
+      target.y = metrics.head.min.y - metrics.headSize.y * profile.napeDropMul;
+      target.z = metrics.headCenter.z - targetSize.z * 0.5 - metrics.headSize.z * profile.napeBackMul;
+    }
+    const offset = profile.targetOffsets?.[name];
+    if (offset) {
+      target.x += offset[0] * metrics.headSize.x;
+      target.y += offset[1] * metrics.headSize.y;
+      target.z += offset[2] * metrics.headSize.z;
+    }
+    landmarks[name] = target;
+  }
+  return Object.freeze(landmarks);
 }
 
 function normalizedCoordinates(point, box, target = new THREE.Vector3()) {
@@ -279,23 +339,9 @@ function normalizedCoordinates(point, box, target = new THREE.Vector3()) {
   );
 }
 
-function targetBoxFromLandmarks(landmarks) {
-  const box = new THREE.Box3().makeEmpty();
-  for (const name of HEAD_LANDMARK_NAMES) box.expandByPoint(landmarks[name]);
-  return box;
-}
-
-function baseMapToTarget(normalized, targetBox, target = new THREE.Vector3()) {
-  return target.set(
-    THREE.MathUtils.lerp(targetBox.min.x, targetBox.max.x, (normalized.x + 1) * 0.5),
-    THREE.MathUtils.lerp(targetBox.min.y, targetBox.max.y, normalized.y),
-    THREE.MathUtils.lerp(targetBox.min.z, targetBox.max.z, (normalized.z + 1) * 0.5),
-  );
-}
-
-function warpPointToLandmarks(point, sourceBox, targetBox, sourceLandmarks, targetLandmarks, power, target = new THREE.Vector3()) {
+function warpPointToCage(point, sourceBox, targetBounds, sourceLandmarks, targetLandmarks, power, target = new THREE.Vector3()) {
   const normalized = normalizedCoordinates(point, sourceBox, new THREE.Vector3());
-  baseMapToTarget(normalized, targetBox, target);
+  baseMapToBounds(normalized, targetBounds, target);
   const displacement = new THREE.Vector3();
   let totalWeight = 0;
   for (const name of HEAD_LANDMARK_NAMES) {
@@ -304,8 +350,8 @@ function warpPointToLandmarks(point, sourceBox, targetBox, sourceLandmarks, targ
     const dy = normalized.y - sourceNormalized.y;
     const dz = normalized.z - sourceNormalized.z;
     const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-    const weight = 1 / (0.035 + Math.pow(distance, power));
-    const sourceMapped = baseMapToTarget(sourceNormalized, targetBox, new THREE.Vector3());
+    const weight = 1 / (0.018 + Math.pow(distance, power));
+    const sourceMapped = baseMapToBounds(sourceNormalized, targetBounds, new THREE.Vector3());
     displacement.addScaledVector(targetLandmarks[name].clone().sub(sourceMapped), weight);
     totalWeight += weight;
   }
@@ -320,10 +366,10 @@ function warpHairPrototype(prototype, metrics, profile, anchorPosition, tint) {
   if (![sourceSize.x, sourceSize.y, sourceSize.z].every(Number.isFinite) || sourceSize.x <= 0 || sourceSize.y <= 0 || sourceSize.z <= 0) {
     throw new Error('invalid hair source bounds');
   }
-  const targetLandmarks = targetHeadLandmarks(metrics, profile);
-  const targetBox = targetBoxFromLandmarks(targetLandmarks);
+  const targetBounds = hairTargetBounds(metrics, sourceSize, profile);
+  const targetLandmarks = targetHeadCage(metrics, profile, targetBounds);
   const warped = new THREE.Group();
-  warped.name = 'ZW_LandmarkWarpedHair';
+  warped.name = 'ZW_DenseLandmarkWarpedHair';
 
   prototype.traverse((node) => {
     if (!node.isMesh) return;
@@ -334,7 +380,7 @@ function warpHairPrototype(prototype, metrics, profile, anchorPosition, tint) {
     for (let index = 0; index < position.count; index++) {
       tempVertex.fromBufferAttribute(position, index);
       node.localToWorld(tempVertex);
-      warpPointToLandmarks(tempVertex, sourceBox, targetBox, profile.sourceLandmarks, targetLandmarks, profile.influencePower, tempVertex);
+      warpPointToCage(tempVertex, sourceBox, targetBounds, profile.sourceLandmarks, targetLandmarks, profile.influencePower, tempVertex);
       tempVertex.sub(anchorPosition);
       positions[index * 3] = tempVertex.x;
       positions[index * 3 + 1] = tempVertex.y;
@@ -353,7 +399,7 @@ function warpHairPrototype(prototype, metrics, profile, anchorPosition, tint) {
       return clone;
     });
     const mesh = new THREE.Mesh(geometry, Array.isArray(node.material) ? clonedMaterials : clonedMaterials[0]);
-    mesh.name = node.name || 'ZW_LandmarkHairMesh';
+    mesh.name = node.name || 'ZW_DenseLandmarkHairMesh';
     mesh.castShadow = true;
     mesh.receiveShadow = true;
     mesh.frustumCulled = false;
@@ -362,6 +408,7 @@ function warpHairPrototype(prototype, metrics, profile, anchorPosition, tint) {
 
   if (!warped.children.length) throw new Error('hair asset produced no renderable meshes');
   warped.userData.zwHeadLandmarks = Object.fromEntries(HEAD_LANDMARK_NAMES.map((name) => [name, targetLandmarks[name].toArray()]));
+  warped.userData.zwTargetBounds = { min: targetBounds.min.toArray(), max: targetBounds.max.toArray() };
   return warped;
 }
 
@@ -375,7 +422,7 @@ function updateMountedAttachment(instance, mount, anchor, elapsedSeconds = 0) {
   if (mount.userData.zwAttachment === 'jewelry') {
     const seed = mount.userData.zwSwaySeed || 0;
     const sway = Math.sin(elapsedSeconds * 2.2 + seed) * 0.006;
-    delta.multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), sway));
+    delta.multiply(new THREE.Quaternion().setFromAxisAngle(Z_AXIS, sway));
   }
   mount.quaternion.copy(delta);
 }
@@ -395,7 +442,7 @@ export async function updateLegacyHair(instance, custom, renderer) {
   if (!instance?.anchors?.head) return false;
   const styleId = custom.modularHair;
   const fitKey = socketMetricKey(custom);
-  const desiredKey = isLegacyAssetHair(styleId) ? `${styleId}:${custom.hairColor || 'jet'}:${fitKey}:landmark-v1` : 'none';
+  const desiredKey = isLegacyAssetHair(styleId) ? `${styleId}:${custom.hairColor || 'jet'}:${fitKey}:dense-cage-v2` : 'none';
   const layer = attachmentLayer(instance);
   const existing = findNamed(layer, 'ZW_ExternalHairMount');
 
@@ -423,7 +470,7 @@ export async function updateLegacyHair(instance, custom, renderer) {
     mount.userData.zwAttachment = 'hair';
     mount.userData.zwItemId = styleId;
     mount.userData.zwFitKey = fitKey;
-    mount.userData.zwFitContract = 'head-landmarks-v1';
+    mount.userData.zwFitContract = 'dense-head-cage-v2';
     mount.userData.zwFallbackSocket = metrics.fallback;
     mount.add(warpHairPrototype(prototype, metrics, profile, tempAnchorPosition.clone(), colorForHair(custom)));
     captureAnchorRest(instance, mount, instance.anchors.head, 'head');
@@ -437,7 +484,7 @@ export async function updateLegacyHair(instance, custom, renderer) {
     updateAttachmentTransforms(instance);
     return true;
   } catch (error) {
-    console.warn('[modular-attachments] landmark hair mount failed', styleId, error);
+    console.warn('[modular-attachments] dense landmark hair mount failed', styleId, error);
     removeNamed(layer, 'ZW_ExternalHairMount');
     instance.externalHairKey = null;
     return false;
@@ -456,67 +503,154 @@ function jewelryMaterial(kind) {
   });
 }
 
-function jewelryLandmarks(metrics, fit) {
-  const width = Math.max(metrics.chestSize.x, metrics.headSize.x * 1.7);
-  const halfWidth = width * 0.31;
-  const topY = metrics.chest.max.y - metrics.chestSize.y * 0.08;
-  const centerY = topY - fit.drop;
-  const frontZ = metrics.chest.max.z + fit.chestClearance;
+function weightedSurfaceZ(metrics, x, y, front = true) {
+  const samples = metrics.surfaceSamples || [];
+  if (!samples.length) return front ? metrics.chest.max.z : metrics.chest.min.z;
+  const radiusX = Math.max(metrics.chestSize.x * 0.12, 0.025);
+  const radiusY = Math.max(metrics.chestSize.y * 0.10, 0.025);
+  let selected = front ? -Infinity : Infinity;
+  let found = false;
+  for (const sample of samples) {
+    const nx = (sample.x - x) / radiusX;
+    const ny = (sample.y - y) / radiusY;
+    const distance = nx * nx + ny * ny;
+    if (distance > 1.4) continue;
+    if (front) selected = Math.max(selected, sample.z);
+    else selected = Math.min(selected, sample.z);
+    found = true;
+  }
+  return found ? selected : (front ? metrics.chest.max.z : metrics.chest.min.z);
+}
+
+function neckEnvelope(metrics, fit) {
+  const samples = metrics.surfaceSamples || [];
+  const neckY = Math.min(
+    metrics.head.min.y + metrics.headSize.y * 0.06,
+    metrics.chest.max.y - metrics.chestSize.y * 0.04,
+  );
+  const band = samples.filter((sample) => Math.abs(sample.y - neckY) <= Math.max(metrics.headSize.y * 0.12, 0.035));
+  const centerX = metrics.chestCenter.x;
+  let minX = centerX - metrics.headSize.x * 0.22;
+  let maxX = centerX + metrics.headSize.x * 0.22;
+  let minZ = metrics.chestCenter.z - metrics.headSize.z * 0.20;
+  let maxZ = metrics.chestCenter.z + metrics.headSize.z * 0.20;
+  if (band.length) {
+    minX = Math.min(...band.map((sample) => sample.x));
+    maxX = Math.max(...band.map((sample) => sample.x));
+    minZ = Math.min(...band.map((sample) => sample.z));
+    maxZ = Math.max(...band.map((sample) => sample.z));
+  }
+  const centerZ = (minZ + maxZ) * 0.5;
   return {
-    leftCollar: new THREE.Vector3(metrics.chestCenter.x - halfWidth, topY, frontZ),
-    leftChest: new THREE.Vector3(metrics.chestCenter.x - halfWidth * 0.52, topY - fit.drop * 0.55, frontZ + 0.008),
-    pendantHang: new THREE.Vector3(metrics.chestCenter.x, centerY, frontZ + 0.014),
-    rightChest: new THREE.Vector3(metrics.chestCenter.x + halfWidth * 0.52, topY - fit.drop * 0.55, frontZ + 0.008),
-    rightCollar: new THREE.Vector3(metrics.chestCenter.x + halfWidth, topY, frontZ),
+    y: neckY,
+    center: new THREE.Vector3((minX + maxX) * 0.5, neckY, centerZ),
+    radiusX: Math.max((maxX - minX) * 0.5 + fit.neckClearance, metrics.headSize.x * 0.18),
+    radiusZ: Math.max((maxZ - minZ) * 0.5 + fit.neckClearance, metrics.headSize.z * 0.17),
   };
+}
+
+function neckRingPoint(envelope, angle, fit) {
+  const radialX = Math.sin(angle);
+  const radialZ = Math.cos(angle);
+  return new THREE.Vector3(
+    envelope.center.x + radialX * envelope.radiusX,
+    envelope.y + (radialZ < 0 ? fit.neckClearance * 0.35 : -fit.neckClearance * 0.20),
+    envelope.center.z + radialZ * envelope.radiusZ,
+  );
+}
+
+function projectedChestDrape(metrics, fit) {
+  const points = [];
+  const halfWidth = Math.max(metrics.chestSize.x * fit.shoulderWidthMul, metrics.headSize.x * 0.52);
+  const topY = metrics.chest.max.y - metrics.chestSize.y * 0.12;
+  for (let index = 0; index < CHEST_DRAPE_SEGMENTS; index++) {
+    const t = index / (CHEST_DRAPE_SEGMENTS - 1);
+    const x = THREE.MathUtils.lerp(metrics.chestCenter.x - halfWidth, metrics.chestCenter.x + halfWidth, t);
+    const y = topY - Math.sin(Math.PI * t) * fit.drop;
+    const z = weightedSurfaceZ(metrics, x, y, true) + fit.chestClearance;
+    points.push(new THREE.Vector3(x, y, z));
+  }
+  return points;
+}
+
+function necklaceSurfacePath(metrics, fit) {
+  const envelope = neckEnvelope(metrics, fit);
+  const points = [];
+  const sideCount = Math.max(4, Math.floor(NECK_RING_SEGMENTS / 2));
+  const leftFrontAngle = Math.PI * 2 - 0.55;
+  const rightFrontAngle = 0.55;
+
+  for (let index = 0; index <= sideCount; index++) {
+    const t = index / sideCount;
+    points.push(neckRingPoint(envelope, THREE.MathUtils.lerp(Math.PI, leftFrontAngle, t), fit));
+  }
+
+  const drape = projectedChestDrape(metrics, fit);
+  points.push(...drape);
+
+  for (let index = 0; index <= sideCount; index++) {
+    const t = index / sideCount;
+    points.push(neckRingPoint(envelope, THREE.MathUtils.lerp(rightFrontAngle, Math.PI, t), fit));
+  }
+  return { points, drape, envelope };
 }
 
 function makeChainLink(material, fit, kind, index) {
   const link = new THREE.Mesh(new THREE.TorusGeometry(fit.linkRadius, fit.linkTube, 5, kind === 'cuban' ? 12 : 10), material);
   link.name = `ZW_ChainLink_${kind}_${index}`;
   link.castShadow = true;
-  if (kind === 'cuban') link.scale.set(1.28, 0.72, 0.72);
-  else link.scale.set(1.10, 0.82, 0.82);
+  if (kind === 'cuban') link.scale.set(1.24, 0.70, 0.70);
+  else link.scale.set(1.08, 0.82, 0.82);
   return link;
 }
 
 function buildJewelry(kind, metrics, anchorPosition) {
   const fit = JEWELRY_FIT[kind] || JEWELRY_FIT.chain;
   const material = jewelryMaterial(kind);
-  const landmarks = jewelryLandmarks(metrics, fit);
-  const points = [landmarks.leftCollar, landmarks.leftChest, landmarks.pendantHang, landmarks.rightChest, landmarks.rightCollar]
-    .map((point) => point.clone().sub(anchorPosition));
-  const curve = new THREE.CatmullRomCurve3(points, false, 'centripetal', 0.5);
+  const { points, drape, envelope } = necklaceSurfacePath(metrics, fit);
+  const localPoints = points.map((point) => point.clone().sub(anchorPosition));
+  const curve = new THREE.CatmullRomCurve3(localPoints, false, 'centripetal', 0.5);
   const group = new THREE.Group();
   group.name = 'ZW_ModularJewelryMount';
   group.userData.zwAttachment = 'jewelry';
   group.userData.zwItemId = kind;
-  group.userData.zwFitContract = 'chest-landmarks-v1';
-  group.userData.zwJewelryLandmarks = Object.fromEntries(Object.entries(landmarks).map(([name, point]) => [name, point.toArray()]));
+  group.userData.zwFitContract = 'neck-chest-surface-v2';
+  group.userData.zwNeckEnvelope = {
+    center: envelope.center.toArray(), radiusX: envelope.radiusX, radiusZ: envelope.radiusZ,
+  };
+  group.userData.zwSurfacePath = points.map((point) => point.toArray());
 
   for (let index = 0; index < fit.links; index++) {
     const t = fit.links <= 1 ? 0.5 : index / (fit.links - 1);
-    const point = curve.getPointAt(t);
+    const curvePoint = curve.getPointAt(t);
     const tangent = curve.getTangentAt(t).normalize();
     const link = makeChainLink(material, fit, kind, index);
-    link.position.copy(point);
+    link.position.copy(curvePoint);
     const align = new THREE.Quaternion().setFromUnitVectors(X_AXIS, tangent);
     const alternatingTwist = new THREE.Quaternion().setFromAxisAngle(X_AXIS, index % 2 ? Math.PI * 0.5 : 0);
     link.quaternion.copy(align).multiply(alternatingTwist);
     group.add(link);
   }
 
-  const centerPoint = curve.getPointAt(0.5);
-  const bail = new THREE.Mesh(new THREE.TorusGeometry(fit.linkRadius * 0.72, fit.linkTube, 5, 12), material);
+  const centerWorld = drape[Math.floor(drape.length / 2)].clone();
+  const bailWorld = centerWorld.clone().add(new THREE.Vector3(0, -fit.linkRadius * 1.20, fit.pendantClearance));
+  const bail = new THREE.Mesh(new THREE.TorusGeometry(fit.linkRadius * 0.66, fit.linkTube, 5, 12), material);
   bail.name = `ZW_PendantBail_${kind}`;
-  bail.position.copy(centerPoint).add(new THREE.Vector3(0, -fit.linkRadius * 1.35, 0.002));
+  bail.position.copy(bailWorld).sub(anchorPosition);
   bail.rotation.x = Math.PI * 0.5;
   bail.castShadow = true;
   group.add(bail);
 
+  const pendantY = bailWorld.y - fit.linkRadius * 1.55;
+  const pendantSurfaceZ = weightedSurfaceZ(metrics, centerWorld.x, pendantY, true);
+  const pendantWorld = new THREE.Vector3(
+    centerWorld.x,
+    pendantY,
+    Math.max(bailWorld.z, pendantSurfaceZ + fit.pendantClearance),
+  );
   const pendant = new THREE.Group();
   pendant.name = `ZW_Pendant_${kind}`;
-  pendant.position.copy(bail.position).add(new THREE.Vector3(0, -fit.linkRadius * 1.7, 0.003));
+  pendant.position.copy(pendantWorld).sub(anchorPosition);
   pendant.scale.setScalar(fit.pendantScale);
   if (kind === 'iced') {
     const gemMaterial = new THREE.MeshPhysicalMaterial({
@@ -529,7 +663,7 @@ function buildJewelry(kind, metrics, anchorPosition) {
     pendant.add(setting, gem);
   } else {
     const tag = new THREE.Mesh(new THREE.CylinderGeometry(0.019, 0.019, 0.008, 20), material);
-    tag.rotation.x = Math.PI * 0.5;
+    tag.rotation.x = Math.PI / 2;
     pendant.add(tag);
   }
   pendant.traverse((node) => { if (node.isMesh) node.castShadow = true; });
@@ -541,7 +675,7 @@ export function updateJewelry(instance, custom) {
   if (!instance?.anchors?.chest) return false;
   const kind = custom.jewelry || 'none';
   const fitKey = socketMetricKey(custom);
-  const desiredKey = kind === 'none' ? 'none' : `${kind}:${fitKey}:landmark-v1`;
+  const desiredKey = kind === 'none' ? 'none' : `${kind}:${fitKey}:surface-v2`;
   const layer = attachmentLayer(instance);
   const existing = findNamed(layer, 'ZW_ModularJewelryMount');
 
@@ -566,7 +700,7 @@ export function updateJewelry(instance, custom) {
     updateAttachmentTransforms(instance);
     return true;
   } catch (error) {
-    console.warn('[modular-attachments] landmark jewelry mount failed', kind, error);
+    console.warn('[modular-attachments] surface jewelry mount failed', kind, error);
     removeNamed(layer, 'ZW_ModularJewelryMount');
     instance.jewelryKey = null;
     return false;
