@@ -7,7 +7,8 @@ export function injectCharacterStudioStyles() {
   #creator .panel.studio-panel{width:min(1180px,96vw);height:min(760px,94vh);max-height:94vh;gap:18px;padding:18px;background:linear-gradient(145deg,#11121b,#191927 58%,#11131c)}
   #creator .studio-panel #creator-left{flex:0 0 43%;min-width:320px}#creator .studio-panel #creator-right{min-width:0;overflow:hidden;padding:12px;border:1px solid #ffffff14;border-radius:16px;background:#08090f59}
   #creator-canvas-wrap{box-shadow:inset 0 0 50px #0007,0 12px 40px #0005}#creator-canvas-wrap .turn{z-index:14;padding:4px 10px;border-radius:999px;background:#06070cb8;color:#c8cad8}
-  .zw-studio-canvas{position:absolute;inset:0;z-index:10;width:100%;height:100%;touch-action:none;cursor:grab}.zw-studio-canvas.dragging{cursor:grabbing}
+  #creator-canvas-wrap[data-character-studio="active"] canvas:not(.zw-studio-canvas){visibility:hidden!important;pointer-events:none!important}
+  .zw-studio-canvas{position:absolute;inset:0;z-index:10;width:100%;height:100%;touch-action:none;cursor:grab;image-rendering:auto;transform:translateZ(0);backface-visibility:hidden}.zw-studio-canvas.dragging{cursor:grabbing}
   .zw-studio-loading{position:absolute;inset:auto 12px 12px;z-index:15;padding:8px 10px;border:1px solid #ffffff1f;border-radius:10px;background:#08090fd1;color:#bfc6d8;font-size:12px}
   .zw-studio-head{display:flex;justify-content:space-between;gap:12px;margin-bottom:10px}.zw-studio-head h2{margin:0;font-size:20px}.zw-studio-head p{margin:4px 0 0;color:#9399ad;font-size:12px}
   .zw-studio-status{height:max-content;padding:5px 8px;border:1px solid #4eff913d;border-radius:999px;background:#4eff9114;color:#59f49a;font-size:10px;letter-spacing:.9px;text-transform:uppercase;white-space:nowrap}
