@@ -8,11 +8,12 @@ export const CHARACTER_ROLE_POLICY = Object.freeze({
     reason: 'Editable shared rig with body/face morphs, modular wardrobe slots, texture variants and procedural fallback.',
   }),
   civilian: Object.freeze({
-    mode: 'procedural-functional',
-    maxLiveSkins: 0,
+    mode: 'glb-functional-direct',
+    maxLiveSkins: 24,
     height: 1.75,
     playEmbeddedClip: false,
-    reason: 'Complete procedural pedestrians remain active until imported rigs have retargeted locomotion and visual approval.',
+    castShadows: false,
+    reason: 'Complete imported PSX civilians use direct lightweight bone drivers; procedural bubble meshes retire after a validated swap.',
   }),
   police: Object.freeze({
     mode: 'procedural-functional',
@@ -22,8 +23,6 @@ export const CHARACTER_ROLE_POLICY = Object.freeze({
   }),
 });
 
-// Retained as audited future pools. They are not loaded by the current live role
-// policy, so they cannot distort pedestrians or consume animation mixers.
 export const CIVILIAN_CHARACTER_CANDIDATES = Object.freeze([
   'character-01', 'character-02', 'character-03', 'character-04',
   'character-05', 'character-06', 'character-07', 'character-08',
