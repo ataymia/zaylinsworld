@@ -13,6 +13,8 @@
     "check": "npm run check:project && npm test && npm run build",
     "audit:characters": "node tools/audit-characters.mjs",
     "audit:characters:check": "node tools/audit-characters.mjs --check",
+    "audit:assets": "node tools/audit-assets.mjs",
+    "audit:assets:check": "node tools/audit-assets.mjs --check",
     "gen:gem": "node tools/make-sample-gem.mjs",
     "gen:assets": "node tools/build-assets.mjs",
     "gen:asset-report": "node scripts/gen-asset-report.mjs",
