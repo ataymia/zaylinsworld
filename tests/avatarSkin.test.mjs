@@ -6,6 +6,7 @@ import {
   CIVILIANS,
   PLAYER_CANDIDATES,
   POLICE,
+  isUsableCharacterClip,
   validateHumanoidGlb,
 } from '../src/avatarSkin.js';
 
@@ -35,6 +36,16 @@ test('validateHumanoidGlb rejects empty and extreme-proportion scenes', () => {
   const blobResult = validateHumanoidGlb(wideBlob, 1.8);
   assert.equal(blobResult.ok, false);
   assert.match(blobResult.reason, /final w\/d/);
+});
+
+test('pose-only animation tracks are not treated as locomotion clips', () => {
+  const poseTrack = new THREE.NumberKeyframeTrack('.position[x]', [0, 0.033], [0, 0]);
+  const poseClip = new THREE.AnimationClip('mixamo.com', -1, [poseTrack]);
+  assert.equal(isUsableCharacterClip(poseClip), false);
+
+  const walkTrack = new THREE.NumberKeyframeTrack('.position[x]', [0, 0.5, 1], [0, 0.5, 1]);
+  const walkClip = new THREE.AnimationClip('Walking', -1, [walkTrack]);
+  assert.equal(isUsableCharacterClip(walkClip), true);
 });
 
 test('role pools contain distinct approved character candidates', () => {
