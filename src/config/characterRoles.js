@@ -8,18 +8,22 @@ export const CHARACTER_ROLE_POLICY = Object.freeze({
     reason: 'Editable shared rig with body/face morphs, modular wardrobe slots, texture variants and procedural fallback.',
   }),
   civilian: Object.freeze({
-    mode: 'glb-capped',
-    maxLiveSkins: 12,
+    mode: 'procedural-functional',
+    maxLiveSkins: 0,
     height: 1.75,
-    playEmbeddedClip: true,
+    playEmbeddedClip: false,
+    reason: 'Complete procedural pedestrians remain active until imported rigs have retargeted locomotion and visual approval.',
   }),
   police: Object.freeze({
-    mode: 'glb-with-procedural-fallback',
+    mode: 'procedural-functional',
     height: 1.82,
-    playEmbeddedClip: true,
+    playEmbeddedClip: false,
+    reason: 'Procedural police remain functional until imported police animation passes live validation.',
   }),
 });
 
+// Retained as audited future pools. They are not loaded by the current live role
+// policy, so they cannot distort pedestrians or consume animation mixers.
 export const CIVILIAN_CHARACTER_CANDIDATES = Object.freeze([
   'character-01', 'character-02', 'character-03', 'character-04',
   'character-05', 'character-06', 'character-07', 'character-08',
@@ -47,8 +51,8 @@ export function stableCharacterCandidate(candidates, key = 0) {
   if (!candidates.length) return null;
   const text = String(key ?? '0');
   let hash = 2166136261;
-  for (let i = 0; i < text.length; i++) {
-    hash ^= text.charCodeAt(i);
+  for (let index = 0; index < text.length; index++) {
+    hash ^= text.charCodeAt(index);
     hash = Math.imul(hash, 16777619);
   }
   return candidates[(hash >>> 0) % candidates.length];
