@@ -74,8 +74,22 @@ export async function loadSlotModel(category, slot, renderer) {
 
 // ── animation mixers ──────────────────────────────────────────────────────────
 const _mixers = new Set();
-export function trackMixer(m) { _mixers.add(m); return m; }
-export function updateMixers(dt) { for (const m of _mixers) m.update(dt); }
+export function trackMixer(m) { if (m) _mixers.add(m); return m; }
+export function untrackMixer(m) {
+  if (!m) return false;
+  try { m.mixer?.stopAllAction?.(); m.mixer?.uncacheRoot?.(m.mixer.getRoot?.()); } catch {}
+  return _mixers.delete(m);
+}
+export function updateMixers(dt) {
+  for (const m of [..._mixers]) {
+    const root = m?.mixer?.getRoot?.();
+    // Cops and temporary imported characters may be removed from the scene. Drop
+    // their mixers automatically so repeated spawns do not grow an immortal set.
+    if (!root || !root.parent) { untrackMixer(m); continue; }
+    m.update(dt);
+  }
+}
+export function mixerCount() { return _mixers.size; }
 
 // ── swap helpers ──────────────────────────────────────────────────────────────
 function boxOf(obj) { return new THREE.Box3().setFromObject(obj); }
