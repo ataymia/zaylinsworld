@@ -162,15 +162,25 @@ export async function listAssets(category, pack) {
   return Object.values(cat).flat();
 }
 
-// Find an asset entry by (category, pack, name-substring) — case-insensitive.
-export async function findAsset(category, pack, nameLike) {
-  const list = await listAssets(category, pack);
-  if (!nameLike) return list[0] || null;
-  const q = nameLike.toLowerCase();
-  return list.find((e) => e.name.includes(q)) || null;
+// Pure selection helper, exported so lookup behavior stays regression-testable.
+// Exact case-insensitive names win. Substring matching remains only as a legacy
+// convenience for callers that intentionally request a family of assets.
+export function selectAssetEntry(list, nameLike) {
+  const entries = Array.isArray(list) ? list : [];
+  if (!nameLike) return entries[0] || null;
+  const query = String(nameLike).toLowerCase();
+  const exact = entries.find((entry) => String(entry?.name || '').toLowerCase() === query);
+  if (exact) return exact;
+  return entries.find((entry) => String(entry?.name || '').toLowerCase().includes(query)) || null;
 }
 
-// Load an asset directly from the library by (category, pack, name-substring).
+// Find an asset entry by exact name first, then legacy substring — case-insensitive.
+export async function findAsset(category, pack, nameLike) {
+  const list = await listAssets(category, pack);
+  return selectAssetEntry(list, nameLike);
+}
+
+// Load an asset directly from the library by (category, pack, name).
 // Returns { scene, animations } or null (caller falls back to procedural).
 export async function loadAsset(category, pack, nameLike, renderer) {
   const entry = await findAsset(category, pack, nameLike);
