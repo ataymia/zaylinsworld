@@ -13,6 +13,7 @@
     "check:characters": "node tools/check-character-policy.mjs",
     "check": "npm run check:syntax && npm run check:smoke && npm run check:characters && npm run build",
     "audit:characters": "node tools/audit-characters.mjs",
+    "audit:assets": "node tools/audit-assets.mjs",
     "gen:gem": "node tools/make-sample-gem.mjs",
     "gen:assets": "node tools/build-assets.mjs",
     "gen:asset-report": "node scripts/gen-asset-report.mjs",
