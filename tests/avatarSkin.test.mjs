@@ -39,12 +39,16 @@ test('validateHumanoidGlb rejects empty and extreme-proportion scenes', () => {
 });
 
 test('pose-only animation tracks are not treated as locomotion clips', () => {
-  const poseTrack = new THREE.NumberKeyframeTrack('.position[x]', [0, 0.033], [0, 0]);
-  const poseClip = new THREE.AnimationClip('mixamo.com', -1, [poseTrack]);
+  const poseClip = {
+    duration: 0.033,
+    tracks: [{ times: [0, 0.033] }],
+  };
   assert.equal(isUsableCharacterClip(poseClip), false);
 
-  const walkTrack = new THREE.NumberKeyframeTrack('.position[x]', [0, 0.5, 1], [0, 0.5, 1]);
-  const walkClip = new THREE.AnimationClip('Walking', -1, [walkTrack]);
+  const walkClip = {
+    duration: 1,
+    tracks: [{ times: [0, 0.5, 1] }],
+  };
   assert.equal(isUsableCharacterClip(walkClip), true);
 });
 
