@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
+import { STARTER_TOWN_ID } from '../src/config/townRegistry.js';
 import {
   clearSave,
   defaultState,
@@ -39,6 +40,8 @@ test('defaultState contains the required Starter Town systems', () => {
   const state = defaultState();
   assert.equal(state.createdCharacter, false);
   assert.equal(state.useRealSkin, true);
+  assert.equal(state.townId, STARTER_TOWN_ID);
+  assert.equal(state.townLoadStates[STARTER_TOWN_ID], 'active');
   assert.equal(state.equippedWeapon, 'fists');
   assert.deepEqual(state.ownedWeapons, ['fists']);
   assert.equal(typeof state.stats.health, 'number');
@@ -58,10 +61,11 @@ test('saveState and loadState preserve progress', () => {
   const loaded = loadState();
   assert.equal(loaded.money, 1234);
   assert.equal(loaded.stats.fun, 88);
+  assert.equal(loaded.townId, STARTER_TOWN_ID);
   assert.deepEqual(loaded.ownedCars, ['starter']);
 });
 
-test('loadState migrates stale real-skin disable flags', () => {
+test('loadState migrates stale real-skin and pre-town saves', () => {
   const legacy = {
     version: 2,
     useRealSkin: false,
@@ -72,9 +76,24 @@ test('loadState migrates stale real-skin disable flags', () => {
 
   const loaded = loadState();
   assert.equal(loaded.useRealSkin, true);
+  assert.equal(loaded.townId, STARTER_TOWN_ID);
+  assert.equal(loaded.townLoadStates[STARTER_TOWN_ID], 'active');
   assert.equal(loaded.money, 777);
   assert.equal(loaded.custom.hair, 'afro');
   assert.equal(typeof loaded.custom.skin, 'string');
+});
+
+test('unknown future town ids safely fall back to Starter Town', () => {
+  const invalid = {
+    ...defaultState(),
+    townId: 'missing-town',
+    townLoadStates: { 'missing-town': 'active' },
+  };
+  globalThis.localStorage.setItem('zaylinsworld.save.v2', JSON.stringify(invalid));
+
+  const loaded = loadState();
+  assert.equal(loaded.townId, STARTER_TOWN_ID);
+  assert.equal(loaded.townLoadStates[STARTER_TOWN_ID], 'active');
 });
 
 test('clearSave removes the stored save', () => {
