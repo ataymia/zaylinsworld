@@ -11,6 +11,7 @@ const requiredFiles = [
   'src/modularAttachments.js',
   'src/characterStudio.js',
   'src/characterStudioTheme.js',
+  'src/config/avatarAttachmentFit.js',
   'src/config/playerAvatarCatalog.js',
   'src/config/characterRoles.js',
   'src/npc.js',
@@ -30,6 +31,7 @@ const blockLayout = sources['src/config/blockSupplyLayout.js'];
 const skinTextureAwait = sources['src/modularPlayer.js'].indexOf('await Promise.all(jobs)');
 const skinTint = sources['src/modularPlayer.js'].indexOf("const skin = instance.materials.get('ZW_Skin')");
 const attachments = sources['src/modularAttachments.js'];
+const attachmentFit = sources['src/config/avatarAttachmentFit.js'];
 const studio = sources['src/characterStudio.js'];
 const avatarSkin = sources['src/avatarSkin.js'];
 const rolePolicy = sources['src/config/characterRoles.js'];
@@ -49,12 +51,15 @@ const checks = [
   ['skin tint happens after texture jobs', skinTextureAwait >= 0 && skinTint > skinTextureAwait],
   ['world-scale modular wrapper', /const group = new THREE\.Group\(\)/.test(sources['src/modularPlayer.js']) && /model\.scale\.setScalar/.test(sources['src/modularPlayer.js'])],
   ['modular attachment bridge', /updateModularAttachments/.test(sources['src/modularPlayer.js'])],
-  ['chain uses measured front chest', /metrics\.chest\.max\.z \+ 0\.018/.test(attachments) && /ZW_ModularJewelryMount/.test(attachments)],
-  ['pendant is connected by bail', /ZW_PendantBail_/.test(attachments) && /-dropMax - 0\.038/.test(attachments)],
+  ['all legacy hair profiles are landmark mapped', ['gltf-buzzed', 'gltf-buzzed-f', 'gltf-parted', 'gltf-long', 'gltf-buns'].every((id) => attachmentFit.includes(`'${id}'`))],
+  ['canonical head landmarks exist', /forehead/.test(attachmentFit) && /crown/.test(attachmentFit) && /leftTemple/.test(attachmentFit) && /rightTemple/.test(attachmentFit) && /leftEar/.test(attachmentFit) && /rightEar/.test(attachmentFit) && /backScalp/.test(attachmentFit) && /nape/.test(attachmentFit)],
+  ['hair uses landmark cage deformation', /function warpHairPrototype/.test(attachments) && /function warpPointToLandmarks/.test(attachments) && /sourceLandmarks/.test(attachments)],
+  ['hair follows head rotation delta', /zwAnchorRestQuaternion/.test(attachments) && /tempLocalQuaternion/.test(attachments)],
   ['legacy asset hair bridge', /HAIR_GLTF/.test(attachments) && /ZW_ExternalHairMount/.test(attachments)],
-  ['legacy hair uses original forward', /mount\.rotation\.set\(cfg\.rotX \?\? 0, cfg\.rotY \?\? 0/.test(attachments)],
-  ['legacy hair seats on measured crown', /metrics\.head\.max\.y - hairHeight \* modularFit\.crownSeat/.test(attachments)],
-  ['legacy hair fits measured head bounds', /metrics\.headSize\.x \* modularFit\.widthMul/.test(attachments) && /Math\.min\(widthFit, heightFit\)/.test(attachments)],
+  ['chain uses chest landmarks', /function jewelryLandmarks/.test(attachments) && /leftCollar/.test(attachments) && /pendantHang/.test(attachments) && /rightCollar/.test(attachments)],
+  ['chain is made from alternating links', /ZW_ChainLink_/.test(attachments) && /TorusGeometry/.test(attachments) && /alternatingTwist/.test(attachments) && !/TubeGeometry/.test(attachments)],
+  ['chain clears measured shirt chest surface', /metrics\.chest\.max\.z \+ fit\.chestClearance/.test(attachments)],
+  ['pendant is connected to center chain link', /const centerPoint = curve\.getPointAt\(0\.5\)/.test(attachments) && /ZW_PendantBail_/.test(attachments) && /pendant\.position\.copy\(bail\.position\)/.test(attachments)],
   ['attachment socket fallback exists', /function fallbackBodySockets/.test(attachments) && /measuredBodySockets\(instance, custom\) \|\| fallbackBodySockets/.test(attachments)],
   ['attachment fit cache includes body shape', /const fitKey = socketMetricKey\(custom\)/.test(attachments) && /zwFitKey/.test(attachments)],
   ['hair cache requires a real mount', /instance\.externalHairKey === desiredKey && existing/.test(attachments)],
@@ -62,7 +67,7 @@ const checks = [
   ['failed hair mount can retry', /externalHairRequest/.test(attachments) && /instance\.externalHairKey = null/.test(attachments) && /hairPrototypeCache\.delete/.test(attachments)],
   ['jewelry cache requires a real mount', /instance\.jewelryKey === desiredKey && existing/.test(attachments)],
   ['jewelry cache commits after mount', jewelryMountAdd >= 0 && jewelryCacheCommit > jewelryMountAdd],
-  ['failed jewelry mount can retry', /jewelry mount failed/.test(attachments) && /instance\.jewelryKey = null/.test(attachments)],
+  ['failed jewelry mount can retry', /landmark jewelry mount failed/.test(attachments) && /instance\.jewelryKey = null/.test(attachments)],
   ['socket metrics are not reset every update', !/updateModularAttachments[\s\S]{0,120}instance\.socketMetrics = null/.test(attachments)],
   ['direct imported civilian policy', /mode:\s*['"]glb-functional-direct['"]/.test(rolePolicy) && /maxLiveSkins:\s*24/.test(rolePolicy)],
   ['directional arm solver', /makeDirectionalArmDriver/.test(avatarSkin) && /setFromUnitVectors/.test(avatarSkin)],
