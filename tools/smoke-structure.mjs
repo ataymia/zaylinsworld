@@ -19,7 +19,9 @@ const requiredFiles = [
   'src/config/mapConfig.js',
 ];
 for (const rel of requiredFiles) await access(path.join(ROOT, rel));
-const sources = Object.fromEntries(await Promise.all(requiredFiles.map(async (rel) => [rel, await readFile(path.join(ROOT, rel), 'utf8')]));
+const sources = Object.fromEntries(await Promise.all(
+  requiredFiles.map(async (rel) => [rel, await readFile(path.join(ROOT, rel), 'utf8')]),
+));
 const chickenFurniture = sources['src/furnish.js'].match(/chicken:\s*\[([\s\S]*?)\n\s*\],\n\};/)?.[1] || '';
 const blockLayout = sources['src/config/blockSupplyLayout.js'];
 const checks = [
