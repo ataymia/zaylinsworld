@@ -1,0 +1,19 @@
+{
+  "source": "Sunbox Games / CGTrader 3901952",
+  "license": "Royalty Free License (no AI)",
+  "model": {
+    "filename": "sunbox-male-free.glb",
+    "bytes": 1389128,
+    "sha256": "52afa745db43063c6140cef53cf9bc8b16aa64f5fe1e26b9f0439f2d17dc8cc5",
+    "nodes": 113,
+    "meshes": 15,
+    "materials": 17,
+    "extensionsUsed": [
+      "EXT_meshopt_compression",
+      "KHR_mesh_quantization"
+    ]
+  },
+  "textureCount": 47,
+  "textureBytes": 1177595,
+  "generatedAt": "2026-07-16T19:46:45.649Z"
+}
