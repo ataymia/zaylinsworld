@@ -26,15 +26,14 @@ const hair = (values = {}) => Object.freeze({
 });
 
 // The silhouette and scale are approved. These values only seat the already
-// fitted geometry onto the scalp. This final calibration moves each imported
-// style one last micro-step downward without changing width, depth, or the
-// approved front/back placement.
+// fitted geometry onto the scalp. This calibration moves each imported style
+// one final micro-step downward and backward without changing its proportions.
 export const DEFAULT_HAIR_FIT_PROFILE = hair({
   widthScale: 0.70,
   heightScale: 1.00,
   depthScale: 0.70,
-  yOffsetMul: 0.085,
-  zOffsetMul: -0.004,
+  yOffsetMul: 0.095,
+  zOffsetMul: -0.008,
 });
 
 export const HAIR_FIT_PROFILES = Object.freeze({
@@ -42,36 +41,36 @@ export const HAIR_FIT_PROFILES = Object.freeze({
     widthScale: 0.66,
     heightScale: 1.00,
     depthScale: 0.66,
-    yOffsetMul: 0.125,
-    zOffsetMul: 0.000,
+    yOffsetMul: 0.135,
+    zOffsetMul: -0.004,
   }),
   'gltf-buzzed-f': hair({
     widthScale: 0.67,
     heightScale: 1.00,
     depthScale: 0.67,
-    yOffsetMul: 0.115,
-    zOffsetMul: 0.000,
+    yOffsetMul: 0.125,
+    zOffsetMul: -0.004,
   }),
   'gltf-parted': hair({
     widthScale: 0.70,
     heightScale: 1.00,
     depthScale: 0.70,
-    yOffsetMul: 0.085,
-    zOffsetMul: -0.002,
+    yOffsetMul: 0.095,
+    zOffsetMul: -0.006,
   }),
   'gltf-long': hair({
     widthScale: 0.74,
     heightScale: 1.00,
     depthScale: 0.74,
-    yOffsetMul: 0.065,
-    zOffsetMul: -0.006,
+    yOffsetMul: 0.075,
+    zOffsetMul: -0.010,
   }),
   'gltf-buns': hair({
     widthScale: 0.72,
     heightScale: 1.00,
     depthScale: 0.72,
-    yOffsetMul: 0.085,
-    zOffsetMul: -0.004,
+    yOffsetMul: 0.095,
+    zOffsetMul: -0.008,
   }),
 });
 
@@ -85,16 +84,16 @@ const jewelry = (values = {}) => Object.freeze({
   sideDrop: 0.004,
   neckHeightMul: 0.08,
   chestTopInsetMul: 0.07,
-  // The approved front drape stays untouched. Only the rear half contracts
-  // sharply toward the nape and is pulled forward off the torso-back sample.
+  // The approved front drape stays untouched. The rear half is rebuilt as a
+  // narrow, forward nape loop so it hugs the neck instead of floating behind it.
   neckWidthMul: 0.30,
   shoulderWidthMul: 0.13,
   frontWidthBoost: 0.18,
   frontDropPower: 1.55,
   chestClearance: 0.014,
   backClearance: 0.0000,
-  backWidthScale: 0.42,
-  backForward: 0.095,
+  backWidthScale: 0.20,
+  backForward: 0.185,
   pendantClearance: 0.016,
   pendantScale: 0.50,
   ...values,
@@ -113,8 +112,8 @@ export const JEWELRY_FIT = Object.freeze({
     frontWidthBoost: 0.17,
     chestClearance: 0.016,
     backClearance: 0.0000,
-    backWidthScale: 0.44,
-    backForward: 0.098,
+    backWidthScale: 0.22,
+    backForward: 0.190,
     pendantClearance: 0.018,
     pendantScale: 0.54,
   }),
@@ -126,8 +125,8 @@ export const JEWELRY_FIT = Object.freeze({
     drop: 0.080,
     chestClearance: 0.017,
     backClearance: 0.0000,
-    backWidthScale: 0.42,
-    backForward: 0.095,
+    backWidthScale: 0.20,
+    backForward: 0.185,
     pendantClearance: 0.020,
     pendantScale: 0.47,
   }),
