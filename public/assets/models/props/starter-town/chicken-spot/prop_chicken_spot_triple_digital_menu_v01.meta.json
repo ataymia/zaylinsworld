@@ -1,0 +1,98 @@
+{
+  "asset_id": "prop_chicken_spot_triple_digital_menu_v01",
+  "display_name": "Chicken Spot Triple Digital Menu",
+  "category": "menu_board",
+  "town": "Starter Town",
+  "district": "Dreamdrop District",
+  "location": "Chicken Spot back wall above service counter",
+  "format": "glb",
+  "units": "meters",
+  "up_axis": "Y",
+  "forward_axis": "+Z",
+  "dimensions_m": {
+    "width": 3.61,
+    "height": 1.5,
+    "depth": 0.238
+  },
+  "pivot": "bottom-center",
+  "triangle_count": 598,
+  "component_meshes": 35,
+  "embedded_textures": 1,
+  "screen_nodes": [
+    "Screen_Combos",
+    "Screen_SignatureChicken",
+    "Screen_SidesDrinksDesserts"
+  ],
+  "collision_plan": "three simple monitor housing boxes; mounting hardware cosmetic",
+  "interaction_plan": {
+    "station_id": "chicken-spot-menu",
+    "action": "Open Chicken Spot menu"
+  },
+  "menu_prices": {
+    "combos": [
+      [
+        "2 PC Combo",
+        9
+      ],
+      [
+        "3 PC Combo",
+        11
+      ],
+      [
+        "Wings Combo",
+        12
+      ],
+      [
+        "Family Box",
+        20
+      ]
+    ],
+    "chicken": [
+      [
+        "2 PC Chicken",
+        6
+      ],
+      [
+        "4 PC Chicken",
+        11
+      ],
+      [
+        "8 PC Chicken",
+        20
+      ],
+      [
+        "12 PC Chicken",
+        28
+      ],
+      [
+        "16 Wings",
+        19
+      ]
+    ],
+    "sides": [
+      [
+        "Fries",
+        3
+      ],
+      [
+        "Mac & Cheese",
+        4
+      ],
+      [
+        "Coleslaw",
+        3
+      ],
+      [
+        "Biscuit",
+        1
+      ],
+      [
+        "Fountain Drink",
+        3
+      ]
+    ]
+  },
+  "approval_status": "APPROVED",
+  "approved_in_chat": "2026-07-17",
+  "license": "Original ZTA geometry and artwork"
+}
