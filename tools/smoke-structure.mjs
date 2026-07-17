@@ -13,6 +13,7 @@ const requiredFiles = [
   'src/characterStudioTheme.js',
   'src/config/playerAvatarCatalog.js',
   'src/config/avatarAttachmentFit.js',
+  'src/config/avatarBodyAttachmentBlueprint.js',
   'src/config/characterRoles.js',
   'src/npc.js',
   'src/interiors.js',
@@ -32,6 +33,7 @@ const skinTextureAwait = sources['src/modularPlayer.js'].indexOf('await Promise.
 const skinTint = sources['src/modularPlayer.js'].indexOf("const skin = instance.materials.get('ZW_Skin')");
 const attachments = sources['src/modularAttachments.js'];
 const attachmentFit = sources['src/config/avatarAttachmentFit.js'];
+const attachmentBlueprint = sources['src/config/avatarBodyAttachmentBlueprint.js'];
 const studio = sources['src/characterStudio.js'];
 const avatarSkin = sources['src/avatarSkin.js'];
 const rolePolicy = sources['src/config/characterRoles.js'];
@@ -53,14 +55,20 @@ const checks = [
   ['modular attachment bridge', /updateModularAttachments/.test(sources['src/modularPlayer.js'])],
   ['canonical source hair contract', /SOURCE_CANONICAL_HAIR_STYLE/.test(attachmentFit) && /NATIVE_HAIR_REFERENCE_NODE/.test(attachmentFit)],
   ['all imported hair profiles mapped', ['gltf-buzzed', 'gltf-buzzed-f', 'gltf-parted', 'gltf-long', 'gltf-buns'].every((id) => attachmentFit.includes(`'${id}'`))],
-  ['hair captures source Head bone frame', /getObjectByName\('Head'\)/.test(attachments) && /translateGeometry\(baked, sourceHeadPosition\)/.test(attachments)],
-  ['hair maps canonical source to native fitted reference', /fitHairToCanonicalHead/.test(attachments) && /source-head-to-native-hair-reference-v4/.test(attachments) && /NATIVE_HAIR_REFERENCE_NODE/.test(attachments)],
+  ['hair captures complete source Head matrix', /function bakeToHeadLocal/.test(attachments) && /sourceHead\.matrixWorld\.clone\(\)\.invert\(\)/.test(attachments) && /applyMatrix4\(headWorldInverse\)/.test(attachments)],
+  ['hair target reference is measured in target Head space', /function vertexInAnchorSpace/.test(attachments) && /headBone\.worldToLocal/.test(attachments) && /native-hair-reference-v2/.test(attachments)],
+  ['hair maps source rig space to native fitted reference', /fitHairToCanonicalHead/.test(attachments) && /full-head-matrix-to-native-reference-v5/.test(attachments) && /NATIVE_HAIR_REFERENCE_NODE/.test(attachments)],
+  ['hair mount follows absolute Head-bone pose', /zwAnchorMode/.test(attachments) && /mode === 'absolute'/.test(attachments) && /targetHeadBone\(instance\)/.test(attachments)],
   ['hair geometry is preserved without scalp deformation', !/(?:warpPointToCage|fitHairToNativeScalp|sourceShellRadius|rootAdhesion|nativeScalpField)/.test(attachments)],
   ['hair cache requires a real mount', /instance\.externalHairKey === desiredKey && existing/.test(attachments)],
   ['hair cache commits after mount', hairMountAdd >= 0 && hairCacheCommit > hairMountAdd],
   ['failed hair mount can retry', /externalHairRequest/.test(attachments) && /instance\.externalHairKey = null/.test(attachments) && /hairPrototypeCache\.delete/.test(attachments)],
+  ['whole-body attachment blueprint exists', /AVATAR_ATTACHMENT_BLUEPRINT/.test(attachmentBlueprint) && /preserveAuthoredShape/.test(attachmentBlueprint)],
+  ['whole-body blueprint covers wearable slots', ['hair', 'facialHair', 'hat', 'glasses', 'top', 'bottom', 'leftShoe', 'rightShoe', 'jewelry'].every((slot) => attachmentBlueprint.includes(`${slot}: slot`))],
+  ['whole-body blueprint uses native references', /ZW_Top_TShirt/.test(attachmentBlueprint) && /ZW_Bottom_Jeans/.test(attachmentBlueprint) && /ZW_Shoes_Basketball/.test(attachmentBlueprint)],
   ['chain is one closed collarbone loop', /necklaceLoop/.test(attachments) && /new THREE\.CatmullRomCurve3\(localPoints, true/.test(attachments)],
   ['rear chain arc tightens independently', /backWidthScale/.test(attachmentFit) && /backForward/.test(attachmentFit) && /backTighten/.test(attachments)],
+  ['rear chain radius is tightened', /backWidthScale:\s*0\.44/.test(attachmentFit) && /backForward:\s*0\.036/.test(attachmentFit)],
   ['chain projects onto visible surface', /weightedSurfaceZ/.test(attachments) && /surfaceSamples/.test(attachments)],
   ['chain uses individual links', /ZW_ChainLink_/.test(attachments) && /TorusGeometry/.test(attachments) && !/TubeGeometry/.test(attachments)],
   ['pendant clears chest and uses bail', /ZW_PendantBail_/.test(attachments) && /pendantSurfaceZ/.test(attachments) && /pendantClearance/.test(attachments)],
