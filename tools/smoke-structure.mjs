@@ -56,7 +56,7 @@ const checks = [
   ['canonical source hair contract', /SOURCE_CANONICAL_HAIR_STYLE/.test(attachmentFit) && /NATIVE_HAIR_REFERENCE_NODE/.test(attachmentFit)],
   ['all imported hair profiles mapped', ['gltf-buzzed', 'gltf-buzzed-f', 'gltf-parted', 'gltf-long', 'gltf-buns'].every((id) => attachmentFit.includes(`'${id}'`))],
   ['hair captures complete source Head matrix', /function bakeToHeadLocal/.test(attachments) && /sourceHead\.matrixWorld\.clone\(\)\.invert\(\)/.test(attachments) && /applyMatrix4\(headWorldInverse\)/.test(attachments)],
-  ['hair target reference is measured in target Head space', /function vertexInAnchorSpace/.test(attachments) && /headBone\.worldToLocal/.test(attachments) && /native-hair-reference-v2/.test(attachments)],
+  ['hair target reference is measured in target Head space', /function vertexInAnchorSpace/.test(attachments) && /anchor\.worldToLocal/.test(attachments) && /native-hair-reference-v2/.test(attachments)],
   ['hair maps source rig space to native fitted reference', /fitHairToCanonicalHead/.test(attachments) && /full-head-matrix-to-native-reference-v5/.test(attachments) && /NATIVE_HAIR_REFERENCE_NODE/.test(attachments)],
   ['hair mount follows absolute Head-bone pose', /zwAnchorMode/.test(attachments) && /mode === 'absolute'/.test(attachments) && /targetHeadBone\(instance\)/.test(attachments)],
   ['hair geometry is preserved without scalp deformation', !/(?:warpPointToCage|fitHairToNativeScalp|sourceShellRadius|rootAdhesion|nativeScalpField)/.test(attachments)],
