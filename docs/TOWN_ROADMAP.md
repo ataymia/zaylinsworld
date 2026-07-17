@@ -1,6 +1,6 @@
 # Town Roadmap
 
-Per-town content design for **Zaylin's World**. Starter Town is one district of a larger connected world.
+Per-town content design for **Zaylins World**. The world contains connected cities/towns; each city contains districts and neighborhoods.
 
 Master planning references:
 
@@ -9,6 +9,8 @@ Master planning references:
 - [ZTA_WORLD_BLUEPRINT.md](ZTA_WORLD_BLUEPRINT.md)
 - [TOWN_SELF_SUSTAINING_SYSTEMS.md](TOWN_SELF_SUSTAINING_SYSTEMS.md)
 - [WATER_ECOSYSTEM_BLUEPRINT.md](WATER_ECOSYSTEM_BLUEPRINT.md)
+- [STARTER_TOWN_BLUEPRINT.md](STARTER_TOWN_BLUEPRINT.md)
+- [STARTER_TOWN_IMPLEMENTATION_CHECKLIST.md](STARTER_TOWN_IMPLEMENTATION_CHECKLIST.md)
 - [TECH_TOWN_BLUEPRINT.md](TECH_TOWN_BLUEPRINT.md)
 - [STARLINE_CITY_BLUEPRINT.md](STARLINE_CITY_BLUEPRINT.md)
 - [FISHING_HARBOR_BLUEPRINT.md](FISHING_HARBOR_BLUEPRINT.md)
@@ -23,6 +25,7 @@ Each town is also represented as forward-looking data in
 
 ## Design rules
 
+- Every town must contain multiple districts with distinct geography, roads, population, services, and gameplay identity.
 - Every town must have at least 3 to 4 specific minigames or repeatable activity loops.
 - Every town must have police/security, buyable housing, a school/training path, local jobs, local skills, town-specific crimes, and a local way to clear trouble.
 - Every town must support food, recovery, fuel/charging where vehicles are allowed, sanitation, transportation, and ordinary life.
@@ -34,15 +37,22 @@ Each town is also represented as forward-looking data in
 
 ---
 
-## 1. Starter Town *(playable today)*
+## 1. Starter Town *(playable foundation; major expansion planned)*
 
-- **Theme:** everyday small city and tutorial home base.
-- **Purpose:** movement, jobs, money, stats, school, police, driving, housing, and ordinary life.
-- **Stores/services:** Block Supply, Mini-Market, Chicken Spot, gas station, Iron City Gym, Frostbox, Kicks & Fits, Auto Haus, City Garage, police, school, home.
-- **Activity loops:** Chicken Eating, Kitchen Shift, Line Up/Clippers, Gym Training, Road Test, Trash Cleanup, Study Sprint, Gas Pump Timing.
-- **Economy:** low wages and affordable goods; teaches earn-to-spend loop.
-- **Legal/risk:** standard wanted system, car theft, reckless driving, shop trouble.
-- **Role in world:** baseline city used to teach systems that become more specialized elsewhere.
+- **Deeper spec:** [STARTER_TOWN_BLUEPRINT.md](STARTER_TOWN_BLUEPRINT.md)
+- **Live audit/checklist:** [STARTER_TOWN_IMPLEMENTATION_CHECKLIST.md](STARTER_TOWN_IMPLEMENTATION_CHECKLIST.md)
+- **Theme:** everyday city and tutorial home base, with Dreamdrop District as its historic commercial core.
+- **Scale:** expands from the current compact 3x3 grid to an approximately 500 x 480-unit city with eight districts, multiple gateways, curved roads, hills, service lanes, roundabouts, school zones, and meaningful travel distance.
+- **Districts:** Dreamdrop District, Market Mile, Northworks/Auto Row, Scholar's Quarter, Civic Heights, Eastgate Corridor, Parkside Commons, and Willowbend Residential, with Westside transitional blocks.
+- **Purpose:** teach movement, needs, jobs, money, school, skills, police, optional crime, driving, property ownership, city services, and ordinary life before travel.
+- **Functional-building rule:** preserve and relocate the current functional building set rather than adding unnecessary new interactable buildings. Use filler homes, apartments, shops, warehouses, civic shells, parks, lots, and infrastructure to create a real city between destinations.
+- **Activity loops:** Chicken Eating, Kitchen Shift, Lineup Lab, Gym Training, Foundation Classes, Office Shift, Garage Shift, Trash Cleanup, Fuel Shift, Road Test, Delivery Route, Auto Lot Challenge, Retail Stocking, Park Sprint, and optional Police Escape.
+- **Housing:** Zaylins Home becomes the first claimable property and teaches deeds, primary residence, storage, rest, wardrobe, hygiene, and upgrades before the player visits other towns.
+- **School:** Zaylins Prep teaches foundational math, reading/memory, computer basics, civics, health, career basics, driver education, physical education, arts/rhythm, and world geography.
+- **Jobs:** Chicken Spot, WorkTower, Garage, sanitation, retail, fuel, school aide, gym assistant, Auto Haus lot attendant, and city courier paths.
+- **Legal/risk:** existing wanted, theft, combat, police, and pursuit systems become an optional branch with deeper fines, confiscation, impound, booking, community service, restitution, and district response modifiers.
+- **Tutorial correction:** the player may choose legal, risky, or observer orientation. Assault and mugging are never mandatory tutorial objectives.
+- **Role in world:** first complete reference city. Later towns specialize systems introduced here.
 
 ## 2. Fishing Harbor
 
@@ -147,6 +157,7 @@ Each town is also represented as forward-looking data in
 
 ## Cross-town systems
 
+- **Hierarchy:** world -> city/town -> district -> neighborhood/block -> building/activity.
 - **Travel:** roads, highways, bridges, tunnels, dirt routes, transit nodes, boats, yachts, current lanes, submarines, and special pedestrian/swim paths connect towns.
 - **Water:** Crownwater Basin links Fishing Harbor, Rich Hills Marina, the Casino bridge coast, and Aqualume through surface and underwater routes.
 - **Swimming:** non-gilled players have a breath meter and return safely to shore/rescue when they run out. Gillyfish adaptation permanently removes normal underwater breath limits.
@@ -155,4 +166,4 @@ Each town is also represented as forward-looking data in
 - **Economy:** global cash and bank; tightly scoped local values/materials such as Fame, game-hall chips, arcade tickets, course cosmetics, and Lumen Shards.
 - **Law:** wanted/heat is town-aware; local bans, permits, reputation, confiscation, impound, water patrol, sonar pursuit, and community-repair tasks add geographic consequences.
 - **No fake prompts:** every interaction requires a working handler and fallback.
-- **Implementation:** every town must ship asset, interaction, UI, collision, fallback, performance, civic, housing, school, job, crime, and supported-travel plans before becoming playable.
+- **Implementation:** every town must ship asset, interaction, UI, collision, fallback, performance, civic, housing, school, job, crime, district, and supported-travel plans before becoming playable.
