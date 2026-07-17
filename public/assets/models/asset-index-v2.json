@@ -2899,6 +2899,12 @@
         "path": "models/props/starter-town/chicken-spot/prop_chicken_spot_heated_holding_station_v01.glb",
         "type": "glb",
         "tex": 0
+      },
+      {
+        "name": "prop_chicken_spot_service_counter_pos_v01",
+        "path": "models/props/starter-town/chicken-spot/prop_chicken_spot_service_counter_pos_v01.glb",
+        "type": "glb",
+        "tex": 0
       }
     ]
   },

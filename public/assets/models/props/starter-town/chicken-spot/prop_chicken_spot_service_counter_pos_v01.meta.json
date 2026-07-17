@@ -1,0 +1,31 @@
+{
+  "asset_id": "prop_chicken_spot_service_counter_pos_v01",
+  "display_name": "Chicken Spot Service Counter & POS",
+  "town": "Starter Town",
+  "district": "Dreamdrop District",
+  "location": "Chicken Spot front counter",
+  "category": "prop",
+  "units": "meters",
+  "up_axis": "Y",
+  "forward_axis": "+Z",
+  "dimensions_m": {
+    "width": 2.38,
+    "depth": 1.08,
+    "height": 1.58
+  },
+  "pivot": "ground-center",
+  "triangle_target": "approximately 4k or lower",
+  "collision_plan": "single counter cabinet box; elevated screens, glass, cups and trays non-colliding",
+  "interaction_nodes": [
+    "POS screen",
+    "card terminal",
+    "receipt printer",
+    "order display",
+    "pickup bay",
+    "bags and cups"
+  ],
+  "approval_status": "APPROVED",
+  "approved_in_chat": "2026-07-17",
+  "generated_bytes": 185660,
+  "license": "Original ZTA geometry"
+}
