@@ -1,0 +1,45 @@
+name: Generate Starter Town Assets
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/generated-assets/build-starter-town-assets.mjs'
+      - 'tools/glb.mjs'
+      - '.github/workflows/generate-starter-town-assets.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate approved Starter Town GLBs
+        run: node tools/generated-assets/build-starter-town-assets.mjs
+
+      - name: Commit generated assets and index
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/assets/models/props/starter-town/chicken-spot/
+          git add public/assets/models/asset-index-v2.json
+          if git diff --cached --quiet; then
+            echo "No generated asset changes."
+            exit 0
+          fi
+          git commit -m "Generate approved Starter Town assets"
+          git push
