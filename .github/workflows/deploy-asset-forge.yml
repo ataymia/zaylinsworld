@@ -1,6 +1,10 @@
 name: Deploy ZTA Asset Forge
 
 on:
+  pull_request:
+    paths:
+      - 'asset-forge/**'
+      - '.github/workflows/deploy-asset-forge.yml'
   workflow_dispatch:
   push:
     branches: [main]
@@ -12,11 +16,33 @@ permissions:
   contents: read
 
 concurrency:
-  group: zta-asset-forge-production
+  group: zta-asset-forge-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: asset-forge
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Wrangler
+        run: npm install
+
+      - name: Validate Worker bundle
+        run: npm run check
+
   deploy:
+    if: github.event_name != 'pull_request'
+    needs: validate
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -43,9 +69,6 @@ jobs:
 
       - name: Install Wrangler
         run: npm install
-
-      - name: Validate Worker bundle
-        run: npm run check
 
       - name: Deploy Worker and provision Cloudflare resources
         run: npm run deploy
