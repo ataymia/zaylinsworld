@@ -8,6 +8,7 @@ on:
       - 'tools/generated-assets/build-chicken-spot-breading-station.mjs'
       - 'tools/generated-assets/build-chicken-spot-heated-holding-station.mjs'
       - 'tools/generated-assets/build-chicken-spot-service-counter.mjs'
+      - 'tools/generated-assets/build-chicken-spot-triple-menu.mjs'
       - 'tools/glb.mjs'
       - '.github/workflows/generate-starter-town-assets.yml'
   workflow_dispatch:
@@ -36,6 +37,7 @@ jobs:
           node tools/generated-assets/build-chicken-spot-breading-station.mjs
           node tools/generated-assets/build-chicken-spot-heated-holding-station.mjs
           node tools/generated-assets/build-chicken-spot-service-counter.mjs
+          node tools/generated-assets/build-chicken-spot-triple-menu.mjs
 
       - name: Commit generated assets and index
         shell: bash
