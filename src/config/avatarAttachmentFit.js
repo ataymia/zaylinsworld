@@ -25,53 +25,54 @@ const hair = (values = {}) => Object.freeze({
   ...values,
 });
 
+// fitHairToCanonicalHead currently anchors from the source reference floor.
+// These y offsets compensate by seating the shrunken styles from the crown:
+// geometry contracts inward first, then rises onto the native Crew Cut scalp.
+// Height stays independent from width/depth so shrinking the cap does not
+// accidentally squash the hairstyle twice.
 export const DEFAULT_HAIR_FIT_PROFILE = hair({
-  widthScale: 0.84,
-  heightScale: 0.86,
-  depthScale: 0.84,
-  yOffsetMul: -0.10,
-  zOffsetMul: 0.035,
+  widthScale: 0.70,
+  heightScale: 1.00,
+  depthScale: 0.70,
+  yOffsetMul: 0.16,
+  zOffsetMul: 0.025,
 });
 
-// The full Head-matrix mapping now supplies the correct orientation. These are
-// deliberately small final-fit calibrations that pull each authored style toward
-// the scalp without flattening its silhouette. Short caps seat deepest; draped
-// and bun styles retain slightly more volume.
 export const HAIR_FIT_PROFILES = Object.freeze({
   'gltf-buzzed': hair({
-    widthScale: 0.80,
-    heightScale: 0.82,
-    depthScale: 0.80,
-    yOffsetMul: -0.12,
-    zOffsetMul: 0.045,
+    widthScale: 0.66,
+    heightScale: 1.00,
+    depthScale: 0.66,
+    yOffsetMul: 0.20,
+    zOffsetMul: 0.030,
   }),
   'gltf-buzzed-f': hair({
-    widthScale: 0.81,
-    heightScale: 0.83,
-    depthScale: 0.81,
-    yOffsetMul: -0.115,
-    zOffsetMul: 0.045,
+    widthScale: 0.67,
+    heightScale: 1.00,
+    depthScale: 0.67,
+    yOffsetMul: 0.19,
+    zOffsetMul: 0.030,
   }),
   'gltf-parted': hair({
-    widthScale: 0.84,
-    heightScale: 0.86,
-    depthScale: 0.84,
-    yOffsetMul: -0.10,
-    zOffsetMul: 0.040,
+    widthScale: 0.70,
+    heightScale: 1.00,
+    depthScale: 0.70,
+    yOffsetMul: 0.16,
+    zOffsetMul: 0.028,
   }),
   'gltf-long': hair({
-    widthScale: 0.86,
-    heightScale: 0.88,
-    depthScale: 0.86,
-    yOffsetMul: -0.09,
-    zOffsetMul: 0.035,
+    widthScale: 0.74,
+    heightScale: 1.00,
+    depthScale: 0.74,
+    yOffsetMul: 0.14,
+    zOffsetMul: 0.024,
   }),
   'gltf-buns': hair({
-    widthScale: 0.84,
-    heightScale: 0.86,
-    depthScale: 0.84,
-    yOffsetMul: -0.10,
-    zOffsetMul: 0.040,
+    widthScale: 0.72,
+    heightScale: 1.00,
+    depthScale: 0.72,
+    yOffsetMul: 0.16,
+    zOffsetMul: 0.026,
   }),
 });
 
@@ -81,7 +82,7 @@ const jewelry = (values = {}) => Object.freeze({
   links: 72,
   pathSamples: 72,
   drop: 0.072,
-  backLift: 0.002,
+  backLift: 0.000,
   sideDrop: 0.010,
   neckHeightMul: 0.08,
   chestTopInsetMul: 0.07,
@@ -91,8 +92,11 @@ const jewelry = (values = {}) => Object.freeze({
   frontDropPower: 1.55,
   chestClearance: 0.014,
   backClearance: 0.001,
-  backWidthScale: 0.30,
-  backForward: 0.050,
+  // Rear-only values. The front drape and shoulder width above are unchanged.
+  // A negative backForward moves the rear semicircle toward the neck in this
+  // model's chest-anchor coordinate system.
+  backWidthScale: 0.20,
+  backForward: -0.018,
   pendantClearance: 0.016,
   pendantScale: 0.50,
   ...values,
@@ -108,8 +112,8 @@ export const JEWELRY_FIT = Object.freeze({
     drop: 0.068,
     chestClearance: 0.016,
     backClearance: 0.001,
-    backWidthScale: 0.32,
-    backForward: 0.052,
+    backWidthScale: 0.22,
+    backForward: -0.020,
     pendantClearance: 0.018,
     pendantScale: 0.54,
     shoulderWidthMul: 0.21,
@@ -122,8 +126,8 @@ export const JEWELRY_FIT = Object.freeze({
     drop: 0.080,
     chestClearance: 0.017,
     backClearance: 0.001,
-    backWidthScale: 0.30,
-    backForward: 0.050,
+    backWidthScale: 0.20,
+    backForward: -0.018,
     pendantClearance: 0.020,
     pendantScale: 0.47,
   }),
