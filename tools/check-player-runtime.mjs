@@ -7,10 +7,20 @@ const playerRoot = path.join(ROOT, 'public/assets/models/characters/player');
 const modelPath = path.join(playerRoot, 'sunbox-male-free.glb');
 const libraryPath = path.join(playerRoot, 'sunbox-male-free/texture-library.json');
 const runtimePath = path.join(playerRoot, 'sunbox-male-free.runtime.json');
+const adapterPath = path.join(ROOT, 'src/modularPlayer.js');
 
 async function exists(file) {
   try { await access(file); return true; }
   catch { return false; }
+}
+
+function readGlbJson(buffer) {
+  assert.equal(buffer.toString('ascii', 0, 4), 'glTF', 'player model must be a GLB');
+  assert.equal(buffer.readUInt32LE(4), 2, 'player model must use glTF 2');
+  const jsonLength = buffer.readUInt32LE(12);
+  const jsonType = buffer.readUInt32LE(16);
+  assert.equal(jsonType, 0x4E4F534A, 'player GLB must start with a JSON chunk');
+  return JSON.parse(buffer.toString('utf8', 20, 20 + jsonLength).trim());
 }
 
 const present = await Promise.all([modelPath, libraryPath, runtimePath].map(exists));
@@ -21,9 +31,34 @@ if (!present.some(Boolean)) {
 assert.ok(present.every(Boolean), 'player runtime must include GLB, texture library and runtime manifest together');
 
 const model = await readFile(modelPath);
-assert.equal(model.toString('ascii', 0, 4), 'glTF', 'player model must be a GLB');
-assert.equal(model.readUInt32LE(4), 2, 'player model must use glTF 2');
 assert.ok(model.length < 5 * 1024 * 1024, 'player GLB exceeds 5 MB budget');
+const gltf = readGlbJson(model);
+const nodes = gltf.nodes || [];
+const jointNames = new Set();
+for (const skin of gltf.skins || []) {
+  for (const jointIndex of skin.joints || []) {
+    const name = nodes[jointIndex]?.name;
+    if (name) jointNames.add(name);
+  }
+}
+for (const requiredJoint of ['UpperArm_L', 'UpperArm_R', 'Hand_L', 'Hand_R']) {
+  assert.ok(jointNames.has(requiredJoint), `player skin is missing deform joint ${requiredJoint}`);
+}
+
+const adapter = await readFile(adapterPath, 'utf8');
+assert.match(adapter, /skinnedBoneMap\(root\)/, 'player adapter must discover bones from SkinnedMesh skeletons');
+assert.match(adapter, /getDeform\('UpperArm_L'/, 'player adapter must select the left deform upper-arm joint');
+assert.match(adapter, /getDeform\('UpperArm_R'/, 'player adapter must select the right deform upper-arm joint');
+assert.doesNotMatch(
+  adapter,
+  /leftArm:\s*getNode\('UpperArm_Anim_L'\)|leftArm:\s*get\('UpperArm_Anim_L'\)/,
+  'player adapter must not drive the left control-layer arm bone',
+);
+assert.doesNotMatch(
+  adapter,
+  /rightArm:\s*getNode\('UpperArm_Anim_R'\)|rightArm:\s*get\('UpperArm_Anim_R'\)/,
+  'player adapter must not drive the right control-layer arm bone',
+);
 
 const library = JSON.parse(await readFile(libraryPath, 'utf8'));
 assert.equal(library.format, 'data-uri-library-v1');
@@ -37,4 +72,7 @@ assert.equal(runtime.source, 'Sunbox Games / CGTrader 3901952');
 assert.equal(runtime.textureCount, 47);
 assert.ok((await stat(libraryPath)).size < 2 * 1024 * 1024, 'texture library exceeds 2 MB budget');
 
-console.log(`[player-runtime] verified ${(model.length / 1024 / 1024).toFixed(2)} MB GLB and 47 lazy texture variants.`);
+console.log(
+  `[player-runtime] verified ${(model.length / 1024 / 1024).toFixed(2)} MB GLB, ` +
+  'deform arm/hand joints, and 47 lazy texture variants.',
+);
