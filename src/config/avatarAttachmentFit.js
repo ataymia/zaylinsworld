@@ -26,13 +26,14 @@ const hair = (values = {}) => Object.freeze({
 });
 
 // The silhouette and scale are approved. These values only seat the already
-// fitted geometry onto the scalp: slightly down toward the native cap and back
-// toward the ear line. Width, height, and depth are intentionally unchanged.
+// fitted geometry onto the scalp. This final calibration moves each imported
+// style one very small step downward while preserving its width, depth, and
+// front/back placement.
 export const DEFAULT_HAIR_FIT_PROFILE = hair({
   widthScale: 0.70,
   heightScale: 1.00,
   depthScale: 0.70,
-  yOffsetMul: 0.12,
+  yOffsetMul: 0.10,
   zOffsetMul: -0.004,
 });
 
@@ -41,35 +42,35 @@ export const HAIR_FIT_PROFILES = Object.freeze({
     widthScale: 0.66,
     heightScale: 1.00,
     depthScale: 0.66,
-    yOffsetMul: 0.16,
+    yOffsetMul: 0.14,
     zOffsetMul: 0.000,
   }),
   'gltf-buzzed-f': hair({
     widthScale: 0.67,
     heightScale: 1.00,
     depthScale: 0.67,
-    yOffsetMul: 0.15,
+    yOffsetMul: 0.13,
     zOffsetMul: 0.000,
   }),
   'gltf-parted': hair({
     widthScale: 0.70,
     heightScale: 1.00,
     depthScale: 0.70,
-    yOffsetMul: 0.12,
+    yOffsetMul: 0.10,
     zOffsetMul: -0.002,
   }),
   'gltf-long': hair({
     widthScale: 0.74,
     heightScale: 1.00,
     depthScale: 0.74,
-    yOffsetMul: 0.10,
+    yOffsetMul: 0.08,
     zOffsetMul: -0.006,
   }),
   'gltf-buns': hair({
     widthScale: 0.72,
     heightScale: 1.00,
     depthScale: 0.72,
-    yOffsetMul: 0.12,
+    yOffsetMul: 0.10,
     zOffsetMul: -0.004,
   }),
 });
@@ -84,17 +85,17 @@ const jewelry = (values = {}) => Object.freeze({
   sideDrop: 0.004,
   neckHeightMul: 0.08,
   chestTopInsetMul: 0.07,
-  // Use the neck itself as the loop radius instead of the shoulders. The front
-  // width boost restores a natural chest drape while the side and rear remain
-  // a smooth, uniformly tight ellipse around the neck.
+  // The approved front drape stays untouched. Only the rear half contracts
+  // toward the neck and moves forward off the torso-back sample so it rests at
+  // the nape instead of projecting behind the character.
   neckWidthMul: 0.30,
   shoulderWidthMul: 0.13,
   frontWidthBoost: 0.18,
   frontDropPower: 1.55,
   chestClearance: 0.014,
   backClearance: 0.0005,
-  backWidthScale: 1.00,
-  backForward: 0.000,
+  backWidthScale: 0.62,
+  backForward: 0.038,
   pendantClearance: 0.016,
   pendantScale: 0.50,
   ...values,
@@ -113,8 +114,8 @@ export const JEWELRY_FIT = Object.freeze({
     frontWidthBoost: 0.17,
     chestClearance: 0.016,
     backClearance: 0.0005,
-    backWidthScale: 1.00,
-    backForward: 0.000,
+    backWidthScale: 0.64,
+    backForward: 0.040,
     pendantClearance: 0.018,
     pendantScale: 0.54,
   }),
@@ -126,8 +127,8 @@ export const JEWELRY_FIT = Object.freeze({
     drop: 0.080,
     chestClearance: 0.017,
     backClearance: 0.0005,
-    backWidthScale: 1.00,
-    backForward: 0.000,
+    backWidthScale: 0.62,
+    backForward: 0.038,
     pendantClearance: 0.020,
     pendantScale: 0.47,
   }),
