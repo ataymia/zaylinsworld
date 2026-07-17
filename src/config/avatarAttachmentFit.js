@@ -1,141 +1,41 @@
-// Canonical attachment fit contracts for cross-pack hair and jewelry.
+// Canonical attachment contracts for modular hair and jewelry.
 //
-// Imported hairstyles are fit against the pack-native Crew Cut / Close Crop
-// geometry that already conforms to the current morphed head. The per-style
-// profiles below preserve volume and length while binding the root shell to that
-// native scalp surface.
+// The mini-kit hairstyles are already authored around the same humanoid Head
+// bone. Runtime fitting therefore preserves each source mesh exactly and maps its
+// source-head coordinate frame onto the pack-native Crew Cut that already fits
+// the current player head. No vertex cage, shell inference, or scalp deformation.
 
-export const NATIVE_SCALP_REFERENCE_NODES = Object.freeze([
-  'ZW_Hair_CloseCrop',
-  'ZW_Hair_CrewCut',
-]);
+export const NATIVE_HAIR_REFERENCE_NODE = 'ZW_Hair_CrewCut';
+export const FALLBACK_NATIVE_HAIR_REFERENCE_NODE = 'ZW_Hair_CloseCrop';
+export const SOURCE_CANONICAL_HAIR_STYLE = 'gltf-buzzed';
 
-export const SCALP_FIELD_SETTINGS = Object.freeze({
-  angleBins: 64,
-  heightBins: 36,
-  sourceAngleBins: 64,
-  sourceHeightBins: 36,
-  maxReferenceSamples: 7000,
-  minReferenceHeight: 0.12,
-  searchRadius: 3,
-  neighborCount: 14,
-  heightWeight: 5.5,
-  weightFloor: 0.0025,
+export const HAIR_REFERENCE_SETTINGS = Object.freeze({
+  minExtent: 0.01,
+  minScale: 0.35,
+  maxScale: 4.0,
 });
 
-const profile = (values = {}) => Object.freeze({
-  widthMul: 1.01,
-  depthMul: 1.01,
+const hair = (values = {}) => Object.freeze({
+  widthScale: 1,
   heightScale: 1,
-  maxHeightMul: 1.15,
-  topLiftMul: 0.01,
-  bottomDropMul: 0.08,
-  scalpVMin: 0.08,
-  scalpVSpan: 0.92,
-  rootClearance: 0.0025,
-  rootAdhesion: 0.96,
-  shellBand: 0.24,
-  volumeScale: 0.92,
-  releaseFloor: 0,
-  releaseBelow: 0.12,
-  frontSeatMul: 0.02,
-  crownBiasMul: 0.02,
-  napeBackMul: 0.03,
+  depthScale: 1,
+  xOffsetMul: 0,
+  yOffsetMul: 0,
+  zOffsetMul: 0,
   ...values,
 });
 
-export const DEFAULT_HAIR_FIT_PROFILE = profile({});
+// These are intentionally conservative. Because every mini-kit style shares the
+// same source rig/head frame, style shape and root placement come from the asset,
+// not a pile of hand-guessed offsets.
+export const DEFAULT_HAIR_FIT_PROFILE = hair({});
 
 export const HAIR_FIT_PROFILES = Object.freeze({
-  'gltf-buzzed': profile({
-    widthMul: 1.00,
-    depthMul: 1.00,
-    maxHeightMul: 0.56,
-    topLiftMul: 0,
-    bottomDropMul: 0,
-    scalpVMin: 0.18,
-    scalpVSpan: 0.80,
-    rootClearance: 0.0015,
-    rootAdhesion: 0.99,
-    shellBand: 0.18,
-    volumeScale: 0.72,
-    releaseBelow: 0,
-    frontSeatMul: 0.012,
-    crownBiasMul: 0,
-    napeBackMul: 0,
-  }),
-  'gltf-buzzed-f': profile({
-    widthMul: 1.01,
-    depthMul: 1.01,
-    maxHeightMul: 0.74,
-    topLiftMul: 0.004,
-    bottomDropMul: 0.01,
-    scalpVMin: 0.16,
-    scalpVSpan: 0.82,
-    rootClearance: 0.0018,
-    rootAdhesion: 0.99,
-    shellBand: 0.19,
-    volumeScale: 0.78,
-    releaseBelow: 0.02,
-    frontSeatMul: 0.014,
-    crownBiasMul: 0.01,
-    napeBackMul: 0.01,
-  }),
-  'gltf-parted': profile({
-    widthMul: 1.035,
-    depthMul: 1.025,
-    heightScale: 1.04,
-    maxHeightMul: 1.20,
-    topLiftMul: 0.012,
-    bottomDropMul: 0.05,
-    scalpVMin: 0.10,
-    scalpVSpan: 0.90,
-    rootClearance: 0.0023,
-    rootAdhesion: 0.97,
-    shellBand: 0.25,
-    volumeScale: 0.98,
-    releaseBelow: 0.08,
-    frontSeatMul: 0.035,
-    crownBiasMul: 0.035,
-    napeBackMul: 0.02,
-  }),
-  'gltf-long': profile({
-    widthMul: 1.045,
-    depthMul: 1.035,
-    heightScale: 1.02,
-    maxHeightMul: 2.55,
-    topLiftMul: 0.008,
-    bottomDropMul: 1.38,
-    scalpVMin: 0.05,
-    scalpVSpan: 0.95,
-    rootClearance: 0.0025,
-    rootAdhesion: 0.98,
-    shellBand: 0.22,
-    volumeScale: 0.94,
-    releaseFloor: 0.08,
-    releaseBelow: 0.39,
-    frontSeatMul: 0.03,
-    crownBiasMul: 0.018,
-    napeBackMul: 0.18,
-  }),
-  'gltf-buns': profile({
-    widthMul: 1.075,
-    depthMul: 1.035,
-    heightScale: 1.02,
-    maxHeightMul: 1.52,
-    topLiftMul: 0.016,
-    bottomDropMul: 0.05,
-    scalpVMin: 0.08,
-    scalpVSpan: 0.92,
-    rootClearance: 0.0022,
-    rootAdhesion: 0.98,
-    shellBand: 0.24,
-    volumeScale: 1.02,
-    releaseBelow: 0.08,
-    frontSeatMul: 0.04,
-    crownBiasMul: 0.05,
-    napeBackMul: 0.02,
-  }),
+  'gltf-buzzed': hair({}),
+  'gltf-buzzed-f': hair({}),
+  'gltf-parted': hair({}),
+  'gltf-long': hair({}),
+  'gltf-buns': hair({}),
 });
 
 const jewelry = (values = {}) => Object.freeze({
@@ -153,7 +53,9 @@ const jewelry = (values = {}) => Object.freeze({
   frontWidthBoost: 0.06,
   frontDropPower: 1.55,
   chestClearance: 0.014,
-  backClearance: 0.010,
+  backClearance: 0.004,
+  backWidthScale: 0.58,
+  backForward: 0.020,
   pendantClearance: 0.016,
   pendantScale: 0.50,
   ...values,
@@ -168,7 +70,9 @@ export const JEWELRY_FIT = Object.freeze({
     pathSamples: 68,
     drop: 0.068,
     chestClearance: 0.016,
-    backClearance: 0.012,
+    backClearance: 0.005,
+    backWidthScale: 0.60,
+    backForward: 0.021,
     pendantClearance: 0.018,
     pendantScale: 0.54,
     shoulderWidthMul: 0.21,
@@ -180,7 +84,9 @@ export const JEWELRY_FIT = Object.freeze({
     pathSamples: 74,
     drop: 0.080,
     chestClearance: 0.017,
-    backClearance: 0.011,
+    backClearance: 0.004,
+    backWidthScale: 0.58,
+    backForward: 0.020,
     pendantClearance: 0.020,
     pendantScale: 0.47,
   }),
