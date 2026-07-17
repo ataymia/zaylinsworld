@@ -42,23 +42,17 @@ for (const skin of gltf.skins || []) {
   }
 }
 for (const requiredJoint of ['UpperArm_L', 'UpperArm_R', 'Hand_L', 'Hand_R']) {
-  assert.ok(jointNames.has(requiredJoint), `player skin is missing deform joint ${requiredJoint}`);
+  assert.ok(jointNames.has(requiredJoint), `player skin is missing arm-chain joint ${requiredJoint}`);
 }
 
 const adapter = await readFile(adapterPath, 'utf8');
-assert.match(adapter, /skinnedBoneMap\(root\)/, 'player adapter must discover bones from SkinnedMesh skeletons');
-assert.match(adapter, /getDeform\('UpperArm_L'/, 'player adapter must select the left deform upper-arm joint');
-assert.match(adapter, /getDeform\('UpperArm_R'/, 'player adapter must select the right deform upper-arm joint');
-assert.doesNotMatch(
-  adapter,
-  /leftArm:\s*getNode\('UpperArm_Anim_L'\)|leftArm:\s*get\('UpperArm_Anim_L'\)/,
-  'player adapter must not drive the left control-layer arm bone',
-);
-assert.doesNotMatch(
-  adapter,
-  /rightArm:\s*getNode\('UpperArm_Anim_R'\)|rightArm:\s*get\('UpperArm_Anim_R'\)/,
-  'player adapter must not drive the right control-layer arm bone',
-);
+assert.match(adapter, /function skinnedBoneUsage\(root\)/, 'player adapter must inspect SkinnedMesh bone usage');
+assert.match(adapter, /getAttribute\?\.\('skinIndex'\)/, 'player adapter must read skin joint indices');
+assert.match(adapter, /getAttribute\?\.\('skinWeight'\)/, 'player adapter must read skin weights');
+assert.match(adapter, /function pickWeightedBone\(/, 'player adapter must select bones by visible-mesh influence');
+assert.match(adapter, /source: 'highest-visible-skin-weight'/, 'player adapter must report weighted rig selection');
+assert.match(adapter, /leftArm:\s*pickWeightedBone\(/, 'left arm must use weighted bone selection');
+assert.match(adapter, /rightArm:\s*pickWeightedBone\(/, 'right arm must use weighted bone selection');
 
 const library = JSON.parse(await readFile(libraryPath, 'utf8'));
 assert.equal(library.format, 'data-uri-library-v1');
@@ -74,5 +68,5 @@ assert.ok((await stat(libraryPath)).size < 2 * 1024 * 1024, 'texture library exc
 
 console.log(
   `[player-runtime] verified ${(model.length / 1024 / 1024).toFixed(2)} MB GLB, ` +
-  'deform arm/hand joints, and 47 lazy texture variants.',
+  'weighted arm-joint selection, and 47 lazy texture variants.',
 );
