@@ -1,0 +1,1574 @@
+{
+  "generatedAt": "2026-07-16T22:22:32.422Z",
+  "totals": {
+    "indexedEntries": 588,
+    "runtimeFiles": 1075,
+    "runtimeBytes": 353712373,
+    "missingIndexedFiles": 0,
+    "unindexedNonCompanionFiles": 261,
+    "exactDuplicateGroups": 5,
+    "exactDuplicateBytes": 4450707,
+    "directSourceReferences": 29
+  },
+  "categoryTotals": {
+    "characters/psx": 79,
+    "characters/people": 6,
+    "characters/spooky": 2,
+    "characters/creatures": 1,
+    "buildings/gas-station": 2,
+    "buildings/diner": 4,
+    "buildings/mini-market": 1,
+    "buildings/cabins": 1,
+    "buildings/misc": 1,
+    "buildings/shop": 1,
+    "interiors/furniture": 53,
+    "interiors/restaurant": 49,
+    "interiors/gym": 72,
+    "interiors/classroom": 189,
+    "props/food": 55,
+    "props/food-extra": 1,
+    "props/trash": 1,
+    "props/machines": 1,
+    "props/trees": 1,
+    "props/rocks": 1,
+    "props/fishing": 1,
+    "weapons/styloo": 40,
+    "weapons/maxwp": 23,
+    "animations/ual-1": 1,
+    "animations/ual-2": 2
+  },
+  "missing": [],
+  "unindexed": [
+    {
+      "path": "models/buildings/urban-kit/Brick_90Angle_L.gltf",
+      "bytes": 4650,
+      "sha256": "4ed3edb72d5749b564cff8d5c09274cea1e5a528cf1ba7a08e4dab1a43089138"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_90Angle_R.gltf",
+      "bytes": 4695,
+      "sha256": "e976a9a697ef479f4d9490d93e2747661360013af6c9495fc8e878c7f0fba2cf"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_BottomTrim.gltf",
+      "bytes": 6828,
+      "sha256": "82c9a04e6e4f1c43b330cda65633af3908a3bcc2b76a2f560431270cf136d99e"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_Column_RedBricks.gltf",
+      "bytes": 2399,
+      "sha256": "74ae118e8315e58e64b48efdfdea4ef182674d0aa0656d3075cefdb47f2f0c9b"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_Column_Small.gltf",
+      "bytes": 2333,
+      "sha256": "3a39cc79f8ceae549ae8680fe3927ecde4c592478eb8efe9e302ef903afe8911"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_Column_TrimBricks.gltf",
+      "bytes": 4197,
+      "sha256": "450c18482630dbd2590144dc52a605a9c91da8ac2d41370713f97e6145c68904"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_CornerColumn_Bottom.gltf",
+      "bytes": 5016,
+      "sha256": "13c25035d8db9e602a314cb0b8c8dc5c418710bc39950d0b25a0c3a35caca279"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_CornerColumn_Cap.gltf",
+      "bytes": 5016,
+      "sha256": "8478fba841e6779eac0f02c8906c0d37071c05a946ecfa4e6dcc996b38d8c15c"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_CornerColumn_CapShort.gltf",
+      "bytes": 2781,
+      "sha256": "270fb4bb503ddaec2dc0a35cf6707952fba2634687480d568c17d794cfeaa48f"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_CornerColumn_Center.gltf",
+      "bytes": 2776,
+      "sha256": "3edb3d11849f91f3928d7b2d47d7cc1c4241c2d39719ec2f6fcb26eecad5cd17"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_CornerColumn_Center_Half.gltf",
+      "bytes": 2888,
+      "sha256": "1441edef3ce9c9e38e60c03c76de57cb04c31c211f588c65860578236bbe5d78"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_CornerColumn_Top.gltf",
+      "bytes": 5008,
+      "sha256": "99ab3bb041a54547dae1426797ef060bbcb3441e88c587c4bf845d7365d7edf9"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_Corner_Plain.gltf",
+      "bytes": 4623,
+      "sha256": "bef9b255fbd7ceedfa95a264283589ef0a641c08e4a7739c70961051658d44a4"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_HalfColumn_Bottom.gltf",
+      "bytes": 4181,
+      "sha256": "6bdd130c019345e051d682894a985d0ccb19eecd12661d3ad4622ead064fb104"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_HalfColumn_Center.gltf",
+      "bytes": 2387,
+      "sha256": "de90d6f6fee0c57fbbdcc6779d4823786e273d1fe56c04ba6348c69ee9823eaf"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_HalfColumn_Top.gltf",
+      "bytes": 4189,
+      "sha256": "3eaf3bdac7e5078eef0ae6fe20dcaa91cad10e69996f7516eadb8d90a7df630f"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_HalfTrim.gltf",
+      "bytes": 6841,
+      "sha256": "f7e8de0af8c9e1afb4c5cf93e37d860a809f4c1e0f3373f124baa1a15b093328"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_Inset.gltf",
+      "bytes": 6854,
+      "sha256": "cb25cefaa8c3b2fd6f1f10cb1d528184b1f16fa8d6d56d44e03cb46c6afaa73e"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_Inset_Window.gltf",
+      "bytes": 9646,
+      "sha256": "af26a4877af7681b504907fcd5920139c2e1baa61f5b5025900459342585bee9"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_Inset_Window_Curved.gltf",
+      "bytes": 9650,
+      "sha256": "3c6c629f7cb342837e192956fea029984a1813c3f2ff4a19d9db08e5ee14e9f9"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_Inset_Window_Curved_Small.gltf",
+      "bytes": 10724,
+      "sha256": "1d65637f8109d26f96204d35750e571c55ff36b434d0d415fdfe57067e479ca9"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_InteriorWall_1.gltf",
+      "bytes": 2727,
+      "sha256": "05080b68ad757a7a17ec9150fb4c39e5690c020f5d53e8496e4794db473653a6"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_InteriorWall_3.gltf",
+      "bytes": 2728,
+      "sha256": "051f9c674d87e1c6776bf4ade73f2a4b6d7c06d3744e83282f82ab382e5eeb77"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_InteriorWall_4.gltf",
+      "bytes": 2728,
+      "sha256": "bae951d058abd6e059cc51d0eaf91bf1ad000eee6da79fcd82ea573bd111291f"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_Ornament_Horizontal.gltf",
+      "bytes": 2370,
+      "sha256": "f0c529811ed6d2fc5054e28d9499f0153280df47a223508157af8cddd2cb86c8"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_Plain_1.gltf",
+      "bytes": 4576,
+      "sha256": "e5952b1fe4fce2d26b88e2e5363e8b6942608bc9fd43ec56e61df78f83db34ba"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_Plain_3.gltf",
+      "bytes": 4157,
+      "sha256": "bc86dfb9e5bb4d6fa4e7c38fd541a5b82ce8d9eb99557ce6228b480c68552bba"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_Plain_3_noWear.gltf",
+      "bytes": 4171,
+      "sha256": "26d761410cce9c648023af2ad819ca0620d7db9b8421df46aa4e6d793bc16b29"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_Plain_4.gltf",
+      "bytes": 4599,
+      "sha256": "d35be7cf9f3a27232554c20b318d76afb9f7f8fb281225de3f8b6f4ac1e4c50e"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_RedWhite_DoubleWindow.gltf",
+      "bytes": 13012,
+      "sha256": "f4d537874274a1a49b13c5dd9d8409f8441d5a375c77f8fa0a17fb09822117cc"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_TopTrim.gltf",
+      "bytes": 6806,
+      "sha256": "52e08108d7018519db4112af7c1c1f8066171bf3c3e07767eee344900b4873ad"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_TopTrim_90Angle_L.gltf",
+      "bytes": 6883,
+      "sha256": "d27b9eeeb5803ae02f59e3be22160ef1a4dca9594d32ef221b04b2fc4915774b"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_TopTrim_90Angle_R.gltf",
+      "bytes": 6877,
+      "sha256": "aca265db771345220b5c0b0280c9312427bd914db3c175c358e9d338d722f4e2"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_TopTrim_Corner.gltf",
+      "bytes": 6848,
+      "sha256": "55bd90e86e5e38fa9b0392bdf3d2ad50f9645c39bec9fa992c07c01de0091965"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_Window_CurvedDouble.gltf",
+      "bytes": 9758,
+      "sha256": "9a52e0435a50a18677fdacbbd560f46bd9141d09c04b0b8fd1ea6d7af3217018"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_Window_Square_Single.gltf",
+      "bytes": 10672,
+      "sha256": "64b21d1bbe6a320095c69bd521d2e2c0f7f7586fe86c73765ff89607664625b4"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_Window_Trim.gltf",
+      "bytes": 11678,
+      "sha256": "6f9b512a5bef61cadc822876bf95f3a8502b4c5da13f83bcdef6007de838cebe"
+    },
+    {
+      "path": "models/buildings/urban-kit/Brick_Window_Trim_Single.gltf",
+      "bytes": 10746,
+      "sha256": "cd30951c3d67ba2e811367ed09d0714d4fecc62625ca8fb72642e86355447523"
+    },
+    {
+      "path": "models/buildings/urban-kit/Building_Large_2.gltf",
+      "bytes": 22880,
+      "sha256": "903209b63ad4e151190dce32ccab47a2c0dc256c09d999835984a0459ef2bd91"
+    },
+    {
+      "path": "models/buildings/urban-kit/Building_Medium_2_001.gltf",
+      "bytes": 25244,
+      "sha256": "423f4b3e709ef5633eac4a94a8a1ce25750aa42fe34e3b983d7aac39846f9a1c"
+    },
+    {
+      "path": "models/buildings/urban-kit/Building_Small_1.gltf",
+      "bytes": 27435,
+      "sha256": "3c864724fffd016ca440191bca169d6ba486e14617bb3cafa09ddbac7532f3d7"
+    },
+    {
+      "path": "models/buildings/urban-kit/Cornice_Brick_90Angle_L.gltf",
+      "bytes": 2735,
+      "sha256": "bb0fb55bdcce37496fe021c2cf3c00e29e65910b6950f1e8506e2934ad9205bc"
+    },
+    {
+      "path": "models/buildings/urban-kit/Cornice_Brick_90Angle_R.gltf",
+      "bytes": 2735,
+      "sha256": "72198c53cc026dc1948ea8f5f5adbb9806d6ac121f3f3ae6e880ba8306674bb2"
+    },
+    {
+      "path": "models/buildings/urban-kit/Cornice_Brick_Center.gltf",
+      "bytes": 2719,
+      "sha256": "2ab7e490a616f3e33a871efe47751dba468394187619de80b991967e3d330530"
+    },
+    {
+      "path": "models/buildings/urban-kit/Cornice_Brick_L.gltf",
+      "bytes": 2709,
+      "sha256": "5506326089bb483d22e71fea9931d5b6cc85467bd7a148a10215c07115e5db4e"
+    },
+    {
+      "path": "models/buildings/urban-kit/Cornice_Brick_R.gltf",
+      "bytes": 2709,
+      "sha256": "9491e1f973c8a4a795f5ee46dc6cf68bad087a20d4bc14c018c76e8aeab3aefe"
+    },
+    {
+      "path": "models/buildings/urban-kit/Cornice_Metal_90Angle_L.gltf",
+      "bytes": 2612,
+      "sha256": "631c67fc844ca99bcc02f6c02b7a7bee7146a48ba0b3b4830a8bfd0d25e13e9e"
+    },
+    {
+      "path": "models/buildings/urban-kit/Cornice_Metal_90Angle_R.gltf",
+      "bytes": 2612,
+      "sha256": "206d613e51d9593a7e1f07913635851012d43241d644446eec34302d855daaa4"
+    },
+    {
+      "path": "models/buildings/urban-kit/Cornice_Metal_Center.gltf",
+      "bytes": 2595,
+      "sha256": "85b21a653d1dc695cd96b0fe9125c231cc4bed1855343efaeb60c03954d49d7b"
+    },
+    {
+      "path": "models/buildings/urban-kit/Cornice_Metal_L.gltf",
+      "bytes": 2611,
+      "sha256": "81479571b9d20de0af4af6fe53e384687f9abf00d62d3fea83596584b8d8c7cd"
+    },
+    {
+      "path": "models/buildings/urban-kit/Cornice_Metal_R.gltf",
+      "bytes": 2611,
+      "sha256": "a4b6852bbfa188d826ded39a8d09ae653cb9fba31e02507cbaadf538b1fd6d5d"
+    },
+    {
+      "path": "models/buildings/urban-kit/Cornice_Trim_90Angle_L.gltf",
+      "bytes": 2327,
+      "sha256": "54600e6086bef2b92db8b66a9c74a2be808ba8eeaabef9e647fa1a814506fc2c"
+    },
+    {
+      "path": "models/buildings/urban-kit/Cornice_Trim_90Angle_R.gltf",
+      "bytes": 2343,
+      "sha256": "a6491c622197586749240c08789623f60fb27553ccb1a757171e28eeb3bd0174"
+    },
+    {
+      "path": "models/buildings/urban-kit/Cornice_Trim_Center.gltf",
+      "bytes": 2303,
+      "sha256": "fe4c40e61284b264da4b366ae738d8e573afc2a536658bb4dedf2f1bdcc3d9b7"
+    },
+    {
+      "path": "models/buildings/urban-kit/Cornice_Trim_L.gltf",
+      "bytes": 2310,
+      "sha256": "48db2e34b4b3bf42cb6af7409bd4c3c27691005b3872b7e8fe9fc955d2fb2d4b"
+    },
+    {
+      "path": "models/buildings/urban-kit/Cornice_Trim_R.gltf",
+      "bytes": 2310,
+      "sha256": "90f98398692ed9c78481540144072da216e5d0d023c77ed9a7f13436f27d3d79"
+    },
+    {
+      "path": "models/buildings/urban-kit/Decal_ArrowForwardLeft.gltf",
+      "bytes": 1881,
+      "sha256": "acbc5abd46bbdbd8ee88db13640a78241a5f95b85a22823175b5cbf3bfbeeae8"
+    },
+    {
+      "path": "models/buildings/urban-kit/Decal_ArrowForwardRight.gltf",
+      "bytes": 1883,
+      "sha256": "bdf612f6c96eedfdcb98edcebe6387938e44d0f608a22d6e97e215917850086a"
+    },
+    {
+      "path": "models/buildings/urban-kit/Decal_ArrowStraight.gltf",
+      "bytes": 1871,
+      "sha256": "6340876dbe0d4573e16de5f569583a9e76a4305dbd40e5bc0a6ae85f4b7ef6d5"
+    },
+    {
+      "path": "models/buildings/urban-kit/Decal_ArrowTurnLeft.gltf",
+      "bytes": 1872,
+      "sha256": "d5db5faffb29b42ce04b8136e0ab02e4344f8cbe8fe4a9e9a3400ea2fe4b27d4"
+    },
+    {
+      "path": "models/buildings/urban-kit/Decal_ArrowTurnRight.gltf",
+      "bytes": 2082,
+      "sha256": "707d8dc2a242ef9e1852c72f59fa5b898c0b4fe595c05ff41f2d5c86c69025ea"
+    },
+    {
+      "path": "models/buildings/urban-kit/Decal_Bikelane.gltf",
+      "bytes": 1868,
+      "sha256": "7b7ecdc57f806049ff3d4140e7dcf09f5d72ca07d78d9b9da3f2fd8f5ebd584b"
+    },
+    {
+      "path": "models/buildings/urban-kit/Decal_BrokenLine_Straight.gltf",
+      "bytes": 2039,
+      "sha256": "270c6af2b8399f31aa4bb7d68f1fd07de517b96810517c648ded5b2ef614d058"
+    },
+    {
+      "path": "models/buildings/urban-kit/Decal_Crosswalk.gltf",
+      "bytes": 1863,
+      "sha256": "979b6024af70ca61270ce07c89e0996d2eb2debf1357e7ca10d5fc559d6b2c90"
+    },
+    {
+      "path": "models/buildings/urban-kit/Decal_Crosswalk_Wide.gltf",
+      "bytes": 1929,
+      "sha256": "cdf51bc6d02c595264af2532e2cd64607c65bf6e302728bb9f2032f63e672c8d"
+    },
+    {
+      "path": "models/buildings/urban-kit/Decal_Curve_2Lane_Stripe.gltf",
+      "bytes": 2085,
+      "sha256": "6c2c45957b44930db0b8ce0d99ebab02efd9f5cad700f8d552fce71d9eb72103"
+    },
+    {
+      "path": "models/buildings/urban-kit/Decal_Curve_4LaneShort.gltf",
+      "bytes": 2063,
+      "sha256": "056c2f3e9f0c4a47b3755e8daaebfaa7f9914d238b10bd35ef453df5c50f7f2f"
+    },
+    {
+      "path": "models/buildings/urban-kit/Decal_Curve_4LaneShort_DoubleYellow.gltf",
+      "bytes": 2094,
+      "sha256": "28a06eaf7f66f94488bc754d99a8a7f74412b9e00ff3dc237e959079d8f09c27"
+    },
+    {
+      "path": "models/buildings/urban-kit/Decal_Curve_4LaneShort_Stripe.gltf",
+      "bytes": 2099,
+      "sha256": "d2695f6238f5c9c43369552df157ace9c222510aa3b9211aa01bf8ece6eb3377"
+    },
+    {
+      "path": "models/buildings/urban-kit/Decal_DoubleYellow_Straight.gltf",
+      "bytes": 1856,
+      "sha256": "d63f9bc78522c3ce9524af8784dcaf46038e1d078d9954e51d3f00662a53bcc6"
+    },
+    {
+      "path": "models/buildings/urban-kit/Decal_Only.gltf",
+      "bytes": 1852,
+      "sha256": "f0f7fea4fedf844fe4afb4cbf1d01d5c8ccf9290c72be1f5092ea31f3645df88"
+    },
+    {
+      "path": "models/buildings/urban-kit/Decal_Slow.gltf",
+      "bytes": 1852,
+      "sha256": "2515effd7e8bd9adaa4c13c1943a2c5058314db9db74f8f86f8618ee8f4d4514"
+    },
+    {
+      "path": "models/buildings/urban-kit/Decal_Stop.gltf",
+      "bytes": 1850,
+      "sha256": "ce4037a07295d723231df5fb39d8c4e97b2bcf41936d040d018c8b3febe0b93a"
+    },
+    {
+      "path": "models/buildings/urban-kit/DoorFrame_Metal_Single.gltf",
+      "bytes": 4713,
+      "sha256": "c30cbb493a15191ea6432f246b601d741694015b9e6826ee80759bc66587a39e"
+    },
+    {
+      "path": "models/buildings/urban-kit/DoorFrame_Trim.gltf",
+      "bytes": 7990,
+      "sha256": "79a41d327aa8486b4ca461d3d3fd012f2dd5486ad8493cf823271ea5ace745a9"
+    },
+    {
+      "path": "models/buildings/urban-kit/DoorFrame_Wooden.gltf",
+      "bytes": 3810,
+      "sha256": "7fda1b1102b8d7fbdaa0f172f0de32c03740e97c79d3514808ab323da0044f6b"
+    },
+    {
+      "path": "models/buildings/urban-kit/Door_1.gltf",
+      "bytes": 2372,
+      "sha256": "f42457e1d39744f1ccfe7e1459052e2acbb74f076baaad9f62059d53b661d3b4"
+    },
+    {
+      "path": "models/buildings/urban-kit/Door_2.gltf",
+      "bytes": 4722,
+      "sha256": "afd3e0a931cdfffa40d21c3304655f6433314d27aa752d86a0b8c08d68e6ea6a"
+    },
+    {
+      "path": "models/buildings/urban-kit/Door_3.gltf",
+      "bytes": 4722,
+      "sha256": "45fa80aa2ea960523cf7ee66765208941949cabff3381516301dd2877e29aba5"
+    },
+    {
+      "path": "models/buildings/urban-kit/Entrance_Concrete_2x1.gltf",
+      "bytes": 2395,
+      "sha256": "37328e60e3605563ec5b5f02a309829a68ba56c54bbde507c73deaae34d4ee5f"
+    },
+    {
+      "path": "models/buildings/urban-kit/Entrance_Concrete_2x2.gltf",
+      "bytes": 2391,
+      "sha256": "3bf9d43646ea50c441db43cdc56ebffb407cad15cef123b1f33b9f30ce2b2e4e"
+    },
+    {
+      "path": "models/buildings/urban-kit/Floor_2x2.gltf",
+      "bytes": 3641,
+      "sha256": "5aca0bb65884ab575b57821c7ef5a4b6ce69c55ce2610b9fed495b65189b4e42"
+    },
+    {
+      "path": "models/buildings/urban-kit/Floor_4x4.gltf",
+      "bytes": 4043,
+      "sha256": "a4a6514e043eee868b48fa592ec50cdeca18008e63ddf961aad95bf4b21032b6"
+    },
+    {
+      "path": "models/buildings/urban-kit/Floor_Inset.gltf",
+      "bytes": 4098,
+      "sha256": "9ae2b6f202c0fd14378be5aa1599de6b9d61e796d64e11330679062e7b71dbc1"
+    },
+    {
+      "path": "models/buildings/urban-kit/Metal_Column_Bottom.gltf",
+      "bytes": 2403,
+      "sha256": "2afa819c9a10b5f488340536833ef25ff610fbc29e18c76fd6052f249de5bbb1"
+    },
+    {
+      "path": "models/buildings/urban-kit/Metal_Column_Center.gltf",
+      "bytes": 2394,
+      "sha256": "675c58eebda25ffc7b5886a7ba65f82d83825c8de75c2e69edecfbfde10e4b84"
+    },
+    {
+      "path": "models/buildings/urban-kit/Metal_Column_Small_Bottom.gltf",
+      "bytes": 2417,
+      "sha256": "6f40c4081233c40ec1c86894769fa40d169a687f5c4aaec0afd22ccdc7861073"
+    },
+    {
+      "path": "models/buildings/urban-kit/Metal_Column_Small_Center.gltf",
+      "bytes": 2407,
+      "sha256": "6c162dcf27e81b41447077fb390227b50714742ed45aafe4535f7d464fa784fa"
+    },
+    {
+      "path": "models/buildings/urban-kit/Metal_Column_Small_Top.gltf",
+      "bytes": 2412,
+      "sha256": "edd64e0e6f764dcf8b5738d5a26c407a3f760133036000fb80bca6b2dc3505bc"
+    },
+    {
+      "path": "models/buildings/urban-kit/Metal_Column_Top.gltf",
+      "bytes": 2400,
+      "sha256": "523e8f695274db2454a31870cb404ac3b3ed56d8734f47d46abd952242e4abbc"
+    },
+    {
+      "path": "models/buildings/urban-kit/Metal_FirstFloor_Wall.gltf",
+      "bytes": 6566,
+      "sha256": "0f4d600afb016a4911c611da8ee5b3f4254ead6f131402211f7e3ae79bbbafa6"
+    },
+    {
+      "path": "models/buildings/urban-kit/Metal_FirstFloor_Wall_1.gltf",
+      "bytes": 4482,
+      "sha256": "59d896203eb653a1a5f4c7a6f025e637dd6676627c092230cd3982d34169af6a"
+    },
+    {
+      "path": "models/buildings/urban-kit/Metal_FirstFloor_Window.gltf",
+      "bytes": 9945,
+      "sha256": "4e9029f004d6e0031222be220b3494241a88e837b40fe3b6bb1d96b1a55f43e7"
+    },
+    {
+      "path": "models/buildings/urban-kit/Metal_FullWindow.gltf",
+      "bytes": 6571,
+      "sha256": "0ca31d1e8ddebbfd8910a50ee68608841fa8b59b1f91a41df71ea03e5a1054b0"
+    },
+    {
+      "path": "models/buildings/urban-kit/Metal_Plain_1.gltf",
+      "bytes": 4978,
+      "sha256": "ce6eedf8abfa656477ccf16eeb0f45ece50d3f52d9d43916dcce747a80d17e71"
+    },
+    {
+      "path": "models/buildings/urban-kit/Metal_Plain_3.gltf",
+      "bytes": 5040,
+      "sha256": "1311b5c4bffda0beefa95d90590f4fbb0c6f07fca1371c1aa6a1b829e5bb7f11"
+    },
+    {
+      "path": "models/buildings/urban-kit/Metal_Window.gltf",
+      "bytes": 10718,
+      "sha256": "6e8be236918316777d8b3707718138501856715d4edb4b667781380d22514e89"
+    },
+    {
+      "path": "models/buildings/urban-kit/Metal_Window_Half.gltf",
+      "bytes": 6633,
+      "sha256": "99f7c206eec1cb5e66d46c57936e7574f30390cfb4fd7731a4bdd75e9260bc61"
+    },
+    {
+      "path": "models/buildings/urban-kit/Prop_ACUnit.gltf",
+      "bytes": 2376,
+      "sha256": "f81fae2b49804312d23cc5c56fdf36f6bec89f342df9d135c1565ed31a7e968d"
+    },
+    {
+      "path": "models/buildings/urban-kit/Prop_Bollard.gltf",
+      "bytes": 2394,
+      "sha256": "4a05291a05873e4043c6354c7cae969c0726fd9b4590625a24ee3bcf940a1c9a"
+    },
+    {
+      "path": "models/buildings/urban-kit/Prop_Drain.gltf",
+      "bytes": 2149,
+      "sha256": "b81de6bf5cac90f6b62cd739218f4ee0a82cc930226af2060e9616ec7a5ac75f"
+    },
+    {
+      "path": "models/buildings/urban-kit/Prop_ManholeCover.gltf",
+      "bytes": 2198,
+      "sha256": "c8519276b3628a217ec7ae0198e598868279046e329f9f6d16b3eec3e0aa2fc9"
+    },
+    {
+      "path": "models/buildings/urban-kit/Prop_Planter_Single.gltf",
+      "bytes": 4132,
+      "sha256": "5ab51700931236c2de45c9c8c5c1206ff312d56f00cedf134bfa462da4ef4f13"
+    },
+    {
+      "path": "models/buildings/urban-kit/Roof_2x2.gltf",
+      "bytes": 2096,
+      "sha256": "fb9686ae868cad0a566767f4777c7dfc3ebb7917296eac8528c2d2ebb225159f"
+    },
+    {
+      "path": "models/buildings/urban-kit/Roof_2x2_90Angle_Center.gltf",
+      "bytes": 2143,
+      "sha256": "800bb55774d47a1d7895c5b74ca02e946b617ac2edbfb51a8c58a710dd289d66"
+    },
+    {
+      "path": "models/buildings/urban-kit/Roof_2x2_90Angle_L.gltf",
+      "bytes": 2118,
+      "sha256": "01c4b6b36055e08eacf0ae23026b343b06c052afe29ed9d0aa95fdbaeb23a2be"
+    },
+    {
+      "path": "models/buildings/urban-kit/Roof_2x2_90Angle_R.gltf",
+      "bytes": 2118,
+      "sha256": "6d8bfb334fab0ae043797824901ce7fe9219217ee74188353c3e3e04ed1a8af6"
+    },
+    {
+      "path": "models/buildings/urban-kit/Roof_4x4.gltf",
+      "bytes": 2105,
+      "sha256": "2e07d03f08bf1331b5938f0f22e189071bf369caeca0d61131c74b6d3b8d81fd"
+    },
+    {
+      "path": "models/buildings/urban-kit/Roof_SlateCornice_Center.gltf",
+      "bytes": 5827,
+      "sha256": "5666aad879306fd0eeb06f4989d8b368d1b4a0fc8136c3acf83db0a90b164fc5"
+    },
+    {
+      "path": "models/buildings/urban-kit/Roof_SlateCornice_Corner.gltf",
+      "bytes": 4132,
+      "sha256": "3ae1548b262fc6e276f81d82c02ff5c5e2d789d0aed9811e1c61e83461704188"
+    },
+    {
+      "path": "models/buildings/urban-kit/Roof_SlateCornice_InnerCorner.gltf",
+      "bytes": 5984,
+      "sha256": "e4d3c36450150494e09f417a043ccee95094731d82090f4b55105f0f086e9e56"
+    },
+    {
+      "path": "models/buildings/urban-kit/Roof_SlateCornice_Window_1.gltf",
+      "bytes": 8826,
+      "sha256": "611c60d835438bc91cd40f3b4617ef28b8fc5775c019ad96e933e476178f6098"
+    },
+    {
+      "path": "models/buildings/urban-kit/Roof_Slate_Center.gltf",
+      "bytes": 4037,
+      "sha256": "4d85124c5896d1fa35926b5995d73bbdc85ebcea8e385cfa00b3791a933e2312"
+    },
+    {
+      "path": "models/buildings/urban-kit/Roof_Slate_Corner.gltf",
+      "bytes": 2345,
+      "sha256": "eff42380f0f1d9e740929cafe9872f88c363499bfa3c9a8f0745a5fc89ab9fca"
+    },
+    {
+      "path": "models/buildings/urban-kit/Roof_Slate_InnerCorner.gltf",
+      "bytes": 4146,
+      "sha256": "fd7d634c1bad3ac6a9820f2951e8a346c7f291db5ac5c230904fa608ffb0bdf7"
+    },
+    {
+      "path": "models/buildings/urban-kit/Roof_Slate_Window_1.gltf",
+      "bytes": 8847,
+      "sha256": "9663df957d76e68a0f2d8636e18d029a78148090ff4cf8bba2b46fff58f3af66"
+    },
+    {
+      "path": "models/buildings/urban-kit/Sidewalk_Corner_Flat_3m.gltf",
+      "bytes": 2630,
+      "sha256": "76ae3f0766121a5a77bfbd9cc5cc073818b9ed1cfeff730a56c933d1135e5672"
+    },
+    {
+      "path": "models/buildings/urban-kit/Sidewalk_Corner_Flat_3m_Stripe.gltf",
+      "bytes": 2063,
+      "sha256": "29a343a9c52d995d0326d74668319c2b1a045ba3341f86b8f0fc3e9cc33679cc"
+    },
+    {
+      "path": "models/buildings/urban-kit/Sidewalk_Corner_Round_3m.gltf",
+      "bytes": 2636,
+      "sha256": "099002b275669d77f610cd96c41613b1a3de19d8408df7be7d80827c83356f7f"
+    },
+    {
+      "path": "models/buildings/urban-kit/Sidewalk_Corner_Round_3m_Stripe.gltf",
+      "bytes": 1905,
+      "sha256": "0c9335de7ce9d7b4d06728e77a105215bbee64aa94729b9a7e3f73a7df64a112"
+    },
+    {
+      "path": "models/buildings/urban-kit/Sidewalk_NoCurb_3m.gltf",
+      "bytes": 2356,
+      "sha256": "c32ac81ec8485b1b0b03186ac8e43573266dfcfd8c39dde1b97e8522ef61546b"
+    },
+    {
+      "path": "models/buildings/urban-kit/Sidewalk_Planter.gltf",
+      "bytes": 4215,
+      "sha256": "55bf5b2b916999a08e8f995bdc1c3c51a54dff4b7e1b1d9c3fbe7d5dfc70fbe3"
+    },
+    {
+      "path": "models/buildings/urban-kit/Sidewalk_Straight_3m.gltf",
+      "bytes": 2586,
+      "sha256": "ecfc8c7c7b802afd0a6171409d05abc887162c2030e9d012bc89549f33e76c5f"
+    },
+    {
+      "path": "models/buildings/urban-kit/Sidewalk_Straight_3m_Stripe.gltf",
+      "bytes": 1856,
+      "sha256": "4d13226203c1a27408b5a0c895ffba5dadbeedb1f53c844f09edb4e1f1a45d9d"
+    },
+    {
+      "path": "models/buildings/urban-kit/Stairs_Entrance_Concrete.gltf",
+      "bytes": 4227,
+      "sha256": "8645a6e3a0cfd3018d0b53655720dbe5a23ecbd24b98037593b5892caf2748aa"
+    },
+    {
+      "path": "models/buildings/urban-kit/Stairs_Rails_Metal.gltf",
+      "bytes": 2412,
+      "sha256": "0bc2e54ec9fe67de394653281ccee626f83f9be7c23ab1e498200a86d218e092"
+    },
+    {
+      "path": "models/buildings/urban-kit/Stairs_Rails_Metal_Straight_1.gltf",
+      "bytes": 2410,
+      "sha256": "59dfd4dd9a6c684436a4dadb75bc64cb07ea33e2c3990d6adceaea01b4880024"
+    },
+    {
+      "path": "models/buildings/urban-kit/Stairs_Rails_Metal_Straight_2.gltf",
+      "bytes": 2412,
+      "sha256": "91062c81770b84f6bced8fc13f58d2d323d7a3c29997869300fdca32cd9dab3c"
+    },
+    {
+      "path": "models/buildings/urban-kit/Street_2Lane.gltf",
+      "bytes": 6364,
+      "sha256": "4bfa763a0a1988276fd5604e8e9e1d401c31cf5438401d42a15cf3a7ec3a60fe"
+    },
+    {
+      "path": "models/buildings/urban-kit/Street_2Lane_noSidewalk.gltf",
+      "bytes": 4301,
+      "sha256": "f69d933bae59e7baad74d5403ced00152c264e0c39293ef0b17e20f36d628d61"
+    },
+    {
+      "path": "models/buildings/urban-kit/Street_4Lane.gltf",
+      "bytes": 6307,
+      "sha256": "ac7c9b2043a7f9f7c8f0230965db056b8a58d04d568ca329ca0ebd29a46d8f1c"
+    },
+    {
+      "path": "models/buildings/urban-kit/Street_4Lane_noSidewalk.gltf",
+      "bytes": 4275,
+      "sha256": "926b21443fc7a7d616cb1bec554d7d83b908edf83741f8899932f7dee8402ad9"
+    },
+    {
+      "path": "models/buildings/urban-kit/Street_4WayIntersection.gltf",
+      "bytes": 6432,
+      "sha256": "b332bf9afd47ec6ae1c19151f8eafccee3b45037f4dfff2f115001d9d4cac34e"
+    },
+    {
+      "path": "models/buildings/urban-kit/Street_Asphalt_6x6.gltf",
+      "bytes": 2132,
+      "sha256": "5a6092eeb46cd61a5b9fe6782574e2d90942e1e41408e41a54ba6413974b0a13"
+    },
+    {
+      "path": "models/buildings/urban-kit/Street_Asphalt_9x9.gltf",
+      "bytes": 2136,
+      "sha256": "010f8ad35fec1e365116616c259af9f892c8b1e2a078e2775b2d2447e96a8713"
+    },
+    {
+      "path": "models/buildings/urban-kit/Street_Asphalt_Curve_2Lane - Copy - Copy.gltf",
+      "bytes": 2570,
+      "sha256": "16aad644c9c453a21aa1757ac27149b33bd2f8d06c43f4cd68d5b30d2b18342e"
+    },
+    {
+      "path": "models/buildings/urban-kit/Street_Asphalt_Curve_2Lane - Copy.bin",
+      "bytes": 2064,
+      "sha256": "1f77ccbdca57dc5884975dff472df6be6785ef5a34311857258b867209794ab4"
+    },
+    {
+      "path": "models/buildings/urban-kit/Street_Asphalt_Curve_2Lane - Copy.gltf",
+      "bytes": 2570,
+      "sha256": "16aad644c9c453a21aa1757ac27149b33bd2f8d06c43f4cd68d5b30d2b18342e"
+    },
+    {
+      "path": "models/buildings/urban-kit/Street_Asphalt_Curve_2Lane.gltf",
+      "bytes": 2570,
+      "sha256": "16aad644c9c453a21aa1757ac27149b33bd2f8d06c43f4cd68d5b30d2b18342e"
+    },
+    {
+      "path": "models/buildings/urban-kit/Street_Asphalt_Curve_4Lane_Short.gltf",
+      "bytes": 2581,
+      "sha256": "a3ea0903bbad3d0922c72107645b5b89d519d0398974428d3d01cab86b912914"
+    },
+    {
+      "path": "models/buildings/urban-kit/Street_Curve_2Lane.gltf",
+      "bytes": 6437,
+      "sha256": "761eeb26fec563eacf343a02d74f1a70c2df9f1917f9572d93b2de2bda795ef6"
+    },
+    {
+      "path": "models/buildings/urban-kit/Street_Curve_2Lane_Curb.gltf",
+      "bytes": 2654,
+      "sha256": "b5ba48c6ea83bcc6f5e4cb2433556071526be395838b45189cd5745caf5d366d"
+    },
+    {
+      "path": "models/buildings/urban-kit/Street_Curve_4LaneShort.gltf",
+      "bytes": 6433,
+      "sha256": "9b4c0aa7cbc50c5ce6030542aabef351ae4ee3eaba40123d303a362b7a522bec"
+    },
+    {
+      "path": "models/buildings/urban-kit/Street_Curve_4Lane_Short_Curb.gltf",
+      "bytes": 2653,
+      "sha256": "db49354fd6878f6d99756cb8ee1ee1b91f75795e9359274221e3bdefdb8b7438"
+    },
+    {
+      "path": "models/buildings/urban-kit/Street_TIntersection.gltf",
+      "bytes": 6406,
+      "sha256": "b8ecb3ec2514027af88d61b93e844ce004d21e759b730b27d73d880d9a270943"
+    },
+    {
+      "path": "models/buildings/urban-kit/Trim_90Angle_TopCover.gltf",
+      "bytes": 4918,
+      "sha256": "e1182fec82b13929557d44b940649e340b8403e6ac01d2fa47bea23736f722fd"
+    },
+    {
+      "path": "models/buildings/urban-kit/Trim_Column_Bottom.gltf",
+      "bytes": 2346,
+      "sha256": "f8d4a7f80615df50166a9c8555d9815387cd9d5f15c6eec80efff72592799e50"
+    },
+    {
+      "path": "models/buildings/urban-kit/Trim_Column_Center.gltf",
+      "bytes": 2315,
+      "sha256": "1fd155424bf13d98893c72ef0c3ae7466442a0b38dde3e6ccab90a07ee3c805c"
+    },
+    {
+      "path": "models/buildings/urban-kit/Trim_Column_Top.gltf",
+      "bytes": 2354,
+      "sha256": "1829ee5d92645c2a1dd89dfe1401906263be941366942f5f62245c76c64eb230"
+    },
+    {
+      "path": "models/buildings/urban-kit/Trim_Corner.gltf",
+      "bytes": 4905,
+      "sha256": "5356455e6163971a87d829332eb18a24805d6fb05de4f34a575c59e2dda0e539"
+    },
+    {
+      "path": "models/buildings/urban-kit/Trim_FirstFloor_Wall.gltf",
+      "bytes": 4920,
+      "sha256": "b6dec6c4817e76cce835d714d834aa3f6229d4a2afc8b2c9b1d042110f6524f7"
+    },
+    {
+      "path": "models/buildings/urban-kit/Trim_FirstFloor_Window_001.gltf",
+      "bytes": 7915,
+      "sha256": "d3e80aa99e89533fe2af979a45be9004684926176bbeb79860c45cc574cb9506"
+    },
+    {
+      "path": "models/buildings/urban-kit/Trim_FirstFloor_Window_Columns.gltf",
+      "bytes": 2586,
+      "sha256": "97da02e9f0bbbc9036d282a49f50fca7f4383ba176a31035abe0f22db3f0afe7"
+    },
+    {
+      "path": "models/buildings/urban-kit/Trim_Plain_3.gltf",
+      "bytes": 4904,
+      "sha256": "193fa82b2a7cdfd98e031f51d21e40a733896b30668ec705f46b128a87a9352f"
+    },
+    {
+      "path": "models/buildings/urban-kit/Trim_Wall_Guard.gltf",
+      "bytes": 2504,
+      "sha256": "1a8fed582619dfeafc3660d9f28aae193715c4f3800d5593f354c99ee6723019"
+    },
+    {
+      "path": "models/buildings/urban-kit/Trim_Window.gltf",
+      "bytes": 10727,
+      "sha256": "253942c661a09da5bad08ced802ecabe17624fbe1907a2fac1a84a60bc968aae"
+    },
+    {
+      "path": "models/characters/mini-kit/Eyebrows_Female.gltf",
+      "bytes": 25053,
+      "sha256": "ec294eb3dbe1b2027090e336255fa34ade5f2182c8964530404f3af7ad45939e"
+    },
+    {
+      "path": "models/characters/mini-kit/Eyebrows_Regular.gltf",
+      "bytes": 23117,
+      "sha256": "ced6afcce12cc72a27e30fc06880401aff2b3fe883a01739299a5b49e5f7509e"
+    },
+    {
+      "path": "models/characters/mini-kit/Hair_Beard.gltf",
+      "bytes": 23104,
+      "sha256": "80013b9791ce12c65fbe693cf669b02ef5c38091c653bf13b9415d2d8380e0ce"
+    },
+    {
+      "path": "models/characters/mini-kit/Hair_Buns.gltf",
+      "bytes": 23807,
+      "sha256": "cbdd6f509ec8f1021361b53da6fa1a077b95762ebc8bc2d8acae59bb0cb263c1"
+    },
+    {
+      "path": "models/characters/mini-kit/Hair_Buzzed.gltf",
+      "bytes": 23108,
+      "sha256": "6e709c691d4feccda9788df917bf9604e751f02da21cee2bc81bcc3d26b3b580"
+    },
+    {
+      "path": "models/characters/mini-kit/Hair_BuzzedFemale.gltf",
+      "bytes": 23779,
+      "sha256": "096a7a4ea5bcadc588f4c1e95f04b3461f8a20f3643a0308cfd23e81e180ab32"
+    },
+    {
+      "path": "models/characters/mini-kit/Hair_Long.gltf",
+      "bytes": 23813,
+      "sha256": "27e2c63e8f98c79fb600268ffcc92b36c621b8653b5a7dcbadb08328f3f887a9"
+    },
+    {
+      "path": "models/characters/mini-kit/Hair_SimpleParted.gltf",
+      "bytes": 23114,
+      "sha256": "fe0f354d7f95d83d38e15c60794dcc063fa4d60550706f3d7ba51491cdc07c56"
+    },
+    {
+      "path": "models/characters/mini-kit/Superhero_Female_FullBody.gltf",
+      "bytes": 31656,
+      "sha256": "adedf28000a0716f689b009a70314506fc62f827498f77ba852acb5610f3f3f4"
+    },
+    {
+      "path": "models/characters/mini-kit/Superhero_Male_FullBody.gltf",
+      "bytes": 30989,
+      "sha256": "e7fcea214ecf8855afbf910b50de6f9c7d1decfb71ca28bad8a4481452dafeb4"
+    },
+    {
+      "path": "models/characters/mini-kit/T_Eye_Normal.png",
+      "bytes": 15097,
+      "sha256": "a74aa37050f26fe336e7dbe5d1e9f01942879dd541c67be2f836633529bc68b7"
+    },
+    {
+      "path": "models/characters/mini-kit/T_Hair_1_BaseColor_png.png",
+      "bytes": 1570376,
+      "sha256": "bc7aa863bd22ab0a995cd838cceb4d3a5186ee54ee2fb0108fad85d20c057e6e"
+    },
+    {
+      "path": "models/characters/mini-kit/T_Hair_2_BaseColor_png.png",
+      "bytes": 1729467,
+      "sha256": "f9f4f2fb3eeeefb0b6f0fdef38b0770fd6607640c1c680b8139dd76697e9f9b3"
+    },
+    {
+      "path": "models/characters/mini-kit/T_Superhero_Female_Light_BaseColor.png",
+      "bytes": 1317541,
+      "sha256": "743f811857db0b950f3ad09a0733dfa4888801ead332313ca25becea14c54f8d"
+    },
+    {
+      "path": "models/characters/mini-kit/T_Superhero_Male_Ligh.png",
+      "bytes": 1389170,
+      "sha256": "419f96dbb8811511e2d515bcdabc085ff2f219ec7b8b4e91050a84cba6888fe9"
+    },
+    {
+      "path": "models/characters/npc_basic_01.glb",
+      "bytes": 51212,
+      "sha256": "207013049feaf5b7f2f52aef20fd749b5a8a5d01119843f1a29dd61226d24b1d"
+    },
+    {
+      "path": "models/characters/npc_basic_02.glb",
+      "bytes": 65060,
+      "sha256": "227dec7c0158dc85fb899732315a889774152984b80a234b2cf794400e8645b6"
+    },
+    {
+      "path": "models/characters/npc_shopkeeper_frostbox.glb",
+      "bytes": 72904,
+      "sha256": "8db04d6023f2e1fb105f16280fb8484065c02a9203edc6fecfd501b9ee1979b2"
+    },
+    {
+      "path": "models/characters/player/sunbox-male-free.glb",
+      "bytes": 1389128,
+      "sha256": "52afa745db43063c6140cef53cf9bc8b16aa64f5fe1e26b9f0439f2d17dc8cc5"
+    },
+    {
+      "path": "models/characters/player_avatar.glb",
+      "bytes": 52704,
+      "sha256": "11f7f98efff559af949a7244a617ac94855a484316ff84b66ffcd9f209714f2c"
+    },
+    {
+      "path": "models/hair/hair_afro.glb",
+      "bytes": 7736,
+      "sha256": "dc937e24ea41830da63d059d515cf4123beb480b6ee8db9f0c5088745fa4bfab"
+    },
+    {
+      "path": "models/hair/hair_braids.glb",
+      "bytes": 20228,
+      "sha256": "f2dd0633c214db85b21d6066fc20065162f180fb703e1774e28227ff56595332"
+    },
+    {
+      "path": "models/hair/hair_cornrows.glb",
+      "bytes": 7684,
+      "sha256": "abbe1fbaada9a1061cf539404b94833b8ff824cd5a9c5bce507223a7a9e3a39b"
+    },
+    {
+      "path": "models/hair/hair_locs.glb",
+      "bytes": 20068,
+      "sha256": "102634c4193e9bf425026c59fe421e7517f3b3f2894c3413e7ae05d5a1065024"
+    },
+    {
+      "path": "models/hair/hair_taper_fade.glb",
+      "bytes": 6224,
+      "sha256": "0b2f20ea4f3142e7c087cefdda90a3e71eb52189af660092f84a8a6cb8f56aed"
+    },
+    {
+      "path": "models/hair/hair_waves.glb",
+      "bytes": 6240,
+      "sha256": "9eb7bbfeb6d5cc7cf3bb0d90fc3b1bdbe4ee61e7a638cdaeda0ff739e905a5b1"
+    },
+    {
+      "path": "models/jewelry/frostbox_chain_cuban.glb",
+      "bytes": 92184,
+      "sha256": "c0231f11c83f0b5e86cea8710d06d92472da404e1e953e31520b8e8f2cef09af"
+    },
+    {
+      "path": "models/jewelry/frostbox_display_case.glb",
+      "bytes": 6988,
+      "sha256": "3dcd5d711a7dd41997615b1123eecb534ee5133b253f803ef9709b3d98a87ea1"
+    },
+    {
+      "path": "models/jewelry/frostbox_gem_diamond.glb",
+      "bytes": 1548,
+      "sha256": "5d27154f3f5da2b24f9702cf003e92717035e4addd3d3a0a4805e2d7ddd56596"
+    },
+    {
+      "path": "models/jewelry/frostbox_pendant_initial.glb",
+      "bytes": 10368,
+      "sha256": "a4ce03f7ae8cd091fd47e8060855274fa5dbeda896b5a5ca44d1efa6defe23f5"
+    },
+    {
+      "path": "models/props/trash-debris.glb",
+      "bytes": 1143660,
+      "sha256": "d132a085dd64e61b512013512a811c14e2226ef1959b50d3c37088e72f152d1d"
+    },
+    {
+      "path": "models/props/urban-props.glb",
+      "bytes": 4181964,
+      "sha256": "ae33aac2e273d7c1c5d050fc6812cc2df0a298bf08016d8e2d39434ee2718ce7"
+    },
+    {
+      "path": "models/vehicles/car-kit/ambulance.glb",
+      "bytes": 233612,
+      "sha256": "9e429e2b6202c0d78d0c38b2adbaae6b77716bb2a0f6fbb2811556e1fb31edba"
+    },
+    {
+      "path": "models/vehicles/car-kit/box.glb",
+      "bytes": 14108,
+      "sha256": "b773815c791d2708a2a70f1a9bb6d197d7211269ad96e273f9e364ea536c1b18"
+    },
+    {
+      "path": "models/vehicles/car-kit/cone-flat.glb",
+      "bytes": 16712,
+      "sha256": "ae3ffbf948c4c8c5c26d0d509f7de4c1dc66e3cc0dfd8ca8abf380aab2d6dd8e"
+    },
+    {
+      "path": "models/vehicles/car-kit/cone.glb",
+      "bytes": 16696,
+      "sha256": "d6659fc365de47c5d056b14f3d3fb3e191d3a5b869c43171753621dcf14b76bd"
+    },
+    {
+      "path": "models/vehicles/car-kit/debris-bolt.glb",
+      "bytes": 4768,
+      "sha256": "7951734ddc5256a69e0f15ad1ff91b64fc8e5a3cd2d77be9d7d99b2e9f6d945a"
+    },
+    {
+      "path": "models/vehicles/car-kit/debris-bumper.glb",
+      "bytes": 11312,
+      "sha256": "dac8b9a01766f187c4f116eb7070e13485b642120f4d53ec611bf987100a1792"
+    },
+    {
+      "path": "models/vehicles/car-kit/debris-door-window.glb",
+      "bytes": 7576,
+      "sha256": "b1adc1a83d72f96754c000ab7661844ecc8c26a6b5b8053716c608f2aa91ca42"
+    },
+    {
+      "path": "models/vehicles/car-kit/debris-door.glb",
+      "bytes": 7052,
+      "sha256": "c62ab01c07be9be5dfc0f940dbc933fa836019ea1bc8fd0baa2d0e52cd764ea2"
+    },
+    {
+      "path": "models/vehicles/car-kit/debris-drivetrain-axle.glb",
+      "bytes": 18740,
+      "sha256": "5ac6335574ba941e8afa827a377d667686541668b71192972179b5439e53bf78"
+    },
+    {
+      "path": "models/vehicles/car-kit/debris-drivetrain.glb",
+      "bytes": 36896,
+      "sha256": "4a93bba25d3004b028f8494105d1774a91797d116dcb136fde00b4882bfec652"
+    },
+    {
+      "path": "models/vehicles/car-kit/debris-nut.glb",
+      "bytes": 4744,
+      "sha256": "1a535f639861746799d95853017c08273d25c2ae888f5cd1ff8d3c973c0b895a"
+    },
+    {
+      "path": "models/vehicles/car-kit/debris-plate-a.glb",
+      "bytes": 5048,
+      "sha256": "3ecb3242d9e984dadd149fcdd0ded5f43e803b6370b6ddf2b7ab24876aa361ae"
+    },
+    {
+      "path": "models/vehicles/car-kit/debris-plate-b.glb",
+      "bytes": 5380,
+      "sha256": "363f9baf530b25fe97b7c54f8ff186249cd974b34897d39dae4c95bafca2a181"
+    },
+    {
+      "path": "models/vehicles/car-kit/debris-plate-small-a.glb",
+      "bytes": 4224,
+      "sha256": "d710da638e0709318a06fb06a71a6c8c3b2bc1a59b87c6736f4d14ea84a8ff09"
+    },
+    {
+      "path": "models/vehicles/car-kit/debris-plate-small-b.glb",
+      "bytes": 5392,
+      "sha256": "4bca4c02db94ba05a611bf835a638aa7b0a66208d9dc49a66799682c7cbe8446"
+    },
+    {
+      "path": "models/vehicles/car-kit/debris-spoiler-a.glb",
+      "bytes": 5616,
+      "sha256": "0deed006f429b46b2583b503d2b32cfe854c997eb63d1de39be2418d9e1bc0ab"
+    },
+    {
+      "path": "models/vehicles/car-kit/debris-spoiler-b.glb",
+      "bytes": 8596,
+      "sha256": "93a3ff0d440ecd61f315e257ff81c7ba80cd6fa32a854ff8d0e2d3a0b9c3f498"
+    },
+    {
+      "path": "models/vehicles/car-kit/debris-tire.glb",
+      "bytes": 26548,
+      "sha256": "7c3f5968244e2c617c698820e943493b8480c7bef8535fbab04d4a501b3489e9"
+    },
+    {
+      "path": "models/vehicles/car-kit/delivery-flat.glb",
+      "bytes": 214456,
+      "sha256": "2973152df7699767692ce890b3a0845a11333a52a23aa74b86a12ed443254c1b"
+    },
+    {
+      "path": "models/vehicles/car-kit/delivery.glb",
+      "bytes": 240264,
+      "sha256": "426a3e3a2c242c05c889b1445ba02ef95b2c8b7cd6f597e1275ef736a826014b"
+    },
+    {
+      "path": "models/vehicles/car-kit/firetruck.glb",
+      "bytes": 232448,
+      "sha256": "c0c0a22809316536468da7e9c7f57b8ec1a8e387ec3a1cde032976c6d8a6c7a4"
+    },
+    {
+      "path": "models/vehicles/car-kit/garbage-truck.glb",
+      "bytes": 268224,
+      "sha256": "6f2943e0ba4c6d86eb69a9243224259d6e0f169f474228439cda0579d49d3509"
+    },
+    {
+      "path": "models/vehicles/car-kit/hatchback-sports.glb",
+      "bytes": 197804,
+      "sha256": "bd5c9d4c3b4bdd254a66b8426563a68b1487ae7a5076df3a2488e6ffed7be64f"
+    },
+    {
+      "path": "models/vehicles/car-kit/kart-oobi.glb",
+      "bytes": 251516,
+      "sha256": "035c80531d201f050fb38c3edb348833fd0f6be0b2a132fe8d804f52a15e5756"
+    },
+    {
+      "path": "models/vehicles/car-kit/kart-oodi.glb",
+      "bytes": 230984,
+      "sha256": "1a6d7dc227d7f1edb8aebcecaeef0749c614dcb168b69a59e0127ad6a3a71a59"
+    },
+    {
+      "path": "models/vehicles/car-kit/kart-ooli.glb",
+      "bytes": 233380,
+      "sha256": "8b496397361b92f481e83dd5d0b74649571bae53e900ffbd785bb2d384182cc2"
+    },
+    {
+      "path": "models/vehicles/car-kit/kart-oopi.glb",
+      "bytes": 236196,
+      "sha256": "09c1a7522345761dec9d0d1efbf6093aa1611a5ccbd825e1e3260b1607a2d8ab"
+    },
+    {
+      "path": "models/vehicles/car-kit/kart-oozi.glb",
+      "bytes": 240776,
+      "sha256": "116afde6ab8e4b94ff8f2d79ea0ef8cca15bab3a3aad2c5d73c0dc0fed5da654"
+    },
+    {
+      "path": "models/vehicles/car-kit/police.glb",
+      "bytes": 195336,
+      "sha256": "a617b880594f56239b7ac4cf6fd4d74ebdae3ba6c5d842e77c76a5906eff352a"
+    },
+    {
+      "path": "models/vehicles/car-kit/race-future.glb",
+      "bytes": 173164,
+      "sha256": "869e2a58d2c12de474e824aff137334491b8f234b97127cf23f1ea04e42deec6"
+    },
+    {
+      "path": "models/vehicles/car-kit/race.glb",
+      "bytes": 167272,
+      "sha256": "e1408c4c6e135f5a39c5f34cbfbcac9ae21c5c491e793fdee74bccac8334d942"
+    },
+    {
+      "path": "models/vehicles/car-kit/sedan-sports.glb",
+      "bytes": 177676,
+      "sha256": "2889c428ca1dd9c975c3ff760eb8757883490410555ab60b818f712f583826d6"
+    },
+    {
+      "path": "models/vehicles/car-kit/sedan.glb",
+      "bytes": 172216,
+      "sha256": "b532ea7d2c59f7f6b22b138cf1955218a2c1898f1cea932af4d3fd563c3959b7"
+    },
+    {
+      "path": "models/vehicles/car-kit/suv-luxury.glb",
+      "bytes": 175908,
+      "sha256": "9e2a79dc050189d4555a88d2e9da0f30ff946ba74f1d43b5b3bda3c193d1f7d7"
+    },
+    {
+      "path": "models/vehicles/car-kit/suv.glb",
+      "bytes": 207572,
+      "sha256": "9df31f6e89e927a8176fc792aa125f0b19dc1ba29d2025bfef7c4f4d6ab1778a"
+    },
+    {
+      "path": "models/vehicles/car-kit/taxi.glb",
+      "bytes": 175608,
+      "sha256": "3803539718ffd3b84b515dbce8ed6b489f1ff5be58edb1903d2c5db5c584bdc7"
+    },
+    {
+      "path": "models/vehicles/car-kit/tractor-police.glb",
+      "bytes": 196308,
+      "sha256": "25cd7801798fd1c81bb82cd8e9d5ec1ec1797b9fb720304efff5e6cbc7949142"
+    },
+    {
+      "path": "models/vehicles/car-kit/tractor-shovel.glb",
+      "bytes": 222584,
+      "sha256": "1bc67bcc36dc563baf7b5060e2a790f67a5a0b42fbdf17c18ab933fcc8a4aa53"
+    },
+    {
+      "path": "models/vehicles/car-kit/tractor.glb",
+      "bytes": 175960,
+      "sha256": "48b30b3e4bb0adb48378c473dc27ee5ae4d9296ec758c85816f17121a3ce8371"
+    },
+    {
+      "path": "models/vehicles/car-kit/truck-flat.glb",
+      "bytes": 207424,
+      "sha256": "4279862f2442e96c6603c514edf50bfb932707545695d8c4747611cd3796cf3b"
+    },
+    {
+      "path": "models/vehicles/car-kit/truck.glb",
+      "bytes": 176360,
+      "sha256": "5e1bc66c343501dd7d5734b57e672dd949bf95d7abdce680c6508cef99d374f8"
+    },
+    {
+      "path": "models/vehicles/car-kit/van.glb",
+      "bytes": 175664,
+      "sha256": "ed4ed56e8e5ed98db050af09ed2062b3b6bb7b93eab1e563cb6774b387b233a1"
+    },
+    {
+      "path": "models/vehicles/car-kit/wheel-dark.glb",
+      "bytes": 29116,
+      "sha256": "ca871b4db5c5300314c5873b4c8e412f30fc95c1f1deee87599fde736a7adc20"
+    },
+    {
+      "path": "models/vehicles/car-kit/wheel-default.glb",
+      "bytes": 26820,
+      "sha256": "7d61941bc27bcc3b235e2e26c598cbcb4166bd66eb8f9920e26842a11015c62b"
+    },
+    {
+      "path": "models/vehicles/car-kit/wheel-racing.glb",
+      "bytes": 29120,
+      "sha256": "5d8dbff9da004a2aabc471a12be0a4b70725c49463ec36ec3465b15c0cf64571"
+    },
+    {
+      "path": "models/vehicles/car-kit/wheel-tractor-back.glb",
+      "bytes": 36628,
+      "sha256": "818d83067e1196608fe81dbc04d354b0d65af51c2612e683ab755e92c49253b4"
+    },
+    {
+      "path": "models/vehicles/car-kit/wheel-tractor-dark-back.glb",
+      "bytes": 36644,
+      "sha256": "a969fa48317f6da226c1c3505b917603c325080949fbc510bc6fe736bed8fed9"
+    },
+    {
+      "path": "models/vehicles/car-kit/wheel-tractor-dark-front.glb",
+      "bytes": 29156,
+      "sha256": "76eda5c812243a85cac5074c4e0726cb521d45f1e8fdd30c62dacd1c6ba9d364"
+    },
+    {
+      "path": "models/vehicles/car-kit/wheel-tractor-front.glb",
+      "bytes": 29140,
+      "sha256": "427a632a5b930cdda9d55a63fba94f01f0c77e86face3878ce9fbc63e9879b2f"
+    },
+    {
+      "path": "models/vehicles/car-kit/wheel-truck.glb",
+      "bytes": 34304,
+      "sha256": "411ff9692f72e9b0490d20574e3efd94b20058732a587abc26f4952e2c91351e"
+    },
+    {
+      "path": "models/vehicles/car_hypercar_01.glb",
+      "bytes": 58988,
+      "sha256": "85148a83c4a95adcce4d437be9ffd4d2026b2f8453d30c42b28963e11398a3c9"
+    },
+    {
+      "path": "models/vehicles/car_sedan.glb",
+      "bytes": 52236,
+      "sha256": "5fca3b895f39026379ad34cc2804c4157d4faf98c8810a54317bf0d5b84f766c"
+    },
+    {
+      "path": "models/vehicles/car_starter.glb",
+      "bytes": 50536,
+      "sha256": "e6f449c307e539dab0c7bf156e67a1ef2bad3a1e8895ed66c79fb64555e1d659"
+    },
+    {
+      "path": "models/vehicles/car_supercar_01.glb",
+      "bytes": 54140,
+      "sha256": "f8f0b19c5b5fc6d97070faf08ea6c95aa085b74a65722e3e1dbb6e7ed5c8c142"
+    },
+    {
+      "path": "models/vehicles/lowpoly-cars/armor.glb",
+      "bytes": 147348,
+      "sha256": "949dc1646bdce260e0db3df8cd4393f708aa8e2833ed3a8d3c1ce6457625b74c"
+    },
+    {
+      "path": "models/vehicles/lowpoly-cars/coupe.glb",
+      "bytes": 139768,
+      "sha256": "661c70ed32f2232606c2a350b37595ea43eb410bccf7c4a299d9e4d2becc08dc"
+    },
+    {
+      "path": "models/vehicles/lowpoly-cars/fenyr.glb",
+      "bytes": 152012,
+      "sha256": "40c7025350cf66cfeb28e07f35ce3681ac41b24d5f08fe624cbe1c3dcca20a94"
+    },
+    {
+      "path": "models/vehicles/lowpoly-cars/ghini.glb",
+      "bytes": 141704,
+      "sha256": "66401ebc1f860d2354a26b70e91d2571375b16ee3469e0a309e5d46403c61abc"
+    },
+    {
+      "path": "models/vehicles/lowpoly-cars/italia.glb",
+      "bytes": 135664,
+      "sha256": "98c14666c3bb5c529e4e7d109efcb0c0c13bf5119a5f486bb9d2a121de83e785"
+    },
+    {
+      "path": "models/vehicles/lowpoly-cars/jeep.glb",
+      "bytes": 219724,
+      "sha256": "46753dadc1f1e37593ec63264a656749c89e92765733acd222751d3d20b37782"
+    },
+    {
+      "path": "models/vehicles/lowpoly-cars/kamaro.glb",
+      "bytes": 210940,
+      "sha256": "5524c92aa92f25ef42123eba5303576d890910f27abd30ef11046286fadca267"
+    },
+    {
+      "path": "models/vehicles/lowpoly-cars/lamb.glb",
+      "bytes": 167876,
+      "sha256": "9b0447347fff81fd33c5be3a8d2448f254fb85bed1b8caf6048f7a488c2fa0b9"
+    },
+    {
+      "path": "models/vehicles/lowpoly-cars/mobil.glb",
+      "bytes": 170336,
+      "sha256": "4c737c16b79d2e3e13478d3c9ba15e3d8a9b092cd488d067ec39ccbdd208c476"
+    },
+    {
+      "path": "models/vehicles/lowpoly-cars/police.glb",
+      "bytes": 184104,
+      "sha256": "1603f28ac0718297f099d0bd6258d464bb500237f2b717fc8b5a3ef5c23efdad"
+    },
+    {
+      "path": "models/vehicles/lowpoly-cars/rally.glb",
+      "bytes": 137604,
+      "sha256": "a1ba861c078502e83f458ca8c0eea609a3e6ddba1ffe5f91cd64bd6cb8845a16"
+    },
+    {
+      "path": "models/vehicles/lowpoly-cars/van.glb",
+      "bytes": 158800,
+      "sha256": "21b2ea7aa2be43a4bea49a50c5a350464363add66bba8229431a1c8e478e4c21"
+    },
+    {
+      "path": "models/weapons/ak47.glb",
+      "bytes": 1769496,
+      "sha256": "236fc9445e9bfb13f651c86242f6a76a9b25b6762d25b74dc10da374ec0bd7c7"
+    },
+    {
+      "path": "models/weapons/ammobox.glb",
+      "bytes": 256128,
+      "sha256": "bca0372b9313698d2e1c7430a011f54a7815aa0f52709883feacef63180d800d"
+    },
+    {
+      "path": "models/weapons/awp.glb",
+      "bytes": 1462200,
+      "sha256": "d0ac16402ed3ff9d12ac8d003486a3b6a538456ba3d3078cfc90cffce1f10e80"
+    },
+    {
+      "path": "models/weapons/mac10.glb",
+      "bytes": 1507340,
+      "sha256": "157e4293e5c7130c751d64913894b91ed3210c4358f0b8f4d2ab9f6370076c4f"
+    },
+    {
+      "path": "models/weapons/pew.glb",
+      "bytes": 1738440,
+      "sha256": "685867be7ecfe75ee1b2bae658b52ba0bd44a55817551aacdebb277523df03b7"
+    },
+    {
+      "path": "models/weapons/rocketlaucher.glb",
+      "bytes": 1493936,
+      "sha256": "a2ac620f4f88f7089d66fd3f012f1b645ae7a9c9b32516f9df700f1d2cd7e5c2"
+    },
+    {
+      "path": "models/weapons/shotgun.glb",
+      "bytes": 1155228,
+      "sha256": "249dfca6e95da64a1078999c805549a4f33549fc601171b5c1822e8ca2fbf2da"
+    }
+  ],
+  "duplicates": [
+    {
+      "hash": "f9f4f2fb3eeeefb0b6f0fdef38b0770fd6607640c1c680b8139dd76697e9f9b3",
+      "bytes": 1729467,
+      "paths": [
+        "models/characters/mini-kit/T_Hair_2_BaseColor.png",
+        "models/characters/mini-kit/T_Hair_2_BaseColor_png.png"
+      ]
+    },
+    {
+      "hash": "bc7aa863bd22ab0a995cd838cceb4d3a5186ee54ee2fb0108fad85d20c057e6e",
+      "bytes": 1570376,
+      "paths": [
+        "models/characters/mini-kit/T_Hair_1_BaseColor.png",
+        "models/characters/mini-kit/T_Hair_1_BaseColor_png.png"
+      ]
+    },
+    {
+      "hash": "d132a085dd64e61b512013512a811c14e2226ef1959b50d3c37088e72f152d1d",
+      "bytes": 1143660,
+      "paths": [
+        "models/props/trash-debris.glb",
+        "models/props/trash/trashanddebris.glb"
+      ]
+    },
+    {
+      "hash": "16aad644c9c453a21aa1757ac27149b33bd2f8d06c43f4cd68d5b30d2b18342e",
+      "bytes": 2570,
+      "paths": [
+        "models/buildings/urban-kit/Street_Asphalt_Curve_2Lane - Copy - Copy.gltf",
+        "models/buildings/urban-kit/Street_Asphalt_Curve_2Lane - Copy.gltf",
+        "models/buildings/urban-kit/Street_Asphalt_Curve_2Lane.gltf"
+      ]
+    },
+    {
+      "hash": "1f77ccbdca57dc5884975dff472df6be6785ef5a34311857258b867209794ab4",
+      "bytes": 2064,
+      "paths": [
+        "models/buildings/urban-kit/Street_Asphalt_Curve_2Lane - Copy.bin",
+        "models/buildings/urban-kit/Street_Asphalt_Curve_2Lane.bin"
+      ]
+    }
+  ],
+  "largest": [
+    {
+      "path": "models/interiors/classroom/chemistrylabdemoscene.glb",
+      "bytes": 12261628,
+      "sha256": "13579f0e25e964eb23bbfc314fa6f82c6c436695fc8617f39861706d5d96ea9a"
+    },
+    {
+      "path": "models/buildings/diner/diner.glb",
+      "bytes": 10421328,
+      "sha256": "1a0a6d814a0a02c4747f54e0392750224be418f7ff0aeb9b00fd8ef7d24786a7"
+    },
+    {
+      "path": "models/buildings/urban-kit/T_Dirt_Normal.png",
+      "bytes": 9650819,
+      "sha256": "88958149742c2ebf8447079edd80ac1133f7b72a5fce0c118206b2f742a350ea"
+    },
+    {
+      "path": "models/buildings/gas-station/gas-station.glb",
+      "bytes": 9090388,
+      "sha256": "31cf3965e7e7b71c8ea63c954cae6fe094a6c4db6787ceaf84e7c448f3ea514a"
+    },
+    {
+      "path": "models/buildings/mini-market/market.glb",
+      "bytes": 8784460,
+      "sha256": "84404a4f11ab6381b0e4156e8feb6e1a9db23fc8068fc3062b4193662a86c59f"
+    },
+    {
+      "path": "models/animations/ual-1/ual1-standard.glb",
+      "bytes": 8114364,
+      "sha256": "d867292451e432b735e2a910c2db6640fbea97b205d85a2e8ffed26da87972cf"
+    },
+    {
+      "path": "models/animations/ual-2/ual2-standard.glb",
+      "bytes": 8061600,
+      "sha256": "9a0ffda4931f934f13fb584002c51673723b03f9655a581167e7e5dae744f086"
+    },
+    {
+      "path": "models/buildings/urban-kit/T_RedBrick_Normal.png",
+      "bytes": 7273659,
+      "sha256": "147f14d7f665d2598d0d796bd02a227f6b8b0fbc790c3e0737b1b90128101c93"
+    },
+    {
+      "path": "models/buildings/urban-kit/T_Ornaments_Normal.png",
+      "bytes": 7172215,
+      "sha256": "c1aa6b307d47386b63e775ba88d82992dd0aaf34f1e4c2b7824002e3cc0a795a"
+    },
+    {
+      "path": "models/interiors/classroom/computerdemoscene.glb",
+      "bytes": 6486040,
+      "sha256": "08d127a4fc22d954dc569e8a6a22ce8ddd8311a55f931f0a62dd5795f2297381"
+    },
+    {
+      "path": "models/interiors/classroom/cafeteriademoscene.glb",
+      "bytes": 5965564,
+      "sha256": "9c8d772fb90a6d5e8a4b5d27817abe6243d21871d1978f6e823771eef520faa0"
+    },
+    {
+      "path": "models/buildings/diner/objects.glb",
+      "bytes": 5474832,
+      "sha256": "75756da39df1ca26ade691b5d0789379ab1aeb596cf9b90cd950d015fa5e6286"
+    },
+    {
+      "path": "models/buildings/shop/shop.glb",
+      "bytes": 5314184,
+      "sha256": "49d160c52a847078c8f71424f8bd03a7436ac4ac476b8946a97dd033cefe50ac"
+    },
+    {
+      "path": "models/buildings/urban-kit/T_MetalConcrete_Normal.png",
+      "bytes": 4815924,
+      "sha256": "93f95a96c32b27820c590301f00f5ba1d23d4054046d92bf6d58adbf23007419"
+    },
+    {
+      "path": "models/buildings/urban-kit/T_Ornaments_BaseColor.png",
+      "bytes": 4776648,
+      "sha256": "528cbe672c62384aa3bac703f574b60509bd69b4d492291cb2915022a12a449c"
+    },
+    {
+      "path": "models/buildings/urban-kit/T_Ornaments_ORM.png",
+      "bytes": 4548795,
+      "sha256": "c65b673f871e6b4b2fa61fd110286a096d05d9a311e71ca71804cea46811885d"
+    },
+    {
+      "path": "models/buildings/urban-kit/T_Trim_BaseColor.png",
+      "bytes": 4421593,
+      "sha256": "c3334902f8315783477eec63e2d462f8cefedf9c55b41ef452d8374b5603f08e"
+    },
+    {
+      "path": "models/buildings/urban-kit/T_Concrete_Normal.png",
+      "bytes": 4416770,
+      "sha256": "e4de917d2506bff4b17d44380a136336cf16e5ea828edfdb8981f4f27e30a86a"
+    },
+    {
+      "path": "models/interiors/classroom/principalofficedemoscene.glb",
+      "bytes": 4225692,
+      "sha256": "9b2cc92f08a32e7afbcbc7c1c9e84b80bbd0b1aacdb3f601816fca50aeb92a7d"
+    },
+    {
+      "path": "models/props/urban-props.glb",
+      "bytes": 4181964,
+      "sha256": "ae33aac2e273d7c1c5d050fc6812cc2df0a298bf08016d8e2d39434ee2718ce7"
+    },
+    {
+      "path": "models/characters/mini-kit/T_Hair_2_Normal.png",
+      "bytes": 4109628,
+      "sha256": "214dff8981ab87319b2acfaf1ad9143db020989afa14896a0d70048a667e17e3"
+    },
+    {
+      "path": "models/buildings/urban-kit/T_Trim_Normal.png",
+      "bytes": 4104873,
+      "sha256": "95fa43093067956fa6e206408f3e2f2302c18c7453b75a02f6e29fe57e2cd041"
+    },
+    {
+      "path": "models/buildings/gas-station/gas-station-props.glb",
+      "bytes": 4082760,
+      "sha256": "eee3752f9f6424d94c1e3762b345a2c482ed024044c19aed3c5efb239a6ac19e"
+    },
+    {
+      "path": "models/characters/mini-kit/T_Hair_1_Normal.png",
+      "bytes": 3770683,
+      "sha256": "fd4530bb696a083ac7f9c2f685b4bb15d91150040e76c905db591c7644b4aa87"
+    },
+    {
+      "path": "models/characters/mini-kit/T_Superhero_Male_Normal.png",
+      "bytes": 3687166,
+      "sha256": "3645858289beb51643155a924e5148735dd5fe226230532936375c06ba829dec"
+    },
+    {
+      "path": "models/buildings/urban-kit/T_RoofSlate_Normal.png",
+      "bytes": 3679324,
+      "sha256": "cd5cb711b2cc4f59a846604309cb0d312596b0e178b3aa2cd56e3a2f84d9471b"
+    },
+    {
+      "path": "models/characters/mini-kit/T_Superhero_Female_Normal.png",
+      "bytes": 3420584,
+      "sha256": "3b90600cbd90d1e8b39bcb0befee4333388003a82af9d0ff00825d144cf99373"
+    },
+    {
+      "path": "models/buildings/urban-kit/Building_Large_2.bin",
+      "bytes": 3345228,
+      "sha256": "e25636464da7b96a346f89314e498099ce33d3b0e9b1f8d9cba3eee94b63fac3"
+    },
+    {
+      "path": "models/buildings/urban-kit/T_RoofSlate_ORM.png",
+      "bytes": 3160276,
+      "sha256": "7e8bafdd2a33af3d5ae9493305b48ed40c6ea8f7354808da6d6e40ec42a1e01b"
+    },
+    {
+      "path": "models/interiors/classroom/classroom-demoscene.glb",
+      "bytes": 3139660,
+      "sha256": "90aa64cb6c9c53d646f43b5af90d11f4f616ef46382c981dd5334778d9121952"
+    }
+  ],
+  "directReferences": [
+    "models/buildings/diner/diner.glb",
+    "models/buildings/gas-station/gas-station.glb",
+    "models/buildings/mini-market/market.glb",
+    "models/characters/npc_basic_01.glb",
+    "models/characters/npc_basic_02.glb",
+    "models/characters/npc_shopkeeper_frostbox.glb",
+    "models/characters/player/sunbox-male-free.glb",
+    "models/characters/player_avatar.glb",
+    "models/hair/hair_afro.glb",
+    "models/hair/hair_braids.glb",
+    "models/hair/hair_cornrows.glb",
+    "models/hair/hair_locs.glb",
+    "models/hair/hair_taper_fade.glb",
+    "models/hair/hair_waves.glb",
+    "models/jewelry/frostbox_chain_cuban.glb",
+    "models/jewelry/frostbox_display_case.glb",
+    "models/jewelry/frostbox_gem_diamond.glb",
+    "models/jewelry/frostbox_pendant_initial.glb",
+    "models/props/trash-debris.glb",
+    "models/vehicles/car_hypercar_01.glb",
+    "models/vehicles/car_sedan.glb",
+    "models/vehicles/car_starter.glb",
+    "models/vehicles/car_supercar_01.glb",
+    "models/weapons/ak47.glb",
+    "models/weapons/awp.glb",
+    "models/weapons/mac10.glb",
+    "models/weapons/pew.glb",
+    "models/weapons/rocketlaucher.glb",
+    "models/weapons/shotgun.glb"
+  ]
+}

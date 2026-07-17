@@ -3,6 +3,7 @@
 // ───────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 import { buildAvatar, SKIN_TONES, HAIRSTYLES, OUTFIT_TOPS, OUTFIT_BOTTOMS, SHOES } from './avatar.js';
+import { applyNpcSkins } from './avatarSkin.js';
 import { buildCar, CAR_TYPES } from './vehicles.js';
 import { TRAFFIC_ROUTES, PEDESTRIAN_ROUTES } from './config/mapConfig.js';
 
@@ -41,6 +42,17 @@ export function createCityNPCs(scene, count = 8) {
       target: route[(wp + 1) % route.length].clone(),
       speed: 1.1 + Math.random() * 0.8,
       phase: Math.random() * Math.PI * 2,
+    });
+  }
+
+  // Explicit visible-skin wiring. The player and foot cops already call their
+  // role-specific adapters in main.js; civilians previously had no live call at
+  // all. Cap the GLB pass so density settings never turn character loading into a
+  // frame-time avalanche. Distant/excess pedestrians remain procedural.
+  if (globalThis.__ZW_FEATURES__?.USE_REAL_NPC_SKINS !== false && npcs.length) {
+    queueMicrotask(() => {
+      applyNpcSkins(npcs, null, Math.min(12, npcs.length))
+        .catch((error) => console.warn('[skin] civilian pass failed; procedural fallback kept', error));
     });
   }
   return npcs;
@@ -162,7 +174,6 @@ export function createTraffic(scene, count = 6) {
   const perRoute = TRAFFIC_ROUTES.map(() => 0);
   for (let i = 0; i < count; i++) perRoute[i % TRAFFIC_ROUTES.length]++;
 
-  let idx = 0;
   for (let r = 0; r < TRAFFIC_ROUTES.length; r++) {
     const routeDef = TRAFFIC_ROUTES[r];
     const route = toWaypoints(routeDef.loop);
@@ -185,7 +196,6 @@ export function createTraffic(scene, count = 6) {
         wheels: g.userData.wheels, driver, hasDriver: true,
         _stuckT: 0, _stopAt: null, _stopTimer: 0,
       });
-      idx++;
     }
   }
   return cars;
@@ -249,9 +259,6 @@ export function updateTraffic(cars, dt, obstacles = [], control = null) {
     c.speed += (tgtSpeed - c.speed) * Math.min(1, dt * 3.5);
 
     // ── stuck recovery ──────────────────────────────────────────────────────
-    // Only count as "stuck" when we're NOT legitimately stopped at a light/sign
-    // or queued behind another car at one. If a car idles too long in open road,
-    // teleport it to a free slot on its route (or nudge its waypoint forward).
     if (c.speed < 0.4 && !controlStop) {
       c._stuckT += dt;
       if (c._stuckT > 5.5) {
@@ -263,7 +270,7 @@ export function updateTraffic(cars, dt, obstacles = [], control = null) {
           c.g.rotation.y = Math.atan2(b.x - cpos.x, b.z - cpos.z);
           c.speed = 0;
         } else {
-          c.wp = (c.wp + 1) % c.route.length;    // can't relocate → skip ahead
+          c.wp = (c.wp + 1) % c.route.length;
         }
         c._stuckT = 0;
       }
@@ -274,10 +281,8 @@ export function updateTraffic(cars, dt, obstacles = [], control = null) {
     const step = c.speed * dt;
     cpos.x += heading.x * step;
     cpos.z += heading.z * step;
-    // smoothly rotate toward travel direction
     const yaw = Math.atan2(heading.x, heading.z);
     c.g.rotation.y = lerpAngle(c.g.rotation.y, yaw, Math.min(1, dt * 4));
-    // roll wheels
     const spin = step / 0.36;
     (c.g.userData.wheels || []).forEach(w => { w.rotation.x += spin; });
   }

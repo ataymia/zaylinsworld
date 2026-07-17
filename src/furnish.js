@@ -101,19 +101,18 @@ const FURNITURE = {
     { name: 'shelf-b-large-decorated', dx: -8.2, dz: -3, ry: Math.PI / 2, s: 0.9 },
     { name: 'lamp-standing',   dx: 6,  dz: 4,  ry: 0,            s: 0.9 },
   ],
-  // CHICKEN SPOT — restaurant-pack ONLY (cm pack → unit 0.01). Counter + kitchen
-  // along the back wall, booths down the left, tables + chairs in the seating area.
-  // `surface:true` pieces are support surfaces; `onSurface:true` pieces snap onto
-  // them (no more floating registers/trays). `tint` is the fallback colour used
-  // only when the GLB's texture failed to embed (flat-white restaurant pack).
+  // CHICKEN SPOT — restaurant-pack ONLY (cm pack → unit 0.01). The pack has no
+  // true fryer model, so the authored fryer bank/hood stays visible as a permanent
+  // kitchen fixture. Real assets replace the front counter, dining room, handwash
+  // sink and storage shelf. Stove/griddle meshes are intentionally excluded.
   chicken: [
     { name: 'counter-front',   dx: -1.05, dz: -3.2, ry: 0,           s: 1.0, surface: true, tint: '#b5651d' },
     { name: 'counter-front',   dx: 0,     dz: -3.2, ry: 0,           s: 1.0, surface: true, tint: '#b5651d' },
     { name: 'counter-front',   dx: 1.05,  dz: -3.2, ry: 0,           s: 1.0, surface: true, tint: '#b5651d' },
     { name: 'cash-register',   dx: 0.9,   dz: -3.2, ry: Math.PI,     s: 1.0, onSurface: true, surfaceFallback: 0.96, tint: '#2a2a2e' },
     { name: 'heat-lamp-tray-grill', dx: -0.9, dz: -3.2, ry: 0,       s: 1.0, onSurface: true, surfaceFallback: 0.96, tint: '#c0392b' },
-    { name: 'stove-griddle',   dx: -3.5,  dz: -4.4, ry: 0,           s: 1.0, surface: true, tint: '#8a9099' },
-    { name: 'burner-stove',    dx: -5.6,  dz: -4.4, ry: 0,           s: 1.0, surface: true, tint: '#8a9099' },
+    { name: 'sink-handwash',   dx: 5.55,  dz: -4.55, ry: 0,           s: 1.0, tint: '#bfc6ce' },
+    { name: 'shelf-large',     dx: -5.65, dz: -4.55, ry: 0,           s: 1.0, tint: '#6f737a' },
     { name: 'booth-full',      dx: -5.6,  dz: 2,    ry: Math.PI / 2, s: 1.0, tint: '#7a1f2b' },
     { name: 'booth-half',      dx: -5.6,  dz: 4.2,  ry: Math.PI / 2, s: 1.0, tint: '#7a1f2b' },
     { name: 'table-square',    dx: 4.5,   dz: 1.6,  ry: 0,           s: 1.0, surface: true, tint: '#caa37a' },
@@ -131,7 +130,8 @@ const FURNITURE = {
 const FOOD_UNIT = 1.0;
 const FOOD = {
   chicken: [
-    { name: 'chicken-cooking-a', dx: -3.5, dz: -4.4, s: 2.0, onSurface: true, surfaceFallback: 1.1 },
+    // Cooking chicken now sits over the permanent fryer bank, not a stove mesh.
+    { name: 'chicken-cooking-a', dx: -1.8, dz: -4.4, s: 2.0, y: 1.05 },
     { name: 'fried-chicken',     dx: 0.2,  dz: -3.2, s: 2.4, onSurface: true, surfaceFallback: 0.96 },
     { name: 'french-fries',      dx: 4.5,  dz: 1.6,  s: 2.4, onSurface: true, surfaceFallback: 0.87 },
     { name: 'chicken-nuggets',   dx: 1.6,  dz: 3.8,  s: 2.4, onSurface: true, surfaceFallback: 0.86 },
@@ -213,6 +213,30 @@ async function place(root, asset, ox, item, renderer, unit, warnings, supports) 
   } catch (e) { return { ok: false, reason: (e && e.message) || 'threw' }; }
 }
 
+// Most interiors use all-or-nothing placeholder replacement. Chicken Spot is
+// different: the asset pack has no fryer, so its rear procedural fryer bank and
+// hood remain while the counter/seating placeholders disappear.
+function hideProceduralDecor(intr, id, info) {
+  if (!intr?.decor) return;
+  if (id !== 'chicken') {
+    intr.decor.visible = false;
+  } else {
+    intr.decor.visible = true;
+    const kitchenCutoff = (intr.offset?.z ?? 0) - 3.8;
+    for (const child of intr.decor.children) {
+      child.visible = child.position.z <= kitchenCutoff;
+    }
+    info.warnings.push('kept procedural fryer bank: restaurant pack has no fryer asset');
+  }
+  if (Array.isArray(intr.decorColliders) && Array.isArray(intr.colliders)) {
+    for (const c of intr.decorColliders) {
+      const i = intr.colliders.indexOf(c);
+      if (i >= 0) { intr.colliders.splice(i, 1); info.removed++; }
+    }
+  }
+  intr._decorHidden = id !== 'chicken';
+}
+
 // Furnish every configured interior. `interiors` = { group, byId } from buildInteriors().
 // Returns { items, interiors, failed[], rejected[], byInterior{} } so the debug
 // panel can PROVE each interior pulled from its approved pack only AND that the
@@ -246,16 +270,7 @@ export async function furnishInteriors(interiors, renderer) {
       }
     }
     // ── REPLACEMENT: hide procedural decor ONLY if real assets actually placed ──
-    if (info.placed.length > 0 && intr.decor) {
-      intr.decor.visible = false;
-      if (Array.isArray(intr.decorColliders) && Array.isArray(intr.colliders)) {
-        for (const c of intr.decorColliders) {
-          const i = intr.colliders.indexOf(c);
-          if (i >= 0) { intr.colliders.splice(i, 1); info.removed++; }
-        }
-      }
-      intr._decorHidden = true;
-    }
+    if (info.placed.length > 0 && intr.decor) hideProceduralDecor(intr, id, info);
   }
 
   // ── per-interior validation log (P7) ──

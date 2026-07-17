@@ -19,15 +19,27 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 const CDN = 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/';
 
 let _gltf = null;
+let _ktx2 = null;
+let _ktxRenderer = null;
 function gltfLoader(renderer) {
-  if (_gltf) return _gltf;
-  const draco = new DRACOLoader().setDecoderPath(CDN + 'draco/');
-  const ktx2 = new KTX2Loader().setTranscoderPath(CDN + 'basis/');
-  if (renderer) ktx2.detectSupport(renderer);
-  _gltf = new GLTFLoader()
-    .setDRACOLoader(draco)
-    .setKTX2Loader(ktx2)
-    .setMeshoptDecoder(MeshoptDecoder);
+  if (!_gltf) {
+    const draco = new DRACOLoader().setDecoderPath(CDN + 'draco/');
+    _ktx2 = new KTX2Loader().setTranscoderPath(CDN + 'basis/');
+    _gltf = new GLTFLoader()
+      .setDRACOLoader(draco)
+      .setKTX2Loader(_ktx2)
+      .setMeshoptDecoder(MeshoptDecoder);
+  }
+  // NPC loading may initialize the shared loader before the player path has a
+  // renderer. Detect KTX2 support as soon as any later caller supplies one.
+  if (renderer && _ktx2 && _ktxRenderer !== renderer) {
+    try {
+      _ktx2.detectSupport(renderer);
+      _ktxRenderer = renderer;
+    } catch (error) {
+      console.warn('[assets] KTX2 renderer detection failed; normal textures still work', error);
+    }
+  }
   return _gltf;
 }
 
@@ -36,16 +48,23 @@ const _modelCache = new Map();
 // Load a .glb/.gltf. Returns { scene, animations } or null if it can't load.
 // Never throws — callers fall back to procedural meshes.
 export async function loadModel(url, renderer) {
-  if (_modelCache.has(url)) return _modelCache.get(url);
+  if (_modelCache.has(url)) {
+    // Upgrade the singleton KTX2 loader if this cached call is the first one that
+    // knows about the renderer.
+    gltfLoader(renderer);
+    return _modelCache.get(url);
+  }
   const p = new Promise((resolve) => {
     gltfLoader(renderer).load(
       url,
       (gltf) => {
         gltf.scene.traverse((o) => {
-          if (o.isMesh) {
-            o.castShadow = true;
-            o.receiveShadow = true;
-            if (o.material) o.material.envMapIntensity = 1.0;
+          if (!o.isMesh) return;
+          o.castShadow = true;
+          o.receiveShadow = true;
+          const mats = Array.isArray(o.material) ? o.material : [o.material];
+          for (const material of mats) {
+            if (material) material.envMapIntensity = 1.0;
           }
         });
         resolve({ scene: gltf.scene, animations: gltf.animations || [] });
@@ -62,12 +81,17 @@ export async function loadModel(url, renderer) {
 export function makeMixer(root, animations) {
   const mixer = new THREE.AnimationMixer(root);
   const clips = {};
-  for (const clip of animations) clips[clip.name.toLowerCase()] = clip;
+  const clipNames = [];
+  for (const clip of animations) {
+    clips[clip.name.toLowerCase()] = clip;
+    clipNames.push(clip.name);
+  }
   return {
     mixer,
     actions: {},
+    clipNames,
     play(name, { fade = 0.25, loop = true } = {}) {
-      const clip = clips[name.toLowerCase()];
+      const clip = clips[String(name).toLowerCase()];
       if (!clip) return null;
       let act = this.actions[name];
       if (!act) { act = mixer.clipAction(clip); this.actions[name] = act; }
@@ -162,15 +186,18 @@ export async function listAssets(category, pack) {
   return Object.values(cat).flat();
 }
 
-// Find an asset entry by (category, pack, name-substring) — case-insensitive.
+// Find an asset entry by (category, pack, name). Exact case-insensitive matches
+// win; substring lookup remains as a compatibility fallback for older callers.
 export async function findAsset(category, pack, nameLike) {
   const list = await listAssets(category, pack);
   if (!nameLike) return list[0] || null;
-  const q = nameLike.toLowerCase();
-  return list.find((e) => e.name.includes(q)) || null;
+  const q = String(nameLike).toLowerCase();
+  return list.find((e) => String(e.name).toLowerCase() === q)
+    || list.find((e) => String(e.name).toLowerCase().includes(q))
+    || null;
 }
 
-// Load an asset directly from the library by (category, pack, name-substring).
+// Load an asset directly from the library by (category, pack, name).
 // Returns { scene, animations } or null (caller falls back to procedural).
 export async function loadAsset(category, pack, nameLike, renderer) {
   const entry = await findAsset(category, pack, nameLike);

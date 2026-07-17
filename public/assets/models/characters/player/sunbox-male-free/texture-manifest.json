@@ -1,0 +1,666 @@
+{
+  "sourceModelId": "3901952",
+  "creator": "sunboxgames",
+  "format": "webp",
+  "files": [
+    {
+      "source": "Baseball_Cap/Baseball_Cap_Black.png",
+      "path": "baseball-cap/baseball-cap-black.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 1778,
+      "sha256": "2a6e6ec619e494d9a2e52a649e680d27a3926f5de6af63c24904a73aff672a36"
+    },
+    {
+      "source": "Baseball_Cap/Baseball_Cap_White.png",
+      "path": "baseball-cap/baseball-cap-white.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 5994,
+      "sha256": "b73ce404365691abbcc7f71138df67bf4a643b6e05aa4aa4c619c120bbb2c24e"
+    },
+    {
+      "source": "Basketball_Shoes/Basketball_Shoes_Black.png",
+      "path": "basketball-shoes/basketball-shoes-black.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 39308,
+      "sha256": "3d43416c866a24f8ac2a4075bfce9bfd7915c6afa6ad32217653f42f54af6042"
+    },
+    {
+      "source": "Basketball_Shoes/Basketball_Shoes_Pink.png",
+      "path": "basketball-shoes/basketball-shoes-pink.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 46816,
+      "sha256": "04674982b0a17993ab3d091b237377880a8a25bca1d28d6c024af5a1073b37de"
+    },
+    {
+      "source": "Basketball_Shoes/Basketball_Shoes_White.png",
+      "path": "basketball-shoes/basketball-shoes-white.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 42608,
+      "sha256": "2958534784084e88e80b76e1a20aa8b329bc5529e11e4ee63c9da349cc2229da"
+    },
+    {
+      "source": "Basketball_Shoes/Sneakers_Blue.png",
+      "path": "basketball-shoes/sneakers-blue.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 48542,
+      "sha256": "224cfe7ff217fa61a123d25e5bde6bb23b415d37b41ca12e66a26d989b466a15"
+    },
+    {
+      "source": "Beanie/Beanie_Black.png",
+      "path": "beanie/beanie-black.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 11876,
+      "sha256": "661a9fe02e0d2e20e2d4a66192f58b63bbe1f6c03588b040d86a3e2e222a9980"
+    },
+    {
+      "source": "Beanie/Beanie_White.png",
+      "path": "beanie/beanie-white.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 70576,
+      "sha256": "09b5ac73c86a919c7bff41eb4cfa31d72447271e5d194fc08c85a3a2534ddca1"
+    },
+    {
+      "source": "Eyelashes/Eyelashes_01.png",
+      "path": "eyelashes/eyelashes-01.webp",
+      "originalSize": [
+        1024,
+        1024
+      ],
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "bytes": 20354,
+      "sha256": "6eebbf3583f230283cf16e0ae46c1301939fa6309a7ee98eff1c7043b52e4162"
+    },
+    {
+      "source": "Eyelashes/Eyelashes_02.png",
+      "path": "eyelashes/eyelashes-02.webp",
+      "originalSize": [
+        1024,
+        1024
+      ],
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "bytes": 24300,
+      "sha256": "5ed9ad04457f5e5b0ccb8d9b2b13269d348a01c0642e6227dcd64f8c900dccc2"
+    },
+    {
+      "source": "Eyelashes/Eyelashes_03.png",
+      "path": "eyelashes/eyelashes-03.webp",
+      "originalSize": [
+        1024,
+        1024
+      ],
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "bytes": 25964,
+      "sha256": "5dc3aafc1462590d8d16cc69cb7e5d5d59c30f4b776e332849792fbe52b8fbec"
+    },
+    {
+      "source": "Eyelashes/Eyelashes_04.png",
+      "path": "eyelashes/eyelashes-04.webp",
+      "originalSize": [
+        1024,
+        1024
+      ],
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "bytes": 24810,
+      "sha256": "0126ad76ea0767732f1fc9ae9caee1e63b9224b1d58d4ba9de450f82af5215cb"
+    },
+    {
+      "source": "Eyes/Eyes_Blue01.png",
+      "path": "eyes/eyes-blue01.webp",
+      "originalSize": [
+        1311,
+        1311
+      ],
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "bytes": 9522,
+      "sha256": "a22cf7e0fdbcc56a8fee1de0561fced14330fc736f28d8b72a29518008bd4f3c"
+    },
+    {
+      "source": "Eyes/Eyes_Blue02.png",
+      "path": "eyes/eyes-blue02.webp",
+      "originalSize": [
+        1311,
+        1311
+      ],
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "bytes": 10596,
+      "sha256": "cb11bcbd62acc8195886807f7db13bb9288732f96e92a16621d25da76ccbca4f"
+    },
+    {
+      "source": "Eyes/Eyes_Blue03.png",
+      "path": "eyes/eyes-blue03.webp",
+      "originalSize": [
+        1311,
+        1311
+      ],
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "bytes": 10750,
+      "sha256": "a1dd5d56bfc2b5ad6538b053738c480d457a5dc28c64acaa1e6707fb5a9171c2"
+    },
+    {
+      "source": "Eyes/Eyes_Brown01.png",
+      "path": "eyes/eyes-brown01.webp",
+      "originalSize": [
+        1311,
+        1311
+      ],
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "bytes": 6144,
+      "sha256": "5d5b1706bd17820034cfd292a61b292f8761c976bca50eb4acf4a4ae0886d851"
+    },
+    {
+      "source": "Eyes/Eyes_Brown02.png",
+      "path": "eyes/eyes-brown02.webp",
+      "originalSize": [
+        1311,
+        1311
+      ],
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "bytes": 5078,
+      "sha256": "950b961927c41d3e8cdbf75506ac3e6dc5bb5c552fa4635932fb47c5e5f1a534"
+    },
+    {
+      "source": "Eyes/Eyes_Brown03.png",
+      "path": "eyes/eyes-brown03.webp",
+      "originalSize": [
+        1311,
+        1311
+      ],
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "bytes": 8528,
+      "sha256": "497cc2f6983c0f50942d7ac611c8c9f71baed4389b287fb78f3b9ea945f298b8"
+    },
+    {
+      "source": "Eyes/Eyes_Brown04.png",
+      "path": "eyes/eyes-brown04.webp",
+      "originalSize": [
+        1311,
+        1311
+      ],
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "bytes": 6766,
+      "sha256": "e7b85cc46f2f3062c8583e11d2573ff73e25d966cb26a7a5d9ab10d118d05b97"
+    },
+    {
+      "source": "Eyes/Eyes_Green01.png",
+      "path": "eyes/eyes-green01.webp",
+      "originalSize": [
+        1311,
+        1311
+      ],
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "bytes": 10002,
+      "sha256": "e759ea24124968021698c5cb601cad8489477b71f3ebc9751d9fe35be67f107a"
+    },
+    {
+      "source": "Eyes/Eyes_Green02.png",
+      "path": "eyes/eyes-green02.webp",
+      "originalSize": [
+        1311,
+        1311
+      ],
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "bytes": 10840,
+      "sha256": "b3d548c1ceee5edd2a66cc64e984f2f40b5186649a1f6e5c1e7675e7fcd2192f"
+    },
+    {
+      "source": "Eyes/Eyes_Orange.png",
+      "path": "eyes/eyes-orange.webp",
+      "originalSize": [
+        1311,
+        1311
+      ],
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "bytes": 11892,
+      "sha256": "cd45a49104fbeb3ac954729efaa3086635f99be153b2171702127f9e613bd90d"
+    },
+    {
+      "source": "Eyes/Eyes_Pink01.png",
+      "path": "eyes/eyes-pink01.webp",
+      "originalSize": [
+        1311,
+        1311
+      ],
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "bytes": 10490,
+      "sha256": "5678ad9e50c70e8ed291c0b8c63a79eb2e7c2b95df0a5a401371f6054f0115c8"
+    },
+    {
+      "source": "Eyes/Eyes_Pink02.png",
+      "path": "eyes/eyes-pink02.webp",
+      "originalSize": [
+        1311,
+        1311
+      ],
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "bytes": 9128,
+      "sha256": "78298a03c64df4901d9fb3c89844398df4c623ececc2f30f9cf0e0ea2e8b0a97"
+    },
+    {
+      "source": "Eyes/Eyes_Purple01.png",
+      "path": "eyes/eyes-purple01.webp",
+      "originalSize": [
+        1311,
+        1311
+      ],
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "bytes": 10182,
+      "sha256": "bce7235b38fd63ad6e4183e76e3813e3e2d8b07de5bb94b3df958ae0992322ea"
+    },
+    {
+      "source": "Eyes/Eyes_Purple02.png",
+      "path": "eyes/eyes-purple02.webp",
+      "originalSize": [
+        1311,
+        1311
+      ],
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "bytes": 10812,
+      "sha256": "752a85e281383cd67da2e26ddcd0d0d5741fccdd8c12001b18d90c6d499bfb63"
+    },
+    {
+      "source": "Eyes/Eyes_Red01.png",
+      "path": "eyes/eyes-red01.webp",
+      "originalSize": [
+        1311,
+        1311
+      ],
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "bytes": 10378,
+      "sha256": "9e841689180737eb442b0a24d7bf8b66ba188b562542f08b4e7f202ae0c0a451"
+    },
+    {
+      "source": "Eyes/Eyes_Red02.png",
+      "path": "eyes/eyes-red02.webp",
+      "originalSize": [
+        1311,
+        1311
+      ],
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "bytes": 11404,
+      "sha256": "4d960e06e5c79a6d3eced54c4be9833c183f5e162c7660bcf4a1e61aca8da57a"
+    },
+    {
+      "source": "Eyes/Eyes_Teal01.png",
+      "path": "eyes/eyes-teal01.webp",
+      "originalSize": [
+        1311,
+        1311
+      ],
+      "runtimeSize": [
+        384,
+        384
+      ],
+      "bytes": 10206,
+      "sha256": "77a6a257b384dbacf429b6df56f3a860b95b2bb31e994d3f3c6692259a77ea83"
+    },
+    {
+      "source": "FLipFlops/Flip_Flops_White.png",
+      "path": "flipflops/flip-flops-white.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 48346,
+      "sha256": "e8b0ae20af3e06869bb6327cefb98f6ec16fa594c2d63836b1f42bf7f29bebed"
+    },
+    {
+      "source": "Hair/Hair_Diffuse.png",
+      "path": "hair/hair-diffuse.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 8126,
+      "sha256": "e99e2c3abc24123edb776ca9a48407dadc834fa2de972b0e462206c5648b42da"
+    },
+    {
+      "source": "Hair/Hair_Rainbow_Diffuse.png",
+      "path": "hair/hair-rainbow-diffuse.webp",
+      "originalSize": [
+        265,
+        265
+      ],
+      "runtimeSize": [
+        265,
+        265
+      ],
+      "bytes": 3308,
+      "sha256": "4e991de55f8eeba6ad04ce177183729af4582294a8b357d21b27df7f2bdeef57"
+    },
+    {
+      "source": "Hoodie/Hoodie_Grey.png",
+      "path": "hoodie/hoodie-grey.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 7700,
+      "sha256": "f2d3e9d162f9f0969cb1303eeecc0486d67747ec7bbe4c6ff9efa5643b124a72"
+    },
+    {
+      "source": "Hoodie/Hoodie_White.png",
+      "path": "hoodie/hoodie-white.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 16464,
+      "sha256": "a130f6b9a2228369e33dce9470177c0cf7bbc138ae8e28e03db04d25b2f8cc12"
+    },
+    {
+      "source": "Jeans/Jeans_Black.png",
+      "path": "jeans/jeans-black.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 18108,
+      "sha256": "e82f0202e047bad6a807d27ce2e14f684e3c328cd17711179fe9438e58c50b13"
+    },
+    {
+      "source": "Jeans/Jeans_Blue.png",
+      "path": "jeans/jeans-blue.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 27022,
+      "sha256": "2f1f56bb810bd6f543140374941a5566b1297bd1a70fcd28df3e8fe140871fc2"
+    },
+    {
+      "source": "Jeans/Jeans_Pink.png",
+      "path": "jeans/jeans-pink.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 41082,
+      "sha256": "a829774820db38ec54ae7d71a275c5b778ac78be31745146cd69e2b347dd0879"
+    },
+    {
+      "source": "Jeans/Jeans_White.png",
+      "path": "jeans/jeans-white.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 43116,
+      "sha256": "d457e6a78cf77f820469ed37eb34fd258e075c2e9f2bd6b586027bab631c86a2"
+    },
+    {
+      "source": "Shorts/Cargo_Shorts_Black.png",
+      "path": "shorts/cargo-shorts-black.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 19450,
+      "sha256": "c754eb7590af057df9482422a15599b97b7614292742c910609455d251ecb3f3"
+    },
+    {
+      "source": "Shorts/Cargo_Shorts_Blue.png",
+      "path": "shorts/cargo-shorts-blue.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 26890,
+      "sha256": "4f4b55488bb1862f53d933aa0d9ffe9ee23d375c73ad24b9d965d5db9d40baa3"
+    },
+    {
+      "source": "Shorts/Cargo_Shorts_Pink.png",
+      "path": "shorts/cargo-shorts-pink.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 36026,
+      "sha256": "fbcd606e3d6221938f08634a9ab8bb849ed47c54d941904acb6b23bda38f2f67"
+    },
+    {
+      "source": "Shorts/Cargo_Shorts_White.png",
+      "path": "shorts/cargo-shorts-white.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 33162,
+      "sha256": "c4e765a175f1c272b274e0098250a70019023ee9c7ae9ef6324349305ee9cf25"
+    },
+    {
+      "source": "Skin_Male/Male_Avatar_Diffuse.png",
+      "path": "skin-male/male-avatar-diffuse.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 8464,
+      "sha256": "2ad9024f340e5bc38520e1442138ad91d05cc59c78817d2647b0b7259270f16b"
+    },
+    {
+      "source": "Tshirt/Tshirt_Black.png",
+      "path": "tshirt/tshirt-black.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 3818,
+      "sha256": "e1e0593356dc00c267b21959bc4d5581b1332ae18343ed186f676ec2aea6e141"
+    },
+    {
+      "source": "Tshirt/Tshirt_Logo.png",
+      "path": "tshirt/tshirt-logo.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 6946,
+      "sha256": "84f5823e8f4f4d755b7d4fc5c52d12180b47644eadc035ea0135ecaaa00e872a"
+    },
+    {
+      "source": "Tshirt/Tshirt_Pink.png",
+      "path": "tshirt/tshirt-pink.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 3506,
+      "sha256": "dc6356408b7f2cce71bacfec4c8bbe7f75500d6b3096b5a6754cebe7b4f63528"
+    },
+    {
+      "source": "Tshirt/Tshirt_White.png",
+      "path": "tshirt/tshirt-white.webp",
+      "originalSize": [
+        4096,
+        4096
+      ],
+      "runtimeSize": [
+        768,
+        768
+      ],
+      "bytes": 4004,
+      "sha256": "ac4458478311527847febc719fdc9dd49dcda918485ff92d859f1b0463d53777"
+    }
+  ],
+  "totalBytes": 881182
+}

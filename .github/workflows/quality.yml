@@ -1,0 +1,49 @@
+name: Quality Gate
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - 'agent/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Run quality checks
+        shell: bash
+        run: |
+          mkdir -p reports
+          set -o pipefail
+          npm run check 2>&1 | tee reports/quality-gate.log
+      - run: npm run audit:characters
+      - run: npm run audit:assets
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: character-asset-audit
+          path: artifacts/
+          if-no-files-found: warn
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: repository-asset-inventory
+          path: reports/
+          if-no-files-found: warn
+          retention-days: 14
