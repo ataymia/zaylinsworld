@@ -1,0 +1,29 @@
+{
+  "asset_id": "prop_chicken_spot_deep_fryer_double_v01",
+  "display_name": "Chicken Spot Double Deep Fryer",
+  "town": "Starter Town",
+  "district": "Dreamdrop District",
+  "location": "Chicken Spot kitchen",
+  "category": "prop",
+  "units": "meters",
+  "up_axis": "Y",
+  "forward_axis": "+Z",
+  "dimensions_m": {
+    "width": 1.22,
+    "depth": 0.78,
+    "height": 1.448
+  },
+  "pivot": "ground-center",
+  "triangle_target": "approximately 4k or lower",
+  "collision_plan": "simple cabinet box plus top slab; baskets non-colliding",
+  "interaction_nodes": [
+    "left basket",
+    "right basket",
+    "indicator lights",
+    "oil surface"
+  ],
+  "approval_status": "APPROVED",
+  "approved_in_chat": "2026-07-17",
+  "generated_bytes": 158904,
+  "license": "Original ZTA geometry"
+}
