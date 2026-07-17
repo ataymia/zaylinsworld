@@ -3,7 +3,8 @@
 //
 // Exactly one visible body owns each character. The player uses an editable
 // modular rig. Civilians use complete imported PSX bodies with direct bone
-// drivers whose relaxed pose is solved from shoulder-to-hand geometry.
+// drivers. Normal locomotion is solved from the real shoulder-to-hand chain so
+// hands rest beside the waist rather than exposing the source T-pose.
 // ───────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 import { clone as skeletonClone } from 'three/addons/utils/SkeletonUtils.js';
@@ -137,28 +138,46 @@ function makeEulerDriver(bone, base = {}) {
   return { rotation, userData: { modularBone: bone.name, driver: 'euler' }, bone };
 }
 
+function normalizeBoneName(name) {
+  return String(name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
 function farthestBoneDescendant(bone) {
-  const queue = [...(bone?.children || [])];
+  const queue = [...(bone?.children || [])].map((node) => ({ node, depth: 1 }));
   let chosen = null;
   let bestDepth = -1;
   while (queue.length) {
-    const node = queue.shift();
-    const depth = node.userData?.zwBoneDepth || 1;
+    const { node, depth } = queue.shift();
     if (node.isBone && depth > bestDepth) {
       chosen = node;
       bestDepth = depth;
     }
-    for (const child of node.children || []) {
-      child.userData.zwBoneDepth = depth + 1;
-      queue.push(child);
-    }
+    for (const child of node.children || []) queue.push({ node: child, depth: depth + 1 });
   }
   return chosen;
 }
 
+// Prop anchors are useful for held items, but they are not guaranteed to be
+// children of the animated arm. A non-descendant endpoint can make a correct
+// shoulder rotation solve toward an unrelated point and leave the mesh in a
+// T-pose. Prefer a real hand/wrist bone inside the arm chain.
+function armEndpoint(upperArm, explicitEnd) {
+  if (!upperArm) return null;
+  if (explicitEnd?.isBone && isDescendantOf(explicitEnd, upperArm)) return explicitEnd;
+  let hand = null;
+  upperArm.traverse((node) => {
+    if (hand || !node.isBone || node === upperArm) return;
+    const key = normalizeBoneName(node.name);
+    const isHand = key.includes('hand') || key.includes('wrist');
+    const isDigit = /finger|thumb|index|middle|ring|pinky|little/.test(key);
+    if (isHand && !isDigit) hand = node;
+  });
+  return hand || farthestBoneDescendant(upperArm);
+}
+
 function makeDirectionalArmDriver(bone, endNode, root, desiredRootDirection) {
   if (!bone || !root) return null;
-  const end = endNode || farthestBoneDescendant(bone);
+  const end = armEndpoint(bone, endNode);
   if (!end) return makeEulerDriver(bone);
 
   root.updateWorldMatrix(true, true);
@@ -178,7 +197,9 @@ function makeDirectionalArmDriver(bone, endNode, root, desiredRootDirection) {
 
   bone.getWorldPosition(shoulder);
   end.getWorldPosition(hand);
-  currentDirection.copy(hand).sub(shoulder).normalize();
+  currentDirection.copy(hand).sub(shoulder);
+  if (currentDirection.lengthSq() < 1e-8) return makeEulerDriver(bone);
+  currentDirection.normalize();
   root.getWorldQuaternion(rootWorldQuaternion);
   desiredWorldDirection.applyQuaternion(rootWorldQuaternion).normalize();
   deltaWorld.setFromUnitVectors(currentDirection, desiredWorldDirection);
@@ -213,18 +234,26 @@ function makeDirectionalArmDriver(bone, endNode, root, desiredRootDirection) {
     set y(value) { offset.y = Number(value) || 0; apply(); },
     get z() { return offset.z; },
     set z(value) { offset.z = Number(value) || 0; apply(); },
-    set(x = 0, y = 0, z = 0) { offset.x = Number(x) || 0; offset.y = Number(y) || 0; offset.z = Number(z) || 0; apply(); return this; },
+    set(x = 0, y = 0, z = 0) {
+      offset.x = Number(x) || 0;
+      offset.y = Number(y) || 0;
+      offset.z = Number(z) || 0;
+      apply();
+      return this;
+    },
   };
   return {
     rotation,
-    userData: { modularBone: bone.name, driver: 'directional-arm', relaxed: true },
+    userData: {
+      modularBone: bone.name,
+      endpointBone: end.name,
+      driver: 'directional-arm',
+      relaxed: true,
+      waistPose: true,
+    },
     bone,
     end,
   };
-}
-
-function normalizeBoneName(name) {
-  return String(name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
 }
 
 function boneEntries(root) {
@@ -264,13 +293,15 @@ function remapPlayerRig(avatar, modular) {
     modular.bones.leftArm,
     modular.anchors.leftHand,
     avatar.group,
-    new THREE.Vector3(-0.08, -1, 0.07),
+    // Positive X pulls the left hand inward toward the left hip.
+    new THREE.Vector3(0.14, -1, 0.03),
   );
   const rightArm = makeDirectionalArmDriver(
     modular.bones.rightArm,
     modular.anchors.rightHand,
     avatar.group,
-    new THREE.Vector3(0.08, -1, 0.07),
+    // Negative X pulls the right hand inward toward the right hip.
+    new THREE.Vector3(-0.14, -1, 0.03),
   );
   const leftLeg = makeEulerDriver(modular.bones.leftLeg);
   const rightLeg = makeEulerDriver(modular.bones.rightLeg);
@@ -297,6 +328,7 @@ function remapPlayerRig(avatar, modular) {
     catch { modular.anchors.rightHand.add(held); }
   }
   modular.group.userData.zwRelaxedArmPose = !!(leftArm && rightArm);
+  modular.group.userData.zwArmPose = leftArm && rightArm ? 'waist-rest' : 'fallback';
 }
 
 function remapImportedRig(avatar, skin) {
@@ -307,13 +339,13 @@ function remapImportedRig(avatar, skin) {
     rig.leftArm,
     rig.leftHand,
     avatar.group,
-    new THREE.Vector3(-0.10, -1, 0.05),
+    new THREE.Vector3(0.12, -1, 0.03),
   );
   const rightArm = makeDirectionalArmDriver(
     rig.rightArm,
     rig.rightHand,
     avatar.group,
-    new THREE.Vector3(0.10, -1, 0.05),
+    new THREE.Vector3(-0.12, -1, 0.03),
   );
   const leftLeg = makeEulerDriver(rig.leftLeg);
   const rightLeg = makeEulerDriver(rig.rightLeg);
@@ -344,6 +376,7 @@ function remapImportedRig(avatar, skin) {
     head: !!rig.head,
     torso: !!rig.torso,
     relaxedArms: !!(leftArm && rightArm),
+    armPose: leftArm && rightArm ? 'waist-rest' : 'fallback',
   };
   return !!(rig.leftArm && rig.rightArm && rig.leftLeg && rig.rightLeg);
 }
@@ -584,7 +617,7 @@ export async function applyPlayerSkin(avatar, renderer) {
     avatar.eyeHeight = modular.normalized.targetHeight * 0.91;
     remapPlayerRig(avatar, modular);
     const size = modular.normalized.sourceSize;
-    SKIN_STATUS.player.reason = 'editable modular player active with relaxed arm rig';
+    SKIN_STATUS.player.reason = 'editable modular player active with hands-down waist pose';
     SKIN_STATUS.player.bounds = `${size.x.toFixed(2)}x${size.y.toFixed(2)}x${size.z.toFixed(2)}`;
     SKIN_STATUS.player.scale = modular.normalized.scale;
     return true;
