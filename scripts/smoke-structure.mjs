@@ -56,7 +56,7 @@ const checks = [
   ['canonical source hair contract', /SOURCE_CANONICAL_HAIR_STYLE/.test(attachmentFit) && /NATIVE_HAIR_REFERENCE_NODE/.test(attachmentFit)],
   ['all imported hair profiles mapped', ['gltf-buzzed', 'gltf-buzzed-f', 'gltf-parted', 'gltf-long', 'gltf-buns'].every((id) => attachmentFit.includes(`'${id}'`))],
   ['hair approved scale is preserved', /widthScale:\s*0\.66/.test(attachmentFit) && /widthScale:\s*0\.74/.test(attachmentFit) && /heightScale:\s*1\.00/.test(attachmentFit)],
-  ['hair receives final two-notch downward seat', /yOffsetMul:\s*0\.155/.test(attachmentFit) && /yOffsetMul:\s*0\.145/.test(attachmentFit) && /yOffsetMul:\s*0\.115/.test(attachmentFit) && /yOffsetMul:\s*0\.095/.test(attachmentFit) && /zOffsetMul:\s*-0\.010/.test(attachmentFit)],
+  ['hair uses corrected-sign two-notch downward seat', /yOffsetMul:\s*0\.115/.test(attachmentFit) && /yOffsetMul:\s*0\.105/.test(attachmentFit) && /yOffsetMul:\s*0\.075/.test(attachmentFit) && /yOffsetMul:\s*0\.055/.test(attachmentFit) && /zOffsetMul:\s*-0\.010/.test(attachmentFit)],
   ['hair captures complete source Head matrix', /function bakeToHeadLocal/.test(attachments) && /sourceHead\.matrixWorld\.clone\(\)\.invert\(\)/.test(attachments) && /applyMatrix4\(headWorldInverse\)/.test(attachments)],
   ['hair target reference is measured in target Head space', /function vertexInAnchorSpace/.test(attachments) && /anchor\.worldToLocal/.test(attachments) && /native-hair-reference-v2/.test(attachments)],
   ['hair maps source rig space to native fitted reference', /fitHairToCanonicalHead/.test(attachments) && /full-head-matrix-to-native-reference-v5/.test(attachments) && /NATIVE_HAIR_REFERENCE_NODE/.test(attachments)],
