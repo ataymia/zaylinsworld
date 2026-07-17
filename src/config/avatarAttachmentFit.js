@@ -25,14 +25,14 @@ const hair = (values = {}) => Object.freeze({
   ...values,
 });
 
-// The silhouette and scale are approved. These values only seat the already
-// fitted geometry onto the scalp. This calibration moves each imported style
-// one final micro-step downward and backward without changing its proportions.
+// The silhouette, scale, and front/back placement are approved. These values
+// only seat the already fitted geometry two final micro-notches lower so every
+// imported style rests flush against the scalp without changing proportions.
 export const DEFAULT_HAIR_FIT_PROFILE = hair({
   widthScale: 0.70,
   heightScale: 1.00,
   depthScale: 0.70,
-  yOffsetMul: 0.095,
+  yOffsetMul: 0.115,
   zOffsetMul: -0.008,
 });
 
@@ -41,35 +41,35 @@ export const HAIR_FIT_PROFILES = Object.freeze({
     widthScale: 0.66,
     heightScale: 1.00,
     depthScale: 0.66,
-    yOffsetMul: 0.135,
+    yOffsetMul: 0.155,
     zOffsetMul: -0.004,
   }),
   'gltf-buzzed-f': hair({
     widthScale: 0.67,
     heightScale: 1.00,
     depthScale: 0.67,
-    yOffsetMul: 0.125,
+    yOffsetMul: 0.145,
     zOffsetMul: -0.004,
   }),
   'gltf-parted': hair({
     widthScale: 0.70,
     heightScale: 1.00,
     depthScale: 0.70,
-    yOffsetMul: 0.095,
+    yOffsetMul: 0.115,
     zOffsetMul: -0.006,
   }),
   'gltf-long': hair({
     widthScale: 0.74,
     heightScale: 1.00,
     depthScale: 0.74,
-    yOffsetMul: 0.075,
+    yOffsetMul: 0.095,
     zOffsetMul: -0.010,
   }),
   'gltf-buns': hair({
     widthScale: 0.72,
     heightScale: 1.00,
     depthScale: 0.72,
-    yOffsetMul: 0.095,
+    yOffsetMul: 0.115,
     zOffsetMul: -0.008,
   }),
 });
