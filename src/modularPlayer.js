@@ -269,60 +269,114 @@ function normalizeVisibleModel(model, custom) {
   return { targetHeight, scale, sourceSize: size };
 }
 
-function skinnedBoneMap(root) {
+function normalizedBoneName(name) {
+  return String(name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+function skinnedBoneUsage(root) {
   const bones = new Map();
+  const weights = new Map();
+  const componentGetters = ['getX', 'getY', 'getZ', 'getW'];
   root.traverse((node) => {
     if (!node.isSkinnedMesh || !node.skeleton) return;
     for (const bone of node.skeleton.bones || []) {
       if (bone?.name && !bones.has(bone.name)) bones.set(bone.name, bone);
     }
+    const skinIndex = node.geometry?.getAttribute?.('skinIndex');
+    const skinWeight = node.geometry?.getAttribute?.('skinWeight');
+    if (!skinIndex || !skinWeight) return;
+    const slots = Math.min(4, skinIndex.itemSize || 0, skinWeight.itemSize || 0);
+    for (let vertex = 0; vertex < skinIndex.count; vertex++) {
+      for (let slot = 0; slot < slots; slot++) {
+        const jointIndex = skinIndex[componentGetters[slot]](vertex);
+        const weight = skinWeight[componentGetters[slot]](vertex);
+        const bone = node.skeleton.bones?.[jointIndex];
+        if (!bone || !Number.isFinite(weight) || weight <= 0) continue;
+        weights.set(bone, (weights.get(bone) || 0) + weight);
+      }
+    }
   });
-  return bones;
+  return { bones, weights };
+}
+
+function pickWeightedBone(usage, exactNames, matches, excludes = []) {
+  const candidates = new Set();
+  for (const name of exactNames) {
+    const bone = usage.bones.get(name);
+    if (bone) candidates.add(bone);
+  }
+  for (const bone of usage.bones.values()) {
+    const key = normalizedBoneName(bone.name);
+    if (excludes.some((term) => key.includes(term))) continue;
+    if (matches.some((term) => key.includes(term))) candidates.add(bone);
+  }
+  const sorted = [...candidates].sort(
+    (a, b) => (usage.weights.get(b) || 0) - (usage.weights.get(a) || 0),
+  );
+  return sorted.find((bone) => (usage.weights.get(bone) || 0) > 0.000001) || sorted[0] || null;
 }
 
 function findRig(root) {
-  const deformBones = skinnedBoneMap(root);
+  const usage = skinnedBoneUsage(root);
   const getNode = (name) => root.getObjectByName(name) || null;
-  const getDeform = (...names) => {
-    for (const name of names) {
-      const bone = deformBones.get(name);
-      if (bone) return bone;
-    }
-    for (const bone of deformBones.values()) {
-      const key = String(bone.name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-      if (key.includes('anim') || key.includes('control') || key.includes('ctrl') || key.includes('ik')) continue;
-      if (names.some((name) => key === name.toLowerCase().replace(/[^a-z0-9]/g, ''))) return bone;
-    }
-    return null;
-  };
-
-  // The Sunbox file contains both control bones (UpperArm_Anim_*) and the
-  // deform joints that the visible body is actually weighted to (UpperArm_*).
-  // Driving the control layer left the rendered mesh in its authored T-pose.
-  // Every gameplay bone below is therefore resolved from a SkinnedMesh skeleton,
-  // never from a similarly named scene/control node.
   const bones = {
-    leftArm: getDeform('UpperArm_L', 'mixamorigLeftArm'),
-    rightArm: getDeform('UpperArm_R', 'mixamorigRightArm'),
-    leftLeg: getDeform('UpperLeg_L', 'mixamorigLeftUpLeg'),
-    rightLeg: getDeform('UpperLeg_R', 'mixamorigRightUpLeg'),
-    head: getDeform('Head', 'mixamorigHead'),
-    hips: getDeform('Hips', 'mixamorigHips'),
+    leftArm: pickWeightedBone(
+      usage,
+      ['UpperArm_L', 'UpperArm_Anim_L', 'mixamorigLeftArm'],
+      ['upperarml', 'upperarmaniml', 'leftupperarm', 'mixamorigleftarm'],
+      ['forearm', 'lowerarm', 'hand'],
+    ),
+    rightArm: pickWeightedBone(
+      usage,
+      ['UpperArm_R', 'UpperArm_Anim_R', 'mixamorigRightArm'],
+      ['upperarmr', 'upperarmanimr', 'rightupperarm', 'mixamorigrightarm'],
+      ['forearm', 'lowerarm', 'hand'],
+    ),
+    leftLeg: pickWeightedBone(
+      usage,
+      ['UpperLeg_L', 'mixamorigLeftUpLeg'],
+      ['upperlegl', 'leftupperleg', 'leftupleg', 'mixamorigleftupleg'],
+      ['lowerleg', 'foot'],
+    ),
+    rightLeg: pickWeightedBone(
+      usage,
+      ['UpperLeg_R', 'mixamorigRightUpLeg'],
+      ['upperlegr', 'rightupperleg', 'rightupleg', 'mixamorigrightupleg'],
+      ['lowerleg', 'foot'],
+    ),
+    head: pickWeightedBone(usage, ['Head', 'mixamorigHead'], ['head'], ['headtopend']),
+    hips: pickWeightedBone(usage, ['Hips', 'mixamorigHips'], ['hips'], []),
   };
   const anchors = {
     head: getNode('ZW_Anchor_Head') || bones.head,
-    rightHand: getDeform('Hand_R', 'mixamorigRightHand') || getNode('ZW_Anchor_RightHand') || getNode('Hand_Prop_R'),
-    leftHand: getDeform('Hand_L', 'mixamorigLeftHand') || getNode('ZW_Anchor_LeftHand') || getNode('Hand_Prop_L'),
-    chest: getDeform('Chest', 'UpperChest', 'mixamorigSpine2') || getNode('ZW_Anchor_Chest'),
+    rightHand: pickWeightedBone(
+      usage,
+      ['Hand_R', 'mixamorigRightHand'],
+      ['handr', 'righthand', 'mixamorigrighthand'],
+      ['finger', 'thumb', 'index', 'middle', 'ring', 'pinky', 'little', 'prop'],
+    ) || getNode('ZW_Anchor_RightHand') || getNode('Hand_Prop_R'),
+    leftHand: pickWeightedBone(
+      usage,
+      ['Hand_L', 'mixamorigLeftHand'],
+      ['handl', 'lefthand', 'mixamoriglefthand'],
+      ['finger', 'thumb', 'index', 'middle', 'ring', 'pinky', 'little', 'prop'],
+    ) || getNode('ZW_Anchor_LeftHand') || getNode('Hand_Prop_L'),
+    chest: pickWeightedBone(
+      usage,
+      ['Chest', 'UpperChest', 'mixamorigSpine2'],
+      ['chest', 'upperchest', 'mixamorigspine2'],
+      [],
+    ) || getNode('ZW_Anchor_Chest'),
   };
 
   root.userData.zwRigSelection = {
-    source: 'skinned-mesh-deform-bones',
+    source: 'highest-visible-skin-weight',
     leftArm: bones.leftArm?.name || '',
+    leftArmWeight: usage.weights.get(bones.leftArm) || 0,
     rightArm: bones.rightArm?.name || '',
+    rightArmWeight: usage.weights.get(bones.rightArm) || 0,
     leftHand: anchors.leftHand?.name || '',
     rightHand: anchors.rightHand?.name || '',
-    rejectedControlBones: ['UpperArm_Anim_L', 'UpperArm_Anim_R'],
   };
   return { bones, anchors };
 }
