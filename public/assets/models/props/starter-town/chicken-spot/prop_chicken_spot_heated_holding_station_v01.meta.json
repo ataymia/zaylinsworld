@@ -1,0 +1,30 @@
+{
+  "asset_id": "prop_chicken_spot_heated_holding_station_v01",
+  "display_name": "Chicken Spot Heated Holding Station",
+  "town": "Starter Town",
+  "district": "Dreamdrop District",
+  "location": "Chicken Spot kitchen/service line",
+  "category": "prop",
+  "units": "meters",
+  "up_axis": "Y",
+  "forward_axis": "+Z",
+  "dimensions_m": {
+    "width": 1.48,
+    "depth": 0.76,
+    "height": 1.79
+  },
+  "pivot": "ground-center",
+  "triangle_target": "approximately 4.5k or lower",
+  "collision_plan": "base cabinet and display frame only; glass, trays, food and utensils non-colliding",
+  "interaction_nodes": [
+    "sliding doors",
+    "four food trays",
+    "serving tongs",
+    "temperature controls",
+    "restock and cleaning points"
+  ],
+  "approval_status": "APPROVED",
+  "approved_in_chat": "2026-07-17",
+  "generated_bytes": 200028,
+  "license": "Original ZTA geometry"
+}
