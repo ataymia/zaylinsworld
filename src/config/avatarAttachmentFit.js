@@ -25,17 +25,54 @@ const hair = (values = {}) => Object.freeze({
   ...values,
 });
 
-export const DEFAULT_HAIR_FIT_PROFILE = hair({});
+export const DEFAULT_HAIR_FIT_PROFILE = hair({
+  widthScale: 0.84,
+  heightScale: 0.86,
+  depthScale: 0.84,
+  yOffsetMul: -0.10,
+  zOffsetMul: 0.035,
+});
 
-// The imported styles share one source rig. These profiles intentionally remain
-// small calibration controls; the actual left/right alignment comes from the
-// complete source Head matrix and the native fitted reference.
+// The full Head-matrix mapping now supplies the correct orientation. These are
+// deliberately small final-fit calibrations that pull each authored style toward
+// the scalp without flattening its silhouette. Short caps seat deepest; draped
+// and bun styles retain slightly more volume.
 export const HAIR_FIT_PROFILES = Object.freeze({
-  'gltf-buzzed': hair({}),
-  'gltf-buzzed-f': hair({}),
-  'gltf-parted': hair({}),
-  'gltf-long': hair({}),
-  'gltf-buns': hair({}),
+  'gltf-buzzed': hair({
+    widthScale: 0.80,
+    heightScale: 0.82,
+    depthScale: 0.80,
+    yOffsetMul: -0.12,
+    zOffsetMul: 0.045,
+  }),
+  'gltf-buzzed-f': hair({
+    widthScale: 0.81,
+    heightScale: 0.83,
+    depthScale: 0.81,
+    yOffsetMul: -0.115,
+    zOffsetMul: 0.045,
+  }),
+  'gltf-parted': hair({
+    widthScale: 0.84,
+    heightScale: 0.86,
+    depthScale: 0.84,
+    yOffsetMul: -0.10,
+    zOffsetMul: 0.040,
+  }),
+  'gltf-long': hair({
+    widthScale: 0.86,
+    heightScale: 0.88,
+    depthScale: 0.86,
+    yOffsetMul: -0.09,
+    zOffsetMul: 0.035,
+  }),
+  'gltf-buns': hair({
+    widthScale: 0.84,
+    heightScale: 0.86,
+    depthScale: 0.84,
+    yOffsetMul: -0.10,
+    zOffsetMul: 0.040,
+  }),
 });
 
 const jewelry = (values = {}) => Object.freeze({
@@ -44,8 +81,8 @@ const jewelry = (values = {}) => Object.freeze({
   links: 72,
   pathSamples: 72,
   drop: 0.072,
-  backLift: 0.010,
-  sideDrop: 0.008,
+  backLift: 0.002,
+  sideDrop: 0.010,
   neckHeightMul: 0.08,
   chestTopInsetMul: 0.07,
   neckWidthMul: 0.42,
@@ -53,9 +90,9 @@ const jewelry = (values = {}) => Object.freeze({
   frontWidthBoost: 0.06,
   frontDropPower: 1.55,
   chestClearance: 0.014,
-  backClearance: 0.003,
-  backWidthScale: 0.44,
-  backForward: 0.036,
+  backClearance: 0.001,
+  backWidthScale: 0.30,
+  backForward: 0.050,
   pendantClearance: 0.016,
   pendantScale: 0.50,
   ...values,
@@ -70,9 +107,9 @@ export const JEWELRY_FIT = Object.freeze({
     pathSamples: 68,
     drop: 0.068,
     chestClearance: 0.016,
-    backClearance: 0.004,
-    backWidthScale: 0.46,
-    backForward: 0.037,
+    backClearance: 0.001,
+    backWidthScale: 0.32,
+    backForward: 0.052,
     pendantClearance: 0.018,
     pendantScale: 0.54,
     shoulderWidthMul: 0.21,
@@ -84,9 +121,9 @@ export const JEWELRY_FIT = Object.freeze({
     pathSamples: 74,
     drop: 0.080,
     chestClearance: 0.017,
-    backClearance: 0.003,
-    backWidthScale: 0.44,
-    backForward: 0.036,
+    backClearance: 0.001,
+    backWidthScale: 0.30,
+    backForward: 0.050,
     pendantClearance: 0.020,
     pendantScale: 0.47,
   }),
