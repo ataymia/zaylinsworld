@@ -1,15 +1,15 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// modularAttachments.js — canonical-head hair fitting + continuous jewelry.
+// modularAttachments.js — rig-space hair fitting + continuous jewelry.
 //
-// Mini-kit hairs are authored as full-body skinned assets on the same humanoid
-// skeleton. We bake each hair at bind pose, preserve its exact shape relative to
-// its own source Head bone, and map that canonical frame onto the pack-native
-// Crew Cut that already fits the current player. No box cage or per-vertex scalp
-// deformation is used, so imported styles cannot tear through the skull.
+// Imported mini-kit hairs are baked into their authored Head-bone coordinate
+// frame, including the source bone's full rotation and scale. That canonical
+// frame is then mapped onto the Sunbox player's real Head bone and the native
+// Crew Cut reference that already fits it. This preserves both left and right
+// sides of every style instead of aligning only the source head position.
 //
 // Jewelry remains one continuous closed collarbone loop made from individual
-// links. Only the rear arc is tightened toward the neck; the approved front and
-// shoulder drape is preserved.
+// links. The approved front drape is preserved while the rear arc is tightened
+// independently around the neck.
 // ─────────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 import { clone as skeletonClone } from 'three/addons/utils/SkeletonUtils.js';
@@ -55,52 +55,52 @@ function cloneTintedMaterial(material, tint) {
   return clone;
 }
 
-function bakeToStatic(root) {
+function bakedVertex(node, sourcePosition, index, target) {
+  if (typeof node.getVertexPosition === 'function') node.getVertexPosition(index, target);
+  else {
+    target.fromBufferAttribute(sourcePosition, index);
+    if (node.isSkinnedMesh) node.applyBoneTransform(index, target);
+  }
+  node.localToWorld(target);
+  return target;
+}
+
+function bakeToHeadLocal(root, sourceHead) {
   root.updateMatrixWorld(true);
+  sourceHead.updateMatrixWorld(true);
+  const headWorldInverse = sourceHead.matrixWorld.clone().invert();
   const out = new THREE.Group();
   const vertex = new THREE.Vector3();
+
   root.traverse((node) => {
     if (!node.isMesh) return;
     const source = node.geometry;
     const position = source?.attributes?.position;
     if (!position) return;
+
     const positions = new Float32Array(position.count * 3);
     for (let index = 0; index < position.count; index++) {
-      if (typeof node.getVertexPosition === 'function') node.getVertexPosition(index, vertex);
-      else {
-        vertex.fromBufferAttribute(position, index);
-        if (node.isSkinnedMesh) node.applyBoneTransform(index, vertex);
-      }
-      node.localToWorld(vertex);
+      bakedVertex(node, position, index, vertex).applyMatrix4(headWorldInverse);
       positions[index * 3] = vertex.x;
       positions[index * 3 + 1] = vertex.y;
       positions[index * 3 + 2] = vertex.z;
     }
+
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     if (source.attributes.uv) geometry.setAttribute('uv', source.attributes.uv.clone());
     if (source.index) geometry.setIndex(source.index.clone());
     geometry.computeVertexNormals();
+    geometry.computeBoundingBox();
+    geometry.computeBoundingSphere();
+
     const mesh = new THREE.Mesh(geometry, node.material);
     mesh.name = node.name || 'ZW_ExternalHairMesh';
     out.add(mesh);
   });
-  return out;
-}
 
-function translateGeometry(root, offset) {
-  root.traverse((node) => {
-    if (!node.isMesh || !node.geometry?.attributes?.position) return;
-    const position = node.geometry.attributes.position;
-    for (let index = 0; index < position.count; index++) {
-      tempVertex.fromBufferAttribute(position, index).sub(offset);
-      position.setXYZ(index, tempVertex.x, tempVertex.y, tempVertex.z);
-    }
-    position.needsUpdate = true;
-    node.geometry.computeBoundingBox();
-    node.geometry.computeBoundingSphere();
-  });
-  root.updateMatrixWorld(true);
+  out.updateMatrixWorld(true);
+  return out;
 }
 
 async function hairPrototype(styleId, renderer) {
@@ -115,19 +115,17 @@ async function hairPrototype(styleId, renderer) {
         cloned.updateMatrixWorld(true);
         const sourceHead = cloned.getObjectByName('Head');
         if (!sourceHead) throw new Error('source hair rig has no Head bone');
-        const sourceHeadPosition = new THREE.Vector3();
-        sourceHead.getWorldPosition(sourceHeadPosition);
-        const baked = bakeToStatic(cloned);
-        translateGeometry(baked, sourceHeadPosition);
+
+        const baked = bakeToHeadLocal(cloned, sourceHead);
         const box = new THREE.Box3().setFromObject(baked);
         const size = box.getSize(new THREE.Vector3());
         if (![size.x, size.y, size.z].every(Number.isFinite)
           || Math.max(size.x, size.y, size.z) < HAIR_REFERENCE_SETTINGS.minExtent) {
-          throw new Error('invalid source-head-relative hair bounds');
+          throw new Error('invalid source-head-local hair bounds');
         }
         return Object.freeze({ styleId, group: baked, box, size });
       } catch (error) {
-        console.warn('[modular-attachments] canonical hair prototype failed', styleId, error);
+        console.warn('[modular-attachments] rig-space hair prototype failed', styleId, error);
         return null;
       }
     })());
@@ -182,14 +180,15 @@ function anchorLocalPose(instance, anchor, positionTarget, quaternionTarget) {
   return true;
 }
 
-function captureAnchorRest(instance, mount, anchor, kind) {
+function captureAnchorRest(instance, mount, anchor, kind, mode = 'delta') {
   anchorLocalPose(instance, anchor, tempAnchorPosition, tempLocalQuaternion);
   mount.userData.zwAnchorKind = kind;
+  mount.userData.zwAnchorMode = mode;
   mount.userData.zwAnchorOffset = [0, 0, 0];
   mount.userData.zwAnchorRestQuaternion = tempLocalQuaternion.toArray();
   mount.userData.zwSwaySeed = Math.random() * TWO_PI;
   mount.position.copy(tempAnchorPosition);
-  mount.quaternion.identity();
+  mount.quaternion.copy(mode === 'absolute' ? tempLocalQuaternion : new THREE.Quaternion());
 }
 
 function socketMetricKey(custom = {}) {
@@ -200,13 +199,16 @@ function socketMetricKey(custom = {}) {
 function vertexInInstanceSpace(instance, mesh, index, target) {
   const position = mesh.geometry?.attributes?.position;
   if (!position) return null;
-  if (typeof mesh.getVertexPosition === 'function') mesh.getVertexPosition(index, target);
-  else {
-    target.fromBufferAttribute(position, index);
-    if (mesh.isSkinnedMesh) mesh.applyBoneTransform(index, target);
-  }
-  mesh.localToWorld(target);
+  bakedVertex(mesh, position, index, target);
   instance.group.worldToLocal(target);
+  return target;
+}
+
+function vertexInAnchorSpace(mesh, index, anchor, target) {
+  const position = mesh.geometry?.attributes?.position;
+  if (!position || !anchor) return null;
+  bakedVertex(mesh, position, index, target);
+  anchor.worldToLocal(target);
   return target;
 }
 
@@ -306,38 +308,51 @@ function bodySockets(instance, custom) {
   return measuredBodySockets(instance, custom) || fallbackBodySockets(instance, custom);
 }
 
+function targetHeadBone(instance) {
+  return instance?.model?.getObjectByName('Head') || instance?.anchors?.head || null;
+}
+
 function nativeHairReference(instance, metrics, custom = instance?.custom || {}) {
-  const key = `${socketMetricKey(custom)}:native-hair-reference-v1`;
+  const key = `${socketMetricKey(custom)}:native-hair-reference-v2`;
   if (instance.nativeHairReference?.key === key) return instance.nativeHairReference;
 
+  const headBone = targetHeadBone(instance);
   const candidates = [NATIVE_HAIR_REFERENCE_NODE, FALLBACK_NATIVE_HAIR_REFERENCE_NODE];
   let chosenNode = null;
   let box = null;
-  for (const nodeName of candidates) {
-    const root = instance.model?.getObjectByName(nodeName);
-    if (!root) continue;
-    const candidateBox = new THREE.Box3().makeEmpty();
-    root.traverse?.((mesh) => {
-      if (!mesh.isMesh || !mesh.geometry?.attributes?.position) return;
-      mesh.updateMatrixWorld(true);
-      const count = mesh.geometry.attributes.position.count;
-      for (let index = 0; index < count; index++) {
-        const point = vertexInInstanceSpace(instance, mesh, index, tempVertex);
-        if (point) candidateBox.expandByPoint(point);
+  if (headBone) {
+    instance.group.updateMatrixWorld(true);
+    headBone.updateMatrixWorld(true);
+    for (const nodeName of candidates) {
+      const root = instance.model?.getObjectByName(nodeName);
+      if (!root) continue;
+      const candidateBox = new THREE.Box3().makeEmpty();
+      root.traverse?.((mesh) => {
+        if (!mesh.isMesh || !mesh.geometry?.attributes?.position) return;
+        mesh.updateMatrixWorld(true);
+        const count = mesh.geometry.attributes.position.count;
+        for (let index = 0; index < count; index++) {
+          const point = vertexInAnchorSpace(mesh, index, headBone, tempVertex);
+          if (point) candidateBox.expandByPoint(point);
+        }
+      });
+      const size = candidateBox.getSize(new THREE.Vector3());
+      if (!candidateBox.isEmpty() && Math.max(size.x, size.y, size.z) >= HAIR_REFERENCE_SETTINGS.minExtent) {
+        chosenNode = nodeName;
+        box = candidateBox;
+        break;
       }
-    });
-    const size = candidateBox.getSize(new THREE.Vector3());
-    if (!candidateBox.isEmpty() && Math.max(size.x, size.y, size.z) >= HAIR_REFERENCE_SETTINGS.minExtent) {
-      chosenNode = nodeName;
-      box = candidateBox;
-      break;
     }
   }
 
-  if (!box) box = metrics.head.clone();
+  if (!box) {
+    const half = metrics.headSize.clone().multiplyScalar(0.5);
+    box = new THREE.Box3(half.clone().multiplyScalar(-1), half);
+  }
   const reference = {
     key,
     nodeName: chosenNode || 'body-head-fallback',
+    headBone,
     box,
     center: box.getCenter(new THREE.Vector3()),
     size: box.getSize(new THREE.Vector3()),
@@ -354,7 +369,7 @@ function safeScale(value) {
   );
 }
 
-function fitHairToCanonicalHead(prototype, canonical, instance, metrics, profile, anchorPosition, tint) {
+function fitHairToCanonicalHead(prototype, canonical, instance, metrics, profile, tint) {
   const target = nativeHairReference(instance, metrics, instance.custom || {});
   const sourceReferenceSize = canonical.size;
   const sourceReferenceCenter = canonical.box.getCenter(new THREE.Vector3());
@@ -364,8 +379,6 @@ function fitHairToCanonicalHead(prototype, canonical, instance, metrics, profile
   const horizontalScale = Math.sqrt(Math.max(scaleX * scaleZ, 0.0001));
   const scaleY = horizontalScale * profile.heightScale;
 
-  // X/Z align by the canonical short-cap center. Y aligns by the lower edge of
-  // the canonical cap, which is the shared authored root/hairline plane.
   const targetOrigin = new THREE.Vector3(
     target.center.x - sourceReferenceCenter.x * scaleX,
     target.box.min.y - canonical.box.min.y * scaleY,
@@ -375,8 +388,8 @@ function fitHairToCanonicalHead(prototype, canonical, instance, metrics, profile
   targetOrigin.y += target.size.y * profile.yOffsetMul;
   targetOrigin.z += target.size.z * profile.zOffsetMul;
 
-  const warped = new THREE.Group();
-  warped.name = 'ZW_CanonicalHeadFittedHair';
+  const fitted = new THREE.Group();
+  fitted.name = 'ZW_RigSpaceFittedHair';
   prototype.group.updateMatrixWorld(true);
   prototype.group.traverse((node) => {
     if (!node.isMesh || !node.geometry?.attributes?.position) return;
@@ -390,7 +403,7 @@ function fitHairToCanonicalHead(prototype, canonical, instance, metrics, profile
         targetOrigin.x + tempVertex.x * scaleX,
         targetOrigin.y + tempVertex.y * scaleY,
         targetOrigin.z + tempVertex.z * scaleZ,
-      ).sub(anchorPosition);
+      );
       positions[index * 3] = tempVertex.x;
       positions[index * 3 + 1] = tempVertex.y;
       positions[index * 3 + 2] = tempVertex.z;
@@ -401,24 +414,26 @@ function fitHairToCanonicalHead(prototype, canonical, instance, metrics, profile
     if (source.attributes.uv) geometry.setAttribute('uv', source.attributes.uv.clone());
     if (source.index) geometry.setIndex(source.index.clone());
     geometry.computeVertexNormals();
+    geometry.computeBoundingBox();
+    geometry.computeBoundingSphere();
     const materials = Array.isArray(node.material)
       ? node.material.map((material) => cloneTintedMaterial(material, tint))
       : cloneTintedMaterial(node.material, tint);
     const mesh = new THREE.Mesh(geometry, materials);
-    mesh.name = node.name || 'ZW_CanonicalHeadHairMesh';
+    mesh.name = node.name || 'ZW_RigSpaceHairMesh';
     mesh.castShadow = true;
     mesh.receiveShadow = true;
     mesh.frustumCulled = false;
-    warped.add(mesh);
+    fitted.add(mesh);
   });
 
-  if (!warped.children.length) throw new Error('hair asset produced no renderable meshes');
-  warped.userData.zwFitContract = 'source-head-to-native-hair-reference-v4';
-  warped.userData.zwSourceReference = SOURCE_CANONICAL_HAIR_STYLE;
-  warped.userData.zwTargetReferenceNode = target.nodeName;
-  warped.userData.zwScale = [scaleX, scaleY, scaleZ];
-  warped.userData.zwTargetOrigin = targetOrigin.toArray();
-  return warped;
+  if (!fitted.children.length) throw new Error('hair asset produced no renderable meshes');
+  fitted.userData.zwFitContract = 'full-head-matrix-to-native-reference-v5';
+  fitted.userData.zwSourceReference = SOURCE_CANONICAL_HAIR_STYLE;
+  fitted.userData.zwTargetReferenceNode = target.nodeName;
+  fitted.userData.zwScale = [scaleX, scaleY, scaleZ];
+  fitted.userData.zwTargetOrigin = targetOrigin.toArray();
+  return fitted;
 }
 
 function updateMountedAttachment(instance, mount, anchor, elapsedSeconds = 0) {
@@ -426,6 +441,12 @@ function updateMountedAttachment(instance, mount, anchor, elapsedSeconds = 0) {
   anchorLocalPose(instance, anchor, tempAnchorPosition, tempLocalQuaternion);
   const offset = mount.userData.zwAnchorOffset || [0, 0, 0];
   mount.position.copy(tempAnchorPosition).add(new THREE.Vector3(...offset));
+
+  if (mount.userData.zwAnchorMode === 'absolute') {
+    mount.quaternion.copy(tempLocalQuaternion);
+    return;
+  }
+
   const rest = new THREE.Quaternion().fromArray(mount.userData.zwAnchorRestQuaternion || [0, 0, 0, 1]);
   const delta = tempLocalQuaternion.clone().multiply(rest.invert());
   if (mount.userData.zwAttachment === 'jewelry') {
@@ -439,7 +460,7 @@ function updateMountedAttachment(instance, mount, anchor, elapsedSeconds = 0) {
 export function updateAttachmentTransforms(instance, elapsedSeconds = 0) {
   const layer = instance?.attachmentLayer;
   if (!layer) return;
-  updateMountedAttachment(instance, findNamed(layer, 'ZW_ExternalHairMount'), instance.anchors?.head, elapsedSeconds);
+  updateMountedAttachment(instance, findNamed(layer, 'ZW_ExternalHairMount'), targetHeadBone(instance), elapsedSeconds);
   updateMountedAttachment(instance, findNamed(layer, 'ZW_ModularJewelryMount'), instance.anchors?.chest, elapsedSeconds);
 }
 
@@ -448,10 +469,11 @@ export function isLegacyAssetHair(styleId) {
 }
 
 export async function updateLegacyHair(instance, custom, renderer) {
-  if (!instance?.anchors?.head) return false;
+  const headBone = targetHeadBone(instance);
+  if (!headBone) return false;
   const styleId = custom.modularHair;
   const fitKey = socketMetricKey(custom);
-  const desiredKey = isLegacyAssetHair(styleId) ? `${styleId}:${custom.hairColor || 'jet'}:${fitKey}:canonical-head-v4` : 'none';
+  const desiredKey = isLegacyAssetHair(styleId) ? `${styleId}:${custom.hairColor || 'jet'}:${fitKey}:rig-space-v5` : 'none';
   const layer = attachmentLayer(instance);
   const existing = findNamed(layer, 'ZW_ExternalHairMount');
 
@@ -476,13 +498,12 @@ export async function updateLegacyHair(instance, custom, renderer) {
     if (!prototype || !canonical || instance.externalHairRequest !== request) return false;
     const metrics = bodySockets(instance, custom);
     const profile = hairFitProfile(styleId);
-    anchorLocalPose(instance, instance.anchors.head, tempAnchorPosition, tempLocalQuaternion);
     const mount = new THREE.Group();
     mount.name = 'ZW_ExternalHairMount';
     mount.userData.zwAttachment = 'hair';
     mount.userData.zwItemId = styleId;
     mount.userData.zwFitKey = fitKey;
-    mount.userData.zwFitContract = 'source-head-to-native-hair-reference-v4';
+    mount.userData.zwFitContract = 'full-head-matrix-to-native-reference-v5';
     mount.userData.zwFallbackSocket = metrics.fallback;
     mount.add(fitHairToCanonicalHead(
       prototype,
@@ -490,10 +511,9 @@ export async function updateLegacyHair(instance, custom, renderer) {
       instance,
       metrics,
       profile,
-      tempAnchorPosition.clone(),
       colorForHair(custom),
     ));
-    captureAnchorRest(instance, mount, instance.anchors.head, 'head');
+    captureAnchorRest(instance, mount, headBone, 'head', 'absolute');
 
     if (instance.externalHairRequest !== request) {
       disposeTree(mount);
@@ -504,7 +524,7 @@ export async function updateLegacyHair(instance, custom, renderer) {
     updateAttachmentTransforms(instance);
     return true;
   } catch (error) {
-    console.warn('[modular-attachments] canonical head hair mount failed', styleId, error);
+    console.warn('[modular-attachments] rig-space hair mount failed', styleId, error);
     removeNamed(layer, 'ZW_ExternalHairMount');
     instance.externalHairKey = null;
     return false;
@@ -599,7 +619,7 @@ function buildJewelry(kind, metrics, anchorPosition) {
   group.name = 'ZW_ModularJewelryMount';
   group.userData.zwAttachment = 'jewelry';
   group.userData.zwItemId = kind;
-  group.userData.zwFitContract = 'tight-back-collarbone-loop-v4';
+  group.userData.zwFitContract = 'tight-back-collarbone-loop-v5';
   group.userData.zwSurfacePath = worldPoints.map((point) => point.toArray());
 
   for (let index = 0; index < fit.links; index++) {
@@ -659,7 +679,7 @@ export function updateJewelry(instance, custom) {
   if (!instance?.anchors?.chest) return false;
   const kind = custom.jewelry || 'none';
   const fitKey = socketMetricKey(custom);
-  const desiredKey = kind === 'none' ? 'none' : `${kind}:${fitKey}:tight-back-loop-v4`;
+  const desiredKey = kind === 'none' ? 'none' : `${kind}:${fitKey}:tight-back-loop-v5`;
   const layer = attachmentLayer(instance);
   const existing = findNamed(layer, 'ZW_ModularJewelryMount');
 
