@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "batchSize": 10,
+  "generationCost": "free-open-source-tooling",
+  "engine": "Blender headless in GitHub Actions",
+  "artDirection": {
+    "target": "Family-friendly open-world realism with stylized readability, believable proportions, intentional materials, and mechanically or anatomically plausible construction.",
+    "recognitionRule": "Every asset must be immediately recognizable from its silhouette and major functional components before color or labels are considered.",
+    "hardEdgesRule": "Hard edges, square forms, flat panels, and angular geometry are welcome when the real object or approved town style calls for them. The prohibition is crude placeholder construction, not geometric sharpness.",
+    "detailRule": "Hero and close-range assets require secondary forms such as seams, fasteners, vents, supports, handles, trim, lenses, panels, joints, or service access appropriate to the object.",
+    "plausibilityRule": "Vehicles, machinery, buildings, furniture, creatures, and people must have a coherent physical structure. Decorative futuristic styling cannot replace the functional anatomy or engineering of the object.",
+    "townReferenceRule": "Town materials, density, silhouette, and atmosphere must follow docs/WORLD_VISUAL_REFERENCE_BIBLE.md and the applicable town blueprint."
+  },
+  "prohibitedShortcuts": [
+    "generic primitive fallback for an unsupported family",
+    "humans assembled from cylinders and spheres without credible anatomy, clothing, hands, feet, face structure, and rigging",
+    "monsters or animals represented by stacked circles, repeated blobs, or disconnected primitive piles",
+    "vehicles without a readable chassis, passenger cabin, propulsion system, lighting, access panels, and stable stance",
+    "hover vehicles that are only a floating box or toy saucer",
+    "buildings that are only an undecorated rectangular shell when the specification requires a functional facade",
+    "one-material assets when the real object clearly contains distinct materials",
+    "unlabeled generic output quietly substituted for a requested asset",
+    "Roblox-like filler, toy-block proportions, or third-grade collage styling",
+    "random neon on assets whose town profile does not call for neon"
+  ],
+  "globalGeometry": {
+    "minimumMeshObjects": 4,
+    "minimumTriangles": 350,
+    "maximumTriangles": 50000,
+    "maximumMaterials": 12,
+    "dimensionTolerance": 0.35,
+    "groundPivotToleranceMeters": 0.04,
+    "minimumPreviewCoverage": 0.07,
+    "maximumPreviewCoverage": 0.9,
+    "requiredComponentCoverage": 1.0,
+    "automaticRetryLimit": 3
+  },
+  "queueRules": {
+    "unsupportedFamily": "quarantine-without-generating",
+    "failedQualityGate": "retry-with-higher-detail-then-quarantine",
+    "batchFailure": "record-failure-and-continue-other-assets",
+    "batchReportInterval": 10,
+    "summaryReportInterval": 100,
+    "manualApprovalRequired": false
+  },
+  "townProfiles": {
+    "starter-town": {
+      "style": "welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials",
+      "palette": ["warm brick", "cream", "storefront blue", "civic navy", "school green", "utility gray", "residential sage"],
+      "avoid": ["citywide neon wash", "toy-town proportions", "sterile empty streets"]
+    },
+    "fishing-harbor": {
+      "style": "working coastal municipality; weathered wood, painted metal, rope, wet surfaces, practical marine hardware, salt-worn details",
+      "palette": ["navy", "cream", "weathered red", "teal", "warm wood", "galvanized metal"],
+      "avoid": ["theme-park pirate props", "clean plastic docks", "empty decorative marina"]
+    },
+    "rich-hills": {
+      "style": "luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture",
+      "palette": ["limestone", "warm white", "charcoal", "bronze", "deep green", "pool blue"],
+      "avoid": ["gold-everything caricature", "flat mansion boxes", "unmaintained public realm"]
+    },
+    "techtown": {
+      "style": "sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting",
+      "palette": ["dark metal", "black composite", "tinted glass", "cyan", "magenta", "violet", "electric blue"],
+      "avoid": ["Jetsons retro-future", "rounded toy sci-fi", "sterile white-only futurism", "rainbow neon soup", "Roblox block filler"]
+    },
+    "casino-strip": {
+      "style": "dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle",
+      "palette": ["violet", "electric blue", "warm gold", "red", "black", "cream"],
+      "avoid": ["flat billboard walls", "single-casino emptiness", "unreadable rainbow clutter"]
+    },
+    "dungeon-outskirts": {
+      "style": "grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate",
+      "palette": ["weathered stone", "dark iron", "aged timber", "earth", "ember orange", "arcane cyan"],
+      "avoid": ["cute stacked blob monsters", "plastic medieval props", "uniform fantasy village kits"]
+    },
+    "obby-canyon": {
+      "style": "large-scale canyon adventure infrastructure; engineered platforms, bridges, rescue equipment, rock integration, believable supports and safety systems",
+      "palette": ["sandstone", "rust", "safety orange", "steel", "turquoise water", "desert green"],
+      "avoid": ["floating shapes without supports", "toy obstacle pieces", "unreadable scale"]
+    },
+    "starline-city": {
+      "style": "glamorous production city with real backstage labor; theaters, studios, hotels, hills, apartments, warehouses, lighting rigs, and service corridors",
+      "palette": ["warm marquee gold", "black", "deep red", "violet", "sunset orange", "concrete gray"],
+      "avoid": ["red-carpet-only city", "empty studio facades", "generic neon metropolis"]
+    },
+    "aqualume": {
+      "style": "advanced inhabited underwater city; pressure-rated structures, curved glass, coral-integrated architecture, current-powered transit, marine engineering, luminous but functional materials",
+      "palette": ["deep blue", "cyan", "pearl", "coral", "violet", "bioluminescent green"],
+      "avoid": ["bubble toy houses", "random coral piles", "structures with no pressure or anchoring logic"]
+    },
+    "shared-world": {
+      "style": "cohesive family-friendly open-world realism matching the owning town and gameplay role",
+      "palette": ["contextual"],
+      "avoid": ["generic placeholder output"]
+    }
+  }
+}
