@@ -1,9 +1,9 @@
 // Canonical attachment contracts for modular hair and jewelry.
 //
-// The mini-kit hairstyles are already authored around the same humanoid Head
-// bone. Runtime fitting therefore preserves each source mesh exactly and maps its
-// source-head coordinate frame onto the pack-native Crew Cut that already fits
-// the current player head. No vertex cage, shell inference, or scalp deformation.
+// Mini-kit hairs are baked into the full local matrix of their authored Head
+// bone, then mapped onto the Sunbox player's real Head bone and native fitted
+// Crew Cut reference. The mapping preserves both sides of the source style and
+// never depends on world-space offsets.
 
 export const NATIVE_HAIR_REFERENCE_NODE = 'ZW_Hair_CrewCut';
 export const FALLBACK_NATIVE_HAIR_REFERENCE_NODE = 'ZW_Hair_CloseCrop';
@@ -25,11 +25,11 @@ const hair = (values = {}) => Object.freeze({
   ...values,
 });
 
-// These are intentionally conservative. Because every mini-kit style shares the
-// same source rig/head frame, style shape and root placement come from the asset,
-// not a pile of hand-guessed offsets.
 export const DEFAULT_HAIR_FIT_PROFILE = hair({});
 
+// The imported styles share one source rig. These profiles intentionally remain
+// small calibration controls; the actual left/right alignment comes from the
+// complete source Head matrix and the native fitted reference.
 export const HAIR_FIT_PROFILES = Object.freeze({
   'gltf-buzzed': hair({}),
   'gltf-buzzed-f': hair({}),
@@ -53,9 +53,9 @@ const jewelry = (values = {}) => Object.freeze({
   frontWidthBoost: 0.06,
   frontDropPower: 1.55,
   chestClearance: 0.014,
-  backClearance: 0.004,
-  backWidthScale: 0.58,
-  backForward: 0.020,
+  backClearance: 0.003,
+  backWidthScale: 0.44,
+  backForward: 0.036,
   pendantClearance: 0.016,
   pendantScale: 0.50,
   ...values,
@@ -70,9 +70,9 @@ export const JEWELRY_FIT = Object.freeze({
     pathSamples: 68,
     drop: 0.068,
     chestClearance: 0.016,
-    backClearance: 0.005,
-    backWidthScale: 0.60,
-    backForward: 0.021,
+    backClearance: 0.004,
+    backWidthScale: 0.46,
+    backForward: 0.037,
     pendantClearance: 0.018,
     pendantScale: 0.54,
     shoulderWidthMul: 0.21,
@@ -84,9 +84,9 @@ export const JEWELRY_FIT = Object.freeze({
     pathSamples: 74,
     drop: 0.080,
     chestClearance: 0.017,
-    backClearance: 0.004,
-    backWidthScale: 0.58,
-    backForward: 0.020,
+    backClearance: 0.003,
+    backWidthScale: 0.44,
+    backForward: 0.036,
     pendantClearance: 0.020,
     pendantScale: 0.47,
   }),
