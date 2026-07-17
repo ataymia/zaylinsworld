@@ -269,24 +269,62 @@ function normalizeVisibleModel(model, custom) {
   return { targetHeight, scale, sourceSize: size };
 }
 
+function skinnedBoneMap(root) {
+  const bones = new Map();
+  root.traverse((node) => {
+    if (!node.isSkinnedMesh || !node.skeleton) return;
+    for (const bone of node.skeleton.bones || []) {
+      if (bone?.name && !bones.has(bone.name)) bones.set(bone.name, bone);
+    }
+  });
+  return bones;
+}
+
 function findRig(root) {
-  const get = (name) => root.getObjectByName(name) || null;
-  return {
-    bones: {
-      leftArm: get('UpperArm_Anim_L') || get('UpperArm_L'),
-      rightArm: get('UpperArm_Anim_R') || get('UpperArm_R'),
-      leftLeg: get('UpperLeg_L'),
-      rightLeg: get('UpperLeg_R'),
-      head: get('Head'),
-      hips: get('Hips'),
-    },
-    anchors: {
-      head: get('ZW_Anchor_Head') || get('Head'),
-      rightHand: get('ZW_Anchor_RightHand') || get('Hand_Prop_R') || get('Hand_R'),
-      leftHand: get('ZW_Anchor_LeftHand') || get('Hand_Prop_L') || get('Hand_L'),
-      chest: get('ZW_Anchor_Chest') || get('UpperChest') || get('Chest'),
-    },
+  const deformBones = skinnedBoneMap(root);
+  const getNode = (name) => root.getObjectByName(name) || null;
+  const getDeform = (...names) => {
+    for (const name of names) {
+      const bone = deformBones.get(name);
+      if (bone) return bone;
+    }
+    for (const bone of deformBones.values()) {
+      const key = String(bone.name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+      if (key.includes('anim') || key.includes('control') || key.includes('ctrl') || key.includes('ik')) continue;
+      if (names.some((name) => key === name.toLowerCase().replace(/[^a-z0-9]/g, ''))) return bone;
+    }
+    return null;
   };
+
+  // The Sunbox file contains both control bones (UpperArm_Anim_*) and the
+  // deform joints that the visible body is actually weighted to (UpperArm_*).
+  // Driving the control layer left the rendered mesh in its authored T-pose.
+  // Every gameplay bone below is therefore resolved from a SkinnedMesh skeleton,
+  // never from a similarly named scene/control node.
+  const bones = {
+    leftArm: getDeform('UpperArm_L', 'mixamorigLeftArm'),
+    rightArm: getDeform('UpperArm_R', 'mixamorigRightArm'),
+    leftLeg: getDeform('UpperLeg_L', 'mixamorigLeftUpLeg'),
+    rightLeg: getDeform('UpperLeg_R', 'mixamorigRightUpLeg'),
+    head: getDeform('Head', 'mixamorigHead'),
+    hips: getDeform('Hips', 'mixamorigHips'),
+  };
+  const anchors = {
+    head: getNode('ZW_Anchor_Head') || bones.head,
+    rightHand: getDeform('Hand_R', 'mixamorigRightHand') || getNode('ZW_Anchor_RightHand') || getNode('Hand_Prop_R'),
+    leftHand: getDeform('Hand_L', 'mixamorigLeftHand') || getNode('ZW_Anchor_LeftHand') || getNode('Hand_Prop_L'),
+    chest: getDeform('Chest', 'UpperChest', 'mixamorigSpine2') || getNode('ZW_Anchor_Chest'),
+  };
+
+  root.userData.zwRigSelection = {
+    source: 'skinned-mesh-deform-bones',
+    leftArm: bones.leftArm?.name || '',
+    rightArm: bones.rightArm?.name || '',
+    leftHand: anchors.leftHand?.name || '',
+    rightHand: anchors.rightHand?.name || '',
+    rejectedControlBones: ['UpperArm_Anim_L', 'UpperArm_Anim_R'],
+  };
+  return { bones, anchors };
 }
 
 export async function createModularPlayerVisual(customInput, renderer, options = {}) {
