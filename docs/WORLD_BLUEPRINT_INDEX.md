@@ -15,23 +15,25 @@ ZTA connected world
 -> building, road, property, job, school, activity, or service
 ```
 
-A city/town cannot be represented by one block of landmarks. Every town blueprint must define multiple districts with distinct geography and movement.
+A city/town cannot be represented by one block of landmarks. Every town blueprint must define multiple districts or equivalent geographic zones with distinct movement and gameplay.
 
 ## World-wide planning
 
-1. [WORLD_MAP_DESIGN.md](WORLD_MAP_DESIGN.md) — connected-world intent and road hierarchy.
-2. [ZTA_WORLD_BLUEPRINT.md](ZTA_WORLD_BLUEPRINT.md) — macro world, town silhouettes, and integration sequence.
-3. [CITY_BLUEPRINT_STANDARD.md](CITY_BLUEPRINT_STANDARD.md) — mandatory detail standard for every city.
-4. [TOWN_SELF_SUSTAINING_SYSTEMS.md](TOWN_SELF_SUSTAINING_SYSTEMS.md) — housing, schools, jobs, skills, police, crime, and civic minimums.
-5. [WATER_ECOSYSTEM_BLUEPRINT.md](WATER_ECOSYSTEM_BLUEPRINT.md) — Crownwater Basin, swimming, breath, fishing catches, Gillyfish, boats, yachts, sea life, currents, and underwater access.
-6. [TOWN_ROADMAP.md](TOWN_ROADMAP.md) — compact summary and links.
-7. [MINIGAME_FRAMEWORK.md](MINIGAME_FRAMEWORK.md) — shared activity lifecycle.
+1. [LARGE_WORLD_SCALE_BLUEPRINT.md](LARGE_WORLD_SCALE_BLUEPRINT.md) — authoritative 2,000 x 2,000 Starter Town scale, multi-thousand-unit town spacing, travel-time targets, and streaming architecture.
+2. [WORLD_MAP_DESIGN.md](WORLD_MAP_DESIGN.md) — connected-world route hierarchy and large-world layout.
+3. [POLICE_CAREER_SYSTEM.md](POLICE_CAREER_SYSTEM.md) — jurisdictional criminal records, police eligibility, reform, academy, ranks, and shifts.
+4. [ZTA_WORLD_BLUEPRINT.md](ZTA_WORLD_BLUEPRINT.md) — macro world, town silhouettes, and integration sequence.
+5. [CITY_BLUEPRINT_STANDARD.md](CITY_BLUEPRINT_STANDARD.md) — mandatory detail standard for every city.
+6. [TOWN_SELF_SUSTAINING_SYSTEMS.md](TOWN_SELF_SUSTAINING_SYSTEMS.md) — housing, schools, jobs, skills, police, crime, and civic minimums.
+7. [WATER_ECOSYSTEM_BLUEPRINT.md](WATER_ECOSYSTEM_BLUEPRINT.md) — Crownwater Basin, swimming, breath, fishing catches, Gillyfish, boats, yachts, sea life, currents, and underwater access.
+8. [TOWN_ROADMAP.md](TOWN_ROADMAP.md) — compact summary and links.
+9. [MINIGAME_FRAMEWORK.md](MINIGAME_FRAMEWORK.md) — shared activity lifecycle.
 
 ## Detailed town blueprints
 
 | Town | Blueprint | Core identity | Planning status |
 |---|---|---|---|
-| Starter Town | [STARTER_TOWN_BLUEPRINT.md](STARTER_TOWN_BLUEPRINT.md) + [STARTER_TOWN_IMPLEMENTATION_CHECKLIST.md](STARTER_TOWN_IMPLEMENTATION_CHECKLIST.md) | large reference city, ordinary life, tutorial, housing, foundational school/jobs/law | detailed; current runtime audited |
+| Starter Town | [STARTER_TOWN_BLUEPRINT.md](STARTER_TOWN_BLUEPRINT.md), [LARGE_WORLD_SCALE_BLUEPRINT.md](LARGE_WORLD_SCALE_BLUEPRINT.md), [STARTER_TOWN_IMPLEMENTATION_CHECKLIST.md](STARTER_TOWN_IMPLEMENTATION_CHECKLIST.md), [STARTER_TOWN_SCALE_AND_POLICE_CHECKLIST.md](STARTER_TOWN_SCALE_AND_POLICE_CHECKLIST.md) | 2,000 x 2,000 reference city, ordinary life, tutorial, housing, foundational school/jobs/law | detailed; runtime audited; scale revision locked |
 | TechTown | [TECH_TOWN_BLUEPRINT.md](TECH_TOWN_BLUEPRINT.md) | smart city, coding, drones, robotics, tech crime | detailed |
 | Starline City | [STARLINE_CITY_BLUEPRINT.md](STARLINE_CITY_BLUEPRINT.md) | studios, performance, fashion, media, reputation | detailed |
 | Fishing Harbor | [FISHING_HARBOR_BLUEPRINT.md](FISHING_HARBOR_BLUEPRINT.md) | fishing, boats, market, marine school, harbor economy, Gillyfish discovery | detailed |
@@ -40,6 +42,30 @@ A city/town cannot be represented by one block of landmarks. Every town blueprin
 | Rich Hills | [RICH_HILLS_BLUEPRINT.md](RICH_HILLS_BLUEPRINT.md) | property, luxury, hospitality, golf, marina, yachts, strict security | detailed |
 | Casino Strip | [CASINO_STRIP_BLUEPRINT.md](CASINO_STRIP_BLUEPRINT.md) | fictional game halls, arcade, hotels, hospitality | detailed |
 | Aqualume | [AQUALUME_BLUEPRINT.md](AQUALUME_BLUEPRINT.md) | earned underwater final city, currents, sea life, salvage, advanced jobs | detailed |
+
+## Authoritative large-world origins
+
+```txt
+Starter Town        (0, 0)
+Fishing Harbor      (0, -5200)
+Rich Hills          (5200, 0)
+TechTown            (5200, -5200)
+Casino Strip        (0, -10400)
+Dungeon Outskirts   (10400, -5200)
+Obby Canyon         (10400, -10400)
+Starline City       (0, -15600)
+Aqualume            (3000, -7800) underwater
+```
+
+Approximate initial world envelope:
+
+```txt
+22,000 x 20,000 units
+plus water, underwater depth, terrain buffers, and future expansion
+```
+
+The forward-looking source of truth is
+[src/config/worldMapPlan.js](../src/config/worldMapPlan.js).
 
 ## Starter Town expansion structure
 
@@ -52,9 +78,56 @@ Civic Heights            police, WorkTower, city services, hill roads
 Eastgate Corridor        fuel, travel, Rich Hills gateway
 Parkside Commons         gym, recreation, park, curved roads
 Willowbend Residential   player home, housing, neighborhood life
+Westside Blocks          working neighborhood and market transition
 ```
 
-The current 3x3 grid is a runtime foundation only. The final Starter Town is planned as an approximately 500 x 480-unit city with polyline roads, multiple driving loops, hills, alleys, roundabouts, school zones, gateway roads, and filler neighborhoods between existing functional buildings.
+The current compact grid is a runtime foundation only. The final Starter Town is 2,000 x 2,000 with a Beltway, expressway/highway approaches, parkways, multiple arterials, local roads, hills, alleys, roundabouts, school zones, and filler neighborhoods between functional buildings.
+
+Target legal driving times:
+
+```txt
+Home -> School: 2.5-4 minutes
+Home -> WorkTower: 3-5 minutes
+Home -> Auto Haus: 4-6 minutes
+West edge -> East edge: 4-7 minutes
+Full Starter Beltway: 8-12 minutes
+```
+
+## Police career structure
+
+Police is a real career family in every jurisdiction.
+
+```txt
+Uncaught crime:
+- hidden history only
+- no official criminal record
+- police application may remain available
+
+Conviction in a town:
+- permanent disqualification from that town's department
+- cannot be purchased or waited away
+
+Conviction elsewhere:
+- complete sentence, civics, community work, and clean period
+- earn Reformed Citizen status
+- may apply in a different town with no local conviction
+```
+
+Department variants:
+
+```txt
+Starter Town      Dreamdrop Police / Public Safety
+Fishing Harbor    Harbor Patrol
+Rich Hills        Rich Hills Police
+TechTown          Metro Security / Police
+Casino Strip      Strip Police
+Starline City     Starline Police
+Dungeon           Warden / Ranger
+Obby Canyon       Canyon Ranger / Safety
+Aqualume          Current Guard
+```
+
+See [POLICE_CAREER_SYSTEM.md](POLICE_CAREER_SYSTEM.md).
 
 ## Water-world structure
 
@@ -77,8 +150,6 @@ and a later pressure-sub route. Casino Strip connects across the coastal bridge 
 
 ## Planning order
 
-The detailed planning sequence is now:
-
 ```txt
 1. TechTown
 2. Starline City / Hollywood-Fame Town
@@ -90,29 +161,33 @@ The detailed planning sequence is now:
 8. Crownwater Basin water ecosystem
 9. Aqualume final underwater town
 10. Expanded Starter Town and live-runtime gap audit
+11. Large-world scale revision
+12. Police career and jurisdictional criminal-record system
 ```
 
 ## Recommended implementation order
 
-Planning order and implementation order do not have to match. Recommended build sequence:
-
 ```txt
-1. Build Starter Town polyline-road and district data foundation.
-2. Expand Starter Town geography and relocate existing functional buildings.
-3. Implement Starter housing, foundational school, job board, city services, and optional branching tutorial.
-4. Deepen Starter crime consequences after the expanded road/police map is stable.
-5. Implement basic water, swimming, breath, safe drowning return, and shore boundaries.
-6. Build Fishing Harbor as the first new connected town.
-7. Expand fishing catch tables, including non-fish loot and the Gillyfish permanent unlock.
-8. Add basic boats, marina slips, fuel docks, and Crownwater Basin routes.
-9. Build Obby Canyon course prototype because it tests separate-zone rules cleanly.
-10. Build Dungeon Outskirts surface + first dungeon floor prototype.
-11. Build TechTown after curved/segment roads, transit, and denser assets are proven.
-12. Build Rich Hills after curved hill roads, property, marina, yachts, and security modifiers exist.
-13. Build Casino Strip after local currencies, hotels, crowds, security, and payout controls exist.
-14. Build Starline City after rhythm, reputation, events, studios, and crowd scheduling exist.
-15. Build the Aqualume gate/arrival prototype after water streaming, currents, underwater camera, Gillyfish persistence, and vehicles are stable.
-16. Build full Aqualume as the final city, then Abyssal Edge as late-game expansion.
+1. Add large-world bounds, streaming-cell metadata, and safe old-save migration.
+2. Build Starter Town polyline/curve-road engine and Dreamdrop Beltway prototype.
+3. Expand Starter Town to 2,000 x 2,000 and relocate existing functional buildings.
+4. Add instanced filler neighborhoods, LOD, district traffic, and city-map UI.
+5. Implement Starter housing, foundational school, job board, city services, and optional branching tutorial.
+6. Implement jurisdictional criminal records and police-career eligibility.
+7. Build Starter police academy, cadet work, patrol shifts, discipline, and ranks.
+8. Deepen Starter crime consequences after the expanded road/police map is stable.
+9. Implement basic water, swimming, breath, safe drowning return, and shore boundaries.
+10. Build Fishing Harbor as the first new connected town.
+11. Expand fishing catch tables, including non-fish loot and Gillyfish.
+12. Add boats, marina slips, fuel docks, and Crownwater Basin routes.
+13. Build Obby Canyon course prototype.
+14. Build Dungeon Outskirts surface + first dungeon floor.
+15. Build TechTown after curved roads, transit, and dense streaming are proven.
+16. Build Rich Hills after hill roads, property, marina, yachts, and security modifiers exist.
+17. Build Casino Strip after local currencies, hotels, crowds, security, and payout controls exist.
+18. Build Starline City after rhythm, reputation, events, studios, and crowd scheduling exist.
+19. Build Aqualume arrival after water streaming, currents, camera, Gillyfish persistence, and underwater vehicles are stable.
+20. Build full Aqualume, then Abyssal Edge.
 ```
 
 This is a dependency recommendation, not a creative priority ranking.
@@ -125,10 +200,11 @@ No town is complete until the player can:
 - arrive and understand its geography
 - identify and navigate multiple districts
 - travel safely by its supported transportation modes
-- experience road/path complexity appropriate to the town
+- experience route complexity appropriate to the town
 - buy or select local housing
 - attend its school/training center
 - work multiple geographically appropriate jobs
+- access its law-career equivalent when eligible
 - play multiple town-specific activities
 - buy food and ordinary supplies
 - recover health/energy and use local services
@@ -139,12 +215,25 @@ No town is complete until the player can:
 - revisit for a lasting progression reason
 ```
 
-Starter Town has an additional tutorial rule:
+Starter Town has additional rules:
 
 ```txt
-- it must introduce housing, school, jobs, law, shopping, needs, driving, and travel
+- it must measure approximately 2,000 x 2,000 playable units
+- cross-city driving must take real minutes
+- it must introduce housing, school, jobs, law, police career, shopping, needs, driving, and travel
 - it must be completable without committing assault, robbery, or any other crime
 - an optional risky path must still demonstrate the crime sandbox and consequences
+```
+
+Police-career completion rules:
+
+```txt
+- hidden crimes and official records are separate
+- uncaught crimes do not appear in a normal background check
+- local conviction permanently closes the local department
+- reform may open another town's department, never the convicting town
+- officer gameplay scores lawful procedure and civilian safety
+- no paid bypass can restore eligibility
 ```
 
 Additional water-city completion rules:
@@ -162,13 +251,13 @@ Additional water-city completion rules:
 
 ```txt
 1. Style-anchor props
-2. Terrain, water, and road/current skeleton
+2. Terrain, water, road/current skeleton, and streaming cells
 3. District boundaries, routes, and filler massing
 4. Civic/service exteriors
 5. Housing and school exteriors
 6. Hero entertainment/gameplay exteriors
 7. Core interiors
-8. Jobs and minigame support assets
+8. Jobs, careers, and minigame support assets
 9. Police/crime/housing systems
 10. NPC/creature population and schedules
 11. Lighting, sound, signage, performance, and QA
@@ -177,10 +266,14 @@ Additional water-city completion rules:
 ## Agent rule
 
 An implementation agent must read the relevant town blueprint,
-[CITY_BLUEPRINT_STANDARD.md](CITY_BLUEPRINT_STANDARD.md), and any applicable shared-system blueprint before changing a town.
+[CITY_BLUEPRINT_STANDARD.md](CITY_BLUEPRINT_STANDARD.md), [LARGE_WORLD_SCALE_BLUEPRINT.md](LARGE_WORLD_SCALE_BLUEPRINT.md), and any applicable shared-system blueprint before changing a town.
 
-For Starter Town, the agent must also read [STARTER_TOWN_IMPLEMENTATION_CHECKLIST.md](STARTER_TOWN_IMPLEMENTATION_CHECKLIST.md) and preserve the current functional systems while expanding the map.
+For Starter Town, the agent must also read:
+
+- [STARTER_TOWN_IMPLEMENTATION_CHECKLIST.md](STARTER_TOWN_IMPLEMENTATION_CHECKLIST.md)
+- [STARTER_TOWN_SCALE_AND_POLICE_CHECKLIST.md](STARTER_TOWN_SCALE_AND_POLICE_CHECKLIST.md)
+- [POLICE_CAREER_SYSTEM.md](POLICE_CAREER_SYSTEM.md)
 
 For Fishing Harbor, Rich Hills Marina, Casino Bridge water, or Aqualume, the agent must also read [WATER_ECOSYSTEM_BLUEPRINT.md](WATER_ECOSYSTEM_BLUEPRINT.md).
 
-Agents must not invent missing districts, move gateways, replace established names, expose placeholder interactions, force crime in the tutorial, turn Gillyfish into a purchase, or bypass permanent-unlock save rules without an explicit planning update.
+Agents must not shrink the world back to adjacent playsets, invent missing districts, move gateways, replace established names, expose placeholder interactions, force crime in the tutorial, create a paid police-record bypass, turn Gillyfish into a purchase, or bypass permanent-unlock save rules without an explicit planning update.
