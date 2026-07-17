@@ -1,0 +1,30 @@
+{
+  "asset_id": "prop_chicken_spot_breading_prep_station_v01",
+  "display_name": "Chicken Spot Breading & Prep Station",
+  "town": "Starter Town",
+  "district": "Dreamdrop District",
+  "location": "Chicken Spot kitchen",
+  "category": "prop",
+  "units": "meters",
+  "up_axis": "Y",
+  "forward_axis": "+Z",
+  "dimensions_m": {
+    "width": 1.76,
+    "depth": 0.86,
+    "height": 1.524
+  },
+  "pivot": "ground-center",
+  "triangle_target": "approximately 3k or lower",
+  "collision_plan": "cabinet box plus countertop; lids and utensils non-colliding",
+  "interaction_nodes": [
+    "breading wells",
+    "portion scale",
+    "tongs",
+    "ingredient lids",
+    "sanitation supplies"
+  ],
+  "approval_status": "APPROVED",
+  "approved_in_chat": "2026-07-17",
+  "generated_bytes": 129068,
+  "license": "Original ZTA geometry"
+}

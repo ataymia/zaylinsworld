@@ -2883,6 +2883,12 @@
     ],
     "starter-town-chicken-spot": [
       {
+        "name": "prop_chicken_spot_breading_prep_station_v01",
+        "path": "models/props/starter-town/chicken-spot/prop_chicken_spot_breading_prep_station_v01.glb",
+        "type": "glb",
+        "tex": 0
+      },
+      {
         "name": "prop_chicken_spot_deep_fryer_double_v01",
         "path": "models/props/starter-town/chicken-spot/prop_chicken_spot_deep_fryer_double_v01.glb",
         "type": "glb",
