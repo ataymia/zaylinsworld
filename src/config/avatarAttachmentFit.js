@@ -26,14 +26,13 @@ const hair = (values = {}) => Object.freeze({
 });
 
 // The silhouette, scale, and front/back placement are approved. Positive local
-// Y seats these imported meshes upward, so the prior +0.020 adjustment was in
-// the wrong direction. These values restore that pass, then move each style two
-// measured notches downward so the lower edge rests over the ear/scalp line.
+// Y seats these imported meshes upward. These values move every imported style
+// two additional measured notches downward while preserving every other axis.
 export const DEFAULT_HAIR_FIT_PROFILE = hair({
   widthScale: 0.70,
   heightScale: 1.00,
   depthScale: 0.70,
-  yOffsetMul: 0.075,
+  yOffsetMul: 0.055,
   zOffsetMul: -0.008,
 });
 
@@ -42,35 +41,35 @@ export const HAIR_FIT_PROFILES = Object.freeze({
     widthScale: 0.66,
     heightScale: 1.00,
     depthScale: 0.66,
-    yOffsetMul: 0.115,
+    yOffsetMul: 0.095,
     zOffsetMul: -0.004,
   }),
   'gltf-buzzed-f': hair({
     widthScale: 0.67,
     heightScale: 1.00,
     depthScale: 0.67,
-    yOffsetMul: 0.105,
+    yOffsetMul: 0.085,
     zOffsetMul: -0.004,
   }),
   'gltf-parted': hair({
     widthScale: 0.70,
     heightScale: 1.00,
     depthScale: 0.70,
-    yOffsetMul: 0.075,
+    yOffsetMul: 0.055,
     zOffsetMul: -0.006,
   }),
   'gltf-long': hair({
     widthScale: 0.74,
     heightScale: 1.00,
     depthScale: 0.74,
-    yOffsetMul: 0.055,
+    yOffsetMul: 0.035,
     zOffsetMul: -0.010,
   }),
   'gltf-buns': hair({
     widthScale: 0.72,
     heightScale: 1.00,
     depthScale: 0.72,
-    yOffsetMul: 0.075,
+    yOffsetMul: 0.055,
     zOffsetMul: -0.008,
   }),
 });
