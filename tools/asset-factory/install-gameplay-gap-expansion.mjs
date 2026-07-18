@@ -1,57 +1,45 @@
-import { gunzipSync } from 'node:zlib';
 import { createHash } from 'node:crypto';
-import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { gunzipSync } from 'node:zlib';
 import { dirname, join } from 'node:path';
+import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 
 const ROOT = process.cwd();
-const PAYLOAD_ROOT = join(ROOT, 'tools', 'asset-factory', 'gameplay-gap-expansion-payload');
-const FILE_MANIFEST_PATH = join(ROOT, 'tools', 'asset-factory', 'gameplay-gap-expansion-files.json');
-const EXPECTED_CHUNKS = 11;
-const EXPECTED_ENCODED_LENGTH = 187724;
-const EXPECTED_GZIP_BYTES = 140793;
-const EXPECTED_GZIP_SHA256 = '9ea824051aeec16fb17d8622475d8d4ef1fb7c5f944ada6aae2be16ca4d423bd';
+const PAYLOAD_ROOT = join(ROOT, 'tools', 'asset-factory', 'factory-patch-payload');
+const MANIFEST_PATH = join(ROOT, 'tools', 'asset-factory', 'factory-patch-files.json');
+const EXPECTED_BYTES = 50516;
+const EXPECTED_SHA256 = '3ab50269563031c5cb8e27b8a49b6b6d92cac794ff58d391d3e4d6d9e24dbe1a';
 
-const chunkNames = readdirSync(PAYLOAD_ROOT)
-  .filter((name) => /^chunk-\d+\.txt$/.test(name))
+const parts = readdirSync(PAYLOAD_ROOT)
+  .filter((name) => /^part-\d+\.bin$/.test(name))
   .sort();
-if (chunkNames.length !== EXPECTED_CHUNKS) {
-  throw new Error(`Gameplay-gap bundle has ${chunkNames.length} chunks; expected ${EXPECTED_CHUNKS}.`);
-}
-const encoded = chunkNames
-  .map((name) => readFileSync(join(PAYLOAD_ROOT, name), 'utf8').trim())
-  .join('');
-if (encoded.length !== EXPECTED_ENCODED_LENGTH) {
-  throw new Error(`Gameplay-gap source bundle length ${encoded.length} does not match ${EXPECTED_ENCODED_LENGTH}.`);
-}
-const compressed = Buffer.from(encoded, 'base64');
-if (compressed.length !== EXPECTED_GZIP_BYTES) {
-  throw new Error(`Gameplay-gap gzip length ${compressed.length} does not match ${EXPECTED_GZIP_BYTES}.`);
+if (parts.length !== 11) throw new Error(`Expected 11 patch parts, found ${parts.length}.`);
+const compressed = Buffer.concat(parts.map((name) => readFileSync(join(PAYLOAD_ROOT, name))));
+if (compressed.length !== EXPECTED_BYTES) {
+  throw new Error(`Patch bundle has ${compressed.length} bytes; expected ${EXPECTED_BYTES}.`);
 }
 const digest = createHash('sha256').update(compressed).digest('hex');
-if (digest !== EXPECTED_GZIP_SHA256) {
-  throw new Error(`Gameplay-gap source bundle SHA-256 ${digest} does not match ${EXPECTED_GZIP_SHA256}.`);
+if (digest !== EXPECTED_SHA256) {
+  throw new Error(`Patch bundle SHA-256 ${digest} does not match ${EXPECTED_SHA256}.`);
 }
-const packageData = JSON.parse(gunzipSync(compressed).toString('utf8'));
-if (packageData.version !== 3 || !packageData.files || typeof packageData.files !== 'object') {
-  throw new Error('Invalid final gameplay-gap expansion source bundle.');
+const bundle = JSON.parse(gunzipSync(compressed).toString('utf8'));
+if (bundle.version !== 1 || !bundle.files || typeof bundle.files !== 'object') {
+  throw new Error('Invalid repaired factory bundle.');
 }
-const writtenPaths = [];
-for (const [path, content] of Object.entries(packageData.files)) {
+const files = [];
+for (const [path, encoded] of Object.entries(bundle.files)) {
   const output = join(ROOT, path);
   mkdirSync(dirname(output), { recursive: true });
-  writeFileSync(output, Buffer.from(content, 'base64'));
-  writtenPaths.push(path);
+  writeFileSync(output, Buffer.from(encoded, 'base64'));
+  files.push(path);
 }
-writtenPaths.sort();
-writeFileSync(FILE_MANIFEST_PATH, `${JSON.stringify({
-  version: 3,
-  generatedAt: new Date().toISOString(),
-  payloadChunks: chunkNames,
-  encodedLength: encoded.length,
-  gzipBytes: compressed.length,
-  gzipSha256: digest,
-  files: writtenPaths,
+files.sort();
+writeFileSync(MANIFEST_PATH, `${JSON.stringify({
+  version: 1,
+  installedAt: new Date().toISOString(),
+  compressedBytes: compressed.length,
+  compressedSha256: digest,
+  parts,
+  files,
 }, null, 2)}\n`);
-console.log(`[gameplay-gap-bootstrap] verified ${chunkNames.length} chunks and ${compressed.length} compressed bytes (${digest}).`);
-console.log(`[gameplay-gap-bootstrap] installed ${writtenPaths.length} readable source files.`);
-console.log(`[gameplay-gap-bootstrap] wrote ${FILE_MANIFEST_PATH}.`);
+console.log(`[factory-bootstrap] verified ${compressed.length} compressed bytes (${digest}).`);
+console.log(`[factory-bootstrap] installed ${files.length} repaired production files.`);
