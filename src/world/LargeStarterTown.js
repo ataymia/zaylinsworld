@@ -13,7 +13,6 @@ import { RoadNetwork } from './RoadNetwork.js';
 import { buildDistrictMassing } from './DistrictMassing.js';
 import { buildStreetscapeLayer } from './StreetscapeLayer.js';
 import {
-  applyTerrainHeightsToPlane,
   starterTownHeightAt,
   STARTER_TOWN_GRADE_REPORT,
 } from './StarterTownTerrain.js';
@@ -44,7 +43,22 @@ function polygonBounds(polygon) {
   return { minX: Math.min(...xs), maxX: Math.max(...xs), minZ: Math.min(...zs), maxZ: Math.max(...zs) };
 }
 
-function locationPlaceholder(location) {
+function applyHeightFunctionToPlane(geometry, heightAt) {
+  const position = geometry?.getAttribute?.('position');
+  if (!position) return geometry;
+  for (let index = 0; index < position.count; index++) {
+    const worldX = position.getX(index);
+    const worldZ = -position.getY(index);
+    position.setZ(index, Number(heightAt(worldX, worldZ)) || 0);
+  }
+  position.needsUpdate = true;
+  geometry.computeVertexNormals?.();
+  geometry.computeBoundingBox?.();
+  geometry.computeBoundingSphere?.();
+  return geometry;
+}
+
+function locationPlaceholder(location, heightAt) {
   const width = location.category === 'property' ? 12 : location.category === 'school' ? 28 : 18;
   const depth = location.category === 'fuel' ? 24 : location.category === 'activity' ? 34 : 16;
   const height = location.category === 'job' ? 34 : location.category === 'school' ? 15 : location.category === 'activity' ? 0.25 : 10;
@@ -60,7 +74,7 @@ function locationPlaceholder(location) {
   mesh.name = `ZW_LocationPlaceholder_${location.id}`;
   mesh.position.set(
     location.position.x,
-    starterTownHeightAt(location.position.x, location.position.z) + height / 2 + 0.04,
+    heightAt(location.position.x, location.position.z) + height / 2 + 0.04,
     location.position.z,
   );
   mesh.castShadow = height > 1;
@@ -71,7 +85,7 @@ function locationPlaceholder(location) {
   return mesh;
 }
 
-function normalizeModel(scene, location) {
+function normalizeModel(scene, location, heightAt) {
   const box = new THREE.Box3().setFromObject(scene);
   const size = new THREE.Vector3();
   const center = new THREE.Vector3();
@@ -83,7 +97,7 @@ function normalizeModel(scene, location) {
   scene.scale.setScalar(scale);
   scene.position.set(
     location.position.x - center.x * scale,
-    starterTownHeightAt(location.position.x, location.position.z) - box.min.y * scale + 0.04,
+    heightAt(location.position.x, location.position.z) - box.min.y * scale + 0.04,
     location.position.z - center.z * scale,
   );
   scene.updateWorldMatrix(true, true);
@@ -97,6 +111,8 @@ export async function buildLargeStarterTown({
   includeStreetscape = true,
   includeGeneratedRoadside = true,
   includeSpecialRoadForms = true,
+  heightAt = starterTownHeightAt,
+  compatibilityMode = false,
 } = {}) {
   const plan = worldRegistry.starterPlan;
   const group = new THREE.Group();
@@ -105,8 +121,9 @@ export async function buildLargeStarterTown({
 
   const terrainWidth = plan.terrainBounds.maxX - plan.terrainBounds.minX;
   const terrainDepth = plan.terrainBounds.maxZ - plan.terrainBounds.minZ;
-  const terrainGeometry = applyTerrainHeightsToPlane(
+  const terrainGeometry = applyHeightFunctionToPlane(
     new THREE.PlaneGeometry(terrainWidth, terrainDepth, 48, 48),
+    heightAt,
   );
   const terrain = new THREE.Mesh(
     terrainGeometry,
@@ -135,7 +152,7 @@ export async function buildLargeStarterTown({
       }),
     );
     slab.rotation.x = -Math.PI / 2;
-    slab.position.set(centerX, starterTownHeightAt(centerX, centerZ) + 0.08, centerZ);
+    slab.position.set(centerX, heightAt(centerX, centerZ) + 0.08, centerZ);
     slab.name = `ZW_District_${district.id}`;
     slab.userData.districtId = district.id;
     districtLayer.add(slab);
@@ -146,24 +163,27 @@ export async function buildLargeStarterTown({
   const roads = roadNetwork.buildGeometry({
     name: 'ZW_StarterRoadSkeleton',
     yOffset: 0.065,
-    heightAt: (x, z) => starterTownHeightAt(x, z),
+    heightAt,
   });
   group.add(roads);
 
+  // Roadside and special-form modules currently use the authored graded terrain.
+  // The normal-game compatibility layer disables them until vehicle elevation is
+  // bound in Phase 7. The isolated engineering preview keeps them enabled.
   const specialRoadForms = includeSpecialRoadForms ? buildSpecialRoadFormsLayer() : null;
   if (specialRoadForms) group.add(specialRoadForms.group);
 
   const generatedRoadside = includeGeneratedRoadside ? buildStarterTownRoadsideLayer() : null;
   if (generatedRoadside) group.add(generatedRoadside.group);
 
-  const massing = includeMassing ? buildDistrictMassing({ heightAt: starterTownHeightAt }) : null;
+  const massing = includeMassing ? buildDistrictMassing({ heightAt }) : null;
   if (massing) group.add(massing.group);
 
   const locationLayer = new THREE.Group();
   locationLayer.name = 'ZW_StarterLocationParcels';
   const placeholders = new Map();
   for (const location of plan.locations) {
-    const placeholder = locationPlaceholder(location);
+    const placeholder = locationPlaceholder(location, heightAt);
     placeholders.set(location.id, placeholder);
     locationLayer.add(placeholder);
   }
@@ -185,7 +205,7 @@ export async function buildLargeStarterTown({
       }
       const model = loaded.scene.clone(true);
       model.name = `ZW_LocationAsset_${location.id}`;
-      normalizeModel(model, location);
+      normalizeModel(model, location, heightAt);
       model.userData.locationId = location.id;
       model.userData.assetId = record.id;
       locationLayer.add(model);
@@ -201,17 +221,22 @@ export async function buildLargeStarterTown({
     : null;
   if (streetscape) group.add(streetscape.group);
 
+  const gradeReport = compatibilityMode
+    ? Object.freeze({ ok: true, compatibilityFlat: true, warnings: [], errors: [] })
+    : STARTER_TOWN_GRADE_REPORT;
+
   group.userData.largeStarterTown = true;
   group.userData.featureFlag = 'starterTownLargeWorld';
+  group.userData.compatibilityMode = compatibilityMode;
   group.userData.roadNetwork = roadNetwork;
   group.userData.placementReport = placementReport;
-  group.userData.gradeReport = STARTER_TOWN_GRADE_REPORT;
+  group.userData.gradeReport = gradeReport;
   group.userData.snapshot = () => ({
     terrain: {
       width: terrainWidth,
       depth: terrainDepth,
       vertices: terrain.geometry.getAttribute('position')?.count || 0,
-      grades: STARTER_TOWN_GRADE_REPORT,
+      grades: gradeReport,
     },
     districts: plan.districts.length,
     roads: roadNetwork.snapshot(),
