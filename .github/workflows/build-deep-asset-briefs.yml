@@ -8,6 +8,8 @@ on:
       - 'tools/asset-factory/normalize-deep-specs.mjs'
       - 'tools/asset-factory/deep-spec-semantics.mjs'
       - 'tools/asset-factory/refine-deep-semantics.mjs'
+      - 'tools/asset-factory/deep-spec-final-classifier.mjs'
+      - 'tools/asset-factory/finalize-deep-semantics.mjs'
       - 'tools/asset-factory/check-deep-specs.mjs'
       - 'asset-factory/quality-policy.json'
       - 'asset-factory/manual-overrides.json'
@@ -20,6 +22,8 @@ on:
       - 'tools/asset-factory/normalize-deep-specs.mjs'
       - 'tools/asset-factory/deep-spec-semantics.mjs'
       - 'tools/asset-factory/refine-deep-semantics.mjs'
+      - 'tools/asset-factory/deep-spec-final-classifier.mjs'
+      - 'tools/asset-factory/finalize-deep-semantics.mjs'
       - 'tools/asset-factory/check-deep-specs.mjs'
       - 'asset-factory/quality-policy.json'
       - 'asset-factory/manual-overrides.json'
@@ -48,7 +52,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: Validate source syntax
         run: |
@@ -56,6 +60,8 @@ jobs:
           node --check tools/asset-factory/normalize-deep-specs.mjs
           node --check tools/asset-factory/deep-spec-semantics.mjs
           node --check tools/asset-factory/refine-deep-semantics.mjs
+          node --check tools/asset-factory/deep-spec-final-classifier.mjs
+          node --check tools/asset-factory/finalize-deep-semantics.mjs
           node --check tools/asset-factory/check-deep-specs.mjs
 
       - name: Generate deep production briefs for the complete asset library
@@ -64,10 +70,13 @@ jobs:
       - name: Expand sparse blueprint-list context
         run: node tools/asset-factory/normalize-deep-specs.mjs
 
-      - name: Correct semantic categories and rebuild category-specific doctrine
+      - name: Build category-specific doctrine
         run: node tools/asset-factory/refine-deep-semantics.mjs
 
-      - name: Require complete unique semantically consistent coverage
+      - name: Finalize physical-object categories and rebuild affected briefs
+        run: node tools/asset-factory/finalize-deep-semantics.mjs
+
+      - name: Require complete unique physically consistent coverage
         run: node tools/asset-factory/check-deep-specs.mjs
 
       - name: Commit generated specification library
