@@ -12,9 +12,11 @@ on:
       - 'tools/asset-factory/finalize-deep-semantics.mjs'
       - 'tools/asset-factory/derive-physical-specs.mjs'
       - 'tools/asset-factory/specialize-physical-specs.mjs'
+      - 'tools/asset-factory/classify-inventory-intent.mjs'
       - 'tools/asset-factory/check-deep-specs.mjs'
       - 'tools/asset-factory/check-physical-specs.mjs'
       - 'tools/asset-factory/check-specialized-physical-specs.mjs'
+      - 'tools/asset-factory/check-inventory-intent.mjs'
       - 'asset-factory/quality-policy.json'
       - 'asset-factory/manual-overrides.json'
       - 'asset-factory/generated/master-asset-specs.json'
@@ -30,9 +32,11 @@ on:
       - 'tools/asset-factory/finalize-deep-semantics.mjs'
       - 'tools/asset-factory/derive-physical-specs.mjs'
       - 'tools/asset-factory/specialize-physical-specs.mjs'
+      - 'tools/asset-factory/classify-inventory-intent.mjs'
       - 'tools/asset-factory/check-deep-specs.mjs'
       - 'tools/asset-factory/check-physical-specs.mjs'
       - 'tools/asset-factory/check-specialized-physical-specs.mjs'
+      - 'tools/asset-factory/check-inventory-intent.mjs'
       - 'asset-factory/quality-policy.json'
       - 'asset-factory/manual-overrides.json'
       - 'asset-factory/generated/master-asset-specs.json'
@@ -72,9 +76,11 @@ jobs:
           node --check tools/asset-factory/finalize-deep-semantics.mjs
           node --check tools/asset-factory/derive-physical-specs.mjs
           node --check tools/asset-factory/specialize-physical-specs.mjs
+          node --check tools/asset-factory/classify-inventory-intent.mjs
           node --check tools/asset-factory/check-deep-specs.mjs
           node --check tools/asset-factory/check-physical-specs.mjs
           node --check tools/asset-factory/check-specialized-physical-specs.mjs
+          node --check tools/asset-factory/check-inventory-intent.mjs
 
       - name: Generate deep production briefs for the complete asset library
         run: node tools/asset-factory/enrich-all-specs.mjs
@@ -97,6 +103,9 @@ jobs:
       - name: Rebuild descriptions from corrected specialized dimensions and components
         run: node tools/asset-factory/finalize-deep-semantics.mjs
 
+      - name: Separate canonical requests from documentation and existing-asset references
+        run: node tools/asset-factory/classify-inventory-intent.mjs
+
       - name: Require complete unique physically consistent coverage
         run: node tools/asset-factory/check-deep-specs.mjs
 
@@ -105,6 +114,9 @@ jobs:
 
       - name: Require specialized profiles for every derived asset
         run: node tools/asset-factory/check-specialized-physical-specs.mjs
+
+      - name: Require audited generation eligibility for every record
+        run: node tools/asset-factory/check-inventory-intent.mjs
 
       - name: Commit generated specification library
         if: github.event_name == 'push' && github.actor != 'github-actions[bot]'
