@@ -80,14 +80,14 @@ const TOKEN_GROUPS = {
   ]),
   infrastructure: new Set([
     'streetlight', 'hydrant', 'utility', 'bollard', 'guardrail', 'drain',
-    'shelter', 'charging', 'fuel', 'kiosk', 'generator', 'transformer',
+    'shelter', 'charging', 'charger', 'fuel', 'kiosk', 'generator', 'transformer',
     'antenna', 'vent', 'pipe', 'valve', 'gate', 'fence', 'railing', 'crane',
     'winch', 'pump', 'terminal', 'scanner', 'camera', 'barrier', 'turnstile',
     'beacon', 'substation', 'power', 'pedestal', 'divider', 'marker', 'dock',
     'post', 'elevator', 'escalator', 'conveyor', 'dumpster', 'trash', 'bin',
     'airlock', 'seal', 'hatch', 'reader', 'machine', 'station', 'feeder',
     'trap', 'net', 'bucket', 'rig', 'console', 'gantry', 'hoist', 'turret',
-    'sensor', 'apparatus', 'equipment', 'generator', 'compressor', 'filter',
+    'sensor', 'apparatus', 'equipment', 'compressor', 'filter',
   ]),
   food: new Set([
     'food', 'meal', 'drink', 'beverage', 'cup', 'bottle', 'plate', 'tray',
@@ -123,12 +123,14 @@ function hasAny(tokens, group) {
 
 function physicalTokenCategory(tokens) {
   // These categories describe the physical object itself and therefore outrank
-  // words naming a profession, animal, customer, district, or narrative use.
+  // words naming a profession, animal, customer, district, vehicle type, or
+  // gameplay location. Service infrastructure wins before contextual words such
+  // as hover, vehicle, road, and checkpoint.
   if (hasAny(tokens, 'furniture')) return 'furniture';
   if (hasAny(tokens, 'signage')) return 'signage';
+  if (hasAny(tokens, 'infrastructure')) return 'infrastructure';
   if (hasAny(tokens, 'vehicle')) return 'vehicle';
   if (hasAny(tokens, 'road_surface')) return 'road_surface';
-  if (hasAny(tokens, 'infrastructure')) return 'infrastructure';
   if (hasAny(tokens, 'food')) return 'food';
   if (hasAny(tokens, 'vegetation')) return 'vegetation';
   if (hasAny(tokens, 'container_prop')) return 'generic_prop';
