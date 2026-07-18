@@ -27,9 +27,11 @@
     "asset:refine-deep": "node tools/asset-factory/refine-deep-semantics.mjs",
     "asset:finalize-deep": "node tools/asset-factory/finalize-deep-semantics.mjs",
     "asset:derive-physical": "node tools/asset-factory/derive-physical-specs.mjs",
+    "asset:specialize-physical": "node tools/asset-factory/specialize-physical-specs.mjs",
     "asset:check-deep": "node tools/asset-factory/check-deep-specs.mjs",
     "asset:check-physical": "node tools/asset-factory/check-physical-specs.mjs",
-    "asset:deep": "npm run asset:enrich && npm run asset:normalize-deep && npm run asset:refine-deep && npm run asset:finalize-deep && npm run asset:derive-physical && npm run asset:finalize-deep && npm run asset:check-deep && npm run asset:check-physical",
+    "asset:check-specialized": "node tools/asset-factory/check-specialized-physical-specs.mjs",
+    "asset:deep": "npm run asset:enrich && npm run asset:normalize-deep && npm run asset:refine-deep && npm run asset:finalize-deep && npm run asset:derive-physical && npm run asset:specialize-physical && npm run asset:finalize-deep && npm run asset:check-deep && npm run asset:check-physical && npm run asset:check-specialized",
     "asset:batch": "node tools/asset-factory/run-batch.mjs --batch-size 10",
     "asset:dry-run": "node tools/asset-factory/run-batch.mjs --batch-size 10 --dry-run"
   },
