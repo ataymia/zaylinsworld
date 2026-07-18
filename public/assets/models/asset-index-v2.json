@@ -3107,6 +3107,78 @@
         "license": "Original ZTA procedural geometry"
       },
       {
+        "name": "prop_starter_guardrail_a_v01",
+        "path": "models/generated/starter-town/guardrail/prop_starter_guardrail_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starter-town",
+        "family": "guardrail",
+        "displayName": "Starter Guardrail",
+        "description": "A production-ready Starter Guardrail, designed as a roadside guardrail module for Starter Town. Show corrugated beam structure, post spacing, bolt heads, and a safe end treatment; do not use one flat bar. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “G. Street and terrain props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_starter_loading_crate_a_v01",
+        "path": "models/generated/starter-town/loading_crate/prop_starter_loading_crate_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starter-town",
+        "family": "loading_crate",
+        "displayName": "Starter Loading Crate",
+        "description": "A production-ready Starter Loading Crate, designed as a industrial loading crate for Starter Town. Show panel thickness, structural corner framing, lifting skids, and believable assembly. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “F. Industrial filler” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_starter_pallet_stack_a_v01",
+        "path": "models/generated/starter-town/pallet_stack/prop_starter_pallet_stack_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starter-town",
+        "family": "pallet_stack",
+        "displayName": "Starter Pallet Stack",
+        "description": "A production-ready Starter Pallet Stack, designed as a stacked industrial pallets for Starter Town. Build real pallet layers and stringers with usable fork gaps; avoid solid wooden slabs. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “F. Industrial filler” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_starter_parking_bollard_a_v01",
+        "path": "models/generated/starter-town/bollard/prop_starter_parking_bollard_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starter-town",
+        "family": "bollard",
+        "displayName": "Starter Parking Bollard",
+        "description": "A production-ready Starter Parking Bollard, designed as a protective traffic bollard for Starter Town. Use credible steel thickness, cap treatment, reflective marking, and ground anchoring. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “D. Commercial filler” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_starter_planter_a_v01",
+        "path": "models/generated/starter-town/planter/prop_starter_planter_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starter-town",
+        "family": "planter",
+        "displayName": "Starter Planter",
+        "description": "A production-ready Starter Planter, designed as a city planter for Starter Town. The container needs wall thickness, rim depth, soil, drainage logic, and believable planting rather than a cube with a green sphere. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “G. Street and terrain props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_starter_school_bus_stop_a_v01",
+        "path": "models/generated/starter-town/bus_shelter/prop_starter_school_bus_stop_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starter-town",
+        "family": "bus_shelter",
+        "displayName": "Starter School Bus Stop",
+        "description": "A production-ready Starter School Bus Stop, designed as a municipal bus shelter for Starter Town. Create a physically supported weather shelter with safe glass thickness, seating, drainage, route information, and pedestrian clearance. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “E. Civic and school filler” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
         "name": "prop_starter_stop_sign_a_v01",
         "path": "models/generated/starter-town/road-sign/prop_starter_stop_sign_a_v01.glb",
         "type": "glb",
@@ -3116,6 +3188,18 @@
         "family": "road-sign",
         "displayName": "Starter Town Stop Sign",
         "description": "A regulation-style roadside stop sign with a correctly proportioned red octagonal aluminum face, narrow white border, raised readable STOP lettering, galvanized perforated post, rear mounting brackets, fasteners, and a small concrete footing collar. The face should be thin metal, not a thick red toy block.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_starter_storm_drain_a_v01",
+        "path": "models/generated/starter-town/storm_drain/prop_starter_storm_drain_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starter-town",
+        "family": "storm_drain",
+        "displayName": "Starter Storm Drain",
+        "description": "A production-ready Starter Storm Drain, designed as a curb and storm-drain assembly for Starter Town. Provide a recessed drain, framed grate, gutter slope, and curb relationship instead of a painted rectangle. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “G. Street and terrain props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
         "license": "Original ZTA procedural geometry"
       },
       {
