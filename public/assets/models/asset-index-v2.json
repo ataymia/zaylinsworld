@@ -612,16 +612,16 @@
     "zta-free-asset-factory": [
       {
         "name": "arch_aqualume_bubble_lift_a_v01",
-        "path": "models/generated/aqualume/building_shell/arch_aqualume_bubble_lift_a_v01.glb",
+        "path": "models/generated/aqualume/bubble_lift/arch_aqualume_bubble_lift_a_v01.glb",
         "type": "glb",
         "tex": 0,
         "generated": true,
         "town": "aqualume",
-        "family": "building_shell",
-        "builder": "modular_building",
-        "builderRevision": "2026-07-18-r3",
-        "displayName": "Aqualume Bubble Lift",
-        "description": "A production-ready Aqualume Bubble Lift, designed as a specialized asset awaiting a dedicated family builder for Aqualume. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: advanced inhabited underwater city; pressure-rated structures, curved glass, coral-integrated architecture, current-powered transit, marine engineering, luminous but functional materials. This asset appears under the blueprint section “B. Modular architecture” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "family": "bubble_lift",
+        "builder": "bubble_lift",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "Aqualume Pressure Bubble Lift",
+        "description": "A full-height underwater civic elevator built around a transparent pressure-rated cylindrical shaft rather than an ordinary box cabin. The lift stands on a broad reef-safe foundation ring and is wrapped by evenly spaced structural pressure ribs. Two opposing docking portals use thick sliding glass doors, illuminated seal tracks, mechanical latches, and exterior emergency-release housings. Inside the shaft, a luminous current-drive core and bubble intake manifold create the visible rising-water column that carries the passenger capsule between districts. A waist-height control pedestal, directional current arrows, service conduits, pressure gauges, emergency red seal bands, and a reinforced roof docking collar make its operation readable from every angle. The silhouette must read instantly as vertical underwater transit, with open glass volume between ring ribs and visible mechanical systems at the base and roof.",
         "license": "Original ZTA procedural geometry"
       },
       {
@@ -650,6 +650,20 @@
         "builderRevision": "2026-07-18-r6",
         "displayName": "Aqualume Coral Wall",
         "description": "A production-ready Aqualume Coral Wall, designed as a specialized asset awaiting a dedicated family builder for Aqualume. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: advanced inhabited underwater city; pressure-rated structures, curved glass, coral-integrated architecture, current-powered transit, marine engineering, luminous but functional materials. This asset appears under the blueprint section “B. Modular architecture” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "arch_aqualume_current_lane_ring_a_v01",
+        "path": "models/generated/aqualume/building_shell/arch_aqualume_current_lane_ring_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "aqualume",
+        "family": "building_shell",
+        "builder": "modular_building",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "Aqualume Current Lane Ring",
+        "description": "A production-ready Aqualume Current Lane Ring, designed as a specialized asset awaiting a dedicated family builder for Aqualume. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: advanced inhabited underwater city; pressure-rated structures, curved glass, coral-integrated architecture, current-powered transit, marine engineering, luminous but functional materials. This asset appears under the blueprint section “B. Modular architecture” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
         "license": "Original ZTA procedural geometry"
       }
     ]
@@ -3001,6 +3015,20 @@
         "license": "Original ZTA procedural geometry"
       },
       {
+        "name": "crosswalk_starter_school_raised_a_v01",
+        "path": "models/generated/starter-town/road_module/crosswalk_starter_school_raised_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starter-town",
+        "family": "road_module",
+        "builder": "modular_road",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "Starter School Raised",
+        "description": "A production-ready Starter School Raised, designed as a modular road or pedestrian surface for Starter Town. Geometry must tile cleanly, keep consistent elevation, show engineered edge and drainage treatment, and avoid becoming a featureless plane. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “B. Road modules” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
         "name": "elevated_road_support_a_v01",
         "path": "models/generated/techtown/elevated_road_support/elevated_road_support_a_v01.glb",
         "type": "glb",
@@ -3057,6 +3085,48 @@
         "license": "Original Zaylins production specification; implementation must use original or documented commercially compatible source work."
       },
       {
+        "name": "prop_air_water_service_terminal_future_a_v01",
+        "path": "models/generated/techtown/fuel_pump/prop_air_water_service_terminal_future_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "fuel_pump",
+        "builder": "fuel_pump",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "Air Water Service Terminal Future",
+        "description": "A production-ready Air Water Service Terminal Future, designed as a fuel or multi-energy dispenser for Techtown. Include payment, metering, hose routing, nozzle storage, service access, ventilation, and protective base structure. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “Asset list” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_aqualume_pressure_seal_bench_a_v01",
+        "path": "models/generated/aqualume/municipal_bench/prop_aqualume_pressure_seal_bench_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "aqualume",
+        "family": "municipal_bench",
+        "builder": "municipal_bench",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "Aqualume Pressure Seal Bench",
+        "description": "A production-ready Aqualume Pressure Seal Bench, designed as a public seating bench for Aqualume. Respect adult seating dimensions, back angle, load-bearing frames, fasteners, and ground anchors. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: advanced inhabited underwater city; pressure-rated structures, curved glass, coral-integrated architecture, current-powered transit, marine engineering, luminous but functional materials. This asset appears under the blueprint section “G. Industrial/salvage” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_aqualume_wayfinding_sign_a_v01",
+        "path": "models/generated/aqualume/road_sign/prop_aqualume_wayfinding_sign_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "aqualume",
+        "family": "road_sign",
+        "builder": "road_sign",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "Aqualume Wayfinding Sign",
+        "description": "A production-ready Aqualume Wayfinding Sign, designed as a municipal road sign for Aqualume. Use a thin metal sign face, readable modeled lettering where named, rear brackets, and correctly scaled roadside support hardware. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: advanced inhabited underwater city; pressure-rated structures, curved glass, coral-integrated architecture, current-powered transit, marine engineering, luminous but functional materials. This asset appears under the blueprint section “C. Navigation and public infrastructure” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
         "name": "prop_canyon_streetlight_a_v01",
         "path": "models/generated/obby-canyon/streetlight/prop_canyon_streetlight_a_v01.glb",
         "type": "glb",
@@ -3097,6 +3167,20 @@
         "license": "Original ZTA procedural geometry"
       },
       {
+        "name": "prop_casino_streetlight_a_v01",
+        "path": "models/generated/casino-strip/streetlight/prop_casino_streetlight_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "casino-strip",
+        "family": "streetlight",
+        "builder": "streetlight",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "Casino Streetlight",
+        "description": "A production-ready Casino Streetlight, designed as a municipal streetlight for Casino Strip. Include weatherproof mounting, service access, a credible support arm, proper luminaire housing, and enough segment resolution for round metal parts. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “B. Strip roads/street props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
         "name": "prop_code_terminal_minigame_a_v01",
         "path": "models/generated/techtown/digital_kiosk/prop_code_terminal_minigame_a_v01.glb",
         "type": "glb",
@@ -3111,6 +3195,20 @@
         "license": "Original ZTA procedural geometry"
       },
       {
+        "name": "prop_customer_kiosk_tech_a_v01",
+        "path": "models/generated/techtown/digital_kiosk/prop_customer_kiosk_tech_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "digital_kiosk",
+        "builder": "digital_kiosk",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "Customer Kiosk Tech",
+        "description": "A production-ready Customer Kiosk Tech, designed as a public digital kiosk for Techtown. Use readable human ergonomics, screen protection, service access, ventilation, and a stable anti-tip base. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “F. Electronics / drone / gadget retail” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
         "name": "prop_data_drive_crate_a_v01",
         "path": "models/generated/techtown/loading_crate/prop_data_drive_crate_a_v01.glb",
         "type": "glb",
@@ -3120,6 +3218,20 @@
         "family": "loading_crate",
         "displayName": "Data Drive Crate",
         "description": "A production-ready Data Drive Crate, designed as a industrial loading crate for Techtown. Show panel thickness, structural corner framing, lifting skids, and believable assembly. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “I. Police / security / crime” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_digital_board_classroom_a_v01",
+        "path": "models/generated/techtown/wall_screen/prop_digital_board_classroom_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "wall_screen",
+        "builder": "wall_screen",
+        "builderRevision": "2026-07-18-r4",
+        "displayName": "Digital Board Classroom",
+        "description": "A production-ready Digital Board Classroom, designed as a wall-mounted display system for Techtown. Include wall mounting, housing depth, bezel, power or data routing, and a controllable display material rather than a bare emissive plane. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “D. School / academy” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
         "license": "Original ZTA procedural geometry"
       },
       {
@@ -3234,6 +3346,20 @@
         "builderRevision": "2026-07-18-r4",
         "displayName": "Richhills Security Monitor Wall",
         "description": "A production-ready Richhills Security Monitor Wall, designed as a multi-monitor workstation for Rich Hills. Displays require rear housings, mounts, bezels, and cable routing; avoid floating screen planes. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “G. Police/security/clinic/service” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_security_monitor_wall_a_v01",
+        "path": "models/generated/techtown/multi_monitor/prop_security_monitor_wall_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "multi_monitor",
+        "builder": "multi_monitor",
+        "builderRevision": "2026-07-18-r4",
+        "displayName": "Security Monitor Wall",
+        "description": "A production-ready Security Monitor Wall, designed as a multi-monitor workstation for Techtown. Displays require rear housings, mounts, bezels, and cable routing; avoid floating screen planes. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “I. Police / security / crime” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
         "license": "Original ZTA procedural geometry"
       },
       {
@@ -3356,6 +3482,20 @@
         "family": "bench",
         "displayName": "Dreamdrop Municipal Park Bench",
         "description": "A durable three-seat public bench with separate hardwood seat and back slats, curved powder-coated steel side frames, integrated armrests, rear support rails, slat mounting bolts, anti-skate center divider, and four anchored feet. Human seating dimensions must be credible, with a comfortable back angle and sufficient structural support beneath the seat.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_starter_bus_shelter_a_v01",
+        "path": "models/generated/starter-town/bus_shelter/prop_starter_bus_shelter_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starter-town",
+        "family": "bus_shelter",
+        "builder": "bus_shelter",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "Starter Bus Shelter",
+        "description": "A production-ready Starter Bus Shelter, designed as a municipal bus shelter for Starter Town. Create a physically supported weather shelter with safe glass thickness, seating, drainage, route information, and pedestrian clearance. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “E. Civic and school filler” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
         "license": "Original ZTA procedural geometry"
       },
       {
@@ -4137,6 +4277,20 @@
         "license": "Original ZTA procedural geometry"
       },
       {
+        "name": "equipment_pulsestage_dance_cardio_pad_a_v01",
+        "path": "models/generated/starline-city/modular_infrastructure/equipment_pulsestage_dance_cardio_pad_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starline-city",
+        "family": "modular_infrastructure",
+        "builder": "modular_infrastructure",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "Pulsestage Dance Cardio Pad",
+        "description": "A production-ready Pulsestage Dance Cardio Pad, designed as a specialized asset awaiting a dedicated family builder for Starline City. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: glamorous production city with real backstage labor; theaters, studios, hotels, hills, apartments, warehouses, lighting rigs, and service corridors. This asset appears under the blueprint section “H. Police/security/clinic/gym” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
         "name": "furniture_acting_class_chair_a_v01",
         "path": "models/generated/starline-city/modular_furniture/furniture_acting_class_chair_a_v01.glb",
         "type": "glb",
@@ -4162,6 +4316,20 @@
         "builderRevision": "2026-07-18-r6",
         "displayName": "Aqualume Glassway Bed",
         "description": "A production-ready Aqualume Glassway Bed, designed as a specialized asset awaiting a dedicated family builder for Aqualume. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: advanced inhabited underwater city; pressure-rated structures, curved glass, coral-integrated architecture, current-powered transit, marine engineering, luminous but functional materials. This asset appears under the blueprint section “H. Housing” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "furniture_aqualume_pearl_table_a_v01",
+        "path": "models/generated/aqualume/modular_furniture/furniture_aqualume_pearl_table_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "aqualume",
+        "family": "modular_furniture",
+        "builder": "modular_furniture",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "Aqualume Pearl Table",
+        "description": "A production-ready Aqualume Pearl Table, designed as a specialized asset awaiting a dedicated family builder for Aqualume. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: advanced inhabited underwater city; pressure-rated structures, curved glass, coral-integrated architecture, current-powered transit, marine engineering, luminous but functional materials. This asset appears under the blueprint section “H. Housing” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
         "license": "Original ZTA procedural geometry"
       },
       {

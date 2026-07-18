@@ -1,16 +1,16 @@
 {
   "format": "zta-asset-factory-health",
   "version": 1,
-  "generatedAt": "2026-07-18T18:28:59.587Z",
+  "generatedAt": "2026-07-18T18:37:35.140Z",
   "masterRecords": 2298,
   "queueRecords": 2298,
-  "completed": 601,
-  "queued": 1489,
+  "completed": 614,
+  "queued": 1476,
   "queuedRuntime": 0,
   "quarantined": 3,
   "unsupported": 189,
   "referenceOnly": 16,
-  "generatedGlbsOnDisk": 73,
+  "generatedGlbsOnDisk": 86,
   "failures": [],
   "warnings": [
     "Unreferenced generated GLB on disk: public/assets/models/generated/aqualume/building_shell/arch_aqualume_bubble_lift_a_v01.glb.",
@@ -31,8 +31,8 @@
     {
       "builder": "bubble_lift",
       "revision": "2026-07-18-r6",
-      "completed": 0,
-      "queued": 1,
+      "completed": 1,
+      "queued": 0,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
@@ -42,8 +42,8 @@
     {
       "builder": "bus_shelter",
       "revision": "2026-07-18-r6",
-      "completed": 2,
-      "queued": 2,
+      "completed": 3,
+      "queued": 1,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
@@ -54,8 +54,8 @@
       "builder": "charging_pad",
       "revision": "2026-07-18-r6",
       "completed": 0,
-      "queued": 3,
-      "quarantined": 1,
+      "queued": 4,
+      "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
       "referenceOnly": 0,
@@ -68,8 +68,8 @@
       "builder": "classroom_desk",
       "revision": "2026-07-18-r6",
       "completed": 0,
-      "queued": 1,
-      "quarantined": 1,
+      "queued": 0,
+      "quarantined": 2,
       "unsupported": 0,
       "runtime": 0,
       "referenceOnly": 0,
@@ -80,14 +80,14 @@
     {
       "builder": "digital_kiosk",
       "revision": "2026-07-18-r6",
-      "completed": 2,
-      "queued": 6,
+      "completed": 3,
+      "queued": 5,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
       "referenceOnly": 0,
       "errorSignatures": {
-        "material count # is below #": 6
+        "material count # is below #": 5
       }
     },
     {
@@ -126,14 +126,14 @@
     {
       "builder": "fuel_pump",
       "revision": "2026-07-18-r6",
-      "completed": 2,
-      "queued": 6,
+      "completed": 3,
+      "queued": 5,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
       "referenceOnly": 0,
       "errorSignatures": {
-        "mesh object count # is below #": 6
+        "mesh object count # is below #": 5
       }
     },
     {
@@ -207,8 +207,8 @@
     {
       "builder": "modular_building",
       "revision": "2026-07-18-r6",
-      "completed": 2,
-      "queued": 228,
+      "completed": 3,
+      "queued": 227,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
@@ -242,8 +242,8 @@
     {
       "builder": "modular_furniture",
       "revision": "2026-07-18-r6",
-      "completed": 3,
-      "queued": 137,
+      "completed": 4,
+      "queued": 136,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
@@ -253,8 +253,8 @@
     {
       "builder": "modular_infrastructure",
       "revision": "2026-07-18-r6",
-      "completed": 3,
-      "queued": 233,
+      "completed": 4,
+      "queued": 232,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
@@ -275,8 +275,8 @@
     {
       "builder": "modular_road",
       "revision": "2026-07-18-r6",
-      "completed": 3,
-      "queued": 33,
+      "completed": 4,
+      "queued": 32,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
@@ -286,8 +286,8 @@
     {
       "builder": "multi_monitor",
       "revision": "2026-07-18-r4",
-      "completed": 3,
-      "queued": 3,
+      "completed": 4,
+      "queued": 2,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
@@ -297,14 +297,14 @@
     {
       "builder": "municipal_bench",
       "revision": "2026-07-18-r6",
-      "completed": 4,
-      "queued": 10,
+      "completed": 5,
+      "queued": 9,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
       "referenceOnly": 0,
       "errorSignatures": {
-        "missing required components: seat structure, back structure, side frames, supports": 7,
+        "missing required components: seat structure, back structure, side frames, supports": 6,
         "material count # is below #; missing required components: seat structure, back structure, side frames, supports": 3
       }
     },
@@ -388,14 +388,14 @@
     {
       "builder": "road_sign",
       "revision": "2026-07-18-r6",
-      "completed": 5,
-      "queued": 4,
+      "completed": 6,
+      "queued": 3,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
       "referenceOnly": 0,
       "errorSignatures": {
-        "missing required components: border or lettering, support post, mounting brackets, fasteners": 4
+        "missing required components: border or lettering, support post, mounting brackets, fasteners": 3
       }
     },
     {
@@ -423,14 +423,14 @@
     {
       "builder": "streetlight",
       "revision": "2026-07-18-r6",
-      "completed": 5,
-      "queued": 3,
+      "completed": 6,
+      "queued": 2,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
       "referenceOnly": 0,
       "errorSignatures": {
-        "missing required components: maintenance access, support arm": 3
+        "missing required components: maintenance access, support arm": 2
       }
     },
     {
@@ -458,15 +458,13 @@
     {
       "builder": "wall_screen",
       "revision": "2026-07-18-r4",
-      "completed": 2,
-      "queued": 1,
+      "completed": 3,
+      "queued": 0,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
       "referenceOnly": 0,
-      "errorSignatures": {
-        "triangle count # is below #; height #m differs from target #m by #%": 1
-      }
+      "errorSignatures": {}
     }
   ]
 }
