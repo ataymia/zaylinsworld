@@ -1,15 +1,14 @@
 // ───────────────────────────────────────────────────────────────────────────
 // loader.js — real boot/world readiness gate + per-scene preload registry.
-//
-// The overlay no longer disappears merely because one frame rendered. It stays
-// up until tracked GLBs, textures, HDRIs, indexes, and explicit boot promises are
-// idle, the current phase has had time to settle, and two clean frames have run.
 // ───────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 
 const el = (id) => document.getElementById(id);
 const now = () => (typeof performance !== 'undefined' ? performance.now() : Date.now());
-const nextFrame = () => new Promise((resolve) => requestAnimationFrame(resolve));
+const nextFrame = () => new Promise((resolve) => {
+  if (typeof requestAnimationFrame === 'function') requestAnimationFrame(resolve);
+  else setTimeout(resolve, 16);
+});
 
 export const loadingManager = new THREE.LoadingManager();
 
@@ -17,12 +16,12 @@ let barFill = null;
 let barLabel = null;
 let screen = null;
 let sessionId = 0;
-let sessionStartedAt = 0;
+let sessionStartedAt = now();
 let minimumVisibleMs = 900;
 let settleMs = 360;
 let revealRequested = false;
 let revealTimer = null;
-let lastActivityAt = 0;
+let lastActivityAt = sessionStartedAt;
 let managerLoaded = 0;
 let managerTotal = 0;
 let managerActive = 0;
@@ -33,29 +32,22 @@ let hidden = false;
 let manualToken = 0;
 
 function clamp(value, min, max) { return Math.max(min, Math.min(max, value)); }
-
 function managerPercent() {
   if (!managerTotal) return managerActive ? 0 : 1;
   return clamp(managerLoaded / managerTotal, 0, 1);
 }
-
 function displayPercent() {
-  const network = managerPercent();
-  const tracked = managerTotal ? 8 + network * 87 : progressFloor;
+  const tracked = managerTotal ? 8 + managerPercent() * 87 : progressFloor;
   return Math.round(clamp(Math.max(progressFloor, tracked), 0, revealRequested ? 99 : 96));
 }
-
 function paint() {
   if (barFill) barFill.style.width = `${displayPercent()}%`;
   if (barLabel) barLabel.textContent = currentLabel;
 }
-
 function noteActivity() {
   lastActivityAt = now();
-  if (revealTimer) {
-    clearTimeout(revealTimer);
-    revealTimer = null;
-  }
+  if (revealTimer) clearTimeout(revealTimer);
+  revealTimer = null;
 }
 
 async function finishReveal(expectedSession) {
@@ -80,58 +72,52 @@ async function finishReveal(expectedSession) {
     if (screen && expectedSession === sessionId) screen.style.display = 'none';
   }, 650);
 }
-
 function maybeReveal() {
   if (!revealRequested || hidden || managerActive > 0) return;
   finishReveal(sessionId);
 }
 
+// Attach callbacks immediately, not in initLoadingScreen(). ESM imports can start
+// asset work before main.js reaches the DOM initializer, and those early tasks
+// must still count toward the real readiness gate.
+loadingManager.onStart = (_url, loaded, total) => {
+  if (managerActive === 0) {
+    managerLoaded = loaded || 0;
+    managerTotal = total || 1;
+  } else {
+    managerTotal = Math.max(managerTotal, total || managerTotal);
+  }
+  managerActive = Math.max(1, managerTotal - managerLoaded);
+  hidden = false;
+  noteActivity();
+  paint();
+};
+loadingManager.onProgress = (_url, loaded, total) => {
+  managerLoaded = loaded || managerLoaded;
+  managerTotal = Math.max(total || 0, managerTotal);
+  managerActive = Math.max(0, managerTotal - managerLoaded);
+  noteActivity();
+  paint();
+};
+loadingManager.onLoad = () => {
+  managerLoaded = Math.max(managerLoaded, managerTotal);
+  managerActive = 0;
+  noteActivity();
+  paint();
+  maybeReveal();
+};
+loadingManager.onError = (url) => {
+  const text = String(url || 'unknown asset');
+  if (!errors.includes(text)) errors.push(text);
+  noteActivity();
+  currentLabel = 'Loading with a fallback…';
+  paint();
+};
+
 export function initLoadingScreen() {
   screen = el('loading');
   barFill = el('load-bar-fill');
   barLabel = el('load-label');
-  if (!sessionStartedAt) {
-    sessionStartedAt = now();
-    lastActivityAt = sessionStartedAt;
-  }
-
-  loadingManager.onStart = (_url, loaded, total) => {
-    if (managerActive === 0) {
-      managerLoaded = loaded || 0;
-      managerTotal = total || 1;
-    } else {
-      managerTotal = Math.max(managerTotal, total || managerTotal);
-    }
-    managerActive = Math.max(1, managerTotal - managerLoaded);
-    hidden = false;
-    noteActivity();
-    paint();
-  };
-
-  loadingManager.onProgress = (_url, loaded, total) => {
-    managerLoaded = loaded || managerLoaded;
-    managerTotal = Math.max(total || 0, managerTotal);
-    managerActive = Math.max(0, managerTotal - managerLoaded);
-    noteActivity();
-    paint();
-  };
-
-  loadingManager.onLoad = () => {
-    managerLoaded = Math.max(managerLoaded, managerTotal);
-    managerActive = 0;
-    noteActivity();
-    paint();
-    maybeReveal();
-  };
-
-  loadingManager.onError = (url) => {
-    const text = String(url || 'unknown asset');
-    if (!errors.includes(text)) errors.push(text);
-    noteActivity();
-    currentLabel = 'Loading with a fallback…';
-    paint();
-  };
-
   paint();
 }
 
@@ -144,7 +130,7 @@ export function setProgress(pct, label) {
 
 export function setStatus(label) {
   if (label) currentLabel = label;
-  if (screen && (hidden || screen.style.display === 'none')) {
+  if (hidden || screen?.style.display === 'none') {
     showLoadingScreen(label || 'Loading…', { minVisibleMs: 1100, settleMs: 420 });
     return;
   }
@@ -152,8 +138,6 @@ export function setStatus(label) {
   paint();
 }
 
-// This is a request to reveal, not an immediate dismissal. The overlay remains
-// until the shared LoadingManager and manual promises are quiet.
 export function hideLoadingScreen() {
   revealRequested = true;
   progressFloor = Math.max(progressFloor, 92);
@@ -163,7 +147,6 @@ export function hideLoadingScreen() {
 }
 
 export function showLoadingScreen(label = 'Loading…', options = {}) {
-  if (!screen) return;
   sessionId += 1;
   sessionStartedAt = now();
   lastActivityAt = sessionStartedAt;
@@ -176,8 +159,10 @@ export function showLoadingScreen(label = 'Loading…', options = {}) {
   currentLabel = label;
   if (revealTimer) clearTimeout(revealTimer);
   revealTimer = null;
-  screen.style.display = '';
-  screen.classList.remove('done');
+  if (screen) {
+    screen.style.display = '';
+    screen.classList.remove('done');
+  }
   paint();
 }
 
@@ -194,11 +179,13 @@ export function trackLoadingPromise(promise, label = 'Loading game data…') {
 }
 
 export function trackLoadingFetch(url, init, label = 'Loading game data…') {
-  const task = fetch(url, init).then((response) => {
-    if (!response.ok) throw new Error(`${url} returned ${response.status}`);
-    return response;
-  });
-  return trackLoadingPromise(task, label);
+  return trackLoadingPromise(
+    fetch(url, init).then((response) => {
+      if (!response.ok) throw new Error(`${url} returned ${response.status}`);
+      return response;
+    }),
+    label,
+  );
 }
 
 export function loadingSnapshot() {
@@ -216,7 +203,6 @@ export function loadingSnapshot() {
   });
 }
 
-// ── per-scene asset map ───────────────────────────────────────────────────────
 export const SCENES = {
   city:        { label: 'City Exterior', preload: ['environment', 'player', 'world-index'] },
   frostbox:    { label: 'Frostbox', preload: [] },
@@ -228,7 +214,6 @@ export const SCENES = {
   kicks:       { label: 'Kicks & Fits', preload: [] },
   monster:     { label: 'Monster Mode', preload: [] },
 };
-
 const builtScenes = new Set(['city']);
 export function isSceneBuilt(id) { return builtScenes.has(id); }
 export function markSceneBuilt(id) { builtScenes.add(id); }
