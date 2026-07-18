@@ -1,54 +1,72 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-18T18:07:52.605Z",
+  "generatedAt": "2026-07-18T18:28:59.587Z",
   "builders": {
     "bollard": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
       "completed": 0,
       "queued": 2,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "bubble_lift": {
+      "revision": "2026-07-18-r6",
+      "state": "closed",
+      "reason": null,
+      "completed": 0,
+      "queued": 1,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
     "bus_shelter": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
-      "completed": 1,
-      "queued": 3,
+      "completed": 2,
+      "queued": 2,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
     "charging_pad": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
       "completed": 0,
-      "queued": 4,
-      "quarantined": 0,
-      "dominantFailureCount": 4
+      "queued": 3,
+      "quarantined": 1,
+      "dominantFailureCount": 3
     },
     "classroom_desk": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
       "completed": 0,
-      "queued": 2,
-      "quarantined": 0,
+      "queued": 1,
+      "quarantined": 1,
       "dominantFailureCount": 2
     },
     "digital_kiosk": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
+      "state": "closed",
+      "reason": null,
+      "completed": 2,
+      "queued": 6,
+      "quarantined": 0,
+      "dominantFailureCount": 6
+    },
+    "district_sign": {
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
       "completed": 1,
-      "queued": 7,
+      "queued": 0,
       "quarantined": 0,
-      "dominantFailureCount": 7
+      "dominantFailureCount": 0
     },
-    "district_sign": {
-      "revision": "2026-07-18-r5",
+    "elevated_road_support": {
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
       "completed": 1,
@@ -57,7 +75,7 @@
       "dominantFailureCount": 0
     },
     "fire_hydrant": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
       "completed": 1,
@@ -66,16 +84,16 @@
       "dominantFailureCount": 0
     },
     "fuel_pump": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
-      "completed": 1,
-      "queued": 7,
+      "completed": 2,
+      "queued": 6,
       "quarantined": 0,
       "dominantFailureCount": 6
     },
     "guardrail": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
       "completed": 1,
@@ -84,7 +102,7 @@
       "dominantFailureCount": 0
     },
     "hologram_billboard": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
       "completed": 3,
@@ -93,7 +111,7 @@
       "dominantFailureCount": 0
     },
     "hover_vehicle": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
       "completed": 1,
@@ -102,7 +120,7 @@
       "dominantFailureCount": 1
     },
     "loading_crate": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
       "completed": 3,
@@ -111,7 +129,7 @@
       "dominantFailureCount": 0
     },
     "mailbox": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
       "completed": 1,
@@ -129,16 +147,16 @@
       "dominantFailureCount": 0
     },
     "modular_building": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
       "completed": 2,
-      "queued": 229,
+      "queued": 228,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
     "modular_connector": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
       "completed": 1,
@@ -153,41 +171,41 @@
       "completed": 1,
       "queued": 8,
       "quarantined": 0,
-      "dominantFailureCount": 0
+      "dominantFailureCount": 1
     },
     "modular_furniture": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
-      "completed": 2,
-      "queued": 138,
+      "completed": 3,
+      "queued": 137,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
     "modular_infrastructure": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
-      "completed": 2,
-      "queued": 234,
+      "completed": 3,
+      "queued": 233,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
     "modular_prop": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
-      "completed": 2,
+      "completed": 1,
       "queued": 557,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
     "modular_road": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
-      "completed": 2,
-      "queued": 34,
+      "completed": 3,
+      "queued": 33,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
@@ -195,22 +213,22 @@
       "revision": "2026-07-18-r4",
       "state": "closed",
       "reason": null,
-      "completed": 2,
-      "queued": 4,
+      "completed": 3,
+      "queued": 3,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
     "municipal_bench": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
-      "completed": 3,
-      "queued": 11,
+      "completed": 4,
+      "queued": 10,
       "quarantined": 0,
       "dominantFailureCount": 7
     },
     "municipal_trash_can": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
       "completed": 3,
@@ -219,16 +237,16 @@
       "dominantFailureCount": 0
     },
     "office_desk": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
-      "completed": 4,
-      "queued": 1,
+      "completed": 5,
+      "queued": 0,
       "quarantined": 0,
-      "dominantFailureCount": 1
+      "dominantFailureCount": 0
     },
     "pallet_stack": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
       "completed": 1,
@@ -237,7 +255,7 @@
       "dominantFailureCount": 0
     },
     "picnic_table": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
       "completed": 1,
@@ -246,7 +264,7 @@
       "dominantFailureCount": 0
     },
     "planter": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
       "completed": 4,
@@ -255,7 +273,7 @@
       "dominantFailureCount": 0
     },
     "restaurant_booth": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
       "completed": 1,
@@ -264,16 +282,16 @@
       "dominantFailureCount": 0
     },
     "road_sign": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
-      "completed": 4,
-      "queued": 5,
+      "completed": 5,
+      "queued": 4,
       "quarantined": 0,
       "dominantFailureCount": 4
     },
     "state_variant": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
       "completed": 1,
@@ -282,7 +300,7 @@
       "dominantFailureCount": 0
     },
     "storm_drain": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
       "completed": 1,
@@ -291,16 +309,16 @@
       "dominantFailureCount": 0
     },
     "streetlight": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
-      "completed": 4,
-      "queued": 4,
+      "completed": 5,
+      "queued": 3,
       "quarantined": 0,
-      "dominantFailureCount": 4
+      "dominantFailureCount": 3
     },
     "traffic_light": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
       "completed": 1,
@@ -309,7 +327,7 @@
       "dominantFailureCount": 0
     },
     "utility_box": {
-      "revision": "2026-07-18-r5",
+      "revision": "2026-07-18-r6",
       "state": "closed",
       "reason": null,
       "completed": 1,
@@ -321,8 +339,8 @@
       "revision": "2026-07-18-r4",
       "state": "closed",
       "reason": null,
-      "completed": 1,
-      "queued": 2,
+      "completed": 2,
+      "queued": 1,
       "quarantined": 0,
       "dominantFailureCount": 1
     }

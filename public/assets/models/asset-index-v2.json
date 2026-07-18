@@ -637,6 +637,20 @@
         "displayName": "Aqualume Coral Villa Module",
         "description": "A production-ready Aqualume Coral Villa Module, designed as a specialized asset awaiting a dedicated family builder for Aqualume. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: advanced inhabited underwater city; pressure-rated structures, curved glass, coral-integrated architecture, current-powered transit, marine engineering, luminous but functional materials. This asset appears under the blueprint section “B. Modular architecture” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
         "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "arch_aqualume_coral_wall_a_v01",
+        "path": "models/generated/aqualume/building_shell/arch_aqualume_coral_wall_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "aqualume",
+        "family": "building_shell",
+        "builder": "modular_building",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "Aqualume Coral Wall",
+        "description": "A production-ready Aqualume Coral Wall, designed as a specialized asset awaiting a dedicated family builder for Aqualume. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: advanced inhabited underwater city; pressure-rated structures, curved glass, coral-integrated architecture, current-powered transit, marine engineering, luminous but functional materials. This asset appears under the blueprint section “B. Modular architecture” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
       }
     ]
   },
@@ -2973,17 +2987,31 @@
         "license": "Original ZTA procedural geometry"
       },
       {
+        "name": "crosswalk_starline_marquee_a_v01",
+        "path": "models/generated/starline-city/road_module/crosswalk_starline_marquee_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starline-city",
+        "family": "road_module",
+        "builder": "modular_road",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "Starline Marquee",
+        "description": "A production-ready Starline Marquee, designed as a modular road or pedestrian surface for Starline City. Geometry must tile cleanly, keep consistent elevation, show engineered edge and drainage treatment, and avoid becoming a featureless plane. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: glamorous production city with real backstage labor; theaters, studios, hotels, hills, apartments, warehouses, lighting rigs, and service corridors. This asset appears under the blueprint section “C. Roads and street props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
         "name": "elevated_road_support_a_v01",
-        "path": "models/generated/techtown/modular_prop/elevated_road_support_a_v01.glb",
+        "path": "models/generated/techtown/elevated_road_support/elevated_road_support_a_v01.glb",
         "type": "glb",
         "tex": 0,
         "generated": true,
         "town": "techtown",
-        "family": "modular_prop",
-        "builder": "modular_prop",
-        "builderRevision": "2026-07-18-r3",
-        "displayName": "Elevated Road Support",
-        "description": "A production-ready Elevated Road Support, designed as a specialized asset awaiting a dedicated family builder for Techtown. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “B. Roads / infrastructure” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "family": "elevated_road_support",
+        "builder": "elevated_road_support",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "TechTown Elevated Road Support Pier",
+        "description": "A tall engineered support assembly for TechTown's elevated vehicle lanes. It begins with a wide reinforced concrete crash footing and rises through a tapered composite-clad pier with a recessed inspection door, drainage outlet, service conduit, and protected maintenance ladder. A broad transverse cap beam at the top carries four replaceable elastomeric bearing pads, two lateral restraint blocks, expansion-joint catch trays, and visible bolted access plates beneath the roadway deck. Diagonal steel knee braces connect the pier to the cap beam and create a recognizable load path instead of leaving a slab floating on a column. Low collision guards and reflective hazard bands protect the base at street level. Controlled cyan inspection lights may accent access points, but the structure remains primarily concrete, dark metal, and black composite.",
         "license": "Original ZTA procedural geometry"
       },
       {
@@ -2995,9 +3023,9 @@
         "town": "aqualume",
         "family": "modular_connector",
         "builder": "modular_connector",
-        "builderRevision": "2026-07-18-r5",
-        "displayName": "Aqualume airlock Conduit Straight Standard",
-        "description": "Aqualume airlock Conduit Straight Standard is a dedicated-modular-builder added by the final Zaylins gameplay, sensory, environmental, interaction, customization, and cohesion sweep for aqualume. It closes the “airlock connector” gap with a named production asset rather than an invisible placeholder, a recycled generic puff, an unrelated object, or a crude primitive approximation. The result must communicate its purpose immediately through silhouette, motion, timing, optical response, state, surface contact, or interaction while following pressure-rated underwater engineering, thick framed glass, current response, mineral haze, reef-safe anchors, marine seals, and controlled bioluminescence.\n\nRequired production anatomy: primary structural span, start connection socket, end connection socket, load-bearing frame, service access, seal or transition trim, collision-safe boundary, LOD-preserved silhouette. Every component is functional. Components connect through believable supports, timing relationships, strand roots, anatomy, attachment points, projection rules, emitter origins, service paths, collision-safe boundaries, or state transitions appropriate to Aqualume airlock Conduit Straight Standard. Materials and response layers include structural material, connection hardware, seal or trim material, town-specific surface finish. Separation follows real construction, biological growth, light transport, contamination, weather, particle behavior, hair-fiber behavior, or gameplay state rather than arbitrary color blocks.\n\nImplementation defines a stable named origin, deterministic forward or projection direction, scale envelope, spawn or placement conditions, looping or one-shot lifecycle, transition timing, cleanup and pooling, network relevance, quality tiers, editor-preview metadata, and validation thresholds. Dependencies on surfaces, bodies, vehicles, weapons, water, wind, camera, lighting, audio, quests, or interaction sockets are explicit and testable. Close-range presentation needs convincing breakup, thickness, depth, hardware, strand structure, species anatomy, or layered motion. Distant presentation preserves the primary read without excessive triangles, overdraw, alpha sorting, particle count, shadows, or replication traffic.\n\nAccessibility is mandatory. The asset does not rely on color alone. Flashing, injury feedback, camera motion, particle density, and hazard communication include reduced-flash, reduced-motion, reduced-particle, high-contrast, or icon alternatives where relevant. Injury effects default to non-graphic presentation. Stylized blood is abstract and optional, contains no gore or exposed anatomy, and has paint, spark, dust, and comic-impact alternatives. Hair uses a scalp-conforming root field, purposeful hairline, believable density and gravity, style-specific structure, silhouette variation, ear and nape clearance, recolor support, and secondary-motion planning. Afros are not bunched spheres. Locs are not identical cylinders. Braids and twists show interwoven rhythm, parting, tension, taper, and purposeful styling.\n\nThis specification never authorizes crude geometry. Every layer reinforces Aqualume airlock Conduit Straight Standard, integrates with adjacent Zaylins systems, and passes recognition, lifecycle, town-style, accessibility, performance, and state review. Specialized GLBs remain outside the generic primitive Blender lane until a dedicated builder can satisfy this contract.",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "Aqualume Straight Airlock Conduit",
+        "description": "A straight enclosed connector for joining dry Aqualume interiors across wet exterior space. The primary form is a thick pressure-glass pedestrian tube running between two oversized circular docking collars. Each end has layered compression flanges, visible gasket seams, locking dogs, alignment keys, and a short reinforced transition throat that can mate cleanly with neighboring modules. Five external load-bearing pressure hoops wrap the span and connect to a lower service spine carrying current cables, drainage, oxygen lines, and inspection access. One side includes a recessed service hatch with latch hardware, pressure gauge, warning placard, and emergency isolation valve. A narrow illuminated floor strip and repeated directional icons preserve orientation without relying on color alone. The conduit must read as hollow traversable architecture with believable wall thickness, not a solid cylinder or a rectangular bridge wearing round end caps.",
         "license": "Original Zaylins production specification; implementation must use original or documented commercially compatible source work."
       },
       {
@@ -3009,7 +3037,7 @@
         "town": "casino-strip",
         "family": "modular_prop",
         "builder": "modular_prop",
-        "builderRevision": "2026-07-18-r5",
+        "builderRevision": "2026-07-18-r6",
         "displayName": "Casino Strip arcade Backpack Standard",
         "description": "Casino Strip arcade Backpack Standard is a dedicated-prop-builder added by the final Zaylins gameplay, sensory, environmental, interaction, customization, and cohesion sweep for casino-strip. It closes the “arcade prop” gap with a named production asset rather than an invisible placeholder, a recycled generic puff, an unrelated object, or a crude primitive approximation. The result must communicate its purpose immediately through silhouette, motion, timing, optical response, state, surface contact, or interaction while following polished entertainment spectacle with theatrical lighting, durable public finishes, signage hierarchy, security, and readable circulation.\n\nRequired production anatomy: object-specific primary body, support or contact structure, functional opening or access, handle, control, or closure, secondary functional assembly, fasteners and seams, placement contact, interaction or inventory socket. Every component is functional. Components connect through believable supports, timing relationships, strand roots, anatomy, attachment points, projection rules, emitter origins, service paths, collision-safe boundaries, or state transitions appropriate to Casino Strip arcade Backpack Standard. Materials and response layers include primary structural material, secondary functional material, hardware or closure material, transparent, flexible, organic, or emissive material when needed. Separation follows real construction, biological growth, light transport, contamination, weather, particle behavior, hair-fiber behavior, or gameplay state rather than arbitrary color blocks.\n\nImplementation defines a stable named origin, deterministic forward or projection direction, scale envelope, spawn or placement conditions, looping or one-shot lifecycle, transition timing, cleanup and pooling, network relevance, quality tiers, editor-preview metadata, and validation thresholds. Dependencies on surfaces, bodies, vehicles, weapons, water, wind, camera, lighting, audio, quests, or interaction sockets are explicit and testable. Close-range presentation needs convincing breakup, thickness, depth, hardware, strand structure, species anatomy, or layered motion. Distant presentation preserves the primary read without excessive triangles, overdraw, alpha sorting, particle count, shadows, or replication traffic.\n\nAccessibility is mandatory. The asset does not rely on color alone. Flashing, injury feedback, camera motion, particle density, and hazard communication include reduced-flash, reduced-motion, reduced-particle, high-contrast, or icon alternatives where relevant. Injury effects default to non-graphic presentation. Stylized blood is abstract and optional, contains no gore or exposed anatomy, and has paint, spark, dust, and comic-impact alternatives. Hair uses a scalp-conforming root field, purposeful hairline, believable density and gravity, style-specific structure, silhouette variation, ear and nape clearance, recolor support, and secondary-motion planning. Afros are not bunched spheres. Locs are not identical cylinders. Braids and twists show interwoven rhythm, parting, tension, taper, and purposeful styling.\n\nThis specification never authorizes crude geometry. Every layer reinforces Casino Strip arcade Backpack Standard, integrates with adjacent Zaylins systems, and passes recognition, lifecycle, town-style, accessibility, performance, and state review. Specialized GLBs remain outside the generic primitive Blender lane until a dedicated builder can satisfy this contract.",
         "license": "Original Zaylins production specification; implementation must use original or documented commercially compatible source work."
@@ -3023,10 +3051,24 @@
         "town": "shared-world",
         "family": "state_variant",
         "builder": "state_variant",
-        "builderRevision": "2026-07-18-r5",
-        "displayName": "Shared World accessibility Gate Locked Standard",
-        "description": "Shared World accessibility Gate Locked Standard is a state-aware-model-builder added by the final Zaylins gameplay, sensory, environmental, interaction, customization, and cohesion sweep for shared-world. It closes the “accessibility state-variant” gap with a named production asset rather than an invisible placeholder, a recycled generic puff, an unrelated object, or a crude primitive approximation. The result must communicate its purpose immediately through silhouette, motion, timing, optical response, state, surface contact, or interaction while following cross-town physical realism, controlled stylization, legible silhouettes, accessibility, and consistent gameplay language.\n\nRequired production anatomy: base object relationship, state-defining geometry, state-defining material layer, animation transition socket, collision state, interaction state, damage or repair metadata, LOD and swap policy. Every component is functional. Components connect through believable supports, timing relationships, strand roots, anatomy, attachment points, projection rules, emitter origins, service paths, collision-safe boundaries, or state transitions appropriate to Shared World accessibility Gate Locked Standard. Materials and response layers include base structural material, state-specific material, hardware or damage layer, indicator material. Separation follows real construction, biological growth, light transport, contamination, weather, particle behavior, hair-fiber behavior, or gameplay state rather than arbitrary color blocks.\n\nImplementation defines a stable named origin, deterministic forward or projection direction, scale envelope, spawn or placement conditions, looping or one-shot lifecycle, transition timing, cleanup and pooling, network relevance, quality tiers, editor-preview metadata, and validation thresholds. Dependencies on surfaces, bodies, vehicles, weapons, water, wind, camera, lighting, audio, quests, or interaction sockets are explicit and testable. Close-range presentation needs convincing breakup, thickness, depth, hardware, strand structure, species anatomy, or layered motion. Distant presentation preserves the primary read without excessive triangles, overdraw, alpha sorting, particle count, shadows, or replication traffic.\n\nAccessibility is mandatory. The asset does not rely on color alone. Flashing, injury feedback, camera motion, particle density, and hazard communication include reduced-flash, reduced-motion, reduced-particle, high-contrast, or icon alternatives where relevant. Injury effects default to non-graphic presentation. Stylized blood is abstract and optional, contains no gore or exposed anatomy, and has paint, spark, dust, and comic-impact alternatives. Hair uses a scalp-conforming root field, purposeful hairline, believable density and gravity, style-specific structure, silhouette variation, ear and nape clearance, recolor support, and secondary-motion planning. Afros are not bunched spheres. Locs are not identical cylinders. Braids and twists show interwoven rhythm, parting, tension, taper, and purposeful styling.\n\nThis specification never authorizes crude geometry. Every layer reinforces Shared World accessibility Gate Locked Standard, integrates with adjacent Zaylins systems, and passes recognition, lifecycle, town-style, accessibility, performance, and state review. Specialized GLBs remain outside the generic primitive Blender lane until a dedicated builder can satisfy this contract.",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "Locked Accessible Passage Gate",
+        "description": "A clearly locked but accessibility-compliant pedestrian passage gate used across Zaylins facilities and restricted routes. Two anchored vertical posts frame a full-width gate leaf with rounded horizontal rails and closely spaced lower infill that prevents unsafe gaps without becoming visually prison-like. A heavy hinge barrel, lower pivot, and overhead closing arm show how the gate moves. The locked state is communicated by a visible mechanical latch, shielded electric strike, raised padlock icon, amber status lamp, and a physical CLOSED tab, so players do not have to rely on color. The approach side includes a large wheelchair-height push plate, tactile icon panel, card reader, intercom button, and emergency override housing. A flush threshold strip preserves wheelchair passage when unlocked. Lock actuator, gate leaf, and indicators remain separate for later state animation and quest logic.",
         "license": "Original Zaylins production specification; implementation must use original or documented commercially compatible source work."
+      },
+      {
+        "name": "prop_canyon_streetlight_a_v01",
+        "path": "models/generated/obby-canyon/streetlight/prop_canyon_streetlight_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "obby-canyon",
+        "family": "streetlight",
+        "builder": "streetlight",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "Canyon Streetlight",
+        "description": "A production-ready Canyon Streetlight, designed as a municipal streetlight for Obby Canyon. Include weatherproof mounting, service access, a credible support arm, proper luminaire housing, and enough segment resolution for round metal parts. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: large-scale canyon adventure infrastructure; engineered platforms, bridges, rescue equipment, rock integration, believable supports and safety systems. This asset appears under the blueprint section “D. Base camp/street” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
       },
       {
         "name": "prop_casino_bus_shelter_a_v01",
@@ -3052,6 +3094,20 @@
         "builderRevision": "2026-07-18-r4",
         "displayName": "Casino Security Monitor Wall",
         "description": "A production-ready Casino Security Monitor Wall, designed as a multi-monitor workstation for Casino Strip. Displays require rear housings, mounts, bezels, and cable routing; avoid floating screen planes. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “F. School/service/security” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_code_terminal_minigame_a_v01",
+        "path": "models/generated/techtown/digital_kiosk/prop_code_terminal_minigame_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "digital_kiosk",
+        "builder": "digital_kiosk",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "Code Terminal Minigame",
+        "description": "A production-ready Code Terminal Minigame, designed as a public digital kiosk for Techtown. Use readable human ergonomics, screen protection, service access, ventilation, and a stable anti-tip base. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “J. Minigame support UI/assets” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
         "license": "Original ZTA procedural geometry"
       },
       {
@@ -3115,6 +3171,20 @@
         "license": "Original ZTA procedural geometry"
       },
       {
+        "name": "prop_home_richhills_office_desk_a_v01",
+        "path": "models/generated/rich-hills/office_desk/prop_home_richhills_office_desk_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "rich-hills",
+        "family": "office_desk",
+        "builder": "office_desk",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "Home Richhills Office Desk",
+        "description": "A production-ready Home Richhills Office Desk, designed as a professional office desk for Rich Hills. Use ergonomic dimensions, credible support, cable routing, drawer or service access, and layered material construction. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “F. Residential” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
         "name": "prop_menu_board_digital_a_v01",
         "path": "models/generated/techtown/hologram_billboard/prop_menu_board_digital_a_v01.glb",
         "type": "glb",
@@ -3153,6 +3223,20 @@
         "license": "Original ZTA procedural geometry"
       },
       {
+        "name": "prop_richhills_security_monitor_wall_a_v01",
+        "path": "models/generated/rich-hills/multi_monitor/prop_richhills_security_monitor_wall_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "rich-hills",
+        "family": "multi_monitor",
+        "builder": "multi_monitor",
+        "builderRevision": "2026-07-18-r4",
+        "displayName": "Richhills Security Monitor Wall",
+        "description": "A production-ready Richhills Security Monitor Wall, designed as a multi-monitor workstation for Rich Hills. Displays require rear housings, mounts, bezels, and cable routing; avoid floating screen planes. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “G. Police/security/clinic/service” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
         "name": "prop_service_loading_crate_a_v01",
         "path": "models/generated/casino-strip/loading_crate/prop_service_loading_crate_a_v01.glb",
         "type": "glb",
@@ -3176,6 +3260,20 @@
         "builderRevision": "2026-07-18-r3",
         "displayName": "Starline Bench",
         "description": "A production-ready Starline Bench, designed as a public seating bench for Starline City. Respect adult seating dimensions, back angle, load-bearing frames, fasteners, and ground anchors. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: glamorous production city with real backstage labor; theaters, studios, hotels, hills, apartments, warehouses, lighting rigs, and service corridors. This asset appears under the blueprint section “C. Roads and street props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_starline_bus_shelter_a_v01",
+        "path": "models/generated/starline-city/bus_shelter/prop_starline_bus_shelter_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starline-city",
+        "family": "bus_shelter",
+        "builder": "bus_shelter",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "Starline Bus Shelter",
+        "description": "A production-ready Starline Bus Shelter, designed as a municipal bus shelter for Starline City. Create a physically supported weather shelter with safe glass thickness, seating, drainage, route information, and pedestrian clearance. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: glamorous production city with real backstage labor; theaters, studios, hotels, hills, apartments, warehouses, lighting rigs, and service corridors. This asset appears under the blueprint section “C. Roads and street props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
         "license": "Original ZTA procedural geometry"
       },
       {
@@ -3523,6 +3621,20 @@
         "license": "Original ZTA procedural geometry"
       },
       {
+        "name": "prop_tool_bench_precision_a_v01",
+        "path": "models/generated/techtown/municipal_bench/prop_tool_bench_precision_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "municipal_bench",
+        "builder": "municipal_bench",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "Tool Bench Precision",
+        "description": "A production-ready Tool Bench Precision, designed as a public seating bench for Techtown. Respect adult seating dimensions, back angle, load-bearing frames, fasteners, and ground anchors. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “F. Electronics / drone / gadget retail” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
         "name": "prop_wall_fitness_screen_a_v01",
         "path": "models/generated/techtown/wall_screen/prop_wall_fitness_screen_a_v01.glb",
         "type": "glb",
@@ -3534,6 +3646,48 @@
         "builderRevision": "2026-07-18-r4",
         "displayName": "Wall Fitness Screen",
         "description": "A production-ready Wall Fitness Screen, designed as a wall-mounted display system for Techtown. Include wall mounting, housing depth, bezel, power or data routing, and a controllable display material rather than a bare emissive plane. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “H. Gym / wellness / clinic” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_wall_screen_home_a_v01",
+        "path": "models/generated/techtown/wall_screen/prop_wall_screen_home_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "wall_screen",
+        "builder": "wall_screen",
+        "builderRevision": "2026-07-18-r4",
+        "displayName": "Wall Screen Home",
+        "description": "A production-ready Wall Screen Home, designed as a wall-mounted display system for Techtown. Include wall mounting, housing depth, bezel, power or data routing, and a controllable display material rather than a bare emissive plane. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “G. Residential / home” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_wayfarer_fuel_pump_a_v01",
+        "path": "models/generated/dungeon-outskirts/fuel_pump/prop_wayfarer_fuel_pump_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "dungeon-outskirts",
+        "family": "fuel_pump",
+        "builder": "fuel_pump",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "Wayfarer Fuel Pump",
+        "description": "A production-ready Wayfarer Fuel Pump, designed as a fuel or multi-energy dispenser for Dungeon Outskirts. Include payment, metering, hose routing, nozzle storage, service access, ventilation, and protective base structure. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “Layout” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_wayfinding_sign_digital_a_v01",
+        "path": "models/generated/techtown/road_sign/prop_wayfinding_sign_digital_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "road_sign",
+        "builder": "road_sign",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "Wayfinding Sign Digital",
+        "description": "A production-ready Wayfinding Sign Digital, designed as a municipal road sign for Techtown. Use a thin metal sign face, readable modeled lettering where named, rear brackets, and correctly scaled roadside support hardware. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “B. Roads / infrastructure” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
         "license": "Original ZTA procedural geometry"
       },
       {
@@ -3969,6 +4123,20 @@
         "license": "Original ZTA procedural geometry"
       },
       {
+        "name": "equipment_dumbbell_rack_future_a_v01",
+        "path": "models/generated/techtown/modular_infrastructure/equipment_dumbbell_rack_future_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "modular_infrastructure",
+        "builder": "modular_infrastructure",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "Dumbbell Rack Future",
+        "description": "A production-ready Dumbbell Rack Future, designed as a specialized asset awaiting a dedicated family builder for Techtown. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “H. Gym / wellness / clinic” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
         "name": "furniture_acting_class_chair_a_v01",
         "path": "models/generated/starline-city/modular_furniture/furniture_acting_class_chair_a_v01.glb",
         "type": "glb",
@@ -3980,6 +4148,20 @@
         "builderRevision": "2026-07-18-r5",
         "displayName": "Acting Class Chair",
         "description": "A production-ready Acting Class Chair, designed as a specialized asset awaiting a dedicated family builder for Starline City. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: glamorous production city with real backstage labor; theaters, studios, hotels, hills, apartments, warehouses, lighting rigs, and service corridors. This asset appears under the blueprint section “School assets” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "furniture_aqualume_glassway_bed_a_v01",
+        "path": "models/generated/aqualume/modular_furniture/furniture_aqualume_glassway_bed_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "aqualume",
+        "family": "modular_furniture",
+        "builder": "modular_furniture",
+        "builderRevision": "2026-07-18-r6",
+        "displayName": "Aqualume Glassway Bed",
+        "description": "A production-ready Aqualume Glassway Bed, designed as a specialized asset awaiting a dedicated family builder for Aqualume. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: advanced inhabited underwater city; pressure-rated structures, curved glass, coral-integrated architecture, current-powered transit, marine engineering, luminous but functional materials. This asset appears under the blueprint section “H. Housing” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
         "license": "Original ZTA procedural geometry"
       },
       {
