@@ -10,6 +10,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 if SCRIPT_DIR not in sys.path:
     sys.path.insert(0, SCRIPT_DIR)
 
+import common as common_module
 from builders import BUILDERS
 from common import (
     apply_modifier,
@@ -23,6 +24,40 @@ from common import (
     render_turntable,
     reset_scene,
 )
+
+
+def configure_render_compatible():
+    scene = bpy.context.scene
+    try:
+        scene.render.engine = "BLENDER_EEVEE_NEXT"
+    except Exception:
+        scene.render.engine = "BLENDER_EEVEE"
+    scene.render.resolution_x = 512
+    scene.render.resolution_y = 512
+    scene.render.resolution_percentage = 100
+    scene.render.image_settings.file_format = "PNG"
+    scene.render.image_settings.color_mode = "RGBA"
+    scene.render.film_transparent = True
+    scene.render.image_settings.color_depth = "8"
+
+    look_property = scene.view_settings.bl_rna.properties.get("look")
+    available_looks = {item.identifier for item in look_property.enum_items} if look_property else set()
+    for candidate in ("AgX - Medium High Contrast", "Medium High Contrast", "AgX - Base Contrast", "None"):
+        if candidate in available_looks:
+            scene.view_settings.look = candidate
+            break
+
+    world = scene.world or bpy.data.worlds.new("AssetPreviewWorld")
+    scene.world = world
+    world.use_nodes = True
+    background = world.node_tree.nodes.get("Background")
+    if background:
+        background.inputs["Color"].default_value = (0.035, 0.045, 0.065, 1.0)
+        background.inputs["Strength"].default_value = 0.35
+
+
+# render_turntable resolves configure_render from the common module at call time.
+common_module.configure_render = configure_render_compatible
 
 
 def parse_args():
