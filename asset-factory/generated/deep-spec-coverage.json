@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-18T03:33:52.747Z",
+  "generatedAt": "2026-07-18T03:40:33.308Z",
   "expectedFromMaster": 978,
   "produced": 978,
   "descriptionsAtOrAboveMinimum": 978,
@@ -71,12 +71,12 @@
     "hologram_billboard": 3
   },
   "normalizedSparseContexts": 42,
-  "normalizedAt": "2026-07-18T03:33:53.148Z",
+  "normalizedAt": "2026-07-18T03:40:33.662Z",
   "semanticCategoryCorrections": 405,
-  "semanticRefinedAt": "2026-07-18T03:33:53.704Z",
+  "semanticRefinedAt": "2026-07-18T03:40:34.214Z",
   "finalSemanticCorrections": 0,
   "finalSemanticCorrectedIds": [],
-  "finalSemanticPassAt": "2026-07-18T03:33:55.781Z",
+  "finalSemanticPassAt": "2026-07-18T03:40:36.254Z",
   "physicalSpecsDerived": 667,
   "contaminatedCharacterSpecsRepaired": 23,
   "physicalSpecsDerivedByCategory": {
@@ -90,7 +90,7 @@
     "food": 11,
     "road_surface": 16
   },
-  "physicalSpecPassAt": "2026-07-18T03:33:54.711Z",
+  "physicalSpecPassAt": "2026-07-18T03:40:35.172Z",
   "explicitPhysicalSpecializations": 107,
   "dynamicPhysicalSpecializations": 169,
   "dynamicPhysicalSpecializationIds": [
@@ -264,5 +264,34 @@
     "vehicle_water_motorboat_a_v01",
     "vehicle_water_speedboat_a_v01"
   ],
-  "physicalSpecializationPassAt": "2026-07-18T03:33:55.143Z"
+  "physicalSpecializationPassAt": "2026-07-18T03:40:35.580Z",
+  "inventoryDispositionCounts": {
+    "canonical-generation-request": 960,
+    "manual-canonical-request": 2,
+    "naming-example": 3,
+    "workflow-template-reference": 1,
+    "existing-asset-reference": 9,
+    "documentation-command-fragment": 3
+  },
+  "canonicalGenerationRequestCount": 962,
+  "referenceOnlyRecordCount": 16,
+  "referenceOnlyRecordIds": [
+    "prop_harbor_fish_crate_a_v01",
+    "building_starline_studios_exterior_v01",
+    "base_character",
+    "cafeteriademoscene",
+    "chemistrylabdemoscene",
+    "computerdemoscene",
+    "debris",
+    "demoscene",
+    "furniture_richhills_mansion_sofa_a_v01",
+    "in",
+    "ktx",
+    "out",
+    "principalofficedemoscene",
+    "standard",
+    "toiletdemoscene",
+    "trashanddebris"
+  ],
+  "inventoryAuditAt": "2026-07-18T03:40:36.860Z"
 }
