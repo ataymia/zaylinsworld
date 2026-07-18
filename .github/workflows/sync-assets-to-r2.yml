@@ -1,0 +1,187 @@
+name: Sync Game Assets to Cloudflare R2
+
+on:
+  workflow_dispatch:
+    inputs:
+      scope:
+        description: Binary asset scope to synchronize
+        required: false
+        type: choice
+        options:
+          - generated
+          - all
+        default: generated
+  pull_request:
+    paths:
+      - 'tools/cloudflare/**'
+      - 'cloudflare/**'
+      - 'src/assets.js'
+      - 'public/assets/remote-asset-manifest.json'
+      - '.github/workflows/sync-assets-to-r2.yml'
+  push:
+    branches: [main, agent/gameplay-gap-asset-expansion]
+    paths:
+      - 'public/assets/models/generated/**'
+      - 'public/assets/textures/generated/**'
+      - 'public/assets/audio/generated/**'
+      - 'tools/cloudflare/**'
+      - 'cloudflare/**'
+      - 'src/assets.js'
+      - '.github/workflows/sync-assets-to-r2.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: zaylins-r2-sync-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+      R2_BUCKET: ${{ vars.R2_BUCKET || 'zaylins-assets' }}
+      R2_ASSET_DOMAIN: ${{ vars.R2_ASSET_DOMAIN }}
+      R2_ASSET_BASE_URL: ${{ vars.R2_ASSET_BASE_URL }}
+      SYNC_SCOPE: ${{ github.event.inputs.scope || 'generated' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Validate synchronization source
+        run: node --check tools/cloudflare/build-r2-upload-plan.mjs
+
+      - name: Require Cloudflare deployment credentials
+        shell: bash
+        run: |
+          if [[ -z "$CLOUDFLARE_API_TOKEN" || -z "$CLOUDFLARE_ACCOUNT_ID" ]]; then
+            echo "::error::CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID must be configured as GitHub Actions secrets."
+            exit 1
+          fi
+          echo "Cloudflare account credentials are available to Actions."
+
+      - name: Install current Wrangler
+        run: npx --yes wrangler@latest --version
+
+      - name: Ensure R2 bucket exists
+        shell: bash
+        run: |
+          if npx --yes wrangler@latest r2 bucket info "$R2_BUCKET" --json > /tmp/r2-bucket-info.json 2>/tmp/r2-bucket-info.err; then
+            echo "R2 bucket $R2_BUCKET already exists."
+          else
+            cat /tmp/r2-bucket-info.err || true
+            npx --yes wrangler@latest r2 bucket create "$R2_BUCKET"
+            npx --yes wrangler@latest r2 bucket info "$R2_BUCKET" --json > /tmp/r2-bucket-info.json
+          fi
+          cat /tmp/r2-bucket-info.json
+
+      - name: Configure read-only browser CORS
+        run: |
+          npx --yes wrangler@latest r2 bucket cors set "$R2_BUCKET" --file cloudflare/r2-cors.json
+          npx --yes wrangler@latest r2 bucket cors list "$R2_BUCKET"
+
+      - name: Attach optional production asset domain
+        shell: bash
+        run: |
+          if [[ -z "$R2_ASSET_DOMAIN" || -z "$CLOUDFLARE_ZONE_ID" ]]; then
+            echo "Custom domain setup skipped. Set R2_ASSET_DOMAIN as a repository variable and CLOUDFLARE_ZONE_ID as a secret to automate it."
+            exit 0
+          fi
+          if npx --yes wrangler@latest r2 bucket domain get "$R2_BUCKET" --domain "$R2_ASSET_DOMAIN" >/dev/null 2>&1; then
+            echo "$R2_ASSET_DOMAIN is already attached to $R2_BUCKET."
+          else
+            npx --yes wrangler@latest r2 bucket domain add "$R2_BUCKET" \
+              --domain "$R2_ASSET_DOMAIN" \
+              --zone-id "$CLOUDFLARE_ZONE_ID" \
+              --min-tls 1.2 \
+              --force
+          fi
+
+      - name: Build content-addressed upload plan
+        shell: bash
+        run: |
+          BASE_URL="$R2_ASSET_BASE_URL"
+          if [[ -z "$BASE_URL" && -n "$R2_ASSET_DOMAIN" ]]; then
+            BASE_URL="https://$R2_ASSET_DOMAIN"
+          fi
+          node tools/cloudflare/build-r2-upload-plan.mjs \
+            --scope "$SYNC_SCOPE" \
+            --base-url "$BASE_URL" \
+            --output reports/asset-factory/r2-upload-plan.tsv \
+            --manifest public/assets/remote-asset-manifest.json
+          wc -l reports/asset-factory/r2-upload-plan.tsv
+
+      - name: Upload immutable binary objects
+        shell: bash
+        run: |
+          set -euo pipefail
+          PLAN=reports/asset-factory/r2-upload-plan.tsv
+          if [[ ! -s "$PLAN" ]]; then
+            echo "No binary assets matched this synchronization scope."
+            exit 0
+          fi
+          uploaded=0
+          while IFS=$'\t' read -r source key content_type cache_control hash size; do
+            npx --yes wrangler@latest r2 object put "$R2_BUCKET/$key" \
+              --file="$source" \
+              --content-type="$content_type" \
+              --cache-control="$cache_control" \
+              --remote
+            uploaded=$((uploaded + 1))
+            echo "[$uploaded] $source -> $key ($size bytes)"
+          done < "$PLAN"
+          echo "Uploaded $uploaded immutable objects to R2."
+
+      - name: Verify an uploaded object by checksum
+        shell: bash
+        run: |
+          PLAN=reports/asset-factory/r2-upload-plan.tsv
+          if [[ ! -s "$PLAN" ]]; then exit 0; fi
+          IFS=$'\t' read -r source key content_type cache_control hash size < "$PLAN"
+          npx --yes wrangler@latest r2 object get "$R2_BUCKET/$key" \
+            --file=/tmp/zaylins-r2-verify.bin \
+            --remote
+          echo "$hash  /tmp/zaylins-r2-verify.bin" | sha256sum --check --strict
+          echo "Verified $key against its SHA-256 content address."
+
+      - name: Commit compact remote manifest
+        if: github.event_name != 'pull_request'
+        shell: bash
+        env:
+          TARGET_BRANCH: ${{ github.ref_name }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/assets/remote-asset-manifest.json
+          if git diff --cached --quiet; then
+            echo "Remote asset manifest is already current."
+            exit 0
+          fi
+          git commit -m "Update Cloudflare R2 asset manifest [skip ci]"
+          git pull --rebase origin "$TARGET_BRANCH"
+          git push origin "HEAD:$TARGET_BRANCH"
+
+      - name: Upload R2 synchronization proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zaylins-r2-sync-${{ github.run_number }}
+          path: |
+            /tmp/r2-bucket-info.json
+            reports/asset-factory/r2-upload-plan.tsv
+            public/assets/remote-asset-manifest.json
+          if-no-files-found: warn
+          retention-days: 7
