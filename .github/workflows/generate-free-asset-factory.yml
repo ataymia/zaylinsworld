@@ -87,6 +87,7 @@ jobs:
           node --check tools/asset-factory/run-batch.mjs
           node --check tools/asset-factory/run-fair-batch.mjs
           node --check tools/asset-factory/validate-production-pass.mjs
+          node --check tools/asset-factory/validate-repository-assets.mjs
           python3 -m py_compile \
             tools/asset-factory/blender/common.py \
             tools/asset-factory/blender/builders.py \
@@ -131,6 +132,7 @@ jobs:
           git add public/assets/decals/generated/
           git add reports/asset-factory/
           git add docs/FINAL_GAMEPLAY_GAPS.md
+          node tools/asset-factory/validate-repository-assets.mjs
           if git diff --cached --quiet; then
             echo "No asset-factory changes to commit."
             exit 0
