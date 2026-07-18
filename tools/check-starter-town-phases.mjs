@@ -38,6 +38,9 @@ const [
   diagnostics,
   phaseDoc,
   directWorkflow,
+  previewHtml,
+  previewSource,
+  viteConfig,
 ] = await Promise.all([
   source('src/runtime/GameObjectPools.js'),
   source('src/runtime/StarterTownRuntime.js'),
@@ -45,6 +48,9 @@ const [
   source('src/runtime/RuntimeDiagnostics.js'),
   source('docs/ACTIVE_PHASE_STATUS.md'),
   source('docs/DIRECT_GITHUB_WORKFLOW.md'),
+  source('large-town-preview.html'),
+  source('src/largeTownPreview.js'),
+  source('vite.config.js'),
 ]);
 
 for (const poolId of ['civilians', 'police', 'traffic', 'police-vehicles', 'parked-vehicles', 'litter-pickups', 'effects', 'interaction-markers']) {
@@ -62,5 +68,10 @@ assert.match(diagnostics, /nextPhase:/, 'runtime report must print the next phas
 assert.match(phaseDoc, /Phase 7: Functional-location relocation/, 'active status must name the next phase');
 assert.match(phaseDoc, /Phase 3F: Live acceptance/, 'active status must preserve live performance verification');
 assert.match(directWorkflow, /Do not create new pull requests unless Mia explicitly requests one/, 'direct GitHub workflow must remain authoritative');
+assert.match(previewHtml, /src\/largeTownPreview\.js/, 'preview HTML must load its isolated runtime entry');
+assert.doesNotMatch(previewSource, /loadState|saveState|localStorage/, 'large-town preview must not touch the normal player save');
+assert.match(previewSource, /forceBuild: true/, 'preview must force the feature-gated large town without changing production flags');
+assert.match(previewSource, /placeReadyAssets/, 'preview must offer ready Asset Lab hydration');
+assert.match(viteConfig, /starterTownPreview: resolve\(__dirname, 'large-town-preview\.html'\)/, 'Vite must build the preview page');
 
-console.log('[starter-town-phases] Phase 2–6 implementation contracts, named pools, special roads, status ledger, and direct workflow verified.');
+console.log('[starter-town-phases] Phase 2–6 contracts, named pools, special roads, isolated preview, status ledger, and direct workflow verified.');
