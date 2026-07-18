@@ -1,5 +1,9 @@
 // ───────────────────────────────────────────────────────────────────────────
 // loader.js — real boot/world readiness gate + per-scene preload registry.
+//
+// Critical assets hold the gate until they settle. Optional work must use the
+// background manager. A watchdog guarantees that one stalled request can never
+// imprison the player behind the loading screen forever.
 // ───────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 
@@ -11,6 +15,7 @@ const nextFrame = () => new Promise((resolve) => {
 });
 
 export const loadingManager = new THREE.LoadingManager();
+export const backgroundLoadingManager = new THREE.LoadingManager();
 
 let barFill = null;
 let barLabel = null;
@@ -19,8 +24,11 @@ let sessionId = 0;
 let sessionStartedAt = now();
 let minimumVisibleMs = 900;
 let settleMs = 360;
+let maximumWaitMs = 12000;
 let revealRequested = false;
+let revealRequestedAt = 0;
 let revealTimer = null;
+let watchdogTimer = null;
 let lastActivityAt = sessionStartedAt;
 let managerLoaded = 0;
 let managerTotal = 0;
@@ -29,9 +37,58 @@ let progressFloor = 0;
 let currentLabel = 'Loading…';
 let errors = [];
 let hidden = false;
+let forcedReveal = false;
 let manualToken = 0;
+const activeItems = new Map();
 
 function clamp(value, min, max) { return Math.max(min, Math.min(max, value)); }
+function activeItemCount() {
+  let count = 0;
+  for (const record of activeItems.values()) count += record.count;
+  return count;
+}
+function activeItemList() {
+  return [...activeItems.entries()].map(([url, record]) => ({
+    url,
+    count: record.count,
+    ageMs: Math.round(now() - record.startedAt),
+  }));
+}
+function trackItemStart(url) {
+  const key = String(url || 'unknown asset');
+  const record = activeItems.get(key);
+  if (record) record.count += 1;
+  else activeItems.set(key, { count: 1, startedAt: now() });
+  managerActive = activeItemCount();
+}
+function trackItemEnd(url) {
+  const key = String(url || 'unknown asset');
+  const record = activeItems.get(key);
+  if (!record) return;
+  record.count -= 1;
+  if (record.count <= 0) activeItems.delete(key);
+  managerActive = activeItemCount();
+}
+
+// Wrap LoadingManager's item accounting so the debug report can identify the
+// exact URL that is still active instead of merely saying “one item remaining.”
+const originalItemStart = loadingManager.itemStart.bind(loadingManager);
+const originalItemEnd = loadingManager.itemEnd.bind(loadingManager);
+const originalItemError = loadingManager.itemError.bind(loadingManager);
+loadingManager.itemStart = (url) => {
+  trackItemStart(url);
+  return originalItemStart(url);
+};
+loadingManager.itemEnd = (url) => {
+  trackItemEnd(url);
+  return originalItemEnd(url);
+};
+loadingManager.itemError = (url) => {
+  const text = String(url || 'unknown asset');
+  if (!errors.includes(text)) errors.push(text);
+  return originalItemError(url);
+};
+
 function managerPercent() {
   if (!managerTotal) return managerActive ? 0 : 1;
   return clamp(managerLoaded / managerTotal, 0, 1);
@@ -44,10 +101,42 @@ function paint() {
   if (barFill) barFill.style.width = `${displayPercent()}%`;
   if (barLabel) barLabel.textContent = currentLabel;
 }
+function clearRevealTimers() {
+  if (revealTimer) clearTimeout(revealTimer);
+  if (watchdogTimer) clearTimeout(watchdogTimer);
+  revealTimer = null;
+  watchdogTimer = null;
+}
 function noteActivity() {
   lastActivityAt = now();
   if (revealTimer) clearTimeout(revealTimer);
   revealTimer = null;
+}
+
+function completeReveal(expectedSession, { forced = false, reason = '' } = {}) {
+  if (expectedSession !== sessionId || hidden || !revealRequested) return false;
+  clearRevealTimers();
+  forcedReveal = forced;
+  if (forced) {
+    const stuck = activeItemList();
+    if (stuck.length) {
+      for (const item of stuck) {
+        const message = `background:${item.url}`;
+        if (!errors.includes(message)) errors.push(message);
+      }
+      console.warn('[loader] entering with background assets still active', { reason, stuck });
+    }
+  }
+  progressFloor = 100;
+  currentLabel = forced || errors.length ? 'Ready with fallbacks' : 'Ready';
+  if (barFill) barFill.style.width = '100%';
+  if (barLabel) barLabel.textContent = currentLabel;
+  screen?.classList.add('done');
+  hidden = true;
+  setTimeout(() => {
+    if (screen && expectedSession === sessionId) screen.style.display = 'none';
+  }, 650);
+  return true;
 }
 
 async function finishReveal(expectedSession) {
@@ -62,18 +151,25 @@ async function finishReveal(expectedSession) {
   await nextFrame();
   await nextFrame();
   if (expectedSession !== sessionId || hidden || managerActive > 0) return;
-  progressFloor = 100;
-  currentLabel = errors.length ? 'Ready with fallbacks' : 'Ready';
-  if (barFill) barFill.style.width = '100%';
-  if (barLabel) barLabel.textContent = currentLabel;
-  screen?.classList.add('done');
-  hidden = true;
-  setTimeout(() => {
-    if (screen && expectedSession === sessionId) screen.style.display = 'none';
-  }, 650);
+  completeReveal(expectedSession);
 }
+
+function armWatchdog(expectedSession) {
+  if (watchdogTimer) clearTimeout(watchdogTimer);
+  const elapsedSinceRequest = Math.max(0, now() - revealRequestedAt);
+  const remaining = Math.max(0, maximumWaitMs - elapsedSinceRequest);
+  watchdogTimer = setTimeout(() => {
+    if (expectedSession !== sessionId || hidden || !revealRequested) return;
+    completeReveal(expectedSession, { forced: true, reason: 'maximum-wait-exceeded' });
+  }, remaining + 16);
+}
+
 function maybeReveal() {
-  if (!revealRequested || hidden || managerActive > 0) return;
+  if (!revealRequested || hidden) return;
+  if (managerActive > 0) {
+    armWatchdog(sessionId);
+    return;
+  }
   finishReveal(sessionId);
 }
 
@@ -81,13 +177,9 @@ function maybeReveal() {
 // asset work before main.js reaches the DOM initializer, and those early tasks
 // must still count toward the real readiness gate.
 loadingManager.onStart = (_url, loaded, total) => {
-  if (managerActive === 0) {
-    managerLoaded = loaded || 0;
-    managerTotal = total || 1;
-  } else {
-    managerTotal = Math.max(managerTotal, total || managerTotal);
-  }
-  managerActive = Math.max(1, managerTotal - managerLoaded);
+  managerLoaded = loaded || 0;
+  managerTotal = Math.max(total || 1, managerTotal);
+  managerActive = activeItemCount();
   hidden = false;
   noteActivity();
   paint();
@@ -95,13 +187,13 @@ loadingManager.onStart = (_url, loaded, total) => {
 loadingManager.onProgress = (_url, loaded, total) => {
   managerLoaded = loaded || managerLoaded;
   managerTotal = Math.max(total || 0, managerTotal);
-  managerActive = Math.max(0, managerTotal - managerLoaded);
+  managerActive = activeItemCount();
   noteActivity();
   paint();
 };
 loadingManager.onLoad = () => {
   managerLoaded = Math.max(managerLoaded, managerTotal);
-  managerActive = 0;
+  managerActive = activeItemCount();
   noteActivity();
   paint();
   maybeReveal();
@@ -114,6 +206,12 @@ loadingManager.onError = (url) => {
   paint();
 };
 
+// Optional loads never hold or reopen the main gate. Failures are logged because
+// the procedural sky/placeholders remain valid gameplay fallbacks.
+backgroundLoadingManager.onError = (url) => {
+  console.warn('[loader] optional background asset failed', url);
+};
+
 export function initLoadingScreen() {
   screen = el('loading');
   barFill = el('load-bar-fill');
@@ -124,26 +222,37 @@ export function initLoadingScreen() {
 export function setProgress(pct, label) {
   progressFloor = clamp(Number(pct) || 0, 0, 100);
   if (label) currentLabel = label;
-  noteActivity();
+  if (!hidden) noteActivity();
   paint();
 }
 
-export function setStatus(label) {
+export function setStatus(label, options = {}) {
   if (label) currentLabel = label;
+  // Background asset work must not resurrect a loading screen the player has
+  // already cleared. Scene transitions should call showLoadingScreen explicitly.
   if (hidden || screen?.style.display === 'none') {
-    showLoadingScreen(label || 'Loading…', { minVisibleMs: 1100, settleMs: 420 });
+    if (options.showIfHidden) showLoadingScreen(label || 'Loading…', options);
     return;
   }
   noteActivity();
   paint();
 }
 
-export function hideLoadingScreen() {
+export function hideLoadingScreen(options = {}) {
   revealRequested = true;
+  revealRequestedAt = now();
+  maximumWaitMs = Math.max(2500, Number(options.maxWaitMs) || maximumWaitMs || 12000);
   progressFloor = Math.max(progressFloor, 92);
   currentLabel = managerActive > 0 ? 'Finishing the world…' : 'Final checks…';
   paint();
+  armWatchdog(sessionId);
   maybeReveal();
+}
+
+export function forceRevealLoadingScreen(reason = 'manual-fallback') {
+  revealRequested = true;
+  revealRequestedAt = revealRequestedAt || now();
+  return completeReveal(sessionId, { forced: true, reason });
 }
 
 export function showLoadingScreen(label = 'Loading…', options = {}) {
@@ -152,13 +261,15 @@ export function showLoadingScreen(label = 'Loading…', options = {}) {
   lastActivityAt = sessionStartedAt;
   minimumVisibleMs = Math.max(0, Number(options.minVisibleMs) || 900);
   settleMs = Math.max(80, Number(options.settleMs) || 360);
+  maximumWaitMs = Math.max(2500, Number(options.maxWaitMs) || 12000);
   revealRequested = false;
+  revealRequestedAt = 0;
   hidden = false;
+  forcedReveal = false;
   errors = [];
   progressFloor = clamp(Number(options.initialProgress) || 8, 0, 90);
   currentLabel = label;
-  if (revealTimer) clearTimeout(revealTimer);
-  revealTimer = null;
+  clearRevealTimers();
   if (screen) {
     screen.style.display = '';
     screen.classList.remove('done');
@@ -196,8 +307,12 @@ export function loadingSnapshot() {
     loaded: managerLoaded,
     total: managerTotal,
     active: managerActive,
+    activeItems: activeItemList(),
     revealRequested,
+    revealRequestedAt,
+    maximumWaitMs,
     hidden,
+    forcedReveal,
     elapsedMs: Math.round(now() - sessionStartedAt),
     errors: [...errors],
   });
