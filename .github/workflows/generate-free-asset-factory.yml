@@ -86,6 +86,7 @@ jobs:
           node --check tools/asset-factory/audit-factory-health.mjs
           node --check tools/asset-factory/run-batch.mjs
           node --check tools/asset-factory/run-fair-batch.mjs
+          node --check tools/asset-factory/validate-production-pass.mjs
           python3 -m py_compile \
             tools/asset-factory/blender/common.py \
             tools/asset-factory/blender/builders.py \
@@ -110,31 +111,10 @@ jobs:
           for pass in $(seq 1 "$BATCH_PASSES"); do
             echo "[asset-factory] starting pass $pass/$BATCH_PASSES" | tee -a asset-factory/work/factory.log
             node tools/asset-factory/run-fair-batch.mjs --batch-size "$BATCH_SIZE" 2>&1 | tee -a asset-factory/work/factory.log
+            node tools/asset-factory/validate-production-pass.mjs reports/asset-factory/latest.json 2>&1 | tee -a asset-factory/work/factory.log
             cp reports/asset-factory/latest.json "reports/asset-factory/production-passes/pass-${pass}.json"
             export ASSET_FACTORY_RECOMPILE=0
           done
-
-      - name: Require a healthy proof batch
-        if: github.event_name == 'pull_request'
-        shell: bash
-        run: |
-          node --input-type=module <<'NODE'
-          import { existsSync, readFileSync, statSync } from 'node:fs';
-          const result = JSON.parse(readFileSync('reports/asset-factory/latest.json', 'utf8'));
-          if (!Array.isArray(result.results)) {
-            console.log('[asset-factory] no queued proof batch remained; health audit completed instead.');
-            process.exit(0);
-          }
-          const passedResults = result.results.filter((asset) => asset.passed);
-          const invalidOutputs = passedResults.filter((asset) => !asset.outputPath || !existsSync(asset.outputPath) || statSync(asset.outputPath).size < 1024);
-          const passRate = result.requested ? result.passed / result.requested : 1;
-          console.log(`[asset-factory] proof result: ${result.passed}/${result.requested} passed (${Math.round(passRate * 100)}%)`);
-          if (passRate < 0.70 || invalidOutputs.length) {
-            console.error('The repaired factory must pass at least 70% of its diversified proof batch, and every accepted GLB must exist and be nonempty.');
-            if (invalidOutputs.length) console.error('Invalid accepted outputs:', invalidOutputs.map((asset) => asset.id));
-            process.exit(1);
-          }
-          NODE
 
       - name: Commit passing assets, queue state, and compact reports
         if: github.event_name != 'pull_request'
