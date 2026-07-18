@@ -4,7 +4,7 @@
 import * as THREE from 'three';
 import { clone as skeletonClone } from 'three/addons/utils/SkeletonUtils.js';
 import { loadModel } from './assets.js';
-import { SKIN_TONES } from './avatar.js';
+import { loadingManager, trackLoadingFetch } from './loader.js';
 import {
   PLAYER_AVATAR_CATALOG,
   PLAYER_MODEL_URL,
@@ -18,7 +18,7 @@ import {
   disposeModularAttachments,
 } from './modularAttachments.js';
 
-const textureLoader = new THREE.TextureLoader();
+const textureLoader = new THREE.TextureLoader(loadingManager);
 const textureCache = new Map();
 const PLAYER_TEXTURE_PREFIX = './assets/models/characters/player/sunbox-male-free/textures/';
 const PLAYER_TEXTURE_LIBRARY_URL = './assets/models/characters/player/sunbox-male-free/texture-library.json';
@@ -27,11 +27,12 @@ let textureLibraryPromise = null;
 async function textureSource(url) {
   if (!url?.startsWith(PLAYER_TEXTURE_PREFIX)) return url;
   if (!textureLibraryPromise) {
-    textureLibraryPromise = fetch(PLAYER_TEXTURE_LIBRARY_URL)
-      .then((response) => {
-        if (!response.ok) throw new Error(`texture library ${response.status}`);
-        return response.json();
-      })
+    textureLibraryPromise = trackLoadingFetch(
+      PLAYER_TEXTURE_LIBRARY_URL,
+      undefined,
+      'Loading character textures…',
+    )
+      .then((response) => response.json())
       .then((library) => library.files || {})
       .catch((error) => {
         textureLibraryPromise = null;
@@ -93,7 +94,7 @@ const MATERIAL_TEXTURES = Object.freeze({
 function loadTexture(url, renderer) {
   if (!url) return Promise.resolve(null);
   if (!textureCache.has(url)) {
-    const promise = textureSource(url)
+    textureCache.set(url, textureSource(url)
       .then((source) => textureLoader.loadAsync(source))
       .then((texture) => {
         texture.colorSpace = THREE.SRGBColorSpace;
@@ -110,8 +111,7 @@ function loadTexture(url, renderer) {
       .catch((error) => {
         console.warn('[player-avatar] texture failed', url, error);
         return null;
-      });
-    textureCache.set(url, promise);
+      }));
   }
   return textureCache.get(url);
 }
@@ -129,15 +129,15 @@ function cloneMaterials(root) {
 }
 
 function materialsByName(root) {
-  const out = new Map();
+  const output = new Map();
   root.traverse((node) => {
     if (!node.isMesh) return;
     const materials = Array.isArray(node.material) ? node.material : [node.material];
     for (const material of materials) {
-      if (material?.name && !out.has(material.name)) out.set(material.name, material);
+      if (material?.name && !output.has(material.name)) output.set(material.name, material);
     }
   });
-  return out;
+  return output;
 }
 
 function setSlotVisibility(root, custom) {
@@ -169,15 +169,13 @@ function setMorph(root, name, value) {
   root.traverse((node) => {
     if (!node.isMesh || !node.morphTargetDictionary || !node.morphTargetInfluences) return;
     const index = node.morphTargetDictionary[name];
-    if (index == null) return;
-    node.morphTargetInfluences[index] = amount;
+    if (index != null) node.morphTargetInfluences[index] = amount;
   });
 }
 
 function resetKnownMorphs(root) {
   root.traverse((node) => {
-    if (!node.isMesh || !node.morphTargetInfluences) return;
-    node.morphTargetInfluences.fill(0);
+    if (node.isMesh && node.morphTargetInfluences) node.morphTargetInfluences.fill(0);
   });
 }
 
@@ -189,13 +187,11 @@ function applyMorphs(root, custom) {
   setMorph(root, 'Body_Muscle', THREE.MathUtils.clamp(Number(custom.bodyMuscle) || 0, 0, 1));
   setMorph(root, 'Body_NailsLength_Max', custom.nailsLength);
   setMorph(root, 'Body_NailsCurve_Max', custom.nailsCurve);
-
   for (const slider of PLAYER_AVATAR_CATALOG.faceSliders) {
     const value = THREE.MathUtils.clamp(Number(custom.faceMorphs?.[slider.key]) || 0, -1, 1);
     if (value < 0) setMorph(root, slider.minTarget, -value);
     if (value > 0) setMorph(root, slider.maxTarget, value);
   }
-
   setMorph(root, 'OutfitHide_Tshirt', custom.modularTop ? 1 : 0);
   setMorph(root, 'OutfitHide_Jeans', custom.modularBottom === 'jeans' ? 1 : 0);
   setMorph(root, 'OutfitHide_Sneakers', custom.modularShoes === 'basketball' ? 1 : 0);
@@ -206,29 +202,31 @@ async function applyMaterials(instance, custom, renderer) {
   for (const [materialName, resolveUrl] of Object.entries(MATERIAL_TEXTURES)) {
     const material = instance.materials.get(materialName);
     if (!material) continue;
-    const url = resolveUrl(custom);
-    jobs.push(loadTexture(url, renderer).then((texture) => {
+    jobs.push(loadTexture(resolveUrl(custom), renderer).then((texture) => {
       if (!texture) return;
       material.map = texture;
       material.color.set('#ffffff');
       material.needsUpdate = true;
     }));
   }
-
   await Promise.all(jobs);
 
+  const tones = PLAYER_AVATAR_CATALOG.skinTones;
+  const tone = tones.find((entry) => entry.id === custom.skin)
+    || tones.find((entry) => entry.id === 'umber')
+    || tones[0];
   const skin = instance.materials.get('ZW_Skin');
-  const tone = SKIN_TONES.find((entry) => entry.id === custom.skin) || SKIN_TONES[4] || SKIN_TONES[0];
   if (skin && tone) {
-    const tint = new THREE.Color(tone.color).lerp(new THREE.Color('#ffffff'), 0.3);
-    skin.color.copy(tint);
+    const textureLift = THREE.MathUtils.clamp(Number(tone.textureLift) || 0, 0, 0.35);
+    skin.color.copy(new THREE.Color(tone.color).lerp(new THREE.Color('#ffffff'), textureLift));
     skin.roughness = 0.76;
     skin.metalness = 0;
     skin.needsUpdate = true;
   }
   const nails = instance.materials.get('ZW_Nails');
   if (nails && tone) {
-    nails.color.set(tone.color).lerp(new THREE.Color('#f5c8c8'), 0.5);
+    const nailBlend = THREE.MathUtils.clamp(Number(tone.nailBlend) || 0.36, 0.15, 0.65);
+    nails.color.set(tone.color).lerp(new THREE.Color('#f5c8c8'), nailBlend);
     nails.roughness = 0.45;
     nails.needsUpdate = true;
   }
@@ -310,19 +308,12 @@ function weightedCandidates(usage, candidates) {
 }
 
 function pickWeightedBone(usage, exactNames, matches, excludes = []) {
-  // Exact names are an ordered contract, not a bag of suggestions. The Sunbox
-  // rig contains both deform joints (UpperArm_*) and similarly named control
-  // joints (UpperArm_Anim_*). Sorting those together by aggregate wardrobe
-  // weights can select the control layer and leave the rendered body in a
-  // T-pose. Prefer each exact deform name in order, then fall back to fuzzy
-  // weighted matching only when none of the explicit joints are usable.
   for (const name of exactNames) {
     const exact = weightedCandidates(usage, usage.bonesByName.get(name) || []);
     const weighted = exact.find((bone) => (usage.weights.get(bone) || 0) > 0.000001);
     if (weighted) return weighted;
     if (exact[0]) return exact[0];
   }
-
   const fuzzy = [];
   for (const namedBones of usage.bonesByName.values()) {
     for (const bone of namedBones) {
@@ -387,7 +378,6 @@ function findRig(root) {
       [],
     ) || getNode('ZW_Anchor_Chest'),
   };
-
   root.userData.zwRigSelection = {
     source: 'highest-visible-skin-weight',
     selectionPolicy: 'ordered-deform-first',
@@ -406,16 +396,12 @@ export async function createModularPlayerVisual(customInput, renderer, options =
   const custom = ensurePlayerCustom(customInput || {});
   const loaded = await loadModel(options.modelUrl || PLAYER_MODEL_URL, renderer);
   if (!loaded?.scene) return null;
-
   let model;
   try { model = skeletonClone(loaded.scene); }
   catch { model = loaded.scene.clone(true); }
   model.name = 'ZW_ModularPlayerModel';
   cloneMaterials(model);
 
-  // The wrapper stays at world scale 1. Imported model normalization happens on
-  // its child, giving hair/jewelry a clean meter-based layer independent of the
-  // source pack's centimeter scale and rotated bone axes.
   const group = new THREE.Group();
   group.name = options.name || 'modular-player:Sunbox-male-free';
   group.userData.characterRole = 'player';
