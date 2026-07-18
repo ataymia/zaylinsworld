@@ -4,16 +4,20 @@ import os
 import sys
 import traceback
 
+import bpy
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 if SCRIPT_DIR not in sys.path:
     sys.path.insert(0, SCRIPT_DIR)
 
 from builders import BUILDERS
 from common import (
+    apply_modifier,
     collect_stats,
     create_root,
     evaluate_quality,
     export_glb,
+    mesh_objects,
     move_to_ground_center,
     parent_scene_objects,
     render_turntable,
@@ -39,6 +43,38 @@ def relative_to_cwd(path):
     return os.path.relpath(path, os.getcwd()).replace("\\", "/")
 
 
+def refine_retry_geometry(spec):
+    attempt = int(spec.get("factoryAttempt", 1))
+    if attempt <= 1:
+        return "base detail"
+
+    refined = 0
+    for obj in mesh_objects():
+        if not obj.data or len(obj.data.polygons) == 0:
+            continue
+        minimum_dimension = min(abs(value) for value in obj.dimensions if abs(value) > 0.0001) if any(abs(value) > 0.0001 for value in obj.dimensions) else 0
+        if minimum_dimension <= 0.008:
+            continue
+        modifier = obj.modifiers.new(name=f"retry_refinement_{attempt}", type="BEVEL")
+        modifier.width = min(0.018 * attempt, minimum_dimension * 0.08)
+        modifier.segments = 2 + attempt
+        modifier.limit_method = "ANGLE"
+        apply_modifier(obj, modifier.name)
+        refined += 1
+
+    if attempt >= 3 and spec.get("family") in {"hover_vehicle", "municipal_bench", "municipal_trash_can"}:
+        for obj in mesh_objects():
+            if any(token in obj.name for token in ("chassis", "cabin", "hood", "cushion", "backrest", "rain_hood")):
+                modifier = obj.modifiers.new(name="retry_surface_subdivision", type="SUBSURF")
+                modifier.levels = 1
+                modifier.render_levels = 1
+                apply_modifier(obj, modifier.name)
+                refined += 1
+
+    bpy.context.view_layer.update()
+    return f"attempt {attempt} hard-surface refinement applied to {refined} mesh objects"
+
+
 def main():
     args = parse_args()
     with open(args.batch, "r", encoding="utf8") as handle:
@@ -58,6 +94,8 @@ def main():
             "town": spec["town"],
             "family": spec["family"],
             "builder": spec.get("builder"),
+            "attempt": spec.get("factoryAttempt", 1),
+            "retryEnhancement": None,
             "passed": False,
             "failures": [],
             "exception": None,
@@ -78,6 +116,7 @@ def main():
             reset_scene()
             root = create_root(spec)
             builder(spec)
+            result["retryEnhancement"] = refine_retry_geometry(spec)
             parent_scene_objects(root)
             move_to_ground_center(root)
 
