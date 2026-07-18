@@ -12,6 +12,8 @@ on:
       - 'tools/asset-factory/install-gameplay-gap-expansion.mjs'
       - 'tools/asset-factory/factory-patch-payload/**'
       - '.github/workflows/install-gameplay-gap-expansion.yml'
+      - 'tools/asset-factory/bounded-shard-deep-specs.mjs'
+      - 'tools/asset-factory/check-bounded-deep-shards.mjs'
 
 permissions:
   contents: write
@@ -64,6 +66,17 @@ jobs:
           console.log('[factory-hotfix] classified baseline reference-only records from canonical source documents.');
           NODE
 
+      - name: Enable bounded deep brief shards
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync, writeFileSync } from 'node:fs';
+          const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
+          pkg.scripts['asset:shard-deep'] = 'node tools/asset-factory/bounded-shard-deep-specs.mjs';
+          pkg.scripts['asset:check-shards'] = 'node tools/asset-factory/check-bounded-deep-shards.mjs';
+          writeFileSync('package.json', `${JSON.stringify(pkg, null, 2)}\n`);
+          console.log('[factory-hotfix] routed deep briefs through byte-aware town sub-shards.');
+          NODE
+
       - name: Validate repaired source syntax
         run: |
           node --check tools/asset-factory/compile-expanded-specs.mjs
@@ -74,7 +87,8 @@ jobs:
           node --check tools/asset-factory/run-batch.mjs
           node --check tools/asset-factory/check-gameplay-gap-catalog-v2.mjs
           node --check tools/asset-factory/check-inventory-intent.mjs
-          node --check tools/asset-factory/check-sharded-deep-specs.mjs
+          node --check tools/asset-factory/bounded-shard-deep-specs.mjs
+          node --check tools/asset-factory/check-bounded-deep-shards.mjs
           python3 -m py_compile \
             tools/asset-factory/blender/builder_repair_utils.py \
             tools/asset-factory/blender/builder_repairs_legacy.py \
