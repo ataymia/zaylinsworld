@@ -12,6 +12,13 @@ import { loadRegisteredAsset } from '../assets.js';
 import { RoadNetwork } from './RoadNetwork.js';
 import { buildDistrictMassing } from './DistrictMassing.js';
 import { buildStreetscapeLayer } from './StreetscapeLayer.js';
+import {
+  applyTerrainHeightsToPlane,
+  starterTownHeightAt,
+  STARTER_TOWN_GRADE_REPORT,
+} from './StarterTownTerrain.js';
+import { buildStarterTownRoadsideLayer } from './StarterTownRoadside.js';
+import { auditVisualPerformance } from './VisualPerformanceAudit.js';
 
 const DISTRICT_COLORS = Object.freeze({
   'northworks-auto-row': '#665f57',
@@ -50,7 +57,11 @@ function locationPlaceholder(location) {
   });
   const mesh = new THREE.Mesh(geometry, material);
   mesh.name = `ZW_LocationPlaceholder_${location.id}`;
-  mesh.position.set(location.position.x, height / 2 + 0.04, location.position.z);
+  mesh.position.set(
+    location.position.x,
+    starterTownHeightAt(location.position.x, location.position.z) + height / 2 + 0.04,
+    location.position.z,
+  );
   mesh.castShadow = height > 1;
   mesh.receiveShadow = true;
   mesh.userData.locationId = location.id;
@@ -71,7 +82,7 @@ function normalizeModel(scene, location) {
   scene.scale.setScalar(scale);
   scene.position.set(
     location.position.x - center.x * scale,
-    -box.min.y * scale + 0.04,
+    starterTownHeightAt(location.position.x, location.position.z) - box.min.y * scale + 0.04,
     location.position.z - center.z * scale,
   );
   scene.updateWorldMatrix(true, true);
@@ -83,6 +94,7 @@ export async function buildLargeStarterTown({
   showDistricts = false,
   includeMassing = true,
   includeStreetscape = true,
+  includeGeneratedRoadside = true,
 } = {}) {
   const plan = worldRegistry.starterPlan;
   const group = new THREE.Group();
@@ -91,13 +103,17 @@ export async function buildLargeStarterTown({
 
   const terrainWidth = plan.terrainBounds.maxX - plan.terrainBounds.minX;
   const terrainDepth = plan.terrainBounds.maxZ - plan.terrainBounds.minZ;
+  const terrainGeometry = applyTerrainHeightsToPlane(
+    new THREE.PlaneGeometry(terrainWidth, terrainDepth, 48, 48),
+  );
   const terrain = new THREE.Mesh(
-    new THREE.PlaneGeometry(terrainWidth, terrainDepth, 8, 8),
+    terrainGeometry,
     new THREE.MeshStandardMaterial({ color: '#6f7f61', roughness: 1, metalness: 0 }),
   );
   terrain.name = 'ZW_StarterTerrain';
   terrain.rotation.x = -Math.PI / 2;
   terrain.receiveShadow = true;
+  terrain.frustumCulled = true;
   group.add(terrain);
 
   const districtLayer = new THREE.Group();
@@ -105,6 +121,8 @@ export async function buildLargeStarterTown({
   districtLayer.visible = showDistricts;
   for (const district of plan.districts) {
     const bounds = polygonBounds(district.polygon);
+    const centerX = (bounds.minX + bounds.maxX) / 2;
+    const centerZ = (bounds.minZ + bounds.maxZ) / 2;
     const slab = new THREE.Mesh(
       new THREE.PlaneGeometry(bounds.maxX - bounds.minX, bounds.maxZ - bounds.minZ),
       new THREE.MeshBasicMaterial({
@@ -115,7 +133,7 @@ export async function buildLargeStarterTown({
       }),
     );
     slab.rotation.x = -Math.PI / 2;
-    slab.position.set((bounds.minX + bounds.maxX) / 2, 0.012, (bounds.minZ + bounds.maxZ) / 2);
+    slab.position.set(centerX, starterTownHeightAt(centerX, centerZ) + 0.08, centerZ);
     slab.name = `ZW_District_${district.id}`;
     slab.userData.districtId = district.id;
     districtLayer.add(slab);
@@ -123,10 +141,17 @@ export async function buildLargeStarterTown({
   group.add(districtLayer);
 
   const roadNetwork = new RoadNetwork(plan.routes);
-  const roads = roadNetwork.buildGeometry({ name: 'ZW_StarterRoadSkeleton', yOffset: 0.04 });
+  const roads = roadNetwork.buildGeometry({
+    name: 'ZW_StarterRoadSkeleton',
+    yOffset: 0.065,
+    heightAt: (x, z) => starterTownHeightAt(x, z),
+  });
   group.add(roads);
 
-  const massing = includeMassing ? buildDistrictMassing() : null;
+  const generatedRoadside = includeGeneratedRoadside ? buildStarterTownRoadsideLayer() : null;
+  if (generatedRoadside) group.add(generatedRoadside.group);
+
+  const massing = includeMassing ? buildDistrictMassing({ heightAt: starterTownHeightAt }) : null;
   if (massing) group.add(massing.group);
 
   const locationLayer = new THREE.Group();
@@ -175,14 +200,22 @@ export async function buildLargeStarterTown({
   group.userData.featureFlag = 'starterTownLargeWorld';
   group.userData.roadNetwork = roadNetwork;
   group.userData.placementReport = placementReport;
+  group.userData.gradeReport = STARTER_TOWN_GRADE_REPORT;
   group.userData.snapshot = () => ({
-    terrain: { width: terrainWidth, depth: terrainDepth },
+    terrain: {
+      width: terrainWidth,
+      depth: terrainDepth,
+      vertices: terrain.geometry.getAttribute('position')?.count || 0,
+      grades: STARTER_TOWN_GRADE_REPORT,
+    },
     districts: plan.districts.length,
     roads: roadNetwork.snapshot(),
     locations: plan.locations.length,
     assets: placementReport,
     massing: massing?.group.userData.snapshot?.() || null,
+    generatedRoadside: generatedRoadside?.group.userData.snapshot?.() || null,
     streetscape: streetscape?.group.userData.snapshot?.() || null,
+    visualAudit: auditVisualPerformance(group, { preset: 'medium' }),
   });
 
   return {
@@ -193,6 +226,7 @@ export async function buildLargeStarterTown({
     districtLayer,
     locationLayer,
     massing,
+    generatedRoadside,
     streetscape,
     placementReport,
   };
