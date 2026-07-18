@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-18T16:39:27.767Z",
+  "generatedAt": "2026-07-18T16:42:08.831Z",
   "expectedFromMaster": 978,
   "produced": 978,
   "descriptionsAtOrAboveMinimum": 978,
@@ -71,12 +71,12 @@
     "hologram_billboard": 3
   },
   "normalizedSparseContexts": 42,
-  "normalizedAt": "2026-07-18T16:39:28.225Z",
+  "normalizedAt": "2026-07-18T16:42:09.191Z",
   "semanticCategoryCorrections": 405,
-  "semanticRefinedAt": "2026-07-18T16:39:28.838Z",
+  "semanticRefinedAt": "2026-07-18T16:42:09.760Z",
   "finalSemanticCorrections": 0,
   "finalSemanticCorrectedIds": [],
-  "finalSemanticPassAt": "2026-07-18T16:39:31.149Z",
+  "finalSemanticPassAt": "2026-07-18T16:42:11.854Z",
   "physicalSpecsDerived": 667,
   "contaminatedCharacterSpecsRepaired": 23,
   "physicalSpecsDerivedByCategory": {
@@ -90,7 +90,7 @@
     "food": 11,
     "road_surface": 16
   },
-  "physicalSpecPassAt": "2026-07-18T16:39:29.916Z",
+  "physicalSpecPassAt": "2026-07-18T16:42:10.741Z",
   "explicitPhysicalSpecializations": 107,
   "dynamicPhysicalSpecializations": 169,
   "dynamicPhysicalSpecializationIds": [
@@ -264,7 +264,7 @@
     "vehicle_water_motorboat_a_v01",
     "vehicle_water_speedboat_a_v01"
   ],
-  "physicalSpecializationPassAt": "2026-07-18T16:39:30.434Z",
+  "physicalSpecializationPassAt": "2026-07-18T16:42:11.171Z",
   "inventoryDispositionCounts": {
     "canonical-generation-request": 960,
     "manual-canonical-request": 2,
@@ -293,9 +293,9 @@
     "toiletdemoscene",
     "trashanddebris"
   ],
-  "inventoryAuditAt": "2026-07-18T16:39:31.846Z",
+  "inventoryAuditAt": "2026-07-18T16:42:12.465Z",
   "shardedStorage": true,
-  "shardedAt": "2026-07-18T16:39:33.884Z",
+  "shardedAt": "2026-07-18T16:42:14.258Z",
   "shardCount": 11,
   "shards": [
     {
@@ -305,7 +305,7 @@
       "canonicalGenerationRequests": 116,
       "referenceOnlyRecords": 0,
       "bytes": 4720343,
-      "sha256": "d115016e2b70ff1ea11b3fb17070a13e30ad6c48b97155eb3bb57065746de56a",
+      "sha256": "0363dadaf01812ee6cd6c0409cedd7382256cb66200a6321241f96d63d765fa5",
       "firstAssetId": "arch_aqualume_bubble_lift_a_v01",
       "lastAssetId": "vehicle_underwater_sea_scooter_a_v01"
     },
@@ -316,7 +316,7 @@
       "canonicalGenerationRequests": 71,
       "referenceOnlyRecords": 0,
       "bytes": 2801047,
-      "sha256": "5e5615c6fcd3be6d9f53f87e1bfabb37139aebeb584184b0248f78fcef0ea518",
+      "sha256": "49b2016982ee1765c4a861f030934f20f7a5a8324a0201f99e6f5e1fdbafd36a",
       "firstAssetId": "building_brighthouse_institute_exterior_v01",
       "lastAssetId": "sidewalk_casino_strip_a_v01"
     },
@@ -327,7 +327,7 @@
       "canonicalGenerationRequests": 81,
       "referenceOnlyRecords": 0,
       "bytes": 3270059,
-      "sha256": "79455446e8390b34182ad89fa1c921d666ea912210bc3346672ffcc5f57103de",
+      "sha256": "e07148d7a623cd8f9a3ee467cd3cd93a05859626de6787d543b6f331c15fa1ba",
       "firstAssetId": "arch_dungeon_boss_gate_a_v01",
       "lastAssetId": "prop_wayfarer_warning_sign_a_v01"
     },
@@ -338,7 +338,7 @@
       "canonicalGenerationRequests": 121,
       "referenceOnlyRecords": 0,
       "bytes": 4901141,
-      "sha256": "14264016179e1b54413518282fd20f72608998a8d6811736d6e76a422a3cf26c",
+      "sha256": "40e065829fca1900fb46eda851d297246cb04bcb926bfd897ca1c7e1cb309465",
       "firstAssetId": "arch_harbor_boardwalk_railing_a_v01",
       "lastAssetId": "vehicle_water_fishing_boat_a_v01"
     },
@@ -349,7 +349,7 @@
       "canonicalGenerationRequests": 77,
       "referenceOnlyRecords": 0,
       "bytes": 3130973,
-      "sha256": "b1b6d018468749719da473ecb78d7e85b788d55aa5778337c6bdb910c32264b2",
+      "sha256": "db6b4c8797304030fdd9a5c532c47d6edfd0df18bec8799b6705a71d2eb484d5",
       "firstAssetId": "arch_canyon_cliff_wall_a_v01",
       "lastAssetId": "road_canyon_base_loop_a_v01"
     },
@@ -360,7 +360,7 @@
       "canonicalGenerationRequests": 0,
       "referenceOnlyRecords": 16,
       "bytes": 717702,
-      "sha256": "9ed6d185a4d298b4363bf38dd6f82649aa637c7f0070ec050e20d5165aca040a",
+      "sha256": "c618d9027364f087c905cf44b58a24ccecf4a284bb5f19e9c84863eb08919614",
       "firstAssetId": "base_character",
       "lastAssetId": "trashanddebris"
     },
@@ -371,7 +371,7 @@
       "canonicalGenerationRequests": 70,
       "referenceOnlyRecords": 0,
       "bytes": 2767442,
-      "sha256": "bc85d73770788159c078fefdf602c8231466a4945063dbdbf353dae72ac7f596",
+      "sha256": "9f8903ef15322c316c34aa63a8da9679364d264e150b293c31d82bf32d19d0b4",
       "firstAssetId": "arch_richhills_property_gate_a_v01",
       "lastAssetId": "vehicle_richhills_yacht_a_v01"
     },
@@ -382,7 +382,7 @@
       "canonicalGenerationRequests": 25,
       "referenceOnlyRecords": 0,
       "bytes": 952756,
-      "sha256": "96769900b4cdcf14e176bef9206ec1ee4a0dd11d1d6da51f224b67d7a1d557e4",
+      "sha256": "0822f1cc5cca263f3aee6ee92df94ffea22243056e6646547655c5b2045d4493",
       "firstAssetId": "creature_crab_a_v01",
       "lastAssetId": "vehicle_water_yacht_a_v01"
     },
@@ -393,7 +393,7 @@
       "canonicalGenerationRequests": 116,
       "referenceOnlyRecords": 0,
       "bytes": 4657183,
-      "sha256": "5e9b46e92b0b5ca35b53e5b3b5483b631e6df1bad80496fe3ae1b98a9cfffebd",
+      "sha256": "f5c2fc115d5c50fc3f296df194bc29e591293437b8271860841d74e68e7bbc79",
       "firstAssetId": "arch_starline_backlot_wall_a_v01",
       "lastAssetId": "sidewalk_starline_premiere_a_v01"
     },
@@ -404,7 +404,7 @@
       "canonicalGenerationRequests": 102,
       "referenceOnlyRecords": 0,
       "bytes": 3667473,
-      "sha256": "945432f668e52d6f2aa2c687f689aef74cd3567ded4369fb9391be50bf3e0637",
+      "sha256": "7ad81feeadfe72e48a737f5fe69dd82f92e5f0c1503c877f98ee668990f70312",
       "firstAssetId": "building_starter_6twelve_exterior_v02",
       "lastAssetId": "sidewalk_starter_residential_a_v01"
     },
@@ -415,7 +415,7 @@
       "canonicalGenerationRequests": 183,
       "referenceOnlyRecords": 0,
       "bytes": 7123237,
-      "sha256": "4fb405baf5e24702ae628d4f98fb138ec2bf94135ce6899ab2a0df62ebeeda24",
+      "sha256": "f433c81847433d932da8cb3c98b764f670392771ff190482e4e90d967663c5f5",
       "firstAssetId": "arch_balcony_modern_a_v01",
       "lastAssetId": "vehicle_techtown_hover_sedan_a_v01"
     }
