@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Techtown data Tire Skid Standard">
+  <title>Techtown data Tire Skid Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(176 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(214 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(176 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="85.82,50.00 83.86,69.55 70.12,84.86 50.00,87.39 34.42,76.99 21.81,66.27 12.43,50.00 15.62,30.15 31.28,17.58 50.00,19.67 70.29,14.87 80.38,32.46" fill="url(#fade)"/>
+  <polygon points="85.82,50.00 70.12,84.86 34.42,76.99 12.43,50.00 31.28,17.58 70.29,14.87" fill="none" stroke="hsl(176 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

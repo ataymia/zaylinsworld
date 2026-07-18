@@ -1,0 +1,450 @@
+{
+  "format": "zta-asset-factory-health",
+  "version": 1,
+  "generatedAt": "2026-07-18T17:04:23.472Z",
+  "masterRecords": 2298,
+  "queueRecords": 2298,
+  "completed": 553,
+  "queued": 1539,
+  "queuedRuntime": 0,
+  "quarantined": 1,
+  "unsupported": 189,
+  "referenceOnly": 16,
+  "generatedGlbsOnDisk": 23,
+  "failures": [],
+  "warnings": [],
+  "builders": [
+    {
+      "builder": "bollard",
+      "revision": "2026-07-18-r3",
+      "completed": 0,
+      "queued": 2,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "bus_shelter",
+      "revision": "2026-07-18-r3",
+      "completed": 1,
+      "queued": 3,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "charging_pad",
+      "revision": "2026-07-18-r3",
+      "completed": 0,
+      "queued": 4,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {
+        "height #m differs from target #m by #%": 4
+      }
+    },
+    {
+      "builder": "classroom_desk",
+      "revision": "2026-07-18-r3",
+      "completed": 0,
+      "queued": 2,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {
+        "missing required components: frame": 2
+      }
+    },
+    {
+      "builder": "digital_kiosk",
+      "revision": "2026-07-18-r3",
+      "completed": 0,
+      "queued": 8,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {
+        "material count # is below #": 7
+      }
+    },
+    {
+      "builder": "district_sign",
+      "revision": "2026-07-18-r3",
+      "completed": 1,
+      "queued": 0,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "fire_hydrant",
+      "revision": "2026-07-18-r3",
+      "completed": 1,
+      "queued": 0,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "fuel_pump",
+      "revision": "2026-07-18-r3",
+      "completed": 0,
+      "queued": 8,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {
+        "mesh object count # is below #": 6
+      }
+    },
+    {
+      "builder": "guardrail",
+      "revision": "2026-07-18-r3",
+      "completed": 0,
+      "queued": 1,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "hologram_billboard",
+      "revision": "2026-07-18-r3",
+      "completed": 3,
+      "queued": 0,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "hover_vehicle",
+      "revision": "2026-07-18-r3",
+      "completed": 1,
+      "queued": 0,
+      "quarantined": 1,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {
+        "triangle count # exceeds #; missing required components: four hover pods, underbody emitters": 1
+      }
+    },
+    {
+      "builder": "loading_crate",
+      "revision": "2026-07-18-r3",
+      "completed": 2,
+      "queued": 1,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "mailbox",
+      "revision": "2026-07-18-r3",
+      "completed": 0,
+      "queued": 1,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "modern_bed",
+      "revision": "2026-07-18-r3",
+      "completed": 0,
+      "queued": 1,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {
+        "triangle count # is below #": 1
+      }
+    },
+    {
+      "builder": "modular_building",
+      "revision": "2026-07-18-r3",
+      "completed": 0,
+      "queued": 231,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "modular_connector",
+      "revision": "2026-07-18-r3",
+      "completed": 0,
+      "queued": 173,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "modular_food",
+      "revision": "2026-07-18-r3",
+      "completed": 0,
+      "queued": 9,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "modular_furniture",
+      "revision": "2026-07-18-r3",
+      "completed": 0,
+      "queued": 140,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "modular_infrastructure",
+      "revision": "2026-07-18-r3",
+      "completed": 0,
+      "queued": 236,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "modular_prop",
+      "revision": "2026-07-18-r3",
+      "completed": 0,
+      "queued": 559,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "modular_road",
+      "revision": "2026-07-18-r3",
+      "completed": 0,
+      "queued": 36,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "multi_monitor",
+      "revision": "2026-07-18-r3",
+      "completed": 0,
+      "queued": 6,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {
+        "material count # is below #": 4
+      }
+    },
+    {
+      "builder": "municipal_bench",
+      "revision": "2026-07-18-r3",
+      "completed": 1,
+      "queued": 13,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {
+        "missing required components: seat structure, back structure, side frames, supports": 7,
+        "material count # is below #; missing required components: seat structure, back structure, side frames, supports": 3
+      }
+    },
+    {
+      "builder": "municipal_trash_can",
+      "revision": "2026-07-18-r3",
+      "completed": 1,
+      "queued": 2,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "none",
+      "revision": null,
+      "completed": 530,
+      "queued": 0,
+      "quarantined": 0,
+      "unsupported": 189,
+      "runtime": 0,
+      "referenceOnly": 16,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "office_desk",
+      "revision": "2026-07-18-r3",
+      "completed": 2,
+      "queued": 3,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {
+        "material count # is below #": 1
+      }
+    },
+    {
+      "builder": "pallet_stack",
+      "revision": "2026-07-18-r3",
+      "completed": 0,
+      "queued": 1,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "picnic_table",
+      "revision": "2026-07-18-r3",
+      "completed": 1,
+      "queued": 0,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "planter",
+      "revision": "2026-07-18-r3",
+      "completed": 2,
+      "queued": 2,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "restaurant_booth",
+      "revision": "2026-07-18-r3",
+      "completed": 1,
+      "queued": 0,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "road_sign",
+      "revision": "2026-07-18-r3",
+      "completed": 2,
+      "queued": 7,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {
+        "missing required components: border or lettering, support post, mounting brackets, fasteners": 4
+      }
+    },
+    {
+      "builder": "state_variant",
+      "revision": "2026-07-18-r3",
+      "completed": 0,
+      "queued": 80,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "storm_drain",
+      "revision": "2026-07-18-r3",
+      "completed": 0,
+      "queued": 1,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "streetlight",
+      "revision": "2026-07-18-r3",
+      "completed": 2,
+      "queued": 6,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {
+        "missing required components: maintenance access, support arm": 4
+      }
+    },
+    {
+      "builder": "traffic_light",
+      "revision": "2026-07-18-r3",
+      "completed": 1,
+      "queued": 0,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "utility_box",
+      "revision": "2026-07-18-r3",
+      "completed": 1,
+      "queued": 0,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {}
+    },
+    {
+      "builder": "wall_screen",
+      "revision": "2026-07-18-r3",
+      "completed": 0,
+      "queued": 3,
+      "quarantined": 0,
+      "unsupported": 0,
+      "runtime": 0,
+      "referenceOnly": 0,
+      "errorSignatures": {
+        "mesh object count # is below #; material count # is below #; depth #m differs from target #m by #%": 1
+      }
+    }
+  ]
+}

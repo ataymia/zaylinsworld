@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Fishing Harbor cargo Algae Growth Standard">
+  <title>Fishing Harbor cargo Algae Growth Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(186 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(224 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(186 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="84.53,50.00 84.06,69.66 65.26,76.43 50.00,81.67 34.10,77.55 18.10,68.42 10.95,50.00 18.90,32.04 32.18,19.14 50.00,15.66 70.38,14.71 77.23,34.28" fill="url(#fade)"/>
+  <polygon points="84.53,50.00 65.26,76.43 34.10,77.55 10.95,50.00 32.18,19.14 70.38,14.71" fill="none" stroke="hsl(186 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

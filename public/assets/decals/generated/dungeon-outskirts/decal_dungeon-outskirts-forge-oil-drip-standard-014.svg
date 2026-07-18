@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Dungeon Outskirts forge Oil Drip Standard">
+  <title>Dungeon Outskirts forge Oil Drip Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(354 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(32 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(354 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="85.08,50.00 81.38,68.12 68.46,81.98 50.00,82.68 31.91,81.34 17.58,68.72 11.27,50.00 16.50,30.66 29.85,15.10 50.00,12.29 69.66,15.94 82.34,31.33" fill="url(#fade)"/>
+  <polygon points="85.08,50.00 68.46,81.98 31.91,81.34 11.27,50.00 29.85,15.10 69.66,15.94" fill="none" stroke="hsl(354 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

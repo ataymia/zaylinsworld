@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Shared World camera Comic Impact Mark Standard">
+  <title>Shared World camera Comic Impact Mark Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(311 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(349 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(311 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="89.74,50.00 80.86,67.82 66.99,79.42 50.00,85.91 29.35,85.77 16.70,69.22 9.71,50.00 23.53,34.72 34.86,23.77 50.00,18.61 65.58,23.01 83.10,30.89" fill="url(#fade)"/>
+  <polygon points="89.74,50.00 66.99,79.42 29.35,85.77 9.71,50.00 34.86,23.77 65.58,23.01" fill="none" stroke="hsl(311 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Fishing Harbor mooring Water Stain Standard">
+  <title>Fishing Harbor mooring Water Stain Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(292 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(330 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(292 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="80.47,50.00 85.77,70.65 70.91,86.21 50.00,80.52 34.44,76.95 21.61,66.39 8.51,50.00 17.94,31.49 34.12,22.49 50.00,10.12 68.26,18.38 76.95,34.44" fill="url(#fade)"/>
+  <polygon points="80.47,50.00 70.91,86.21 34.44,76.95 8.51,50.00 34.12,22.49 68.26,18.38" fill="none" stroke="hsl(292 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

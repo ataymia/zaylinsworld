@@ -1,154 +1,87 @@
-name: Build Deep Asset Briefs
+name: Validate Expanded Asset Library
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'tools/asset-factory/enrich-all-specs.mjs'
-      - 'tools/asset-factory/normalize-deep-specs.mjs'
-      - 'tools/asset-factory/deep-spec-semantics.mjs'
-      - 'tools/asset-factory/refine-deep-semantics.mjs'
-      - 'tools/asset-factory/deep-spec-final-classifier.mjs'
-      - 'tools/asset-factory/finalize-deep-semantics.mjs'
-      - 'tools/asset-factory/derive-physical-specs.mjs'
-      - 'tools/asset-factory/specialize-physical-specs.mjs'
-      - 'tools/asset-factory/classify-inventory-intent.mjs'
-      - 'tools/asset-factory/shard-deep-specs.mjs'
-      - 'tools/asset-factory/commit-generated-specs.mjs'
-      - 'tools/asset-factory/check-deep-specs.mjs'
-      - 'tools/asset-factory/check-physical-specs.mjs'
-      - 'tools/asset-factory/check-specialized-physical-specs.mjs'
-      - 'tools/asset-factory/check-inventory-intent.mjs'
-      - 'tools/asset-factory/check-sharded-deep-specs.mjs'
-      - 'asset-factory/quality-policy.json'
-      - 'asset-factory/manual-overrides.json'
-      - 'asset-factory/generated/master-asset-specs.json'
-      - 'docs/**/*.md'
-      - '.github/workflows/build-deep-asset-briefs.yml'
   pull_request:
     paths:
-      - 'tools/asset-factory/enrich-all-specs.mjs'
-      - 'tools/asset-factory/normalize-deep-specs.mjs'
-      - 'tools/asset-factory/deep-spec-semantics.mjs'
-      - 'tools/asset-factory/refine-deep-semantics.mjs'
-      - 'tools/asset-factory/deep-spec-final-classifier.mjs'
-      - 'tools/asset-factory/finalize-deep-semantics.mjs'
-      - 'tools/asset-factory/derive-physical-specs.mjs'
-      - 'tools/asset-factory/specialize-physical-specs.mjs'
-      - 'tools/asset-factory/classify-inventory-intent.mjs'
-      - 'tools/asset-factory/shard-deep-specs.mjs'
-      - 'tools/asset-factory/commit-generated-specs.mjs'
-      - 'tools/asset-factory/check-deep-specs.mjs'
-      - 'tools/asset-factory/check-physical-specs.mjs'
-      - 'tools/asset-factory/check-specialized-physical-specs.mjs'
-      - 'tools/asset-factory/check-inventory-intent.mjs'
-      - 'tools/asset-factory/check-sharded-deep-specs.mjs'
-      - 'asset-factory/quality-policy.json'
+      - 'asset-factory/gameplay-gaps/**'
       - 'asset-factory/manual-overrides.json'
-      - 'asset-factory/generated/master-asset-specs.json'
-      - 'docs/**/*.md'
+      - 'asset-factory/quality-policy.json'
+      - 'tools/asset-factory/**'
+      - 'docs/**/*BLUEPRINT.md'
+      - 'docs/FINAL_GAMEPLAY_GAPS.md'
+      - 'package.json'
       - '.github/workflows/build-deep-asset-briefs.yml'
+  push:
+    branches: [main, agent/gameplay-gap-asset-expansion]
+    paths:
+      - 'asset-factory/gameplay-gaps/**'
+      - 'asset-factory/manual-overrides.json'
+      - 'asset-factory/quality-policy.json'
+      - 'tools/asset-factory/**'
+      - 'docs/**/*BLUEPRINT.md'
+      - 'docs/FINAL_GAMEPLAY_GAPS.md'
+      - 'package.json'
 
 permissions:
   contents: write
 
 concurrency:
-  group: zta-deep-asset-briefs-${{ github.ref }}
+  group: zta-expanded-deep-asset-briefs-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build:
+  validate:
+    if: github.actor != 'github-actions[bot]' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
-
+    timeout-minutes: 120
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: '24'
 
-      - name: Validate source syntax
+      - name: Build and validate all 2,298 production briefs
+        shell: bash
         run: |
-          node --check tools/asset-factory/enrich-all-specs.mjs
-          node --check tools/asset-factory/normalize-deep-specs.mjs
-          node --check tools/asset-factory/deep-spec-semantics.mjs
-          node --check tools/asset-factory/refine-deep-semantics.mjs
-          node --check tools/asset-factory/deep-spec-final-classifier.mjs
-          node --check tools/asset-factory/finalize-deep-semantics.mjs
-          node --check tools/asset-factory/derive-physical-specs.mjs
-          node --check tools/asset-factory/specialize-physical-specs.mjs
-          node --check tools/asset-factory/classify-inventory-intent.mjs
-          node --check tools/asset-factory/shard-deep-specs.mjs
-          node --check tools/asset-factory/commit-generated-specs.mjs
-          node --check tools/asset-factory/check-deep-specs.mjs
-          node --check tools/asset-factory/check-physical-specs.mjs
-          node --check tools/asset-factory/check-specialized-physical-specs.mjs
-          node --check tools/asset-factory/check-inventory-intent.mjs
-          node --check tools/asset-factory/check-sharded-deep-specs.mjs
+          mkdir -p reports/asset-factory
+          set -o pipefail
+          npm run asset:deep 2>&1 | tee reports/asset-factory/deep-validation.log
 
-      - name: Generate deep production briefs for the complete asset library
-        run: node tools/asset-factory/enrich-all-specs.mjs
+      - name: Commit validated catalogs and bounded shards
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add asset-factory/gameplay-gaps/
+          git add asset-factory/generated/
+          git add asset-factory/state/
+          git add docs/FINAL_GAMEPLAY_GAPS.md
+          git add reports/asset-factory/deep-validation.log
+          if git diff --cached --quiet; then
+            echo "Expanded asset library is already current."
+            exit 0
+          fi
+          git commit -m "Validate expanded asset production briefs [skip ci]"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
 
-      - name: Expand sparse blueprint-list context
-        run: node tools/asset-factory/normalize-deep-specs.mjs
-
-      - name: Build category-specific doctrine
-        run: node tools/asset-factory/refine-deep-semantics.mjs
-
-      - name: Resolve final physical-object categories
-        run: node tools/asset-factory/finalize-deep-semantics.mjs
-
-      - name: Replace weak compact placeholders with object-specific physical specs
-        run: node tools/asset-factory/derive-physical-specs.mjs
-
-      - name: Specialize ambiguous and remaining broad physical profiles
-        run: node tools/asset-factory/specialize-physical-specs.mjs
-
-      - name: Rebuild descriptions from corrected specialized dimensions and components
-        run: node tools/asset-factory/finalize-deep-semantics.mjs
-
-      - name: Separate canonical requests from documentation and existing-asset references
-        run: node tools/asset-factory/classify-inventory-intent.mjs
-
-      - name: Require complete unique physically consistent coverage
-        run: node tools/asset-factory/check-deep-specs.mjs
-
-      - name: Reject inherited placeholder dimensions and components
-        run: node tools/asset-factory/check-physical-specs.mjs
-
-      - name: Require specialized profiles for every derived asset
-        run: node tools/asset-factory/check-specialized-physical-specs.mjs
-
-      - name: Require audited generation eligibility for every record
-        run: node tools/asset-factory/check-inventory-intent.mjs
-
-      - name: Shard validated specifications for repository storage
-        run: node tools/asset-factory/shard-deep-specs.mjs
-
-      - name: Reassemble and validate every shard
-        run: node tools/asset-factory/check-sharded-deep-specs.mjs
-
-      - name: Commit generated specification library
-        if: github.actor != 'github-actions[bot]'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          TARGET_BRANCH: ${{ github.head_ref || github.ref_name }}
-        run: node tools/asset-factory/commit-generated-specs.mjs
-
-      - name: Upload deep specification artifact
+      - name: Upload validation proof
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: zta-deep-asset-briefs-${{ github.run_number }}
+          name: zta-expanded-asset-library-${{ github.run_number }}
           path: |
+            reports/asset-factory/deep-validation.log
+            asset-factory/gameplay-gaps/summary.json
             asset-factory/generated/deep-asset-specs.json
             asset-factory/generated/deep-spec-coverage.json
             asset-factory/generated/deep-specs/
+            asset-factory/state/queue.json
           if-no-files-found: warn
           retention-days: 7

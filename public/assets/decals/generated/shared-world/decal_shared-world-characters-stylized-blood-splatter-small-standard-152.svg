@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Shared World characters Stylized Blood Splatter Small Standard">
+  <title>Shared World characters Stylized Blood Splatter Small Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(302 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(340 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(302 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="91.82,50.00 84.82,70.10 66.62,78.78 50.00,88.40 34.21,77.35 18.46,68.21 17.82,50.00 23.17,34.51 34.86,23.77 50.00,18.84 70.45,14.59 82.90,31.01" fill="url(#fade)"/>
+  <polygon points="91.82,50.00 66.62,78.78 34.21,77.35 17.82,50.00 34.86,23.77 70.45,14.59" fill="none" stroke="hsl(302 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

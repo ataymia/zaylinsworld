@@ -19,6 +19,7 @@ if (failures.length) {
 const summary = JSON.parse(readFileSync(SUMMARY_PATH, 'utf8'));
 const master = JSON.parse(readFileSync(MASTER_PATH, 'utf8'));
 const queue = JSON.parse(readFileSync(QUEUE_PATH, 'utf8'));
+const queueAssets = Array.isArray(queue.assets) ? queue.assets : Object.values(queue.assets || {});
 const catalogFiles = readdirSync(CATALOG_ROOT)
   .filter((name) => name.endsWith('.json') && name !== 'summary.json')
   .sort();
@@ -74,8 +75,9 @@ const canonical = master.assets.filter((asset) => asset.generationEligible !== f
 const referenceOnly = master.assets.length - canonical;
 if (canonical !== 2282) failures.push(`Canonical generation count is ${canonical}; expected 2282.`);
 if (referenceOnly !== 16) failures.push(`Reference-only count is ${referenceOnly}; expected 16.`);
-if (queue.assets.length !== master.assets.length) failures.push('Queue and expanded master counts differ.');
-if (queue.counts.total !== master.assets.length) failures.push('Queue total is stale.');
+if (queueAssets.length !== master.assets.length) failures.push(`Queue has ${queueAssets.length} records while expanded master has ${master.assets.length}.`);
+if (queue.counts?.total !== master.assets.length) failures.push('Queue total is stale.');
+if (new Set(queueAssets.map((asset) => asset.id)).size !== queueAssets.length) failures.push('Queue contains duplicate IDs.');
 if (hair.length < 80) failures.push(`Only ${hair.length} hairstyle records found; expected at least 80.`);
 if (runtime.length < 480) failures.push(`Only ${runtime.length} runtime-effect/helper records found; expected at least 480.`);
 if ((kinds['runtime-vfx'] || 0) < 280) failures.push('Runtime VFX coverage is below 280 records.');

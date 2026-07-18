@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Rich Hills security Water Stain Standard">
+  <title>Rich Hills security Water Stain Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(31 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(69 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(31 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="83.93,50.00 78.19,66.27 69.27,83.38 50.00,82.91 30.18,84.34 15.38,69.99 10.63,50.00 16.46,30.64 29.18,13.95 50.00,8.46 68.86,17.34 80.34,32.48" fill="url(#fade)"/>
+  <polygon points="83.93,50.00 69.27,83.38 30.18,84.34 10.63,50.00 29.18,13.95 68.86,17.34" fill="none" stroke="hsl(31 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

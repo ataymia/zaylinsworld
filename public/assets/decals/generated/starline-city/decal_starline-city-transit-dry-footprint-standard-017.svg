@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Starline City transit Dry Footprint Standard">
+  <title>Starline City transit Dry Footprint Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(261 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(299 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(261 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="85.41,50.00 83.94,69.59 67.20,79.78 50.00,81.12 32.18,80.86 13.71,70.95 13.86,50.00 15.50,30.08 32.39,19.50 50.00,10.03 66.11,22.09 84.34,30.18" fill="url(#fade)"/>
+  <polygon points="85.41,50.00 67.20,79.78 32.18,80.86 13.86,50.00 32.39,19.50 66.11,22.09" fill="none" stroke="hsl(261 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

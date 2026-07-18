@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Shared World weather Bullet Mark Concrete Standard">
+  <title>Shared World weather Bullet Mark Concrete Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(270 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(308 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(270 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="87.94,50.00 79.98,67.31 70.77,85.97 50.00,88.31 33.10,79.26 21.69,66.34 8.05,50.00 17.54,31.26 32.32,19.38 50.00,18.79 66.71,21.06 76.27,34.83" fill="url(#fade)"/>
+  <polygon points="87.94,50.00 70.77,85.97 33.10,79.26 8.05,50.00 32.32,19.38 66.71,21.06" fill="none" stroke="hsl(270 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

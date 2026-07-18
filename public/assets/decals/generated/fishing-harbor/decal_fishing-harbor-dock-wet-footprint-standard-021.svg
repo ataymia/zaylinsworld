@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Fishing Harbor dock Wet Footprint Standard">
+  <title>Fishing Harbor dock Wet Footprint Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(229 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(267 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(229 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="80.24,50.00 83.34,69.25 66.02,77.75 50.00,91.82 30.22,84.26 13.71,70.95 16.39,50.00 19.34,32.30 29.48,14.47 50.00,19.25 70.49,14.51 78.27,33.68" fill="url(#fade)"/>
+  <polygon points="80.24,50.00 66.02,77.75 30.22,84.26 16.39,50.00 29.48,14.47 70.49,14.51" fill="none" stroke="hsl(229 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

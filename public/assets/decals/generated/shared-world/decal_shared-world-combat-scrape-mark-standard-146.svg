@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Shared World combat Scrape Mark Standard">
+  <title>Shared World combat Scrape Mark Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(162 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(200 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(162 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="86.00,50.00 77.27,65.74 65.93,77.59 50.00,85.64 34.35,77.11 21.42,66.50 12.34,50.00 16.22,30.50 30.20,15.70 50.00,11.60 66.99,20.58 79.38,33.04" fill="url(#fade)"/>
+  <polygon points="86.00,50.00 65.93,77.59 34.35,77.11 12.34,50.00 30.20,15.70 66.99,20.58" fill="none" stroke="hsl(162 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

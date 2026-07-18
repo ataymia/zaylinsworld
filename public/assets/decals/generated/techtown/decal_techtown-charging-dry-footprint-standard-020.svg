@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Techtown charging Dry Footprint Standard">
+  <title>Techtown charging Dry Footprint Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(311 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(349 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(311 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="84.94,50.00 77.83,66.07 66.96,79.38 50.00,81.25 33.08,79.30 23.21,65.47 13.26,50.00 15.50,30.08 34.26,22.73 50.00,17.68 66.50,21.42 76.67,34.60" fill="url(#fade)"/>
+  <polygon points="84.94,50.00 66.96,79.38 33.08,79.30 13.26,50.00 34.26,22.73 66.50,21.42" fill="none" stroke="hsl(311 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

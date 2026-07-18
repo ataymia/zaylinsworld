@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Casino Strip arcade Oil Drip Standard">
+  <title>Casino Strip arcade Oil Drip Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(277 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(315 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(277 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="85.59,50.00 85.97,70.77 69.34,83.50 50.00,81.67 32.90,79.62 23.01,65.58 15.93,50.00 16.98,30.94 33.20,20.90 50.00,12.52 65.37,23.37 85.89,29.28" fill="url(#fade)"/>
+  <polygon points="85.59,50.00 69.34,83.50 32.90,79.62 15.93,50.00 33.20,20.90 65.37,23.37" fill="none" stroke="hsl(277 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

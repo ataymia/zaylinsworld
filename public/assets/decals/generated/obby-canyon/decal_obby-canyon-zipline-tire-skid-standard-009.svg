@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Obby Canyon zipline Tire Skid Standard">
+  <title>Obby Canyon zipline Tire Skid Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(261 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(299 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(261 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="81.35,50.00 85.33,70.40 67.89,80.98 50.00,84.99 31.54,81.98 16.98,69.06 18.51,50.00 14.83,29.69 34.33,22.85 50.00,12.38 66.80,20.90 82.14,31.44" fill="url(#fade)"/>
+  <polygon points="81.35,50.00 67.89,80.98 31.54,81.98 18.51,50.00 34.33,22.85 66.80,20.90" fill="none" stroke="hsl(261 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

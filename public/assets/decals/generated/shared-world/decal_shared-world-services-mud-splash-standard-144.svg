@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Shared World services Mud Splash Standard">
+  <title>Shared World services Mud Splash Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(8 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(46 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(8 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="81.72,50.00 86.05,70.82 65.42,76.71 50.00,87.71 33.87,77.95 16.78,69.18 11.37,50.00 21.14,33.34 31.58,18.10 50.00,12.43 67.10,20.38 85.69,29.39" fill="url(#fade)"/>
+  <polygon points="81.72,50.00 65.42,76.71 33.87,77.95 11.37,50.00 31.58,18.10 67.10,20.38" fill="none" stroke="hsl(8 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

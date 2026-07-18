@@ -13,18 +13,19 @@ if SCRIPT_DIR not in sys.path:
 
 import common as common_module
 from builders import BUILDERS
+from builder_repairs import install_repairs
 from common import (
-    apply_modifier,
     collect_stats,
     create_root,
     evaluate_quality,
     export_glb,
-    mesh_objects,
     move_to_ground_center,
     parent_scene_objects,
     render_turntable,
     reset_scene,
 )
+
+install_repairs(BUILDERS)
 
 QA_OVERRIDES_PATH = os.path.join(REPO_ROOT, "asset-factory", "qa-overrides.json")
 if os.path.exists(QA_OVERRIDES_PATH):
@@ -64,7 +65,6 @@ def configure_render_compatible():
         background.inputs["Strength"].default_value = 0.35
 
 
-# render_turntable resolves configure_render from the common module at call time.
 common_module.configure_render = configure_render_compatible
 
 
@@ -112,37 +112,15 @@ def saved_preview_coverage(paths):
     return coverages
 
 
-def refine_retry_geometry(spec):
+def retry_policy(spec):
     attempt = int(spec.get("factoryAttempt", 1))
+    revision = spec.get("builderRevision", "legacy")
     if attempt <= 1:
-        return "base detail"
-
-    refined = 0
-    for obj in mesh_objects():
-        if not obj.data or len(obj.data.polygons) == 0:
-            continue
-        nonzero_dimensions = [abs(value) for value in obj.dimensions if abs(value) > 0.0001]
-        minimum_dimension = min(nonzero_dimensions) if nonzero_dimensions else 0
-        if minimum_dimension <= 0.008:
-            continue
-        modifier = obj.modifiers.new(name=f"retry_refinement_{attempt}", type="BEVEL")
-        modifier.width = min(0.018 * attempt, minimum_dimension * 0.08)
-        modifier.segments = 2 + attempt
-        modifier.limit_method = "ANGLE"
-        apply_modifier(obj, modifier.name)
-        refined += 1
-
-    if attempt >= 3 and spec.get("family") in {"hover_vehicle", "municipal_bench", "municipal_trash_can"}:
-        for obj in mesh_objects():
-            if any(token in obj.name for token in ("chassis", "cabin", "hood", "cushion", "backrest", "rain_hood")):
-                modifier = obj.modifiers.new(name="retry_surface_subdivision", type="SUBSURF")
-                modifier.levels = 1
-                modifier.render_levels = 1
-                apply_modifier(obj, modifier.name)
-                refined += 1
-
-    bpy.context.view_layer.update()
-    return f"attempt {attempt} hard-surface refinement applied to {refined} mesh objects"
+        return f"base geometry from builder revision {revision}"
+    # The previous retry path added bevels and subdivision after a failure, which
+    # inflated already-over-budget assets and repeated deterministic mistakes.
+    # Repaired builders now vary only through their explicit specification data.
+    return f"deterministic retry {attempt}; polygon-inflating refinement disabled for builder revision {revision}"
 
 
 def verify_export(output_path):
@@ -177,6 +155,7 @@ def main():
             "town": spec["town"],
             "family": spec["family"],
             "builder": spec.get("builder"),
+            "builderRevision": spec.get("builderRevision"),
             "attempt": spec.get("factoryAttempt", 1),
             "qaOverride": None,
             "retryEnhancement": None,
@@ -204,7 +183,7 @@ def main():
             reset_scene()
             root = create_root(spec)
             builder(spec)
-            result["retryEnhancement"] = refine_retry_geometry(spec)
+            result["retryEnhancement"] = retry_policy(spec)
             parent_scene_objects(root)
             move_to_ground_center(root)
 
@@ -248,7 +227,7 @@ def main():
             results.append(result) if result not in results else None
 
     report = {
-        "version": 1,
+        "version": 2,
         "batchId": batch.get("batchId"),
         "generatedAt": batch.get("startedAt"),
         "resultCount": len(results),

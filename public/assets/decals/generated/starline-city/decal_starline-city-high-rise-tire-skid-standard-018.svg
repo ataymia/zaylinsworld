@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Starline City high rise Tire Skid Standard">
+  <title>Starline City high rise Tire Skid Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(61 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(99 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(61 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="82.68,50.00 76.47,65.28 69.92,84.50 50.00,89.83 30.08,84.50 15.58,69.87 14.73,50.00 17.14,31.03 33.06,20.66 50.00,14.32 66.00,22.29 77.19,34.30" fill="url(#fade)"/>
+  <polygon points="82.68,50.00 69.92,84.50 30.08,84.50 14.73,50.00 33.06,20.66 66.00,22.29" fill="none" stroke="hsl(61 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Rich Hills landscape Dry Footprint Standard">
+  <title>Rich Hills landscape Dry Footprint Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(123 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(161 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(123 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="87.90,50.00 85.37,70.42 69.32,83.46 50.00,90.39 31.81,81.50 19.90,67.38 10.40,50.00 13.87,29.14 30.54,16.30 50.00,14.36 67.77,19.22 78.39,33.61" fill="url(#fade)"/>
+  <polygon points="87.90,50.00 69.32,83.46 31.81,81.50 10.40,50.00 30.54,16.30 67.77,19.22" fill="none" stroke="hsl(123 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

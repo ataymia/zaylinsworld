@@ -4,12 +4,16 @@ import { join } from 'node:path';
 const ROOT = process.cwd();
 const DEEP_PATH = join(ROOT, 'asset-factory', 'generated', 'deep-asset-specs.json');
 const COVERAGE_PATH = join(ROOT, 'asset-factory', 'generated', 'deep-spec-coverage.json');
+const GAP_SUMMARY_PATH = join(ROOT, 'asset-factory', 'gameplay-gaps', 'summary.json');
 if (!existsSync(DEEP_PATH) || !existsSync(COVERAGE_PATH)) {
   throw new Error('Deep specification outputs are missing.');
 }
 
 const deep = JSON.parse(readFileSync(DEEP_PATH, 'utf8'));
 const coverage = JSON.parse(readFileSync(COVERAGE_PATH, 'utf8'));
+const gapSummary = existsSync(GAP_SUMMARY_PATH)
+  ? JSON.parse(readFileSync(GAP_SUMMARY_PATH, 'utf8'))
+  : null;
 const failures = [];
 const EXPECTED_REFERENCE_SOURCES = new Set([
   'docs/ASSET_USAGE_REPORT.md',
@@ -17,14 +21,17 @@ const EXPECTED_REFERENCE_SOURCES = new Set([
   'docs/CITY_BLUEPRINT_STANDARD.md',
   'docs/ASSET_CREATION_WORKFLOW.md',
 ]);
-const EXPECTED_COUNTS = {
-  'canonical-generation-request': 960,
-  'manual-canonical-request': 2,
+const FIXED_REFERENCE_COUNTS = {
   'existing-asset-reference': 9,
   'naming-example': 3,
   'workflow-template-reference': 1,
   'documentation-command-fragment': 3,
 };
+const EXPECTED_MANUAL = 2;
+const expectedCanonical = Number(gapSummary?.expectedCanonicalGenerationRequestCount || 962);
+const expectedReferenceOnly = Number(gapSummary?.expectedReferenceOnlyRecordCount || 16);
+const expectedTotal = Number(gapSummary?.expectedAuditedRecordCount || (expectedCanonical + expectedReferenceOnly));
+const expectedCanonicalBlueprint = expectedCanonical - EXPECTED_MANUAL;
 
 const computed = {};
 const referenceOnly = [];
@@ -71,16 +78,22 @@ for (const asset of deep.assets) {
   }
 }
 
-for (const [intent, expected] of Object.entries(EXPECTED_COUNTS)) {
+const expectedCounts = {
+  'canonical-generation-request': expectedCanonicalBlueprint,
+  'manual-canonical-request': EXPECTED_MANUAL,
+  ...FIXED_REFERENCE_COUNTS,
+};
+for (const [intent, expected] of Object.entries(expectedCounts)) {
   if (computed[intent] !== expected) {
     failures.push(`Inventory intent ${intent} has ${computed[intent] || 0} records; expected ${expected}.`);
   }
 }
-for (const unexpected of Object.keys(computed).filter((intent) => !(intent in EXPECTED_COUNTS))) {
+for (const unexpected of Object.keys(computed).filter((intent) => !(intent in expectedCounts))) {
   failures.push(`Unexpected inventory intent: ${unexpected}.`);
 }
-if (canonical.length !== 962) failures.push(`Canonical generation count is ${canonical.length}; expected 962.`);
-if (referenceOnly.length !== 16) failures.push(`Reference-only count is ${referenceOnly.length}; expected 16.`);
+if (deep.assets.length !== expectedTotal) failures.push(`Deep inventory total is ${deep.assets.length}; expected ${expectedTotal}.`);
+if (canonical.length !== expectedCanonical) failures.push(`Canonical generation count is ${canonical.length}; expected ${expectedCanonical}.`);
+if (referenceOnly.length !== expectedReferenceOnly) failures.push(`Reference-only count is ${referenceOnly.length}; expected ${expectedReferenceOnly}.`);
 if (deep.canonicalGenerationRequestCount !== canonical.length) failures.push('Deep-library canonical count is stale.');
 if (coverage.canonicalGenerationRequestCount !== canonical.length) failures.push('Coverage canonical count is stale.');
 if (deep.referenceOnlyRecordCount !== referenceOnly.length) failures.push('Deep-library reference-only count is stale.');
@@ -92,10 +105,10 @@ if (JSON.stringify(coverage.inventoryDispositionCounts) !== JSON.stringify(compu
 
 if (failures.length) {
   console.error(`[inventory-audit] ${failures.length} validation failure(s)`);
-  for (const failure of failures.slice(0, 200)) console.error(`- ${failure}`);
-  if (failures.length > 200) console.error(`- ...and ${failures.length - 200} additional failures`);
+  for (const failure of failures.slice(0, 300)) console.error(`- ${failure}`);
+  if (failures.length > 300) console.error(`- ...and ${failures.length - 300} additional failures`);
   process.exit(1);
 }
 
-console.log('[inventory-audit] PASS: 978 records audited into 962 canonical generation requests and 16 reference-only records.');
+console.log(`[inventory-audit] PASS: ${expectedTotal} records audited into ${expectedCanonical} canonical generation requests and ${expectedReferenceOnly} reference-only records.`);
 console.log(`[inventory-audit] ${Object.entries(computed).map(([intent, count]) => `${intent}=${count}`).join(', ')}`);

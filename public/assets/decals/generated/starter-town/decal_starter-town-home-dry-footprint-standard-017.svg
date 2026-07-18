@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Starter Town home Dry Footprint Standard">
+  <title>Starter Town home Dry Footprint Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(186 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(224 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(186 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="90.16,50.00 77.19,65.70 65.47,76.79 50.00,84.07 31.38,82.26 23.73,65.17 13.21,50.00 23.61,34.76 30.91,16.94 50.00,11.74 65.70,22.81 77.55,34.10" fill="url(#fade)"/>
+  <polygon points="90.16,50.00 65.47,76.79 31.38,82.26 13.21,50.00 30.91,16.94 65.70,22.81" fill="none" stroke="hsl(186 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>
