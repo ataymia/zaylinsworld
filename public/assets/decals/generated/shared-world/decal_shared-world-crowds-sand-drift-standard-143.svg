@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Shared World crowds Sand Drift Standard">
+  <title>Shared World crowds Sand Drift Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(123 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(161 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(123 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="80.79,50.00 76.67,65.40 69.32,83.46 50.00,89.88 34.17,77.43 22.85,65.67 19.67,50.00 14.47,29.48 30.06,15.46 50.00,15.70 68.72,17.58 84.90,29.85" fill="url(#fade)"/>
+  <polygon points="80.79,50.00 69.32,83.46 34.17,77.43 19.67,50.00 30.06,15.46 68.72,17.58" fill="none" stroke="hsl(123 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

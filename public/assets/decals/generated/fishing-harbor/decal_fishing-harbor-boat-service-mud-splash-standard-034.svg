@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Fishing Harbor boat service Mud Splash Standard">
+  <title>Fishing Harbor boat service Mud Splash Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(250 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(288 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(250 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="82.13,50.00 76.71,65.42 70.29,85.13 50.00,87.25 31.05,82.82 18.14,68.39 19.25,50.00 18.94,32.07 32.30,19.34 50.00,13.67 68.39,18.14 84.38,30.15" fill="url(#fade)"/>
+  <polygon points="82.13,50.00 70.29,85.13 31.05,82.82 19.25,50.00 32.30,19.34 68.39,18.14" fill="none" stroke="hsl(250 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

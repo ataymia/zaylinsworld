@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Starter Town community Mildew Patch Standard">
+  <title>Starter Town community Mildew Patch Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(157 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(195 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(157 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="90.62,50.00 77.19,65.70 67.43,80.18 50.00,80.29 33.50,78.58 18.26,68.33 17.27,50.00 14.39,29.44 29.30,14.15 50.00,16.62 68.97,17.14 76.43,34.74" fill="url(#fade)"/>
+  <polygon points="90.62,50.00 67.43,80.18 33.50,78.58 17.27,50.00 29.30,14.15 68.97,17.14" fill="none" stroke="hsl(157 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

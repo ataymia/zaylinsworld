@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Fishing Harbor fishing Dust Accumulation Standard">
+  <title>Fishing Harbor fishing Dust Accumulation Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(287 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(325 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(287 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="86.19,50.00 83.78,69.50 69.66,84.06 50.00,83.65 34.23,77.31 20.82,66.85 10.21,50.00 22.29,34.00 34.07,22.41 50.00,8.42 70.05,15.26 77.87,33.91" fill="url(#fade)"/>
+  <polygon points="86.19,50.00 69.66,84.06 34.23,77.31 10.21,50.00 34.07,22.41 70.05,15.26" fill="none" stroke="hsl(287 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

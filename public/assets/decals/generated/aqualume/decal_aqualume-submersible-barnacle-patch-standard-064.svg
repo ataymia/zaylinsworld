@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Aqualume submersible Barnacle Patch Standard">
+  <title>Aqualume submersible Barnacle Patch Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(95 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(133 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(95 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="88.40,50.00 79.58,67.08 66.73,78.98 50.00,84.85 34.35,77.11 23.53,65.28 13.21,50.00 14.15,29.30 30.89,16.90 50.00,9.57 67.52,19.66 76.67,34.60" fill="url(#fade)"/>
+  <polygon points="88.40,50.00 66.73,78.98 34.35,77.11 13.21,50.00 30.89,16.90 67.52,19.66" fill="none" stroke="hsl(95 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

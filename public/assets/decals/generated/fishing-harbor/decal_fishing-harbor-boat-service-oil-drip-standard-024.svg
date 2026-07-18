@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Fishing Harbor boat service Oil Drip Standard">
+  <title>Fishing Harbor boat service Oil Drip Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(216 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(254 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(216 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="88.45,50.00 84.10,69.69 68.26,81.62 50.00,89.51 34.49,76.87 14.75,70.35 17.32,50.00 14.03,29.23 29.16,13.91 50.00,19.44 68.69,17.62 83.74,30.52" fill="url(#fade)"/>
+  <polygon points="88.45,50.00 68.26,81.62 34.49,76.87 17.32,50.00 29.16,13.91 68.69,17.62" fill="none" stroke="hsl(216 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

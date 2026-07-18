@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Shared World missions Barnacle Patch Standard">
+  <title>Shared World missions Barnacle Patch Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(223 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(261 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(223 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="80.38,50.00 85.41,70.45 65.49,76.83 50.00,86.00 33.36,78.82 13.67,70.98 9.01,50.00 15.82,30.27 29.07,13.75 50.00,16.53 65.26,23.57 83.62,30.59" fill="url(#fade)"/>
+  <polygon points="80.38,50.00 65.49,76.83 33.36,78.82 9.01,50.00 29.07,13.75 65.26,23.57" fill="none" stroke="hsl(223 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

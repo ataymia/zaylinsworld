@@ -1,1 +1,0 @@
-Temporary anchor used to identify the current main commit before integrating the validated expanded asset factory.

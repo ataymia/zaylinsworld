@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Rich Hills mansion Wet Footprint Standard">
+  <title>Rich Hills mansion Wet Footprint Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(48 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(86 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(48 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="91.91,50.00 84.30,69.80 69.82,84.34 50.00,85.82 29.95,84.74 21.22,66.62 14.00,50.00 20.58,33.01 30.71,16.58 50.00,14.18 70.70,14.15 86.17,29.12" fill="url(#fade)"/>
+  <polygon points="91.91,50.00 69.82,84.34 29.95,84.74 14.00,50.00 30.71,16.58 70.70,14.15" fill="none" stroke="hsl(48 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

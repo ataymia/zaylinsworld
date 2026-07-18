@@ -1,0 +1,83 @@
+name: Validate Expanded Asset Library
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'asset-factory/gameplay-gaps/**'
+      - 'asset-factory/manual-overrides.json'
+      - 'asset-factory/priority-shape-overrides.json'
+      - 'asset-factory/quality-policy.json'
+      - 'tools/asset-factory/**'
+      - 'docs/**/*BLUEPRINT.md'
+      - 'docs/FINAL_GAMEPLAY_GAPS.md'
+      - 'package.json'
+      - '.github/workflows/build-deep-asset-briefs.yml'
+  push:
+    branches: [main, agent/gameplay-gap-asset-expansion]
+    paths:
+      - 'asset-factory/gameplay-gaps/**'
+      - 'asset-factory/manual-overrides.json'
+      - 'asset-factory/priority-shape-overrides.json'
+      - 'asset-factory/quality-policy.json'
+      - 'tools/asset-factory/**'
+      - 'docs/**/*BLUEPRINT.md'
+      - 'docs/FINAL_GAMEPLAY_GAPS.md'
+      - 'package.json'
+      - '.github/workflows/build-deep-asset-briefs.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: zta-expanded-deep-asset-briefs-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    if: github.actor != 'github-actions[bot]' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Checkout repository without historical binary payload
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Build and validate all 2,298 production briefs
+        shell: bash
+        run: |
+          mkdir -p reports/asset-factory
+          set -o pipefail
+          npm run asset:deep 2>&1 | tee reports/asset-factory/deep-validation.log
+
+      - name: Summarize derived-library footprint
+        shell: bash
+        run: |
+          {
+            echo "Derived deep specifications are validated in Actions and are not committed to Git."
+            du -sh asset-factory/generated/deep-specs 2>/dev/null || true
+            find asset-factory/generated/deep-specs -maxdepth 1 -type f -printf '%s\t%f\n' 2>/dev/null | sort -nr || true
+          } | tee reports/asset-factory/deep-storage-summary.txt
+
+      - name: Upload reproducible deep-library proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zta-expanded-asset-library-${{ github.run_number }}
+          path: |
+            reports/asset-factory/deep-validation.log
+            reports/asset-factory/deep-storage-summary.txt
+            asset-factory/gameplay-gaps/summary.json
+            asset-factory/generated/deep-asset-specs.json
+            asset-factory/generated/deep-spec-coverage.json
+            asset-factory/generated/deep-specs/
+            asset-factory/state/queue.json
+          if-no-files-found: warn
+          compression-level: 9
+          retention-days: 30
