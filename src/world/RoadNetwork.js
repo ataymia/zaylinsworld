@@ -113,6 +113,12 @@ export class RoadNetwork {
     const quaternion = new THREE.Quaternion();
     const scale = new THREE.Vector3();
     const center = new THREE.Vector3();
+    const start = new THREE.Vector3();
+    const end = new THREE.Vector3();
+    const direction = new THREE.Vector3();
+    const localForward = new THREE.Vector3(0, 0, 1);
+    const surfaceSamples = [];
+
     for (const [tier, segments] of byTier) {
       const material = new THREE.MeshStandardMaterial({
         color: options.colors?.[tier] || palette[tier] || '#36383d',
@@ -123,16 +129,36 @@ export class RoadNetwork {
       mesh.name = `ZW_RoadTier_${tier}`;
       mesh.receiveShadow = true;
       mesh.castShadow = false;
+      mesh.frustumCulled = true;
+      mesh.userData.tier = tier;
+      mesh.userData.segmentIds = segments.map((segment) => segment.id);
+
       segments.forEach((segment, index) => {
-        center.copy(segment.start).add(segment.end).multiplyScalar(0.5);
-        center.y += options.yOffset ?? 0.018;
-        quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.atan2(
-          segment.end.x - segment.start.x,
-          segment.end.z - segment.start.z,
-        ));
-        scale.set(segment.width, 1, Math.max(0.1, segment.length));
+        const route = this.routes.get(segment.routeId);
+        start.copy(segment.start);
+        end.copy(segment.end);
+        if (typeof options.heightAt === 'function') {
+          start.y = Number(options.heightAt(start.x, start.z, { segment, route, endpoint: 'start' })) || 0;
+          end.y = Number(options.heightAt(end.x, end.z, { segment, route, endpoint: 'end' })) || 0;
+        }
+        const yOffset = options.yOffset ?? 0.018;
+        start.y += yOffset;
+        end.y += yOffset;
+        center.copy(start).add(end).multiplyScalar(0.5);
+        direction.copy(end).sub(start);
+        const length = Math.max(0.1, direction.length());
+        direction.normalize();
+        quaternion.setFromUnitVectors(localForward, direction);
+        scale.set(segment.width, 1, length);
         matrix.compose(center, quaternion, scale);
         mesh.setMatrixAt(index, matrix);
+        surfaceSamples.push(Object.freeze({
+          segmentId: segment.id,
+          routeId: segment.routeId,
+          start: Object.freeze({ x: start.x, y: start.y, z: start.z }),
+          end: Object.freeze({ x: end.x, y: end.y, z: end.z }),
+          grade: length ? (end.y - start.y) / Math.max(0.1, Math.hypot(end.x - start.x, end.z - start.z)) : 0,
+        }));
       });
       mesh.instanceMatrix.needsUpdate = true;
       group.add(mesh);
@@ -140,6 +166,7 @@ export class RoadNetwork {
     group.userData.roadNetwork = this;
     group.userData.routes = this.routes.size;
     group.userData.segments = this.segments.length;
+    group.userData.surfaceSamples = surfaceSamples;
     return group;
   }
 
