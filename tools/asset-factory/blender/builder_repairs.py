@@ -1,8 +1,4 @@
 from builder_repairs_legacy import (
-    build_bench_fixed,
-    build_digital_kiosk_fixed,
-    build_fuel_pump_fixed,
-    build_hover_vehicle_fixed,
     build_mailbox_fixed,
     build_office_desk_fixed,
     build_road_sign_fixed,
@@ -30,6 +26,12 @@ from builder_repairs_priority import (
     build_elevated_road_support,
 )
 from builder_repairs_accessibility import build_accessibility_gate_open
+from builder_repairs_r8 import (
+    build_bench_fixed_r8,
+    build_digital_kiosk_fixed_r8,
+    build_fuel_pump_fixed_r8,
+    build_hover_vehicle_fixed_r8,
+)
 
 
 def install_repairs(builders):
@@ -37,14 +39,14 @@ def install_repairs(builders):
         "streetlight": build_streetlight_fixed,
         "road_sign": build_road_sign_fixed,
         "mailbox": build_mailbox_fixed,
-        "municipal_bench": build_bench_fixed,
+        "municipal_bench": build_bench_fixed_r8,
         "municipal_trash_can": build_trash_can_fixed,
         "charging_pad": build_charging_pad_fixed_r7,
         "classroom_desk": build_classroom_desk_fixed,
-        "fuel_pump": build_fuel_pump_fixed,
-        "digital_kiosk": build_digital_kiosk_fixed,
+        "fuel_pump": build_fuel_pump_fixed_r8,
+        "digital_kiosk": build_digital_kiosk_fixed_r8,
         "office_desk": build_office_desk_fixed,
-        "hover_vehicle": build_hover_vehicle_fixed,
+        "hover_vehicle": build_hover_vehicle_fixed_r8,
         "wall_screen": build_wall_screen_fixed,
         "bubble_lift": build_bubble_lift,
         "airlock_conduit": build_airlock_conduit,
