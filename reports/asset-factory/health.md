@@ -1,15 +1,15 @@
 # Zaylins Asset Factory Health
 
-- Generated: 2026-07-18T19:15:44.927Z
+- Generated: 2026-07-18T19:25:20.395Z
 - Master records: 2298
 - Queue records: 2298
-- Completed: 657
-- Queued Blender assets: 1435
+- Completed: 690
+- Queued Blender assets: 1402
 - Queued runtime assets: 0
 - Quarantined: 1
 - Unsupported: 189
 - Reference-only: 16
-- Generated GLBs on disk: 131
+- Generated GLBs on disk: 164
 
 ## Builder health
 
@@ -22,26 +22,26 @@
 | bus_shelter | 4 | 0 | 0 | closed |
 | charging_pad | 4 | 0 | 0 | closed |
 | classroom_desk | 2 | 0 | 0 | closed |
-| digital_kiosk | 7 | 1 | 0 | closed |
+| digital_kiosk | 8 | 0 | 0 | closed |
 | district_sign | 1 | 0 | 0 | closed |
 | elevated_road_support | 1 | 0 | 0 | closed |
 | fire_hydrant | 1 | 0 | 0 | closed |
-| fuel_pump | 6 | 2 | 0 | closed |
+| fuel_pump | 8 | 0 | 0 | closed |
 | guardrail | 1 | 0 | 0 | closed |
 | hologram_billboard | 3 | 0 | 0 | closed |
 | hover_vehicle | 1 | 0 | 1 | closed |
 | loading_crate | 3 | 0 | 0 | closed |
 | mailbox | 1 | 0 | 0 | closed |
 | modern_bed | 1 | 0 | 0 | closed |
-| modular_building | 6 | 224 | 0 | closed |
-| modular_connector | 1 | 171 | 0 | closed |
-| modular_food | 4 | 5 | 0 | closed |
-| modular_furniture | 7 | 133 | 0 | closed |
-| modular_infrastructure | 7 | 229 | 0 | closed |
-| modular_prop | 1 | 557 | 0 | closed |
-| modular_road | 7 | 29 | 0 | closed |
+| modular_building | 10 | 220 | 0 | closed |
+| modular_connector | 3 | 169 | 0 | closed |
+| modular_food | 7 | 2 | 0 | closed |
+| modular_furniture | 10 | 130 | 0 | closed |
+| modular_infrastructure | 10 | 226 | 0 | closed |
+| modular_prop | 3 | 555 | 0 | closed |
+| modular_road | 12 | 24 | 0 | closed |
 | multi_monitor | 6 | 0 | 0 | closed |
-| municipal_bench | 8 | 6 | 0 | closed |
+| municipal_bench | 13 | 1 | 0 | closed |
 | municipal_trash_can | 3 | 0 | 0 | closed |
 | none | 530 | 0 | 0 | n/a |
 | office_desk | 5 | 0 | 0 | closed |
@@ -50,7 +50,7 @@
 | planter | 4 | 0 | 0 | closed |
 | restaurant_booth | 1 | 0 | 0 | closed |
 | road_sign | 9 | 0 | 0 | closed |
-| state_variant | 1 | 78 | 0 | closed |
+| state_variant | 4 | 75 | 0 | closed |
 | storm_drain | 1 | 0 | 0 | closed |
 | streetlight | 8 | 0 | 0 | closed |
 | traffic_light | 1 | 0 | 0 | closed |
