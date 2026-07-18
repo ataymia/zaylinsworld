@@ -1,15 +1,15 @@
 # Zaylins Asset Factory Health
 
-- Generated: 2026-07-18T18:59:06.620Z
+- Generated: 2026-07-18T19:15:44.927Z
 - Master records: 2298
 - Queue records: 2298
-- Completed: 644
-- Queued Blender assets: 1448
+- Completed: 657
+- Queued Blender assets: 1435
 - Queued runtime assets: 0
 - Quarantined: 1
 - Unsupported: 189
 - Reference-only: 16
-- Generated GLBs on disk: 118
+- Generated GLBs on disk: 131
 
 ## Builder health
 
@@ -20,28 +20,28 @@
 | bollard | 2 | 0 | 0 | closed |
 | bubble_lift | 1 | 0 | 0 | closed |
 | bus_shelter | 4 | 0 | 0 | closed |
-| charging_pad | 2 | 2 | 0 | closed |
-| classroom_desk | 1 | 1 | 0 | closed |
-| digital_kiosk | 5 | 3 | 0 | closed |
+| charging_pad | 4 | 0 | 0 | closed |
+| classroom_desk | 2 | 0 | 0 | closed |
+| digital_kiosk | 7 | 1 | 0 | closed |
 | district_sign | 1 | 0 | 0 | closed |
 | elevated_road_support | 1 | 0 | 0 | closed |
 | fire_hydrant | 1 | 0 | 0 | closed |
-| fuel_pump | 5 | 3 | 0 | closed |
+| fuel_pump | 6 | 2 | 0 | closed |
 | guardrail | 1 | 0 | 0 | closed |
 | hologram_billboard | 3 | 0 | 0 | closed |
 | hover_vehicle | 1 | 0 | 1 | closed |
 | loading_crate | 3 | 0 | 0 | closed |
 | mailbox | 1 | 0 | 0 | closed |
 | modern_bed | 1 | 0 | 0 | closed |
-| modular_building | 5 | 225 | 0 | closed |
+| modular_building | 6 | 224 | 0 | closed |
 | modular_connector | 1 | 171 | 0 | closed |
-| modular_food | 3 | 6 | 0 | closed |
-| modular_furniture | 6 | 134 | 0 | closed |
-| modular_infrastructure | 6 | 230 | 0 | closed |
+| modular_food | 4 | 5 | 0 | closed |
+| modular_furniture | 7 | 133 | 0 | closed |
+| modular_infrastructure | 7 | 229 | 0 | closed |
 | modular_prop | 1 | 557 | 0 | closed |
-| modular_road | 6 | 30 | 0 | closed |
+| modular_road | 7 | 29 | 0 | closed |
 | multi_monitor | 6 | 0 | 0 | closed |
-| municipal_bench | 7 | 7 | 0 | closed |
+| municipal_bench | 8 | 6 | 0 | closed |
 | municipal_trash_can | 3 | 0 | 0 | closed |
 | none | 530 | 0 | 0 | n/a |
 | office_desk | 5 | 0 | 0 | closed |
@@ -49,7 +49,7 @@
 | picnic_table | 1 | 0 | 0 | closed |
 | planter | 4 | 0 | 0 | closed |
 | restaurant_booth | 1 | 0 | 0 | closed |
-| road_sign | 8 | 1 | 0 | closed |
+| road_sign | 9 | 0 | 0 | closed |
 | state_variant | 1 | 78 | 0 | closed |
 | storm_drain | 1 | 0 | 0 | closed |
 | streetlight | 8 | 0 | 0 | closed |

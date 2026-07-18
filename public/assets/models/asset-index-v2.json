@@ -693,6 +693,20 @@
         "displayName": "Aqualume Glass Tunnel Straight",
         "description": "A production-ready Aqualume Glass Tunnel Straight, designed as a specialized asset awaiting a dedicated family builder for Aqualume. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: advanced inhabited underwater city; pressure-rated structures, curved glass, coral-integrated architecture, current-powered transit, marine engineering, luminous but functional materials. This asset appears under the blueprint section “B. Modular architecture” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
         "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "arch_aqualume_moonpool_ring_a_v01",
+        "path": "models/generated/aqualume/building_shell/arch_aqualume_moonpool_ring_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "aqualume",
+        "family": "building_shell",
+        "builder": "modular_building",
+        "builderRevision": "2026-07-18-r7",
+        "displayName": "Aqualume Moonpool Ring",
+        "description": "A production-ready Aqualume Moonpool Ring, designed as a specialized asset awaiting a dedicated family builder for Aqualume. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: advanced inhabited underwater city; pressure-rated structures, curved glass, coral-integrated architecture, current-powered transit, marine engineering, luminous but functional materials. This asset appears under the blueprint section “B. Modular architecture” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
       }
     ]
   },
@@ -3253,6 +3267,20 @@
         "license": "Original ZTA procedural geometry"
       },
       {
+        "name": "prop_bluecore_pressure_repair_bench_a_v01",
+        "path": "models/generated/aqualume/municipal_bench/prop_bluecore_pressure_repair_bench_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "aqualume",
+        "family": "municipal_bench",
+        "builder": "municipal_bench",
+        "builderRevision": "2026-07-18-r7",
+        "displayName": "Bluecore Pressure Repair Bench",
+        "description": "A production-ready Bluecore Pressure Repair Bench, designed as a public seating bench for Aqualume. Respect adult seating dimensions, back angle, load-bearing frames, fasteners, and ground anchors. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: advanced inhabited underwater city; pressure-rated structures, curved glass, coral-integrated architecture, current-powered transit, marine engineering, luminous but functional materials. This asset appears under the blueprint section “Assets” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
         "name": "prop_canyon_streetlight_a_v01",
         "path": "models/generated/obby-canyon/streetlight/prop_canyon_streetlight_a_v01.glb",
         "type": "glb",
@@ -3318,6 +3346,34 @@
         "builderRevision": "2026-07-18-r6",
         "displayName": "Casino Streetlight",
         "description": "A production-ready Casino Streetlight, designed as a municipal streetlight for Casino Strip. Include weatherproof mounting, service access, a credible support arm, proper luminaire housing, and enough segment resolution for round metal parts. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “B. Strip roads/street props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_charge_pad_vehicle_a_v01",
+        "path": "models/generated/techtown/charging_pad/prop_charge_pad_vehicle_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "charging_pad",
+        "builder": "charging_pad",
+        "builderRevision": "2026-07-18-r7",
+        "displayName": "Charge Pad Vehicle",
+        "description": "A production-ready Charge Pad Vehicle, designed as a vehicle or hover charging installation for Techtown. Treat it as real energy infrastructure with serviceable power hardware, protected edges, drainage, and clear vehicle alignment. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “Asset list” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_charging_station_public_a_v01",
+        "path": "models/generated/techtown/charging_pad/prop_charging_station_public_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "charging_pad",
+        "builder": "charging_pad",
+        "builderRevision": "2026-07-18-r7",
+        "displayName": "Charging Station Public",
+        "description": "A production-ready Charging Station Public, designed as a vehicle or hover charging installation for Techtown. Treat it as real energy infrastructure with serviceable power hardware, protected edges, drainage, and clear vehicle alignment. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “TechTown Sprint 001: Style Anchor Pack” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
         "license": "Original ZTA procedural geometry"
       },
       {
@@ -3455,6 +3511,20 @@
         "license": "Original ZTA procedural geometry"
       },
       {
+        "name": "prop_fuel_pump_future_a_v01",
+        "path": "models/generated/techtown/fuel_pump/prop_fuel_pump_future_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "fuel_pump",
+        "builder": "fuel_pump",
+        "builderRevision": "2026-07-18-r7",
+        "displayName": "Fuel Pump Future",
+        "description": "A production-ready Fuel Pump Future, designed as a fuel or multi-energy dispenser for Techtown. Include payment, metering, hose routing, nozzle storage, service access, ventilation, and protective base structure. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “Asset list” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
         "name": "prop_harbor_streetlight_a_v01",
         "path": "models/generated/fishing-harbor/streetlight/prop_harbor_streetlight_a_v01.glb",
         "type": "glb",
@@ -3480,6 +3550,20 @@
         "builderRevision": "2026-07-18-r7",
         "displayName": "Harbor Wayfinding Sign",
         "description": "A production-ready Harbor Wayfinding Sign, designed as a municipal road sign for Fishing Harbor. Use a thin metal sign face, readable modeled lettering where named, rear brackets, and correctly scaled roadside support hardware. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: working coastal municipality; weathered wood, painted metal, rope, wet surfaces, practical marine hardware, salt-worn details. This asset appears under the blueprint section “C. Roads/street/coastal props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_health_terminal_a_v01",
+        "path": "models/generated/techtown/digital_kiosk/prop_health_terminal_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "digital_kiosk",
+        "builder": "digital_kiosk",
+        "builderRevision": "2026-07-18-r7",
+        "displayName": "Health Terminal",
+        "description": "A production-ready Health Terminal, designed as a public digital kiosk for Techtown. Use readable human ergonomics, screen protection, service access, ventilation, and a stable anti-tip base. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “H. Gym / wellness / clinic” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
         "license": "Original ZTA procedural geometry"
       },
       {
@@ -3521,6 +3605,20 @@
         "license": "Original ZTA procedural geometry"
       },
       {
+        "name": "prop_marine_classroom_desk_a_v01",
+        "path": "models/generated/fishing-harbor/classroom_desk/prop_marine_classroom_desk_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "fishing-harbor",
+        "family": "classroom_desk",
+        "builder": "classroom_desk",
+        "builderRevision": "2026-07-18-r7",
+        "displayName": "Marine Classroom Desk",
+        "description": "A production-ready Marine Classroom Desk, designed as a student classroom desk for Fishing Harbor. Use student-scale ergonomics, stable legs, edge treatment, floor glides, and storage or equipment integration appropriate to the town. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: working coastal municipality; weathered wood, painted metal, rope, wet surfaces, practical marine hardware, salt-worn details. This asset appears under the blueprint section “Curriculum” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
         "name": "prop_menu_board_digital_a_v01",
         "path": "models/generated/techtown/hologram_billboard/prop_menu_board_digital_a_v01.glb",
         "type": "glb",
@@ -3544,6 +3642,20 @@
         "builderRevision": "2026-07-18-r4",
         "displayName": "Multi Monitor Station",
         "description": "A production-ready Multi Monitor Station, designed as a multi-monitor workstation for Techtown. Displays require rear housings, mounts, bezels, and cable routing; avoid floating screen planes. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “C. Office / cybersecurity / co-working” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_order_kiosk_futuristic_a_v01",
+        "path": "models/generated/techtown/digital_kiosk/prop_order_kiosk_futuristic_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "digital_kiosk",
+        "builder": "digital_kiosk",
+        "builderRevision": "2026-07-18-r7",
+        "displayName": "Order Kiosk Futuristic",
+        "description": "A production-ready Order Kiosk Futuristic, designed as a public digital kiosk for Techtown. Use readable human ergonomics, screen protection, service access, ventilation, and a stable anti-tip base. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “E. Food / restaurant / convenience” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
         "license": "Original ZTA procedural geometry"
       },
       {
@@ -3584,6 +3696,20 @@
         "builderRevision": "2026-07-18-r7",
         "displayName": "Richhills Streetlight",
         "description": "A production-ready Richhills Streetlight, designed as a municipal streetlight for Rich Hills. Include weatherproof mounting, service access, a credible support arm, proper luminaire housing, and enough segment resolution for round metal parts. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “B. Roads/landscape” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_richhills_wayfinding_sign_a_v01",
+        "path": "models/generated/rich-hills/road_sign/prop_richhills_wayfinding_sign_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "rich-hills",
+        "family": "road_sign",
+        "builder": "road_sign",
+        "builderRevision": "2026-07-18-r7",
+        "displayName": "Richhills Wayfinding Sign",
+        "description": "A production-ready Richhills Wayfinding Sign, designed as a municipal road sign for Rich Hills. Use a thin metal sign face, readable modeled lettering where named, rear brackets, and correctly scaled roadside support hardware. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “B. Roads/landscape” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
         "license": "Original ZTA procedural geometry"
       },
       {
@@ -4179,6 +4305,20 @@
         "displayName": "Canyon Approach",
         "description": "A production-ready Canyon Approach, designed as a modular road or pedestrian surface for Obby Canyon. Geometry must tile cleanly, keep consistent elevation, show engineered edge and drainage treatment, and avoid becoming a featureless plane. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: large-scale canyon adventure infrastructure; engineered platforms, bridges, rescue equipment, rock integration, believable supports and safety systems. This asset appears under the blueprint section “D. Base camp/street” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
         "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "road_canyon_base_loop_a_v01",
+        "path": "models/generated/obby-canyon/road_module/road_canyon_base_loop_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "obby-canyon",
+        "family": "road_module",
+        "builder": "modular_road",
+        "builderRevision": "2026-07-18-r7",
+        "displayName": "Canyon Base Loop",
+        "description": "A production-ready Canyon Base Loop, designed as a modular road or pedestrian surface for Obby Canyon. Geometry must tile cleanly, keep consistent elevation, show engineered edge and drainage treatment, and avoid becoming a featureless plane. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: large-scale canyon adventure infrastructure; engineered platforms, bridges, rescue equipment, rock integration, believable supports and safety systems. This asset appears under the blueprint section “D. Base camp/street” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
       }
     ]
   },
@@ -4655,6 +4795,20 @@
         "license": "Original ZTA procedural geometry"
       },
       {
+        "name": "equipment_treadmill_future_a_v01",
+        "path": "models/generated/techtown/modular_infrastructure/equipment_treadmill_future_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "modular_infrastructure",
+        "builder": "modular_infrastructure",
+        "builderRevision": "2026-07-18-r7",
+        "displayName": "Treadmill Future",
+        "description": "A production-ready Treadmill Future, designed as a specialized asset awaiting a dedicated family builder for Techtown. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “H. Gym / wellness / clinic” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
         "name": "furniture_acting_class_chair_a_v01",
         "path": "models/generated/starline-city/modular_furniture/furniture_acting_class_chair_a_v01.glb",
         "type": "glb",
@@ -4722,6 +4876,20 @@
         "builderRevision": "2026-07-18-r7",
         "displayName": "Aqualume Shellpod Bed",
         "description": "A production-ready Aqualume Shellpod Bed, designed as a specialized asset awaiting a dedicated family builder for Aqualume. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: advanced inhabited underwater city; pressure-rated structures, curved glass, coral-integrated architecture, current-powered transit, marine engineering, luminous but functional materials. This asset appears under the blueprint section “H. Housing” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "furniture_bathroom_sink_future_a_v01",
+        "path": "models/generated/techtown/modular_furniture/furniture_bathroom_sink_future_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "modular_furniture",
+        "builder": "modular_furniture",
+        "builderRevision": "2026-07-18-r7",
+        "displayName": "Bathroom Sink Future",
+        "description": "A production-ready Bathroom Sink Future, designed as a specialized asset awaiting a dedicated family builder for Techtown. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “G. Residential / home” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
         "license": "Original ZTA procedural geometry"
       },
       {
@@ -4818,6 +4986,20 @@
         "builderRevision": "2026-07-18-r4",
         "displayName": "Aqualume Reef Wrap",
         "description": "A production-ready Aqualume Reef Wrap, designed as a specialized asset awaiting a dedicated family builder for Aqualume. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: advanced inhabited underwater city; pressure-rated structures, curved glass, coral-integrated architecture, current-powered transit, marine engineering, luminous but functional materials. This asset appears under the blueprint section “F. Market/food/retail” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "food_burger_future_a_v01",
+        "path": "models/generated/techtown/modular_food/food_burger_future_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "modular_food",
+        "builder": "modular_food",
+        "builderRevision": "2026-07-18-r4",
+        "displayName": "Burger Future",
+        "description": "A production-ready Burger Future, designed as a specialized asset awaiting a dedicated family builder for Techtown. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “E. Food / restaurant / convenience” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
         "license": "Original ZTA procedural geometry"
       }
     ]

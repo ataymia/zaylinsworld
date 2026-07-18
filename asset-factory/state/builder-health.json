@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-18T18:59:06.620Z",
+  "generatedAt": "2026-07-18T19:15:44.927Z",
   "builders": {
     "accessibility_gate": {
       "revision": "2026-07-18-r7",
@@ -51,17 +51,17 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 2,
-      "queued": 2,
+      "completed": 4,
+      "queued": 0,
       "quarantined": 0,
-      "dominantFailureCount": 2
+      "dominantFailureCount": 0
     },
     "classroom_desk": {
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 1,
-      "queued": 1,
+      "completed": 2,
+      "queued": 0,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
@@ -69,10 +69,10 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 5,
-      "queued": 3,
+      "completed": 7,
+      "queued": 1,
       "quarantined": 0,
-      "dominantFailureCount": 3
+      "dominantFailureCount": 1
     },
     "district_sign": {
       "revision": "2026-07-18-r7",
@@ -105,10 +105,10 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 5,
-      "queued": 3,
+      "completed": 6,
+      "queued": 2,
       "quarantined": 0,
-      "dominantFailureCount": 3
+      "dominantFailureCount": 2
     },
     "guardrail": {
       "revision": "2026-07-18-r7",
@@ -168,8 +168,8 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 5,
-      "queued": 225,
+      "completed": 6,
+      "queued": 224,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
@@ -186,8 +186,8 @@
       "revision": "2026-07-18-r4",
       "state": "closed",
       "reason": null,
-      "completed": 3,
-      "queued": 6,
+      "completed": 4,
+      "queued": 5,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
@@ -195,8 +195,8 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 6,
-      "queued": 134,
+      "completed": 7,
+      "queued": 133,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
@@ -204,8 +204,8 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 6,
-      "queued": 230,
+      "completed": 7,
+      "queued": 229,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
@@ -222,8 +222,8 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 6,
-      "queued": 30,
+      "completed": 7,
+      "queued": 29,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
@@ -240,10 +240,10 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 7,
-      "queued": 7,
+      "completed": 8,
+      "queued": 6,
       "quarantined": 0,
-      "dominantFailureCount": 5
+      "dominantFailureCount": 4
     },
     "municipal_trash_can": {
       "revision": "2026-07-18-r7",
@@ -303,10 +303,10 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 8,
-      "queued": 1,
+      "completed": 9,
+      "queued": 0,
       "quarantined": 0,
-      "dominantFailureCount": 1
+      "dominantFailureCount": 0
     },
     "state_variant": {
       "revision": "2026-07-18-r7",
