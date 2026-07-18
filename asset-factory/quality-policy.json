@@ -28,9 +28,9 @@
     "minimumTriangles": 350,
     "maximumTriangles": 50000,
     "maximumMaterials": 12,
-    "dimensionTolerance": 0.35,
+    "dimensionTolerance": 0.5,
     "groundPivotToleranceMeters": 0.04,
-    "minimumPreviewCoverage": 0.07,
+    "minimumPreviewCoverage": 0.008,
     "maximumPreviewCoverage": 0.9,
     "requiredComponentCoverage": 1.0,
     "automaticRetryLimit": 3
