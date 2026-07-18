@@ -40,6 +40,24 @@ jobs:
       - name: Verify and install repaired factory source
         run: node tools/asset-factory/install-gameplay-gap-expansion.mjs
 
+      - name: Preserve audited generation eligibility
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync, writeFileSync } from 'node:fs';
+          const path = 'tools/asset-factory/apply-gameplay-gap-catalog-v2.mjs';
+          const source = readFileSync(path, 'utf8');
+          const before = "const baseAssets = master.assets.filter((asset) => !gapIds.has(asset.id) && !gapFiles.has(asset.fileName));";
+          const after = `const baseAssets = master.assets
+            .filter((asset) => !gapIds.has(asset.id) && !gapFiles.has(asset.fileName))
+            .map((asset) => ({
+              ...asset,
+              generationEligible: asset.generationEligible ?? asset.inventoryDisposition?.generationEligible ?? true,
+            }));`;
+          if (!source.includes(before)) throw new Error('Expected baseline merge statement was not found.');
+          writeFileSync(path, source.replace(before, after));
+          console.log('[factory-hotfix] preserved audited generation eligibility for baseline records.');
+          NODE
+
       - name: Validate repaired source syntax
         run: |
           node --check tools/asset-factory/compile-expanded-specs.mjs
