@@ -1,19 +1,19 @@
 {
   "version": 1,
-  "batchId": "batch-00006",
-  "completedAt": "2026-07-18T04:44:47.337Z",
+  "batchId": "batch-00007",
+  "completedAt": "2026-07-18T05:37:52.591Z",
   "requested": 10,
-  "passed": 3,
-  "failed": 7,
+  "passed": 2,
+  "failed": 8,
   "queueCounts": {
-    "completed": 21,
+    "completed": 23,
     "quarantined": 1,
-    "queued": 77,
+    "queued": 75,
     "unsupported": 879
   },
   "results": [
     {
-      "id": "prop_health_terminal_a_v01",
+      "id": "prop_public_screen_stand_a_v01",
       "passed": false,
       "outputPath": null,
       "failures": [
@@ -66,362 +66,368 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_health_terminal_a_v01/prop_health_terminal_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_health_terminal_a_v01/prop_health_terminal_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_health_terminal_a_v01/prop_health_terminal_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_health_terminal_a_v01/prop_health_terminal_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_public_screen_stand_a_v01/prop_public_screen_stand_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_public_screen_stand_a_v01/prop_public_screen_stand_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_public_screen_stand_a_v01/prop_public_screen_stand_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_public_screen_stand_a_v01/prop_public_screen_stand_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_hologram_billboard_large_a_v01",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/hologram_billboard/prop_hologram_billboard_large_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2572,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_concrete",
-          "tech_cyan_emissive",
-          "tech_dark_metal"
-        ],
-        "materialCount": 5,
-        "components": [
-          "cable routing",
-          "display plane",
-          "foundation or wall mount",
-          "projector or emitter hardware",
-          "service access",
-          "support frame"
-        ],
-        "bounds": {
-          "min": [
-            -1.774999976158142,
-            -0.3499999940395355,
-            0
-          ],
-          "max": [
-            1.774999976158142,
-            0.3499999940395355,
-            2.9099998474121094
-          ],
-          "dimensions": [
-            3.549999952316284,
-            0.699999988079071,
-            2.9099998474121094
-          ]
-        },
-        "requiredComponents": [
-          "foundation or wall mount",
-          "support frame",
-          "display plane",
-          "projector or emitter hardware",
-          "service access",
-          "cable routing"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_hologram_billboard_large_a_v01/prop_hologram_billboard_large_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_hologram_billboard_large_a_v01/prop_hologram_billboard_large_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_hologram_billboard_large_a_v01/prop_hologram_billboard_large_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_hologram_billboard_large_a_v01/prop_hologram_billboard_large_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_hologram_billboard_small_a_v01",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/hologram_billboard/prop_hologram_billboard_small_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2572,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_concrete",
-          "tech_cyan_emissive",
-          "tech_dark_metal"
-        ],
-        "materialCount": 5,
-        "components": [
-          "cable routing",
-          "display plane",
-          "foundation or wall mount",
-          "projector or emitter hardware",
-          "service access",
-          "support frame"
-        ],
-        "bounds": {
-          "min": [
-            -1.774999976158142,
-            -0.3499999940395355,
-            0
-          ],
-          "max": [
-            1.774999976158142,
-            0.3499999940395355,
-            2.9099998474121094
-          ],
-          "dimensions": [
-            3.549999952316284,
-            0.699999988079071,
-            2.9099998474121094
-          ]
-        },
-        "requiredComponents": [
-          "foundation or wall mount",
-          "support frame",
-          "display plane",
-          "projector or emitter hardware",
-          "service access",
-          "cable routing"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_hologram_billboard_small_a_v01/prop_hologram_billboard_small_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_hologram_billboard_small_a_v01/prop_hologram_billboard_small_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_hologram_billboard_small_a_v01/prop_hologram_billboard_small_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_hologram_billboard_small_a_v01/prop_hologram_billboard_small_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_home_richhills_office_desk_a_v01",
+      "id": "prop_richhills_bench_a_v01",
       "passed": false,
       "outputPath": null,
       "failures": [
-        "material count 3 is below 4"
+        "missing required components: seat structure, back structure, side frames, supports"
       ],
       "stats": {
-        "meshObjects": 13,
-        "triangles": 2540,
+        "meshObjects": 30,
+        "triangles": 6308,
         "materials": [
-          "starter_black",
           "starter_dark_metal",
-          "starter_galvanized"
+          "starter_galvanized",
+          "starter_wood"
         ],
         "materialCount": 3,
         "components": [
-          "cable management",
-          "edge trim",
-          "equipment clearance",
-          "load-bearing legs or pedestal",
-          "storage",
-          "work surface"
+          "anchored feet",
+          "armrests",
+          "back slats",
+          "left side frame",
+          "mounting bolts",
+          "rear support rails",
+          "right side frame",
+          "seat slats"
         ],
         "bounds": {
           "min": [
-            -0.8399999737739563,
-            -0.40625,
+            -0.8799999952316284,
+            -0.3550509810447693,
             0
           ],
           "max": [
-            0.8399999737739563,
-            0.40625,
-            0.8125
+            0.8799999952316284,
+            0.3550509810447693,
+            1.1830345392227173
           ],
           "dimensions": [
-            1.6799999475479126,
-            0.8125,
-            0.8125
+            1.7599999904632568,
+            0.7101019620895386,
+            1.1830345392227173
           ]
         },
         "requiredComponents": [
-          "work surface",
-          "load-bearing legs or pedestal",
-          "cable management",
-          "storage",
-          "edge trim",
-          "equipment clearance"
+          "seat structure",
+          "back structure",
+          "side frames",
+          "supports",
+          "armrests",
+          "anchored feet"
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_home_richhills_office_desk_a_v01/prop_home_richhills_office_desk_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_home_richhills_office_desk_a_v01/prop_home_richhills_office_desk_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_home_richhills_office_desk_a_v01/prop_home_richhills_office_desk_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_home_richhills_office_desk_a_v01/prop_home_richhills_office_desk_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_richhills_bench_a_v01/prop_richhills_bench_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_richhills_bench_a_v01/prop_richhills_bench_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_richhills_bench_a_v01/prop_richhills_bench_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_richhills_bench_a_v01/prop_richhills_bench_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_luckyline_fuel_pump_a_v01",
+      "id": "prop_richhills_planter_a_v01",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/rich-hills/planter/prop_richhills_planter_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 24,
+        "triangles": 4892,
+        "materials": [
+          "planter_leaf",
+          "planter_soil",
+          "starter_black",
+          "starter_concrete"
+        ],
+        "materialCount": 4,
+        "components": [
+          "drainage detail",
+          "inner soil volume",
+          "outer planter body",
+          "planting",
+          "rim"
+        ],
+        "bounds": {
+          "min": [
+            -0.5400000214576721,
+            -0.5400000214576721,
+            0
+          ],
+          "max": [
+            0.5400000214576721,
+            0.5400000214576721,
+            1.0579999685287476
+          ],
+          "dimensions": [
+            1.0800000429153442,
+            1.0800000429153442,
+            1.0579999685287476
+          ]
+        },
+        "requiredComponents": [
+          "outer planter body",
+          "inner soil volume",
+          "rim",
+          "drainage detail",
+          "planting"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_richhills_planter_a_v01/prop_richhills_planter_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_richhills_planter_a_v01/prop_richhills_planter_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_richhills_planter_a_v01/prop_richhills_planter_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_richhills_planter_a_v01/prop_richhills_planter_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_richhills_security_monitor_wall_a_v01",
       "passed": false,
       "outputPath": null,
       "failures": [
-        "mesh object count 14 is below 15"
+        "material count 4 is below 5"
       ],
       "stats": {
-        "meshObjects": 14,
-        "triangles": 2624,
+        "meshObjects": 19,
+        "triangles": 3260,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light"
+        ],
+        "materialCount": 4,
+        "components": [
+          "bezels",
+          "cables",
+          "desk or mounting base",
+          "input devices",
+          "monitor arms",
+          "multiple displays",
+          "rear housings"
+        ],
+        "bounds": {
+          "min": [
+            -0.7099999785423279,
+            -0.32499998807907104,
+            0
+          ],
+          "max": [
+            0.7099999785423279,
+            0.32499998807907104,
+            0.9700000286102295
+          ],
+          "dimensions": [
+            1.4199999570846558,
+            0.6499999761581421,
+            0.9700000286102295
+          ]
+        },
+        "requiredComponents": [
+          "desk or mounting base",
+          "monitor arms",
+          "multiple displays",
+          "bezels",
+          "rear housings",
+          "cables",
+          "input devices"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_richhills_security_monitor_wall_a_v01/prop_richhills_security_monitor_wall_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_richhills_security_monitor_wall_a_v01/prop_richhills_security_monitor_wall_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_richhills_security_monitor_wall_a_v01/prop_richhills_security_monitor_wall_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_richhills_security_monitor_wall_a_v01/prop_richhills_security_monitor_wall_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_richhills_streetlight_a_v01",
+      "passed": false,
+      "outputPath": null,
+      "failures": [
+        "missing required components: maintenance access, support arm"
+      ],
+      "stats": {
+        "meshObjects": 19,
+        "triangles": 4336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light"
+        ],
+        "materialCount": 4,
+        "components": [
+          "anchor bolts",
+          "arm brace",
+          "base flange",
+          "cooling ribs",
+          "glass lens",
+          "luminaire housing",
+          "maintenance door",
+          "mast arm",
+          "tapered pole"
+        ],
+        "bounds": {
+          "min": [
+            -1.440000057220459,
+            -0.28999999165534973,
+            0
+          ],
+          "max": [
+            1.4399999380111694,
+            0.28999999165534973,
+            7.4911065101623535
+          ],
+          "dimensions": [
+            2.880000114440918,
+            0.5799999833106995,
+            7.4911065101623535
+          ]
+        },
+        "requiredComponents": [
+          "base flange",
+          "anchor bolts",
+          "pole",
+          "maintenance access",
+          "support arm",
+          "luminaire housing",
+          "lens"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_richhills_streetlight_a_v01/prop_richhills_streetlight_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_richhills_streetlight_a_v01/prop_richhills_streetlight_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_richhills_streetlight_a_v01/prop_richhills_streetlight_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_richhills_streetlight_a_v01/prop_richhills_streetlight_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_richhills_wayfinding_sign_a_v01",
+      "passed": false,
+      "outputPath": null,
+      "failures": [
+        "missing required components: border or lettering, support post, mounting brackets, fasteners"
+      ],
+      "stats": {
+        "meshObjects": 19,
+        "triangles": 7840,
         "materials": [
           "starter_black",
           "starter_concrete",
           "starter_dark_metal",
           "starter_galvanized",
-          "starter_warning_yellow"
+          "starter_red_paint",
+          "starter_white"
         ],
-        "materialCount": 5,
+        "materialCount": 6,
         "components": [
-          "anchored pedestal",
-          "cabinet",
-          "display",
-          "hose",
-          "nozzle",
-          "payment terminal",
-          "protective trim",
-          "service panel"
+          "footing collar",
+          "mounting bolts",
+          "octagonal sign face",
+          "perforated post",
+          "rear brackets",
+          "stop lettering",
+          "white border"
         ],
         "bounds": {
           "min": [
-            -0.4965081810951233,
-            -0.32758575677871704,
+            -0.4292154014110565,
+            -0.11999999731779099,
             0
           ],
           "max": [
-            0.4965081810951233,
-            0.32758575677871704,
-            1.9000000953674316
+            0.4292154014110565,
+            0.11999999731779099,
+            2.609215497970581
           ],
           "dimensions": [
-            0.9930163621902466,
-            0.6551715135574341,
-            1.9000000953674316
+            0.858430802822113,
+            0.23999999463558197,
+            2.609215497970581
           ]
         },
         "requiredComponents": [
-          "anchored pedestal",
-          "cabinet",
-          "display",
-          "payment terminal",
-          "hose",
-          "nozzle",
-          "protective trim",
-          "service panel"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_luckyline_fuel_pump_a_v01/prop_luckyline_fuel_pump_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_luckyline_fuel_pump_a_v01/prop_luckyline_fuel_pump_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_luckyline_fuel_pump_a_v01/prop_luckyline_fuel_pump_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_luckyline_fuel_pump_a_v01/prop_luckyline_fuel_pump_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_marine_classroom_desk_a_v01",
-      "passed": false,
-      "outputPath": null,
-      "failures": [
-        "missing required components: frame"
-      ],
-      "stats": {
-        "meshObjects": 13,
-        "triangles": 2620,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_wood"
-        ],
-        "materialCount": 4,
-        "components": [
-          "fasteners",
-          "feet",
-          "legs",
-          "storage shelf or modesty panel",
-          "work surface"
-        ],
-        "bounds": {
-          "min": [
-            -0.36000001430511475,
-            -0.26249998807907104,
-            0
-          ],
-          "max": [
-            0.36000001430511475,
-            0.26249998807907104,
-            0.7450000047683716
-          ],
-          "dimensions": [
-            0.7200000286102295,
-            0.5249999761581421,
-            0.7450000047683716
-          ]
-        },
-        "requiredComponents": [
-          "work surface",
-          "frame",
-          "legs",
-          "storage shelf or modesty panel",
-          "feet",
+          "sign face",
+          "border or lettering",
+          "support post",
+          "mounting brackets",
           "fasteners"
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_marine_classroom_desk_a_v01/prop_marine_classroom_desk_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_marine_classroom_desk_a_v01/prop_marine_classroom_desk_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_marine_classroom_desk_a_v01/prop_marine_classroom_desk_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_marine_classroom_desk_a_v01/prop_marine_classroom_desk_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_richhills_wayfinding_sign_a_v01/prop_richhills_wayfinding_sign_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_richhills_wayfinding_sign_a_v01/prop_richhills_wayfinding_sign_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_richhills_wayfinding_sign_a_v01/prop_richhills_wayfinding_sign_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_richhills_wayfinding_sign_a_v01/prop_richhills_wayfinding_sign_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_menu_board_digital_a_v01",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/hologram_billboard/prop_menu_board_digital_a_v01.glb",
-      "failures": [],
+      "id": "prop_robotics_workbench_a_v01",
+      "passed": false,
+      "outputPath": null,
+      "failures": [
+        "material count 2 is below 3",
+        "missing required components: seat structure, back structure, side frames, supports"
+      ],
       "stats": {
-        "meshObjects": 12,
-        "triangles": 2572,
+        "meshObjects": 30,
+        "triangles": 6308,
         "materials": [
           "tech_brushed_metal",
-          "tech_composite",
-          "tech_concrete",
-          "tech_cyan_emissive",
           "tech_dark_metal"
         ],
-        "materialCount": 5,
+        "materialCount": 2,
         "components": [
-          "cable routing",
-          "display plane",
-          "foundation or wall mount",
-          "projector or emitter hardware",
-          "service access",
-          "support frame"
+          "anchored feet",
+          "armrests",
+          "back slats",
+          "left side frame",
+          "mounting bolts",
+          "rear support rails",
+          "right side frame",
+          "seat slats"
         ],
         "bounds": {
           "min": [
-            -1.774999976158142,
-            -0.3499999940395355,
+            -0.8799999952316284,
+            -0.3550509810447693,
             0
           ],
           "max": [
-            1.774999976158142,
-            0.3499999940395355,
-            2.9099998474121094
+            0.8799999952316284,
+            0.3550509810447693,
+            1.1830345392227173
           ],
           "dimensions": [
-            3.549999952316284,
-            0.699999988079071,
-            2.9099998474121094
+            1.7599999904632568,
+            0.7101019620895386,
+            1.1830345392227173
           ]
         },
         "requiredComponents": [
-          "foundation or wall mount",
-          "support frame",
-          "display plane",
-          "projector or emitter hardware",
-          "service access",
-          "cable routing"
+          "seat structure",
+          "back structure",
+          "side frames",
+          "supports",
+          "armrests",
+          "anchored feet"
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_menu_board_digital_a_v01/prop_menu_board_digital_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_menu_board_digital_a_v01/prop_menu_board_digital_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_menu_board_digital_a_v01/prop_menu_board_digital_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_menu_board_digital_a_v01/prop_menu_board_digital_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_robotics_workbench_a_v01/prop_robotics_workbench_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_robotics_workbench_a_v01/prop_robotics_workbench_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_robotics_workbench_a_v01/prop_robotics_workbench_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_robotics_workbench_a_v01/prop_robotics_workbench_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_multi_monitor_station_a_v01",
+      "id": "prop_security_monitor_wall_a_v01",
       "passed": false,
       "outputPath": null,
       "failures": [
@@ -474,134 +480,123 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_multi_monitor_station_a_v01/prop_multi_monitor_station_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_multi_monitor_station_a_v01/prop_multi_monitor_station_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_multi_monitor_station_a_v01/prop_multi_monitor_station_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_multi_monitor_station_a_v01/prop_multi_monitor_station_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_security_monitor_wall_a_v01/prop_security_monitor_wall_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_security_monitor_wall_a_v01/prop_security_monitor_wall_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_security_monitor_wall_a_v01/prop_security_monitor_wall_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_security_monitor_wall_a_v01/prop_security_monitor_wall_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_order_kiosk_futuristic_a_v01",
-      "passed": false,
-      "outputPath": null,
-      "failures": [
-        "material count 4 is below 5"
-      ],
+      "id": "prop_service_loading_crate_a_v01",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/casino-strip/loading_crate/prop_service_loading_crate_a_v01.glb",
+      "failures": [],
       "stats": {
-        "meshObjects": 11,
-        "triangles": 2068,
+        "meshObjects": 16,
+        "triangles": 10692,
         "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_cyan_emissive",
-          "tech_dark_metal"
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_wood"
         ],
         "materialCount": 4,
         "components": [
-          "anchored base",
-          "input area",
-          "protective bezel",
-          "screen",
-          "service panel",
-          "structural body",
-          "ventilation"
+          "base skids",
+          "corner frame",
+          "crate panels",
+          "fasteners",
+          "handling markings"
         ],
         "bounds": {
           "min": [
-            -0.36000001430511475,
-            -0.30250000953674316,
+            -0.5699999928474426,
+            -0.5149999856948853,
             0
           ],
           "max": [
-            0.36000001430511475,
-            0.30250000953674316,
-            1.684999942779541
+            0.5699999928474426,
+            0.5149999856948853,
+            0.9599999785423279
           ],
           "dimensions": [
-            0.7200000286102295,
-            0.6050000190734863,
-            1.684999942779541
+            1.1399999856948853,
+            1.0299999713897705,
+            0.9599999785423279
           ]
         },
         "requiredComponents": [
-          "anchored base",
-          "structural body",
-          "screen",
-          "protective bezel",
-          "input area",
-          "service panel",
-          "ventilation"
+          "crate panels",
+          "corner frame",
+          "base skids",
+          "fasteners",
+          "handling markings"
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_order_kiosk_futuristic_a_v01/prop_order_kiosk_futuristic_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_order_kiosk_futuristic_a_v01/prop_order_kiosk_futuristic_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_order_kiosk_futuristic_a_v01/prop_order_kiosk_futuristic_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_order_kiosk_futuristic_a_v01/prop_order_kiosk_futuristic_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_service_loading_crate_a_v01/prop_service_loading_crate_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_service_loading_crate_a_v01/prop_service_loading_crate_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_service_loading_crate_a_v01/prop_service_loading_crate_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_service_loading_crate_a_v01/prop_service_loading_crate_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_pay_kiosk_fuel_future_a_v01",
+      "id": "prop_service_neon_repair_bench_a_v01",
       "passed": false,
       "outputPath": null,
       "failures": [
-        "mesh object count 14 is below 15"
+        "material count 2 is below 3",
+        "missing required components: seat structure, back structure, side frames, supports"
       ],
       "stats": {
-        "meshObjects": 14,
-        "triangles": 2624,
+        "meshObjects": 30,
+        "triangles": 6308,
         "materials": [
           "tech_brushed_metal",
-          "tech_composite",
-          "tech_concrete",
-          "tech_cyan_emissive",
-          "tech_dark_metal",
-          "tech_rubber"
+          "tech_dark_metal"
         ],
-        "materialCount": 6,
+        "materialCount": 2,
         "components": [
-          "anchored pedestal",
-          "cabinet",
-          "display",
-          "hose",
-          "nozzle",
-          "payment terminal",
-          "protective trim",
-          "service panel"
+          "anchored feet",
+          "armrests",
+          "back slats",
+          "left side frame",
+          "mounting bolts",
+          "rear support rails",
+          "right side frame",
+          "seat slats"
         ],
         "bounds": {
           "min": [
-            -0.4965081810951233,
-            -0.32758575677871704,
+            -0.8799999952316284,
+            -0.3550509810447693,
             0
           ],
           "max": [
-            0.4965081810951233,
-            0.32758575677871704,
-            1.9000000953674316
+            0.8799999952316284,
+            0.3550509810447693,
+            1.1830345392227173
           ],
           "dimensions": [
-            0.9930163621902466,
-            0.6551715135574341,
-            1.9000000953674316
+            1.7599999904632568,
+            0.7101019620895386,
+            1.1830345392227173
           ]
         },
         "requiredComponents": [
-          "anchored pedestal",
-          "cabinet",
-          "display",
-          "payment terminal",
-          "hose",
-          "nozzle",
-          "protective trim",
-          "service panel"
+          "seat structure",
+          "back structure",
+          "side frames",
+          "supports",
+          "armrests",
+          "anchored feet"
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_pay_kiosk_fuel_future_a_v01/prop_pay_kiosk_fuel_future_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_pay_kiosk_fuel_future_a_v01/prop_pay_kiosk_fuel_future_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_pay_kiosk_fuel_future_a_v01/prop_pay_kiosk_fuel_future_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_pay_kiosk_fuel_future_a_v01/prop_pay_kiosk_fuel_future_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_service_neon_repair_bench_a_v01/prop_service_neon_repair_bench_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_service_neon_repair_bench_a_v01/prop_service_neon_repair_bench_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_service_neon_repair_bench_a_v01/prop_service_neon_repair_bench_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_service_neon_repair_bench_a_v01/prop_service_neon_repair_bench_a_v01_view_4.png"
       ]
     }
   ]
