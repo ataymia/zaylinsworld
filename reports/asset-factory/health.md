@@ -1,15 +1,15 @@
 # Zaylins Asset Factory Health
 
-- Generated: 2026-07-18T20:02:34.667Z
+- Generated: 2026-07-18T20:24:37.968Z
 - Master records: 2298
 - Queue records: 2298
-- Completed: 754
-- Queued Blender assets: 1338
+- Completed: 794
+- Queued Blender assets: 1298
 - Queued runtime assets: 0
 - Quarantined: 1
 - Unsupported: 189
 - Reference-only: 16
-- Generated GLBs on disk: 228
+- Generated GLBs on disk: 268
 
 ## Builder health
 
@@ -33,13 +33,13 @@
 | loading_crate | 3 | 0 | 0 | closed |
 | mailbox | 1 | 0 | 0 | closed |
 | modern_bed | 1 | 0 | 0 | closed |
-| modular_building | 21 | 209 | 0 | closed |
-| modular_connector | 11 | 161 | 0 | closed |
+| modular_building | 26 | 204 | 0 | closed |
+| modular_connector | 17 | 155 | 0 | closed |
 | modular_food | 9 | 0 | 0 | closed |
-| modular_furniture | 21 | 119 | 0 | closed |
-| modular_infrastructure | 18 | 218 | 0 | closed |
-| modular_prop | 9 | 549 | 0 | closed |
-| modular_road | 22 | 14 | 0 | closed |
+| modular_furniture | 27 | 113 | 0 | closed |
+| modular_infrastructure | 24 | 212 | 0 | closed |
+| modular_prop | 15 | 543 | 0 | closed |
+| modular_road | 28 | 8 | 0 | closed |
 | multi_monitor | 6 | 0 | 0 | closed |
 | municipal_bench | 14 | 0 | 0 | closed |
 | municipal_trash_can | 3 | 0 | 0 | closed |
@@ -50,7 +50,7 @@
 | planter | 4 | 0 | 0 | closed |
 | restaurant_booth | 1 | 0 | 0 | closed |
 | road_sign | 9 | 0 | 0 | closed |
-| state_variant | 11 | 68 | 0 | closed |
+| state_variant | 16 | 63 | 0 | closed |
 | storm_drain | 1 | 0 | 0 | closed |
 | streetlight | 8 | 0 | 0 | closed |
 | traffic_light | 1 | 0 | 0 | closed |
