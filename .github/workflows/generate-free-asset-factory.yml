@@ -1,0 +1,96 @@
+name: Generate Free ZTA Asset Batch
+
+on:
+  workflow_dispatch:
+    inputs:
+      batch_size:
+        description: Assets to process in this run, capped at 10
+        required: false
+        default: '10'
+  schedule:
+    - cron: '17,47 * * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'asset-factory/**'
+      - 'tools/asset-factory/**'
+      - 'docs/**/*BLUEPRINT.md'
+      - 'docs/WORLD_VISUAL_REFERENCE_BIBLE.md'
+      - '.github/workflows/generate-free-asset-factory.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: zta-free-asset-factory
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    if: github.actor != 'github-actions[bot]' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install free Blender engine
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y blender
+          blender --version
+
+      - name: Validate factory source
+        shell: bash
+        run: |
+          node --check tools/asset-factory/compile-specs.mjs
+          node --check tools/asset-factory/run-batch.mjs
+          python3 -m py_compile \
+            tools/asset-factory/blender/common.py \
+            tools/asset-factory/blender/builders.py \
+            tools/asset-factory/blender/generate_batch.py
+
+      - name: Generate and quality-check next batch
+        env:
+          BATCH_SIZE: ${{ github.event.inputs.batch_size || '10' }}
+        run: node tools/asset-factory/run-batch.mjs --batch-size "$BATCH_SIZE"
+
+      - name: Commit passing assets, queue state, and reports
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add asset-factory/generated/
+          git add asset-factory/state/
+          git add public/assets/models/generated/
+          git add public/assets/models/asset-index-v2.json
+          git add reports/asset-factory/
+          if git diff --cached --quiet; then
+            echo "No asset-factory changes to commit."
+            exit 0
+          fi
+          git commit -m "Generate free asset-factory batch [skip ci]"
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+      - name: Upload temporary QA previews
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zta-asset-factory-qa-${{ github.run_number }}
+          path: |
+            asset-factory/work/previews/
+            asset-factory/work/current-batch.json
+            asset-factory/work/blender-report.json
+            reports/asset-factory/latest.json
+          if-no-files-found: warn
+          retention-days: 7
