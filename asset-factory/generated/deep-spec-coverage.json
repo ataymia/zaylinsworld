@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-18T03:12:35.792Z",
+  "generatedAt": "2026-07-18T03:17:43.662Z",
   "expectedFromMaster": 978,
   "produced": 978,
   "descriptionsAtOrAboveMinimum": 978,
@@ -71,12 +71,12 @@
     "hologram_billboard": 3
   },
   "normalizedSparseContexts": 42,
-  "normalizedAt": "2026-07-18T03:12:36.148Z",
+  "normalizedAt": "2026-07-18T03:17:44.036Z",
   "semanticCategoryCorrections": 405,
-  "semanticRefinedAt": "2026-07-18T03:12:36.708Z",
+  "semanticRefinedAt": "2026-07-18T03:17:44.602Z",
   "finalSemanticCorrections": 0,
   "finalSemanticCorrectedIds": [],
-  "finalSemanticPassAt": "2026-07-18T03:12:38.342Z",
+  "finalSemanticPassAt": "2026-07-18T03:17:46.227Z",
   "physicalSpecsDerived": 667,
   "contaminatedCharacterSpecsRepaired": 23,
   "physicalSpecsDerivedByCategory": {
@@ -90,5 +90,5 @@
     "food": 11,
     "road_surface": 23
   },
-  "physicalSpecPassAt": "2026-07-18T03:12:37.683Z"
+  "physicalSpecPassAt": "2026-07-18T03:17:45.568Z"
 }
