@@ -39,7 +39,14 @@ jobs:
           node-version: '24'
 
       - name: Materialize readable expansion source
-        run: node tools/asset-factory/install-gameplay-gap-expansion.mjs
+        shell: bash
+        run: |
+          set +e
+          mkdir -p reports/asset-factory
+          node tools/asset-factory/install-gameplay-gap-expansion.mjs > reports/asset-factory/gameplay-gap-install.log 2>&1
+          STATUS=$?
+          cat reports/asset-factory/gameplay-gap-install.log
+          exit $STATUS
 
       - name: Validate installed source syntax
         run: |
@@ -69,6 +76,7 @@ jobs:
         with:
           name: zta-gameplay-gap-expansion-${{ github.run_number }}
           path: |
+            reports/asset-factory/gameplay-gap-install.log
             tools/asset-factory/gameplay-gap-expansion-files.json
             asset-factory/gameplay-gaps/
             docs/*GAMEPLAY_GAPS.md
