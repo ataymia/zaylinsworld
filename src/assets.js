@@ -3,11 +3,12 @@
 //  * GLTFLoader with Draco + meshopt decompression for optimized .glb/.gltf
 //  * KTX2 (Basis) compressed-texture support when a transcoder is present
 //  * RGBE HDRI environment loading with graceful fallback to a procedural sky
+//  * content-addressed Cloudflare R2 resolution with transparent local fallback
 //  * a small async cache + skinned-animation helper (AnimationMixer)
 //
-//  Drop properly-licensed (CC0 / commercial-use / original) .glb files into
-//  /assets and reference them from /assets/manifest.json — they load here with
-//  PBR materials, shadows, and animations, no code changes required.
+//  Local development continues to work with /public/assets. Production builds
+//  may set VITE_ASSET_BASE_URL to an R2 custom domain. The compact remote asset
+//  manifest maps familiar local paths to immutable SHA-256 object keys.
 // ───────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -17,6 +18,10 @@ import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 
 const CDN = 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/';
+const ENV_ASSET_BASE_URL = String(import.meta.env.VITE_ASSET_BASE_URL || '')
+  .trim()
+  .replace(/\/+$/, '');
+const REMOTE_MANIFEST_URL = './assets/remote-asset-manifest.json';
 
 let _gltf = null;
 let _ktx2 = null;
@@ -43,20 +48,56 @@ function gltfLoader(renderer) {
   return _gltf;
 }
 
+function isAbsoluteUrl(value) {
+  return /^(?:https?:|data:|blob:)/i.test(String(value || ''));
+}
+
+function normalizePublicAssetPath(value) {
+  const normalized = String(value || '')
+    .replace(/^\.\//, '')
+    .replace(/^\/+/, '');
+  return normalized.startsWith('assets/') ? normalized : `assets/${normalized}`;
+}
+
+let _remoteManifestPromise = null;
+async function loadRemoteAssetManifest() {
+  if (_remoteManifestPromise) return _remoteManifestPromise;
+  _remoteManifestPromise = fetch(REMOTE_MANIFEST_URL, { cache: 'no-cache' })
+    .then((response) => (response.ok ? response.json() : null))
+    .then((manifest) => (manifest && typeof manifest === 'object' ? manifest : { assets: {} }))
+    .catch(() => ({ assets: {} }));
+  return _remoteManifestPromise;
+}
+
+// Resolve a familiar local public path to a content-addressed R2 object when a
+// synchronized manifest and asset base URL are available. Missing mappings,
+// local development, or a temporarily unavailable manifest all fall back to
+// the original URL without changing callers.
+export async function resolveAssetUrl(url) {
+  if (!url || isAbsoluteUrl(url)) return url;
+  const publicPath = normalizePublicAssetPath(url);
+  const manifest = await loadRemoteAssetManifest();
+  const entry = manifest.assets?.[publicPath];
+  const baseUrl = ENV_ASSET_BASE_URL || String(manifest.baseUrl || '').replace(/\/+$/, '');
+  if (entry?.key && baseUrl) return `${baseUrl}/${String(entry.key).replace(/^\/+/, '')}`;
+  return url;
+}
+
 const _modelCache = new Map();
 
 // Load a .glb/.gltf. Returns { scene, animations } or null if it can't load.
 // Never throws — callers fall back to procedural meshes.
 export async function loadModel(url, renderer) {
-  if (_modelCache.has(url)) {
+  const resolvedUrl = await resolveAssetUrl(url);
+  if (_modelCache.has(resolvedUrl)) {
     // Upgrade the singleton KTX2 loader if this cached call is the first one that
     // knows about the renderer.
     gltfLoader(renderer);
-    return _modelCache.get(url);
+    return _modelCache.get(resolvedUrl);
   }
   const p = new Promise((resolve) => {
     gltfLoader(renderer).load(
-      url,
+      resolvedUrl,
       (gltf) => {
         gltf.scene.traverse((o) => {
           if (!o.isMesh) return;
@@ -73,7 +114,7 @@ export async function loadModel(url, renderer) {
       () => resolve(null),   // 404 / decode error → procedural fallback
     );
   });
-  _modelCache.set(url, p);
+  _modelCache.set(resolvedUrl, p);
   return p;
 }
 
@@ -107,11 +148,12 @@ export function makeMixer(root, animations) {
 // Image-based lighting: load a real CC0 HDRI for reflections + ambient light.
 // Resolves to the equirect/PMREM env texture, or null on failure (use sky).
 export async function loadHDRI(renderer, url, manager) {
+  const resolvedUrl = await resolveAssetUrl(url);
   return new Promise((resolve) => {
     const pmrem = new THREE.PMREMGenerator(renderer);
     pmrem.compileEquirectangularShader();
     new RGBELoader(manager).load(
-      url,
+      resolvedUrl,
       (hdr) => {
         hdr.mapping = THREE.EquirectangularReflectionMapping;
         const env = pmrem.fromEquirectangular(hdr).texture;
