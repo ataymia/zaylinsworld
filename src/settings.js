@@ -1,11 +1,17 @@
 // ───────────────────────────────────────────────────────────────────────────
 //  settings.js — the in-game Graphics / Settings menu UI.
 //
-//  Self-contained: it injects its own gear button (top-right), overlay panel,
+//  Self-contained: it injects its own visible Graphics button, overlay panel,
 //  and styles, then drives the `graphics` settings model. Opening it pauses the
 //  pointer lock; closing returns control to the game. Defaults to "Auto".
 // ───────────────────────────────────────────────────────────────────────────
 import { graphics, PRESETS, OPTION_DIMENSIONS } from './graphics.js';
+import { installProductionWorldBridge } from './runtime/ProductionWorldBridge.js';
+
+// This dependency is evaluated before main.js creates the gameplay scene, allowing
+// the production bridge to capture that scene and quietly prepare Starter Town
+// while Character Studio is open.
+installProductionWorldBridge();
 
 const PRESET_ORDER = [
   { mode: 'low', label: 'Low' },
@@ -21,12 +27,12 @@ let overlay = null;
 function injectStyles() {
   if (document.getElementById('settings-styles')) return;
   const css = `
-  #settings-gear{position:fixed;top:10px;right:14px;z-index:55;width:40px;height:40px;
-    border-radius:12px;background:rgba(8,8,16,.62);border:1px solid rgba(255,255,255,.18);
-    color:#dcdcf0;font-size:20px;cursor:pointer;backdrop-filter:blur(6px);pointer-events:auto;
-    display:flex;align-items:center;justify-content:center;transition:.15s;}
-  #settings-gear:hover{border-color:#5a5a80;transform:rotate(35deg);}
-  #settings-screen{position:fixed;inset:0;z-index:240;background:rgba(4,4,10,.92);
+  #settings-gear{position:fixed;top:12px;right:14px;z-index:260;min-width:126px;height:42px;
+    padding:0 14px;border-radius:12px;background:rgba(8,8,16,.88);border:1px solid rgba(78,255,145,.5);
+    color:#dfffee;font-size:13px;font-weight:800;cursor:pointer;backdrop-filter:blur(8px);pointer-events:auto;
+    display:flex;align-items:center;justify-content:center;gap:7px;transition:.15s;box-shadow:0 7px 24px rgba(0,0,0,.28);}
+  #settings-gear:hover{border-color:#4eff91;background:rgba(15,30,24,.94);transform:translateY(-1px);}
+  #settings-screen{position:fixed;inset:0;z-index:290;background:rgba(4,4,10,.92);
     display:flex;align-items:center;justify-content:center;}
   #settings-screen.hidden{display:none;}
   #settings-screen .panel{background:#15151f;border:1px solid #33334a;border-radius:18px;
@@ -52,6 +58,10 @@ function injectStyles() {
   #settings-fps{font-size:12px;color:#8a8aa0;}
   #settings-close{background:#4eff91;color:#06210f;border:none;border-radius:12px;
     padding:11px 26px;font-size:15px;font-weight:800;cursor:pointer;}
+  @media (max-width:720px){
+    #settings-gear{min-width:104px;height:38px;font-size:12px;top:8px;right:8px;}
+    .set-row{align-items:flex-start;flex-direction:column;}
+  }
   `;
   const s = document.createElement('style');
   s.id = 'settings-styles'; s.textContent = css;
@@ -108,7 +118,8 @@ export function initSettingsMenu({ onOpen, onClose } = {}) {
   injectStyles();
 
   const gear = document.createElement('button');
-  gear.id = 'settings-gear'; gear.title = 'Graphics & Settings'; gear.textContent = '⚙';
+  gear.id = 'settings-gear'; gear.title = 'Graphics & Performance'; gear.textContent = '⚙ Graphics';
+  gear.setAttribute('aria-label', 'Open Graphics and Performance settings');
   gear.onclick = () => openSettings();
   document.body.appendChild(gear);
 
@@ -117,7 +128,7 @@ export function initSettingsMenu({ onOpen, onClose } = {}) {
   overlay.innerHTML = `
     <div class="panel">
       <h1>Graphics &amp; Performance</h1>
-      <div class="sub">Pick a preset, or fine-tune below. Lower settings = smoother on slower laptops.</div>
+      <div class="sub">Pick Low, Medium, High, or Auto. Auto can step quality down when sustained frame rate drops.</div>
       <div id="settings-presets"></div>
       <div id="settings-options"></div>
       <div id="settings-foot">
