@@ -9,13 +9,13 @@ const builderNeedle = "const builders = [...byBuilder.keys()].sort();";
 const builderReplacement = `const builderNames = [...byBuilder.keys()].sort();
   const rotation = builderNames.length ? (queue.sequence || 0) % builderNames.length : 0;
   const builders = builderNames.slice(rotation).concat(builderNames.slice(0, rotation));`;
-const compilerNeedle = 'run(COMPILER);';
+const compilerNeedle = "run(process.execPath, ['tools/asset-factory/compile-expanded-specs.mjs']);";
 const compilerReplacement = `if (
     process.env.ASSET_FACTORY_RECOMPILE === '1'
     || !existsSync(MASTER_PATH)
     || !existsSync(QUEUE_PATH)
   ) {
-    run(COMPILER);
+    run(process.execPath, ['tools/asset-factory/compile-expanded-specs.mjs']);
   } else {
     console.log('[asset-factory] reusing validated master and queue; catalog recompilation skipped.');
   }`;
@@ -32,6 +32,17 @@ const patched = source
   .replace(compilerNeedle, compilerReplacement);
 mkdirSync(dirname(ACTIVE), { recursive: true });
 writeFileSync(ACTIVE, patched);
+
+const syntax = spawnSync(process.execPath, ['--check', ACTIVE], {
+  cwd: ROOT,
+  encoding: 'utf8',
+  stdio: 'pipe',
+  env: process.env,
+});
+if (syntax.error) throw syntax.error;
+if (syntax.status !== 0) {
+  throw new Error(`Generated fair batch runner failed syntax validation.\n${syntax.stdout || ''}\n${syntax.stderr || ''}`);
+}
 
 const result = spawnSync(process.execPath, [ACTIVE, ...process.argv.slice(2)], {
   cwd: ROOT,
