@@ -29,6 +29,7 @@ writeFileSync(FILE_MANIFEST_PATH, `${JSON.stringify({
   payloadChunks: chunkNames,
   files: writtenPaths,
 }, null, 2)}\n`);
+console.log('[gameplay-gap-bootstrap] materialization trigger: final-sweep preparation.');
 console.log(`[gameplay-gap-bootstrap] decoded ${chunkNames.length} payload chunks.`);
 console.log(`[gameplay-gap-bootstrap] installed ${writtenPaths.length} readable source files.`);
 console.log(`[gameplay-gap-bootstrap] wrote ${FILE_MANIFEST_PATH}.`);
