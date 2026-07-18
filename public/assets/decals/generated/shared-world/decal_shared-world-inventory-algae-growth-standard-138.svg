@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Shared World inventory Algae Growth Standard">
+  <title>Shared World inventory Algae Growth Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(71 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(109 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(71 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="89.05,50.00 81.74,68.33 66.41,78.43 50.00,80.84 30.61,83.58 23.81,65.12 10.12,50.00 21.10,33.31 31.44,17.86 50.00,10.77 70.61,14.31 83.50,30.66" fill="url(#fade)"/>
+  <polygon points="89.05,50.00 66.41,78.43 30.61,83.58 10.12,50.00 31.44,17.86 70.61,14.31" fill="none" stroke="hsl(71 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

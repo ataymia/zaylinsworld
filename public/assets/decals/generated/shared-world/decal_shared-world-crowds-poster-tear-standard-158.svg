@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Shared World crowds Poster Tear Standard">
+  <title>Shared World crowds Poster Tear Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(72 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(110 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(72 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="86.42,50.00 84.54,69.94 68.33,81.74 50.00,85.59 31.56,81.94 21.45,66.48 9.15,50.00 15.66,30.18 30.27,15.82 50.00,15.42 66.20,21.93 84.14,30.29" fill="url(#fade)"/>
+  <polygon points="86.42,50.00 68.33,81.74 31.56,81.94 9.15,50.00 30.27,15.82 66.20,21.93" fill="none" stroke="hsl(72 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

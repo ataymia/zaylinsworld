@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Techtown transit Water Stain Standard">
+  <title>Techtown transit Water Stain Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(103 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(141 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(103 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="91.45,50.00 76.63,65.37 66.07,77.83 50.00,82.32 34.63,76.63 19.10,67.84 19.11,50.00 21.89,33.77 31.54,18.02 50.00,16.81 69.46,16.30 77.87,33.91" fill="url(#fade)"/>
+  <polygon points="91.45,50.00 66.07,77.83 34.63,76.63 19.11,50.00 31.54,18.02 69.46,16.30" fill="none" stroke="hsl(103 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

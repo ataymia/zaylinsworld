@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Shared World customization Paint Chip Standard">
+  <title>Shared World customization Paint Chip Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(17 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(55 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(17 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="88.63,50.00 76.71,65.42 66.64,78.82 50.00,81.62 34.21,77.35 21.38,66.53 11.74,50.00 20.58,33.01 29.85,15.10 50.00,11.78 66.23,21.89 79.26,33.10" fill="url(#fade)"/>
+  <polygon points="88.63,50.00 66.64,78.82 34.21,77.35 11.74,50.00 29.85,15.10 66.23,21.89" fill="none" stroke="hsl(17 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

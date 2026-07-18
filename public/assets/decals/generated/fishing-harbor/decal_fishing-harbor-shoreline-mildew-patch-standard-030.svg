@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Fishing Harbor shoreline Mildew Patch Standard">
+  <title>Fishing Harbor shoreline Mildew Patch Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(140 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(178 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(140 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="91.68,50.00 84.78,70.08 66.57,78.70 50.00,88.73 30.91,83.06 17.30,68.88 16.44,50.00 13.63,29.00 34.74,23.57 50.00,15.79 66.83,20.86 79.66,32.87" fill="url(#fade)"/>
+  <polygon points="91.68,50.00 66.57,78.70 30.91,83.06 16.44,50.00 34.74,23.57 66.83,20.86" fill="none" stroke="hsl(140 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

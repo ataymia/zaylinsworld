@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Dungeon Outskirts hazard Dry Footprint Standard">
+  <title>Dungeon Outskirts hazard Dry Footprint Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(58 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(96 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(58 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="89.37,50.00 81.50,68.19 70.42,85.37 50.00,83.93 32.57,80.18 15.34,70.01 12.38,50.00 19.98,32.67 31.05,17.18 50.00,14.59 68.30,18.30 76.39,34.76" fill="url(#fade)"/>
+  <polygon points="89.37,50.00 70.42,85.37 32.57,80.18 12.38,50.00 31.05,17.18 68.30,18.30" fill="none" stroke="hsl(58 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

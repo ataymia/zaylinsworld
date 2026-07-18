@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Aqualume current Oil Drip Standard">
+  <title>Aqualume current Oil Drip Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(143 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(181 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(143 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="81.67,50.00 76.83,65.49 65.95,77.63 50.00,81.58 34.19,77.39 16.18,69.52 11.64,50.00 16.42,30.61 30.01,15.38 50.00,15.52 67.93,18.94 78.55,33.52" fill="url(#fade)"/>
+  <polygon points="81.67,50.00 65.95,77.63 34.19,77.39 11.64,50.00 30.01,15.38 67.93,18.94" fill="none" stroke="hsl(143 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

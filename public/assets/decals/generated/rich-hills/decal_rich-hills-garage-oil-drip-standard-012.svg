@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Rich Hills garage Oil Drip Standard">
+  <title>Rich Hills garage Oil Drip Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(25 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(63 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(25 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="85.45,50.00 78.70,66.57 68.81,82.58 50.00,86.79 29.53,85.45 21.49,66.46 18.33,50.00 21.93,33.80 31.33,17.66 50.00,19.34 67.56,19.58 81.02,32.09" fill="url(#fade)"/>
+  <polygon points="85.45,50.00 68.81,82.58 29.53,85.45 18.33,50.00 31.33,17.66 67.56,19.58" fill="none" stroke="hsl(25 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

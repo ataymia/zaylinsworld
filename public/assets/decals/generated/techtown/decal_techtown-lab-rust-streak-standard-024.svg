@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Techtown lab Rust Streak Standard">
+  <title>Techtown lab Rust Streak Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(188 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(226 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(188 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="87.11,50.00 80.18,67.43 70.93,86.25 50.00,91.82 34.58,76.71 16.06,69.59 17.27,50.00 23.09,34.46 29.85,15.10 50.00,15.66 67.61,19.50 79.10,33.20" fill="url(#fade)"/>
+  <polygon points="87.11,50.00 70.93,86.25 34.58,76.71 17.27,50.00 29.85,15.10 67.61,19.50" fill="none" stroke="hsl(188 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

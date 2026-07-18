@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Aqualume airlock Dry Footprint Standard">
+  <title>Aqualume airlock Dry Footprint Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(119 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(157 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(119 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="91.22,50.00 81.14,67.98 70.91,86.21 50.00,87.62 32.76,79.86 15.34,70.01 9.06,50.00 23.21,34.53 34.44,23.05 50.00,11.50 66.30,21.77 79.98,32.69" fill="url(#fade)"/>
+  <polygon points="91.22,50.00 70.91,86.21 32.76,79.86 9.06,50.00 34.44,23.05 66.30,21.77" fill="none" stroke="hsl(119 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Starter Town school Wet Footprint Standard">
+  <title>Starter Town school Wet Footprint Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(359 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(37 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(359 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="83.88,50.00 83.86,69.55 65.81,77.39 50.00,81.62 32.57,80.18 15.18,70.10 12.34,50.00 15.90,30.31 31.56,18.06 50.00,10.21 67.66,19.42 76.19,34.88" fill="url(#fade)"/>
+  <polygon points="83.88,50.00 65.81,77.39 32.57,80.18 12.34,50.00 31.56,18.06 67.66,19.42" fill="none" stroke="hsl(359 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

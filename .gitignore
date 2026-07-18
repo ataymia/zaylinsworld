@@ -29,3 +29,7 @@ vendor/source-textures/
 asset-factory/work/
 *.blend1
 __pycache__/
+
+# Reproducible 100+ MB deep production briefs. Actions validates and archives
+# these from the compact master/catalog source; they are not checkout payload.
+asset-factory/generated/deep-specs/*.json

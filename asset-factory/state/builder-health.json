@@ -1,0 +1,366 @@
+{
+  "version": 1,
+  "generatedAt": "2026-07-18T19:15:44.927Z",
+  "builders": {
+    "accessibility_gate": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 1,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "airlock_conduit": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 1,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "bollard": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 2,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "bubble_lift": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 1,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "bus_shelter": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 4,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "charging_pad": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 4,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "classroom_desk": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 2,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "digital_kiosk": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 7,
+      "queued": 1,
+      "quarantined": 0,
+      "dominantFailureCount": 1
+    },
+    "district_sign": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 1,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "elevated_road_support": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 1,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "fire_hydrant": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 1,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "fuel_pump": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 6,
+      "queued": 2,
+      "quarantined": 0,
+      "dominantFailureCount": 2
+    },
+    "guardrail": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 1,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "hologram_billboard": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 3,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "hover_vehicle": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 1,
+      "queued": 0,
+      "quarantined": 1,
+      "dominantFailureCount": 1
+    },
+    "loading_crate": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 3,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "mailbox": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 1,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "modern_bed": {
+      "revision": "2026-07-18-r4",
+      "state": "closed",
+      "reason": null,
+      "completed": 1,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "modular_building": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 6,
+      "queued": 224,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "modular_connector": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 1,
+      "queued": 171,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "modular_food": {
+      "revision": "2026-07-18-r4",
+      "state": "closed",
+      "reason": null,
+      "completed": 4,
+      "queued": 5,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "modular_furniture": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 7,
+      "queued": 133,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "modular_infrastructure": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 7,
+      "queued": 229,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "modular_prop": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 1,
+      "queued": 557,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "modular_road": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 7,
+      "queued": 29,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "multi_monitor": {
+      "revision": "2026-07-18-r4",
+      "state": "closed",
+      "reason": null,
+      "completed": 6,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "municipal_bench": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 8,
+      "queued": 6,
+      "quarantined": 0,
+      "dominantFailureCount": 4
+    },
+    "municipal_trash_can": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 3,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "office_desk": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 5,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "pallet_stack": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 1,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "picnic_table": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 1,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "planter": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 4,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "restaurant_booth": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 1,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "road_sign": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 9,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "state_variant": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 1,
+      "queued": 78,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "storm_drain": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 1,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "streetlight": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 8,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "traffic_light": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 1,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "utility_box": {
+      "revision": "2026-07-18-r7",
+      "state": "closed",
+      "reason": null,
+      "completed": 1,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    },
+    "wall_screen": {
+      "revision": "2026-07-18-r4",
+      "state": "closed",
+      "reason": null,
+      "completed": 3,
+      "queued": 0,
+      "quarantined": 0,
+      "dominantFailureCount": 0
+    }
+  }
+}

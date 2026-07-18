@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Aqualume life support Salt Stain Standard">
+  <title>Aqualume life support Salt Stain Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(295 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(333 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(295 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="86.00,50.00 78.58,66.50 66.18,78.03 50.00,87.20 30.50,83.78 14.51,70.49 10.72,50.00 17.98,31.51 31.47,17.90 50.00,17.59 68.16,18.54 82.14,31.44" fill="url(#fade)"/>
+  <polygon points="86.00,50.00 66.18,78.03 30.50,83.78 10.72,50.00 31.47,17.90 68.16,18.54" fill="none" stroke="hsl(295 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

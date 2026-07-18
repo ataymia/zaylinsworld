@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Starter Town clinic Rust Streak Standard">
+  <title>Starter Town clinic Rust Streak Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(13 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(51 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(13 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="80.56,50.00 77.19,65.70 70.38,85.29 50.00,86.51 31.47,82.10 20.22,67.20 15.38,50.00 14.07,29.25 30.91,16.94 50.00,14.59 66.73,21.02 77.71,34.00" fill="url(#fade)"/>
+  <polygon points="80.56,50.00 70.38,85.29 31.47,82.10 15.38,50.00 30.91,16.94 66.73,21.02" fill="none" stroke="hsl(13 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

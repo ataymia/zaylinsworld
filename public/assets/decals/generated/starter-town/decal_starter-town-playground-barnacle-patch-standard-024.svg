@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Starter Town playground Barnacle Patch Standard">
+  <title>Starter Town playground Barnacle Patch Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(216 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(254 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(216 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="91.72,50.00 78.51,66.46 66.43,78.47 50.00,86.42 31.54,81.98 17.82,68.58 11.69,50.00 16.74,30.80 30.61,16.42 50.00,14.46 69.80,15.70 79.30,33.08" fill="url(#fade)"/>
+  <polygon points="91.72,50.00 66.43,78.47 31.54,81.98 11.69,50.00 30.61,16.42 69.80,15.70" fill="none" stroke="hsl(216 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

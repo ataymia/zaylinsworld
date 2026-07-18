@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Shared World damage Floor Scuff Standard">
+  <title>Shared World damage Floor Scuff Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(294 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(332 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(294 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="87.11,50.00 78.39,66.39 70.77,85.97 50.00,91.77 31.70,81.70 17.66,68.67 9.38,50.00 17.58,31.28 33.13,20.78 50.00,17.22 67.29,20.06 82.46,31.26" fill="url(#fade)"/>
+  <polygon points="87.11,50.00 70.77,85.97 31.70,81.70 9.38,50.00 33.13,20.78 67.29,20.06" fill="none" stroke="hsl(294 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

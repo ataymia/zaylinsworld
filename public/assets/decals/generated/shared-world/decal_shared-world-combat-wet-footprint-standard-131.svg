@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Shared World combat Wet Footprint Standard">
+  <title>Shared World combat Wet Footprint Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(234 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(272 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(234 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="90.62,50.00 80.50,67.61 65.70,77.19 50.00,81.30 32.16,80.90 22.33,65.97 8.60,50.00 19.74,32.53 32.21,19.18 50.00,17.59 67.31,20.02 84.42,30.13" fill="url(#fade)"/>
+  <polygon points="90.62,50.00 65.70,77.19 32.16,80.90 8.60,50.00 32.21,19.18 67.31,20.02" fill="none" stroke="hsl(234 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>
