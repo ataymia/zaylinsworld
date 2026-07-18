@@ -1,0 +1,71 @@
+name: Install Gameplay Gap Expansion
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'tools/asset-factory/install-gameplay-gap-expansion.mjs'
+      - 'tools/asset-factory/gameplay-gap-expansion-payload/**'
+      - '.github/workflows/install-gameplay-gap-expansion.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: zta-install-gameplay-gap-expansion-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  install-and-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout expansion branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Materialize readable expansion source
+        run: node tools/asset-factory/install-gameplay-gap-expansion.mjs
+
+      - name: Validate installed source syntax
+        run: |
+          node --check tools/asset-factory/build-gameplay-gap-catalog.mjs
+          node --check tools/asset-factory/apply-gameplay-gap-catalog.mjs
+          node --check tools/asset-factory/check-gameplay-gap-catalog.mjs
+          node --check tools/asset-factory/deep-spec-final-classifier.mjs
+          node --check tools/asset-factory/classify-inventory-intent.mjs
+          node --check tools/asset-factory/check-inventory-intent.mjs
+          node --check tools/asset-factory/shard-deep-specs.mjs
+          node --check tools/asset-factory/check-sharded-deep-specs.mjs
+          node --check tools/asset-factory/commit-generated-specs.mjs
+
+      - name: Build and validate all expanded production briefs
+        run: npm run asset:deep
+
+      - name: Commit readable source and generated libraries
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET_BRANCH: ${{ github.ref_name }}
+        run: node tools/asset-factory/commit-generated-specs.mjs
+
+      - name: Upload full expansion proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zta-gameplay-gap-expansion-${{ github.run_number }}
+          path: |
+            asset-factory/gameplay-gaps/
+            docs/*GAMEPLAY_GAPS.md
+            asset-factory/generated/master-asset-specs.json
+            asset-factory/generated/deep-asset-specs.json
+            asset-factory/generated/deep-spec-coverage.json
+            asset-factory/generated/deep-specs/
+          if-no-files-found: warn
+          retention-days: 7
