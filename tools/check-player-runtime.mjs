@@ -47,10 +47,26 @@ for (const requiredJoint of ['UpperArm_L', 'UpperArm_R', 'Hand_L', 'Hand_R']) {
 
 const adapter = await readFile(adapterPath, 'utf8');
 assert.match(adapter, /function skinnedBoneUsage\(root\)/, 'player adapter must inspect SkinnedMesh bone usage');
+assert.match(adapter, /const bonesByName = new Map\(\)/, 'player adapter must preserve duplicate named skin joints');
 assert.match(adapter, /getAttribute\?\.\('skinIndex'\)/, 'player adapter must read skin joint indices');
 assert.match(adapter, /getAttribute\?\.\('skinWeight'\)/, 'player adapter must read skin weights');
 assert.match(adapter, /function pickWeightedBone\(/, 'player adapter must select bones by visible-mesh influence');
-assert.match(adapter, /source: 'highest-visible-skin-weight'/, 'player adapter must report weighted rig selection');
+assert.match(adapter, /for \(const name of exactNames\)/, 'player adapter must honor ordered exact-joint preference before fuzzy ranking');
+assert.match(
+  adapter,
+  /\['UpperArm_L', 'mixamorigLeftArm', 'UpperArm_Anim_L'\]/,
+  'left arm must prefer deform joints before the Sunbox control-layer joint',
+);
+assert.match(
+  adapter,
+  /\['UpperArm_R', 'mixamorigRightArm', 'UpperArm_Anim_R'\]/,
+  'right arm must prefer deform joints before the Sunbox control-layer joint',
+);
+assert.match(
+  adapter,
+  /selectionPolicy: 'ordered-deform-first'/,
+  'player adapter must report deform-first weighted rig selection',
+);
 assert.match(adapter, /leftArm:\s*pickWeightedBone\(/, 'left arm must use weighted bone selection');
 assert.match(adapter, /rightArm:\s*pickWeightedBone\(/, 'right arm must use weighted bone selection');
 
@@ -68,5 +84,5 @@ assert.ok((await stat(libraryPath)).size < 2 * 1024 * 1024, 'texture library exc
 
 console.log(
   `[player-runtime] verified ${(model.length / 1024 / 1024).toFixed(2)} MB GLB, ` +
-  'weighted arm-joint selection, and 47 lazy texture variants.',
+  'deform-first weighted arm selection, duplicate-joint indexing, and 47 lazy texture variants.',
 );
