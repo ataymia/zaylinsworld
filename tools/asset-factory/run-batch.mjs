@@ -118,8 +118,8 @@ function createMarkdownReport({ batch, blenderReport, masterById, queue }) {
     '',
     '## Batch results',
     '',
-    '| Asset | Town | Family | Result | Meshes | Triangles | Materials | Notes |',
-    '|---|---|---|---|---:|---:|---:|---|',
+    '| Asset | Town | Family | Result | Meshes | Triangles | Materials | GLB bytes | Notes |',
+    '|---|---|---|---|---:|---:|---:|---:|---|',
   ];
 
   for (const result of blenderReport.results) {
@@ -129,13 +129,14 @@ function createMarkdownReport({ batch, blenderReport, masterById, queue }) {
       ? `Registered at ${result.outputPath}`
       : `${result.failures.join('; ')}. Queue status: ${state?.status || 'unknown'}`;
     lines.push(
-      `| ${markdownEscape(spec?.displayName || result.id)} | ${markdownEscape(result.town)} | ${markdownEscape(result.family)} | ${result.passed ? 'PASS' : 'FAIL'} | ${result.stats?.meshObjects ?? 0} | ${result.stats?.triangles ?? 0} | ${result.stats?.materialCount ?? 0} | ${markdownEscape(notes)} |`,
+      `| ${markdownEscape(spec?.displayName || result.id)} | ${markdownEscape(result.town)} | ${markdownEscape(result.family)} | ${result.passed ? 'PASS' : 'FAIL'} | ${result.stats?.meshObjects ?? 0} | ${result.stats?.triangles ?? 0} | ${result.stats?.materialCount ?? 0} | ${result.exportBytes ?? 0} | ${markdownEscape(notes)} |`,
     );
   }
 
   lines.push('', '## Quality contract', '');
   lines.push('- A technically valid GLB is not automatically accepted.');
   lines.push('- Required components, scale, materials, pivot, silhouette coverage, and geometry budgets are checked.');
+  lines.push('- Passing additionally requires a verified nonempty GLB with valid binary magic bytes.');
   lines.push('- Unsupported families are never replaced by generic primitive placeholders.');
   lines.push('- Persistent failures are quarantined while the rest of the queue continues.');
   lines.push('');
@@ -163,6 +164,9 @@ function createLatestSummary({ batch, blenderReport, queue }) {
     results: blenderReport.results.map((item) => ({
       id: item.id,
       passed: item.passed,
+      qualityPassed: item.qualityPassed,
+      exportVerified: item.exportVerified,
+      exportBytes: item.exportBytes,
       outputPath: item.outputPath,
       failures: item.failures,
       stats: item.stats,
@@ -179,7 +183,7 @@ function chooseBatch(master, queue, batchSize) {
     .filter(({ spec }) => spec?.builderStatus === 'supported' && spec.builder)
     .sort((a, b) => {
       if (a.state.priority !== b.state.priority) return a.state.priority - b.state.priority;
-      if (a.state.attempts !== b.state.attempts) return a.state.attempts - b.state.attempts;
+      if (a.state.attempts !== b.state.attempts) return b.state.attempts - a.state.attempts;
       return a.state.id.localeCompare(b.state.id);
     })
     .slice(0, batchSize)
