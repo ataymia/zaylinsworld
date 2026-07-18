@@ -20,6 +20,7 @@ from builder_repairs_modular import (
     build_state_variant,
 )
 from builder_repairs_food import build_modular_food_fixed
+from builder_repairs_screen import build_wall_screen_fixed
 
 
 def install_repairs(builders):
@@ -34,6 +35,7 @@ def install_repairs(builders):
         "digital_kiosk": build_digital_kiosk_fixed,
         "office_desk": build_office_desk_fixed,
         "hover_vehicle": build_hover_vehicle_fixed,
+        "wall_screen": build_wall_screen_fixed,
         "modular_connector": build_modular_connector,
         "modular_infrastructure": build_modular_infrastructure,
         "modular_furniture": build_modular_furniture,
