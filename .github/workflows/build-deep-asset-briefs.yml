@@ -13,11 +13,13 @@ on:
       - 'tools/asset-factory/derive-physical-specs.mjs'
       - 'tools/asset-factory/specialize-physical-specs.mjs'
       - 'tools/asset-factory/classify-inventory-intent.mjs'
+      - 'tools/asset-factory/shard-deep-specs.mjs'
       - 'tools/asset-factory/commit-generated-specs.mjs'
       - 'tools/asset-factory/check-deep-specs.mjs'
       - 'tools/asset-factory/check-physical-specs.mjs'
       - 'tools/asset-factory/check-specialized-physical-specs.mjs'
       - 'tools/asset-factory/check-inventory-intent.mjs'
+      - 'tools/asset-factory/check-sharded-deep-specs.mjs'
       - 'asset-factory/quality-policy.json'
       - 'asset-factory/manual-overrides.json'
       - 'asset-factory/generated/master-asset-specs.json'
@@ -34,11 +36,13 @@ on:
       - 'tools/asset-factory/derive-physical-specs.mjs'
       - 'tools/asset-factory/specialize-physical-specs.mjs'
       - 'tools/asset-factory/classify-inventory-intent.mjs'
+      - 'tools/asset-factory/shard-deep-specs.mjs'
       - 'tools/asset-factory/commit-generated-specs.mjs'
       - 'tools/asset-factory/check-deep-specs.mjs'
       - 'tools/asset-factory/check-physical-specs.mjs'
       - 'tools/asset-factory/check-specialized-physical-specs.mjs'
       - 'tools/asset-factory/check-inventory-intent.mjs'
+      - 'tools/asset-factory/check-sharded-deep-specs.mjs'
       - 'asset-factory/quality-policy.json'
       - 'asset-factory/manual-overrides.json'
       - 'asset-factory/generated/master-asset-specs.json'
@@ -80,11 +84,13 @@ jobs:
           node --check tools/asset-factory/derive-physical-specs.mjs
           node --check tools/asset-factory/specialize-physical-specs.mjs
           node --check tools/asset-factory/classify-inventory-intent.mjs
+          node --check tools/asset-factory/shard-deep-specs.mjs
           node --check tools/asset-factory/commit-generated-specs.mjs
           node --check tools/asset-factory/check-deep-specs.mjs
           node --check tools/asset-factory/check-physical-specs.mjs
           node --check tools/asset-factory/check-specialized-physical-specs.mjs
           node --check tools/asset-factory/check-inventory-intent.mjs
+          node --check tools/asset-factory/check-sharded-deep-specs.mjs
 
       - name: Generate deep production briefs for the complete asset library
         run: node tools/asset-factory/enrich-all-specs.mjs
@@ -122,6 +128,12 @@ jobs:
       - name: Require audited generation eligibility for every record
         run: node tools/asset-factory/check-inventory-intent.mjs
 
+      - name: Shard validated specifications for repository storage
+        run: node tools/asset-factory/shard-deep-specs.mjs
+
+      - name: Reassemble and validate every shard
+        run: node tools/asset-factory/check-sharded-deep-specs.mjs
+
       - name: Commit generated specification library
         if: github.actor != 'github-actions[bot]'
         env:
@@ -137,5 +149,6 @@ jobs:
           path: |
             asset-factory/generated/deep-asset-specs.json
             asset-factory/generated/deep-spec-coverage.json
+            asset-factory/generated/deep-specs/
           if-no-files-found: warn
           retention-days: 7
