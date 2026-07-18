@@ -115,7 +115,7 @@ interactions.register({
 });
 assert.equal(interactions.findNearest({}, null)?.id, 'mission-test', 'overlapping prompts must select the higher-priority interaction');
 
-const [loader, assets, state, modular, largeTown, lifecycle, diagnostics, massing, streetscape] = await Promise.all([
+const [loader, assets, state, modular, largeTown, lifecycle, diagnostics, massing, streetscape, graphicsSource] = await Promise.all([
   source('src/loader.js'),
   source('src/assets.js'),
   source('src/state.js'),
@@ -125,12 +125,19 @@ const [loader, assets, state, modular, largeTown, lifecycle, diagnostics, massin
   source('src/runtime/RuntimeDiagnostics.js'),
   source('src/world/DistrictMassing.js'),
   source('src/world/StreetscapeLayer.js'),
+  source('src/graphics.js'),
 ]);
 assert.match(loader, /loadingManager\.onStart =/, 'loader must track work before DOM initialization');
 assert.match(loader, /revealRequested/, 'loader must gate reveal on readiness');
 assert.match(loader, /await nextFrame\(\);\s*await nextFrame\(\);/, 'loader must settle for two clean frames');
-assert.match(assets, /new GLTFLoader\(loadingManager\)/, 'GLBs must report to the shared loader');
+assert.match(loader, /maximumWaitMs = 12000/, 'loader must have a finite twelve-second boot ceiling');
+assert.match(loader, /completeReveal\(expectedSession, \{ forced: true, reason: 'maximum-wait-exceeded' \}\)/, 'stalled loads must enter with fallbacks');
+assert.match(loader, /activeItems: activeItemList\(\)/, 'loader diagnostics must identify stuck URLs');
+assert.match(loader, /if \(options\.showIfHidden\)/, 'background work must not resurrect a cleared loading screen');
+assert.match(assets, /new GLTFLoader\(loadingManager\)/, 'critical GLBs must report to the shared loader');
 assert.match(assets, /assetRuntimeRegistry\.load\(\)/, 'asset indexes must warm into the runtime resolver');
+assert.match(assets, /manager === loadingManager \? backgroundLoadingManager : manager/, 'optional HDRI must be redirected away from the blocking gate');
+assert.match(assets, /new RGBELoader\(effectiveManager\)/, 'HDRI must use the nonblocking manager');
 assert.match(state, /SAVE_SCHEMA_VERSION = 4/, 'save schema must be versioned');
 assert.match(state, /checksum\(payloadText\)/, 'save payload must be checksummed');
 assert.match(state, /BACKUP_KEY/, 'save migration must preserve a backup');
@@ -144,5 +151,6 @@ assert.match(streetscape, /assetRuntimeRegistry\.resolve/, 'streetscape must sea
 assert.match(streetscape, /fallbackTypes/, 'unready street assets must be reported, not crash the build');
 assert.match(lifecycle, /deterministic ownership and cleanup/i);
 assert.match(diagnostics, /budgetViolations/, 'runtime diagnostics must report performance-budget violations');
+assert.match(graphicsSource, /adaptToFps\(fps/, 'Auto graphics must react to measured frame rate');
 
-console.log('[runtime-foundation] inclusive palette, real loader, Phase 2 contracts, predictive streaming, LOD, connected roads, parcels, massing, and ready-asset streetscape verified.');
+console.log('[runtime-foundation] inclusive palette, finite real loader, predictive streaming, adaptive graphics, connected roads, parcels, massing, and ready-asset streetscape verified.');
