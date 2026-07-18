@@ -2,14 +2,16 @@
 // LargeStarterTown.js — feature-flagged authoritative city skeleton.
 //
 // This does not replace the compact compatibility map by default. It builds the
-// approved terrain, districts, roads, location parcels, and any registered final
-// location assets that are already ready in the Asset Lab.
+// approved terrain, districts, roads, location parcels, district massing, and any
+// registered final assets that are already ready in the Asset Lab.
 // ─────────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 import { worldRegistry } from '../runtime/WorldRegistry.js';
 import { assetRuntimeRegistry } from '../runtime/AssetRuntimeRegistry.js';
 import { loadRegisteredAsset } from '../assets.js';
 import { RoadNetwork } from './RoadNetwork.js';
+import { buildDistrictMassing } from './DistrictMassing.js';
+import { buildStreetscapeLayer } from './StreetscapeLayer.js';
 
 const DISTRICT_COLORS = Object.freeze({
   'northworks-auto-row': '#665f57',
@@ -75,7 +77,13 @@ function normalizeModel(scene, location) {
   scene.updateWorldMatrix(true, true);
 }
 
-export async function buildLargeStarterTown({ renderer = null, placeReadyAssets = true, showDistricts = false } = {}) {
+export async function buildLargeStarterTown({
+  renderer = null,
+  placeReadyAssets = true,
+  showDistricts = false,
+  includeMassing = true,
+  includeStreetscape = true,
+} = {}) {
   const plan = worldRegistry.starterPlan;
   const group = new THREE.Group();
   group.name = 'ZW_LargeStarterTown';
@@ -118,6 +126,9 @@ export async function buildLargeStarterTown({ renderer = null, placeReadyAssets 
   const roads = roadNetwork.buildGeometry({ name: 'ZW_StarterRoadSkeleton', yOffset: 0.04 });
   group.add(roads);
 
+  const massing = includeMassing ? buildDistrictMassing() : null;
+  if (massing) group.add(massing.group);
+
   const locationLayer = new THREE.Group();
   locationLayer.name = 'ZW_StarterLocationParcels';
   const placeholders = new Map();
@@ -155,6 +166,11 @@ export async function buildLargeStarterTown({ renderer = null, placeReadyAssets 
     }
   }
 
+  const streetscape = includeStreetscape
+    ? await buildStreetscapeLayer({ renderer })
+    : null;
+  if (streetscape) group.add(streetscape.group);
+
   group.userData.largeStarterTown = true;
   group.userData.featureFlag = 'starterTownLargeWorld';
   group.userData.roadNetwork = roadNetwork;
@@ -165,9 +181,21 @@ export async function buildLargeStarterTown({ renderer = null, placeReadyAssets 
     roads: roadNetwork.snapshot(),
     locations: plan.locations.length,
     assets: placementReport,
+    massing: massing?.group.userData.snapshot?.() || null,
+    streetscape: streetscape?.group.userData.snapshot?.() || null,
   });
 
-  return { group, terrain, roads, roadNetwork, districtLayer, locationLayer, placementReport };
+  return {
+    group,
+    terrain,
+    roads,
+    roadNetwork,
+    districtLayer,
+    locationLayer,
+    massing,
+    streetscape,
+    placementReport,
+  };
 }
 
 export async function installLargeStarterTown(scene, options = {}) {
