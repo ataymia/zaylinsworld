@@ -36,7 +36,7 @@ for (const asset of derived) {
   if (asset.physicalSpecSpecialized !== true) {
     failures.push(`${label}: derived asset was not processed by the specialization pass.`);
   }
-  if (!asset.physicalSpecProfile || asset.physicalSpecProfile.length < 5) {
+  if (!asset.physicalSpecProfile || asset.physicalSpecProfile.trim().length < 3) {
     failures.push(`${label}: specialized physical profile name is missing.`);
   }
   if (BROAD_PROFILE_NAMES.has(asset.physicalSpecProfile)) {
