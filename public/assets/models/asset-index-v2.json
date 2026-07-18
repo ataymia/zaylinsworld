@@ -2963,6 +2963,42 @@
         "license": "Original ZTA procedural geometry"
       },
       {
+        "name": "prop_hologram_billboard_large_a_v01",
+        "path": "models/generated/techtown/hologram_billboard/prop_hologram_billboard_large_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "hologram_billboard",
+        "displayName": "Hologram Billboard Large",
+        "description": "A production-ready Hologram Billboard Large, designed as a digital or holographic billboard for Techtown. The display needs a credible support and emitter system. Do not float a glowing rectangle in space. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “B. Roads / infrastructure” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_hologram_billboard_small_a_v01",
+        "path": "models/generated/techtown/hologram_billboard/prop_hologram_billboard_small_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "hologram_billboard",
+        "displayName": "Hologram Billboard Small",
+        "description": "A production-ready Hologram Billboard Small, designed as a digital or holographic billboard for Techtown. The display needs a credible support and emitter system. Do not float a glowing rectangle in space. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “B. Roads / infrastructure” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_menu_board_digital_a_v01",
+        "path": "models/generated/techtown/hologram_billboard/prop_menu_board_digital_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "hologram_billboard",
+        "displayName": "Menu Board Digital",
+        "description": "A production-ready Menu Board Digital, designed as a digital or holographic billboard for Techtown. The display needs a credible support and emitter system. Do not float a glowing rectangle in space. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “E. Food / restaurant / convenience” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
         "name": "prop_starter_bench_a_v01",
         "path": "models/generated/starter-town/bench/prop_starter_bench_a_v01.glb",
         "type": "glb",
