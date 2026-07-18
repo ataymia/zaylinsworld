@@ -1,37 +1,36 @@
 {
   "version": 2,
-  "batchId": "batch-00001",
-  "completedAt": "2026-07-18T18:01:30.047Z",
+  "batchId": "batch-00002",
+  "completedAt": "2026-07-18T18:07:52.474Z",
   "requested": 20,
-  "passed": 18,
-  "failed": 2,
+  "passed": 20,
+  "failed": 0,
   "queueCounts": {
-    "completed": 571,
-    "queued": 1521,
+    "completed": 589,
+    "queued": 1503,
     "reference-only": 16,
     "unsupported": 189,
     "quarantined": 1
   },
   "results": [
     {
-      "id": "prop_digital_board_classroom_a_v01",
+      "id": "prop_wall_fitness_screen_a_v01",
       "builder": "wall_screen",
       "builderRevision": "2026-07-18-r4",
-      "passed": false,
-      "outputPath": null,
-      "failures": [
-        "triangle count 1128 is below 1200",
-        "height 1.010m differs from target 0.720m by 40%"
-      ],
+      "passed": true,
+      "outputPath": "public/assets/models/generated/techtown/wall_screen/prop_wall_fitness_screen_a_v01.glb",
+      "failures": [],
       "stats": {
-        "meshObjects": 6,
-        "triangles": 1128,
+        "meshObjects": 17,
+        "triangles": 3548,
         "materials": [
+          "tech_brushed_metal",
           "tech_composite",
           "tech_cyan_emissive",
-          "tech_dark_metal"
+          "tech_dark_metal",
+          "tech_white_light"
         ],
-        "materialCount": 3,
+        "materialCount": 5,
         "components": [
           "cable or power channel",
           "mounting bracket",
@@ -43,18 +42,18 @@
         "bounds": {
           "min": [
             -0.6000000238418579,
-            -0.11950000375509262,
+            -0.12839999794960022,
             0
           ],
           "max": [
             0.6000000238418579,
-            0.11949999630451202,
-            1.0099999904632568
+            0.12839999794960022,
+            0.7200000286102295
           ],
           "dimensions": [
             1.2000000476837158,
-            0.23899999260902405,
-            1.0099999904632568
+            0.25679999589920044,
+            0.7200000286102295
           ]
         },
         "requiredComponents": [
@@ -67,27 +66,27 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_digital_board_classroom_a_v01/prop_digital_board_classroom_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_digital_board_classroom_a_v01/prop_digital_board_classroom_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_digital_board_classroom_a_v01/prop_digital_board_classroom_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_digital_board_classroom_a_v01/prop_digital_board_classroom_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_wall_fitness_screen_a_v01/prop_wall_fitness_screen_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_wall_fitness_screen_a_v01/prop_wall_fitness_screen_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_wall_fitness_screen_a_v01/prop_wall_fitness_screen_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_wall_fitness_screen_a_v01/prop_wall_fitness_screen_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_starline_streetlight_gold_a_v01",
+      "id": "prop_streetlight_neon_a_v01",
       "builder": "streetlight",
-      "builderRevision": "2026-07-18-r3",
+      "builderRevision": "2026-07-18-r5",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/streetlight/prop_starline_streetlight_gold_a_v01.glb",
+      "outputPath": "public/assets/models/generated/techtown/streetlight/prop_streetlight_neon_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 10,
         "triangles": 1996,
         "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light"
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_cyan_emissive",
+          "tech_dark_metal"
         ],
         "materialCount": 4,
         "components": [
@@ -127,72 +126,16 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_starline_streetlight_gold_a_v01/prop_starline_streetlight_gold_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starline_streetlight_gold_a_v01/prop_starline_streetlight_gold_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starline_streetlight_gold_a_v01/prop_starline_streetlight_gold_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starline_streetlight_gold_a_v01/prop_starline_streetlight_gold_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_starter_storm_drain_a_v01",
-      "builder": "storm_drain",
-      "builderRevision": "2026-07-18-r3",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/storm_drain/prop_starter_storm_drain_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 13,
-        "triangles": 2444,
-        "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized"
-        ],
-        "materialCount": 4,
-        "components": [
-          "curb section",
-          "drain opening",
-          "frame",
-          "gutter channel",
-          "metal grate"
-        ],
-        "bounds": {
-          "min": [
-            -0.6000000238418579,
-            -0.3500000238418579,
-            -9.313225746154785e-10
-          ],
-          "max": [
-            0.6000000238418579,
-            0.3499999940395355,
-            0.3057340681552887
-          ],
-          "dimensions": [
-            1.2000000476837158,
-            0.7000000476837158,
-            0.3057340681552887
-          ]
-        },
-        "requiredComponents": [
-          "curb section",
-          "drain opening",
-          "metal grate",
-          "frame",
-          "gutter channel"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_starter_storm_drain_a_v01/prop_starter_storm_drain_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starter_storm_drain_a_v01/prop_starter_storm_drain_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starter_storm_drain_a_v01/prop_starter_storm_drain_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starter_storm_drain_a_v01/prop_starter_storm_drain_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_streetlight_neon_a_v01/prop_streetlight_neon_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_streetlight_neon_a_v01/prop_streetlight_neon_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_streetlight_neon_a_v01/prop_streetlight_neon_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_streetlight_neon_a_v01/prop_streetlight_neon_a_v01_view_4.png"
       ]
     },
     {
       "id": "gap-shared-world-accessibility-gate-locked-standard-310",
       "builder": "state_variant",
-      "builderRevision": "2026-07-18-r3",
+      "builderRevision": "2026-07-18-r5",
       "passed": true,
       "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-accessibility-gate-locked-standard-310.glb",
       "failures": [],
@@ -253,11 +196,11 @@
       ]
     },
     {
-      "id": "prop_starline_wayfinding_sign_a_v01",
+      "id": "prop_starter_crossing_guard_sign_a_v01",
       "builder": "road_sign",
-      "builderRevision": "2026-07-18-r3",
+      "builderRevision": "2026-07-18-r5",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/road_sign/prop_starline_wayfinding_sign_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starter-town/road_sign/prop_starter_crossing_guard_sign_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 9,
@@ -304,18 +247,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_starline_wayfinding_sign_a_v01/prop_starline_wayfinding_sign_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starline_wayfinding_sign_a_v01/prop_starline_wayfinding_sign_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starline_wayfinding_sign_a_v01/prop_starline_wayfinding_sign_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starline_wayfinding_sign_a_v01/prop_starline_wayfinding_sign_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starter_crossing_guard_sign_a_v01/prop_starter_crossing_guard_sign_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starter_crossing_guard_sign_a_v01/prop_starter_crossing_guard_sign_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starter_crossing_guard_sign_a_v01/prop_starter_crossing_guard_sign_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starter_crossing_guard_sign_a_v01/prop_starter_crossing_guard_sign_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_starline_planter_a_v01",
+      "id": "prop_starter_planter_a_v01",
       "builder": "planter",
-      "builderRevision": "2026-07-18-r3",
+      "builderRevision": "2026-07-18-r5",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/planter/prop_starline_planter_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starter-town/planter/prop_starter_planter_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 24,
@@ -360,72 +303,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_starline_planter_a_v01/prop_starline_planter_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starline_planter_a_v01/prop_starline_planter_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starline_planter_a_v01/prop_starline_planter_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starline_planter_a_v01/prop_starline_planter_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starter_planter_a_v01/prop_starter_planter_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starter_planter_a_v01/prop_starter_planter_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starter_planter_a_v01/prop_starter_planter_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starter_planter_a_v01/prop_starter_planter_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_starter_pallet_stack_a_v01",
-      "builder": "pallet_stack",
-      "builderRevision": "2026-07-18-r3",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/pallet_stack/prop_starter_pallet_stack_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 41,
-        "triangles": 7708,
-        "materials": [
-          "starter_black",
-          "starter_wood"
-        ],
-        "materialCount": 2,
-        "components": [
-          "bottom deck boards",
-          "spacing gaps",
-          "stack offsets",
-          "stringers",
-          "top deck boards"
-        ],
-        "bounds": {
-          "min": [
-            -0.6150000095367432,
-            -0.5099999904632568,
-            0
-          ],
-          "max": [
-            0.6150000095367432,
-            0.5099999904632568,
-            0.6150000095367432
-          ],
-          "dimensions": [
-            1.2300000190734863,
-            1.0199999809265137,
-            0.6150000095367432
-          ]
-        },
-        "requiredComponents": [
-          "top deck boards",
-          "bottom deck boards",
-          "stringers",
-          "spacing gaps",
-          "stack offsets"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_starter_pallet_stack_a_v01/prop_starter_pallet_stack_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starter_pallet_stack_a_v01/prop_starter_pallet_stack_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starter_pallet_stack_a_v01/prop_starter_pallet_stack_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starter_pallet_stack_a_v01/prop_starter_pallet_stack_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_worktower_health_desk_a_v01",
+      "id": "prop_worktower_property_desk_a_v01",
       "builder": "office_desk",
-      "builderRevision": "2026-07-18-r3",
+      "builderRevision": "2026-07-18-r5",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/office_desk/prop_worktower_health_desk_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starter-town/office_desk/prop_worktower_property_desk_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -473,18 +362,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_worktower_health_desk_a_v01/prop_worktower_health_desk_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_worktower_health_desk_a_v01/prop_worktower_health_desk_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_worktower_health_desk_a_v01/prop_worktower_health_desk_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_worktower_health_desk_a_v01/prop_worktower_health_desk_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_worktower_property_desk_a_v01/prop_worktower_property_desk_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_worktower_property_desk_a_v01/prop_worktower_property_desk_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_worktower_property_desk_a_v01/prop_worktower_property_desk_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_worktower_property_desk_a_v01/prop_worktower_property_desk_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_starline_trash_can_a_v01",
+      "id": "prop_starter_industrial_dumpster_a_v01",
       "builder": "municipal_trash_can",
-      "builderRevision": "2026-07-18-r3",
+      "builderRevision": "2026-07-18-r5",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/municipal_trash_can/prop_starline_trash_can_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starter-town/municipal_trash_can/prop_starter_industrial_dumpster_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 14,
@@ -534,18 +423,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_starline_trash_can_a_v01/prop_starline_trash_can_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starline_trash_can_a_v01/prop_starline_trash_can_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starline_trash_can_a_v01/prop_starline_trash_can_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starline_trash_can_a_v01/prop_starline_trash_can_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starter_industrial_dumpster_a_v01/prop_starter_industrial_dumpster_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starter_industrial_dumpster_a_v01/prop_starter_industrial_dumpster_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starter_industrial_dumpster_a_v01/prop_starter_industrial_dumpster_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starter_industrial_dumpster_a_v01/prop_starter_industrial_dumpster_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_starline_bench_a_v01",
+      "id": "prop_tideglass_sub_engine_bench_a_v01",
       "builder": "municipal_bench",
-      "builderRevision": "2026-07-18-r3",
+      "builderRevision": "2026-07-18-r5",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/municipal_bench/prop_starline_bench_a_v01.glb",
+      "outputPath": "public/assets/models/generated/aqualume/municipal_bench/prop_tideglass_sub_engine_bench_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 16,
@@ -592,27 +481,27 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_starline_bench_a_v01/prop_starline_bench_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starline_bench_a_v01/prop_starline_bench_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starline_bench_a_v01/prop_starline_bench_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starline_bench_a_v01/prop_starline_bench_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_tideglass_sub_engine_bench_a_v01/prop_tideglass_sub_engine_bench_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_tideglass_sub_engine_bench_a_v01/prop_tideglass_sub_engine_bench_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_tideglass_sub_engine_bench_a_v01/prop_tideglass_sub_engine_bench_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_tideglass_sub_engine_bench_a_v01/prop_tideglass_sub_engine_bench_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_casino_security_monitor_wall_a_v01",
+      "id": "prop_multi_monitor_station_a_v01",
       "builder": "multi_monitor",
       "builderRevision": "2026-07-18-r4",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/multi_monitor/prop_casino_security_monitor_wall_a_v01.glb",
+      "outputPath": "public/assets/models/generated/techtown/multi_monitor/prop_multi_monitor_station_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
         "triangles": 3260,
         "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light"
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_cyan_emissive",
+          "tech_dark_metal"
         ],
         "materialCount": 4,
         "components": [
@@ -652,18 +541,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_casino_security_monitor_wall_a_v01/prop_casino_security_monitor_wall_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_casino_security_monitor_wall_a_v01/prop_casino_security_monitor_wall_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_casino_security_monitor_wall_a_v01/prop_casino_security_monitor_wall_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_casino_security_monitor_wall_a_v01/prop_casino_security_monitor_wall_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_multi_monitor_station_a_v01/prop_multi_monitor_station_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_multi_monitor_station_a_v01/prop_multi_monitor_station_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_multi_monitor_station_a_v01/prop_multi_monitor_station_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_multi_monitor_station_a_v01/prop_multi_monitor_station_a_v01_view_4.png"
       ]
     },
     {
-      "id": "crosswalk_casino_neon_a_v01",
+      "id": "crosswalk_neon_a_v01",
       "builder": "modular_road",
-      "builderRevision": "2026-07-18-r3",
+      "builderRevision": "2026-07-18-r5",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/road_module/crosswalk_casino_neon_a_v01.glb",
+      "outputPath": "public/assets/models/generated/techtown/road_module/crosswalk_neon_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 14,
@@ -710,79 +599,81 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/crosswalk_casino_neon_a_v01/crosswalk_casino_neon_a_v01_view_1.png",
-        "asset-factory/work/previews/crosswalk_casino_neon_a_v01/crosswalk_casino_neon_a_v01_view_2.png",
-        "asset-factory/work/previews/crosswalk_casino_neon_a_v01/crosswalk_casino_neon_a_v01_view_3.png",
-        "asset-factory/work/previews/crosswalk_casino_neon_a_v01/crosswalk_casino_neon_a_v01_view_4.png"
+        "asset-factory/work/previews/crosswalk_neon_a_v01/crosswalk_neon_a_v01_view_1.png",
+        "asset-factory/work/previews/crosswalk_neon_a_v01/crosswalk_neon_a_v01_view_2.png",
+        "asset-factory/work/previews/crosswalk_neon_a_v01/crosswalk_neon_a_v01_view_3.png",
+        "asset-factory/work/previews/crosswalk_neon_a_v01/crosswalk_neon_a_v01_view_4.png"
       ]
     },
     {
-      "id": "elevated_road_support_a_v01",
+      "id": "gap-casino-strip-arcade-backpack-standard-030",
       "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r3",
+      "builderRevision": "2026-07-18-r5",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_prop/elevated_road_support_a_v01.glb",
+      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_casino-strip-arcade-backpack-standard-030.glb",
       "failures": [],
       "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
+        "meshObjects": 17,
+        "triangles": 3212,
         "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_cyan_emissive",
-          "tech_dark_metal",
-          "tech_white_light"
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
         ],
         "materialCount": 5,
         "components": [
-          "appropriate materials",
           "fasteners and seams",
           "functional opening or access",
-          "functional secondary components",
           "handle, control, or closure",
           "interaction or inventory socket",
           "object-specific primary body",
           "placement contact",
-          "recognizable primary structure",
           "secondary functional assembly",
           "support or contact structure"
         ],
         "bounds": {
           "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
+            -0.36800000071525574,
+            -0.27300000190734863,
             0
           ],
           "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
+            0.36800000071525574,
+            0.27300000190734863,
+            0.5679999589920044
           ],
           "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
+            0.7360000014305115,
+            0.5460000038146973,
+            0.5679999589920044
           ]
         },
         "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
+          "object-specific primary body",
+          "support or contact structure",
+          "functional opening or access",
+          "handle, control, or closure",
+          "secondary functional assembly",
+          "fasteners and seams",
+          "placement contact",
+          "interaction or inventory socket"
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/elevated_road_support_a_v01/elevated_road_support_a_v01_view_1.png",
-        "asset-factory/work/previews/elevated_road_support_a_v01/elevated_road_support_a_v01_view_2.png",
-        "asset-factory/work/previews/elevated_road_support_a_v01/elevated_road_support_a_v01_view_3.png",
-        "asset-factory/work/previews/elevated_road_support_a_v01/elevated_road_support_a_v01_view_4.png"
+        "asset-factory/work/previews/gap-casino-strip-arcade-backpack-standard-030/gap-casino-strip-arcade-backpack-standard-030_view_1.png",
+        "asset-factory/work/previews/gap-casino-strip-arcade-backpack-standard-030/gap-casino-strip-arcade-backpack-standard-030_view_2.png",
+        "asset-factory/work/previews/gap-casino-strip-arcade-backpack-standard-030/gap-casino-strip-arcade-backpack-standard-030_view_3.png",
+        "asset-factory/work/previews/gap-casino-strip-arcade-backpack-standard-030/gap-casino-strip-arcade-backpack-standard-030_view_4.png"
       ]
     },
     {
-      "id": "equipment_bike_future_a_v01",
+      "id": "equipment_cable_machine_future_a_v01",
       "builder": "modular_infrastructure",
-      "builderRevision": "2026-07-18-r3",
+      "builderRevision": "2026-07-18-r5",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/equipment_bike_future_a_v01.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/equipment_cable_machine_future_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -833,28 +724,28 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/equipment_bike_future_a_v01/equipment_bike_future_a_v01_view_1.png",
-        "asset-factory/work/previews/equipment_bike_future_a_v01/equipment_bike_future_a_v01_view_2.png",
-        "asset-factory/work/previews/equipment_bike_future_a_v01/equipment_bike_future_a_v01_view_3.png",
-        "asset-factory/work/previews/equipment_bike_future_a_v01/equipment_bike_future_a_v01_view_4.png"
+        "asset-factory/work/previews/equipment_cable_machine_future_a_v01/equipment_cable_machine_future_a_v01_view_1.png",
+        "asset-factory/work/previews/equipment_cable_machine_future_a_v01/equipment_cable_machine_future_a_v01_view_2.png",
+        "asset-factory/work/previews/equipment_cable_machine_future_a_v01/equipment_cable_machine_future_a_v01_view_3.png",
+        "asset-factory/work/previews/equipment_cable_machine_future_a_v01/equipment_cable_machine_future_a_v01_view_4.png"
       ]
     },
     {
-      "id": "chair_student_modern_a_v01",
+      "id": "furniture_acting_class_chair_a_v01",
       "builder": "modular_furniture",
-      "builderRevision": "2026-07-18-r3",
+      "builderRevision": "2026-07-18-r5",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_furniture/chair_student_modern_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_furniture/furniture_acting_class_chair_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 16,
         "triangles": 3104,
         "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_cyan_emissive",
-          "tech_dark_metal",
-          "tech_white_light"
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
         ],
         "materialCount": 5,
         "components": [
@@ -894,28 +785,73 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/chair_student_modern_a_v01/chair_student_modern_a_v01_view_1.png",
-        "asset-factory/work/previews/chair_student_modern_a_v01/chair_student_modern_a_v01_view_2.png",
-        "asset-factory/work/previews/chair_student_modern_a_v01/chair_student_modern_a_v01_view_3.png",
-        "asset-factory/work/previews/chair_student_modern_a_v01/chair_student_modern_a_v01_view_4.png"
+        "asset-factory/work/previews/furniture_acting_class_chair_a_v01/furniture_acting_class_chair_a_v01_view_1.png",
+        "asset-factory/work/previews/furniture_acting_class_chair_a_v01/furniture_acting_class_chair_a_v01_view_2.png",
+        "asset-factory/work/previews/furniture_acting_class_chair_a_v01/furniture_acting_class_chair_a_v01_view_3.png",
+        "asset-factory/work/previews/furniture_acting_class_chair_a_v01/furniture_acting_class_chair_a_v01_view_4.png"
       ]
     },
     {
       "id": "food_aqualume_bubble_fruit_drink_v01",
       "builder": "modular_food",
       "builderRevision": "2026-07-18-r4",
-      "passed": false,
-      "outputPath": null,
-      "failures": [
-        "TypeError: add_uv_sphere() got an unexpected keyword argument 'ring_count'"
-      ],
-      "stats": null,
-      "previewPaths": []
+      "passed": true,
+      "outputPath": "public/assets/models/generated/aqualume/modular_food/food_aqualume_bubble_fruit_drink_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 15,
+        "triangles": 3724,
+        "materials": [
+          "drink_cup_glass",
+          "drink_fruit_a",
+          "drink_fruit_b",
+          "drink_lid",
+          "drink_liquid",
+          "drink_straw",
+          "starter_black",
+          "starter_galvanized",
+          "starter_warm_light"
+        ],
+        "materialCount": 9,
+        "components": [
+          "appropriate materials",
+          "functional secondary components",
+          "recognizable primary structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.16809600591659546,
+            -0.16972799599170685,
+            0
+          ],
+          "max": [
+            0.16809600591659546,
+            0.16972801089286804,
+            0.5979745388031006
+          ],
+          "dimensions": [
+            0.3361920118331909,
+            0.3394560217857361,
+            0.5979745388031006
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/food_aqualume_bubble_fruit_drink_v01/food_aqualume_bubble_fruit_drink_v01_view_1.png",
+        "asset-factory/work/previews/food_aqualume_bubble_fruit_drink_v01/food_aqualume_bubble_fruit_drink_v01_view_2.png",
+        "asset-factory/work/previews/food_aqualume_bubble_fruit_drink_v01/food_aqualume_bubble_fruit_drink_v01_view_3.png",
+        "asset-factory/work/previews/food_aqualume_bubble_fruit_drink_v01/food_aqualume_bubble_fruit_drink_v01_view_4.png"
+      ]
     },
     {
       "id": "gap-aqualume-airlock-conduit-straight-standard-105",
       "builder": "modular_connector",
-      "builderRevision": "2026-07-18-r3",
+      "builderRevision": "2026-07-18-r5",
       "passed": true,
       "outputPath": "public/assets/models/generated/aqualume/modular_connector/connector_aqualume-airlock-conduit-straight-standard-105.glb",
       "failures": [],
@@ -976,11 +912,11 @@
       ]
     },
     {
-      "id": "arch_aqualume_bubble_lift_a_v01",
+      "id": "arch_aqualume_coral_villa_module_a_v01",
       "builder": "modular_building",
-      "builderRevision": "2026-07-18-r3",
+      "builderRevision": "2026-07-18-r5",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/building_shell/arch_aqualume_bubble_lift_a_v01.glb",
+      "outputPath": "public/assets/models/generated/aqualume/building_shell/arch_aqualume_coral_villa_module_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 28,
@@ -1030,130 +966,245 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/arch_aqualume_bubble_lift_a_v01/arch_aqualume_bubble_lift_a_v01_view_1.png",
-        "asset-factory/work/previews/arch_aqualume_bubble_lift_a_v01/arch_aqualume_bubble_lift_a_v01_view_2.png",
-        "asset-factory/work/previews/arch_aqualume_bubble_lift_a_v01/arch_aqualume_bubble_lift_a_v01_view_3.png",
-        "asset-factory/work/previews/arch_aqualume_bubble_lift_a_v01/arch_aqualume_bubble_lift_a_v01_view_4.png"
+        "asset-factory/work/previews/arch_aqualume_coral_villa_module_a_v01/arch_aqualume_coral_villa_module_a_v01_view_1.png",
+        "asset-factory/work/previews/arch_aqualume_coral_villa_module_a_v01/arch_aqualume_coral_villa_module_a_v01_view_2.png",
+        "asset-factory/work/previews/arch_aqualume_coral_villa_module_a_v01/arch_aqualume_coral_villa_module_a_v01_view_3.png",
+        "asset-factory/work/previews/arch_aqualume_coral_villa_module_a_v01/arch_aqualume_coral_villa_module_a_v01_view_4.png"
       ]
     },
     {
-      "id": "furniture_bed_modern_tech_a_v01",
-      "builder": "modern_bed",
-      "builderRevision": "2026-07-18-r4",
+      "id": "prop_starter_loading_crate_a_v01",
+      "builder": "loading_crate",
+      "builderRevision": "2026-07-18-r5",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modern_bed/furniture_bed_modern_tech_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starter-town/loading_crate/prop_starter_loading_crate_a_v01.glb",
       "failures": [],
       "stats": {
-        "meshObjects": 13,
-        "triangles": 2444,
+        "meshObjects": 16,
+        "triangles": 10692,
         "materials": [
-          "bed_pillow",
-          "bed_sheet",
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_dark_metal"
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_wood"
         ],
-        "materialCount": 5,
+        "materialCount": 4,
         "components": [
-          "bed frame",
-          "blanket or duvet",
-          "headboard",
-          "mattress",
-          "pillows",
-          "support legs"
+          "base skids",
+          "corner frame",
+          "crate panels",
+          "fasteners",
+          "handling markings"
         ],
         "bounds": {
           "min": [
-            -0.8399999737739563,
-            -1.059999942779541,
+            -0.5699999928474426,
+            -0.5149999856948853,
             0
           ],
           "max": [
-            0.8399999737739563,
-            1.059999942779541,
-            1.3149999380111694
+            0.5699999928474426,
+            0.5149999856948853,
+            0.9599999785423279
           ],
           "dimensions": [
-            1.6799999475479126,
-            2.119999885559082,
-            1.3149999380111694
+            1.1399999856948853,
+            1.0299999713897705,
+            0.9599999785423279
           ]
         },
         "requiredComponents": [
-          "bed frame",
-          "support legs",
-          "mattress",
-          "headboard",
-          "pillows",
-          "blanket or duvet"
+          "crate panels",
+          "corner frame",
+          "base skids",
+          "fasteners",
+          "handling markings"
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/furniture_bed_modern_tech_a_v01/furniture_bed_modern_tech_a_v01_view_1.png",
-        "asset-factory/work/previews/furniture_bed_modern_tech_a_v01/furniture_bed_modern_tech_a_v01_view_2.png",
-        "asset-factory/work/previews/furniture_bed_modern_tech_a_v01/furniture_bed_modern_tech_a_v01_view_3.png",
-        "asset-factory/work/previews/furniture_bed_modern_tech_a_v01/furniture_bed_modern_tech_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starter_loading_crate_a_v01/prop_starter_loading_crate_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starter_loading_crate_a_v01/prop_starter_loading_crate_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starter_loading_crate_a_v01/prop_starter_loading_crate_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starter_loading_crate_a_v01/prop_starter_loading_crate_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_starter_mailbox_a_v01",
-      "builder": "mailbox",
-      "builderRevision": "2026-07-18-r3",
+      "id": "prop_starter_guardrail_a_v01",
+      "builder": "guardrail",
+      "builderRevision": "2026-07-18-r5",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/mailbox/prop_starter_mailbox_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starter-town/guardrail/prop_starter_guardrail_a_v01.glb",
       "failures": [],
       "stats": {
-        "meshObjects": 9,
-        "triangles": 1780,
+        "meshObjects": 17,
+        "triangles": 3548,
+        "materials": [
+          "starter_dark_metal",
+          "starter_galvanized"
+        ],
+        "materialCount": 2,
+        "components": [
+          "end treatment",
+          "fasteners",
+          "rail beam",
+          "spacers",
+          "support posts"
+        ],
+        "bounds": {
+          "min": [
+            -2.299999952316284,
+            -0.1895955204963684,
+            0
+          ],
+          "max": [
+            2.299999952316284,
+            0.1895955204963684,
+            0.7433406710624695
+          ],
+          "dimensions": [
+            4.599999904632568,
+            0.3791910409927368,
+            0.7433406710624695
+          ]
+        },
+        "requiredComponents": [
+          "rail beam",
+          "support posts",
+          "spacers",
+          "end treatment",
+          "fasteners"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_starter_guardrail_a_v01/prop_starter_guardrail_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starter_guardrail_a_v01/prop_starter_guardrail_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starter_guardrail_a_v01/prop_starter_guardrail_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starter_guardrail_a_v01/prop_starter_guardrail_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_starstop_fuel_pump_a_v01",
+      "builder": "fuel_pump",
+      "builderRevision": "2026-07-18-r5",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/starline-city/fuel_pump/prop_starstop_fuel_pump_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 15,
+        "triangles": 2800,
         "materials": [
           "starter_black",
+          "starter_concrete",
           "starter_dark_metal",
           "starter_galvanized",
           "starter_warm_light",
           "starter_white"
         ],
-        "materialCount": 5,
+        "materialCount": 6,
         "components": [
-          "cross support",
-          "curved roof",
-          "front door",
-          "handle",
-          "mailbox body",
-          "post",
-          "signal flag"
+          "anchored pedestal",
+          "cabinet",
+          "display",
+          "hose",
+          "nozzle",
+          "payment terminal",
+          "protective trim",
+          "service panel"
         ],
         "bounds": {
           "min": [
-            -0.22837498784065247,
-            -0.36394399404525757,
+            -0.460957407951355,
+            -0.3036479353904724,
             0
           ],
           "max": [
-            0.22837498784065247,
-            0.36394399404525757,
-            1.4375
+            0.460957407951355,
+            0.3036479353904724,
+            1.8899999856948853
           ],
           "dimensions": [
-            0.45674997568130493,
-            0.7278879880905151,
-            1.4375
+            0.92191481590271,
+            0.6072958707809448,
+            1.8899999856948853
           ]
         },
         "requiredComponents": [
-          "post",
-          "cross support",
-          "mailbox body",
-          "curved roof",
-          "front door",
-          "handle",
-          "signal flag"
+          "anchored pedestal",
+          "cabinet",
+          "display",
+          "payment terminal",
+          "hose",
+          "nozzle",
+          "protective trim",
+          "service panel"
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_starter_mailbox_a_v01/prop_starter_mailbox_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starter_mailbox_a_v01/prop_starter_mailbox_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starter_mailbox_a_v01/prop_starter_mailbox_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starter_mailbox_a_v01/prop_starter_mailbox_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starstop_fuel_pump_a_v01/prop_starstop_fuel_pump_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starstop_fuel_pump_a_v01/prop_starstop_fuel_pump_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starstop_fuel_pump_a_v01/prop_starstop_fuel_pump_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starstop_fuel_pump_a_v01/prop_starstop_fuel_pump_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_ticket_terminal_a_v01",
+      "builder": "digital_kiosk",
+      "builderRevision": "2026-07-18-r5",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/techtown/digital_kiosk/prop_ticket_terminal_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2256,
+        "materials": [
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_cyan_emissive",
+          "tech_dark_metal",
+          "tech_white_light"
+        ],
+        "materialCount": 5,
+        "components": [
+          "anchored base",
+          "input area",
+          "protective bezel",
+          "screen",
+          "service panel",
+          "structural body",
+          "ventilation"
+        ],
+        "bounds": {
+          "min": [
+            -0.36000001430511475,
+            -0.2667500078678131,
+            0
+          ],
+          "max": [
+            0.36000001430511475,
+            0.2667500078678131,
+            1.590999960899353
+          ],
+          "dimensions": [
+            0.7200000286102295,
+            0.5335000157356262,
+            1.590999960899353
+          ]
+        },
+        "requiredComponents": [
+          "anchored base",
+          "structural body",
+          "screen",
+          "protective bezel",
+          "input area",
+          "service panel",
+          "ventilation"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_ticket_terminal_a_v01/prop_ticket_terminal_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_ticket_terminal_a_v01/prop_ticket_terminal_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_ticket_terminal_a_v01/prop_ticket_terminal_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_ticket_terminal_a_v01/prop_ticket_terminal_a_v01_view_4.png"
       ]
     }
   ]
