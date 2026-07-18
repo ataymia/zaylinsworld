@@ -57,7 +57,7 @@ def build_modular_food_fixed(spec):
         add_uv_sphere('fruit_bubble', radius * (0.12 if index % 2 else 0.10),
                       (math.cos(angle) * ring, math.sin(angle) * ring, z),
                       fruit_a if index % 2 else fruit_b,
-                      segments=16, ring_count=8, component='appropriate materials')
+                      segments=16, rings=8, component='appropriate materials')
 
     add_rounded_box('brand_label', (radius * 1.25, radius * 0.06, height * 0.16),
                     (0, -radius * 1.02, height * 0.42), mats[4], bevel=0.018,
