@@ -3023,6 +3023,42 @@
         "license": "Original ZTA procedural geometry"
       },
       {
+        "name": "prop_starline_bus_shelter_a_v01",
+        "path": "models/generated/starline-city/bus_shelter/prop_starline_bus_shelter_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starline-city",
+        "family": "bus_shelter",
+        "displayName": "Starline Bus Shelter",
+        "description": "A production-ready Starline Bus Shelter, designed as a municipal bus shelter for Starline City. Create a physically supported weather shelter with safe glass thickness, seating, drainage, route information, and pedestrian clearance. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: glamorous production city with real backstage labor; theaters, studios, hotels, hills, apartments, warehouses, lighting rigs, and service corridors. This asset appears under the blueprint section “C. Roads and street props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_starline_event_bollard_a_v01",
+        "path": "models/generated/starline-city/bollard/prop_starline_event_bollard_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starline-city",
+        "family": "bollard",
+        "displayName": "Starline Event Bollard",
+        "description": "A production-ready Starline Event Bollard, designed as a protective traffic bollard for Starline City. Use credible steel thickness, cap treatment, reflective marking, and ground anchoring. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: glamorous production city with real backstage labor; theaters, studios, hotels, hills, apartments, warehouses, lighting rigs, and service corridors. This asset appears under the blueprint section “C. Roads and street props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_starline_planter_a_v01",
+        "path": "models/generated/starline-city/planter/prop_starline_planter_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starline-city",
+        "family": "planter",
+        "displayName": "Starline Planter",
+        "description": "A production-ready Starline Planter, designed as a city planter for Starline City. The container needs wall thickness, rim depth, soil, drainage logic, and believable planting rather than a cube with a green sphere. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: glamorous production city with real backstage labor; theaters, studios, hotels, hills, apartments, warehouses, lighting rigs, and service corridors. This asset appears under the blueprint section “C. Roads and street props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
         "name": "prop_starter_bench_a_v01",
         "path": "models/generated/starter-town/bench/prop_starter_bench_a_v01.glb",
         "type": "glb",
@@ -3032,6 +3068,18 @@
         "family": "bench",
         "displayName": "Dreamdrop Municipal Park Bench",
         "description": "A durable three-seat public bench with separate hardwood seat and back slats, curved powder-coated steel side frames, integrated armrests, rear support rails, slat mounting bolts, anti-skate center divider, and four anchored feet. Human seating dimensions must be credible, with a comfortable back angle and sufficient structural support beneath the seat.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_starter_bus_shelter_a_v01",
+        "path": "models/generated/starter-town/bus_shelter/prop_starter_bus_shelter_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starter-town",
+        "family": "bus_shelter",
+        "displayName": "Starter Bus Shelter",
+        "description": "A production-ready Starter Bus Shelter, designed as a municipal bus shelter for Starter Town. Create a physically supported weather shelter with safe glass thickness, seating, drainage, route information, and pedestrian clearance. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “E. Civic and school filler” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
         "license": "Original ZTA procedural geometry"
       },
       {

@@ -1,79 +1,19 @@
 {
   "version": 1,
-  "batchId": "batch-00007",
-  "completedAt": "2026-07-18T05:37:52.591Z",
+  "batchId": "batch-00008",
+  "completedAt": "2026-07-18T06:30:01.228Z",
   "requested": 10,
-  "passed": 2,
-  "failed": 8,
+  "passed": 4,
+  "failed": 6,
   "queueCounts": {
-    "completed": 23,
+    "completed": 27,
     "quarantined": 1,
-    "queued": 75,
+    "queued": 71,
     "unsupported": 879
   },
   "results": [
     {
-      "id": "prop_public_screen_stand_a_v01",
-      "passed": false,
-      "outputPath": null,
-      "failures": [
-        "material count 4 is below 5"
-      ],
-      "stats": {
-        "meshObjects": 11,
-        "triangles": 2068,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_cyan_emissive",
-          "tech_dark_metal"
-        ],
-        "materialCount": 4,
-        "components": [
-          "anchored base",
-          "input area",
-          "protective bezel",
-          "screen",
-          "service panel",
-          "structural body",
-          "ventilation"
-        ],
-        "bounds": {
-          "min": [
-            -0.36000001430511475,
-            -0.30250000953674316,
-            0
-          ],
-          "max": [
-            0.36000001430511475,
-            0.30250000953674316,
-            1.684999942779541
-          ],
-          "dimensions": [
-            0.7200000286102295,
-            0.6050000190734863,
-            1.684999942779541
-          ]
-        },
-        "requiredComponents": [
-          "anchored base",
-          "structural body",
-          "screen",
-          "protective bezel",
-          "input area",
-          "service panel",
-          "ventilation"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_public_screen_stand_a_v01/prop_public_screen_stand_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_public_screen_stand_a_v01/prop_public_screen_stand_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_public_screen_stand_a_v01/prop_public_screen_stand_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_public_screen_stand_a_v01/prop_public_screen_stand_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_richhills_bench_a_v01",
+      "id": "prop_starline_bench_a_v01",
       "passed": false,
       "outputPath": null,
       "failures": [
@@ -125,16 +65,130 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_richhills_bench_a_v01/prop_richhills_bench_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_richhills_bench_a_v01/prop_richhills_bench_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_richhills_bench_a_v01/prop_richhills_bench_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_richhills_bench_a_v01/prop_richhills_bench_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starline_bench_a_v01/prop_starline_bench_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starline_bench_a_v01/prop_starline_bench_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starline_bench_a_v01/prop_starline_bench_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starline_bench_a_v01/prop_starline_bench_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_richhills_planter_a_v01",
+      "id": "prop_starline_bus_shelter_a_v01",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/planter/prop_richhills_planter_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/bus_shelter/prop_starline_bus_shelter_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 16,
+        "triangles": 15480,
+        "materials": [
+          "starter_civic_navy",
+          "starter_concrete",
+          "starter_dark_metal",
+          "starter_glass",
+          "starter_warm_light",
+          "starter_white",
+          "starter_wood"
+        ],
+        "materialCount": 7,
+        "components": [
+          "bench",
+          "foundation pads",
+          "lighting",
+          "roof",
+          "route panel",
+          "structural frame",
+          "weather panels"
+        ],
+        "bounds": {
+          "min": [
+            -1.600000023841858,
+            -0.75,
+            0
+          ],
+          "max": [
+            1.600000023841858,
+            0.75,
+            2.4750001430511475
+          ],
+          "dimensions": [
+            3.200000047683716,
+            1.5,
+            2.4750001430511475
+          ]
+        },
+        "requiredComponents": [
+          "foundation pads",
+          "structural frame",
+          "roof",
+          "weather panels",
+          "bench",
+          "route panel",
+          "lighting"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_starline_bus_shelter_a_v01/prop_starline_bus_shelter_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starline_bus_shelter_a_v01/prop_starline_bus_shelter_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starline_bus_shelter_a_v01/prop_starline_bus_shelter_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starline_bus_shelter_a_v01/prop_starline_bus_shelter_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_starline_event_bollard_a_v01",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/starline-city/bollard/prop_starline_event_bollard_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 8,
+        "triangles": 3240,
+        "materials": [
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warning_yellow"
+        ],
+        "materialCount": 3,
+        "components": [
+          "anchored base",
+          "cap",
+          "main post",
+          "mounting hardware",
+          "reflective band"
+        ],
+        "bounds": {
+          "min": [
+            -0.12999999523162842,
+            -0.12999999523162842,
+            0
+          ],
+          "max": [
+            0.12999999523162842,
+            0.12999999523162842,
+            0.952750027179718
+          ],
+          "dimensions": [
+            0.25999999046325684,
+            0.25999999046325684,
+            0.952750027179718
+          ]
+        },
+        "requiredComponents": [
+          "anchored base",
+          "main post",
+          "cap",
+          "reflective band",
+          "mounting hardware"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_starline_event_bollard_a_v01/prop_starline_event_bollard_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starline_event_bollard_a_v01/prop_starline_event_bollard_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starline_event_bollard_a_v01/prop_starline_event_bollard_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starline_event_bollard_a_v01/prop_starline_event_bollard_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_starline_planter_a_v01",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/starline-city/planter/prop_starline_planter_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 24,
@@ -179,14 +233,14 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_richhills_planter_a_v01/prop_richhills_planter_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_richhills_planter_a_v01/prop_richhills_planter_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_richhills_planter_a_v01/prop_richhills_planter_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_richhills_planter_a_v01/prop_richhills_planter_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starline_planter_a_v01/prop_starline_planter_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starline_planter_a_v01/prop_starline_planter_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starline_planter_a_v01/prop_starline_planter_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starline_planter_a_v01/prop_starline_planter_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_richhills_security_monitor_wall_a_v01",
+      "id": "prop_starline_security_monitor_wall_a_v01",
       "passed": false,
       "outputPath": null,
       "failures": [
@@ -239,14 +293,14 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_richhills_security_monitor_wall_a_v01/prop_richhills_security_monitor_wall_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_richhills_security_monitor_wall_a_v01/prop_richhills_security_monitor_wall_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_richhills_security_monitor_wall_a_v01/prop_richhills_security_monitor_wall_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_richhills_security_monitor_wall_a_v01/prop_richhills_security_monitor_wall_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starline_security_monitor_wall_a_v01/prop_starline_security_monitor_wall_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starline_security_monitor_wall_a_v01/prop_starline_security_monitor_wall_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starline_security_monitor_wall_a_v01/prop_starline_security_monitor_wall_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starline_security_monitor_wall_a_v01/prop_starline_security_monitor_wall_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_richhills_streetlight_a_v01",
+      "id": "prop_starline_streetlight_gold_a_v01",
       "passed": false,
       "outputPath": null,
       "failures": [
@@ -301,14 +355,75 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_richhills_streetlight_a_v01/prop_richhills_streetlight_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_richhills_streetlight_a_v01/prop_richhills_streetlight_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_richhills_streetlight_a_v01/prop_richhills_streetlight_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_richhills_streetlight_a_v01/prop_richhills_streetlight_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starline_streetlight_gold_a_v01/prop_starline_streetlight_gold_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starline_streetlight_gold_a_v01/prop_starline_streetlight_gold_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starline_streetlight_gold_a_v01/prop_starline_streetlight_gold_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starline_streetlight_gold_a_v01/prop_starline_streetlight_gold_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_richhills_wayfinding_sign_a_v01",
+      "id": "prop_starline_trash_can_a_v01",
+      "passed": false,
+      "outputPath": null,
+      "failures": [
+        "missing required components: outer enclosure, support rings, rain cover, service access"
+      ],
+      "stats": {
+        "meshObjects": 31,
+        "triangles": 8544,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized"
+        ],
+        "materialCount": 3,
+        "components": [
+          "base anchors",
+          "bottom support ring",
+          "disposal opening",
+          "internal liner",
+          "latch",
+          "rain hood",
+          "service door",
+          "top support ring",
+          "vertical slats"
+        ],
+        "bounds": {
+          "min": [
+            -0.3720000088214874,
+            -0.38475000858306885,
+            0
+          ],
+          "max": [
+            0.3720000088214874,
+            0.38475000858306885,
+            1.1304000616073608
+          ],
+          "dimensions": [
+            0.7440000176429749,
+            0.7695000171661377,
+            1.1304000616073608
+          ]
+        },
+        "requiredComponents": [
+          "liner",
+          "outer enclosure",
+          "support rings",
+          "disposal opening",
+          "rain cover",
+          "service access",
+          "base anchors"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_starline_trash_can_a_v01/prop_starline_trash_can_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starline_trash_can_a_v01/prop_starline_trash_can_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starline_trash_can_a_v01/prop_starline_trash_can_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starline_trash_can_a_v01/prop_starline_trash_can_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_starline_wayfinding_sign_a_v01",
       "passed": false,
       "outputPath": null,
       "failures": [
@@ -361,242 +476,134 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_richhills_wayfinding_sign_a_v01/prop_richhills_wayfinding_sign_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_richhills_wayfinding_sign_a_v01/prop_richhills_wayfinding_sign_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_richhills_wayfinding_sign_a_v01/prop_richhills_wayfinding_sign_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_richhills_wayfinding_sign_a_v01/prop_richhills_wayfinding_sign_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starline_wayfinding_sign_a_v01/prop_starline_wayfinding_sign_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starline_wayfinding_sign_a_v01/prop_starline_wayfinding_sign_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starline_wayfinding_sign_a_v01/prop_starline_wayfinding_sign_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starline_wayfinding_sign_a_v01/prop_starline_wayfinding_sign_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_robotics_workbench_a_v01",
+      "id": "prop_starstop_fuel_pump_a_v01",
       "passed": false,
       "outputPath": null,
       "failures": [
-        "material count 2 is below 3",
-        "missing required components: seat structure, back structure, side frames, supports"
+        "mesh object count 14 is below 15"
       ],
       "stats": {
-        "meshObjects": 30,
-        "triangles": 6308,
+        "meshObjects": 14,
+        "triangles": 2624,
         "materials": [
-          "tech_brushed_metal",
-          "tech_dark_metal"
+          "starter_black",
+          "starter_concrete",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warning_yellow"
         ],
-        "materialCount": 2,
+        "materialCount": 5,
         "components": [
-          "anchored feet",
-          "armrests",
-          "back slats",
-          "left side frame",
-          "mounting bolts",
-          "rear support rails",
-          "right side frame",
-          "seat slats"
+          "anchored pedestal",
+          "cabinet",
+          "display",
+          "hose",
+          "nozzle",
+          "payment terminal",
+          "protective trim",
+          "service panel"
         ],
         "bounds": {
           "min": [
-            -0.8799999952316284,
-            -0.3550509810447693,
+            -0.4965081810951233,
+            -0.32758575677871704,
             0
           ],
           "max": [
-            0.8799999952316284,
-            0.3550509810447693,
-            1.1830345392227173
+            0.4965081810951233,
+            0.32758575677871704,
+            1.9000000953674316
           ],
           "dimensions": [
-            1.7599999904632568,
-            0.7101019620895386,
-            1.1830345392227173
+            0.9930163621902466,
+            0.6551715135574341,
+            1.9000000953674316
           ]
         },
         "requiredComponents": [
-          "seat structure",
-          "back structure",
-          "side frames",
-          "supports",
-          "armrests",
-          "anchored feet"
+          "anchored pedestal",
+          "cabinet",
+          "display",
+          "payment terminal",
+          "hose",
+          "nozzle",
+          "protective trim",
+          "service panel"
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_robotics_workbench_a_v01/prop_robotics_workbench_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_robotics_workbench_a_v01/prop_robotics_workbench_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_robotics_workbench_a_v01/prop_robotics_workbench_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_robotics_workbench_a_v01/prop_robotics_workbench_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starstop_fuel_pump_a_v01/prop_starstop_fuel_pump_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starstop_fuel_pump_a_v01/prop_starstop_fuel_pump_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starstop_fuel_pump_a_v01/prop_starstop_fuel_pump_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starstop_fuel_pump_a_v01/prop_starstop_fuel_pump_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_security_monitor_wall_a_v01",
-      "passed": false,
-      "outputPath": null,
-      "failures": [
-        "material count 4 is below 5"
-      ],
-      "stats": {
-        "meshObjects": 19,
-        "triangles": 3260,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_cyan_emissive",
-          "tech_dark_metal"
-        ],
-        "materialCount": 4,
-        "components": [
-          "bezels",
-          "cables",
-          "desk or mounting base",
-          "input devices",
-          "monitor arms",
-          "multiple displays",
-          "rear housings"
-        ],
-        "bounds": {
-          "min": [
-            -0.7099999785423279,
-            -0.32499998807907104,
-            0
-          ],
-          "max": [
-            0.7099999785423279,
-            0.32499998807907104,
-            0.9700000286102295
-          ],
-          "dimensions": [
-            1.4199999570846558,
-            0.6499999761581421,
-            0.9700000286102295
-          ]
-        },
-        "requiredComponents": [
-          "desk or mounting base",
-          "monitor arms",
-          "multiple displays",
-          "bezels",
-          "rear housings",
-          "cables",
-          "input devices"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_security_monitor_wall_a_v01/prop_security_monitor_wall_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_security_monitor_wall_a_v01/prop_security_monitor_wall_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_security_monitor_wall_a_v01/prop_security_monitor_wall_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_security_monitor_wall_a_v01/prop_security_monitor_wall_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_service_loading_crate_a_v01",
+      "id": "prop_starter_bus_shelter_a_v01",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/loading_crate/prop_service_loading_crate_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starter-town/bus_shelter/prop_starter_bus_shelter_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 16,
-        "triangles": 10692,
+        "triangles": 15480,
         "materials": [
-          "starter_black",
+          "starter_civic_navy",
+          "starter_concrete",
           "starter_dark_metal",
-          "starter_galvanized",
+          "starter_glass",
+          "starter_warm_light",
+          "starter_white",
           "starter_wood"
         ],
-        "materialCount": 4,
+        "materialCount": 7,
         "components": [
-          "base skids",
-          "corner frame",
-          "crate panels",
-          "fasteners",
-          "handling markings"
+          "bench",
+          "foundation pads",
+          "lighting",
+          "roof",
+          "route panel",
+          "structural frame",
+          "weather panels"
         ],
         "bounds": {
           "min": [
-            -0.5699999928474426,
-            -0.5149999856948853,
+            -1.600000023841858,
+            -0.75,
             0
           ],
           "max": [
-            0.5699999928474426,
-            0.5149999856948853,
-            0.9599999785423279
+            1.600000023841858,
+            0.75,
+            2.4750001430511475
           ],
           "dimensions": [
-            1.1399999856948853,
-            1.0299999713897705,
-            0.9599999785423279
+            3.200000047683716,
+            1.5,
+            2.4750001430511475
           ]
         },
         "requiredComponents": [
-          "crate panels",
-          "corner frame",
-          "base skids",
-          "fasteners",
-          "handling markings"
+          "foundation pads",
+          "structural frame",
+          "roof",
+          "weather panels",
+          "bench",
+          "route panel",
+          "lighting"
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_service_loading_crate_a_v01/prop_service_loading_crate_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_service_loading_crate_a_v01/prop_service_loading_crate_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_service_loading_crate_a_v01/prop_service_loading_crate_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_service_loading_crate_a_v01/prop_service_loading_crate_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_service_neon_repair_bench_a_v01",
-      "passed": false,
-      "outputPath": null,
-      "failures": [
-        "material count 2 is below 3",
-        "missing required components: seat structure, back structure, side frames, supports"
-      ],
-      "stats": {
-        "meshObjects": 30,
-        "triangles": 6308,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_dark_metal"
-        ],
-        "materialCount": 2,
-        "components": [
-          "anchored feet",
-          "armrests",
-          "back slats",
-          "left side frame",
-          "mounting bolts",
-          "rear support rails",
-          "right side frame",
-          "seat slats"
-        ],
-        "bounds": {
-          "min": [
-            -0.8799999952316284,
-            -0.3550509810447693,
-            0
-          ],
-          "max": [
-            0.8799999952316284,
-            0.3550509810447693,
-            1.1830345392227173
-          ],
-          "dimensions": [
-            1.7599999904632568,
-            0.7101019620895386,
-            1.1830345392227173
-          ]
-        },
-        "requiredComponents": [
-          "seat structure",
-          "back structure",
-          "side frames",
-          "supports",
-          "armrests",
-          "anchored feet"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_service_neon_repair_bench_a_v01/prop_service_neon_repair_bench_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_service_neon_repair_bench_a_v01/prop_service_neon_repair_bench_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_service_neon_repair_bench_a_v01/prop_service_neon_repair_bench_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_service_neon_repair_bench_a_v01/prop_service_neon_repair_bench_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starter_bus_shelter_a_v01/prop_starter_bus_shelter_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starter_bus_shelter_a_v01/prop_starter_bus_shelter_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starter_bus_shelter_a_v01/prop_starter_bus_shelter_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starter_bus_shelter_a_v01/prop_starter_bus_shelter_a_v01_view_4.png"
       ]
     }
   ]
