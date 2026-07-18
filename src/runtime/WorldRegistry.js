@@ -9,6 +9,11 @@ import {
   MAP_UI,
 } from '../config/worldMapPlan.js';
 import { STARTER_TOWN_RUNTIME_PLAN } from '../config/starterTownRuntimePlan.js';
+import { STARTER_TOWN_DISTRICT_PROFILES } from '../config/starterTownDistrictProfiles.js';
+import {
+  STARTER_TOWN_PARCELS,
+  STARTER_TOWN_NO_BUILD_BUFFERS,
+} from '../config/starterTownParcelPlan.js';
 
 const finite = (value) => Number.isFinite(Number(value));
 const clonePoint = (value = {}) => ({ x: Number(value.x) || 0, y: Number(value.y) || 0, z: Number(value.z) || 0 });
@@ -59,15 +64,29 @@ function inBounds(point, bounds) {
     && point.z >= bounds.minZ && point.z <= bounds.maxZ;
 }
 
+function parcelPoint(parcel) {
+  return { x: Number(parcel?.bounds?.x) || 0, z: Number(parcel?.bounds?.z) || 0 };
+}
+
 export class WorldRegistry {
-  constructor({ towns = WORLD_TOWNS, connections = CONNECTIONS, starterPlan = STARTER_TOWN_RUNTIME_PLAN } = {}) {
+  constructor({
+    towns = WORLD_TOWNS,
+    connections = CONNECTIONS,
+    starterPlan = STARTER_TOWN_RUNTIME_PLAN,
+    districtProfiles = STARTER_TOWN_DISTRICT_PROFILES,
+    parcels = STARTER_TOWN_PARCELS,
+    noBuildBuffers = STARTER_TOWN_NO_BUILD_BUFFERS,
+  } = {}) {
     this.towns = new Map();
     this.gateways = new Map();
     this.connections = new Map();
     this.districts = new Map();
+    this.districtProfiles = new Map();
     this.routes = new Map();
     this.locations = new Map();
+    this.parcels = new Map();
     this.spawns = new Map();
+    this.noBuildBuffers = new Map();
     this.errors = [];
     this.warnings = [];
     this.roadTiers = ROAD_TIERS;
@@ -76,6 +95,8 @@ export class WorldRegistry {
     this.starterPlan = starterPlan;
     this._loadTowns(towns);
     this._loadStarterPlan(starterPlan);
+    this._loadDistrictProfiles(districtProfiles);
+    this._loadParcels(parcels, noBuildBuffers);
     this._loadConnections(connections);
     this.validate();
   }
@@ -111,6 +132,15 @@ export class WorldRegistry {
     }
     for (const location of plan.locations || []) this._put(this.locations, 'location', location);
     for (const spawn of plan.spawns || []) this._put(this.spawns, 'spawn', spawn);
+  }
+
+  _loadDistrictProfiles(profiles) {
+    for (const profile of profiles || []) this._put(this.districtProfiles, 'district profile', profile);
+  }
+
+  _loadParcels(parcels, noBuildBuffers) {
+    for (const parcel of parcels || []) this._put(this.parcels, 'parcel', parcel);
+    for (const buffer of noBuildBuffers || []) this._put(this.noBuildBuffers, 'no-build buffer', buffer);
   }
 
   _loadConnections(connections) {
@@ -152,6 +182,14 @@ export class WorldRegistry {
         if (!finite(vertex.x) || !finite(vertex.z)) this.errors.push(`district ${district.id} has invalid polygon coordinates`);
         if (starterBounds && !inBounds(vertex, starterBounds)) this.errors.push(`district ${district.id} exceeds Starter Town bounds`);
       }
+      if (!this.districtProfiles.has(district.id)) this.errors.push(`district ${district.id} is missing a simulation/visual profile`);
+    }
+
+    for (const profile of this.districtProfiles.values()) {
+      if (!this.districts.has(profile.id)) this.errors.push(`district profile ${profile.id} references missing district`);
+      if (!(Number(profile.density) >= 0 && Number(profile.density) <= 1)) this.errors.push(`district profile ${profile.id} has invalid density`);
+      if (!(Number(profile.parcelDensity) >= 0 && Number(profile.parcelDensity) <= 1)) this.errors.push(`district profile ${profile.id} has invalid parcel density`);
+      if (!Array.isArray(profile.palette) || profile.palette.length < 3) this.errors.push(`district profile ${profile.id} needs at least three palette colors`);
     }
 
     for (const route of this.routes.values()) {
@@ -168,6 +206,28 @@ export class WorldRegistry {
       if (starterBounds && !inBounds(location.position, starterBounds)) this.errors.push(`location ${location.id} exceeds Starter Town bounds`);
     }
 
+    const locationParcels = new Map();
+    for (const parcel of this.parcels.values()) {
+      if (!this.towns.has(parcel.townId)) this.errors.push(`parcel ${parcel.id} references missing town ${parcel.townId}`);
+      if (!this.districts.has(parcel.districtId)) this.errors.push(`parcel ${parcel.id} references missing district ${parcel.districtId}`);
+      if (!(Number(parcel.bounds?.w) > 0) || !(Number(parcel.bounds?.d) > 0)) this.errors.push(`parcel ${parcel.id} has invalid dimensions`);
+      if (!finite(parcel.bounds?.x) || !finite(parcel.bounds?.z)) this.errors.push(`parcel ${parcel.id} has invalid coordinates`);
+      if (starterBounds && !inBounds(parcelPoint(parcel), starterBounds)) this.errors.push(`parcel ${parcel.id} center exceeds Starter Town bounds`);
+      if (parcel.locationId) {
+        if (!this.locations.has(parcel.locationId)) this.errors.push(`parcel ${parcel.id} references missing location ${parcel.locationId}`);
+        if (locationParcels.has(parcel.locationId)) this.errors.push(`location ${parcel.locationId} owns multiple functional parcels`);
+        locationParcels.set(parcel.locationId, parcel.id);
+      }
+    }
+    for (const location of this.locations.values()) {
+      if (!locationParcels.has(location.id)) this.errors.push(`location ${location.id} is missing a functional parcel`);
+    }
+
+    for (const buffer of this.noBuildBuffers.values()) {
+      if (buffer.routeId && !this.routes.has(buffer.routeId)) this.errors.push(`no-build buffer ${buffer.id} references missing route ${buffer.routeId}`);
+      if (buffer.bounds && (!(Number(buffer.bounds.w) > 0) || !(Number(buffer.bounds.d) > 0))) this.errors.push(`no-build buffer ${buffer.id} has invalid dimensions`);
+    }
+
     for (const spawn of this.spawns.values()) {
       if (!this.towns.has(spawn.townId)) this.errors.push(`spawn ${spawn.id} references missing town ${spawn.townId}`);
       if (!this.districts.has(spawn.districtId)) this.errors.push(`spawn ${spawn.id} references missing district ${spawn.districtId}`);
@@ -182,11 +242,21 @@ export class WorldRegistry {
 
   town(id) { return this.towns.get(id) || null; }
   district(id) { return this.districts.get(id) || null; }
+  districtProfile(id) { return this.districtProfiles.get(id) || null; }
   route(id) { return this.routes.get(id) || null; }
   location(id) { return this.locations.get(id) || null; }
+  parcel(id) { return this.parcels.get(id) || null; }
   spawn(id) { return this.spawns.get(id) || null; }
   gateway(id) { return this.gateways.get(id) || null; }
   connection(id) { return this.connections.get(id) || null; }
+
+  parcelsForDistrict(districtId) {
+    return [...this.parcels.values()].filter((parcel) => parcel.districtId === districtId);
+  }
+
+  parcelForLocation(locationId) {
+    return [...this.parcels.values()].find((parcel) => parcel.locationId === locationId) || null;
+  }
 
   townAt(globalPoint) {
     const point = clonePoint(globalPoint);
@@ -240,8 +310,11 @@ export class WorldRegistry {
       gateways: this.gateways.size,
       connections: this.connections.size,
       districts: this.districts.size,
+      districtProfiles: this.districtProfiles.size,
       routes: this.routes.size,
       locations: this.locations.size,
+      parcels: this.parcels.size,
+      noBuildBuffers: this.noBuildBuffers.size,
       spawns: this.spawns.size,
       starterTownLargeWorld: this.featureEnabled('starterTownLargeWorld'),
       warnings: [...this.warnings],
