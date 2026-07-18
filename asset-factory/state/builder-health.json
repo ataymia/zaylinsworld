@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-18T18:45:24.377Z",
+  "generatedAt": "2026-07-18T18:59:06.620Z",
   "builders": {
     "accessibility_gate": {
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 0,
-      "queued": 1,
+      "completed": 1,
+      "queued": 0,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
@@ -15,8 +15,8 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 0,
-      "queued": 1,
+      "completed": 1,
+      "queued": 0,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
@@ -24,8 +24,8 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 1,
-      "queued": 1,
+      "completed": 2,
+      "queued": 0,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
@@ -51,10 +51,10 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 1,
-      "queued": 3,
+      "completed": 2,
+      "queued": 2,
       "quarantined": 0,
-      "dominantFailureCount": 3
+      "dominantFailureCount": 2
     },
     "classroom_desk": {
       "revision": "2026-07-18-r7",
@@ -69,10 +69,10 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 4,
-      "queued": 4,
+      "completed": 5,
+      "queued": 3,
       "quarantined": 0,
-      "dominantFailureCount": 4
+      "dominantFailureCount": 3
     },
     "district_sign": {
       "revision": "2026-07-18-r7",
@@ -105,10 +105,10 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 4,
-      "queued": 4,
+      "completed": 5,
+      "queued": 3,
       "quarantined": 0,
-      "dominantFailureCount": 4
+      "dominantFailureCount": 3
     },
     "guardrail": {
       "revision": "2026-07-18-r7",
@@ -168,8 +168,8 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 4,
-      "queued": 226,
+      "completed": 5,
+      "queued": 225,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
@@ -186,8 +186,8 @@
       "revision": "2026-07-18-r4",
       "state": "closed",
       "reason": null,
-      "completed": 2,
-      "queued": 7,
+      "completed": 3,
+      "queued": 6,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
@@ -195,8 +195,8 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 5,
-      "queued": 135,
+      "completed": 6,
+      "queued": 134,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
@@ -204,8 +204,8 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 5,
-      "queued": 231,
+      "completed": 6,
+      "queued": 230,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
@@ -222,8 +222,8 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 5,
-      "queued": 31,
+      "completed": 6,
+      "queued": 30,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
@@ -231,8 +231,8 @@
       "revision": "2026-07-18-r4",
       "state": "closed",
       "reason": null,
-      "completed": 5,
-      "queued": 1,
+      "completed": 6,
+      "queued": 0,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
@@ -240,8 +240,8 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 6,
-      "queued": 8,
+      "completed": 7,
+      "queued": 7,
       "quarantined": 0,
       "dominantFailureCount": 5
     },
@@ -303,10 +303,10 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 7,
-      "queued": 2,
+      "completed": 8,
+      "queued": 1,
       "quarantined": 0,
-      "dominantFailureCount": 2
+      "dominantFailureCount": 1
     },
     "state_variant": {
       "revision": "2026-07-18-r7",
@@ -330,10 +330,10 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 7,
-      "queued": 1,
+      "completed": 8,
+      "queued": 0,
       "quarantined": 0,
-      "dominantFailureCount": 1
+      "dominantFailureCount": 0
     },
     "traffic_light": {
       "revision": "2026-07-18-r7",
