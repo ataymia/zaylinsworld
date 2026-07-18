@@ -24,3 +24,8 @@ dist/
 vendor/source-textures/
 .staging/
 .player-avatar-work/
+
+# Free asset factory scratch files and temporary Blender previews
+asset-factory/work/
+*.blend1
+__pycache__/

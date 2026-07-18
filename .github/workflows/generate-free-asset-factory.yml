@@ -1,0 +1,141 @@
+name: Generate Free ZTA Asset Batch
+
+on:
+  workflow_dispatch:
+    inputs:
+      batch_size:
+        description: Assets to process in this run, capped at 10
+        required: false
+        default: '10'
+  schedule:
+    - cron: '17,47 * * * *'
+  pull_request:
+    paths:
+      - 'asset-factory/**'
+      - 'tools/asset-factory/**'
+      - 'docs/**/*BLUEPRINT.md'
+      - 'docs/WORLD_VISUAL_REFERENCE_BIBLE.md'
+      - '.github/workflows/generate-free-asset-factory.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'asset-factory/**'
+      - 'tools/asset-factory/**'
+      - 'docs/**/*BLUEPRINT.md'
+      - 'docs/WORLD_VISUAL_REFERENCE_BIBLE.md'
+      - '.github/workflows/generate-free-asset-factory.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: zta-free-asset-factory-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  generate:
+    if: github.actor != 'github-actions[bot]' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install free Blender engine and headless graphics runtime
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            blender \
+            python3-numpy \
+            libegl1 \
+            libgl1 \
+            libgl1-mesa-dri \
+            libx11-6 \
+            libxext6 \
+            libxi6 \
+            libxrender1 \
+            libxkbcommon0
+          blender --version
+          ldconfig -p | grep -E 'libEGL.so.1|libGL.so.1'
+          PYTHONPATH=/usr/lib/python3/dist-packages blender --background --python-expr "import numpy; print('Blender NumPy', numpy.__version__)"
+
+      - name: Validate factory source
+        shell: bash
+        run: |
+          node --check tools/asset-factory/compile-specs.mjs
+          node --check tools/asset-factory/run-batch.mjs
+          python3 -m py_compile \
+            tools/asset-factory/blender/common.py \
+            tools/asset-factory/blender/builders.py \
+            tools/asset-factory/blender/generate_batch.py
+
+      - name: Generate and quality-check next batch
+        shell: bash
+        env:
+          BATCH_SIZE: ${{ github.event.inputs.batch_size || '10' }}
+          PYTHONPATH: /usr/lib/python3/dist-packages
+        run: |
+          mkdir -p asset-factory/work
+          set -o pipefail
+          node tools/asset-factory/run-batch.mjs --batch-size "$BATCH_SIZE" 2>&1 | tee asset-factory/work/factory.log
+
+      - name: Require the complete proof batch to pass
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { existsSync, readFileSync, statSync } from 'node:fs';
+          const result = JSON.parse(readFileSync('reports/asset-factory/latest.json', 'utf8'));
+          console.log(`[asset-factory] proof result: ${result.passed}/${result.requested} passed`);
+          const invalidOutputs = result.results.filter((asset) => !asset.outputPath || !existsSync(asset.outputPath) || statSync(asset.outputPath).size < 1024);
+          if (result.passed !== result.requested || invalidOutputs.length) {
+            console.error('The free asset factory is not mergeable until every first-batch asset passes QA and produces a nonempty GLB.');
+            if (invalidOutputs.length) console.error('Invalid outputs:', invalidOutputs.map((asset) => asset.id));
+            process.exit(1);
+          }
+          NODE
+
+      - name: Commit passing assets, queue state, and reports
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add asset-factory/generated/
+          git add asset-factory/state/
+          git add public/assets/models/generated/
+          git add public/assets/models/asset-index-v2.json
+          git add reports/asset-factory/
+          if git diff --cached --quiet; then
+            echo "No asset-factory changes to commit."
+            exit 0
+          fi
+          git commit -m "Generate free asset-factory batch [skip ci]"
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+      - name: Upload temporary QA previews
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zta-asset-factory-qa-${{ github.run_number }}
+          path: |
+            asset-factory/work/previews/
+            asset-factory/work/current-batch.json
+            asset-factory/work/blender-report.json
+            asset-factory/work/factory.log
+            asset-factory/generated/master-asset-specs.json
+            asset-factory/state/queue.json
+            public/assets/models/generated/
+            reports/asset-factory/latest.json
+          if-no-files-found: warn
+          retention-days: 7

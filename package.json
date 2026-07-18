@@ -20,7 +20,10 @@
     "gen:assets": "node tools/build-assets.mjs",
     "gen:asset-report": "node scripts/gen-asset-report.mjs",
     "index:kits": "node tools/index-kits.mjs",
-    "organize": "node tools/organize-assets.mjs"
+    "organize": "node tools/organize-assets.mjs",
+    "asset:compile": "node tools/asset-factory/compile-specs.mjs",
+    "asset:batch": "node tools/asset-factory/run-batch.mjs --batch-size 10",
+    "asset:dry-run": "node tools/asset-factory/run-batch.mjs --batch-size 10 --dry-run"
   },
   "dependencies": {
     "three": "0.160.1"

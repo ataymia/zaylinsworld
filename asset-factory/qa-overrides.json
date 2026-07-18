@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "reason": "Object-specific QA tuning based on four-angle proof renders. These values do not bypass required components or visual review.",
+  "assets": {
+    "prop_starter_street_name_sign_a_v01": {
+      "quality": {
+        "maximumTriangles": 20000
+      },
+      "note": "Two sets of modeled, exportable street lettering account for the additional geometry. The sign remains under the global 50k cap."
+    },
+    "prop_starter_fire_hydrant_a_v01": {
+      "quality": {
+        "minimumMaterials": 3
+      },
+      "note": "The proof model correctly separates painted cast iron, dark cap hardware, and galvanized bolts/chains. A fourth material would be decorative rather than structurally meaningful."
+    }
+  }
+}
