@@ -1,1 +1,0 @@
-Run the repaired Zaylins factory against the promoted 2,298-record queue using a diversified 20-model proof batch.
