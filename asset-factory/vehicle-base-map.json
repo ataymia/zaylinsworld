@@ -2,18 +2,18 @@
   "version": 1,
   "assets": {
     "vehicle_techtown_hover_sedan_a_v01": {
+      "baseModel": "public/assets/models/vehicles/car-kit/sedan.glb",
+      "baseName": "Kenney Car Kit sedan",
+      "source": "https://kenney.nl/assets/car-kit",
+      "license": "CC0 1.0 public domain",
+      "conversion": "Remove wheel nodes, preserve the recognizable four-door automotive body and passenger packaging, then add original ZTA hover nacelles, lift emitters, service panels, lighting, cooling, charging, and TechTown materials."
+    },
+    "vehicle_techtown_hover_coupe_a_v01": {
       "baseModel": "public/assets/models/vehicles/car-kit/sedan-sports.glb",
       "baseName": "Kenney Car Kit sedan-sports",
       "source": "https://kenney.nl/assets/car-kit",
       "license": "CC0 1.0 public domain",
-      "conversion": "Remove wheel nodes, preserve the recognizable automotive body and passenger packaging, then add original ZTA hover nacelles, lift emitters, service panels, lighting, cooling, charging, and TechTown materials."
-    },
-    "vehicle_techtown_hover_coupe_a_v01": {
-      "baseModel": "public/assets/models/vehicles/car-kit/race-future.glb",
-      "baseName": "Kenney Car Kit race-future",
-      "source": "https://kenney.nl/assets/car-kit",
-      "license": "CC0 1.0 public domain",
-      "conversion": "Remove wheel nodes, preserve the recognizable performance-car body and cabin, then add original ZTA vector-hover pods, underbody emitters, cooling, lighting, charging, service access, and controlled TechTown surface treatment."
+      "conversion": "Remove wheel nodes, preserve the recognizable enclosed performance-car body and cabin, then add original ZTA vector-hover pods, underbody emitters, cooling, lighting, charging, service access, and controlled TechTown surface treatment."
     }
   }
 }
