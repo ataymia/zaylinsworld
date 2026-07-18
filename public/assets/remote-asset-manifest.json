@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "generatedAt": null,
+  "strategy": "sha256-content-addressed-r2-with-local-fallback",
+  "baseUrl": "",
+  "scope": "generated",
+  "synchronizedAssets": 0,
+  "synchronizedBytes": 0,
+  "totalMappedAssets": 0,
+  "assets": {}
+}

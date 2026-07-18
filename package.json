@@ -47,7 +47,9 @@
     "asset:deep": "npm run asset:compile-expanded && npm run asset:deep-only",
     "asset:materialize": "npm run asset:compile-expanded && npm run asset:runtime && npm run asset:deep-only && npm run asset:health",
     "asset:batch": "node tools/asset-factory/run-batch.mjs --batch-size 20",
-    "asset:dry-run": "node tools/asset-factory/run-batch.mjs --batch-size 20 --dry-run"
+    "asset:dry-run": "node tools/asset-factory/run-batch.mjs --batch-size 20 --dry-run",
+    "asset:r2-plan": "node tools/cloudflare/build-r2-upload-plan.mjs --scope generated",
+    "asset:r2-plan-all": "node tools/cloudflare/build-r2-upload-plan.mjs --scope all"
   },
   "dependencies": {
     "three": "0.160.1"
