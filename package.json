@@ -24,8 +24,9 @@
     "asset:compile": "node tools/asset-factory/compile-specs.mjs",
     "asset:enrich": "node tools/asset-factory/enrich-all-specs.mjs",
     "asset:normalize-deep": "node tools/asset-factory/normalize-deep-specs.mjs",
+    "asset:refine-deep": "node tools/asset-factory/refine-deep-semantics.mjs",
     "asset:check-deep": "node tools/asset-factory/check-deep-specs.mjs",
-    "asset:deep": "npm run asset:enrich && npm run asset:normalize-deep && npm run asset:check-deep",
+    "asset:deep": "npm run asset:enrich && npm run asset:normalize-deep && npm run asset:refine-deep && npm run asset:check-deep",
     "asset:batch": "node tools/asset-factory/run-batch.mjs --batch-size 10",
     "asset:dry-run": "node tools/asset-factory/run-batch.mjs --batch-size 10 --dry-run"
   },
