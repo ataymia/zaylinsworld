@@ -1,8 +1,8 @@
 {
   "format": "zta-deep-asset-spec-shard",
   "version": 1,
-  "generatedAt": "2026-07-18T16:50:17.817Z",
-  "inventoryAuditAt": "2026-07-18T16:50:21.350Z",
+  "generatedAt": "2026-07-18T16:55:53.192Z",
+  "inventoryAuditAt": "2026-07-18T16:55:56.876Z",
   "shardKey": "shared-world",
   "recordCount": 25,
   "canonicalGenerationRequests": 25,
@@ -239,9 +239,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "58f89ce6250555ed1ff76193e9ef87662f86879987a004a8a8745ed80baea110",
-      "semanticRefinedAt": "2026-07-18T16:50:18.716Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.137Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as character",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.747Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.257Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -249,7 +249,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.346Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.872Z"
     },
     {
       "id": "creature_current_skipper_v01",
@@ -471,9 +471,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "ec361f47382ef8a2989cc2c4896a4cc8535c2e5137ea12cd25c002526336ae92",
-      "semanticRefinedAt": "2026-07-18T16:50:18.716Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.137Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as character",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.747Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.257Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -481,7 +481,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.346Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.872Z"
     },
     {
       "id": "creature_dolphin_guide_a_v01",
@@ -703,9 +703,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "157bf4affae9131bda97708d70855fd85724cca0e0bcd60513bbb7c50563600d",
-      "semanticRefinedAt": "2026-07-18T16:50:18.716Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.138Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as character",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.748Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.257Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -713,7 +713,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.346Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.872Z"
     },
     {
       "id": "creature_fish_school_common_a_v01",
@@ -935,9 +935,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "235de3f7fbcc2e9de7267e61365f6414233f4d05e5e149272ada4a5ca14a5579",
-      "semanticRefinedAt": "2026-07-18T16:50:18.716Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.138Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as character",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.748Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.257Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -945,7 +945,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.346Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.872Z"
     },
     {
       "id": "creature_fish_school_reef_a_v01",
@@ -1167,9 +1167,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "df9e9cf1a3589ccb824e4b771be0d86465d8def7850470537d10822ad9e2f341",
-      "semanticRefinedAt": "2026-07-18T16:50:18.717Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.138Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as character",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.748Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.257Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -1177,7 +1177,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.346Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.872Z"
     },
     {
       "id": "creature_gillyfish_v01",
@@ -1399,9 +1399,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "eeba6f9765c2402ef864de23ca05ea803f943dd701b5977d539d2e8bb7d39d0c",
-      "semanticRefinedAt": "2026-07-18T16:50:18.717Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.138Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as character",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.748Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.257Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -1409,7 +1409,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.346Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.872Z"
     },
     {
       "id": "creature_jelly_glow_a_v01",
@@ -1631,9 +1631,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "2295e4e2d202793f1e4b8580a756c7efb9052aca3f83887076a3b47a4060192f",
-      "semanticRefinedAt": "2026-07-18T16:50:18.717Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.138Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as character",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.748Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.257Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -1641,7 +1641,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.347Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.873Z"
     },
     {
       "id": "creature_lantern_minnow_v01",
@@ -1863,9 +1863,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "57ea0986f466680f42d8dc2e22e1cd63c531107d6e001336012c357c2963b558",
-      "semanticRefinedAt": "2026-07-18T16:50:18.717Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.139Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as character",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.748Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.258Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -1873,7 +1873,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.347Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.873Z"
     },
     {
       "id": "creature_manta_glider_a_v01",
@@ -2096,9 +2096,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "bf92f9eea59a6c43f6e62ccc4aa6144b6c6e656b3469cfea20f207773a4d669d",
-      "semanticRefinedAt": "2026-07-18T16:50:18.717Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.139Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as character",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.748Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.258Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -2106,7 +2106,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.347Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.873Z"
     },
     {
       "id": "creature_sea_turtle_a_v01",
@@ -2328,9 +2328,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "8af751ff729db2dcc275907649430fcfcd37c4bed97d75ad5458f194b0ed1100",
-      "semanticRefinedAt": "2026-07-18T16:50:18.717Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.139Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as character",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.749Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.258Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -2338,7 +2338,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.347Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.873Z"
     },
     {
       "id": "creature_zipfin_v01",
@@ -2560,9 +2560,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "765f1213b6d26876d0c95bd313f607cf97a2ed536e65e0f978830b01daa13d66",
-      "semanticRefinedAt": "2026-07-18T16:50:18.718Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.139Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as character",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.749Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.258Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -2570,7 +2570,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.347Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.873Z"
     },
     {
       "id": "item_gillyfish_inventory_v01",
@@ -2808,9 +2808,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "43b7ded1430065f65d476c49e39980ad45a8026ed7c0c904025c796d6c3763f1",
-      "semanticRefinedAt": "2026-07-18T16:50:18.719Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.140Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as generic_prop",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.750Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.259Z",
       "compactSpecLegacy": {
         "family": "unsupported_character",
         "description": "A production-ready Item Gillyfish Inventory, designed as a rigged character or creature requiring a dedicated anatomy pipeline for Shared World. Do not generate with the prop factory. This family is quarantined until a dedicated anatomy, sculpting, retopology, and rigging builder exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “Fishing catches” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -2833,10 +2833,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "inventory-scale preserved fish catch item",
       "physicalSpecReason": "The compact compiler falsely inferred a character from a species or profession word; the physical object profile replaces anatomy data.",
-      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:55:55.141Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated inventory-scale preserved fish catch item profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.090Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:55:55.572Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -2844,7 +2844,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.348Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.874Z"
     },
     {
       "id": "item_gridlink_personal_teleporter_v01",
@@ -3097,9 +3097,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "6bd4d9a5571e32400fbc0338bcd5c6ba595b46e03c76283f8a6e14bcef9c4225",
-      "semanticRefinedAt": "2026-07-18T16:50:18.719Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.140Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as generic_prop",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.750Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.259Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Item Gridlink Personal Teleporter, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “Visual identity” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -3118,10 +3118,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Item Gridlink Personal Teleporter role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:55:55.141Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.090Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:55:55.572Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -3129,7 +3129,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.348Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.874Z"
     },
     {
       "id": "prop_gridlink_arrival_pad_a_v01",
@@ -3382,9 +3382,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "ef40de9c11e926367e57af12e9b9913d7b43a4a2f6389638d4d9eb92746e62f6",
-      "semanticRefinedAt": "2026-07-18T16:50:18.719Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.141Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.750Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.260Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Gridlink Arrival Pad, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “Visual identity” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -3403,10 +3403,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Gridlink Arrival Pad role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:55:55.141Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.091Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:55:55.572Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -3414,7 +3414,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.348Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.874Z"
     },
     {
       "id": "prop_gridlink_service_kiosk_a_v01",
@@ -3673,9 +3673,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "c16490e31cfddc1e24142435192b0f9c0c014bac43123453cc63ec939a3b781e",
-      "semanticRefinedAt": "2026-07-18T16:50:18.720Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.141Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.751Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.260Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Gridlink Service Kiosk, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “Visual identity” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -3694,10 +3694,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "terminal, kiosk, station, or console",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:55:55.141Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named terminal, kiosk, station, or console profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.091Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:55:55.572Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -3705,7 +3705,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.348Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.874Z"
     },
     {
       "id": "prop_gridlink_sync_beacon_a_v01",
@@ -3963,9 +3963,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "3957aa7c7f532d0b10ba098d3612e31a1f05c082876f3a231aadfac577a115b7",
-      "semanticRefinedAt": "2026-07-18T16:50:18.720Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.141Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.751Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.260Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Gridlink Sync Beacon, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “Visual identity” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -3984,10 +3984,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Gridlink Sync Beacon role-specific infrastructure profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:55:55.141Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.091Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:55:55.572Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -3995,7 +3995,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.349Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.875Z"
     },
     {
       "id": "prop_gridlink_vendor_display_v01",
@@ -4253,9 +4253,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "34944db036997cd95ec0c0137b1d5fe39323ed09a253c7ab6715ec9b3b07440a",
-      "semanticRefinedAt": "2026-07-18T16:50:18.720Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.142Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as signage",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.751Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.260Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Gridlink Vendor Display, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “Visual identity” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -4274,10 +4274,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "information board or digital display",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:55:55.141Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named information board or digital display profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.091Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:55:55.572Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -4285,7 +4285,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.349Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.875Z"
     },
     {
       "id": "prop_water_buoy_navigation_a_v01",
@@ -4540,9 +4540,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "df89f5623aa46dfcd098c7cb3ca3c9117c7c7f5521d0b053747a254090e17755",
-      "semanticRefinedAt": "2026-07-18T16:50:18.720Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.142Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.751Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.261Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Water Buoy Navigation, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “Water environment” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -4561,10 +4561,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "buoy or floating marker",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:55:55.141Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named buoy or floating marker profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.091Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:55:55.572Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -4572,7 +4572,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.349Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.875Z"
     },
     {
       "id": "prop_water_buoy_protected_a_v01",
@@ -4827,9 +4827,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "26b239a9f846cea4729dd182835d80f342d3558182d6e10d173088752da4a31b",
-      "semanticRefinedAt": "2026-07-18T16:50:18.720Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.142Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.751Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.261Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Water Buoy Protected, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “Water environment” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -4848,10 +4848,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "buoy or floating marker",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:55:55.141Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named buoy or floating marker profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.091Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:55:55.572Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -4859,7 +4859,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.349Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.875Z"
     },
     {
       "id": "prop_water_rescue_float_a_v01",
@@ -5114,9 +5114,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "20bd0f89e32074888fc2890a25e65a9e9a7fdb7a197cc75248614fbd3df1e796",
-      "semanticRefinedAt": "2026-07-18T16:50:18.721Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.142Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.752Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.261Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Water Rescue Float, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “Water environment” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -5135,10 +5135,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "buoy or floating marker",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:55:55.141Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named buoy or floating marker profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.091Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:55:55.572Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -5146,7 +5146,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.349Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.875Z"
     },
     {
       "id": "vehicle_water_motorboat_a_v01",
@@ -5407,9 +5407,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "6787b8e94834b4ac16ee2447334dbd1cbfb86305f68a6df6c275153f1d7926f8",
-      "semanticRefinedAt": "2026-07-18T16:50:18.721Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.143Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as vehicle",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.752Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.262Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Water Motorboat, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “Vehicles” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -5428,10 +5428,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Water Motorboat role-specific vehicle profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:55:55.141Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.091Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:55:55.572Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -5439,7 +5439,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.350Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.876Z"
     },
     {
       "id": "vehicle_water_patrol_boat_a_v01",
@@ -5700,9 +5700,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "1a03a9806e01103f62bc789e14fdf808ccd7d2e4d5a5452072842f7ba5cfc300",
-      "semanticRefinedAt": "2026-07-18T16:50:18.722Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.143Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as vehicle",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.753Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.262Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Water Patrol Boat, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “Vehicles” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -5721,10 +5721,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "working fishing or service boat",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:55:55.142Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named working fishing or service boat profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.091Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:55:55.572Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -5732,7 +5732,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.350Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.876Z"
     },
     {
       "id": "vehicle_water_skiff_a_v01",
@@ -5993,9 +5993,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "953e1579604ef9bccf926a3002a172d2e86d287eae0a6cadb23b3b3e4d133fb0",
-      "semanticRefinedAt": "2026-07-18T16:50:18.722Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.143Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as vehicle",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.753Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.262Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Water Skiff, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “Vehicles” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -6014,10 +6014,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "working fishing or service boat",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:55:55.142Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named working fishing or service boat profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.091Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:55:55.572Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -6025,7 +6025,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.350Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.876Z"
     },
     {
       "id": "vehicle_water_speedboat_a_v01",
@@ -6286,9 +6286,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "dd8e41b241b5f2171a92384c7956388b2d96b952fb016b15d7107e9c47b9ab15",
-      "semanticRefinedAt": "2026-07-18T16:50:18.722Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.144Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as vehicle",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.753Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.262Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Water Speedboat, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “Vehicles” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -6307,10 +6307,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Water Speedboat role-specific vehicle profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:55:55.142Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.091Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:55:55.572Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -6318,7 +6318,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.350Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.876Z"
     },
     {
       "id": "vehicle_water_yacht_a_v01",
@@ -6579,9 +6579,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "465e44b35a459fdea2e0a04da5bd65fbb05ef0b2715b397fc55a6e83ba3caea5",
-      "semanticRefinedAt": "2026-07-18T16:50:18.722Z",
+      "semanticRefinedAt": "2026-07-18T16:55:54.144Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as vehicle",
-      "semanticFinalizedAt": "2026-07-18T16:50:20.753Z",
+      "semanticFinalizedAt": "2026-07-18T16:55:56.263Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Water Yacht, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “Vehicles” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -6600,10 +6600,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "yacht or large leisure vessel",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:55:55.142Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named yacht or large leisure vessel profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.091Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:55:55.572Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -6611,7 +6611,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.350Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:55:56.876Z"
     }
   ]
 }
