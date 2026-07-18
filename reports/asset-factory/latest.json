@@ -1,0 +1,636 @@
+{
+  "version": 1,
+  "batchId": "batch-00001",
+  "completedAt": "2026-07-18T00:43:34.537Z",
+  "requested": 10,
+  "passed": 10,
+  "failed": 0,
+  "queueCounts": {
+    "completed": 10,
+    "queued": 89,
+    "unsupported": 879
+  },
+  "results": [
+    {
+      "id": "prop_starter_streetlight_main_a_v01",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/starter-town/streetlight/prop_starter_streetlight_main_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 19,
+        "triangles": 4336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light"
+        ],
+        "materialCount": 4,
+        "components": [
+          "anchor bolts",
+          "arm brace",
+          "base flange",
+          "cooling ribs",
+          "glass lens",
+          "luminaire housing",
+          "maintenance door",
+          "mast arm",
+          "tapered pole"
+        ],
+        "bounds": {
+          "min": [
+            -1.440000057220459,
+            -0.28999999165534973,
+            0
+          ],
+          "max": [
+            1.4399999380111694,
+            0.28999999165534973,
+            7.4911065101623535
+          ],
+          "dimensions": [
+            2.880000114440918,
+            0.5799999833106995,
+            7.4911065101623535
+          ]
+        },
+        "requiredComponents": [
+          "base flange",
+          "anchor bolts",
+          "tapered pole",
+          "maintenance door",
+          "mast arm",
+          "arm brace",
+          "luminaire housing",
+          "glass lens",
+          "cooling ribs"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_starter_streetlight_main_a_v01/prop_starter_streetlight_main_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starter_streetlight_main_a_v01/prop_starter_streetlight_main_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starter_streetlight_main_a_v01/prop_starter_streetlight_main_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starter_streetlight_main_a_v01/prop_starter_streetlight_main_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_starter_streetlight_residential_a_v01",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/starter-town/streetlight/prop_starter_streetlight_residential_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 13,
+        "triangles": 3396,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light"
+        ],
+        "materialCount": 4,
+        "components": [
+          "anchor bolts",
+          "base flange",
+          "curved arm",
+          "fixture housing",
+          "glass lens",
+          "maintenance door",
+          "tapered pole"
+        ],
+        "bounds": {
+          "min": [
+            -0.75,
+            -0.23999999463558197,
+            0
+          ],
+          "max": [
+            0.75,
+            0.23999999463558197,
+            5.3625288009643555
+          ],
+          "dimensions": [
+            1.5,
+            0.47999998927116394,
+            5.3625288009643555
+          ]
+        },
+        "requiredComponents": [
+          "base flange",
+          "anchor bolts",
+          "tapered pole",
+          "maintenance door",
+          "curved arm",
+          "fixture housing",
+          "glass lens"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_starter_streetlight_residential_a_v01/prop_starter_streetlight_residential_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starter_streetlight_residential_a_v01/prop_starter_streetlight_residential_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starter_streetlight_residential_a_v01/prop_starter_streetlight_residential_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starter_streetlight_residential_a_v01/prop_starter_streetlight_residential_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_starter_traffic_light_a_v01",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/starter-town/traffic-light/prop_starter_traffic_light_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 38,
+        "triangles": 12240,
+        "materials": [
+          "starter_amber_light",
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_green_light",
+          "starter_red_light",
+          "starter_warning_yellow",
+          "starter_white"
+        ],
+        "materialCount": 8,
+        "components": [
+          "amber lenses",
+          "anchor bolts",
+          "arm brace",
+          "base flange",
+          "green lenses",
+          "mast arm",
+          "pedestrian signal",
+          "push button",
+          "red lenses",
+          "signal head left",
+          "signal head right",
+          "vertical support",
+          "visibility visors"
+        ],
+        "bounds": {
+          "min": [
+            -3.8949999809265137,
+            -0.3400000035762787,
+            0
+          ],
+          "max": [
+            3.8949999809265137,
+            0.3400000035762787,
+            6.240000247955322
+          ],
+          "dimensions": [
+            7.789999961853027,
+            0.6800000071525574,
+            6.240000247955322
+          ]
+        },
+        "requiredComponents": [
+          "base flange",
+          "anchor bolts",
+          "vertical support",
+          "mast arm",
+          "arm brace",
+          "signal head left",
+          "signal head right",
+          "red lenses",
+          "amber lenses",
+          "green lenses",
+          "pedestrian signal",
+          "push button"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_starter_traffic_light_a_v01/prop_starter_traffic_light_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starter_traffic_light_a_v01/prop_starter_traffic_light_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starter_traffic_light_a_v01/prop_starter_traffic_light_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starter_traffic_light_a_v01/prop_starter_traffic_light_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_starter_stop_sign_a_v01",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/starter-town/road-sign/prop_starter_stop_sign_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 19,
+        "triangles": 7840,
+        "materials": [
+          "starter_black",
+          "starter_concrete",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_red_paint",
+          "starter_white"
+        ],
+        "materialCount": 6,
+        "components": [
+          "footing collar",
+          "mounting bolts",
+          "octagonal sign face",
+          "perforated post",
+          "rear brackets",
+          "stop lettering",
+          "white border"
+        ],
+        "bounds": {
+          "min": [
+            -0.4292154014110565,
+            -0.11999999731779099,
+            0
+          ],
+          "max": [
+            0.4292154014110565,
+            0.11999999731779099,
+            2.609215497970581
+          ],
+          "dimensions": [
+            0.858430802822113,
+            0.23999999463558197,
+            2.609215497970581
+          ]
+        },
+        "requiredComponents": [
+          "octagonal sign face",
+          "white border",
+          "stop lettering",
+          "perforated post",
+          "rear brackets",
+          "mounting bolts",
+          "footing collar"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_starter_stop_sign_a_v01/prop_starter_stop_sign_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starter_stop_sign_a_v01/prop_starter_stop_sign_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starter_stop_sign_a_v01/prop_starter_stop_sign_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starter_stop_sign_a_v01/prop_starter_stop_sign_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_starter_street_name_sign_a_v01",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/starter-town/road-sign/prop_starter_street_name_sign_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 10,
+        "triangles": 17328,
+        "materials": [
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_sign_green",
+          "starter_white"
+        ],
+        "materialCount": 4,
+        "components": [
+          "brackets",
+          "centre blade",
+          "dreamdrop blade",
+          "mounting collars",
+          "pole cap",
+          "street lettering",
+          "vertical pole"
+        ],
+        "bounds": {
+          "min": [
+            -0.6750000715255737,
+            -0.6750000715255737,
+            0
+          ],
+          "max": [
+            0.6749999523162842,
+            0.6749999523162842,
+            3.059999942779541
+          ],
+          "dimensions": [
+            1.350000023841858,
+            1.350000023841858,
+            3.059999942779541
+          ]
+        },
+        "requiredComponents": [
+          "vertical pole",
+          "pole cap",
+          "dreamdrop blade",
+          "centre blade",
+          "street lettering",
+          "mounting collars",
+          "brackets"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_starter_street_name_sign_a_v01/prop_starter_street_name_sign_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starter_street_name_sign_a_v01/prop_starter_street_name_sign_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starter_street_name_sign_a_v01/prop_starter_street_name_sign_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starter_street_name_sign_a_v01/prop_starter_street_name_sign_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_starter_district_sign_a_v01",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/starter-town/district-sign/prop_starter_district_sign_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 13,
+        "triangles": 16468,
+        "materials": [
+          "starter_brick",
+          "starter_civic_navy",
+          "starter_cream",
+          "starter_dark_metal",
+          "starter_warm_light",
+          "starter_warning_yellow",
+          "starter_white"
+        ],
+        "materialCount": 7,
+        "components": [
+          "border trim",
+          "cap stone",
+          "inset sign panel",
+          "masonry plinth",
+          "raised lettering",
+          "side piers",
+          "uplights"
+        ],
+        "bounds": {
+          "min": [
+            -1.875,
+            -0.47749999165534973,
+            0
+          ],
+          "max": [
+            1.875,
+            0.47749999165534973,
+            1.9100000858306885
+          ],
+          "dimensions": [
+            3.75,
+            0.9549999833106995,
+            1.9100000858306885
+          ]
+        },
+        "requiredComponents": [
+          "masonry plinth",
+          "side piers",
+          "cap stone",
+          "inset sign panel",
+          "raised lettering",
+          "border trim",
+          "uplights"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_starter_district_sign_a_v01/prop_starter_district_sign_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starter_district_sign_a_v01/prop_starter_district_sign_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starter_district_sign_a_v01/prop_starter_district_sign_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starter_district_sign_a_v01/prop_starter_district_sign_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_starter_fire_hydrant_a_v01",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/starter-town/fire-hydrant/prop_starter_fire_hydrant_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 25,
+        "triangles": 9040,
+        "materials": [
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_red_paint"
+        ],
+        "materialCount": 3,
+        "components": [
+          "base flange",
+          "body collars",
+          "cap chains",
+          "domed bonnet",
+          "eight base bolts",
+          "hose caps",
+          "left hose outlet",
+          "main barrel",
+          "operating nut",
+          "right hose outlet"
+        ],
+        "bounds": {
+          "min": [
+            -0.48750001192092896,
+            -0.3400000035762787,
+            0
+          ],
+          "max": [
+            0.48750001192092896,
+            0.3400000035762787,
+            1.0649999380111694
+          ],
+          "dimensions": [
+            0.9750000238418579,
+            0.6800000071525574,
+            1.0649999380111694
+          ]
+        },
+        "requiredComponents": [
+          "base flange",
+          "eight base bolts",
+          "main barrel",
+          "body collars",
+          "domed bonnet",
+          "operating nut",
+          "left hose outlet",
+          "right hose outlet",
+          "hose caps",
+          "cap chains"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_starter_fire_hydrant_a_v01/prop_starter_fire_hydrant_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starter_fire_hydrant_a_v01/prop_starter_fire_hydrant_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starter_fire_hydrant_a_v01/prop_starter_fire_hydrant_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starter_fire_hydrant_a_v01/prop_starter_fire_hydrant_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_starter_utility_box_a_v01",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/starter-town/utility-box/prop_starter_utility_box_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 33,
+        "triangles": 6524,
+        "materials": [
+          "starter_black",
+          "starter_concrete",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warning_yellow",
+          "utility_sage_paint"
+        ],
+        "materialCount": 6,
+        "components": [
+          "anchor bolts",
+          "cabinet body",
+          "concrete pad",
+          "conduit entries",
+          "drip edge",
+          "hinge",
+          "recessed latch",
+          "service door",
+          "vent louvers",
+          "warning placard"
+        ],
+        "bounds": {
+          "min": [
+            -0.5400000214576721,
+            -0.4273722767829895,
+            0
+          ],
+          "max": [
+            0.5400000214576721,
+            0.4273722767829895,
+            1.5125000476837158
+          ],
+          "dimensions": [
+            1.0800000429153442,
+            0.854744553565979,
+            1.5125000476837158
+          ]
+        },
+        "requiredComponents": [
+          "concrete pad",
+          "cabinet body",
+          "service door",
+          "hinge",
+          "recessed latch",
+          "warning placard",
+          "vent louvers",
+          "drip edge",
+          "conduit entries",
+          "anchor bolts"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_starter_utility_box_a_v01/prop_starter_utility_box_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starter_utility_box_a_v01/prop_starter_utility_box_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starter_utility_box_a_v01/prop_starter_utility_box_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starter_utility_box_a_v01/prop_starter_utility_box_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_starter_bench_a_v01",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/starter-town/bench/prop_starter_bench_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 30,
+        "triangles": 6308,
+        "materials": [
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_wood"
+        ],
+        "materialCount": 3,
+        "components": [
+          "anchored feet",
+          "armrests",
+          "back slats",
+          "left side frame",
+          "mounting bolts",
+          "rear support rails",
+          "right side frame",
+          "seat slats"
+        ],
+        "bounds": {
+          "min": [
+            -0.8799999952316284,
+            -0.3550509810447693,
+            0
+          ],
+          "max": [
+            0.8799999952316284,
+            0.3550509810447693,
+            1.1830345392227173
+          ],
+          "dimensions": [
+            1.7599999904632568,
+            0.7101019620895386,
+            1.1830345392227173
+          ]
+        },
+        "requiredComponents": [
+          "seat slats",
+          "back slats",
+          "left side frame",
+          "right side frame",
+          "armrests",
+          "rear support rails",
+          "mounting bolts",
+          "anchored feet"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_starter_bench_a_v01/prop_starter_bench_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starter_bench_a_v01/prop_starter_bench_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starter_bench_a_v01/prop_starter_bench_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starter_bench_a_v01/prop_starter_bench_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_starter_trash_can_a_v01",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/starter-town/trash-can/prop_starter_trash_can_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 31,
+        "triangles": 8544,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized"
+        ],
+        "materialCount": 3,
+        "components": [
+          "base anchors",
+          "bottom support ring",
+          "disposal opening",
+          "internal liner",
+          "latch",
+          "rain hood",
+          "service door",
+          "top support ring",
+          "vertical slats"
+        ],
+        "bounds": {
+          "min": [
+            -0.3720000088214874,
+            -0.38475000858306885,
+            0
+          ],
+          "max": [
+            0.3720000088214874,
+            0.38475000858306885,
+            1.1304000616073608
+          ],
+          "dimensions": [
+            0.7440000176429749,
+            0.7695000171661377,
+            1.1304000616073608
+          ]
+        },
+        "requiredComponents": [
+          "internal liner",
+          "vertical slats",
+          "top support ring",
+          "bottom support ring",
+          "rain hood",
+          "disposal opening",
+          "service door",
+          "latch",
+          "base anchors"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_starter_trash_can_a_v01/prop_starter_trash_can_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starter_trash_can_a_v01/prop_starter_trash_can_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starter_trash_can_a_v01/prop_starter_trash_can_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starter_trash_can_a_v01/prop_starter_trash_can_a_v01_view_4.png"
+      ]
+    }
+  ]
+}

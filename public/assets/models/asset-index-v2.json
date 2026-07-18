@@ -2912,6 +2912,128 @@
         "type": "glb",
         "tex": 1
       }
+    ],
+    "zta-free-asset-factory": [
+      {
+        "name": "prop_starter_bench_a_v01",
+        "path": "models/generated/starter-town/bench/prop_starter_bench_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starter-town",
+        "family": "bench",
+        "displayName": "Dreamdrop Municipal Park Bench",
+        "description": "A durable three-seat public bench with separate hardwood seat and back slats, curved powder-coated steel side frames, integrated armrests, rear support rails, slat mounting bolts, anti-skate center divider, and four anchored feet. Human seating dimensions must be credible, with a comfortable back angle and sufficient structural support beneath the seat.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_starter_district_sign_a_v01",
+        "path": "models/generated/starter-town/district-sign/prop_starter_district_sign_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starter-town",
+        "family": "district-sign",
+        "displayName": "Dreamdrop District Gateway Sign",
+        "description": "A substantial pedestrian-scale district gateway marker with a low brick-and-stone plinth, inset painted-metal sign panel reading DREAMDROP DISTRICT, raised border trim, side masonry piers, a shallow cap, concealed uplight fixtures, small mounting seams, and landscaping clearance at the base. It should feel like permanent city wayfinding, not a billboard or theme-park prop.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_starter_fire_hydrant_a_v01",
+        "path": "models/generated/starter-town/fire-hydrant/prop_starter_fire_hydrant_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starter-town",
+        "family": "fire-hydrant",
+        "displayName": "Starter Town Municipal Fire Hydrant",
+        "description": "A believable cast-iron municipal hydrant with a broad bolted ground flange, tapered barrel, segmented body collars, domed bonnet, top operating nut, two opposing side hose outlets with hexagonal caps, cap chains, wrench lugs, drain/service details, and eight visible base bolts. Painted red surfaces should show subtle roughness variation while metal caps and bolts remain distinct.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_starter_stop_sign_a_v01",
+        "path": "models/generated/starter-town/road-sign/prop_starter_stop_sign_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starter-town",
+        "family": "road-sign",
+        "displayName": "Starter Town Stop Sign",
+        "description": "A regulation-style roadside stop sign with a correctly proportioned red octagonal aluminum face, narrow white border, raised readable STOP lettering, galvanized perforated post, rear mounting brackets, fasteners, and a small concrete footing collar. The face should be thin metal, not a thick red toy block.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_starter_street_name_sign_a_v01",
+        "path": "models/generated/starter-town/road-sign/prop_starter_street_name_sign_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starter-town",
+        "family": "road-sign",
+        "displayName": "Dreamdrop Cross Street-Name Sign",
+        "description": "A municipal cross-street sign assembly with two perpendicular enamel sign blades labeled DREAMDROP BLVD and CENTRE AVE, reflective borders, rounded blade ends, a capped galvanized pole, mounting collars, bracket hardware, and a sturdy base connection. Lettering must be modeled or converted to mesh so the sign remains readable in the exported GLB.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_starter_streetlight_main_a_v01",
+        "path": "models/generated/starter-town/streetlight/prop_starter_streetlight_main_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starter-town",
+        "family": "streetlight",
+        "displayName": "Dreamdrop Main-Street Streetlight",
+        "description": "A full-height municipal main-street lamp for Dreamdrop District with a flared cast-metal base, tapered steel pole, lockable maintenance panel, substantial horizontal mast arm, believable cable/service joints, and a rectangular LED roadway luminaire with a glass lens and heat-dissipation ribs. The proportions must read as real street infrastructure rather than a decorative toy lamp.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_starter_streetlight_residential_a_v01",
+        "path": "models/generated/starter-town/streetlight/prop_starter_streetlight_residential_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starter-town",
+        "family": "streetlight",
+        "displayName": "Willowbend Residential Streetlight",
+        "description": "A quieter neighborhood streetlight for Willowbend with a shorter tapered pole, decorative but believable base collar, curved shepherd-style arm, compact downward-facing LED fixture, maintenance access panel, mounting bolts, and subtle warm residential lighting. It should fit detached homes and curved local streets without becoming ornate fantasy furniture.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_starter_traffic_light_a_v01",
+        "path": "models/generated/starter-town/traffic-light/prop_starter_traffic_light_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starter-town",
+        "family": "traffic-light",
+        "displayName": "Dreamdrop Mast-Arm Traffic Signal",
+        "description": "A complete signalized-intersection assembly with a bolted pedestal, tapered vertical support, reinforced mast arm, cable junctions, two suspended three-lens vehicle signal heads, deep visibility visors, red amber and green lenses, backplates, a pedestrian signal box, and a push-button/control panel at accessible height. The assembly must look engineered to survive weather and traffic vibration.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_starter_trash_can_a_v01",
+        "path": "models/generated/starter-town/trash-can/prop_starter_trash_can_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starter-town",
+        "family": "trash-can",
+        "displayName": "Dreamdrop Sidewalk Trash Receptacle",
+        "description": "A heavy-duty city sidewalk trash receptacle with a cylindrical internal liner, vertical powder-coated steel slats, top and bottom support rings, a domed rain hood, side disposal opening, hinged service door, latch hardware, drain gap, base anchors, and a visible dark liner through the opening. It must look maintainable by sanitation workers and stable in public space.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "prop_starter_utility_box_a_v01",
+        "path": "models/generated/starter-town/utility-box/prop_starter_utility_box_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "starter-town",
+        "family": "utility-box",
+        "displayName": "Starter Town Sidewalk Utility Cabinet",
+        "description": "A weather-resistant municipal electrical/telecom cabinet on a concrete equipment pad, with a beveled painted-steel enclosure, inset front service door, piano hinge, recessed latch, warning placard frame, upper and lower ventilation louvers, roof drip edge, rear conduit entries, grounding lug, and base anchor bolts. The cabinet should look installable and serviceable, not like a plain gray cube.",
+        "license": "Original ZTA procedural geometry"
+      }
     ]
   },
   "weapons": {
