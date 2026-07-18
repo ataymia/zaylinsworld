@@ -16,6 +16,7 @@ const PREVIEW_DIR = join(WORK_DIR, 'previews');
 const OUTPUT_ROOT = join(ROOT, 'public', 'assets', 'models', 'generated');
 const INDEX_PATH = join(ROOT, 'public', 'assets', 'models', 'asset-index-v2.json');
 const POLICY_PATH = join(FACTORY_DIR, 'quality-policy.json');
+const READY_TOWNS = new Set(['starter-town', 'techtown']);
 
 function parseArgs(argv) {
   const options = { batchSize: null, dryRun: false };
@@ -67,6 +68,18 @@ function indexCategory(spec) {
   if (/^(furniture|equipment|classroom|chair|interior)_/.test(spec.fileName)) return 'furniture';
   if (spec.fileName.startsWith('food_')) return 'food';
   return 'props';
+}
+
+function builderReady(spec) {
+  if (!spec?.builderStatus || spec.builderStatus !== 'supported' || !spec.builder) return false;
+  if (!READY_TOWNS.has(spec.town)) return false;
+
+  // The current road-sign builder intentionally supports regulation stop signs
+  // and cross-street blades. Bespoke district/town wayfinding remains held until
+  // its own family builder exists rather than becoming a disguised stop sign.
+  if (spec.builder === 'road_sign' && !/(stop_sign|street_name_sign)/.test(spec.fileName)) return false;
+
+  return true;
 }
 
 function indexPassedAssets(masterById, blenderReport) {
@@ -180,7 +193,7 @@ function chooseBatch(master, queue, batchSize) {
   const chosen = Object.values(queue.assets)
     .filter((item) => item.status === 'queued')
     .map((item) => ({ state: item, spec: masterById.get(item.id) }))
-    .filter(({ spec }) => spec?.builderStatus === 'supported' && spec.builder)
+    .filter(({ spec }) => builderReady(spec))
     .sort((a, b) => {
       if (a.state.priority !== b.state.priority) return a.state.priority - b.state.priority;
       if (a.state.attempts !== b.state.attempts) return b.state.attempts - a.state.attempts;
@@ -190,6 +203,7 @@ function chooseBatch(master, queue, batchSize) {
     .map(({ state, spec }) => ({
       ...spec,
       factoryAttempt: state.attempts + 1,
+      previousError: state.lastError || null,
     }));
   return { chosen, masterById };
 }
@@ -237,11 +251,11 @@ function main() {
     const summary = {
       version: 1,
       completedAt: isoNow(),
-      message: 'No supported queued assets remain. Unsupported and quarantined assets require purpose-built family work, not generic fallback generation.',
+      message: 'No production-ready queued assets remain. Other fully specified assets are waiting for their town palette or purpose-built family variant rather than using generic fallback geometry.',
     };
     writeJson(join(REPORTS_DIR, 'latest.json'), summary);
     writeJson(QUEUE_PATH, queue);
-    console.log('[asset-factory] no supported queued assets remain');
+    console.log('[asset-factory] no production-ready queued assets remain');
     return;
   }
 
