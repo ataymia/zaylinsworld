@@ -17,7 +17,7 @@ on:
       - 'package.json'
       - '.github/workflows/generate-free-asset-factory.yml'
   push:
-    branches: [main]
+    branches: [main, agent/gameplay-gap-asset-expansion]
     paths:
       - 'asset-factory/**'
       - 'tools/asset-factory/**'
@@ -72,6 +72,7 @@ jobs:
         shell: bash
         run: |
           node --check tools/asset-factory/compile-expanded-specs.mjs
+          node --check tools/asset-factory/normalize-production-contracts.mjs
           node --check tools/asset-factory/build-runtime-deliverables.mjs
           node --check tools/asset-factory/audit-factory-health.mjs
           node --check tools/asset-factory/run-batch.mjs
@@ -81,6 +82,7 @@ jobs:
             tools/asset-factory/blender/builder_repair_utils.py \
             tools/asset-factory/blender/builder_repairs_legacy.py \
             tools/asset-factory/blender/builder_repairs_modular.py \
+            tools/asset-factory/blender/builder_repairs_food.py \
             tools/asset-factory/blender/builder_repairs.py \
             tools/asset-factory/blender/generate_batch.py
 
@@ -136,8 +138,8 @@ jobs:
             exit 0
           fi
           git commit -m "Generate free asset-factory batch [skip ci]"
-          git pull --rebase origin main
-          git push origin HEAD:main
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin "HEAD:$GITHUB_REF_NAME"
 
       - name: Upload temporary QA previews and health proof
         if: always()
