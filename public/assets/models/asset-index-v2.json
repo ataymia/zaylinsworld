@@ -3377,5 +3377,61 @@
         "type": "glb"
       }
     ]
+  },
+  "vehicles": {
+    "zta-free-asset-factory": [
+      {
+        "name": "vehicle_techtown_hover_sedan_a_v01",
+        "path": "models/generated/techtown/hover-vehicle/vehicle_techtown_hover_sedan_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "hover-vehicle",
+        "displayName": "TechTown Four-Seat Hover Sedan",
+        "description": "A production-feasible four-seat urban hover sedan for Neon Drift Motors with an aerodynamic load-bearing lower chassis, enclosed four-door passenger cabin, tinted windshield and side glass, front and rear crumple volumes, four corner-mounted vector hover pods, protected intake grilles, visible underbody lift rings, service access panels, door seams and handles, front lighting, rear lighting, mirrors or camera stalks, charging port, registration panel, and a stable low hovering stance. The vehicle must read as a practical road replacement, not a floating toy, UFO, or wheel-less box.",
+        "license": "Original ZTA procedural geometry"
+      }
+    ]
+  },
+  "furniture": {
+    "zta-free-asset-factory": [
+      {
+        "name": "furniture_office_desk_futuristic_a_v01",
+        "path": "models/generated/techtown/office_desk/furniture_office_desk_futuristic_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "office_desk",
+        "displayName": "Office Desk Futuristic",
+        "description": "A production-ready Office Desk Futuristic, designed as a professional office desk for Techtown. Use ergonomic dimensions, credible support, cable routing, drawer or service access, and layered material construction. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “C. Office / cybersecurity / co-working” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "furniture_restaurant_booth_future_a_v01",
+        "path": "models/generated/techtown/restaurant_booth/furniture_restaurant_booth_future_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "restaurant_booth",
+        "displayName": "Restaurant Booth Future",
+        "description": "A production-ready Restaurant Booth Future, designed as a commercial restaurant booth for Techtown. Respect human seating dimensions, cushion construction, table clearance, seams, and stable commercial support. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “E. Food / restaurant / convenience” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
+        "name": "interior_office_reception_desk_futuristic_v01",
+        "path": "models/generated/techtown/office_desk/interior_office_reception_desk_futuristic_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "office_desk",
+        "displayName": "Office Reception Desk Futuristic",
+        "description": "A production-ready Office Reception Desk Futuristic, designed as a professional office desk for Techtown. Use ergonomic dimensions, credible support, cable routing, drawer or service access, and layered material construction. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “C. Office / cybersecurity / co-working” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      }
+    ]
   }
 }
