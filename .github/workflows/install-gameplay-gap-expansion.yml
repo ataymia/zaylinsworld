@@ -59,7 +59,11 @@ jobs:
             tools/asset-factory/blender/generate_batch.py
 
       - name: Materialize expanded library and runtime assets
-        run: npm run asset:materialize
+        shell: bash
+        run: |
+          mkdir -p reports/asset-factory
+          set -o pipefail
+          npm run asset:materialize 2>&1 | tee reports/asset-factory/materialize.log
 
       - name: Commit repaired source and generated library
         env:
