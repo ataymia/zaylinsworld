@@ -8,9 +8,50 @@ This directory contains the persistent specifications, policies, and queue state
 - First unattended batch completed: 10 of 10 passed QA, exported as verified GLBs, and entered the live asset index
 - Currently supported and queued after batch one: 89
 - Fully specified but intentionally waiting for dedicated family builders: 879
-- Next proof targets include the TechTown hover sedan and hover coupe
+- TechTown hover-vehicle work is being repaired separately and does not block specification enrichment
 
 The unsupported count is a quality safeguard, not lost work. Those assets already have specifications, but the factory refuses to replace them with crude generic geometry.
+
+## Two specification layers
+
+### Compiled master layer
+
+```text
+asset-factory/generated/master-asset-specs.json
+```
+
+This is the compact queue-facing specification library produced from every `.glb` request in the town blueprints. It contains names, towns, source sections, families, builders, dimensions, required components, materials, quality budgets, and baseline descriptions.
+
+### Deep production layer
+
+```text
+asset-factory/generated/deep-asset-specs.json
+asset-factory/generated/deep-spec-coverage.json
+```
+
+The deep layer expands every master asset into a full production brief. Every asset receives:
+
+- a unique long-form production description
+- an asset-specific generation prompt
+- a negative prompt assembled from global, family, town, and asset rejection rules
+- exact source-document and blueprint-section evidence
+- gameplay and world role
+- placement and environmental integration rules
+- silhouette and proportion requirements
+- structural, mechanical, anatomical, architectural, botanical, or food-construction logic
+- dimensions and required components
+- material behavior, town palette, wear, lighting, and emissive restrictions
+- interaction and animation hooks
+- collision rules
+- pivot and orientation rules
+- LOD targets and protected silhouette features
+- export hierarchy
+- licensing and provenance requirements
+- at least 12 QA checks
+- at least 8 rejection criteria
+- a SHA-256 brief hash for duplicate detection and traceability
+
+The deep-spec validation workflow fails when even one asset is absent, too short, duplicated, missing blueprint context, missing required sections, or using placeholder language.
 
 ## Cost model
 
@@ -26,7 +67,7 @@ The unsupported count is a quality safeguard, not lost work. Those assets alread
 asset-factory/
   quality-policy.json          global visual and QA contract
   manual-overrides.json        detailed hero specs and queue priorities
-  generated/                   compiled master specification library
+  generated/                   compact and deep specification libraries
   state/                       persistent queue progress
   work/                        temporary Blender input, renders, and reports; gitignored
 ```
@@ -36,15 +77,23 @@ Source code lives under:
 ```text
 tools/asset-factory/
   compile-specs.mjs
+  enrich-all-specs.mjs
+  check-deep-specs.mjs
   run-batch.mjs
   blender/common.py
   blender/builders.py
   blender/generate_batch.py
 ```
 
-## Automation behavior
+## Deep brief automation
 
-The workflow processes a maximum of 10 assets per run. It requires no per-asset approval.
+`.github/workflows/build-deep-asset-briefs.yml` rebuilds and validates the complete deep specification library when the blueprint documents, master asset list, quality policy, manual overrides, or enrichment code changes.
+
+The workflow commits generated deep specifications on normal branch pushes and uploads them as a temporary artifact on every run. Exact duplicate descriptions, duplicate prompts, or duplicate hashes fail validation.
+
+## Generation automation behavior
+
+The model workflow processes a maximum of 10 assets per run. It requires no per-asset approval.
 
 Passing assets are exported to:
 
