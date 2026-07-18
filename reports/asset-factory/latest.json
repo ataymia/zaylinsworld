@@ -1,19 +1,78 @@
 {
   "version": 1,
-  "batchId": "batch-00016",
-  "completedAt": "2026-07-18T12:06:37.897Z",
+  "batchId": "batch-00017",
+  "completedAt": "2026-07-18T12:38:18.524Z",
   "requested": 10,
   "passed": 0,
   "failed": 10,
   "queueCounts": {
     "completed": 35,
-    "quarantined": 1,
-    "queued": 63,
+    "quarantined": 6,
+    "queued": 58,
     "unsupported": 879
   },
   "results": [
     {
-      "id": "prop_starstop_fuel_pump_a_v01",
+      "id": "prop_wall_screen_home_a_v01",
+      "passed": false,
+      "outputPath": null,
+      "failures": [
+        "mesh object count 6 is below 7",
+        "material count 3 is below 4",
+        "depth 0.239m differs from target 0.120m by 99%"
+      ],
+      "stats": {
+        "meshObjects": 6,
+        "triangles": 3784,
+        "materials": [
+          "tech_composite",
+          "tech_cyan_emissive",
+          "tech_dark_metal"
+        ],
+        "materialCount": 3,
+        "components": [
+          "cable or power channel",
+          "mounting bracket",
+          "protective bezel",
+          "rear housing",
+          "screen panel",
+          "status light"
+        ],
+        "bounds": {
+          "min": [
+            -0.6000000238418579,
+            -0.11950000375509262,
+            0
+          ],
+          "max": [
+            0.6000000238418579,
+            0.11949999630451202,
+            1.0099999904632568
+          ],
+          "dimensions": [
+            1.2000000476837158,
+            0.23899999260902405,
+            1.0099999904632568
+          ]
+        },
+        "requiredComponents": [
+          "mounting bracket",
+          "rear housing",
+          "screen panel",
+          "protective bezel",
+          "status light",
+          "cable or power channel"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_wall_screen_home_a_v01/prop_wall_screen_home_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_wall_screen_home_a_v01/prop_wall_screen_home_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_wall_screen_home_a_v01/prop_wall_screen_home_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_wall_screen_home_a_v01/prop_wall_screen_home_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_wayfarer_fuel_pump_a_v01",
       "passed": false,
       "outputPath": null,
       "failures": [
@@ -69,84 +128,32 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_starstop_fuel_pump_a_v01/prop_starstop_fuel_pump_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starstop_fuel_pump_a_v01/prop_starstop_fuel_pump_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starstop_fuel_pump_a_v01/prop_starstop_fuel_pump_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starstop_fuel_pump_a_v01/prop_starstop_fuel_pump_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_wayfarer_fuel_pump_a_v01/prop_wayfarer_fuel_pump_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_wayfarer_fuel_pump_a_v01/prop_wayfarer_fuel_pump_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_wayfarer_fuel_pump_a_v01/prop_wayfarer_fuel_pump_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_wayfarer_fuel_pump_a_v01/prop_wayfarer_fuel_pump_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_starter_crossing_guard_sign_a_v01",
+      "id": "prop_wayfinding_sign_digital_a_v01",
       "passed": false,
       "outputPath": null,
       "failures": [
-        "triangle count 20336 exceeds 10000",
-        "missing required components: border or lettering, support post, mounting brackets, fasteners"
+        "KeyError: 'paint_red'"
       ],
-      "stats": {
-        "meshObjects": 19,
-        "triangles": 20336,
-        "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_red_paint",
-          "starter_white"
-        ],
-        "materialCount": 6,
-        "components": [
-          "footing collar",
-          "mounting bolts",
-          "octagonal sign face",
-          "perforated post",
-          "rear brackets",
-          "stop lettering",
-          "white border"
-        ],
-        "bounds": {
-          "min": [
-            -0.4292229413986206,
-            -0.11999999731779099,
-            0
-          ],
-          "max": [
-            0.4292229413986206,
-            0.11999999731779099,
-            2.6092231273651123
-          ],
-          "dimensions": [
-            0.8584458827972412,
-            0.23999999463558197,
-            2.6092231273651123
-          ]
-        },
-        "requiredComponents": [
-          "sign face",
-          "border or lettering",
-          "support post",
-          "mounting brackets",
-          "fasteners"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_starter_crossing_guard_sign_a_v01/prop_starter_crossing_guard_sign_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starter_crossing_guard_sign_a_v01/prop_starter_crossing_guard_sign_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starter_crossing_guard_sign_a_v01/prop_starter_crossing_guard_sign_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starter_crossing_guard_sign_a_v01/prop_starter_crossing_guard_sign_a_v01_view_4.png"
-      ]
+      "stats": null,
+      "previewPaths": []
     },
     {
-      "id": "prop_starter_industrial_dumpster_a_v01",
+      "id": "prop_worktower_health_desk_a_v01",
       "passed": false,
       "outputPath": null,
       "failures": [
-        "triangle count 27264 exceeds 20000",
-        "missing required components: outer enclosure, support rings, rain cover, service access"
+        "material count 3 is below 4"
       ],
       "stats": {
-        "meshObjects": 31,
-        "triangles": 27264,
+        "meshObjects": 13,
+        "triangles": 8684,
         "materials": [
           "starter_black",
           "starter_dark_metal",
@@ -154,130 +161,173 @@
         ],
         "materialCount": 3,
         "components": [
-          "base anchors",
-          "bottom support ring",
-          "disposal opening",
-          "internal liner",
-          "latch",
-          "rain hood",
-          "service door",
-          "top support ring",
-          "vertical slats"
+          "cable management",
+          "edge trim",
+          "equipment clearance",
+          "load-bearing legs or pedestal",
+          "storage",
+          "work surface"
         ],
         "bounds": {
           "min": [
-            -0.3711181581020355,
-            -0.3843090832233429,
+            -0.8399999737739563,
+            -0.40625,
             0
           ],
           "max": [
-            0.3711181581020355,
-            0.3843090832233429,
-            1.1304000616073608
+            0.8399999737739563,
+            0.40625,
+            0.8125
           ],
           "dimensions": [
-            0.742236316204071,
-            0.7686181664466858,
-            1.1304000616073608
+            1.6799999475479126,
+            0.8125,
+            0.8125
           ]
         },
         "requiredComponents": [
-          "liner",
-          "outer enclosure",
-          "support rings",
-          "disposal opening",
-          "rain cover",
-          "service access",
-          "base anchors"
+          "work surface",
+          "load-bearing legs or pedestal",
+          "cable management",
+          "storage",
+          "edge trim",
+          "equipment clearance"
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_starter_industrial_dumpster_a_v01/prop_starter_industrial_dumpster_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starter_industrial_dumpster_a_v01/prop_starter_industrial_dumpster_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starter_industrial_dumpster_a_v01/prop_starter_industrial_dumpster_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starter_industrial_dumpster_a_v01/prop_starter_industrial_dumpster_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_worktower_health_desk_a_v01/prop_worktower_health_desk_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_worktower_health_desk_a_v01/prop_worktower_health_desk_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_worktower_health_desk_a_v01/prop_worktower_health_desk_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_worktower_health_desk_a_v01/prop_worktower_health_desk_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_starter_mailbox_a_v01",
+      "id": "prop_worktower_property_desk_a_v01",
       "passed": false,
       "outputPath": null,
       "failures": [
-        "mesh object count 8 is below 9"
+        "material count 3 is below 4"
       ],
       "stats": {
-        "meshObjects": 8,
-        "triangles": 5636,
+        "meshObjects": 13,
+        "triangles": 8684,
         "materials": [
-          "starter_civic_navy",
-          "starter_galvanized",
-          "starter_red_paint",
-          "starter_wood"
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized"
         ],
-        "materialCount": 4,
+        "materialCount": 3,
         "components": [
-          "cross support",
-          "curved roof",
-          "front door",
-          "handle",
-          "mailbox body",
-          "post",
-          "signal flag"
+          "cable management",
+          "edge trim",
+          "equipment clearance",
+          "load-bearing legs or pedestal",
+          "storage",
+          "work surface"
         ],
         "bounds": {
           "min": [
-            -0.2849999964237213,
-            -0.37424999475479126,
+            -0.8399999737739563,
+            -0.40625,
             0
           ],
           "max": [
-            0.2849999964237213,
-            0.37424999475479126,
-            1.4399999380111694
+            0.8399999737739563,
+            0.40625,
+            0.8125
           ],
           "dimensions": [
-            0.5699999928474426,
-            0.7484999895095825,
-            1.4399999380111694
+            1.6799999475479126,
+            0.8125,
+            0.8125
           ]
         },
         "requiredComponents": [
-          "post",
-          "cross support",
-          "mailbox body",
-          "curved roof",
-          "front door",
-          "handle",
-          "signal flag"
+          "work surface",
+          "load-bearing legs or pedestal",
+          "cable management",
+          "storage",
+          "edge trim",
+          "equipment clearance"
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_starter_mailbox_a_v01/prop_starter_mailbox_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starter_mailbox_a_v01/prop_starter_mailbox_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starter_mailbox_a_v01/prop_starter_mailbox_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starter_mailbox_a_v01/prop_starter_mailbox_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_worktower_property_desk_a_v01/prop_worktower_property_desk_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_worktower_property_desk_a_v01/prop_worktower_property_desk_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_worktower_property_desk_a_v01/prop_worktower_property_desk_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_worktower_property_desk_a_v01/prop_worktower_property_desk_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_streetlight_neon_a_v01",
+      "id": "charging_bay_pad_a_v01",
       "passed": false,
       "outputPath": null,
       "failures": [
-        "KeyError: 'warm_light'"
-      ],
-      "stats": null,
-      "previewPaths": []
-    },
-    {
-      "id": "prop_ticket_terminal_a_v01",
-      "passed": false,
-      "outputPath": null,
-      "failures": [
-        "material count 4 is below 5"
+        "triangle count 28052 exceeds 18000",
+        "height 1.145m differs from target 0.350m by 227%"
       ],
       "stats": {
-        "meshObjects": 11,
-        "triangles": 7348,
+        "meshObjects": 16,
+        "triangles": 28052,
+        "materials": [
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_concrete",
+          "tech_cyan_emissive",
+          "tech_dark_metal"
+        ],
+        "materialCount": 5,
+        "components": [
+          "alignment markings",
+          "connector or induction array",
+          "ground pad",
+          "power module",
+          "protective edging",
+          "status lights"
+        ],
+        "bounds": {
+          "min": [
+            -1.5,
+            -2.674999952316284,
+            0
+          ],
+          "max": [
+            1.5,
+            2.674999952316284,
+            1.1449999809265137
+          ],
+          "dimensions": [
+            3,
+            5.349999904632568,
+            1.1449999809265137
+          ]
+        },
+        "requiredComponents": [
+          "ground pad",
+          "alignment markings",
+          "power module",
+          "connector or induction array",
+          "status lights",
+          "protective edging"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/charging_bay_pad_a_v01/charging_bay_pad_a_v01_view_1.png",
+        "asset-factory/work/previews/charging_bay_pad_a_v01/charging_bay_pad_a_v01_view_2.png",
+        "asset-factory/work/previews/charging_bay_pad_a_v01/charging_bay_pad_a_v01_view_3.png",
+        "asset-factory/work/previews/charging_bay_pad_a_v01/charging_bay_pad_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "classroom_desk_tech_a_v01",
+      "passed": false,
+      "outputPath": null,
+      "failures": [
+        "missing required components: frame"
+      ],
+      "stats": {
+        "meshObjects": 13,
+        "triangles": 10156,
         "materials": [
           "tech_brushed_metal",
           "tech_composite",
@@ -286,59 +336,180 @@
         ],
         "materialCount": 4,
         "components": [
-          "anchored base",
-          "input area",
-          "protective bezel",
-          "screen",
-          "service panel",
-          "structural body",
-          "ventilation"
+          "fasteners",
+          "feet",
+          "legs",
+          "storage shelf or modesty panel",
+          "work surface"
         ],
         "bounds": {
           "min": [
             -0.36000001430511475,
-            -0.30250000953674316,
+            -0.26249998807907104,
             0
           ],
           "max": [
             0.36000001430511475,
-            0.30250000953674316,
-            1.684999942779541
+            0.26249998807907104,
+            0.7450000047683716
           ],
           "dimensions": [
             0.7200000286102295,
-            0.6050000190734863,
-            1.684999942779541
+            0.5249999761581421,
+            0.7450000047683716
           ]
         },
         "requiredComponents": [
-          "anchored base",
-          "structural body",
-          "screen",
-          "protective bezel",
-          "input area",
-          "service panel",
-          "ventilation"
+          "work surface",
+          "frame",
+          "legs",
+          "storage shelf or modesty panel",
+          "feet",
+          "fasteners"
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_ticket_terminal_a_v01/prop_ticket_terminal_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_ticket_terminal_a_v01/prop_ticket_terminal_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_ticket_terminal_a_v01/prop_ticket_terminal_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_ticket_terminal_a_v01/prop_ticket_terminal_a_v01_view_4.png"
+        "asset-factory/work/previews/classroom_desk_tech_a_v01/classroom_desk_tech_a_v01_view_1.png",
+        "asset-factory/work/previews/classroom_desk_tech_a_v01/classroom_desk_tech_a_v01_view_2.png",
+        "asset-factory/work/previews/classroom_desk_tech_a_v01/classroom_desk_tech_a_v01_view_3.png",
+        "asset-factory/work/previews/classroom_desk_tech_a_v01/classroom_desk_tech_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_tideglass_sub_engine_bench_a_v01",
+      "id": "hover_parking_pad_a_v01",
       "passed": false,
       "outputPath": null,
       "failures": [
-        "triangle count 21956 exceeds 18000",
+        "triangle count 28052 exceeds 18000",
+        "height 1.145m differs from target 0.350m by 227%"
+      ],
+      "stats": {
+        "meshObjects": 16,
+        "triangles": 28052,
+        "materials": [
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_concrete",
+          "tech_cyan_emissive",
+          "tech_dark_metal"
+        ],
+        "materialCount": 5,
+        "components": [
+          "alignment markings",
+          "connector or induction array",
+          "ground pad",
+          "power module",
+          "protective edging",
+          "status lights"
+        ],
+        "bounds": {
+          "min": [
+            -1.5,
+            -2.674999952316284,
+            0
+          ],
+          "max": [
+            1.5,
+            2.674999952316284,
+            1.1449999809265137
+          ],
+          "dimensions": [
+            3,
+            5.349999904632568,
+            1.1449999809265137
+          ]
+        },
+        "requiredComponents": [
+          "ground pad",
+          "alignment markings",
+          "power module",
+          "connector or induction array",
+          "status lights",
+          "protective edging"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/hover_parking_pad_a_v01/hover_parking_pad_a_v01_view_1.png",
+        "asset-factory/work/previews/hover_parking_pad_a_v01/hover_parking_pad_a_v01_view_2.png",
+        "asset-factory/work/previews/hover_parking_pad_a_v01/hover_parking_pad_a_v01_view_3.png",
+        "asset-factory/work/previews/hover_parking_pad_a_v01/hover_parking_pad_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_air_water_service_terminal_future_a_v01",
+      "passed": false,
+      "outputPath": null,
+      "failures": [
+        "mesh object count 14 is below 15"
+      ],
+      "stats": {
+        "meshObjects": 14,
+        "triangles": 10756,
+        "materials": [
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_concrete",
+          "tech_cyan_emissive",
+          "tech_dark_metal",
+          "tech_rubber"
+        ],
+        "materialCount": 6,
+        "components": [
+          "anchored pedestal",
+          "cabinet",
+          "display",
+          "hose",
+          "nozzle",
+          "payment terminal",
+          "protective trim",
+          "service panel"
+        ],
+        "bounds": {
+          "min": [
+            -0.4960829019546509,
+            -0.3271203637123108,
+            0
+          ],
+          "max": [
+            0.4960829019546509,
+            0.3271203637123108,
+            1.9000000953674316
+          ],
+          "dimensions": [
+            0.9921658039093018,
+            0.6542407274246216,
+            1.9000000953674316
+          ]
+        },
+        "requiredComponents": [
+          "anchored pedestal",
+          "cabinet",
+          "display",
+          "payment terminal",
+          "hose",
+          "nozzle",
+          "protective trim",
+          "service panel"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_air_water_service_terminal_future_a_v01/prop_air_water_service_terminal_future_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_air_water_service_terminal_future_a_v01/prop_air_water_service_terminal_future_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_air_water_service_terminal_future_a_v01/prop_air_water_service_terminal_future_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_air_water_service_terminal_future_a_v01/prop_air_water_service_terminal_future_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_aqualume_pressure_seal_bench_a_v01",
+      "passed": false,
+      "outputPath": null,
+      "failures": [
+        "triangle count 25804 exceeds 18000",
         "missing required components: seat structure, back structure, side frames, supports"
       ],
       "stats": {
         "meshObjects": 30,
-        "triangles": 21956,
+        "triangles": 25804,
         "materials": [
           "starter_dark_metal",
           "starter_galvanized",
@@ -382,189 +553,10 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_tideglass_sub_engine_bench_a_v01/prop_tideglass_sub_engine_bench_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_tideglass_sub_engine_bench_a_v01/prop_tideglass_sub_engine_bench_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_tideglass_sub_engine_bench_a_v01/prop_tideglass_sub_engine_bench_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_tideglass_sub_engine_bench_a_v01/prop_tideglass_sub_engine_bench_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_tool_bench_precision_a_v01",
-      "passed": false,
-      "outputPath": null,
-      "failures": [
-        "triangle count 21956 exceeds 18000",
-        "material count 2 is below 3",
-        "missing required components: seat structure, back structure, side frames, supports"
-      ],
-      "stats": {
-        "meshObjects": 30,
-        "triangles": 21956,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_dark_metal"
-        ],
-        "materialCount": 2,
-        "components": [
-          "anchored feet",
-          "armrests",
-          "back slats",
-          "left side frame",
-          "mounting bolts",
-          "rear support rails",
-          "right side frame",
-          "seat slats"
-        ],
-        "bounds": {
-          "min": [
-            -0.8799999952316284,
-            -0.3550509810447693,
-            0
-          ],
-          "max": [
-            0.8799999952316284,
-            0.3550509810447693,
-            1.1830345392227173
-          ],
-          "dimensions": [
-            1.7599999904632568,
-            0.7101019620895386,
-            1.1830345392227173
-          ]
-        },
-        "requiredComponents": [
-          "seat structure",
-          "back structure",
-          "side frames",
-          "supports",
-          "armrests",
-          "anchored feet"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_tool_bench_precision_a_v01/prop_tool_bench_precision_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_tool_bench_precision_a_v01/prop_tool_bench_precision_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_tool_bench_precision_a_v01/prop_tool_bench_precision_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_tool_bench_precision_a_v01/prop_tool_bench_precision_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_wall_fitness_screen_a_v01",
-      "passed": false,
-      "outputPath": null,
-      "failures": [
-        "mesh object count 6 is below 7",
-        "material count 3 is below 4",
-        "depth 0.239m differs from target 0.120m by 99%"
-      ],
-      "stats": {
-        "meshObjects": 6,
-        "triangles": 3784,
-        "materials": [
-          "tech_composite",
-          "tech_cyan_emissive",
-          "tech_dark_metal"
-        ],
-        "materialCount": 3,
-        "components": [
-          "cable or power channel",
-          "mounting bracket",
-          "protective bezel",
-          "rear housing",
-          "screen panel",
-          "status light"
-        ],
-        "bounds": {
-          "min": [
-            -0.6000000238418579,
-            -0.11950000375509262,
-            0
-          ],
-          "max": [
-            0.6000000238418579,
-            0.11949999630451202,
-            1.0099999904632568
-          ],
-          "dimensions": [
-            1.2000000476837158,
-            0.23899999260902405,
-            1.0099999904632568
-          ]
-        },
-        "requiredComponents": [
-          "mounting bracket",
-          "rear housing",
-          "screen panel",
-          "protective bezel",
-          "status light",
-          "cable or power channel"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_wall_fitness_screen_a_v01/prop_wall_fitness_screen_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_wall_fitness_screen_a_v01/prop_wall_fitness_screen_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_wall_fitness_screen_a_v01/prop_wall_fitness_screen_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_wall_fitness_screen_a_v01/prop_wall_fitness_screen_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_wall_screen_dashboard_a_v01",
-      "passed": false,
-      "outputPath": null,
-      "failures": [
-        "material count 4 is below 5"
-      ],
-      "stats": {
-        "meshObjects": 19,
-        "triangles": 12284,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_cyan_emissive",
-          "tech_dark_metal"
-        ],
-        "materialCount": 4,
-        "components": [
-          "bezels",
-          "cables",
-          "desk or mounting base",
-          "input devices",
-          "monitor arms",
-          "multiple displays",
-          "rear housings"
-        ],
-        "bounds": {
-          "min": [
-            -0.7099999785423279,
-            -0.32499998807907104,
-            0
-          ],
-          "max": [
-            0.7099999785423279,
-            0.32499998807907104,
-            0.9700000286102295
-          ],
-          "dimensions": [
-            1.4199999570846558,
-            0.6499999761581421,
-            0.9700000286102295
-          ]
-        },
-        "requiredComponents": [
-          "desk or mounting base",
-          "monitor arms",
-          "multiple displays",
-          "bezels",
-          "rear housings",
-          "cables",
-          "input devices"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_wall_screen_dashboard_a_v01/prop_wall_screen_dashboard_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_wall_screen_dashboard_a_v01/prop_wall_screen_dashboard_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_wall_screen_dashboard_a_v01/prop_wall_screen_dashboard_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_wall_screen_dashboard_a_v01/prop_wall_screen_dashboard_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_aqualume_pressure_seal_bench_a_v01/prop_aqualume_pressure_seal_bench_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_aqualume_pressure_seal_bench_a_v01/prop_aqualume_pressure_seal_bench_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_aqualume_pressure_seal_bench_a_v01/prop_aqualume_pressure_seal_bench_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_aqualume_pressure_seal_bench_a_v01/prop_aqualume_pressure_seal_bench_a_v01_view_4.png"
       ]
     }
   ]
