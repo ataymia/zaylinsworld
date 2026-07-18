@@ -52,6 +52,16 @@ assert.equal(registry.parcelForLocation('zaylins-home')?.id, 'parcel-zaylins-hom
 assert.equal(registry.districtAt({ x: 48, z: 828 })?.id, 'willowbend-residential');
 assert.equal(registry.featureEnabled('starterTownLargeWorld'), false, 'large town must remain opt-in during parity construction');
 
+const { StarterTownCellIndex } = await importLocal('src/runtime/StarterTownCellIndex.js');
+const cellIndex = new StarterTownCellIndex();
+const cellReport = cellIndex.snapshot();
+assert.equal(cellReport.cellSize, 250);
+assert.equal(cellReport.cells, 100, '2,400-unit envelope must resolve to a 10x10 streaming grid');
+assert.ok(cellReport.populatedCells > 40, 'town content must be distributed across the grid');
+assert.ok(cellIndex.cellAt(registry.location('zaylins-home').position).content.locations.has('zaylins-home'));
+assert.ok(cellIndex.cellsFor('routes', 'dreamdrop-beltway').length > 12, 'beltway must span many streaming cells');
+assert.ok(cellReport.borderDependencies > 0, 'border-spanning roads and parcels need neighbor dependencies');
+
 const { StreamingGrid } = await importLocal('src/runtime/StreamingGrid.js');
 const grid = new StreamingGrid({ bounds: STARTER_TOWN_RUNTIME_PLAN.terrainBounds, cellSize: 250 });
 const firstChanges = grid.update({ x: 0, z: 0 });
@@ -84,11 +94,29 @@ assert.equal(lod.evaluate({ position: { x: 1000, z: 0 } }, { position: { x: 0, z
 assert.equal(lod.canInstance({ category: 'streetlight' }), true);
 assert.equal(lod.canInstance({ category: 'streetlight', interactive: true }), false);
 
+const {
+  starterTownHeightAt,
+  STARTER_TOWN_GRADE_REPORT,
+} = await importLocal('src/world/StarterTownTerrain.js');
+assert.equal(STARTER_TOWN_GRADE_REPORT.ok, true, `terrain grade errors: ${STARTER_TOWN_GRADE_REPORT.errors.join(', ')}`);
+assert.ok(starterTownHeightAt(650, -430) > starterTownHeightAt(-650, -650) + 8, 'Civic Heights must read above Northworks');
+assert.ok(Math.abs(starterTownHeightAt(-600, -650)) < 6, 'Northworks must remain relatively flat');
+
+const { StarterTownBoundaryGuard } = await importLocal('src/world/StarterTownBoundaryGuard.js');
+const boundary = new StarterTownBoundaryGuard();
+assert.equal(boundary.evaluate({ x: 0, z: 0 }).action, 'allow');
+assert.equal(boundary.evaluate({ x: 1080, z: 800 }).action, 'clamp');
+assert.equal(boundary.evaluate({ x: 1600, z: 1600 }).action, 'recover');
+assert.equal(boundary.evaluate({ x: 0, z: -1100 }).action, 'allow-gateway');
+
 const { RoadNetwork } = await importLocal('src/world/RoadNetwork.js');
 const roads = new RoadNetwork(STARTER_TOWN_RUNTIME_PLAN.routes);
 assert.ok(roads.snapshot().segments >= STARTER_TOWN_RUNTIME_PLAN.routes.length, 'road network must create polyline segments');
 assert.equal(roads.isOnRoad({ x: 0, z: 0 }), true, 'central test point must be on Centre Avenue');
 assert.ok(roads.intersections().length > 0, 'road network must discover shared authored nodes');
+const terrainRoadGeometry = roads.buildGeometry({ heightAt: starterTownHeightAt });
+assert.equal(terrainRoadGeometry.userData.surfaceSamples.length, roads.segments.length);
+assert.ok(terrainRoadGeometry.userData.surfaceSamples.some((sample) => Math.abs(sample.grade) > 0.001), 'graded roads must contain nonzero slope samples');
 
 const { RoadGraph } = await importLocal('src/world/RoadGraph.js');
 const roadGraph = new RoadGraph(roads);
@@ -105,6 +133,22 @@ const roadReport = new RoadValidator({ roadNetwork: roads, roadGraph, plan: STAR
 });
 assert.equal(roadReport.ok, true, `road validation errors: ${JSON.stringify(roadReport.errors)}`);
 
+const { createStarterTownRoadsidePlan } = await importLocal('src/world/StarterTownRoadside.js');
+const roadside = createStarterTownRoadsidePlan({ roadNetwork: roads, roadGraph });
+assert.ok(roadside.placements.length > 300, 'Starter Town must generate a substantial roadside plan');
+for (const type of ['streetlight', 'sidewalk', 'center-dash', 'crosswalk-stripe', 'guardrail', 'drain']) {
+  assert.ok(roadside.byType[type] > 0, `roadside plan is missing ${type}`);
+}
+
+const {
+  STARTER_TOWN_ENVIRONMENT_PRESETS,
+  starterTownEnvironmentForDistrict,
+} = await importLocal('src/world/StarterTownEnvironment.js');
+assert.equal(Object.keys(STARTER_TOWN_ENVIRONMENT_PRESETS).length, 9);
+const marketNight = starterTownEnvironmentForDistrict('market-mile', { timeMin: 1320, weather: 'rain' });
+assert.ok(marketNight.lighting.neonIntensity > 0.4, 'Market Mile must retain its night identity');
+assert.equal(marketNight.atmosphere.wetSurface, 1);
+
 const { InteractionManager } = await importLocal('src/interaction.js');
 const interactions = new InteractionManager();
 interactions.register({
@@ -115,7 +159,10 @@ interactions.register({
 });
 assert.equal(interactions.findNearest({}, null)?.id, 'mission-test', 'overlapping prompts must select the higher-priority interaction');
 
-const [loader, assets, state, modular, largeTown, lifecycle, diagnostics, massing, streetscape, graphicsSource] = await Promise.all([
+const [
+  loader, assets, state, modular, largeTown, lifecycle, diagnostics, massing,
+  streetscape, graphicsSource, runtimeSource, visualAuditSource,
+] = await Promise.all([
   source('src/loader.js'),
   source('src/assets.js'),
   source('src/state.js'),
@@ -126,6 +173,8 @@ const [loader, assets, state, modular, largeTown, lifecycle, diagnostics, massin
   source('src/world/DistrictMassing.js'),
   source('src/world/StreetscapeLayer.js'),
   source('src/graphics.js'),
+  source('src/runtime/StarterTownRuntime.js'),
+  source('src/world/VisualPerformanceAudit.js'),
 ]);
 assert.match(loader, /loadingManager\.onStart =/, 'loader must track work before DOM initialization');
 assert.match(loader, /revealRequested/, 'loader must gate reveal on readiness');
@@ -144,13 +193,22 @@ assert.match(state, /BACKUP_KEY/, 'save migration must preserve a backup');
 assert.match(modular, /tone\.textureLift/, 'skin renderer must use per-tone texture lift');
 assert.doesNotMatch(modular, /lerp\(new THREE\.Color\('#ffffff'\), 0\.3\)/, 'skin renderer must not wash every tone 30% toward white');
 assert.match(largeTown, /featureEnabled\('starterTownLargeWorld'\)/, 'large town must remain feature-gated');
-assert.match(largeTown, /buildDistrictMassing/, 'large town must include district massing');
+assert.match(largeTown, /applyTerrainHeightsToPlane/, 'large town terrain must use authored elevation');
+assert.match(largeTown, /buildStarterTownRoadsideLayer/, 'large town must include generated road infrastructure');
+assert.match(largeTown, /buildDistrictMassing\(\{ heightAt: starterTownHeightAt \}\)/, 'district massing must sit on terrain');
 assert.match(largeTown, /buildStreetscapeLayer/, 'large town must include ready-asset streetscape placement');
 assert.match(massing, /new THREE\.InstancedMesh/, 'repeated district massing must use instancing');
+assert.match(massing, /heightAt/, 'massing must support terrain-aware placement');
 assert.match(streetscape, /assetRuntimeRegistry\.resolve/, 'streetscape must search the live asset registry');
 assert.match(streetscape, /fallbackTypes/, 'unready street assets must be reported, not crash the build');
 assert.match(lifecycle, /deterministic ownership and cleanup/i);
 assert.match(diagnostics, /budgetViolations/, 'runtime diagnostics must report performance-budget violations');
 assert.match(graphicsSource, /adaptToFps\(fps/, 'Auto graphics must react to measured frame rate');
+assert.match(runtimeSource, /class StarterTownRuntime/, 'Starter Town systems must have one coordinator');
+assert.match(runtimeSource, /sceneLifecycle\.replace\('town:starter-town'\)/, 'town installation must own deterministic cleanup');
+assert.match(runtimeSource, /this\.streaming\.update/, 'runtime coordinator must drive predictive streaming');
+assert.match(runtimeSource, /this\.boundary\.evaluate/, 'runtime coordinator must enforce safe boundaries');
+assert.match(visualAuditSource, /repeatedCandidates/, 'visual audit must detect missed instancing opportunities');
+assert.match(visualAuditSource, /shadowCasters/, 'visual audit must report costly shadows');
 
-console.log('[runtime-foundation] inclusive palette, finite real loader, predictive streaming, adaptive graphics, connected roads, parcels, massing, and ready-asset streetscape verified.');
+console.log('[runtime-foundation] inclusive palette, finite loader, Phase 2 runtime contracts, Phase 3 cell ownership/streaming, Phase 4 graded connected roads, Phase 5 boundaries/parcels, and Phase 6 environment/massing/streetscape verified.');
