@@ -1,8 +1,8 @@
 {
   "format": "zta-deep-asset-spec-shard",
   "version": 1,
-  "generatedAt": "2026-07-18T16:46:02.534Z",
-  "inventoryAuditAt": "2026-07-18T16:46:06.952Z",
+  "generatedAt": "2026-07-18T16:48:15.587Z",
+  "inventoryAuditAt": "2026-07-18T16:48:19.200Z",
   "shardKey": "dungeon-outskirts",
   "recordCount": 81,
   "canonicalGenerationRequests": 81,
@@ -288,9 +288,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "571b360fd12c615571b0061ae3f39153aa1eb3e8f7b915cff44c42d7d4773dff",
-      "semanticRefinedAt": "2026-07-18T16:46:03.562Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.431Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.080Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.454Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Boss Gate, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “C. Dungeon modular kit” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -309,10 +309,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Dungeon Boss Gate role-specific architecture profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -320,7 +320,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.880Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.133Z"
     },
     {
       "id": "arch_dungeon_corridor_corner_a_v01",
@@ -593,9 +593,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "d537f5dc6cb531ec8e26ade8a24aafa04c06ee3fe01f99017e6562269b982eea",
-      "semanticRefinedAt": "2026-07-18T16:46:03.563Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.432Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.080Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.455Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Corridor Corner, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “C. Dungeon modular kit” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -614,10 +614,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "room or interior shell",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named room or interior shell profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -625,7 +625,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.880Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.133Z"
     },
     {
       "id": "arch_dungeon_corridor_straight_a_v01",
@@ -898,9 +898,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "ce59a8851a6e94104df02d00ab54502f648b4dcb4b0e7abd27e4546c63072717",
-      "semanticRefinedAt": "2026-07-18T16:46:03.563Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.432Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.080Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.455Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Corridor Straight, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “C. Dungeon modular kit” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -919,10 +919,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "room or interior shell",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named room or interior shell profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -930,7 +930,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.881Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.133Z"
     },
     {
       "id": "arch_dungeon_crystal_room_a_v01",
@@ -1203,9 +1203,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "fa2ad272d4a0df25b33b75de9af8fc9108b8109f879304e9898eab543eec7e35",
-      "semanticRefinedAt": "2026-07-18T16:46:03.563Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.432Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.081Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.455Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Crystal Room, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “C. Dungeon modular kit” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -1224,10 +1224,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "room or interior shell",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named room or interior shell profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -1235,7 +1235,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.881Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.134Z"
     },
     {
       "id": "arch_dungeon_forge_chasm_a_v01",
@@ -1504,9 +1504,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "b83df5f6d798ea2f1215ef2af3b188a9c48ec1c37b63ee741cfc80da4c4730eb",
-      "semanticRefinedAt": "2026-07-18T16:46:03.563Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.432Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.081Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.455Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Forge Chasm, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “C. Dungeon modular kit” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -1525,10 +1525,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Dungeon Forge Chasm role-specific architecture profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -1536,7 +1536,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.881Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.134Z"
     },
     {
       "id": "arch_dungeon_library_room_a_v01",
@@ -1809,9 +1809,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "9bd220970d6d7c66c51be5b42031eee32c74a3b28f19eef473c785605c36604e",
-      "semanticRefinedAt": "2026-07-18T16:46:03.563Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.432Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.081Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.456Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Library Room, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “C. Dungeon modular kit” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -1830,10 +1830,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "room or interior shell",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named room or interior shell profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -1841,7 +1841,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.881Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.134Z"
     },
     {
       "id": "arch_dungeon_locked_door_a_v01",
@@ -2113,9 +2113,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "4f58b40a6b1b8e93be5859c313283edd8af9c03df3f1f2f5814d85686d161b98",
-      "semanticRefinedAt": "2026-07-18T16:46:03.564Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.433Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.081Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.456Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Locked Door, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “C. Dungeon modular kit” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -2134,10 +2134,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "door or portal module",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named door or portal module profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -2145,7 +2145,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.881Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.134Z"
     },
     {
       "id": "arch_dungeon_room_stone_large_a_v01",
@@ -2418,9 +2418,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "dca0fdf777f4b2579ec4579fccc390bb96ec768eadfeb0047f01f5b7187576e4",
-      "semanticRefinedAt": "2026-07-18T16:46:03.564Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.433Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.082Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.456Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Room Stone Large, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “C. Dungeon modular kit” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -2439,10 +2439,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "room or interior shell",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named room or interior shell profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -2450,7 +2450,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.881Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.134Z"
     },
     {
       "id": "arch_dungeon_room_stone_small_a_v01",
@@ -2723,9 +2723,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "49da71111ee07bac3fe53aaf5b1f035bf29140d7a8eae3f021894c36c1ed3fc2",
-      "semanticRefinedAt": "2026-07-18T16:46:03.564Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.433Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.082Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.456Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Room Stone Small, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “C. Dungeon modular kit” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -2744,10 +2744,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "room or interior shell",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named room or interior shell profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -2755,7 +2755,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.882Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.135Z"
     },
     {
       "id": "arch_dungeon_root_cavern_a_v01",
@@ -3024,9 +3024,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "3a8aa1e9bb6cf881e941c9dd00bb67d6abd40a3a8d87a002dea3ab3095f3cb1b",
-      "semanticRefinedAt": "2026-07-18T16:46:03.564Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.433Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.082Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.457Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Root Cavern, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “C. Dungeon modular kit” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -3045,10 +3045,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Dungeon Root Cavern role-specific architecture profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -3056,7 +3056,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.882Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.135Z"
     },
     {
       "id": "arch_dungeon_safe_room_a_v01",
@@ -3329,9 +3329,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "cd97e2b4502116a6b297c75d5efb622c27ca70dd52b261e50c3feb5bba0aa460",
-      "semanticRefinedAt": "2026-07-18T16:46:03.564Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.433Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.082Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.457Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Safe Room, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “C. Dungeon modular kit” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -3350,10 +3350,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "room or interior shell",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named room or interior shell profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -3361,7 +3361,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.882Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.135Z"
     },
     {
       "id": "arch_dungeon_stairs_down_a_v01",
@@ -3630,9 +3630,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "28713e97dc4252157307ea89b3b11a64efb772774014716d9cc9ac7e7893444e",
-      "semanticRefinedAt": "2026-07-18T16:46:03.564Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.433Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.083Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.457Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Stairs Down, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “C. Dungeon modular kit” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -3651,10 +3651,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Dungeon Stairs Down role-specific architecture profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -3662,7 +3662,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.882Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.135Z"
     },
     {
       "id": "building_adventurer_academy_exterior_v01",
@@ -3895,9 +3895,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "e4209656d79b193acb52d59a71c536168d539644ec953f291f121070740c7393",
-      "semanticRefinedAt": "2026-07-18T16:46:03.565Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.434Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.083Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.457Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -3905,7 +3905,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.882Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.135Z"
     },
     {
       "id": "building_dungeon_gate_exterior_v01",
@@ -4138,9 +4138,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "a5fc33923ea0fc7a6f80b0470ef549ec8a55a387d9d5ed475ec57fcc77cd8c8b",
-      "semanticRefinedAt": "2026-07-18T16:46:03.565Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.434Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.083Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.458Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -4148,7 +4148,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.882Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.136Z"
     },
     {
       "id": "building_dungeon_guild_hall_exterior_v01",
@@ -4381,9 +4381,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "77ae1df080bd279b293a8ace3b57db08df2a58b6b79515533c6e4e265b8a4cd3",
-      "semanticRefinedAt": "2026-07-18T16:46:03.565Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.434Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.083Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.458Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -4391,7 +4391,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.883Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.136Z"
     },
     {
       "id": "building_healer_lodge_exterior_v01",
@@ -4624,9 +4624,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "39e0c745a97e3522c6b79163cec165d4e4d44c4f9d545a66713ecb5463bd6193",
-      "semanticRefinedAt": "2026-07-18T16:46:03.565Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.434Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.083Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.458Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -4634,7 +4634,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.883Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.136Z"
     },
     {
       "id": "building_ironroot_blacksmith_exterior_v01",
@@ -4867,9 +4867,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "ecf645b7003ad419a63f572347f9e6894987a42275987a164f45f94909ced49d",
-      "semanticRefinedAt": "2026-07-18T16:46:03.565Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.434Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.084Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.458Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -4877,7 +4877,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.883Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.136Z"
     },
     {
       "id": "building_moonwort_potions_exterior_v01",
@@ -5110,9 +5110,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "c7d3097170feb410aaa1c593ed48cd30ce5f00ff262d47a2ae782e8ea7c7042e",
-      "semanticRefinedAt": "2026-07-18T16:46:03.566Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.435Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.088Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.458Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -5120,7 +5120,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.883Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.136Z"
     },
     {
       "id": "building_outpost_cabin_a_v01",
@@ -5353,9 +5353,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "8ebc35bb2cb4e0aa1130339b4bfe6b529298507f714f7f9ffb468c3872f779fa",
-      "semanticRefinedAt": "2026-07-18T16:46:03.566Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.435Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.088Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.461Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -5363,7 +5363,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.883Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.136Z"
     },
     {
       "id": "building_outpost_workshop_loft_exterior_v01",
@@ -5596,9 +5596,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "a5472202c987d4a43700e1d655a1dc2cf6f0512937d6465bce6c0f1dcc72a7be",
-      "semanticRefinedAt": "2026-07-18T16:46:03.566Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.435Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.088Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.461Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -5606,7 +5606,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.883Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.137Z"
     },
     {
       "id": "building_relic_appraiser_exterior_v01",
@@ -5839,9 +5839,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "21190070ffb72c8245c43f8f4a36474802f25eb1a2916c632a59f66a8111beb6",
-      "semanticRefinedAt": "2026-07-18T16:46:03.566Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.435Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.088Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.461Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -5849,7 +5849,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.884Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.137Z"
     },
     {
       "id": "building_shrine_of_return_exterior_v01",
@@ -6082,9 +6082,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "2f747bc1a31b0044c20d82e734f5cdc725de6135201d2202b3dbeff492cb1d34",
-      "semanticRefinedAt": "2026-07-18T16:46:03.566Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.435Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.088Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.461Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -6092,7 +6092,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.884Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.137Z"
     },
     {
       "id": "building_warden_station_exterior_v01",
@@ -6325,9 +6325,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "c917eb47b266305f8da8282249c7e454e5ed69ee4629dfc7e1507965398f8962",
-      "semanticRefinedAt": "2026-07-18T16:46:03.567Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.436Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.088Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.461Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -6335,7 +6335,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.884Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.137Z"
     },
     {
       "id": "building_wayfarer_fuel_supply_exterior_v01",
@@ -6568,9 +6568,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "b761d57162711162790683cb8942d6af68be1de9a4dc573c2be42ba2dac41adb",
-      "semanticRefinedAt": "2026-07-18T16:46:03.567Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.436Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.089Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.462Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -6578,7 +6578,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.884Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.137Z"
     },
     {
       "id": "furniture_outpost_bunk_a_v01",
@@ -6847,9 +6847,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "77cc7ac78bf7a852aeedcb938b56bec664d03a05b059e21b8a8741087be4aba3",
-      "semanticRefinedAt": "2026-07-18T16:46:03.567Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.436Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.089Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.462Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Outpost Bunk, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “F. Housing” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -6868,10 +6868,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Outpost Bunk role-specific furniture profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -6879,7 +6879,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.884Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.137Z"
     },
     {
       "id": "furniture_outpost_cabin_bed_a_v01",
@@ -7152,9 +7152,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "88de3e77ed4e50eed21b42de1ef8c535ff73202188df9177b9a056c3f87f5206",
-      "semanticRefinedAt": "2026-07-18T16:46:03.567Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.436Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.089Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.462Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Outpost Cabin Bed, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “F. Housing” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -7173,10 +7173,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "bed",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named bed profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -7184,7 +7184,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.884Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.138Z"
     },
     {
       "id": "furniture_outpost_table_a_v01",
@@ -7453,9 +7453,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "668343f42154428d6c745223d8707ec765d9d74139ad9486c05fa33da0540349",
-      "semanticRefinedAt": "2026-07-18T16:46:03.567Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.436Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.089Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.462Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Outpost Table, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “F. Housing” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -7474,10 +7474,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "table",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named table profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -7485,7 +7485,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.884Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.138Z"
     },
     {
       "id": "prop_appraisal_lens_a_v01",
@@ -7754,9 +7754,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "1bf5d9e22dcdf5e78c1856914ef31508701c152bda055a0d9b3457e6d1c79000",
-      "semanticRefinedAt": "2026-07-18T16:46:03.567Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.436Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.089Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.462Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Appraisal Lens, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “E. Forge/potion/appraisal” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -7775,10 +7775,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Appraisal Lens role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -7786,7 +7786,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.885Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.138Z"
     },
     {
       "id": "prop_appraisal_table_a_v01",
@@ -8055,9 +8055,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "94a483fec9cf1262f2ddec945639f31e6682b3233f06de9ed6b553834e97198b",
-      "semanticRefinedAt": "2026-07-18T16:46:03.568Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.437Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.090Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.463Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Appraisal Table, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “E. Forge/potion/appraisal” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -8076,10 +8076,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "table",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named table profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -8087,7 +8087,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.885Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.138Z"
     },
     {
       "id": "prop_blacksmith_anvil_a_v01",
@@ -8339,9 +8339,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "4ff4bf4f16b7eb9b1f9439c292f1c683d04dc30eda1b3b24b6c5148551773488",
-      "semanticRefinedAt": "2026-07-18T16:46:03.568Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.437Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.090Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.463Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Blacksmith Anvil, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “E. Forge/potion/appraisal” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -8360,10 +8360,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "blacksmith forge equipment",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated blacksmith forge equipment profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -8371,7 +8371,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.885Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.138Z"
     },
     {
       "id": "prop_blacksmith_cooling_barrel_a_v01",
@@ -8623,9 +8623,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "1b565b3124dfbd926af647d0ae26c2046336005593711e2dd52e81b48a669512",
-      "semanticRefinedAt": "2026-07-18T16:46:03.568Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.437Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as generic_prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.090Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.463Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Blacksmith Cooling Barrel, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “E. Forge/potion/appraisal” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -8644,10 +8644,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "blacksmith forge equipment",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated blacksmith forge equipment profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -8655,7 +8655,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.885Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.138Z"
     },
     {
       "id": "prop_blacksmith_forge_a_v01",
@@ -8907,9 +8907,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "cfefbe8394bb969ebedc3eb217fcb85d19515fc1f787b846a694a65773a1e3d8",
-      "semanticRefinedAt": "2026-07-18T16:46:03.568Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.437Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.090Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.463Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Blacksmith Forge, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “E. Forge/potion/appraisal” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -8928,10 +8928,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "blacksmith forge equipment",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated blacksmith forge equipment profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -8939,7 +8939,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.885Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.138Z"
     },
     {
       "id": "prop_blacksmith_hammer_a_v01",
@@ -9191,9 +9191,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "3815210ad6a079d03d464162bd972d5bbf00dbe936946e00257dc105ef9fa505",
-      "semanticRefinedAt": "2026-07-18T16:46:03.568Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.438Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.090Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.463Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Blacksmith Hammer, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “E. Forge/potion/appraisal” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -9212,10 +9212,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "blacksmith forge equipment",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated blacksmith forge equipment profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -9223,7 +9223,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.885Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.139Z"
     },
     {
       "id": "prop_dungeon_crystal_cluster_a_v01",
@@ -9492,9 +9492,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "2b638d8cf80b3e0634357e60a2601331ea0c77c61c9f00bca811b3ee93060984",
-      "semanticRefinedAt": "2026-07-18T16:46:03.569Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.438Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.091Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.464Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Crystal Cluster, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “D. Dungeon props/traps” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -9513,10 +9513,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Dungeon Crystal Cluster role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -9524,7 +9524,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.886Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.139Z"
     },
     {
       "id": "prop_dungeon_falling_rock_marker_a_v01",
@@ -9796,9 +9796,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "894c876c272f90ce582b8421544de975a66a51ab04575a9b9915ee57ff450631",
-      "semanticRefinedAt": "2026-07-18T16:46:03.569Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.438Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.091Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.464Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Falling Rock Marker, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “D. Dungeon props/traps” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -9817,10 +9817,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Dungeon Falling Rock Marker role-specific infrastructure profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -9828,7 +9828,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.886Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.139Z"
     },
     {
       "id": "prop_dungeon_key_a_v01",
@@ -10079,9 +10079,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "8396965c98d75330491ed7a99ba6626ff28917c1ff84d12b994e754468ac72f8",
-      "semanticRefinedAt": "2026-07-18T16:46:03.569Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.438Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.091Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.464Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Key, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “D. Dungeon props/traps” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -10100,10 +10100,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "dungeon interaction or hazard prop",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated dungeon interaction or hazard prop profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -10111,7 +10111,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.886Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.139Z"
     },
     {
       "id": "prop_dungeon_lever_a_v01",
@@ -10362,9 +10362,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "30c614e863dd692ebbcb687264c6a573659441e56ad025100084fb84db085b43",
-      "semanticRefinedAt": "2026-07-18T16:46:03.569Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.438Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.091Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.464Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Lever, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “D. Dungeon props/traps” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -10383,10 +10383,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "dungeon interaction or hazard prop",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated dungeon interaction or hazard prop profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -10394,7 +10394,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.886Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.139Z"
     },
     {
       "id": "prop_dungeon_locked_door_a_v01",
@@ -10663,9 +10663,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "7e690833e8c2a6842567291d52f53f7908999e69a5ea8e4757cbefdfb5eefa11",
-      "semanticRefinedAt": "2026-07-18T16:46:03.569Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.439Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.091Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.464Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Locked Door, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “Dungeon Sprint 001: Surface + First Floor Anchor Pack” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -10684,10 +10684,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Dungeon Locked Door role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -10695,7 +10695,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.886Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.139Z"
     },
     {
       "id": "prop_dungeon_mushroom_glow_a_v01",
@@ -10963,9 +10963,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "86898febf5a1f5b069beb07977e908b494cf07e8b81115d31b9d65498ec36293",
-      "semanticRefinedAt": "2026-07-18T16:46:03.570Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.439Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as vegetation",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.092Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.464Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Mushroom Glow, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “D. Dungeon props/traps” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -10984,10 +10984,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "mushroom or fungal cluster",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named mushroom or fungal cluster profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -10995,7 +10995,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.886Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.139Z"
     },
     {
       "id": "prop_dungeon_pressure_tile_a_v01",
@@ -11246,9 +11246,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "0f409075df7da7e1c5d433ef927575c54dd2baf69af26e114667b3c65c6e57a3",
-      "semanticRefinedAt": "2026-07-18T16:46:03.570Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.439Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.092Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.465Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Pressure Tile, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “D. Dungeon props/traps” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -11267,10 +11267,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "dungeon interaction or hazard prop",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated dungeon interaction or hazard prop profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -11278,7 +11278,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.887Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.140Z"
     },
     {
       "id": "prop_dungeon_rune_lamp_a_v01",
@@ -11532,9 +11532,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "f292da9b81165f5f1c6bc5cd8ed9d636db4f95c9f643c90564e07d54592521e5",
-      "semanticRefinedAt": "2026-07-18T16:46:03.570Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.439Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.092Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.465Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Rune Lamp, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “D. Dungeon props/traps” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -11553,10 +11553,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "navigation or hazard light",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated navigation or hazard light profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -11564,7 +11564,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.887Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.140Z"
     },
     {
       "id": "prop_dungeon_safe_shrine_a_v01",
@@ -11815,9 +11815,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "e157e35ace3e813c80ebf46ac42e531717a56c5ca007aa815c9a90d73fb2620a",
-      "semanticRefinedAt": "2026-07-18T16:46:03.570Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.439Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.092Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.465Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Safe Shrine, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “D. Dungeon props/traps” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -11836,10 +11836,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "dungeon interaction or hazard prop",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated dungeon interaction or hazard prop profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -11847,7 +11847,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.887Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.140Z"
     },
     {
       "id": "prop_dungeon_spike_trap_a_v01",
@@ -12120,9 +12120,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "0e703b43273eb1b06c57bc96bb20557a3f8e7974445af678dffb8f7cb4b93c0b",
-      "semanticRefinedAt": "2026-07-18T16:46:03.570Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.440Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.093Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.465Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Spike Trap, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “D. Dungeon props/traps” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -12141,10 +12141,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "bucket, trap, net, or fishing equipment",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named bucket, trap, net, or fishing equipment profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -12152,7 +12152,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.887Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.140Z"
     },
     {
       "id": "prop_dungeon_swinging_hazard_a_v01",
@@ -12403,9 +12403,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "2d46ad878626cd85788bae691c3de913811c17ecbb313f7d79f3b59254e31be6",
-      "semanticRefinedAt": "2026-07-18T16:46:03.570Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.440Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.093Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.466Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Swinging Hazard, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “D. Dungeon props/traps” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -12424,10 +12424,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "dungeon interaction or hazard prop",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated dungeon interaction or hazard prop profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -12435,7 +12435,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.887Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.140Z"
     },
     {
       "id": "prop_dungeon_torch_a_v01",
@@ -12689,9 +12689,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "9e0356bae328c97b26fd5098a21ed8a5855e9fe5256bc7b047f72abae9db4873",
-      "semanticRefinedAt": "2026-07-18T16:46:03.571Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.440Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.093Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.466Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Torch, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “D. Dungeon props/traps” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -12710,10 +12710,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "navigation or hazard light",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated navigation or hazard light profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -12721,7 +12721,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.887Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.140Z"
     },
     {
       "id": "prop_dungeon_treasure_chest_a_v01",
@@ -12994,9 +12994,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "704d52138f21a628afe2298eaf84d82876ebe1a8abcbff7bf6e0af937721d5b8",
-      "semanticRefinedAt": "2026-07-18T16:46:03.571Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.440Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as generic_prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.094Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.466Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dungeon Treasure Chest, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “D. Dungeon props/traps” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -13015,10 +13015,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "crate, case, or chest",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named crate, case, or chest profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -13026,7 +13026,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.888Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.140Z"
     },
     {
       "id": "prop_healer_bed_a_v01",
@@ -13299,9 +13299,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "e8954e56f54f7f792c9a102a4f3e1d4721bdbfb976dc012c31774b2e952f2749",
-      "semanticRefinedAt": "2026-07-18T16:46:03.571Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.440Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.094Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.467Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Healer Bed, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “G. Warden/healer” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -13320,10 +13320,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "bed",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named bed profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -13331,7 +13331,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.888Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.141Z"
     },
     {
       "id": "prop_healer_recovery_crystal_a_v01",
@@ -13582,9 +13582,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "21f89ebe68b883b40cbbf0e5adaa877aa389113e4dc04d228ed8dd6a4c894725",
-      "semanticRefinedAt": "2026-07-18T16:46:03.571Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.440Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.094Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.467Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Healer Recovery Crystal, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “G. Warden/healer” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -13603,10 +13603,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "dungeon interaction or hazard prop",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated dungeon interaction or hazard prop profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -13614,7 +13614,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.888Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.141Z"
     },
     {
       "id": "prop_healer_supply_shelf_a_v01",
@@ -13885,9 +13885,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "529b0b992239a30ad9d4d6d9fba1e66ba69cbdec6312d06fcdd8f5c184f4ace4",
-      "semanticRefinedAt": "2026-07-18T16:46:03.571Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.441Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.095Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.467Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Healer Supply Shelf, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “G. Warden/healer” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -13906,10 +13906,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "rack or shelving unit",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named rack or shelving unit profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -13917,7 +13917,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.888Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.141Z"
     },
     {
       "id": "prop_home_dungeon_map_board_a_v01",
@@ -14190,9 +14190,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "dd942039c77845fabffb07394a2ab75fea8b191e19116dd7863d64b1eda882dd",
-      "semanticRefinedAt": "2026-07-18T16:46:03.572Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.441Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as signage",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.095Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.468Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Home Dungeon Map Board, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “F. Housing” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -14211,10 +14211,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "information board or digital display",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named information board or digital display profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -14222,7 +14222,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.888Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.141Z"
     },
     {
       "id": "prop_home_material_chest_a_v01",
@@ -14495,9 +14495,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "6a8a72c234527f010c2aabb3803d5bff12d794686cb45a98fb77b83f604ce337",
-      "semanticRefinedAt": "2026-07-18T16:46:03.572Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.441Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as generic_prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.095Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.468Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Home Material Chest, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “F. Housing” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -14516,10 +14516,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "crate, case, or chest",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named crate, case, or chest profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -14527,7 +14527,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.889Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.141Z"
     },
     {
       "id": "prop_home_pet_bed_a_v01",
@@ -14800,9 +14800,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "e962757112ac5b02f7450dcfd53642f01520feb4c5a4e29a4062c761c9d4980f",
-      "semanticRefinedAt": "2026-07-18T16:46:03.572Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.441Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.095Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.468Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Home Pet Bed, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “F. Housing” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -14821,10 +14821,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "bed",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named bed profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -14832,7 +14832,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.889Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.141Z"
     },
     {
       "id": "prop_home_potion_shelf_a_v01",
@@ -15103,9 +15103,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "cfa2656e9d2dd935e3146d2f9e5cbbbd23784334e2de9e7028a91b819b0b9e54",
-      "semanticRefinedAt": "2026-07-18T16:46:03.572Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.441Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.095Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.468Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Home Potion Shelf, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “F. Housing” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -15124,10 +15124,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "rack or shelving unit",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named rack or shelving unit profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -15135,7 +15135,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.889Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.142Z"
     },
     {
       "id": "prop_home_relic_wall_a_v01",
@@ -15404,9 +15404,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "35dd3b0bf09a9de34ad63eda39c2a2de3e343477140888b6c90e465e696de427",
-      "semanticRefinedAt": "2026-07-18T16:46:03.572Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.442Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.096Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.468Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Home Relic Wall, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “F. Housing” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -15425,10 +15425,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Home Relic Wall role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -15436,7 +15436,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.889Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.142Z"
     },
     {
       "id": "prop_outpost_communal_fire_a_v01",
@@ -15687,9 +15687,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "c543a4d9cff7e1cc8c58a1426077b0bb6ca1ee06361b91261709e33854309294",
-      "semanticRefinedAt": "2026-07-18T16:46:03.572Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.442Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.096Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.469Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Outpost Communal Fire, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “B. Surface props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -15708,10 +15708,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "fountain or public water feature",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated fountain or public water feature profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -15719,7 +15719,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.889Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.142Z"
     },
     {
       "id": "prop_outpost_direction_sign_a_v01",
@@ -15992,9 +15992,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "a24fcff23b84d01d0a3833f1fba26c8aee82e3d6d258e41282135f835d2aa3c7",
-      "semanticRefinedAt": "2026-07-18T16:46:03.573Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.442Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as signage",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.096Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.469Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Outpost Direction Sign, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “B. Surface props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -16013,10 +16013,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "freestanding or wall sign",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named freestanding or wall sign profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -16024,7 +16024,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.889Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.142Z"
     },
     {
       "id": "prop_outpost_lantern_a_v01",
@@ -16278,9 +16278,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "b2433ba933c69be4d9d6be794f08eb2441955ea952b614be04091f91097ea4bc",
-      "semanticRefinedAt": "2026-07-18T16:46:03.573Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.442Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.096Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.469Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Outpost Lantern, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “B. Surface props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -16299,10 +16299,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "navigation or hazard light",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated navigation or hazard light profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -16310,7 +16310,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.889Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.142Z"
     },
     {
       "id": "prop_outpost_quest_board_a_v01",
@@ -16583,9 +16583,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "479639f1527881a7709bd0e273697abfd5ceff876c5a3a9ea4216c4deeacc2ac",
-      "semanticRefinedAt": "2026-07-18T16:46:03.573Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.442Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as signage",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.096Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.469Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Outpost Quest Board, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “B. Surface props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -16604,10 +16604,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "information board or digital display",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named information board or digital display profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -16615,7 +16615,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.890Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.142Z"
     },
     {
       "id": "prop_outpost_rescue_bell_a_v01",
@@ -16866,9 +16866,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "8cd569c77d6b4902a2a8402be90d5e5b12628dd27f0e1fb2154cca694898b26c",
-      "semanticRefinedAt": "2026-07-18T16:46:03.573Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.443Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.097Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.469Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Outpost Rescue Bell, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “B. Surface props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -16887,10 +16887,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "dungeon interaction or hazard prop",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated dungeon interaction or hazard prop profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -16898,7 +16898,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.890Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.143Z"
     },
     {
       "id": "prop_outpost_supply_crate_a_v01",
@@ -17171,9 +17171,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "e59ac2c88eb8610d6049b79e86d4f105dccb6d15b2386df186ff5d32cc532585",
-      "semanticRefinedAt": "2026-07-18T16:46:03.573Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.443Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as generic_prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.097Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.470Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Outpost Supply Crate, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “B. Surface props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -17192,10 +17192,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "crate, case, or chest",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named crate, case, or chest profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -17203,7 +17203,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.890Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.143Z"
     },
     {
       "id": "prop_outpost_training_dummy_a_v01",
@@ -17455,9 +17455,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "2931b77d61dacf20cf8f563170448b7e12e3e1275cb8d23c5e44fbba1220f168",
-      "semanticRefinedAt": "2026-07-18T16:46:03.574Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.443Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.097Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.470Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Outpost Training Dummy, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “B. Surface props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -17476,10 +17476,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "dungeon interaction or hazard prop",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated dungeon interaction or hazard prop profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -17487,7 +17487,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.890Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.143Z"
     },
     {
       "id": "prop_outpost_well_a_v01",
@@ -17738,9 +17738,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "d846c9d3e88e4e7f3ee1aaae2f8a8734d17f85dd157cec1cd79814dd63bee953",
-      "semanticRefinedAt": "2026-07-18T16:46:03.574Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.443Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.097Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.470Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Outpost Well, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “B. Surface props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -17759,10 +17759,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "fountain or public water feature",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated fountain or public water feature profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -17770,7 +17770,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.890Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.143Z"
     },
     {
       "id": "prop_potion_cauldron_a_v01",
@@ -18039,9 +18039,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "2e8ca49c508b7e56756ea6fa8f9699fb6e7879b1efbfc3ca67388a1c6f38f0f0",
-      "semanticRefinedAt": "2026-07-18T16:46:03.574Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.443Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.097Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.470Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Potion Cauldron, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “E. Forge/potion/appraisal” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -18060,10 +18060,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Potion Cauldron role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.826Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -18071,7 +18071,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.890Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.143Z"
     },
     {
       "id": "prop_potion_ingredient_shelf_a_v01",
@@ -18342,9 +18342,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "ff6e0635d3eb6f787b1892d77b7855af0794f0f6d0bacac82c5fab074e372f2a",
-      "semanticRefinedAt": "2026-07-18T16:46:03.574Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.444Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.098Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.470Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Potion Ingredient Shelf, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “E. Forge/potion/appraisal” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -18363,10 +18363,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "rack or shelving unit",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.826Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named rack or shelving unit profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -18374,7 +18374,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.891Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.143Z"
     },
     {
       "id": "prop_potion_mix_table_a_v01",
@@ -18643,9 +18643,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "78b6624963093a6c2f8b605613bd94735b9cb2929a3b46ddb62e99adc5d7e037",
-      "semanticRefinedAt": "2026-07-18T16:46:03.574Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.444Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.098Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.470Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Potion Mix Table, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “E. Forge/potion/appraisal” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -18664,10 +18664,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "table",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.826Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named table profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -18675,7 +18675,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.891Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.143Z"
     },
     {
       "id": "prop_relic_display_case_a_v01",
@@ -18948,9 +18948,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "4be109fe7d1730e94441cb106a1f92da65bb2ff19483b39bb0b3a6add57880a8",
-      "semanticRefinedAt": "2026-07-18T16:46:03.574Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.444Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as signage",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.098Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.471Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Relic Display Case, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “B. Surface props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -18969,10 +18969,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "information board or digital display",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.826Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named information board or digital display profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -18980,7 +18980,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.891Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.144Z"
     },
     {
       "id": "prop_relic_scale_a_v01",
@@ -19232,9 +19232,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "3cec7f9738dd33988660f7aed5e354d1776b4def492f566ca17d2c55e2540f44",
-      "semanticRefinedAt": "2026-07-18T16:46:03.575Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.444Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.098Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.471Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Relic Scale, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “E. Forge/potion/appraisal” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -19253,10 +19253,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "weighing or appraisal scale",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.826Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated weighing or appraisal scale profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -19264,7 +19264,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.891Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.144Z"
     },
     {
       "id": "prop_shrine_blessing_stone_a_v01",
@@ -19515,9 +19515,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "fd4925bc9724ea13cbea6a11b73b7a665b907a5ad734d902246b1e8359ca1800",
-      "semanticRefinedAt": "2026-07-18T16:46:03.575Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.444Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.099Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.471Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Shrine Blessing Stone, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “B. Surface props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -19536,10 +19536,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "dungeon interaction or hazard prop",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.826Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated dungeon interaction or hazard prop profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -19547,7 +19547,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.891Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.144Z"
     },
     {
       "id": "prop_warden_front_desk_a_v01",
@@ -19819,9 +19819,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "67d3a70fbd9f4c3dd8a3f64a1090d82d70729d8958f9c1d10e8cd14a3c371f21",
-      "semanticRefinedAt": "2026-07-18T16:46:03.575Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.444Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.099Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.471Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Warden Front Desk, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “G. Warden/healer” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -19840,10 +19840,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "desk or workstation",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.826Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named desk or workstation profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -19851,7 +19851,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.891Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.144Z"
     },
     {
       "id": "prop_warden_holding_cell_a_v01",
@@ -20120,9 +20120,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "cd3507cfe4937f6ff863c1bdf1a18de52c3055a49b09cc5b4725485a73b987e1",
-      "semanticRefinedAt": "2026-07-18T16:46:03.575Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.445Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.099Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.471Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Warden Holding Cell, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “G. Warden/healer” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -20141,10 +20141,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Warden Holding Cell role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.826Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -20152,7 +20152,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.892Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.144Z"
     },
     {
       "id": "prop_warden_relic_vault_a_v01",
@@ -20421,9 +20421,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "f7d6734ffe1f7fa1cefc5cb0359d0fdf1beaa94868b9b2b3e473595dbc7b4f03",
-      "semanticRefinedAt": "2026-07-18T16:46:03.575Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.445Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.099Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.472Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Warden Relic Vault, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “G. Warden/healer” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -20442,10 +20442,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Warden Relic Vault role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.826Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -20453,7 +20453,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.892Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.144Z"
     },
     {
       "id": "prop_warden_rescue_gear_a_v01",
@@ -20722,9 +20722,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "05ec12bce30c7a185aba5a3ac198ec366acd5a951bfef4eb2a2d4bfc56ddb898",
-      "semanticRefinedAt": "2026-07-18T16:46:03.576Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.445Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.099Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.472Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Warden Rescue Gear, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “G. Warden/healer” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -20743,10 +20743,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Warden Rescue Gear role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.826Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -20754,7 +20754,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.892Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.145Z"
     },
     {
       "id": "prop_wayfarer_canopy_a_v01",
@@ -21025,9 +21025,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "1d81f2b572dc6ccb8704ca04fa6ca085ee9b46f4ffe5ad658cf54dca22ebc6d6",
-      "semanticRefinedAt": "2026-07-18T16:46:03.576Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.445Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.100Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.472Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Wayfarer Canopy, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “Layout” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -21046,10 +21046,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "canopy or temporary cover",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.826Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named canopy or temporary cover profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -21057,7 +21057,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.892Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.145Z"
     },
     {
       "id": "prop_wayfarer_food_warmer_a_v01",
@@ -21314,9 +21314,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "d5054ac02b24e087ab15cfa832d62977c97c23dfff30c317d56e949ba0c96d91",
-      "semanticRefinedAt": "2026-07-18T16:46:03.576Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.445Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.100Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.472Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Wayfarer Food Warmer, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “Layout” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -21335,10 +21335,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "heated food holding cabinet",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.826Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated heated food holding cabinet profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -21346,7 +21346,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.892Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.145Z"
     },
     {
       "id": "prop_wayfarer_fuel_pump_a_v01",
@@ -21584,9 +21584,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "697adcdf402679abe32cf249cfc5ab2bec38766ef4d8baab6f2f510320c3ebc0",
-      "semanticRefinedAt": "2026-07-18T16:46:03.562Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.431Z",
       "semanticCategoryReason": "dedicated family fuel_pump resolves the physical object as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.080Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.454Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -21594,7 +21594,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.880Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.133Z"
     },
     {
       "id": "prop_wayfarer_map_board_a_v01",
@@ -21867,9 +21867,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "9a59c0b66a975e571af35fdc1aab3cc2a754b2d41222aad857dbb5ab0379dc10",
-      "semanticRefinedAt": "2026-07-18T16:46:03.576Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.445Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as signage",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.100Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.472Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Wayfarer Map Board, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “Layout” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -21888,10 +21888,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "information board or digital display",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.826Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named information board or digital display profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -21899,7 +21899,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.892Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.145Z"
     },
     {
       "id": "prop_wayfarer_package_locker_a_v01",
@@ -22172,9 +22172,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "200bb1a639bcefb1d7038a006cbc8883e1b7b599fe4361d12a906d3c0ed61766",
-      "semanticRefinedAt": "2026-07-18T16:46:03.576Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.446Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.100Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.472Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Wayfarer Package Locker, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “Layout” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -22193,10 +22193,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "cabinet, locker, refrigerator, or freezer",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.826Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named cabinet, locker, refrigerator, or freezer profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -22204,7 +22204,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.893Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.145Z"
     },
     {
       "id": "prop_wayfarer_repair_bay_a_v01",
@@ -22462,9 +22462,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "c0903653132401c3503abb4ec8962a89cc4d04a77d4a3e732ad01784c2a7b57f",
-      "semanticRefinedAt": "2026-07-18T16:46:03.577Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.446Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.100Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.473Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Wayfarer Repair Bay, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “Layout” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -22483,10 +22483,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "vehicle service lift or repair bay",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.826Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated vehicle service lift or repair bay profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -22494,7 +22494,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.893Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.145Z"
     },
     {
       "id": "prop_wayfarer_supply_shelf_a_v01",
@@ -22765,9 +22765,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "05da849e409370605b0597eafacdedf160a5697308d4d5942dcec528bc993417",
-      "semanticRefinedAt": "2026-07-18T16:46:03.577Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.446Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.101Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.473Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Wayfarer Supply Shelf, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “Layout” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -22786,10 +22786,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "rack or shelving unit",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.826Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named rack or shelving unit profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -22797,7 +22797,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.893Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.146Z"
     },
     {
       "id": "prop_wayfarer_utility_charger_a_v01",
@@ -23056,9 +23056,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "cd18f197ca38fb3212573466283fd59731be39485063882cabe44ca0448ac56f",
-      "semanticRefinedAt": "2026-07-18T16:46:03.577Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.446Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.101Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.473Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Wayfarer Utility Charger, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “Layout” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -23077,10 +23077,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "electric-vehicle charging pedestal",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.826Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated electric-vehicle charging pedestal profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -23088,7 +23088,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.893Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.146Z"
     },
     {
       "id": "prop_wayfarer_warning_sign_a_v01",
@@ -23361,9 +23361,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "a1bea0e653cf0f4c558285792a10dfbdee057ccdeeff8e58375aeea9e670bbda",
-      "semanticRefinedAt": "2026-07-18T16:46:03.577Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.446Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as signage",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.101Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.473Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Wayfarer Warning Sign, designed as a specialized asset awaiting a dedicated family builder for Dungeon Outskirts. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: grounded dark-fantasy frontier; stone, timber, iron, leather, practical guild and settlement construction around a colossal descending dungeon gate. This asset appears under the blueprint section “Layout” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -23382,10 +23382,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "freestanding or wall sign",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.826Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.472Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named freestanding or wall sign profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.375Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.895Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -23393,7 +23393,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.893Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.146Z"
     }
   ]
 }

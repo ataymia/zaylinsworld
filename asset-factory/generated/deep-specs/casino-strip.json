@@ -1,8 +1,8 @@
 {
   "format": "zta-deep-asset-spec-shard",
   "version": 1,
-  "generatedAt": "2026-07-18T16:46:02.534Z",
-  "inventoryAuditAt": "2026-07-18T16:46:06.952Z",
+  "generatedAt": "2026-07-18T16:48:15.587Z",
+  "inventoryAuditAt": "2026-07-18T16:48:19.200Z",
   "shardKey": "casino-strip",
   "recordCount": 71,
   "canonicalGenerationRequests": 71,
@@ -262,9 +262,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "26f87f9a885d0674063526bb3157fae507d752b8cae1f1e0a88a7cecbca113ee",
-      "semanticRefinedAt": "2026-07-18T16:46:03.549Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.415Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.064Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.438Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -272,7 +272,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.869Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.122Z"
     },
     {
       "id": "building_casino_strip_police_exterior_v01",
@@ -508,9 +508,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "0ebbaff7f4fa7d0812b28eaeddc25a058e2029f4d3598235c8c49377419e6e50",
-      "semanticRefinedAt": "2026-07-18T16:46:03.549Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.415Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.064Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.438Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -518,7 +518,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.870Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.122Z"
     },
     {
       "id": "building_casino_welcome_arch_v01",
@@ -754,9 +754,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "58524ac7d84a1b1db07da4f834f70a05b3003ae4facfaf11ce4f24a53ebec57b",
-      "semanticRefinedAt": "2026-07-18T16:46:03.549Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.415Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.064Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.439Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -764,7 +764,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.870Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.122Z"
     },
     {
       "id": "building_grand_aurora_hotel_exterior_v01",
@@ -1000,9 +1000,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "f74228c54e2b250ce9e1ed2c8c260a52de59b8960e2f0542497de9fc7a0d4d5f",
-      "semanticRefinedAt": "2026-07-18T16:46:03.549Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.415Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.064Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.439Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -1010,7 +1010,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.870Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.123Z"
     },
     {
       "id": "building_grand_chance_gamehall_exterior_v01",
@@ -1246,9 +1246,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "23010d9fd4f4992166aab797f4d06d32a008f9610f427e21722ba2eeef535fe9",
-      "semanticRefinedAt": "2026-07-18T16:46:03.549Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.416Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.065Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.439Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -1256,7 +1256,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.870Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.123Z"
     },
     {
       "id": "building_luckyline_fuel_market_exterior_v01",
@@ -1492,9 +1492,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "c141f06d64c2ab1a85ff4e9a321a386db0425cfb333bb46c57ca6b39de9c0444",
-      "semanticRefinedAt": "2026-07-18T16:46:03.550Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.416Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.065Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.439Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -1502,7 +1502,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.870Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.123Z"
     },
     {
       "id": "building_royal_spin_gamehall_exterior_v01",
@@ -1738,9 +1738,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "1fa60cda6ecd72cf935668b609ef884899d95157dd536c2a328b55a879d413bb",
-      "semanticRefinedAt": "2026-07-18T16:46:03.550Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.417Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.065Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.440Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -1748,7 +1748,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.870Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.123Z"
     },
     {
       "id": "building_service_quarter_operations_exterior_v01",
@@ -1984,9 +1984,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "88b7385a6b56d53f8af2c561eff3ff0bee7bf7cf153f31993031b3bf59d5f2be",
-      "semanticRefinedAt": "2026-07-18T16:46:03.550Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.417Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.065Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.440Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -1994,7 +1994,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.870Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.123Z"
     },
     {
       "id": "building_strip_showhouse_exterior_v01",
@@ -2230,9 +2230,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "ba6a7364df959ed7c6dd064f7e3c52d0c4f0a8d7a7530819b60571a12e2e0ed6",
-      "semanticRefinedAt": "2026-07-18T16:46:03.550Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.417Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.065Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.440Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -2240,7 +2240,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.871Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.123Z"
     },
     {
       "id": "building_strip_transit_terminal_exterior_v01",
@@ -2476,9 +2476,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "43537de6d6a211b431c2f752d31e378c1a8cb8aacf610bbb1f690e7a0152f879",
-      "semanticRefinedAt": "2026-07-18T16:46:03.550Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.418Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.066Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.440Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -2486,7 +2486,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.871Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.123Z"
     },
     {
       "id": "building_ticket_town_arcade_exterior_v01",
@@ -2722,9 +2722,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "16940bc1dcab2bd33fc877302ecd35eeaf1efba5bb85cb8bcd1252c3033013bc",
-      "semanticRefinedAt": "2026-07-18T16:46:03.551Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.418Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.066Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.440Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -2732,7 +2732,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.871Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.124Z"
     },
     {
       "id": "furniture_hotel_bed_a_v01",
@@ -3008,9 +3008,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "0d9053b9da495cd9183642441df66cf45e2c97fe48477aa978868a13047b7d82",
-      "semanticRefinedAt": "2026-07-18T16:46:03.551Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.418Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.066Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.441Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Hotel Bed, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “E. Hotel/hospitality” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -3029,10 +3029,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "bed",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named bed profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -3040,7 +3040,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.871Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.124Z"
     },
     {
       "id": "furniture_hotel_lobby_sofa_a_v01",
@@ -3315,9 +3315,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "5eece505c8ba53d952285fab2901c632fdb2618155380a71dfc52a40a04f9629",
-      "semanticRefinedAt": "2026-07-18T16:46:03.551Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.418Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.066Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.441Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Hotel Lobby Sofa, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “E. Hotel/hospitality” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -3336,10 +3336,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "sofa or upholstered seating",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named sofa or upholstered seating profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -3347,7 +3347,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.871Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.124Z"
     },
     {
       "id": "furniture_hotel_reception_desk_a_v01",
@@ -3622,9 +3622,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "0c114761be7128c54ed1fb4e351e406f26c3b37b5805ed25f078cc4c7ae21f98",
-      "semanticRefinedAt": "2026-07-18T16:46:03.551Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.419Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.067Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.441Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Hotel Reception Desk, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “E. Hotel/hospitality” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -3643,10 +3643,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "desk or workstation",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named desk or workstation profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -3654,7 +3654,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.871Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.124Z"
     },
     {
       "id": "furniture_service_apartment_bed_a_v01",
@@ -3930,9 +3930,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "bea93bddf894c4734db8211bdcf7a713f48343ea9f08d95274758362df0dfa5f",
-      "semanticRefinedAt": "2026-07-18T16:46:03.551Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.419Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.067Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.441Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Service Apartment Bed, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “G. Residential” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -3951,10 +3951,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "bed",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named bed profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -3962,7 +3962,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.872Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.124Z"
     },
     {
       "id": "prop_arcade_cabinet_racing_a_v01",
@@ -4224,9 +4224,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "b49f5a893757dcf79e4fb0754e6fbec2618723a34c9412e9f8678c5145605319",
-      "semanticRefinedAt": "2026-07-18T16:46:03.551Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.419Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.067Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.441Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Arcade Cabinet Racing, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “D. Arcade” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -4245,10 +4245,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "arcade game cabinet",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated arcade game cabinet profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -4256,7 +4256,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.872Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.124Z"
     },
     {
       "id": "prop_arcade_cabinet_rhythm_a_v01",
@@ -4518,9 +4518,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "16bc2bbb6378d37b57a757d6c7b1f3ba641b2e9a36ad963bc62e14d7e29cc6a8",
-      "semanticRefinedAt": "2026-07-18T16:46:03.552Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.420Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.067Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.442Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Arcade Cabinet Rhythm, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “D. Arcade” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -4539,10 +4539,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "arcade game cabinet",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated arcade game cabinet profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -4550,7 +4550,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.872Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.125Z"
     },
     {
       "id": "prop_arcade_cabinet_timing_a_v01",
@@ -4812,9 +4812,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "4afe3424fc22b6f8bf16df19336c870fd414f90e8aa539c2e629399bc6a1fe2e",
-      "semanticRefinedAt": "2026-07-18T16:46:03.552Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.420Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.067Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.442Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Arcade Cabinet Timing, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “D. Arcade” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -4833,10 +4833,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "arcade game cabinet",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated arcade game cabinet profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -4844,7 +4844,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.872Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.125Z"
     },
     {
       "id": "prop_arcade_claw_machine_a_v01",
@@ -5110,9 +5110,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "d8344f53a4a3614abe88a0020f0e2eda32e117d4c51ecc36ec6165629a5f075b",
-      "semanticRefinedAt": "2026-07-18T16:46:03.552Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.420Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.068Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.442Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Arcade Claw Machine, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “D. Arcade” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -5131,10 +5131,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "commercial arcade claw machine",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated commercial arcade claw machine profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -5142,7 +5142,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.872Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.125Z"
     },
     {
       "id": "prop_arcade_prize_wall_a_v01",
@@ -5414,9 +5414,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "cb13e06aef0e78addb45a7868cce306e6f9042f19d5face8562939ba7ed375fd",
-      "semanticRefinedAt": "2026-07-18T16:46:03.552Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.421Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.068Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.442Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Arcade Prize Wall, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “D. Arcade” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -5435,10 +5435,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Arcade Prize Wall role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -5446,7 +5446,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.872Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.125Z"
     },
     {
       "id": "prop_arcade_repair_bench_a_v01",
@@ -5679,9 +5679,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "34bc286a2083fc6d601d62866efabac0f89cd78b4bbd230a03f7c36b7f72fa5f",
-      "semanticRefinedAt": "2026-07-18T16:46:03.547Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.414Z",
       "semanticCategoryReason": "dedicated family municipal_bench resolves the physical object as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.062Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.437Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -5689,7 +5689,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.868Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.121Z"
     },
     {
       "id": "prop_arcade_snack_counter_a_v01",
@@ -5964,9 +5964,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "32e737291720b093231733fb08ab95ac9921bc1eb6088940b5e71ff490fff63c",
-      "semanticRefinedAt": "2026-07-18T16:46:03.552Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.421Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.068Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.443Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Arcade Snack Counter, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “D. Arcade” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -5985,10 +5985,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "counter or reception fixture",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named counter or reception fixture profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -5996,7 +5996,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.873Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.125Z"
     },
     {
       "id": "prop_arcade_ticket_counter_a_v01",
@@ -6271,9 +6271,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "445121bfbcce513902e0545d3ee7b81357f72f01fba10cdd0e069b8708510f66",
-      "semanticRefinedAt": "2026-07-18T16:46:03.553Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.421Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.068Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.443Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Arcade Ticket Counter, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “D. Arcade” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -6292,10 +6292,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "counter or reception fixture",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named counter or reception fixture profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -6303,7 +6303,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.873Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.126Z"
     },
     {
       "id": "prop_casino_bench_a_v01",
@@ -6536,9 +6536,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "6f7d70161381cc999802512948976dc1185a6195e0b1889ea3b53a8ebaed7c51",
-      "semanticRefinedAt": "2026-07-18T16:46:03.548Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.414Z",
       "semanticCategoryReason": "dedicated family municipal_bench resolves the physical object as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.063Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.437Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -6546,7 +6546,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.869Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.121Z"
     },
     {
       "id": "prop_casino_blackjack_table_a_v01",
@@ -6818,9 +6818,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "e2a1bdbcf8665b779c6a92d8f27ce32d8a802470ad7ee9d46305d08a6fc551d8",
-      "semanticRefinedAt": "2026-07-18T16:46:03.553Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.421Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.069Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.443Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Casino Blackjack Table, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “C. Game hall” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -6839,10 +6839,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "table",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named table profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -6850,7 +6850,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.873Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.126Z"
     },
     {
       "id": "prop_casino_bus_shelter_a_v01",
@@ -7087,9 +7087,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "f843d812e677db9864793fc6004d83ad963d1c38f0cfc5b7e1426d6e505f8f0c",
-      "semanticRefinedAt": "2026-07-18T16:46:03.548Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.414Z",
       "semanticCategoryReason": "dedicated family bus_shelter resolves the physical object as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.063Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.437Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -7097,7 +7097,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.869Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.122Z"
     },
     {
       "id": "prop_casino_carpet_tile_a_v01",
@@ -7369,9 +7369,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "706f82714d57dd5c335592ea3765079247eabe6c26c80826becea913791a612a",
-      "semanticRefinedAt": "2026-07-18T16:46:03.553Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.422Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.069Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.443Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Casino Carpet Tile, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “C. Game hall” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -7390,10 +7390,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Casino Carpet Tile role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -7401,7 +7401,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.873Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.126Z"
     },
     {
       "id": "prop_casino_chip_exchange_counter_a_v01",
@@ -7676,9 +7676,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "89f60e8306b48f43153c208265537f7bd9dc5c6d1ef984f8fab51e2af7898b34",
-      "semanticRefinedAt": "2026-07-18T16:46:03.553Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.422Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.069Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.444Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Casino Chip Exchange Counter, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “C. Game hall” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -7697,10 +7697,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "counter or reception fixture",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named counter or reception fixture profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -7708,7 +7708,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.873Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.126Z"
     },
     {
       "id": "prop_casino_floor_security_desk_a_v01",
@@ -7983,9 +7983,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "c10b62020d0512752a26bc7e2731bdcc78929548f5849c92a3ea95c006e8441c",
-      "semanticRefinedAt": "2026-07-18T16:46:03.553Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.422Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.069Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.444Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Casino Floor Security Desk, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “C. Game hall” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -8004,10 +8004,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "desk or workstation",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named desk or workstation profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -8015,7 +8015,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.873Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.126Z"
     },
     {
       "id": "prop_casino_hologram_sign_a_v01",
@@ -8291,9 +8291,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "403aa4381d631c6280c09422d753dc248bf8a3e5b628ec844578c43d1176b048",
-      "semanticRefinedAt": "2026-07-18T16:46:03.554Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.422Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as signage",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.070Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.444Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Casino Hologram Sign, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “B. Strip roads/street props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -8312,10 +8312,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "freestanding or wall sign",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named freestanding or wall sign profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -8323,7 +8323,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.873Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.126Z"
     },
     {
       "id": "prop_casino_pedestrian_barrier_a_v01",
@@ -8598,9 +8598,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "7d8d0030a98472cd530dd57fba0f3f83f920ca2de024d2a8bc9de5d8a2f13f09",
-      "semanticRefinedAt": "2026-07-18T16:46:03.554Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.423Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.070Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.445Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Casino Pedestrian Barrier, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “B. Strip roads/street props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -8619,10 +8619,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "gate, barrier, or fence",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named gate, barrier, or fence profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -8630,7 +8630,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.874Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.127Z"
     },
     {
       "id": "prop_casino_prize_wheel_a_v01",
@@ -8902,9 +8902,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "5a5aa6115e2c5095f1e8e729230d5938b4b8e51155da5b221032d1c105c726d4",
-      "semanticRefinedAt": "2026-07-18T16:46:03.555Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.424Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.071Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.445Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Casino Prize Wheel, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “C. Game hall” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -8923,10 +8923,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Casino Prize Wheel role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -8934,7 +8934,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.874Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.127Z"
     },
     {
       "id": "prop_casino_prize_wheel_exterior_a_v01",
@@ -9206,9 +9206,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "298880b99542169ca569cd9e8d5e1658b27a80ab71f3a8933bae4a69ed282581",
-      "semanticRefinedAt": "2026-07-18T16:46:03.555Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.424Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.071Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.445Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Casino Prize Wheel Exterior, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “B. Strip roads/street props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -9227,10 +9227,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Casino Prize Wheel Exterior role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -9238,7 +9238,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.874Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.127Z"
     },
     {
       "id": "prop_casino_queue_barrier_a_v01",
@@ -9513,9 +9513,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "bc5730378983e7651d562e8ba4d99580f923251cf91bd35bbe8e2642932a9e86",
-      "semanticRefinedAt": "2026-07-18T16:46:03.556Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.424Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.071Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.446Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Casino Queue Barrier, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “C. Game hall” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -9534,10 +9534,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "gate, barrier, or fence",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named gate, barrier, or fence profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -9545,7 +9545,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.874Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.127Z"
     },
     {
       "id": "prop_casino_roulette_table_a_v01",
@@ -9817,9 +9817,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "e9d804154f4f3565fcbde019e2096a1ac77bc71046c8da1b741dbb23fddd9770",
-      "semanticRefinedAt": "2026-07-18T16:46:03.556Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.425Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.071Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.446Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Casino Roulette Table, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “C. Game hall” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -9838,10 +9838,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "table",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named table profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -9849,7 +9849,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.875Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.127Z"
     },
     {
       "id": "prop_casino_security_monitor_wall_a_v01",
@@ -10085,9 +10085,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "bcb0b6fad7893d1d2a28788c8f9e5e79b6b7bbd415f4612bf12afe2b4aff2288",
-      "semanticRefinedAt": "2026-07-18T16:46:03.548Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.414Z",
       "semanticCategoryReason": "dedicated family multi_monitor resolves the physical object as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.063Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.437Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -10095,7 +10095,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.869Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.122Z"
     },
     {
       "id": "prop_casino_security_scanner_a_v01",
@@ -10370,9 +10370,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "aab6ca1f6cf134b3a443342c4bc89bdca3fdb73d756c892f6aa9f37d0b2464b3",
-      "semanticRefinedAt": "2026-07-18T16:46:03.556Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.425Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.072Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.446Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Casino Security Scanner, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “F. School/service/security” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -10391,10 +10391,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "security camera or scanner",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named security camera or scanner profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -10402,7 +10402,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.875Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.128Z"
     },
     {
       "id": "prop_casino_slot_machine_a_v01",
@@ -10665,9 +10665,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "bcbb2871b45d7225ecb1d4363b428b0c14b27814814b1b4378e586ab9d9636d7",
-      "semanticRefinedAt": "2026-07-18T16:46:03.556Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.425Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.072Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.446Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Casino Slot Machine, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “C. Game hall” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -10686,10 +10686,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "arcade game cabinet",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated arcade game cabinet profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -10697,7 +10697,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.875Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.128Z"
     },
     {
       "id": "prop_casino_streetlight_a_v01",
@@ -10933,9 +10933,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "5843dbeb0ea351a8c32d29673b0f2195241d9ae3158bc3201da1afe5a3003528",
-      "semanticRefinedAt": "2026-07-18T16:46:03.548Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.414Z",
       "semanticCategoryReason": "dedicated family streetlight resolves the physical object as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.063Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.438Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -10943,7 +10943,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.869Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.122Z"
     },
     {
       "id": "prop_casino_token_kiosk_a_v01",
@@ -11220,9 +11220,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "c4af1cff3ac226fc875bc5d8690b95d672e825e91a956825eb27d7960ed3f503",
-      "semanticRefinedAt": "2026-07-18T16:46:03.556Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.425Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.072Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.447Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Casino Token Kiosk, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “C. Game hall” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -11241,10 +11241,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "terminal, kiosk, station, or console",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named terminal, kiosk, station, or console profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -11252,7 +11252,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.875Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.128Z"
     },
     {
       "id": "prop_casino_trash_bin_a_v01",
@@ -11529,9 +11529,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "37607eacad8f125208333fd9961e699753aad38e95f5915c49ea48bf65b97250",
-      "semanticRefinedAt": "2026-07-18T16:46:03.557Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.426Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.072Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.447Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Casino Trash Bin, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “B. Strip roads/street props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -11550,10 +11550,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "bin, dumpster, or waste receptacle",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named bin, dumpster, or waste receptacle profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -11561,7 +11561,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.875Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.128Z"
     },
     {
       "id": "prop_casino_wayfinding_kiosk_a_v01",
@@ -11834,9 +11834,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "a500a5e55a6ab9eb2d40a6d3df5aaa4f52478cbd5a2e755ba156fdb75c5233f1",
-      "semanticRefinedAt": "2026-07-18T16:46:03.557Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.426Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as signage",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.073Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.447Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Casino Wayfinding Kiosk, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “B. Strip roads/street props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -11855,10 +11855,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Casino Wayfinding Kiosk role-specific signage profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -11866,7 +11866,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.875Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.128Z"
     },
     {
       "id": "prop_home_arcade_cabinet_a_v01",
@@ -12128,9 +12128,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "a9404aa4e87fa3c53fb9dab92930c39452a0d8f3d5e9135b72fed3accf167b4f",
-      "semanticRefinedAt": "2026-07-18T16:46:03.557Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.426Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.073Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.447Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Home Arcade Cabinet, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “G. Residential” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -12149,10 +12149,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "arcade game cabinet",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated arcade game cabinet profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -12160,7 +12160,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.876Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.128Z"
     },
     {
       "id": "prop_home_budget_terminal_a_v01",
@@ -12437,9 +12437,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "a7f57f4924437e325bd6e74670bf17f24c487c3ed672edf0b75492cdc6557111",
-      "semanticRefinedAt": "2026-07-18T16:46:03.557Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.426Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.073Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.448Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Home Budget Terminal, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “G. Residential” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -12458,10 +12458,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "terminal, kiosk, station, or console",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named terminal, kiosk, station, or console profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -12469,7 +12469,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.876Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.129Z"
     },
     {
       "id": "prop_home_game_table_a_v01",
@@ -12741,9 +12741,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "56a09d746e495a1b639ce2a632cc7d3c19d816b6a02c9e47f6fdf7548abfeb5c",
-      "semanticRefinedAt": "2026-07-18T16:46:03.557Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.426Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.073Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.448Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Home Game Table, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “G. Residential” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -12762,10 +12762,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "table",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named table profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -12773,7 +12773,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.876Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.129Z"
     },
     {
       "id": "prop_home_prize_shelf_a_v01",
@@ -13047,9 +13047,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "709422dae9393ad3b891b32b4fa64c57ef1095b9ff41a452d64607b8421795b2",
-      "semanticRefinedAt": "2026-07-18T16:46:03.558Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.427Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.074Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.448Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Home Prize Shelf, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “G. Residential” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -13068,10 +13068,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "rack or shelving unit",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named rack or shelving unit profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -13079,7 +13079,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.876Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.129Z"
     },
     {
       "id": "prop_hotel_bell_cart_a_v01",
@@ -13357,9 +13357,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "308b54f91c1e8baab4741b1db67b0da363c9c00a4586f647eb1480f6f1f2312e",
-      "semanticRefinedAt": "2026-07-18T16:46:03.558Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.427Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as vehicle",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.074Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.448Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Hotel Bell Cart, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “E. Hotel/hospitality” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -13378,10 +13378,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "cart or small utility carrier",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named cart or small utility carrier profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -13389,7 +13389,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.876Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.129Z"
     },
     {
       "id": "prop_hotel_event_table_a_v01",
@@ -13661,9 +13661,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "258a52b555dd80006b977a45fc9306b8249850954801983011df80dd754ed7d9",
-      "semanticRefinedAt": "2026-07-18T16:46:03.558Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.427Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.074Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.449Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Hotel Event Table, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “E. Hotel/hospitality” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -13682,10 +13682,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "table",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named table profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -13693,7 +13693,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.876Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.129Z"
     },
     {
       "id": "prop_hotel_housekeeping_cart_a_v01",
@@ -13971,9 +13971,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "5762d50d0f79202d03bb8d5fce67f1d88f386cd4783107bc4f422b0daffb520c",
-      "semanticRefinedAt": "2026-07-18T16:46:03.558Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.427Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as vehicle",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.074Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.449Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Hotel Housekeeping Cart, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “E. Hotel/hospitality” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -13992,10 +13992,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "cart or small utility carrier",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named cart or small utility carrier profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -14003,7 +14003,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.877Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.129Z"
     },
     {
       "id": "prop_hotel_luggage_a_v01",
@@ -14275,9 +14275,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "a3b958742a20ae9fbb1b81588e1fb60917dd67a9e6bad8b33581cb8655afa4ac",
-      "semanticRefinedAt": "2026-07-18T16:46:03.558Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.427Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.075Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.449Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Hotel Luggage, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “E. Hotel/hospitality” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -14296,10 +14296,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Hotel Luggage role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -14307,7 +14307,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.877Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.129Z"
     },
     {
       "id": "prop_hotel_room_door_a_v01",
@@ -14579,9 +14579,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "dcaccc31ad31d6bdbbf3e4c3684e7f0e9918e4b33b3ebebc9c7d9bb0f8974c65",
-      "semanticRefinedAt": "2026-07-18T16:46:03.559Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.428Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.075Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.449Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Hotel Room Door, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “E. Hotel/hospitality” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -14600,10 +14600,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Hotel Room Door role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -14611,7 +14611,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.877Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.130Z"
     },
     {
       "id": "prop_hotel_room_service_cart_a_v01",
@@ -14889,9 +14889,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "7dee7ebc0b1f617d1f704a63066945c34235a9963f3f61d8be25d28f4dbb6f59",
-      "semanticRefinedAt": "2026-07-18T16:46:03.559Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.428Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as vehicle",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.075Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.450Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Hotel Room Service Cart, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “E. Hotel/hospitality” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -14910,10 +14910,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "cart or small utility carrier",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named cart or small utility carrier profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -14921,7 +14921,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.877Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.130Z"
     },
     {
       "id": "prop_institute_arcade_repair_station_a_v01",
@@ -15198,9 +15198,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "e0c204a6005a61a90813b2e24d3de0d2a85ee5ef57a42c7cda35d1db4d39e4b8",
-      "semanticRefinedAt": "2026-07-18T16:46:03.559Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.428Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.075Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.450Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Institute Arcade Repair Station, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “F. School/service/security” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -15219,10 +15219,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "terminal, kiosk, station, or console",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named terminal, kiosk, station, or console profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -15230,7 +15230,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.877Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.130Z"
     },
     {
       "id": "prop_institute_probability_board_a_v01",
@@ -15506,9 +15506,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "fcf939fd56ab056371f8dab0f860a6666eef36b187e8f2a21926943f5cf3e038",
-      "semanticRefinedAt": "2026-07-18T16:46:03.559Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.428Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as signage",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.076Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.450Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Institute Probability Board, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “F. School/service/security” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -15527,10 +15527,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "information board or digital display",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named information board or digital display profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -15538,7 +15538,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.877Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.130Z"
     },
     {
       "id": "prop_institute_security_monitor_a_v01",
@@ -15810,9 +15810,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "ac6bd72bc7d5203c0e07934181d8c108f8bd288ed3b54f6c5e25c79b7321441a",
-      "semanticRefinedAt": "2026-07-18T16:46:03.559Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.428Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.076Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.450Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Institute Security Monitor, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “F. School/service/security” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -15831,10 +15831,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Institute Security Monitor role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -15842,7 +15842,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.878Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.130Z"
     },
     {
       "id": "prop_institute_training_table_a_v01",
@@ -16115,9 +16115,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "726f2d42edc70f4d44f6a2191edeb97aaf7df3d1ca0bdaa98a7ede66ab5afcee",
-      "semanticRefinedAt": "2026-07-18T16:46:03.559Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.429Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.076Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.451Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Institute Training Table, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “F. School/service/security” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -16136,10 +16136,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "table",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named table profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -16147,7 +16147,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.878Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.130Z"
     },
     {
       "id": "prop_luckyline_canopy_a_v01",
@@ -16421,9 +16421,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "8ef5a033b9ed388c5b242176063bdb2189893978ce26661171efd69b98ba9a9d",
-      "semanticRefinedAt": "2026-07-18T16:46:03.560Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.429Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.076Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.451Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Luckyline Canopy, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “Exterior” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -16442,10 +16442,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "canopy or temporary cover",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named canopy or temporary cover profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -16453,7 +16453,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.878Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.131Z"
     },
     {
       "id": "prop_luckyline_carwash_a_v01",
@@ -16714,9 +16714,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "c9fe9b33201bf5412d1d1e05a6c1b3b55398c8027a614bf3a87c1b330029a010",
-      "semanticRefinedAt": "2026-07-18T16:46:03.560Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.429Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.077Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.451Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Luckyline Carwash, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “Exterior” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -16735,10 +16735,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "vehicle service lift or repair bay",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated vehicle service lift or repair bay profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -16746,7 +16746,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.878Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.131Z"
     },
     {
       "id": "prop_luckyline_ev_charger_a_v01",
@@ -17008,9 +17008,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "5d0c4aa14cb91bd0ff237ab3a81db84ed979be7e1c7f5272628ec5f0ed4e984e",
-      "semanticRefinedAt": "2026-07-18T16:46:03.560Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.429Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.077Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.451Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Luckyline EV Charger, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “Exterior” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -17029,10 +17029,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "electric-vehicle charging pedestal",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.470Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated electric-vehicle charging pedestal profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -17040,7 +17040,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.878Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.131Z"
     },
     {
       "id": "prop_luckyline_fuel_pump_a_v01",
@@ -17281,9 +17281,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "b1f41ddb740b065cc5792688b3b40ac90187ab38d9b16e267dc7187467d0b12b",
-      "semanticRefinedAt": "2026-07-18T16:46:03.548Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.415Z",
       "semanticCategoryReason": "dedicated family fuel_pump resolves the physical object as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.063Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.438Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -17291,7 +17291,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.869Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.122Z"
     },
     {
       "id": "prop_luckyline_market_shelf_a_v01",
@@ -17565,9 +17565,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "2df9e53c29810505c90dee3b7c72fe05e6cd8159d706a7b1731839534bac5d53",
-      "semanticRefinedAt": "2026-07-18T16:46:03.560Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.429Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.077Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.452Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Luckyline Market Shelf, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “Exterior” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -17586,10 +17586,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "rack or shelving unit",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named rack or shelving unit profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -17597,7 +17597,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.878Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.131Z"
     },
     {
       "id": "prop_luckyline_package_locker_a_v01",
@@ -17873,9 +17873,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "504f27e1d096b8f9114213d92d724dba3458a257bfd28faf44611c161b2b33c7",
-      "semanticRefinedAt": "2026-07-18T16:46:03.560Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.430Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.078Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.452Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Luckyline Package Locker, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “Exterior” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -17894,10 +17894,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "cabinet, locker, refrigerator, or freezer",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named cabinet, locker, refrigerator, or freezer profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -17905,7 +17905,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.879Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.131Z"
     },
     {
       "id": "prop_luckyline_price_sign_a_v01",
@@ -18181,9 +18181,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "2204893e4ff0dfac20b211a613a8c257b88a2da42a77fbfa32844a3d5a3d0690",
-      "semanticRefinedAt": "2026-07-18T16:46:03.561Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.430Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as signage",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.078Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.452Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Luckyline Price Sign, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “Exterior” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -18202,10 +18202,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "freestanding or wall sign",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.824Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named freestanding or wall sign profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -18213,7 +18213,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.879Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.131Z"
     },
     {
       "id": "prop_luckyline_service_key_board_a_v01",
@@ -18489,9 +18489,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "2595748284ad3ddedda66241088bfecd50c2e66fe97b74f7fcde57a294164edd",
-      "semanticRefinedAt": "2026-07-18T16:46:03.561Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.430Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as signage",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.078Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.453Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Luckyline Service Key Board, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “Exterior” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -18510,10 +18510,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "information board or digital display",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named information board or digital display profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -18521,7 +18521,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.879Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.132Z"
     },
     {
       "id": "prop_luckyline_shuttle_bay_a_v01",
@@ -18800,9 +18800,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "fe8a3d498049eb6e194ce62921d3fdb40ede96bc781e927d96e55187d8e2ba9b",
-      "semanticRefinedAt": "2026-07-18T16:46:03.561Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.430Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as vehicle",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.078Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.453Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Luckyline Shuttle Bay, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “Exterior” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -18821,10 +18821,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "bus, tram, or transit vehicle",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named bus, tram, or transit vehicle profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -18832,7 +18832,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.879Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.132Z"
     },
     {
       "id": "prop_service_laundry_cart_a_v01",
@@ -19110,9 +19110,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "751d7663d6c8674492ecefd0a8fd792058c98cb3895dc8ca47ba2a71c192e762",
-      "semanticRefinedAt": "2026-07-18T16:46:03.561Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.430Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as vehicle",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.079Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.453Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Service Laundry Cart, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “F. School/service/security” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -19131,10 +19131,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "cart or small utility carrier",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named cart or small utility carrier profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -19142,7 +19142,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.879Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.132Z"
     },
     {
       "id": "prop_service_loading_crate_a_v01",
@@ -19372,9 +19372,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "0b126e6ce2d1469db8f87b1a1121de0389909d408a5bf98fae86425bc6cae9e8",
-      "semanticRefinedAt": "2026-07-18T16:46:03.548Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.415Z",
       "semanticCategoryReason": "dedicated family loading_crate resolves the physical object as generic_prop",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.064Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.438Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -19382,7 +19382,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.869Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.122Z"
     },
     {
       "id": "prop_strip_police_front_desk_a_v01",
@@ -19657,9 +19657,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "0e4a1b4fab0e02e7f643d001dab46b413ceb95e2fb27f79dabc90e805396786d",
-      "semanticRefinedAt": "2026-07-18T16:46:03.561Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.431Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.079Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.453Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Strip Police Front Desk, designed as a specialized asset awaiting a dedicated family builder for Casino Strip. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “F. School/service/security” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -19678,10 +19678,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "desk or workstation",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:46:04.825Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:48:17.471Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named desk or workstation profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:46:05.374Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.894Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -19689,7 +19689,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.879Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.132Z"
     },
     {
       "id": "road_casino_gateway_bridge_a_v01",
@@ -19919,9 +19919,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "86fca1a74dba330ec4387c6a2eea9263ccef271bd8a94f4a5487c3726f7f4f3b",
-      "semanticRefinedAt": "2026-07-18T16:46:03.562Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.431Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as road_surface",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.079Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.454Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -19929,7 +19929,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.880Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.132Z"
     },
     {
       "id": "road_casino_strip_straight_a_v01",
@@ -20159,9 +20159,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "1ae7378fa2d542d42342aa1b06b7b8bdfc46999a0c315615d2092d16b4a89226",
-      "semanticRefinedAt": "2026-07-18T16:46:03.562Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.431Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as road_surface",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.079Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.454Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -20169,7 +20169,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.880Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.133Z"
     },
     {
       "id": "sidewalk_casino_strip_a_v01",
@@ -20399,9 +20399,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "72b62658de24104ab34b50aa022b67aec5e9146a46679ddb5bafa32d9e1d29bf",
-      "semanticRefinedAt": "2026-07-18T16:46:03.562Z",
+      "semanticRefinedAt": "2026-07-18T16:48:16.431Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as road_surface",
-      "semanticFinalizedAt": "2026-07-18T16:46:06.080Z",
+      "semanticFinalizedAt": "2026-07-18T16:48:18.454Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -20409,7 +20409,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:46:06.880Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.133Z"
     }
   ]
 }
