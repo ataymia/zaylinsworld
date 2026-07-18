@@ -71,6 +71,20 @@ jobs:
           BATCH_SIZE: ${{ github.event.inputs.batch_size || '10' }}
         run: node tools/asset-factory/run-batch.mjs --batch-size "$BATCH_SIZE"
 
+      - name: Require the complete proof batch to pass
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+          const result = JSON.parse(readFileSync('reports/asset-factory/latest.json', 'utf8'));
+          console.log(`[asset-factory] proof result: ${result.passed}/${result.requested} passed`);
+          if (result.passed !== result.requested) {
+            console.error('The free asset factory is not mergeable until every first-batch asset passes its quality gate.');
+            process.exit(1);
+          }
+          NODE
+
       - name: Commit passing assets, queue state, and reports
         if: github.event_name != 'pull_request'
         shell: bash
