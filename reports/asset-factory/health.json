@@ -1,16 +1,16 @@
 {
   "format": "zta-asset-factory-health",
   "version": 1,
-  "generatedAt": "2026-07-18T17:04:23.472Z",
+  "generatedAt": "2026-07-18T18:01:30.176Z",
   "masterRecords": 2298,
   "queueRecords": 2298,
-  "completed": 553,
-  "queued": 1539,
+  "completed": 571,
+  "queued": 1521,
   "queuedRuntime": 0,
   "quarantined": 1,
   "unsupported": 189,
   "referenceOnly": 16,
-  "generatedGlbsOnDisk": 23,
+  "generatedGlbsOnDisk": 41,
   "failures": [],
   "warnings": [],
   "builders": [
@@ -159,8 +159,8 @@
     {
       "builder": "mailbox",
       "revision": "2026-07-18-r3",
-      "completed": 0,
-      "queued": 1,
+      "completed": 1,
+      "queued": 0,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
@@ -169,22 +169,20 @@
     },
     {
       "builder": "modern_bed",
-      "revision": "2026-07-18-r3",
-      "completed": 0,
-      "queued": 1,
+      "revision": "2026-07-18-r4",
+      "completed": 1,
+      "queued": 0,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
       "referenceOnly": 0,
-      "errorSignatures": {
-        "triangle count # is below #": 1
-      }
+      "errorSignatures": {}
     },
     {
       "builder": "modular_building",
       "revision": "2026-07-18-r3",
-      "completed": 0,
-      "queued": 231,
+      "completed": 1,
+      "queued": 230,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
@@ -194,8 +192,8 @@
     {
       "builder": "modular_connector",
       "revision": "2026-07-18-r3",
-      "completed": 0,
-      "queued": 173,
+      "completed": 1,
+      "queued": 172,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
@@ -204,20 +202,22 @@
     },
     {
       "builder": "modular_food",
-      "revision": "2026-07-18-r3",
+      "revision": "2026-07-18-r4",
       "completed": 0,
       "queued": 9,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
       "referenceOnly": 0,
-      "errorSignatures": {}
+      "errorSignatures": {
+        "typeerror: add_uv_sphere() got an unexpected keyword argument 'ring_count'": 1
+      }
     },
     {
       "builder": "modular_furniture",
       "revision": "2026-07-18-r3",
-      "completed": 0,
-      "queued": 140,
+      "completed": 1,
+      "queued": 139,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
@@ -227,8 +227,8 @@
     {
       "builder": "modular_infrastructure",
       "revision": "2026-07-18-r3",
-      "completed": 0,
-      "queued": 236,
+      "completed": 1,
+      "queued": 235,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
@@ -238,8 +238,8 @@
     {
       "builder": "modular_prop",
       "revision": "2026-07-18-r3",
-      "completed": 0,
-      "queued": 559,
+      "completed": 1,
+      "queued": 558,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
@@ -249,8 +249,8 @@
     {
       "builder": "modular_road",
       "revision": "2026-07-18-r3",
-      "completed": 0,
-      "queued": 36,
+      "completed": 1,
+      "queued": 35,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
@@ -259,22 +259,20 @@
     },
     {
       "builder": "multi_monitor",
-      "revision": "2026-07-18-r3",
-      "completed": 0,
-      "queued": 6,
+      "revision": "2026-07-18-r4",
+      "completed": 1,
+      "queued": 5,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
       "referenceOnly": 0,
-      "errorSignatures": {
-        "material count # is below #": 4
-      }
+      "errorSignatures": {}
     },
     {
       "builder": "municipal_bench",
       "revision": "2026-07-18-r3",
-      "completed": 1,
-      "queued": 13,
+      "completed": 2,
+      "queued": 12,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
@@ -287,8 +285,8 @@
     {
       "builder": "municipal_trash_can",
       "revision": "2026-07-18-r3",
-      "completed": 1,
-      "queued": 2,
+      "completed": 2,
+      "queued": 1,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
@@ -309,8 +307,8 @@
     {
       "builder": "office_desk",
       "revision": "2026-07-18-r3",
-      "completed": 2,
-      "queued": 3,
+      "completed": 3,
+      "queued": 2,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
@@ -322,8 +320,8 @@
     {
       "builder": "pallet_stack",
       "revision": "2026-07-18-r3",
-      "completed": 0,
-      "queued": 1,
+      "completed": 1,
+      "queued": 0,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
@@ -344,8 +342,8 @@
     {
       "builder": "planter",
       "revision": "2026-07-18-r3",
-      "completed": 2,
-      "queued": 2,
+      "completed": 3,
+      "queued": 1,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
@@ -366,8 +364,8 @@
     {
       "builder": "road_sign",
       "revision": "2026-07-18-r3",
-      "completed": 2,
-      "queued": 7,
+      "completed": 3,
+      "queued": 6,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
@@ -379,8 +377,8 @@
     {
       "builder": "state_variant",
       "revision": "2026-07-18-r3",
-      "completed": 0,
-      "queued": 80,
+      "completed": 1,
+      "queued": 79,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
@@ -390,8 +388,8 @@
     {
       "builder": "storm_drain",
       "revision": "2026-07-18-r3",
-      "completed": 0,
-      "queued": 1,
+      "completed": 1,
+      "queued": 0,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
@@ -401,8 +399,8 @@
     {
       "builder": "streetlight",
       "revision": "2026-07-18-r3",
-      "completed": 2,
-      "queued": 6,
+      "completed": 3,
+      "queued": 5,
       "quarantined": 0,
       "unsupported": 0,
       "runtime": 0,
@@ -435,7 +433,7 @@
     },
     {
       "builder": "wall_screen",
-      "revision": "2026-07-18-r3",
+      "revision": "2026-07-18-r4",
       "completed": 0,
       "queued": 3,
       "quarantined": 0,
@@ -443,7 +441,7 @@
       "runtime": 0,
       "referenceOnly": 0,
       "errorSignatures": {
-        "mesh object count # is below #; material count # is below #; depth #m differs from target #m by #%": 1
+        "triangle count # is below #; height #m differs from target #m by #%": 1
       }
     }
   ]

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-18T16:56:29.343Z",
+  "generatedAt": "2026-07-18T17:58:24.981Z",
   "source": "All .glb names harvested from docs/**/*.md plus explicit manual canonical additions.",
   "policy": "asset-factory/quality-policy.json",
   "counts": {
@@ -18640,9 +18640,9 @@
       "description": "A production-ready Aqualume Bubble Fruit Drink, designed as a specialized asset awaiting a dedicated family builder for Aqualume. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: advanced inhabited underwater city; pressure-rated structures, curved glass, coral-integrated architecture, current-powered transit, marine engineering, luminous but functional materials. This asset appears under the blueprint section “F. Market/food/retail” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
       "designIntent": "Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists.",
       "dimensionsMeters": {
-        "width": 1.5,
-        "depth": 1.5,
-        "height": 1.5
+        "width": 0.48,
+        "depth": 0.48,
+        "height": 0.62
       },
       "requiredComponents": [
         "recognizable primary structure",
@@ -18660,7 +18660,7 @@
         "minimumTriangles": 500,
         "maximumTriangles": 24000,
         "maximumMaterials": 12,
-        "dimensionTolerance": 0.6,
+        "dimensionTolerance": 0.45,
         "groundPivotToleranceMeters": 0.04,
         "minimumPreviewCoverage": 0.008,
         "maximumPreviewCoverage": 0.9,
@@ -18689,7 +18689,7 @@
       "generatedBy": "ZTA Free Asset Factory",
       "status": "unsupported",
       "generationEligible": true,
-      "builderRevision": "2026-07-18-r3"
+      "builderRevision": "2026-07-18-r4"
     },
     {
       "id": "food_aqualume_kelp_noodles_v01",
@@ -18706,9 +18706,9 @@
       "description": "A production-ready Aqualume Kelp Noodles, designed as a specialized asset awaiting a dedicated family builder for Aqualume. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: advanced inhabited underwater city; pressure-rated structures, curved glass, coral-integrated architecture, current-powered transit, marine engineering, luminous but functional materials. This asset appears under the blueprint section “F. Market/food/retail” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
       "designIntent": "Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists.",
       "dimensionsMeters": {
-        "width": 1.5,
-        "depth": 1.5,
-        "height": 1.5
+        "width": 0.75,
+        "depth": 0.75,
+        "height": 0.45
       },
       "requiredComponents": [
         "recognizable primary structure",
@@ -18726,7 +18726,7 @@
         "minimumTriangles": 500,
         "maximumTriangles": 24000,
         "maximumMaterials": 12,
-        "dimensionTolerance": 0.6,
+        "dimensionTolerance": 0.45,
         "groundPivotToleranceMeters": 0.04,
         "minimumPreviewCoverage": 0.008,
         "maximumPreviewCoverage": 0.9,
@@ -18755,7 +18755,7 @@
       "generatedBy": "ZTA Free Asset Factory",
       "status": "unsupported",
       "generationEligible": true,
-      "builderRevision": "2026-07-18-r3"
+      "builderRevision": "2026-07-18-r4"
     },
     {
       "id": "food_aqualume_reef_wrap_v01",
@@ -18772,9 +18772,9 @@
       "description": "A production-ready Aqualume Reef Wrap, designed as a specialized asset awaiting a dedicated family builder for Aqualume. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: advanced inhabited underwater city; pressure-rated structures, curved glass, coral-integrated architecture, current-powered transit, marine engineering, luminous but functional materials. This asset appears under the blueprint section “F. Market/food/retail” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
       "designIntent": "Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists.",
       "dimensionsMeters": {
-        "width": 1.5,
-        "depth": 1.5,
-        "height": 1.5
+        "width": 0.75,
+        "depth": 0.75,
+        "height": 0.45
       },
       "requiredComponents": [
         "recognizable primary structure",
@@ -18792,7 +18792,7 @@
         "minimumTriangles": 500,
         "maximumTriangles": 24000,
         "maximumMaterials": 12,
-        "dimensionTolerance": 0.6,
+        "dimensionTolerance": 0.45,
         "groundPivotToleranceMeters": 0.04,
         "minimumPreviewCoverage": 0.008,
         "maximumPreviewCoverage": 0.9,
@@ -18821,7 +18821,7 @@
       "generatedBy": "ZTA Free Asset Factory",
       "status": "unsupported",
       "generationEligible": true,
-      "builderRevision": "2026-07-18-r3"
+      "builderRevision": "2026-07-18-r4"
     },
     {
       "id": "food_burger_future_a_v01",
@@ -18838,9 +18838,9 @@
       "description": "A production-ready Burger Future, designed as a specialized asset awaiting a dedicated family builder for Techtown. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “E. Food / restaurant / convenience” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
       "designIntent": "Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists.",
       "dimensionsMeters": {
-        "width": 1.5,
-        "depth": 1.5,
-        "height": 1.5
+        "width": 0.75,
+        "depth": 0.75,
+        "height": 0.45
       },
       "requiredComponents": [
         "recognizable primary structure",
@@ -18858,7 +18858,7 @@
         "minimumTriangles": 500,
         "maximumTriangles": 24000,
         "maximumMaterials": 12,
-        "dimensionTolerance": 0.6,
+        "dimensionTolerance": 0.45,
         "groundPivotToleranceMeters": 0.04,
         "minimumPreviewCoverage": 0.008,
         "maximumPreviewCoverage": 0.9,
@@ -18887,7 +18887,7 @@
       "generatedBy": "ZTA Free Asset Factory",
       "status": "unsupported",
       "generationEligible": true,
-      "builderRevision": "2026-07-18-r3"
+      "builderRevision": "2026-07-18-r4"
     },
     {
       "id": "food_energy_drink_future_a_v01",
@@ -18904,9 +18904,9 @@
       "description": "A production-ready Energy Drink Future, designed as a specialized asset awaiting a dedicated family builder for Techtown. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “Asset list” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
       "designIntent": "Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists.",
       "dimensionsMeters": {
-        "width": 1.5,
-        "depth": 1.5,
-        "height": 1.5
+        "width": 0.48,
+        "depth": 0.48,
+        "height": 0.62
       },
       "requiredComponents": [
         "recognizable primary structure",
@@ -18924,7 +18924,7 @@
         "minimumTriangles": 500,
         "maximumTriangles": 24000,
         "maximumMaterials": 12,
-        "dimensionTolerance": 0.6,
+        "dimensionTolerance": 0.45,
         "groundPivotToleranceMeters": 0.04,
         "minimumPreviewCoverage": 0.008,
         "maximumPreviewCoverage": 0.9,
@@ -18953,7 +18953,7 @@
       "generatedBy": "ZTA Free Asset Factory",
       "status": "unsupported",
       "generationEligible": true,
-      "builderRevision": "2026-07-18-r3"
+      "builderRevision": "2026-07-18-r4"
     },
     {
       "id": "food_fries_future_a_v01",
@@ -18970,9 +18970,9 @@
       "description": "A production-ready Fries Future, designed as a specialized asset awaiting a dedicated family builder for Techtown. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “E. Food / restaurant / convenience” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
       "designIntent": "Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists.",
       "dimensionsMeters": {
-        "width": 1.5,
-        "depth": 1.5,
-        "height": 1.5
+        "width": 0.75,
+        "depth": 0.75,
+        "height": 0.45
       },
       "requiredComponents": [
         "recognizable primary structure",
@@ -18990,7 +18990,7 @@
         "minimumTriangles": 500,
         "maximumTriangles": 24000,
         "maximumMaterials": 12,
-        "dimensionTolerance": 0.6,
+        "dimensionTolerance": 0.45,
         "groundPivotToleranceMeters": 0.04,
         "minimumPreviewCoverage": 0.008,
         "maximumPreviewCoverage": 0.9,
@@ -19019,7 +19019,7 @@
       "generatedBy": "ZTA Free Asset Factory",
       "status": "unsupported",
       "generationEligible": true,
-      "builderRevision": "2026-07-18-r3"
+      "builderRevision": "2026-07-18-r4"
     },
     {
       "id": "food_noodle_bowl_future_a_v01",
@@ -19036,9 +19036,9 @@
       "description": "A production-ready Noodle Bowl Future, designed as a specialized asset awaiting a dedicated family builder for Techtown. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “E. Food / restaurant / convenience” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
       "designIntent": "Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists.",
       "dimensionsMeters": {
-        "width": 1.5,
-        "depth": 1.5,
-        "height": 1.5
+        "width": 0.75,
+        "depth": 0.75,
+        "height": 0.45
       },
       "requiredComponents": [
         "recognizable primary structure",
@@ -19056,7 +19056,7 @@
         "minimumTriangles": 500,
         "maximumTriangles": 24000,
         "maximumMaterials": 12,
-        "dimensionTolerance": 0.6,
+        "dimensionTolerance": 0.45,
         "groundPivotToleranceMeters": 0.04,
         "minimumPreviewCoverage": 0.008,
         "maximumPreviewCoverage": 0.9,
@@ -19085,7 +19085,7 @@
       "generatedBy": "ZTA Free Asset Factory",
       "status": "unsupported",
       "generationEligible": true,
-      "builderRevision": "2026-07-18-r3"
+      "builderRevision": "2026-07-18-r4"
     },
     {
       "id": "food_snack_computer_chips_bag_a_v01",
@@ -19102,9 +19102,9 @@
       "description": "A production-ready Snack Computer Chips Bag, designed as a specialized asset awaiting a dedicated family builder for Techtown. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “Asset list” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
       "designIntent": "Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists.",
       "dimensionsMeters": {
-        "width": 1.5,
-        "depth": 1.5,
-        "height": 1.5
+        "width": 0.75,
+        "depth": 0.75,
+        "height": 0.45
       },
       "requiredComponents": [
         "recognizable primary structure",
@@ -19122,7 +19122,7 @@
         "minimumTriangles": 500,
         "maximumTriangles": 24000,
         "maximumMaterials": 12,
-        "dimensionTolerance": 0.6,
+        "dimensionTolerance": 0.45,
         "groundPivotToleranceMeters": 0.04,
         "minimumPreviewCoverage": 0.008,
         "maximumPreviewCoverage": 0.9,
@@ -19151,7 +19151,7 @@
       "generatedBy": "ZTA Free Asset Factory",
       "status": "unsupported",
       "generationEligible": true,
-      "builderRevision": "2026-07-18-r3"
+      "builderRevision": "2026-07-18-r4"
     },
     {
       "id": "food_softdrink_cup_future_a_v01",
@@ -19168,9 +19168,9 @@
       "description": "A production-ready Softdrink Cup Future, designed as a specialized asset awaiting a dedicated family builder for Techtown. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “E. Food / restaurant / convenience” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
       "designIntent": "Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists.",
       "dimensionsMeters": {
-        "width": 1.5,
-        "depth": 1.5,
-        "height": 1.5
+        "width": 0.48,
+        "depth": 0.48,
+        "height": 0.62
       },
       "requiredComponents": [
         "recognizable primary structure",
@@ -19188,7 +19188,7 @@
         "minimumTriangles": 500,
         "maximumTriangles": 24000,
         "maximumMaterials": 12,
-        "dimensionTolerance": 0.6,
+        "dimensionTolerance": 0.45,
         "groundPivotToleranceMeters": 0.04,
         "minimumPreviewCoverage": 0.008,
         "maximumPreviewCoverage": 0.9,
@@ -19217,7 +19217,7 @@
       "generatedBy": "ZTA Free Asset Factory",
       "status": "unsupported",
       "generationEligible": true,
-      "builderRevision": "2026-07-18-r3"
+      "builderRevision": "2026-07-18-r4"
     },
     {
       "id": "furniture_acting_class_chair_a_v01",
@@ -19650,7 +19650,7 @@
       ],
       "quality": {
         "minimumMeshObjects": 10,
-        "minimumTriangles": 2600,
+        "minimumTriangles": 2200,
         "maximumTriangles": 24000,
         "maximumMaterials": 12,
         "dimensionTolerance": 0.5,
@@ -19682,7 +19682,7 @@
       "generatedBy": "ZTA Free Asset Factory",
       "status": "queued",
       "generationEligible": true,
-      "builderRevision": "2026-07-18-r3"
+      "builderRevision": "2026-07-18-r4"
     },
     {
       "id": "furniture_canyon_bunk_a_v01",
@@ -148129,7 +148129,7 @@
       ],
       "quality": {
         "minimumMeshObjects": 16,
-        "minimumTriangles": 2300,
+        "minimumTriangles": 2200,
         "maximumTriangles": 20000,
         "maximumMaterials": 12,
         "dimensionTolerance": 0.5,
@@ -148138,7 +148138,7 @@
         "maximumPreviewCoverage": 0.9,
         "requiredComponentCoverage": 1,
         "automaticRetryLimit": 2,
-        "minimumMaterials": 5
+        "minimumMaterials": 4
       },
       "functionalNotes": [
         "ground-centered pivot",
@@ -148161,7 +148161,7 @@
       "generatedBy": "ZTA Free Asset Factory",
       "status": "queued",
       "generationEligible": true,
-      "builderRevision": "2026-07-18-r3"
+      "builderRevision": "2026-07-18-r4"
     },
     {
       "id": "prop_casino_security_scanner_a_v01",
@@ -152573,7 +152573,7 @@
       "designIntent": "Include wall mounting, housing depth, bezel, power or data routing, and a controllable display material rather than a bare emissive plane.",
       "dimensionsMeters": {
         "width": 1.2,
-        "depth": 0.12,
+        "depth": 0.24,
         "height": 0.72
       },
       "requiredComponents": [
@@ -152591,17 +152591,17 @@
         "controlled emissive accents"
       ],
       "quality": {
-        "minimumMeshObjects": 7,
-        "minimumTriangles": 1100,
+        "minimumMeshObjects": 6,
+        "minimumTriangles": 1200,
         "maximumTriangles": 12000,
         "maximumMaterials": 12,
-        "dimensionTolerance": 0.5,
+        "dimensionTolerance": 0.35,
         "groundPivotToleranceMeters": 0.04,
         "minimumPreviewCoverage": 0.008,
         "maximumPreviewCoverage": 0.9,
         "requiredComponentCoverage": 1,
         "automaticRetryLimit": 2,
-        "minimumMaterials": 4
+        "minimumMaterials": 3
       },
       "functionalNotes": [
         "ground-centered pivot",
@@ -152624,7 +152624,7 @@
       "generatedBy": "ZTA Free Asset Factory",
       "status": "queued",
       "generationEligible": true,
-      "builderRevision": "2026-07-18-r3"
+      "builderRevision": "2026-07-18-r4"
     },
     {
       "id": "prop_digital_whiteboard_a_v01",
@@ -164020,7 +164020,7 @@
       ],
       "quality": {
         "minimumMeshObjects": 16,
-        "minimumTriangles": 2300,
+        "minimumTriangles": 2200,
         "maximumTriangles": 20000,
         "maximumMaterials": 12,
         "dimensionTolerance": 0.5,
@@ -164029,7 +164029,7 @@
         "maximumPreviewCoverage": 0.9,
         "requiredComponentCoverage": 1,
         "automaticRetryLimit": 2,
-        "minimumMaterials": 5
+        "minimumMaterials": 4
       },
       "functionalNotes": [
         "ground-centered pivot",
@@ -164052,7 +164052,7 @@
       "generatedBy": "ZTA Free Asset Factory",
       "status": "queued",
       "generationEligible": true,
-      "builderRevision": "2026-07-18-r3"
+      "builderRevision": "2026-07-18-r4"
     },
     {
       "id": "prop_music_drumkit_a_v01",
@@ -167540,7 +167540,7 @@
       ],
       "quality": {
         "minimumMeshObjects": 16,
-        "minimumTriangles": 2300,
+        "minimumTriangles": 2200,
         "maximumTriangles": 20000,
         "maximumMaterials": 12,
         "dimensionTolerance": 0.5,
@@ -167549,7 +167549,7 @@
         "maximumPreviewCoverage": 0.9,
         "requiredComponentCoverage": 1,
         "automaticRetryLimit": 2,
-        "minimumMaterials": 5
+        "minimumMaterials": 4
       },
       "functionalNotes": [
         "ground-centered pivot",
@@ -167572,7 +167572,7 @@
       "generatedBy": "ZTA Free Asset Factory",
       "status": "queued",
       "generationEligible": true,
-      "builderRevision": "2026-07-18-r3"
+      "builderRevision": "2026-07-18-r4"
     },
     {
       "id": "prop_richhills_streetlight_a_v01",
@@ -168942,7 +168942,7 @@
       ],
       "quality": {
         "minimumMeshObjects": 16,
-        "minimumTriangles": 2300,
+        "minimumTriangles": 2200,
         "maximumTriangles": 20000,
         "maximumMaterials": 12,
         "dimensionTolerance": 0.5,
@@ -168951,7 +168951,7 @@
         "maximumPreviewCoverage": 0.9,
         "requiredComponentCoverage": 1,
         "automaticRetryLimit": 2,
-        "minimumMaterials": 5
+        "minimumMaterials": 4
       },
       "functionalNotes": [
         "ground-centered pivot",
@@ -168974,7 +168974,7 @@
       "generatedBy": "ZTA Free Asset Factory",
       "status": "queued",
       "generationEligible": true,
-      "builderRevision": "2026-07-18-r3"
+      "builderRevision": "2026-07-18-r4"
     },
     {
       "id": "prop_security_node_a_v01",
@@ -171008,7 +171008,7 @@
       ],
       "quality": {
         "minimumMeshObjects": 16,
-        "minimumTriangles": 2300,
+        "minimumTriangles": 2200,
         "maximumTriangles": 20000,
         "maximumMaterials": 12,
         "dimensionTolerance": 0.5,
@@ -171017,7 +171017,7 @@
         "maximumPreviewCoverage": 0.9,
         "requiredComponentCoverage": 1,
         "automaticRetryLimit": 2,
-        "minimumMaterials": 5
+        "minimumMaterials": 4
       },
       "functionalNotes": [
         "ground-centered pivot",
@@ -171040,7 +171040,7 @@
       "generatedBy": "ZTA Free Asset Factory",
       "status": "queued",
       "generationEligible": true,
-      "builderRevision": "2026-07-18-r3"
+      "builderRevision": "2026-07-18-r4"
     },
     {
       "id": "prop_starline_spotlight_tower_a_v01",
@@ -178062,7 +178062,7 @@
       "designIntent": "Include wall mounting, housing depth, bezel, power or data routing, and a controllable display material rather than a bare emissive plane.",
       "dimensionsMeters": {
         "width": 1.2,
-        "depth": 0.12,
+        "depth": 0.24,
         "height": 0.72
       },
       "requiredComponents": [
@@ -178080,17 +178080,17 @@
         "controlled emissive accents"
       ],
       "quality": {
-        "minimumMeshObjects": 7,
-        "minimumTriangles": 1100,
+        "minimumMeshObjects": 6,
+        "minimumTriangles": 1200,
         "maximumTriangles": 12000,
         "maximumMaterials": 12,
-        "dimensionTolerance": 0.5,
+        "dimensionTolerance": 0.35,
         "groundPivotToleranceMeters": 0.04,
         "minimumPreviewCoverage": 0.008,
         "maximumPreviewCoverage": 0.9,
         "requiredComponentCoverage": 1,
         "automaticRetryLimit": 2,
-        "minimumMaterials": 4
+        "minimumMaterials": 3
       },
       "functionalNotes": [
         "ground-centered pivot",
@@ -178113,7 +178113,7 @@
       "generatedBy": "ZTA Free Asset Factory",
       "status": "queued",
       "generationEligible": true,
-      "builderRevision": "2026-07-18-r3"
+      "builderRevision": "2026-07-18-r4"
     },
     {
       "id": "prop_wall_screen_dashboard_a_v01",
@@ -178151,77 +178151,8 @@
       ],
       "quality": {
         "minimumMeshObjects": 16,
-        "minimumTriangles": 2300,
+        "minimumTriangles": 2200,
         "maximumTriangles": 20000,
-        "maximumMaterials": 12,
-        "dimensionTolerance": 0.5,
-        "groundPivotToleranceMeters": 0.04,
-        "minimumPreviewCoverage": 0.008,
-        "maximumPreviewCoverage": 0.9,
-        "requiredComponentCoverage": 1,
-        "automaticRetryLimit": 2,
-        "minimumMaterials": 5
-      },
-      "functionalNotes": [
-        "ground-centered pivot",
-        "positive Z forward where direction matters",
-        "optimized GLB export"
-      ],
-      "forbiddenShortcuts": [
-        "generic primitive fallback for an unsupported family",
-        "humans assembled from cylinders and spheres without credible anatomy, clothing, hands, feet, face structure, and rigging",
-        "monsters or animals represented by stacked circles, repeated blobs, or disconnected primitive piles",
-        "vehicles without a readable chassis, passenger cabin, propulsion system, lighting, access panels, and stable stance",
-        "hover vehicles that are only a floating box or toy saucer",
-        "buildings that are only an undecorated rectangular shell when the specification requires a functional facade",
-        "one-material assets when the real object clearly contains distinct materials",
-        "unlabeled generic output quietly substituted for a requested asset",
-        "Roblox-like filler, toy-block proportions, or third-grade collage styling",
-        "random neon on assets whose town profile does not call for neon"
-      ],
-      "license": "Original ZTA procedural geometry",
-      "generatedBy": "ZTA Free Asset Factory",
-      "status": "queued",
-      "generationEligible": true,
-      "builderRevision": "2026-07-18-r3"
-    },
-    {
-      "id": "prop_wall_screen_home_a_v01",
-      "fileName": "prop_wall_screen_home_a_v01.glb",
-      "displayName": "Wall Screen Home",
-      "town": "techtown",
-      "sourceDoc": "docs/TECH_TOWN_BLUEPRINT.md",
-      "sourceSection": "G. Residential / home",
-      "family": "wall_screen",
-      "builder": "wall_screen",
-      "builderStatus": "supported",
-      "priority": 10000,
-      "variant": null,
-      "description": "A production-ready Wall Screen Home, designed as a wall-mounted display system for Techtown. Include wall mounting, housing depth, bezel, power or data routing, and a controllable display material rather than a bare emissive plane. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “G. Residential / home” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
-      "designIntent": "Include wall mounting, housing depth, bezel, power or data routing, and a controllable display material rather than a bare emissive plane.",
-      "dimensionsMeters": {
-        "width": 1.2,
-        "depth": 0.12,
-        "height": 0.72
-      },
-      "requiredComponents": [
-        "mounting bracket",
-        "rear housing",
-        "screen panel",
-        "protective bezel",
-        "status light",
-        "cable or power channel"
-      ],
-      "materials": [
-        "dark brushed metal",
-        "black composite",
-        "tinted glass",
-        "controlled emissive accents"
-      ],
-      "quality": {
-        "minimumMeshObjects": 7,
-        "minimumTriangles": 1100,
-        "maximumTriangles": 12000,
         "maximumMaterials": 12,
         "dimensionTolerance": 0.5,
         "groundPivotToleranceMeters": 0.04,
@@ -178252,7 +178183,76 @@
       "generatedBy": "ZTA Free Asset Factory",
       "status": "queued",
       "generationEligible": true,
-      "builderRevision": "2026-07-18-r3"
+      "builderRevision": "2026-07-18-r4"
+    },
+    {
+      "id": "prop_wall_screen_home_a_v01",
+      "fileName": "prop_wall_screen_home_a_v01.glb",
+      "displayName": "Wall Screen Home",
+      "town": "techtown",
+      "sourceDoc": "docs/TECH_TOWN_BLUEPRINT.md",
+      "sourceSection": "G. Residential / home",
+      "family": "wall_screen",
+      "builder": "wall_screen",
+      "builderStatus": "supported",
+      "priority": 10000,
+      "variant": null,
+      "description": "A production-ready Wall Screen Home, designed as a wall-mounted display system for Techtown. Include wall mounting, housing depth, bezel, power or data routing, and a controllable display material rather than a bare emissive plane. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “G. Residential / home” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+      "designIntent": "Include wall mounting, housing depth, bezel, power or data routing, and a controllable display material rather than a bare emissive plane.",
+      "dimensionsMeters": {
+        "width": 1.2,
+        "depth": 0.24,
+        "height": 0.72
+      },
+      "requiredComponents": [
+        "mounting bracket",
+        "rear housing",
+        "screen panel",
+        "protective bezel",
+        "status light",
+        "cable or power channel"
+      ],
+      "materials": [
+        "dark brushed metal",
+        "black composite",
+        "tinted glass",
+        "controlled emissive accents"
+      ],
+      "quality": {
+        "minimumMeshObjects": 6,
+        "minimumTriangles": 1200,
+        "maximumTriangles": 12000,
+        "maximumMaterials": 12,
+        "dimensionTolerance": 0.35,
+        "groundPivotToleranceMeters": 0.04,
+        "minimumPreviewCoverage": 0.008,
+        "maximumPreviewCoverage": 0.9,
+        "requiredComponentCoverage": 1,
+        "automaticRetryLimit": 2,
+        "minimumMaterials": 3
+      },
+      "functionalNotes": [
+        "ground-centered pivot",
+        "positive Z forward where direction matters",
+        "optimized GLB export"
+      ],
+      "forbiddenShortcuts": [
+        "generic primitive fallback for an unsupported family",
+        "humans assembled from cylinders and spheres without credible anatomy, clothing, hands, feet, face structure, and rigging",
+        "monsters or animals represented by stacked circles, repeated blobs, or disconnected primitive piles",
+        "vehicles without a readable chassis, passenger cabin, propulsion system, lighting, access panels, and stable stance",
+        "hover vehicles that are only a floating box or toy saucer",
+        "buildings that are only an undecorated rectangular shell when the specification requires a functional facade",
+        "one-material assets when the real object clearly contains distinct materials",
+        "unlabeled generic output quietly substituted for a requested asset",
+        "Roblox-like filler, toy-block proportions, or third-grade collage styling",
+        "random neon on assets whose town profile does not call for neon"
+      ],
+      "license": "Original ZTA procedural geometry",
+      "generatedBy": "ZTA Free Asset Factory",
+      "status": "queued",
+      "generationEligible": true,
+      "builderRevision": "2026-07-18-r4"
     },
     {
       "id": "prop_warden_front_desk_a_v01",
@@ -183907,7 +183907,7 @@
   "count": 2298,
   "gameplayGapExpansion": {
     "version": 3,
-    "appliedAt": "2026-07-18T16:56:29.111Z",
+    "appliedAt": "2026-07-18T17:58:24.553Z",
     "newCanonicalRequestCount": 1320,
     "expectedAuditedRecordCount": 2298,
     "expectedCanonicalGenerationRequestCount": 2282,
@@ -183937,7 +183937,8 @@
       "runtime-vfx": 289,
       "shader": 40,
       "state-variant": 80
-    }
+    },
+    "builderRevision": "2026-07-18-r4"
   },
-  "builderRevision": "2026-07-18-r3"
+  "builderRevision": "2026-07-18-r4"
 }
