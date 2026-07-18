@@ -6,6 +6,7 @@ on:
     paths:
       - 'asset-factory/gameplay-gaps/**'
       - 'asset-factory/manual-overrides.json'
+      - 'asset-factory/priority-shape-overrides.json'
       - 'asset-factory/quality-policy.json'
       - 'tools/asset-factory/**'
       - 'docs/**/*BLUEPRINT.md'
@@ -17,14 +18,16 @@ on:
     paths:
       - 'asset-factory/gameplay-gaps/**'
       - 'asset-factory/manual-overrides.json'
+      - 'asset-factory/priority-shape-overrides.json'
       - 'asset-factory/quality-policy.json'
       - 'tools/asset-factory/**'
       - 'docs/**/*BLUEPRINT.md'
       - 'docs/FINAL_GAMEPLAY_GAPS.md'
       - 'package.json'
+      - '.github/workflows/build-deep-asset-briefs.yml'
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: zta-expanded-deep-asset-briefs-${{ github.ref }}
@@ -36,10 +39,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
-      - name: Checkout repository
+      - name: Checkout repository without historical binary payload
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -53,35 +56,28 @@ jobs:
           set -o pipefail
           npm run asset:deep 2>&1 | tee reports/asset-factory/deep-validation.log
 
-      - name: Commit validated catalogs and bounded shards
-        if: github.event_name != 'pull_request'
+      - name: Summarize derived-library footprint
         shell: bash
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add asset-factory/gameplay-gaps/
-          git add asset-factory/generated/
-          git add asset-factory/state/
-          git add docs/FINAL_GAMEPLAY_GAPS.md
-          git add reports/asset-factory/deep-validation.log
-          if git diff --cached --quiet; then
-            echo "Expanded asset library is already current."
-            exit 0
-          fi
-          git commit -m "Validate expanded asset production briefs [skip ci]"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+          {
+            echo "Derived deep specifications are validated in Actions and are not committed to Git."
+            du -sh asset-factory/generated/deep-specs 2>/dev/null || true
+            find asset-factory/generated/deep-specs -maxdepth 1 -type f -printf '%s\t%f\n' 2>/dev/null | sort -nr || true
+          } | tee reports/asset-factory/deep-storage-summary.txt
 
-      - name: Upload validation proof
+      - name: Upload reproducible deep-library proof
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: zta-expanded-asset-library-${{ github.run_number }}
           path: |
             reports/asset-factory/deep-validation.log
+            reports/asset-factory/deep-storage-summary.txt
             asset-factory/gameplay-gaps/summary.json
             asset-factory/generated/deep-asset-specs.json
             asset-factory/generated/deep-spec-coverage.json
             asset-factory/generated/deep-specs/
             asset-factory/state/queue.json
           if-no-files-found: warn
-          retention-days: 7
+          compression-level: 9
+          retention-days: 30
