@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-18T08:24:42.196Z",
+  "generatedAt": "2026-07-18T09:14:00.185Z",
   "source": "All .glb names harvested from docs/**/*.md plus explicit manual canonical additions.",
   "policy": "asset-factory/quality-policy.json",
   "counts": {

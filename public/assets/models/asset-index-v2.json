@@ -3637,6 +3637,18 @@
   "furniture": {
     "zta-free-asset-factory": [
       {
+        "name": "furniture_bed_modern_tech_a_v01",
+        "path": "models/generated/techtown/modern_bed/furniture_bed_modern_tech_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "techtown",
+        "family": "modern_bed",
+        "displayName": "Bed Modern Tech",
+        "description": "A production-ready Bed Modern Tech, designed as a residential bed for Techtown. Create layered bedding, a plausible support frame, human-scale mattress thickness, pillow forms, seams, and a clear head/foot orientation. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: sleek cyberpunk smart city; dark brushed metal, black composite panels, tinted glass, polished concrete, controlled cyan, magenta, violet, and electric-blue lighting. This asset appears under the blueprint section “G. Residential / home” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
         "name": "furniture_office_desk_futuristic_a_v01",
         "path": "models/generated/techtown/office_desk/furniture_office_desk_futuristic_a_v01.glb",
         "type": "glb",
