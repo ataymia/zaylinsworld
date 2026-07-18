@@ -41,6 +41,8 @@ function stampServiceWorker() {
 // - The `three/addons/*` alias maps the examples/jsm helpers (Sky, GLTFLoader,
 //   DRACOLoader, KTX2Loader, RGBELoader, meshopt) to the installed npm package,
 //   replacing the old CDN import map so everything bundles & tree-shakes.
+// - The second HTML entry is an isolated large-town engineering preview. It does
+//   not touch the normal player save or replace the main game entry.
 export default defineConfig({
   base: './',
   define: {
@@ -63,6 +65,12 @@ export default defineConfig({
     assetsInlineLimit: 0,
     sourcemap: false,
     chunkSizeWarningLimit: 1500,
+    rollupOptions: {
+      input: {
+        game: resolve(__dirname, 'index.html'),
+        starterTownPreview: resolve(__dirname, 'large-town-preview.html'),
+      },
+    },
   },
   server: {
     open: true,
