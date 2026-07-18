@@ -1,8 +1,8 @@
 {
   "format": "zta-deep-asset-spec-shard",
   "version": 1,
-  "generatedAt": "2026-07-18T14:55:58.524Z",
-  "inventoryAuditAt": "2026-07-18T14:56:02.139Z",
+  "generatedAt": "2026-07-18T15:28:35.113Z",
+  "inventoryAuditAt": "2026-07-18T15:28:39.199Z",
   "shardKey": "rich-hills",
   "recordCount": 70,
   "canonicalGenerationRequests": 70,
@@ -300,9 +300,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "b0de594c4a4d440d9d641a87d16a7bfa7c56b00d947f4a0d252de2602b150916",
-      "semanticRefinedAt": "2026-07-18T14:55:59.298Z",
+      "semanticRefinedAt": "2026-07-18T15:28:35.999Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.344Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.323Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Richhills Property Gate, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “B. Roads/landscape” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -321,10 +321,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Richhills Property Gate role-specific architecture profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.422Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -332,7 +332,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.034Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.085Z"
     },
     {
       "id": "arch_richhills_retaining_wall_a_v01",
@@ -607,9 +607,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "c2b27b3b5123ddb63ebce79520f81e473dc4c54190e6060fd9ffa965562c39cb",
-      "semanticRefinedAt": "2026-07-18T14:55:59.298Z",
+      "semanticRefinedAt": "2026-07-18T15:28:35.999Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.344Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.323Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Richhills Retaining Wall, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “B. Roads/landscape” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -628,10 +628,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "wall or facade module",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.422Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named wall or facade module profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -639,7 +639,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.035Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.086Z"
     },
     {
       "id": "building_crestfuel_motor_club_exterior_v01",
@@ -875,9 +875,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "8eec897cba65825cb23719fffca35be52362be80fa138f59ceeb64a287f0a4e7",
-      "semanticRefinedAt": "2026-07-18T14:55:59.299Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.000Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.344Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.323Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -885,7 +885,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.035Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.086Z"
     },
     {
       "id": "building_crestview_clinic_exterior_v01",
@@ -1121,9 +1121,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "f15e040ccc3e362dbd76bef456b601305d335e1a732c5437f387dea77414c1fa",
-      "semanticRefinedAt": "2026-07-18T14:55:59.299Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.000Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.345Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.323Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -1131,7 +1131,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.035Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.086Z"
     },
     {
       "id": "building_crown_greens_clubhouse_exterior_v01",
@@ -1367,9 +1367,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "85068692fe39cf64db9994b57834a58e27daf39868f703e0f16dd5b31bb114d2",
-      "semanticRefinedAt": "2026-07-18T14:55:59.299Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.000Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.345Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.323Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -1377,7 +1377,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.035Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.086Z"
     },
     {
       "id": "building_crownline_motors_exterior_v01",
@@ -1613,9 +1613,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "6469bec12b6a7351a955b819ae350aefb74835a1036801017ef4f423c4703d0e",
-      "semanticRefinedAt": "2026-07-18T14:55:59.299Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.000Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.345Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.324Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -1623,7 +1623,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.035Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.086Z"
     },
     {
       "id": "building_gallery_crown_exterior_v01",
@@ -1859,9 +1859,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "3d1871e06c7efb91c6885b122630f5e83933e1f16030732157c544f5f217f3d3",
-      "semanticRefinedAt": "2026-07-18T14:55:59.299Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.000Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.345Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.324Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -1869,7 +1869,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.035Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.086Z"
     },
     {
       "id": "building_golden_key_realty_exterior_v01",
@@ -2105,9 +2105,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "2b6fecb7a9b32d690868451422959f5734c9f82db4f893a2dc720d4774150084",
-      "semanticRefinedAt": "2026-07-18T14:55:59.300Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.000Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.345Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.324Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -2115,7 +2115,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.035Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.086Z"
     },
     {
       "id": "building_legacy_prep_academy_exterior_v01",
@@ -2351,9 +2351,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "c0338a90b2fd133623d4d4ad1864df733c127efc6ff0116e2a1a9dba4db5fb52",
-      "semanticRefinedAt": "2026-07-18T14:55:59.300Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.001Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.345Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.324Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -2361,7 +2361,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.035Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.087Z"
     },
     {
       "id": "building_richhills_estate_a_v01",
@@ -2597,9 +2597,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "909ab7b234799f542b310e2f0895408b103500e265f837d37ae43898e6cebbe3",
-      "semanticRefinedAt": "2026-07-18T14:55:59.300Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.001Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.346Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.324Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -2607,7 +2607,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.035Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.087Z"
     },
     {
       "id": "building_richhills_grand_entry_arch_v01",
@@ -2843,9 +2843,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "190c2e53a5ac2baa549d4deac4b3e6c3fdee11e4022e6f695f5ff167261b65ba",
-      "semanticRefinedAt": "2026-07-18T14:55:59.300Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.001Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.346Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.324Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -2853,7 +2853,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.036Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.087Z"
     },
     {
       "id": "building_richhills_police_exterior_v01",
@@ -3089,9 +3089,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "30978d3d944b99b171669d54e358197c119f9919e1cea0911b90a5f80e12f5bb",
-      "semanticRefinedAt": "2026-07-18T14:55:59.300Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.001Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.346Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.325Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -3099,7 +3099,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.036Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.087Z"
     },
     {
       "id": "building_richhills_townhouse_a_v01",
@@ -3335,9 +3335,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "b893b75c818af7e208ec34208f99e4fe786eb26546525a5450069aeefaa75cb6",
-      "semanticRefinedAt": "2026-07-18T14:55:59.301Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.001Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.346Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.325Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -3345,7 +3345,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.036Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.087Z"
     },
     {
       "id": "building_service_village_apartments_exterior_v01",
@@ -3581,9 +3581,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "3fb55de6716254629e831b8954cea5b43dafea8704c9eeefde0ad4750deaf812",
-      "semanticRefinedAt": "2026-07-18T14:55:59.301Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.002Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.346Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.325Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -3591,7 +3591,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.036Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.087Z"
     },
     {
       "id": "building_summit_yacht_club_exterior_v01",
@@ -3827,9 +3827,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "b3360aee9a862190e7392144cbaf2f54a2c2508cf485eb29fb184c687ad73006",
-      "semanticRefinedAt": "2026-07-18T14:55:59.301Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.002Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.346Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.325Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -3837,7 +3837,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.036Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.088Z"
     },
     {
       "id": "furniture_richhills_apartment_bed_a_v01",
@@ -4113,9 +4113,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "c08566e3a98e4a0afd6f2b883925785b0c50548effa02034683bbee0bd927833",
-      "semanticRefinedAt": "2026-07-18T14:55:59.301Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.002Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as furniture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.346Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.325Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Richhills Apartment Bed, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “F. Residential” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -4134,10 +4134,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "bed",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.422Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named bed profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -4145,7 +4145,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.036Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.088Z"
     },
     {
       "id": "furniture_richhills_dining_set_a_v01",
@@ -4417,9 +4417,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "b29cc1b6801eb8c67c8d2cd531e22abb1cef0dd1e35247fcfd452cf580441417",
-      "semanticRefinedAt": "2026-07-18T14:55:59.301Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.002Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as furniture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.347Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.325Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Richhills Dining Set, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “F. Residential” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -4438,10 +4438,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Richhills Dining Set role-specific furniture profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.422Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -4449,7 +4449,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.036Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.088Z"
     },
     {
       "id": "furniture_richhills_estate_bed_a_v01",
@@ -4725,9 +4725,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "c30cb6a117c55584517b13b755ed4961497ee1eebcfebb3ebde3f668088c39b6",
-      "semanticRefinedAt": "2026-07-18T14:55:59.301Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.002Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as furniture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.347Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.326Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Richhills Estate Bed, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “F. Residential” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -4746,10 +4746,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "bed",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.422Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named bed profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -4757,7 +4757,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.036Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.088Z"
     },
     {
       "id": "furniture_richhills_townhouse_sofa_a_v01",
@@ -5032,9 +5032,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "48d987c2f2fb7a196470dca8e1420aa01d21d5de10fd4ae78127738f769ac26c",
-      "semanticRefinedAt": "2026-07-18T14:55:59.302Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.002Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as furniture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.347Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.326Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Richhills Townhouse Sofa, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “F. Residential” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -5053,10 +5053,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "sofa or upholstered seating",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.422Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named sofa or upholstered seating profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -5064,7 +5064,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.037Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.088Z"
     },
     {
       "id": "prop_clubhouse_event_table_a_v01",
@@ -5336,9 +5336,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "b4f1db6d7969dddf6c5700d869d7802767a805c00f8567d5ac5054b5011c76cf",
-      "semanticRefinedAt": "2026-07-18T14:55:59.302Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.003Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.347Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.326Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Clubhouse Event Table, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “C. Country club/golf” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -5357,10 +5357,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "table",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.422Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named table profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -5368,7 +5368,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.037Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.088Z"
     },
     {
       "id": "prop_clubhouse_reception_a_v01",
@@ -5640,9 +5640,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "7cfdad27f834ef7a1cf5659677619e8aba5c9a5283b7820d85099e6fe8030b55",
-      "semanticRefinedAt": "2026-07-18T14:55:59.302Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.003Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.347Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.326Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Clubhouse Reception, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “C. Country club/golf” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -5661,10 +5661,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Clubhouse Reception role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.422Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -5672,7 +5672,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.037Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.088Z"
     },
     {
       "id": "prop_clubhouse_valet_podium_a_v01",
@@ -5944,9 +5944,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "fa70ede735ebe657c1d98a32bc41182a5d1416e02ae9ee33a38ee1b105a53849",
-      "semanticRefinedAt": "2026-07-18T14:55:59.302Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.003Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.348Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.326Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Clubhouse Valet Podium, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “C. Country club/golf” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -5965,10 +5965,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Clubhouse Valet Podium role-specific furniture profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.422Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -5976,7 +5976,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.037Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.089Z"
     },
     {
       "id": "prop_crestfuel_canopy_a_v01",
@@ -6250,9 +6250,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "24b99ab0fb9fbdf918ffcd77d918322e4172c86c47751622d3f3cf2cc58d2e63",
-      "semanticRefinedAt": "2026-07-18T14:55:59.302Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.003Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.348Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.327Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Crestfuel Canopy, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “Layout” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -6271,10 +6271,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "canopy or temporary cover",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.422Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named canopy or temporary cover profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -6282,7 +6282,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.037Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.089Z"
     },
     {
       "id": "prop_crestfuel_detail_bay_a_v01",
@@ -6543,9 +6543,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "9682bfa2105f80017797ffbab5fda47bad7b4de6095aa07751fc55cbde06b21a",
-      "semanticRefinedAt": "2026-07-18T14:55:59.303Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.004Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.348Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.327Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Crestfuel Detail Bay, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “Layout” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -6564,10 +6564,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "vehicle service lift or repair bay",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.422Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated vehicle service lift or repair bay profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -6575,7 +6575,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.037Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.089Z"
     },
     {
       "id": "prop_crestfuel_ev_charger_a_v01",
@@ -6837,9 +6837,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "1dcc2897b18a72ee339aa4b9bd27dafe1ec285d11c795b87a1de0ad239a49a88",
-      "semanticRefinedAt": "2026-07-18T14:55:59.315Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.004Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.349Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.327Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Crestfuel EV Charger, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “Layout” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -6858,10 +6858,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "electric-vehicle charging pedestal",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.422Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated electric-vehicle charging pedestal profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -6869,7 +6869,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.037Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.089Z"
     },
     {
       "id": "prop_crestfuel_market_shelf_a_v01",
@@ -7143,9 +7143,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "f62589636a591023724d5917d66500c159877de75ecc58a7c8b7a5f94ba4fa87",
-      "semanticRefinedAt": "2026-07-18T14:55:59.316Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.004Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.349Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.327Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Crestfuel Market Shelf, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “Layout” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -7164,10 +7164,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "rack or shelving unit",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.422Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named rack or shelving unit profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -7175,7 +7175,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.037Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.089Z"
     },
     {
       "id": "prop_crestfuel_member_kiosk_a_v01",
@@ -7452,9 +7452,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "c91d8270650973f2d361bbe143869a06ac482079145fee96b5e638c2d3aee310",
-      "semanticRefinedAt": "2026-07-18T14:55:59.316Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.013Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.349Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.328Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Crestfuel Member Kiosk, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “Layout” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -7473,10 +7473,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "terminal, kiosk, station, or console",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.422Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named terminal, kiosk, station, or console profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -7484,7 +7484,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.038Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.089Z"
     },
     {
       "id": "prop_crestfuel_package_locker_a_v01",
@@ -7760,9 +7760,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "a3c2bc2a767184d621f09161000790868edf709042184fe3c585815e30a057b2",
-      "semanticRefinedAt": "2026-07-18T14:55:59.316Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.014Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.350Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.328Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Crestfuel Package Locker, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “Layout” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -7781,10 +7781,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "cabinet, locker, refrigerator, or freezer",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.422Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named cabinet, locker, refrigerator, or freezer profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -7792,7 +7792,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.038Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.089Z"
     },
     {
       "id": "prop_crestfuel_price_sign_a_v01",
@@ -8068,9 +8068,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "0b1d976ab6440d8513981f203669416cc9515fa98768fc7d74802ed88de413a2",
-      "semanticRefinedAt": "2026-07-18T14:55:59.316Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.014Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as signage",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.350Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.328Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Crestfuel Price Sign, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “Layout” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -8089,10 +8089,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "freestanding or wall sign",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named freestanding or wall sign profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -8100,7 +8100,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.038Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.090Z"
     },
     {
       "id": "prop_crestfuel_pump_a_v01",
@@ -8341,9 +8341,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "826a3f6c16c043962347eaab391452f0a369f0c20098e34931b524bd5a6a0f47",
-      "semanticRefinedAt": "2026-07-18T14:55:59.297Z",
+      "semanticRefinedAt": "2026-07-18T15:28:35.998Z",
       "semanticCategoryReason": "dedicated family fuel_pump resolves the physical object as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.343Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.322Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -8351,7 +8351,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.034Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.085Z"
     },
     {
       "id": "prop_crestfuel_service_lift_a_v01",
@@ -8612,9 +8612,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "4fc8363416be920cd02d8a2a7ef12e763f17c4fe3de00d14fee562a485e118f9",
-      "semanticRefinedAt": "2026-07-18T14:55:59.316Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.014Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.350Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.328Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Crestfuel Service Lift, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “Layout” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -8633,10 +8633,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "vehicle service lift or repair bay",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated vehicle service lift or repair bay profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -8644,7 +8644,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.038Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.090Z"
     },
     {
       "id": "prop_crestview_clinic_reception_a_v01",
@@ -8916,9 +8916,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "688a22918d8b0ffd437db4642600ac5cdd6b35754c09ad9dc470efdca9b3d0ee",
-      "semanticRefinedAt": "2026-07-18T14:55:59.316Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.014Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.350Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.328Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Crestview Clinic Reception, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “G. Police/security/clinic/service” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -8937,10 +8937,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Crestview Clinic Reception role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -8948,7 +8948,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.038Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.090Z"
     },
     {
       "id": "prop_crestview_exam_bed_a_v01",
@@ -9224,9 +9224,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "58c9fb51812031602ee6278b09d9e1b0c345188cd11b479e54f1435976f5f4dd",
-      "semanticRefinedAt": "2026-07-18T14:55:59.317Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.014Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.351Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.329Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Crestview Exam Bed, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “G. Police/security/clinic/service” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -9245,10 +9245,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "bed",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named bed profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -9256,7 +9256,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.038Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.090Z"
     },
     {
       "id": "prop_designer_clothing_rack_a_v01",
@@ -9530,9 +9530,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "e4f67ac9921917b089465b7b4c6ae0f2bd0ef82e89c68c6245e04c52c06d3519",
-      "semanticRefinedAt": "2026-07-18T14:55:59.317Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.014Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.351Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.329Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Designer Clothing Rack, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “E. Property/gallery/retail” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -9551,10 +9551,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "rack or shelving unit",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named rack or shelving unit profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -9562,7 +9562,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.038Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.090Z"
     },
     {
       "id": "prop_gallery_auction_podium_a_v01",
@@ -9834,9 +9834,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "ccab080a02261ba777c8383fb5e99fab57e49b529d51df76bb7af7df450561ee",
-      "semanticRefinedAt": "2026-07-18T14:55:59.317Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.015Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.351Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.329Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Gallery Auction Podium, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “E. Property/gallery/retail” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -9855,10 +9855,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Gallery Auction Podium role-specific furniture profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -9866,7 +9866,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.038Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.090Z"
     },
     {
       "id": "prop_gallery_display_plinth_a_v01",
@@ -10142,9 +10142,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "f5997560306fe380b61eec239c3cf5dfa23c7c1fbc10bbccecb531c4534709a0",
-      "semanticRefinedAt": "2026-07-18T14:55:59.317Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.015Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as signage",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.352Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.329Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Gallery Display Plinth, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “E. Property/gallery/retail” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -10163,10 +10163,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "information board or digital display",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named information board or digital display profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -10174,7 +10174,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.039Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.090Z"
     },
     {
       "id": "prop_gallery_frame_a_v01",
@@ -10446,9 +10446,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "4eeafad714f4a1c041becc4cb8268604d22d51d19fba60b4b2a1bc2221b1434f",
-      "semanticRefinedAt": "2026-07-18T14:55:59.317Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.015Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.352Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.329Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Gallery Frame, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “E. Property/gallery/retail” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -10467,10 +10467,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Gallery Frame role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -10478,7 +10478,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.039Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.090Z"
     },
     {
       "id": "prop_golf_cart_a_v01",
@@ -10756,9 +10756,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "ec0d7792ee62573331772f2bb4b2bcf1ce6f1f72208ac7d998c7bae655624225",
-      "semanticRefinedAt": "2026-07-18T14:55:59.317Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.015Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as vehicle",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.352Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.330Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Golf Cart, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “C. Country club/golf” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -10777,10 +10777,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "cart or small utility carrier",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named cart or small utility carrier profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -10788,7 +10788,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.039Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.091Z"
     },
     {
       "id": "prop_golf_club_rack_a_v01",
@@ -11062,9 +11062,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "69723ea43d9fa31ba9b87ac793cf54f893ea5d38080aac52d708cd414da0a306",
-      "semanticRefinedAt": "2026-07-18T14:55:59.317Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.015Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.352Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.330Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Golf Club Rack, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “C. Country club/golf” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -11083,10 +11083,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "rack or shelving unit",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named rack or shelving unit profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -11094,7 +11094,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.039Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.091Z"
     },
     {
       "id": "prop_golf_flag_hole_a_v01",
@@ -11366,9 +11366,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "8799e2b06ef73f327a5dc8e5827c0d61e92d65297a98da8f2ada0af02b860b4e",
-      "semanticRefinedAt": "2026-07-18T14:55:59.318Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.015Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.352Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.330Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Golf Flag Hole, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “C. Country club/golf” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -11387,10 +11387,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Golf Flag Hole role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -11398,7 +11398,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.039Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.091Z"
     },
     {
       "id": "prop_golf_practice_target_a_v01",
@@ -11670,9 +11670,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "047a81997b26ac5dd74d90c890d75a76db2f7f0099f19a199d8a318c196ef1f2",
-      "semanticRefinedAt": "2026-07-18T14:55:59.318Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.015Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.353Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.330Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Golf Practice Target, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “C. Country club/golf” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -11691,10 +11691,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Golf Practice Target role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -11702,7 +11702,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.039Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.091Z"
     },
     {
       "id": "prop_golf_tee_marker_a_v01",
@@ -11977,9 +11977,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "3bd98e2e9f997d8399019d0a57496979467f5ddcaaf80f66854f054120d17844",
-      "semanticRefinedAt": "2026-07-18T14:55:59.318Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.016Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.353Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.331Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Golf Tee Marker, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “C. Country club/golf” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -11998,10 +11998,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Golf Tee Marker role-specific infrastructure profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -12009,7 +12009,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.039Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.091Z"
     },
     {
       "id": "prop_home_richhills_art_wall_a_v01",
@@ -12281,9 +12281,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "9b4a83bc5f678846e8b13e00aaf9afb18b8582b71bf108ae1eb9ec5e1e5fe225",
-      "semanticRefinedAt": "2026-07-18T14:55:59.318Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.016Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.353Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.331Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Home Richhills Art Wall, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “F. Residential” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -12302,10 +12302,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Home Richhills Art Wall role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -12313,7 +12313,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.039Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.091Z"
     },
     {
       "id": "prop_home_richhills_garage_display_a_v01",
@@ -12589,9 +12589,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "78aefd79253f0a8f96cf43f729309905d83f09f468d3462eaca360fa52409e9e",
-      "semanticRefinedAt": "2026-07-18T14:55:59.318Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.016Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as signage",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.353Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.331Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Home Richhills Garage Display, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “F. Residential” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -12610,10 +12610,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "information board or digital display",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.217Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named information board or digital display profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -12621,7 +12621,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.040Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.091Z"
     },
     {
       "id": "prop_home_richhills_gym_a_v01",
@@ -12893,9 +12893,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "852381074cf3d76c772a3342cdd7f6ed8630788b7cba642a614bb6ac191da168",
-      "semanticRefinedAt": "2026-07-18T14:55:59.318Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.016Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.353Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.331Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Home Richhills Gym, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “F. Residential” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -12914,10 +12914,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Home Richhills Gym role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.218Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -12925,7 +12925,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.040Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.092Z"
     },
     {
       "id": "prop_home_richhills_office_desk_a_v01",
@@ -13158,9 +13158,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "0777bd61edea79fa2603c011979d72ef9d8ff9b72b908acc4c81a35cfa246608",
-      "semanticRefinedAt": "2026-07-18T14:55:59.297Z",
+      "semanticRefinedAt": "2026-07-18T15:28:35.998Z",
       "semanticCategoryReason": "dedicated family office_desk resolves the physical object as furniture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.343Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.322Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -13168,7 +13168,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.034Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.085Z"
     },
     {
       "id": "prop_home_richhills_pool_module_a_v01",
@@ -13440,9 +13440,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "cd289c62d1de31e3867c5e52592cd836e128eef309c2af8d40e5af6dc29352ee",
-      "semanticRefinedAt": "2026-07-18T14:55:59.319Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.016Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.354Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.331Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Home Richhills Pool Module, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “F. Residential” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -13461,10 +13461,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Home Richhills Pool Module role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.218Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -13472,7 +13472,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.040Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.092Z"
     },
     {
       "id": "prop_luxury_jewelry_case_a_v01",
@@ -13748,9 +13748,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "bfad1589a9bc153a0ec02ba701c5b56288baa6fe190b69c1a602beb256841734",
-      "semanticRefinedAt": "2026-07-18T14:55:59.319Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.016Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as generic_prop",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.354Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.332Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Luxury Jewelry Case, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “E. Property/gallery/retail” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -13769,10 +13769,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "crate, case, or chest",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.218Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named crate, case, or chest profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -13780,7 +13780,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.040Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.092Z"
     },
     {
       "id": "prop_realty_contract_desk_a_v01",
@@ -14055,9 +14055,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "8210196a98464fbf04635af8a2ac8cdc8545cb47c72543abdf90fdcf150087fd",
-      "semanticRefinedAt": "2026-07-18T14:55:59.319Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.017Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.354Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.332Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Realty Contract Desk, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “E. Property/gallery/retail” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -14076,10 +14076,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "desk or workstation",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.218Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named desk or workstation profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -14087,7 +14087,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.040Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.092Z"
     },
     {
       "id": "prop_realty_house_model_a_v01",
@@ -14359,9 +14359,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "7551d641dab3a49e0113375515340b850a35028e55d045574792d1d110664bf6",
-      "semanticRefinedAt": "2026-07-18T14:55:59.319Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.017Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.355Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.332Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Realty House Model, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “E. Property/gallery/retail” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -14380,10 +14380,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Realty House Model role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.218Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -14391,7 +14391,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.040Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.092Z"
     },
     {
       "id": "prop_realty_property_display_a_v01",
@@ -14667,9 +14667,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "441886d65338a24d268e3d582bd5b4328c5cb2a773ad872913de896fc5502008",
-      "semanticRefinedAt": "2026-07-18T14:55:59.319Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.017Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as signage",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.355Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.332Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Realty Property Display, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “E. Property/gallery/retail” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -14688,10 +14688,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "information board or digital display",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.218Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named information board or digital display profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -14699,7 +14699,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.040Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.092Z"
     },
     {
       "id": "prop_richhills_bench_a_v01",
@@ -14932,9 +14932,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "ec5757ce0ad03e03f3a10d33a723f4a1c16937e534f88f62a0fdb7f2d6a4bb77",
-      "semanticRefinedAt": "2026-07-18T14:55:59.297Z",
+      "semanticRefinedAt": "2026-07-18T15:28:35.998Z",
       "semanticCategoryReason": "dedicated family municipal_bench resolves the physical object as furniture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.343Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.322Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -14942,7 +14942,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.034Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.085Z"
     },
     {
       "id": "prop_richhills_evidence_locker_a_v01",
@@ -15217,9 +15217,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "821f2baf4a6fbd065b6a243067848c508cd06c27b54be2ddf5dbcfb38bb788b6",
-      "semanticRefinedAt": "2026-07-18T14:55:59.319Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.017Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.355Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.333Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Richhills Evidence Locker, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “G. Police/security/clinic/service” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -15238,10 +15238,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "cabinet, locker, refrigerator, or freezer",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.218Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named cabinet, locker, refrigerator, or freezer profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -15249,7 +15249,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.040Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.092Z"
     },
     {
       "id": "prop_richhills_fountain_a_v01",
@@ -15503,9 +15503,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "c581e79c6b5fed1909eed91282baaf541d284584ac76ec162ab5c34c4634d33c",
-      "semanticRefinedAt": "2026-07-18T14:55:59.319Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.017Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.355Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.333Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Richhills Fountain, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “B. Roads/landscape” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -15524,10 +15524,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "fountain or public water feature",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.218Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated fountain or public water feature profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -15535,7 +15535,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.040Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.092Z"
     },
     {
       "id": "prop_richhills_hedge_a_v01",
@@ -15805,9 +15805,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "6c209f9346df6a47b4fbb509aa2f7f0e7222561d9de8c108a4b10ff2f4b1eab1",
-      "semanticRefinedAt": "2026-07-18T14:55:59.319Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.017Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as vegetation",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.355Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.333Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Richhills Hedge, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “B. Roads/landscape” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -15826,10 +15826,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "tree, hedge, or shrub",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.218Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named tree, hedge, or shrub profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -15837,7 +15837,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.041Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.093Z"
     },
     {
       "id": "prop_richhills_planter_a_v01",
@@ -16067,9 +16067,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "1819e008d460f1bfd714f1ec4825a54b8889b00d5f09f3fdd3aaa5a795312a94",
-      "semanticRefinedAt": "2026-07-18T14:55:59.297Z",
+      "semanticRefinedAt": "2026-07-18T15:28:35.998Z",
       "semanticCategoryReason": "dedicated family planter resolves the physical object as vegetation",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.343Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.322Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -16077,7 +16077,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.034Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.085Z"
     },
     {
       "id": "prop_richhills_police_front_desk_a_v01",
@@ -16352,9 +16352,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "a0a4e8a9bd6c6ab102c5e28484f7912e3b035ec92b7c535bd126d5c207aa6eb5",
-      "semanticRefinedAt": "2026-07-18T14:55:59.320Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.017Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.356Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.333Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Richhills Police Front Desk, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “G. Police/security/clinic/service” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -16373,10 +16373,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "desk or workstation",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.218Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named desk or workstation profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -16384,7 +16384,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.041Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.093Z"
     },
     {
       "id": "prop_richhills_security_camera_a_v01",
@@ -16659,9 +16659,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "7791eb563d3b131274bb35dd8bd62e46b22790254adc308dbcb173f8cd210a2a",
-      "semanticRefinedAt": "2026-07-18T14:55:59.320Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.018Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.356Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.333Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Richhills Security Camera, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “B. Roads/landscape” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -16680,10 +16680,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "security camera or scanner",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.218Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named security camera or scanner profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -16691,7 +16691,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.041Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.093Z"
     },
     {
       "id": "prop_richhills_security_gate_booth_a_v01",
@@ -16964,9 +16964,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "3c7850b8d3f53f2396ae92f1feea68b187af4919023f6e073edce073c284e51f",
-      "semanticRefinedAt": "2026-07-18T14:55:59.320Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.018Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.356Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.334Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Richhills Security Gate Booth, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “G. Police/security/clinic/service” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -16985,10 +16985,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Richhills Security Gate Booth role-specific furniture profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.218Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -16996,7 +16996,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.041Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.093Z"
     },
     {
       "id": "prop_richhills_security_monitor_wall_a_v01",
@@ -17232,9 +17232,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "dce95be82147aaa8f39b044af9bb4c5be0bedf5714f39b9e9a4861e9f4df9170",
-      "semanticRefinedAt": "2026-07-18T14:55:59.298Z",
+      "semanticRefinedAt": "2026-07-18T15:28:35.999Z",
       "semanticCategoryReason": "dedicated family multi_monitor resolves the physical object as furniture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.344Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.322Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -17242,7 +17242,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.034Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.085Z"
     },
     {
       "id": "prop_richhills_streetlight_a_v01",
@@ -17478,9 +17478,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "3420308ae048d0166e47ec5c83985e2af48930ce781cd11d024c47604f06497c",
-      "semanticRefinedAt": "2026-07-18T14:55:59.298Z",
+      "semanticRefinedAt": "2026-07-18T15:28:35.999Z",
       "semanticCategoryReason": "dedicated family streetlight resolves the physical object as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.344Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.322Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -17488,7 +17488,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.034Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.085Z"
     },
     {
       "id": "prop_richhills_wayfinding_sign_a_v01",
@@ -17718,9 +17718,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "92d7780e82634538c391760ded5e9aba3193f5a3f3c114eec55a332249194d9a",
-      "semanticRefinedAt": "2026-07-18T14:55:59.298Z",
+      "semanticRefinedAt": "2026-07-18T15:28:35.999Z",
       "semanticCategoryReason": "dedicated family road_sign resolves the physical object as signage",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.344Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.323Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -17728,7 +17728,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.034Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.085Z"
     },
     {
       "id": "prop_service_landscape_tool_rack_a_v01",
@@ -18002,9 +18002,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "eac60211b30a82e7ffbb9447fe2a7fc5d26b1bab5711956de3a038cca61530b1",
-      "semanticRefinedAt": "2026-07-18T14:55:59.320Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.018Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as furniture",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.356Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.334Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Service Landscape Tool Rack, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “G. Police/security/clinic/service” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -18023,10 +18023,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "rack or shelving unit",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.218Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named rack or shelving unit profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -18034,7 +18034,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.041Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.093Z"
     },
     {
       "id": "prop_service_sanitation_bin_a_v01",
@@ -18311,9 +18311,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "f322029a615d26582b9a7bba12ce044cac02ea5ff5a65c1f533ab4ebf4acc8b4",
-      "semanticRefinedAt": "2026-07-18T14:55:59.320Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.018Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.356Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.334Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Service Sanitation Bin, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “G. Police/security/clinic/service” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -18332,10 +18332,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "bin, dumpster, or waste receptacle",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.218Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named bin, dumpster, or waste receptacle profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -18343,7 +18343,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.041Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.093Z"
     },
     {
       "id": "prop_yachtclub_reception_a_v01",
@@ -18615,9 +18615,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "2781e3b2ec2335a0bbbf3756d3692b21358930f18747ca6ddfa45bda5ff66b69",
-      "semanticRefinedAt": "2026-07-18T14:55:59.320Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.018Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.357Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.334Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Yachtclub Reception, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “D. Marina/yacht” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -18636,10 +18636,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Yachtclub Reception role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.218Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -18647,7 +18647,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.041Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.093Z"
     },
     {
       "id": "road_richhills_boulevard_straight_a_v01",
@@ -18877,9 +18877,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "5ba3aa9607c23d7e10562127acb76300b0d2aef6b5db8fb573308c4014e248c0",
-      "semanticRefinedAt": "2026-07-18T14:55:59.321Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.018Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as road_surface",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.357Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.334Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -18887,7 +18887,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.041Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.094Z"
     },
     {
       "id": "road_richhills_ridge_curve_a_v01",
@@ -19117,9 +19117,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "90a9f3afd6c7ea9db0db9367a9a00c5c499f3931c2e174df15abd1a6c2bde440",
-      "semanticRefinedAt": "2026-07-18T14:55:59.321Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.018Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as road_surface",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.357Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.335Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -19127,7 +19127,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.042Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.094Z"
     },
     {
       "id": "road_richhills_roundabout_a_v01",
@@ -19357,9 +19357,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "62eee63a8c8e6ffa56d3b6a9bcc8e220f79c3be99611514f0184e4f88f0ce759",
-      "semanticRefinedAt": "2026-07-18T14:55:59.321Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.019Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as road_surface",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.357Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.335Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -19367,7 +19367,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.042Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.094Z"
     },
     {
       "id": "vehicle_richhills_speedboat_a_v01",
@@ -19645,9 +19645,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "ff6e3cd1cefdf771fb2d58982580deb1d5dd4ed3d736d898ebcd41dc60cc30cb",
-      "semanticRefinedAt": "2026-07-18T14:55:59.321Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.019Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as vehicle",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.357Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.335Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Richhills Speedboat, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “D. Marina/yacht” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -19666,10 +19666,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Richhills Speedboat role-specific vehicle profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.218Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -19677,7 +19677,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.042Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.094Z"
     },
     {
       "id": "vehicle_richhills_yacht_a_v01",
@@ -19956,9 +19956,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "a870ad49e7c40cf087649114ecd168374e1b29e30d4ef5f62216fb85d85c85e0",
-      "semanticRefinedAt": "2026-07-18T14:55:59.321Z",
+      "semanticRefinedAt": "2026-07-18T15:28:36.019Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as vehicle",
-      "semanticFinalizedAt": "2026-07-18T14:56:01.358Z",
+      "semanticFinalizedAt": "2026-07-18T15:28:38.335Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Richhills Yacht, designed as a specialized asset awaiting a dedicated family builder for Rich Hills. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: luxury hillside realism; stone, stucco, glass, landscaped masonry, premium vehicles, gated civic and residential architecture. This asset appears under the blueprint section “D. Marina/yacht” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -19977,10 +19977,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "yacht or large leisure vessel",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:56:00.423Z",
+      "physicalSpecDerivedAt": "2026-07-18T15:28:37.218Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named yacht or large leisure vessel profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:56:00.842Z",
+      "physicalSpecSpecializedAt": "2026-07-18T15:28:37.744Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -19988,7 +19988,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:56:02.042Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T15:28:39.094Z"
     }
   ]
 }
