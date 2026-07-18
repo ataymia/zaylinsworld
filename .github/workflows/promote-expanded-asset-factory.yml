@@ -91,14 +91,26 @@ jobs:
             rm -rf tools/asset-factory/factory-patch-payload
             rm -f tools/asset-factory/install-gameplay-gap-expansion.mjs
             rm -f tools/asset-factory/promote-materialized-trigger.txt
-            git restore --source=HEAD -- \
+            for path in \
               .github/workflows/build-deep-asset-briefs.yml \
               .github/workflows/generate-free-asset-factory.yml \
               .github/workflows/install-gameplay-gap-expansion.yml \
-              .github/workflows/materialize-expanded-asset-library.yml 2>/dev/null || true
+              .github/workflows/materialize-expanded-asset-library.yml; do
+              if git cat-file -e "HEAD:$path" 2>/dev/null; then
+                mkdir -p "$(dirname "$path")"
+                git show "HEAD:$path" > "$path"
+              else
+                rm -f "$path"
+              fi
+            done
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add -A
+            if git diff --cached --name-only | grep -q '^.github/workflows/'; then
+              echo "Protected workflow changes remain staged; refusing promotion."
+              git diff --cached --name-only | grep '^.github/workflows/'
+              exit 1
+            fi
             if git diff --cached --quiet; then
               echo "No promoted factory changes to commit."
               exit 0
