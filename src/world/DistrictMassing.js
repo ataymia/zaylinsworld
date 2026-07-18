@@ -101,6 +101,7 @@ export function buildDistrictMassing({
   includeFunctional = false,
   castShadows = false,
   receiveShadows = true,
+  heightAt = null,
 } = {}) {
   const group = new THREE.Group();
   group.name = 'ZW_DistrictMassing';
@@ -138,7 +139,8 @@ export function buildDistrictMassing({
       mesh.userData.districtId = districtId;
       mesh.userData.instanceIds = instances.map((placement) => placement.id);
       instances.forEach((placement, index) => {
-        position.set(placement.position.x, placement.position.y, placement.position.z);
+        const surfaceY = typeof heightAt === 'function' ? Number(heightAt(placement.position.x, placement.position.z)) || 0 : 0;
+        position.set(placement.position.x, placement.position.y + surfaceY, placement.position.z);
         scale.set(placement.size.x, placement.size.y, placement.size.z);
         quaternion.identity();
         matrix.compose(position, quaternion, scale);
@@ -152,10 +154,12 @@ export function buildDistrictMassing({
   group.userData.placements = placements;
   group.userData.districtCount = byDistrict.size;
   group.userData.instanceCount = placements.length;
+  group.userData.terrainAware = typeof heightAt === 'function';
   group.userData.snapshot = () => Object.freeze({
     districts: byDistrict.size,
     instances: placements.length,
     meshes: group.children.length,
+    terrainAware: typeof heightAt === 'function',
     byDistrict: Object.fromEntries([...byDistrict].map(([id, list]) => [id, list.length])),
   });
 
