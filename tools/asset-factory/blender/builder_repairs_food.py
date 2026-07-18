@@ -2,7 +2,7 @@ import math
 
 from common import add_cylinder, add_rounded_box, add_tube, add_uv_sphere, make_material
 from builder_repair_utils import _detail_materials, _dims
-from builder_repairs_modular import build_modular_food as build_modular_food_plated
+from builder_repairs_contracts import build_plated_food_fixed as build_modular_food_plated
 
 
 def _is_drink(spec):
