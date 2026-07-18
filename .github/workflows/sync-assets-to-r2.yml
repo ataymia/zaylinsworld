@@ -53,7 +53,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
           ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Set up Node
@@ -64,7 +64,22 @@ jobs:
       - name: Validate synchronization source
         run: node --check tools/cloudflare/build-r2-upload-plan.mjs
 
+      - name: Build content-addressed upload plan
+        shell: bash
+        run: |
+          BASE_URL="$R2_ASSET_BASE_URL"
+          if [[ -z "$BASE_URL" && -n "$R2_ASSET_DOMAIN" ]]; then
+            BASE_URL="https://$R2_ASSET_DOMAIN"
+          fi
+          node tools/cloudflare/build-r2-upload-plan.mjs \
+            --scope "$SYNC_SCOPE" \
+            --base-url "$BASE_URL" \
+            --output reports/asset-factory/r2-upload-plan.tsv \
+            --manifest public/assets/remote-asset-manifest.json
+          wc -l reports/asset-factory/r2-upload-plan.tsv
+
       - name: Require Cloudflare deployment credentials
+        if: github.event_name != 'pull_request'
         shell: bash
         run: |
           if [[ -z "$CLOUDFLARE_API_TOKEN" || -z "$CLOUDFLARE_ACCOUNT_ID" ]]; then
@@ -74,9 +89,11 @@ jobs:
           echo "Cloudflare account credentials are available to Actions."
 
       - name: Install current Wrangler
+        if: github.event_name != 'pull_request'
         run: npx --yes wrangler@latest --version
 
       - name: Diagnose Cloudflare account and ensure R2 bucket exists
+        if: github.event_name != 'pull_request'
         shell: bash
         run: |
           set -o pipefail
@@ -99,18 +116,20 @@ jobs:
           else
             echo "Bucket lookup failed. Attempting account-level bucket creation." | tee -a "$LOG"
             if ! npx --yes wrangler@latest r2 bucket create "$R2_BUCKET" 2>&1 | tee -a "$LOG"; then
-              echo "::error::Cloudflare authentication succeeded, but R2 bucket access failed. The token likely needs Account > Workers R2 Storage > Edit, or R2 must first be enabled for the account."
+              echo "::error::Cloudflare authentication succeeded, but R2 bucket access failed. Enable R2 in the Cloudflare dashboard and ensure the token has Account > Workers R2 Storage > Edit."
               exit 1
             fi
             npx --yes wrangler@latest r2 bucket info "$R2_BUCKET" --json 2>&1 | tee /tmp/r2-bucket-info.json | tee -a "$LOG"
           fi
 
       - name: Configure read-only browser CORS
+        if: github.event_name != 'pull_request'
         run: |
           npx --yes wrangler@latest r2 bucket cors set "$R2_BUCKET" --file cloudflare/r2-cors.json
           npx --yes wrangler@latest r2 bucket cors list "$R2_BUCKET"
 
       - name: Attach optional production asset domain
+        if: github.event_name != 'pull_request'
         shell: bash
         run: |
           if [[ -z "$R2_ASSET_DOMAIN" || -z "$CLOUDFLARE_ZONE_ID" ]]; then
@@ -127,21 +146,8 @@ jobs:
               --force
           fi
 
-      - name: Build content-addressed upload plan
-        shell: bash
-        run: |
-          BASE_URL="$R2_ASSET_BASE_URL"
-          if [[ -z "$BASE_URL" && -n "$R2_ASSET_DOMAIN" ]]; then
-            BASE_URL="https://$R2_ASSET_DOMAIN"
-          fi
-          node tools/cloudflare/build-r2-upload-plan.mjs \
-            --scope "$SYNC_SCOPE" \
-            --base-url "$BASE_URL" \
-            --output reports/asset-factory/r2-upload-plan.tsv \
-            --manifest public/assets/remote-asset-manifest.json
-          wc -l reports/asset-factory/r2-upload-plan.tsv
-
       - name: Upload immutable binary objects
+        if: github.event_name != 'pull_request'
         shell: bash
         run: |
           set -euo pipefail
@@ -163,6 +169,7 @@ jobs:
           echo "Uploaded $uploaded immutable objects to R2."
 
       - name: Verify an uploaded object by checksum
+        if: github.event_name != 'pull_request'
         shell: bash
         run: |
           PLAN=reports/asset-factory/r2-upload-plan.tsv
