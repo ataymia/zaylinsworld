@@ -5,9 +5,18 @@ const token = process.env.GH_TOKEN || process.env.GITHUB_TOKEN;
 const repository = process.env.GITHUB_REPOSITORY;
 const branch = process.env.TARGET_BRANCH || process.env.GITHUB_HEAD_REF || process.env.GITHUB_REF_NAME;
 const apiBase = process.env.GITHUB_API_URL || 'https://api.github.com';
+const manifestPath = 'asset-factory/generated/deep-asset-specs.json';
+const coveragePath = 'asset-factory/generated/deep-spec-coverage.json';
+const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+
+if (manifest.format !== 'zta-deep-asset-spec-index' || !Array.isArray(manifest.shards)) {
+  throw new Error('The deep specification library must be sharded before commit.');
+}
+
 const files = [
-  'asset-factory/generated/deep-asset-specs.json',
-  'asset-factory/generated/deep-spec-coverage.json',
+  manifestPath,
+  coveragePath,
+  ...manifest.shards.map((record) => record.path),
 ];
 
 if (!token) throw new Error('GH_TOKEN or GITHUB_TOKEN is required.');
@@ -78,7 +87,7 @@ for (const file of localFiles) {
 }
 
 if (unchanged) {
-  console.log('[deep-spec-commit] Generated specification library is already current.');
+  console.log('[deep-spec-commit] Generated sharded specification library is already current.');
   process.exit(0);
 }
 
@@ -113,7 +122,7 @@ const tree = await request('POST', `/repos/${repository}/git/trees`, {
   tree: treeEntries,
 });
 const commit = await request('POST', `/repos/${repository}/git/commits`, {
-  message: 'Generate all deep asset production briefs [skip ci]',
+  message: 'Generate sharded deep asset production briefs [skip ci]',
   tree: tree.sha,
   parents: [parentSha],
   author: {
