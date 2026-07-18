@@ -21,6 +21,12 @@ from builder_repairs_modular import (
 )
 from builder_repairs_food import build_modular_food_fixed
 from builder_repairs_screen import build_wall_screen_fixed
+from builder_repairs_priority import (
+    build_accessibility_gate,
+    build_airlock_conduit,
+    build_bubble_lift,
+    build_elevated_road_support,
+)
 
 
 def install_repairs(builders):
@@ -36,6 +42,10 @@ def install_repairs(builders):
         "office_desk": build_office_desk_fixed,
         "hover_vehicle": build_hover_vehicle_fixed,
         "wall_screen": build_wall_screen_fixed,
+        "bubble_lift": build_bubble_lift,
+        "airlock_conduit": build_airlock_conduit,
+        "elevated_road_support": build_elevated_road_support,
+        "accessibility_gate": build_accessibility_gate,
         "modular_connector": build_modular_connector,
         "modular_infrastructure": build_modular_infrastructure,
         "modular_furniture": build_modular_furniture,
