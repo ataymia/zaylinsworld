@@ -71,6 +71,12 @@
         "minimumMeshObjects": 14
       },
       "note": "All eight required functional assemblies are separately modeled across 14 meshes and six materials. A fifteenth mesh would not add a missing service function."
+    },
+    "prop_bench_futuristic_a_v01": {
+      "quality": {
+        "minimumMaterials": 2
+      },
+      "note": "The TechTown bench intentionally uses two coordinated structural finishes: dark load-bearing metal and contrasting brushed seating slats. Additional decorative material is not required for object identity or plausibility."
     }
   }
 }
