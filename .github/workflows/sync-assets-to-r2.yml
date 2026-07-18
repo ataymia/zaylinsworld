@@ -76,17 +76,34 @@ jobs:
       - name: Install current Wrangler
         run: npx --yes wrangler@latest --version
 
-      - name: Ensure R2 bucket exists
+      - name: Diagnose Cloudflare account and ensure R2 bucket exists
         shell: bash
         run: |
-          if npx --yes wrangler@latest r2 bucket info "$R2_BUCKET" --json > /tmp/r2-bucket-info.json 2>/tmp/r2-bucket-info.err; then
-            echo "R2 bucket $R2_BUCKET already exists."
+          set -o pipefail
+          mkdir -p reports/asset-factory
+          LOG=reports/asset-factory/r2-cloudflare-diagnostic.log
+          : > "$LOG"
+          {
+            echo "== Wrangler identity =="
+            npx --yes wrangler@latest whoami
+            echo
+            echo "== R2 bucket list =="
+            npx --yes wrangler@latest r2 bucket list
+            echo
+            echo "== Requested bucket info: $R2_BUCKET =="
+          } 2>&1 | tee -a "$LOG"
+
+          if npx --yes wrangler@latest r2 bucket info "$R2_BUCKET" --json 2>&1 | tee /tmp/r2-bucket-info-attempt.log | tee -a "$LOG"; then
+            cp /tmp/r2-bucket-info-attempt.log /tmp/r2-bucket-info.json
+            echo "R2 bucket $R2_BUCKET already exists." | tee -a "$LOG"
           else
-            cat /tmp/r2-bucket-info.err || true
-            npx --yes wrangler@latest r2 bucket create "$R2_BUCKET"
-            npx --yes wrangler@latest r2 bucket info "$R2_BUCKET" --json > /tmp/r2-bucket-info.json
+            echo "Bucket lookup failed. Attempting account-level bucket creation." | tee -a "$LOG"
+            if ! npx --yes wrangler@latest r2 bucket create "$R2_BUCKET" 2>&1 | tee -a "$LOG"; then
+              echo "::error::Cloudflare authentication succeeded, but R2 bucket access failed. The token likely needs Account > Workers R2 Storage > Edit, or R2 must first be enabled for the account."
+              exit 1
+            fi
+            npx --yes wrangler@latest r2 bucket info "$R2_BUCKET" --json 2>&1 | tee /tmp/r2-bucket-info.json | tee -a "$LOG"
           fi
-          cat /tmp/r2-bucket-info.json
 
       - name: Configure read-only browser CORS
         run: |
@@ -181,6 +198,7 @@ jobs:
           name: zaylins-r2-sync-${{ github.run_number }}
           path: |
             /tmp/r2-bucket-info.json
+            reports/asset-factory/r2-cloudflare-diagnostic.log
             reports/asset-factory/r2-upload-plan.tsv
             public/assets/remote-asset-manifest.json
           if-no-files-found: warn
