@@ -1,1 +1,2 @@
 Trusted child-PR materialization trigger for the repaired 2,298-record Zaylins asset factory.
+Retry 2 captures the complete materialization transcript for diagnosis.
