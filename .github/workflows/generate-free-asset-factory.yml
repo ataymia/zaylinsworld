@@ -67,9 +67,13 @@ jobs:
             tools/asset-factory/blender/generate_batch.py
 
       - name: Generate and quality-check next batch
+        shell: bash
         env:
           BATCH_SIZE: ${{ github.event.inputs.batch_size || '10' }}
-        run: node tools/asset-factory/run-batch.mjs --batch-size "$BATCH_SIZE"
+        run: |
+          mkdir -p asset-factory/work
+          set -o pipefail
+          node tools/asset-factory/run-batch.mjs --batch-size "$BATCH_SIZE" 2>&1 | tee asset-factory/work/factory.log
 
       - name: Require the complete proof batch to pass
         if: github.event_name == 'pull_request'
@@ -113,6 +117,9 @@ jobs:
             asset-factory/work/previews/
             asset-factory/work/current-batch.json
             asset-factory/work/blender-report.json
+            asset-factory/work/factory.log
+            asset-factory/generated/master-asset-specs.json
+            asset-factory/state/queue.json
             reports/asset-factory/latest.json
           if-no-files-found: warn
           retention-days: 7
