@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { classifyDeepAsset } from './deep-spec-semantics.mjs';
 
 const ROOT = process.cwd();
 const MASTER_PATH = join(ROOT, 'asset-factory', 'generated', 'master-asset-specs.json');
@@ -29,6 +30,13 @@ const REQUIRED_BRIEF_FIELDS = [
   'licensingAndProvenance',
 ];
 const FORBIDDEN_PLACEHOLDERS = /\b(?:todo|tbd|fixme|lorem ipsum|describe later|unknown asset|generic thing)\b/i;
+const SEMANTIC_CONTRADICTIONS = [
+  ['vegetation', /streetlight|hydrant|bench|trash_can|utility_box|traffic_light/i],
+  ['food', /trash_can|dumpster|utility|streetlight|hydrant/i],
+  ['character', /(?:sign|guardrail|monitor_wall|security_camera|terminal|desk|building_)/i],
+  ['architecture', /^(?:prop|furniture|equipment)_.*(?:desk|table|bed|bench|chair|kiosk|terminal|cabinet|locker|sign|display)/i],
+  ['vehicle', /(?:bus_shelter|boatworks|boat_rental|houseboat_bed|dock_power|knot_training)/i],
+];
 
 for (const path of [MASTER_PATH, DEEP_PATH, COVERAGE_PATH]) {
   if (!existsSync(path)) throw new Error(`Missing deep-spec input: ${path}`);
@@ -58,9 +66,21 @@ for (const id of masterIds) {
 const exactDescriptions = new Map();
 const exactPrompts = new Map();
 const briefHashes = new Map();
+const computedCategoryCounts = {};
 
 for (const asset of deep.assets) {
   const label = asset.id || asset.fileName || '<unknown>';
+  const expectedCategory = classifyDeepAsset(asset);
+  computedCategoryCounts[expectedCategory] = (computedCategoryCounts[expectedCategory] || 0) + 1;
+
+  if (asset.semanticCategory !== expectedCategory) {
+    failures.push(`${label}: semantic category ${asset.semanticCategory} does not match deterministic category ${expectedCategory}.`);
+  }
+  for (const [category, pattern] of SEMANTIC_CONTRADICTIONS) {
+    if (asset.semanticCategory === category && pattern.test(asset.fileName)) {
+      failures.push(`${label}: semantic category ${category} contradicts the physical object name.`);
+    }
+  }
   if (!asset.deepDescription || asset.deepDescription.length < deep.descriptionMinimumCharacters) {
     failures.push(`${label}: deep description is ${asset.deepDescription?.length || 0} characters; minimum is ${deep.descriptionMinimumCharacters}.`);
   }
@@ -79,8 +99,14 @@ for (const asset of deep.assets) {
   if (!asset.deepDescription.includes(asset.town)) {
     failures.push(`${label}: deep description does not identify its town.`);
   }
+  if (!asset.deepDescription.includes(`resolved semantic category is ${asset.semanticCategory}`)) {
+    failures.push(`${label}: deep description does not record its resolved semantic category.`);
+  }
   if (!asset.sourceContext?.excerpt || asset.sourceContext.excerpt.length < 40) {
     failures.push(`${label}: blueprint context excerpt is missing or too short.`);
+  }
+  if (String(asset.sourceDoc || '').endsWith('.json') && !asset.sourceContext.excerpt.includes(asset.displayName)) {
+    failures.push(`${label}: manual canonical context does not identify the specific asset.`);
   }
   if (!asset.productionBrief || typeof asset.productionBrief !== 'object') {
     failures.push(`${label}: production brief is missing.`);
@@ -94,6 +120,9 @@ for (const asset of deep.assets) {
   }
   if (!Array.isArray(asset.productionBrief.qaChecklist) || asset.productionBrief.qaChecklist.length < 12) {
     failures.push(`${label}: QA checklist has fewer than 12 checks.`);
+  }
+  if (!asset.productionBrief.qaChecklist.some((item) => item.includes(`resolved as ${asset.semanticCategory}`))) {
+    failures.push(`${label}: QA checklist does not enforce semantic-category correctness.`);
   }
   if (!Array.isArray(asset.productionBrief.rejectionCriteria) || asset.productionBrief.rejectionCriteria.length < 8) {
     failures.push(`${label}: rejection criteria have fewer than eight rules.`);
@@ -127,6 +156,12 @@ for (const owners of briefHashes.values()) {
   if (owners.length > 1) failures.push(`Duplicate brief hash: ${owners.join(', ')}.`);
 }
 
+if (JSON.stringify(coverage.categoryCounts) !== JSON.stringify(computedCategoryCounts)) {
+  failures.push('Coverage semantic category counts do not match deterministic classification.');
+}
+if (JSON.stringify(deep.counts.categories) !== JSON.stringify(computedCategoryCounts)) {
+  failures.push('Deep-library semantic category counts do not match deterministic classification.');
+}
 if (coverage.descriptionsAtOrAboveMinimum !== deep.assets.length) failures.push('Coverage reports a short deep description.');
 if (coverage.promptsAtOrAboveMinimum !== deep.assets.length) failures.push('Coverage reports a short generation prompt.');
 if (coverage.assetsWithBlueprintContext !== deep.assets.length) failures.push('Coverage reports an asset without blueprint context.');
@@ -136,12 +171,12 @@ if (coverage.uniqueBriefHashes !== deep.assets.length) failures.push('Coverage r
 
 if (failures.length) {
   console.error(`[deep-specs] ${failures.length} validation failure(s)`);
-  for (const failure of failures.slice(0, 200)) console.error(`- ${failure}`);
-  if (failures.length > 200) console.error(`- ...and ${failures.length - 200} additional failures`);
+  for (const failure of failures.slice(0, 250)) console.error(`- ${failure}`);
+  if (failures.length > 250) console.error(`- ...and ${failures.length - 250} additional failures`);
   process.exit(1);
 }
 
-console.log(`[deep-specs] PASS: ${deep.assets.length} of ${master.assets.length} assets have complete, unique deep production briefs.`);
+console.log(`[deep-specs] PASS: ${deep.assets.length} of ${master.assets.length} assets have complete, unique, semantically consistent production briefs.`);
 console.log(`[deep-specs] Minimum deep description length: ${deep.descriptionMinimumCharacters} characters.`);
 console.log(`[deep-specs] Minimum generation prompt length: ${deep.generationPromptMinimumCharacters} characters.`);
 console.log(`[deep-specs] Categories: ${Object.entries(deep.counts.categories).map(([name, count]) => `${name}=${count}`).join(', ')}`);
