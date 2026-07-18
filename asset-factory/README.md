@@ -2,6 +2,16 @@
 
 This directory contains the persistent specifications, policies, and queue state for the free unattended Zaylins asset generator.
 
+## Production status
+
+- Factory merged and running on `main`
+- First unattended batch completed: 10 of 10 passed QA, exported as verified GLBs, and entered the live asset index
+- Currently supported and queued after batch one: 89
+- Fully specified but intentionally waiting for dedicated family builders: 879
+- Next proof targets include the TechTown hover sedan and hover coupe
+
+The unsupported count is a quality safeguard, not lost work. Those assets already have specifications, but the factory refuses to replace them with crude generic geometry.
+
 ## Cost model
 
 - Generation engine: Blender, free and open source
