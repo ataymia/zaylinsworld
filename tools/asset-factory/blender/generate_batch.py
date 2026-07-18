@@ -7,6 +7,7 @@ import traceback
 import bpy
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+REPO_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, "..", "..", ".."))
 if SCRIPT_DIR not in sys.path:
     sys.path.insert(0, SCRIPT_DIR)
 
@@ -24,6 +25,13 @@ from common import (
     render_turntable,
     reset_scene,
 )
+
+QA_OVERRIDES_PATH = os.path.join(REPO_ROOT, "asset-factory", "qa-overrides.json")
+if os.path.exists(QA_OVERRIDES_PATH):
+    with open(QA_OVERRIDES_PATH, "r", encoding="utf8") as handle:
+        QA_OVERRIDES = json.load(handle).get("assets", {})
+else:
+    QA_OVERRIDES = {}
 
 
 def configure_render_compatible():
@@ -78,6 +86,32 @@ def relative_to_cwd(path):
     return os.path.relpath(path, os.getcwd()).replace("\\", "/")
 
 
+def apply_qa_override(spec):
+    override = QA_OVERRIDES.get(spec["id"])
+    if not override:
+        return None
+    if override.get("dimensionsMeters"):
+        spec.setdefault("dimensionsMeters", {}).update(override["dimensionsMeters"])
+    if override.get("quality"):
+        spec.setdefault("quality", {}).update(override["quality"])
+    return override.get("note")
+
+
+def saved_preview_coverage(paths):
+    coverages = []
+    for path in paths:
+        absolute_path = os.path.abspath(path)
+        image = bpy.data.images.load(absolute_path, check_existing=False)
+        try:
+            pixels = list(image.pixels)
+            alpha_values = pixels[3::4]
+            coverage = sum(1 for alpha in alpha_values if alpha > 0.05) / max(1, len(alpha_values))
+            coverages.append(coverage)
+        finally:
+            bpy.data.images.remove(image, do_unlink=True)
+    return coverages
+
+
 def refine_retry_geometry(spec):
     attempt = int(spec.get("factoryAttempt", 1))
     if attempt <= 1:
@@ -130,6 +164,7 @@ def main():
             "family": spec["family"],
             "builder": spec.get("builder"),
             "attempt": spec.get("factoryAttempt", 1),
+            "qaOverride": None,
             "retryEnhancement": None,
             "passed": False,
             "failures": [],
@@ -148,6 +183,7 @@ def main():
                 results.append(result)
                 continue
 
+            result["qaOverride"] = apply_qa_override(spec)
             reset_scene()
             root = create_root(spec)
             builder(spec)
@@ -156,7 +192,8 @@ def main():
             move_to_ground_center(root)
 
             preview_asset_dir = os.path.join(args.preview_dir, asset_id)
-            preview_paths, preview_coverage = render_turntable(spec, preview_asset_dir)
+            preview_paths, _ = render_turntable(spec, preview_asset_dir)
+            preview_coverage = saved_preview_coverage(preview_paths)
             stats = collect_stats(spec)
             quality = evaluate_quality(spec, stats, preview_coverage)
 
