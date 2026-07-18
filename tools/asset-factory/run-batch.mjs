@@ -216,10 +216,12 @@ function main() {
   const policy = readJson(POLICY_PATH);
   const requestedBatchSize = Number.isFinite(options.batchSize) ? options.batchSize : policy.batchSize;
   const batchSize = Math.min(10, Math.max(1, requestedBatchSize));
+  const previousSequence = existsSync(QUEUE_PATH) ? (readJson(QUEUE_PATH).sequence || 0) : 0;
 
   run(process.execPath, ['tools/asset-factory/compile-specs.mjs']);
   const master = readJson(MASTER_PATH);
   const queue = readJson(QUEUE_PATH);
+  queue.sequence = previousSequence;
   const { chosen, masterById } = chooseBatch(master, queue, batchSize);
 
   mkdirSync(WORK_DIR, { recursive: true });
@@ -234,11 +236,12 @@ function main() {
       message: 'No supported queued assets remain. Unsupported and quarantined assets require purpose-built family work, not generic fallback generation.',
     };
     writeJson(join(REPORTS_DIR, 'latest.json'), summary);
+    writeJson(QUEUE_PATH, queue);
     console.log('[asset-factory] no supported queued assets remain');
     return;
   }
 
-  const sequence = (queue.sequence || 0) + 1;
+  const sequence = previousSequence + 1;
   const id = batchId(sequence);
   const batch = {
     version: 1,
