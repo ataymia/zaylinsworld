@@ -5,10 +5,10 @@ const ROOT = process.cwd();
 const MASTER_PATH = join(ROOT, 'asset-factory', 'generated', 'master-asset-specs.json');
 const QUEUE_PATH = join(ROOT, 'asset-factory', 'state', 'queue.json');
 const PRIORITY_OVERRIDE_PATH = join(ROOT, 'asset-factory', 'priority-shape-overrides.json');
-const BUILDER_REVISION = '2026-07-18-r6';
+const BUILDER_REVISION = '2026-07-18-r7';
 
 const REPAIRED_FAMILIES = new Set([
-  'charging_pad', 'fuel_pump', 'digital_kiosk', 'office_desk', 'mailbox',
+  'charging_pad', 'classroom_desk', 'fuel_pump', 'digital_kiosk', 'office_desk', 'mailbox',
   'road_sign', 'road-sign', 'municipal_trash_can', 'municipal_bench',
   'streetlight', 'hover_vehicle', 'wall_screen', 'modular_food',
   'bubble_lift', 'airlock_conduit', 'elevated_road_support', 'accessibility_gate',
@@ -21,14 +21,19 @@ const priorityOverrides = existsSync(PRIORITY_OVERRIDE_PATH)
 function selectBuilder(asset) {
   if (asset.generationEligible === false) return null;
   if (asset.builderStatus === 'runtime') return null;
+  if (asset.assetKind === 'hair' || asset.assetKind === 'creature') return null;
+  if (asset.family === 'unsupported_character' || asset.family === 'unsupported_hair') return null;
+
+  // Explicit audited builders must outrank broad asset-kind fallback lanes.
+  // This is what allows a pressure conduit to stay an airlock conduit instead
+  // of being flattened back into the generic connector builder.
+  if (asset.builder) return [asset.family, asset.builder];
+
   if (asset.assetKind === 'connector') return ['modular_connector', 'modular_connector'];
   if (asset.assetKind === 'infrastructure') return ['modular_infrastructure', 'modular_infrastructure'];
   if (asset.assetKind === 'furniture') return ['modular_furniture', 'modular_furniture'];
   if (asset.assetKind === 'prop') return ['modular_prop', 'modular_prop'];
   if (asset.assetKind === 'state-variant') return ['state_variant', 'state_variant'];
-  if (asset.assetKind === 'hair' || asset.assetKind === 'creature') return null;
-  if (asset.family === 'unsupported_character' || asset.family === 'unsupported_hair') return null;
-  if (asset.builder) return [asset.family, asset.builder];
 
   const name = `${asset.fileName || ''} ${asset.id || ''}`.toLowerCase();
   if (asset.family === 'building_shell' || /^(building_|arch_)/.test(name)) return ['building_shell', 'modular_building'];
