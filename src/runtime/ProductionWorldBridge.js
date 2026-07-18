@@ -136,6 +136,15 @@ async function waitForCreatorToClose(maxFrames = 90) {
   return false;
 }
 
+function dispatchPreparedCreatorClick(button) {
+  // Browsers intentionally suppress click() on disabled controls. Re-enable only
+  // for the guarded redispatch; bridge.entering still prevents a second user entry.
+  button.disabled = false;
+  button.dataset.zwWorldBridgeBypass = '1';
+  button.click();
+  delete button.dataset.zwWorldBridgeBypass;
+}
+
 async function enterThroughBridge(button) {
   if (bridge.entering) return;
   bridge.entering = true;
@@ -161,9 +170,7 @@ async function enterThroughBridge(button) {
 
     // Re-dispatch the click after preparation. The bypass flag lets the existing
     // Character Studio handler run normally instead of being intercepted twice.
-    button.dataset.zwWorldBridgeBypass = '1';
-    button.click();
-    delete button.dataset.zwWorldBridgeBypass;
+    dispatchPreparedCreatorClick(button);
 
     await waitForCreatorToClose();
     await nextFrame();
@@ -174,9 +181,7 @@ async function enterThroughBridge(button) {
     bridge.lastError = error;
     console.warn('[production-world-bridge] large Starter Town preload failed; using compact fallback', error);
     setProgress(88, 'Large-town fallback active. Starting the city…');
-    button.dataset.zwWorldBridgeBypass = '1';
-    button.click();
-    delete button.dataset.zwWorldBridgeBypass;
+    dispatchPreparedCreatorClick(button);
     await nextFrame();
     hideLoadingScreen({ maxWaitMs: 4500 });
   } finally {
