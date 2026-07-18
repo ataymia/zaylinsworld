@@ -1,83 +1,24 @@
 {
   "version": 2,
-  "batchId": "batch-00004",
-  "completedAt": "2026-07-18T18:37:34.995Z",
+  "batchId": "batch-00005",
+  "completedAt": "2026-07-18T18:45:24.229Z",
   "requested": 20,
-  "passed": 17,
-  "failed": 3,
+  "passed": 20,
+  "failed": 0,
   "queueCounts": {
-    "completed": 614,
-    "queued": 1476,
+    "completed": 629,
+    "queued": 1463,
     "reference-only": 16,
     "unsupported": 189,
-    "quarantined": 3
+    "quarantined": 1
   },
   "results": [
     {
-      "id": "prop_digital_board_classroom_a_v01",
-      "builder": "wall_screen",
-      "builderRevision": "2026-07-18-r4",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/wall_screen/prop_digital_board_classroom_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 17,
-        "triangles": 3548,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_cyan_emissive",
-          "tech_dark_metal",
-          "tech_white_light"
-        ],
-        "materialCount": 5,
-        "components": [
-          "cable or power channel",
-          "mounting bracket",
-          "protective bezel",
-          "rear housing",
-          "screen panel",
-          "status light"
-        ],
-        "bounds": {
-          "min": [
-            -0.6000000238418579,
-            -0.12839999794960022,
-            0
-          ],
-          "max": [
-            0.6000000238418579,
-            0.12839999794960022,
-            0.7200000286102295
-          ],
-          "dimensions": [
-            1.2000000476837158,
-            0.25679999589920044,
-            0.7200000286102295
-          ]
-        },
-        "requiredComponents": [
-          "mounting bracket",
-          "rear housing",
-          "screen panel",
-          "protective bezel",
-          "status light",
-          "cable or power channel"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_digital_board_classroom_a_v01/prop_digital_board_classroom_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_digital_board_classroom_a_v01/prop_digital_board_classroom_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_digital_board_classroom_a_v01/prop_digital_board_classroom_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_digital_board_classroom_a_v01/prop_digital_board_classroom_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_casino_streetlight_a_v01",
+      "id": "prop_harbor_streetlight_a_v01",
       "builder": "streetlight",
-      "builderRevision": "2026-07-18-r6",
+      "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/streetlight/prop_casino_streetlight_a_v01.glb",
+      "outputPath": "public/assets/models/generated/fishing-harbor/streetlight/prop_harbor_streetlight_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 10,
@@ -126,22 +67,22 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_casino_streetlight_a_v01/prop_casino_streetlight_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_casino_streetlight_a_v01/prop_casino_streetlight_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_casino_streetlight_a_v01/prop_casino_streetlight_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_casino_streetlight_a_v01/prop_casino_streetlight_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_harbor_streetlight_a_v01/prop_harbor_streetlight_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_harbor_streetlight_a_v01/prop_harbor_streetlight_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_harbor_streetlight_a_v01/prop_harbor_streetlight_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_harbor_streetlight_a_v01/prop_harbor_streetlight_a_v01_view_4.png"
       ]
     },
     {
-      "id": "gap-shared-world-accessibility-gate-locked-standard-310",
+      "id": "gap-shared-world-accessibility-plant-dry-standard-340",
       "builder": "state_variant",
-      "builderRevision": "2026-07-18-r6",
+      "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-accessibility-gate-locked-standard-310.glb",
+      "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-accessibility-plant-dry-standard-340.glb",
       "failures": [],
       "stats": {
-        "meshObjects": 23,
-        "triangles": 4276,
+        "meshObjects": 16,
+        "triangles": 3024,
         "materials": [
           "starter_black",
           "starter_dark_metal",
@@ -152,77 +93,55 @@
         "materialCount": 5,
         "components": [
           "LOD and swap policy",
-          "accessible gate leaf",
-          "anchored gate posts",
           "animation transition socket",
           "base object relationship",
-          "card reader",
-          "closed state tab",
-          "closing arm",
           "collision state",
           "damage or repair metadata",
-          "electric strike",
-          "emergency override",
-          "flush threshold",
-          "hinge barrel",
           "interaction state",
-          "lower pivot",
-          "mechanical latch",
-          "raised lock icon",
           "state-defining geometry",
-          "state-defining material layer",
-          "status lamp",
-          "tactile icon panel",
-          "wheelchair-height push plate"
+          "state-defining material layer"
         ],
         "bounds": {
           "min": [
-            -1.0489200353622437,
-            -0.24480000138282776,
-            -1.862645149230957e-9
+            -0.4375,
+            -0.4399999976158142,
+            2.7939677238464355e-9
           ],
           "max": [
-            1.0489200353622437,
-            0.24480000138282776,
-            0.9888750314712524
+            0.4375,
+            0.4399999976158142,
+            0.7325000762939453
           ],
           "dimensions": [
-            2.0978400707244873,
-            0.4896000027656555,
-            0.9888750314712524
+            0.875,
+            0.8799999952316284,
+            0.7325000762939453
           ]
         },
         "requiredComponents": [
-          "anchored gate posts",
-          "accessible gate leaf",
-          "hinge barrel",
-          "lower pivot",
-          "closing arm",
-          "mechanical latch",
-          "electric strike",
-          "raised lock icon",
-          "status lamp",
-          "closed state tab",
-          "wheelchair-height push plate",
-          "tactile icon panel",
-          "card reader",
-          "emergency override",
-          "flush threshold"
+          "base object relationship",
+          "state-defining geometry",
+          "state-defining material layer",
+          "animation transition socket",
+          "collision state",
+          "interaction state",
+          "damage or repair metadata",
+          "LOD and swap policy"
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-accessibility-gate-locked-standard-310/gap-shared-world-accessibility-gate-locked-standard-310_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-accessibility-gate-locked-standard-310/gap-shared-world-accessibility-gate-locked-standard-310_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-accessibility-gate-locked-standard-310/gap-shared-world-accessibility-gate-locked-standard-310_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-accessibility-gate-locked-standard-310/gap-shared-world-accessibility-gate-locked-standard-310_view_4.png"
+        "asset-factory/work/previews/gap-shared-world-accessibility-plant-dry-standard-340/gap-shared-world-accessibility-plant-dry-standard-340_view_1.png",
+        "asset-factory/work/previews/gap-shared-world-accessibility-plant-dry-standard-340/gap-shared-world-accessibility-plant-dry-standard-340_view_2.png",
+        "asset-factory/work/previews/gap-shared-world-accessibility-plant-dry-standard-340/gap-shared-world-accessibility-plant-dry-standard-340_view_3.png",
+        "asset-factory/work/previews/gap-shared-world-accessibility-plant-dry-standard-340/gap-shared-world-accessibility-plant-dry-standard-340_view_4.png"
       ]
     },
     {
-      "id": "prop_aqualume_wayfinding_sign_a_v01",
+      "id": "prop_canyon_wayfinding_sign_a_v01",
       "builder": "road_sign",
-      "builderRevision": "2026-07-18-r6",
+      "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/road_sign/prop_aqualume_wayfinding_sign_a_v01.glb",
+      "outputPath": "public/assets/models/generated/obby-canyon/road_sign/prop_canyon_wayfinding_sign_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 9,
@@ -269,18 +188,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_aqualume_wayfinding_sign_a_v01/prop_aqualume_wayfinding_sign_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_aqualume_wayfinding_sign_a_v01/prop_aqualume_wayfinding_sign_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_aqualume_wayfinding_sign_a_v01/prop_aqualume_wayfinding_sign_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_aqualume_wayfinding_sign_a_v01/prop_aqualume_wayfinding_sign_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_canyon_wayfinding_sign_a_v01/prop_canyon_wayfinding_sign_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_canyon_wayfinding_sign_a_v01/prop_canyon_wayfinding_sign_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_canyon_wayfinding_sign_a_v01/prop_canyon_wayfinding_sign_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_canyon_wayfinding_sign_a_v01/prop_canyon_wayfinding_sign_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_aqualume_pressure_seal_bench_a_v01",
+      "id": "prop_arcade_repair_bench_a_v01",
       "builder": "municipal_bench",
-      "builderRevision": "2026-07-18-r6",
+      "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/municipal_bench/prop_aqualume_pressure_seal_bench_a_v01.glb",
+      "outputPath": "public/assets/models/generated/casino-strip/municipal_bench/prop_arcade_repair_bench_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 16,
@@ -327,27 +246,27 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_aqualume_pressure_seal_bench_a_v01/prop_aqualume_pressure_seal_bench_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_aqualume_pressure_seal_bench_a_v01/prop_aqualume_pressure_seal_bench_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_aqualume_pressure_seal_bench_a_v01/prop_aqualume_pressure_seal_bench_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_aqualume_pressure_seal_bench_a_v01/prop_aqualume_pressure_seal_bench_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_arcade_repair_bench_a_v01/prop_arcade_repair_bench_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_arcade_repair_bench_a_v01/prop_arcade_repair_bench_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_arcade_repair_bench_a_v01/prop_arcade_repair_bench_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_arcade_repair_bench_a_v01/prop_arcade_repair_bench_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_security_monitor_wall_a_v01",
+      "id": "prop_starline_security_monitor_wall_a_v01",
       "builder": "multi_monitor",
       "builderRevision": "2026-07-18-r4",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/multi_monitor/prop_security_monitor_wall_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/multi_monitor/prop_starline_security_monitor_wall_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
         "triangles": 3260,
         "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_cyan_emissive",
-          "tech_dark_metal"
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light"
         ],
         "materialCount": 4,
         "components": [
@@ -387,18 +306,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_security_monitor_wall_a_v01/prop_security_monitor_wall_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_security_monitor_wall_a_v01/prop_security_monitor_wall_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_security_monitor_wall_a_v01/prop_security_monitor_wall_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_security_monitor_wall_a_v01/prop_security_monitor_wall_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starline_security_monitor_wall_a_v01/prop_starline_security_monitor_wall_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starline_security_monitor_wall_a_v01/prop_starline_security_monitor_wall_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starline_security_monitor_wall_a_v01/prop_starline_security_monitor_wall_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starline_security_monitor_wall_a_v01/prop_starline_security_monitor_wall_a_v01_view_4.png"
       ]
     },
     {
-      "id": "crosswalk_starter_school_raised_a_v01",
+      "id": "crosswalk_starter_standard_a_v01",
       "builder": "modular_road",
-      "builderRevision": "2026-07-18-r6",
+      "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/road_module/crosswalk_starter_school_raised_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starter-town/road_module/crosswalk_starter_standard_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 14,
@@ -445,16 +364,16 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/crosswalk_starter_school_raised_a_v01/crosswalk_starter_school_raised_a_v01_view_1.png",
-        "asset-factory/work/previews/crosswalk_starter_school_raised_a_v01/crosswalk_starter_school_raised_a_v01_view_2.png",
-        "asset-factory/work/previews/crosswalk_starter_school_raised_a_v01/crosswalk_starter_school_raised_a_v01_view_3.png",
-        "asset-factory/work/previews/crosswalk_starter_school_raised_a_v01/crosswalk_starter_school_raised_a_v01_view_4.png"
+        "asset-factory/work/previews/crosswalk_starter_standard_a_v01/crosswalk_starter_standard_a_v01_view_1.png",
+        "asset-factory/work/previews/crosswalk_starter_standard_a_v01/crosswalk_starter_standard_a_v01_view_2.png",
+        "asset-factory/work/previews/crosswalk_starter_standard_a_v01/crosswalk_starter_standard_a_v01_view_3.png",
+        "asset-factory/work/previews/crosswalk_starter_standard_a_v01/crosswalk_starter_standard_a_v01_view_4.png"
       ]
     },
     {
       "id": "gap-casino-strip-arcade-backpack-standard-030",
       "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r6",
+      "builderRevision": "2026-07-18-r7",
       "passed": true,
       "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_casino-strip-arcade-backpack-standard-030.glb",
       "failures": [],
@@ -515,11 +434,11 @@
       ]
     },
     {
-      "id": "equipment_pulsestage_dance_cardio_pad_a_v01",
+      "id": "equipment_pulsestage_treadmill_a_v01",
       "builder": "modular_infrastructure",
-      "builderRevision": "2026-07-18-r6",
+      "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_infrastructure/equipment_pulsestage_dance_cardio_pad_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_infrastructure/equipment_pulsestage_treadmill_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -570,18 +489,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/equipment_pulsestage_dance_cardio_pad_a_v01/equipment_pulsestage_dance_cardio_pad_a_v01_view_1.png",
-        "asset-factory/work/previews/equipment_pulsestage_dance_cardio_pad_a_v01/equipment_pulsestage_dance_cardio_pad_a_v01_view_2.png",
-        "asset-factory/work/previews/equipment_pulsestage_dance_cardio_pad_a_v01/equipment_pulsestage_dance_cardio_pad_a_v01_view_3.png",
-        "asset-factory/work/previews/equipment_pulsestage_dance_cardio_pad_a_v01/equipment_pulsestage_dance_cardio_pad_a_v01_view_4.png"
+        "asset-factory/work/previews/equipment_pulsestage_treadmill_a_v01/equipment_pulsestage_treadmill_a_v01_view_1.png",
+        "asset-factory/work/previews/equipment_pulsestage_treadmill_a_v01/equipment_pulsestage_treadmill_a_v01_view_2.png",
+        "asset-factory/work/previews/equipment_pulsestage_treadmill_a_v01/equipment_pulsestage_treadmill_a_v01_view_3.png",
+        "asset-factory/work/previews/equipment_pulsestage_treadmill_a_v01/equipment_pulsestage_treadmill_a_v01_view_4.png"
       ]
     },
     {
-      "id": "furniture_aqualume_pearl_table_a_v01",
+      "id": "furniture_aqualume_reef_sofa_a_v01",
       "builder": "modular_furniture",
-      "builderRevision": "2026-07-18-r6",
+      "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/modular_furniture/furniture_aqualume_pearl_table_a_v01.glb",
+      "outputPath": "public/assets/models/generated/aqualume/modular_furniture/furniture_aqualume_reef_sofa_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 16,
@@ -631,32 +550,31 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/furniture_aqualume_pearl_table_a_v01/furniture_aqualume_pearl_table_a_v01_view_1.png",
-        "asset-factory/work/previews/furniture_aqualume_pearl_table_a_v01/furniture_aqualume_pearl_table_a_v01_view_2.png",
-        "asset-factory/work/previews/furniture_aqualume_pearl_table_a_v01/furniture_aqualume_pearl_table_a_v01_view_3.png",
-        "asset-factory/work/previews/furniture_aqualume_pearl_table_a_v01/furniture_aqualume_pearl_table_a_v01_view_4.png"
+        "asset-factory/work/previews/furniture_aqualume_reef_sofa_a_v01/furniture_aqualume_reef_sofa_a_v01_view_1.png",
+        "asset-factory/work/previews/furniture_aqualume_reef_sofa_a_v01/furniture_aqualume_reef_sofa_a_v01_view_2.png",
+        "asset-factory/work/previews/furniture_aqualume_reef_sofa_a_v01/furniture_aqualume_reef_sofa_a_v01_view_3.png",
+        "asset-factory/work/previews/furniture_aqualume_reef_sofa_a_v01/furniture_aqualume_reef_sofa_a_v01_view_4.png"
       ]
     },
     {
       "id": "food_aqualume_kelp_noodles_v01",
       "builder": "modular_food",
       "builderRevision": "2026-07-18-r4",
-      "passed": false,
-      "outputPath": null,
-      "failures": [
-        "height 0.144m differs from target 0.450m by 68%"
-      ],
+      "passed": true,
+      "outputPath": "public/assets/models/generated/aqualume/modular_food/food_aqualume_kelp_noodles_v01.glb",
+      "failures": [],
       "stats": {
-        "meshObjects": 11,
-        "triangles": 1972,
+        "meshObjects": 15,
+        "triangles": 3152,
         "materials": [
           "food_ceramic",
+          "food_garnish",
           "food_primary",
           "food_sauce",
           "food_secondary",
           "starter_galvanized"
         ],
-        "materialCount": 5,
+        "materialCount": 6,
         "components": [
           "appropriate materials",
           "functional secondary components",
@@ -671,12 +589,12 @@
           "max": [
             0.3449999988079071,
             0.3449999988079071,
-            0.14350000023841858
+            0.39937499165534973
           ],
           "dimensions": [
             0.6899999976158142,
             0.6899999976158142,
-            0.14350000023841858
+            0.39937499165534973
           ]
         },
         "requiredComponents": [
@@ -693,15 +611,15 @@
       ]
     },
     {
-      "id": "gap-aqualume-airlock-conduit-straight-standard-105",
+      "id": "gap-aqualume-airlock-guardrail-end-standard-116",
       "builder": "modular_connector",
-      "builderRevision": "2026-07-18-r6",
+      "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/modular_connector/connector_aqualume-airlock-conduit-straight-standard-105.glb",
+      "outputPath": "public/assets/models/generated/aqualume/modular_connector/connector_aqualume-airlock-guardrail-end-standard-116.glb",
       "failures": [],
       "stats": {
-        "meshObjects": 22,
-        "triangles": 4136,
+        "meshObjects": 19,
+        "triangles": 3572,
         "materials": [
           "starter_black",
           "starter_dark_metal",
@@ -713,68 +631,54 @@
         "components": [
           "LOD-preserved silhouette",
           "collision-safe boundary",
-          "compression flanges",
-          "emergency isolation valve",
           "end connection socket",
-          "end docking collar",
-          "gasket seals",
-          "illuminated floor guide",
           "load-bearing frame",
-          "load-bearing pressure hoops",
-          "pressure gauge",
-          "pressure-glass conduit",
           "primary structural span",
           "seal or transition trim",
           "service access",
-          "service hatch",
-          "service spine",
-          "start connection socket",
-          "start docking collar"
+          "start connection socket"
         ],
         "bounds": {
           "min": [
-            -1.6640000343322754,
-            -2.5275001525878906,
+            -1.0399999618530273,
+            -0.8425000309944153,
             0
           ],
           "max": [
-            1.6640000343322754,
-            2.5275001525878906,
-            2.303999900817871
+            1.0399999618530273,
+            0.8425000309944153,
+            1.440000057220459
           ],
           "dimensions": [
-            3.328000068664551,
-            5.055000305175781,
-            2.303999900817871
+            2.0799999237060547,
+            1.6850000619888306,
+            1.440000057220459
           ]
         },
         "requiredComponents": [
-          "pressure-glass conduit",
-          "start docking collar",
-          "end docking collar",
-          "compression flanges",
-          "gasket seals",
-          "load-bearing pressure hoops",
-          "service spine",
-          "service hatch",
-          "pressure gauge",
-          "emergency isolation valve",
-          "illuminated floor guide"
+          "primary structural span",
+          "start connection socket",
+          "end connection socket",
+          "load-bearing frame",
+          "service access",
+          "seal or transition trim",
+          "collision-safe boundary",
+          "LOD-preserved silhouette"
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-aqualume-airlock-conduit-straight-standard-105/gap-aqualume-airlock-conduit-straight-standard-105_view_1.png",
-        "asset-factory/work/previews/gap-aqualume-airlock-conduit-straight-standard-105/gap-aqualume-airlock-conduit-straight-standard-105_view_2.png",
-        "asset-factory/work/previews/gap-aqualume-airlock-conduit-straight-standard-105/gap-aqualume-airlock-conduit-straight-standard-105_view_3.png",
-        "asset-factory/work/previews/gap-aqualume-airlock-conduit-straight-standard-105/gap-aqualume-airlock-conduit-straight-standard-105_view_4.png"
+        "asset-factory/work/previews/gap-aqualume-airlock-guardrail-end-standard-116/gap-aqualume-airlock-guardrail-end-standard-116_view_1.png",
+        "asset-factory/work/previews/gap-aqualume-airlock-guardrail-end-standard-116/gap-aqualume-airlock-guardrail-end-standard-116_view_2.png",
+        "asset-factory/work/previews/gap-aqualume-airlock-guardrail-end-standard-116/gap-aqualume-airlock-guardrail-end-standard-116_view_3.png",
+        "asset-factory/work/previews/gap-aqualume-airlock-guardrail-end-standard-116/gap-aqualume-airlock-guardrail-end-standard-116_view_4.png"
       ]
     },
     {
-      "id": "arch_aqualume_current_lane_ring_a_v01",
+      "id": "arch_aqualume_glass_tunnel_curve_a_v01",
       "builder": "modular_building",
-      "builderRevision": "2026-07-18-r6",
+      "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/building_shell/arch_aqualume_current_lane_ring_a_v01.glb",
+      "outputPath": "public/assets/models/generated/aqualume/building_shell/arch_aqualume_glass_tunnel_curve_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 28,
@@ -824,29 +728,29 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/arch_aqualume_current_lane_ring_a_v01/arch_aqualume_current_lane_ring_a_v01_view_1.png",
-        "asset-factory/work/previews/arch_aqualume_current_lane_ring_a_v01/arch_aqualume_current_lane_ring_a_v01_view_2.png",
-        "asset-factory/work/previews/arch_aqualume_current_lane_ring_a_v01/arch_aqualume_current_lane_ring_a_v01_view_3.png",
-        "asset-factory/work/previews/arch_aqualume_current_lane_ring_a_v01/arch_aqualume_current_lane_ring_a_v01_view_4.png"
+        "asset-factory/work/previews/arch_aqualume_glass_tunnel_curve_a_v01/arch_aqualume_glass_tunnel_curve_a_v01_view_1.png",
+        "asset-factory/work/previews/arch_aqualume_glass_tunnel_curve_a_v01/arch_aqualume_glass_tunnel_curve_a_v01_view_2.png",
+        "asset-factory/work/previews/arch_aqualume_glass_tunnel_curve_a_v01/arch_aqualume_glass_tunnel_curve_a_v01_view_3.png",
+        "asset-factory/work/previews/arch_aqualume_glass_tunnel_curve_a_v01/arch_aqualume_glass_tunnel_curve_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_air_water_service_terminal_future_a_v01",
+      "id": "prop_checkpoint_fuel_pump_a_v01",
       "builder": "fuel_pump",
-      "builderRevision": "2026-07-18-r6",
+      "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/fuel_pump/prop_air_water_service_terminal_future_a_v01.glb",
+      "outputPath": "public/assets/models/generated/obby-canyon/fuel_pump/prop_checkpoint_fuel_pump_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 15,
         "triangles": 2800,
         "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_concrete",
-          "tech_cyan_emissive",
-          "tech_dark_metal",
-          "tech_white_light"
+          "starter_black",
+          "starter_concrete",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
         ],
         "materialCount": 6,
         "components": [
@@ -888,16 +792,16 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_air_water_service_terminal_future_a_v01/prop_air_water_service_terminal_future_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_air_water_service_terminal_future_a_v01/prop_air_water_service_terminal_future_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_air_water_service_terminal_future_a_v01/prop_air_water_service_terminal_future_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_air_water_service_terminal_future_a_v01/prop_air_water_service_terminal_future_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_checkpoint_fuel_pump_a_v01/prop_checkpoint_fuel_pump_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_checkpoint_fuel_pump_a_v01/prop_checkpoint_fuel_pump_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_checkpoint_fuel_pump_a_v01/prop_checkpoint_fuel_pump_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_checkpoint_fuel_pump_a_v01/prop_checkpoint_fuel_pump_a_v01_view_4.png"
       ]
     },
     {
       "id": "elevated_road_support_a_v01",
       "builder": "elevated_road_support",
-      "builderRevision": "2026-07-18-r6",
+      "builderRevision": "2026-07-18-r7",
       "passed": true,
       "outputPath": "public/assets/models/generated/techtown/elevated_road_support/elevated_road_support_a_v01.glb",
       "failures": [],
@@ -968,11 +872,11 @@
       ]
     },
     {
-      "id": "prop_customer_kiosk_tech_a_v01",
+      "id": "prop_data_terminal_a_v01",
       "builder": "digital_kiosk",
-      "builderRevision": "2026-07-18-r6",
+      "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/digital_kiosk/prop_customer_kiosk_tech_a_v01.glb",
+      "outputPath": "public/assets/models/generated/techtown/digital_kiosk/prop_data_terminal_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -1022,53 +926,53 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_customer_kiosk_tech_a_v01/prop_customer_kiosk_tech_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_customer_kiosk_tech_a_v01/prop_customer_kiosk_tech_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_customer_kiosk_tech_a_v01/prop_customer_kiosk_tech_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_customer_kiosk_tech_a_v01/prop_customer_kiosk_tech_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_data_terminal_a_v01/prop_data_terminal_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_data_terminal_a_v01/prop_data_terminal_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_data_terminal_a_v01/prop_data_terminal_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_data_terminal_a_v01/prop_data_terminal_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_marine_classroom_desk_a_v01",
+      "id": "classroom_desk_tech_a_v01",
       "builder": "classroom_desk",
-      "builderRevision": "2026-07-18-r6",
-      "passed": false,
-      "outputPath": null,
-      "failures": [
-        "missing required components: frame"
-      ],
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/techtown/classroom_desk/classroom_desk_tech_a_v01.glb",
+      "failures": [],
       "stats": {
-        "meshObjects": 13,
-        "triangles": 2620,
+        "meshObjects": 17,
+        "triangles": 3372,
         "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_wood"
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_cyan_emissive",
+          "tech_dark_metal",
+          "tech_white_light"
         ],
-        "materialCount": 4,
+        "materialCount": 5,
         "components": [
           "fasteners",
           "feet",
+          "frame",
           "legs",
           "storage shelf or modesty panel",
           "work surface"
         ],
         "bounds": {
           "min": [
-            -0.36000001430511475,
-            -0.26249998807907104,
+            -0.3456000089645386,
+            -0.25999999046325684,
             0
           ],
           "max": [
-            0.36000001430511475,
-            0.26249998807907104,
-            0.7450000047683716
+            0.3456000089645386,
+            0.25999999046325684,
+            0.7026299834251404
           ],
           "dimensions": [
-            0.7200000286102295,
-            0.5249999761581421,
-            0.7450000047683716
+            0.6912000179290771,
+            0.5199999809265137,
+            0.7026299834251404
           ]
         },
         "requiredComponents": [
@@ -1081,37 +985,38 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_marine_classroom_desk_a_v01/prop_marine_classroom_desk_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_marine_classroom_desk_a_v01/prop_marine_classroom_desk_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_marine_classroom_desk_a_v01/prop_marine_classroom_desk_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_marine_classroom_desk_a_v01/prop_marine_classroom_desk_a_v01_view_4.png"
+        "asset-factory/work/previews/classroom_desk_tech_a_v01/classroom_desk_tech_a_v01_view_1.png",
+        "asset-factory/work/previews/classroom_desk_tech_a_v01/classroom_desk_tech_a_v01_view_2.png",
+        "asset-factory/work/previews/classroom_desk_tech_a_v01/classroom_desk_tech_a_v01_view_3.png",
+        "asset-factory/work/previews/classroom_desk_tech_a_v01/classroom_desk_tech_a_v01_view_4.png"
       ]
     },
     {
       "id": "charging_bay_pad_a_v01",
       "builder": "charging_pad",
-      "builderRevision": "2026-07-18-r6",
-      "passed": false,
-      "outputPath": null,
-      "failures": [
-        "material count 4 is below 5"
-      ],
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/techtown/charging_pad/charging_bay_pad_a_v01.glb",
+      "failures": [],
       "stats": {
-        "meshObjects": 10,
-        "triangles": 1880,
+        "meshObjects": 12,
+        "triangles": 2376,
         "materials": [
+          "charging_pad_warning",
           "tech_brushed_metal",
           "tech_concrete",
           "tech_cyan_emissive",
-          "tech_dark_metal"
+          "tech_dark_metal",
+          "tech_white_light"
         ],
-        "materialCount": 4,
+        "materialCount": 6,
         "components": [
           "alignment markings",
           "connector or induction array",
           "ground pad",
           "power module",
           "protective edging",
+          "safety and warning markings",
           "status lights"
         ],
         "bounds": {
@@ -1123,12 +1028,12 @@
           "max": [
             1.4140000343322754,
             2.496000051498413,
-            0.2029999941587448
+            0.25200000405311584
           ],
           "dimensions": [
             2.828000068664551,
             4.992000102996826,
-            0.2029999941587448
+            0.25200000405311584
           ]
         },
         "requiredComponents": [
@@ -1148,11 +1053,11 @@
       ]
     },
     {
-      "id": "prop_starter_bus_shelter_a_v01",
+      "id": "prop_starter_school_bus_stop_a_v01",
       "builder": "bus_shelter",
-      "builderRevision": "2026-07-18-r6",
+      "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/bus_shelter/prop_starter_bus_shelter_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starter-town/bus_shelter/prop_starter_school_bus_stop_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 16,
@@ -1204,16 +1109,16 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_starter_bus_shelter_a_v01/prop_starter_bus_shelter_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starter_bus_shelter_a_v01/prop_starter_bus_shelter_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starter_bus_shelter_a_v01/prop_starter_bus_shelter_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starter_bus_shelter_a_v01/prop_starter_bus_shelter_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starter_school_bus_stop_a_v01/prop_starter_school_bus_stop_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starter_school_bus_stop_a_v01/prop_starter_school_bus_stop_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starter_school_bus_stop_a_v01/prop_starter_school_bus_stop_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starter_school_bus_stop_a_v01/prop_starter_school_bus_stop_a_v01_view_4.png"
       ]
     },
     {
       "id": "arch_aqualume_bubble_lift_a_v01",
       "builder": "bubble_lift",
-      "builderRevision": "2026-07-18-r6",
+      "builderRevision": "2026-07-18-r7",
       "passed": true,
       "outputPath": "public/assets/models/generated/aqualume/bubble_lift/arch_aqualume_bubble_lift_a_v01.glb",
       "failures": [],
@@ -1279,6 +1184,61 @@
         "asset-factory/work/previews/arch_aqualume_bubble_lift_a_v01/arch_aqualume_bubble_lift_a_v01_view_2.png",
         "asset-factory/work/previews/arch_aqualume_bubble_lift_a_v01/arch_aqualume_bubble_lift_a_v01_view_3.png",
         "asset-factory/work/previews/arch_aqualume_bubble_lift_a_v01/arch_aqualume_bubble_lift_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_starline_event_bollard_a_v01",
+      "builder": "bollard",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/starline-city/bollard/prop_starline_event_bollard_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 8,
+        "triangles": 3240,
+        "materials": [
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warning_yellow"
+        ],
+        "materialCount": 3,
+        "components": [
+          "anchored base",
+          "cap",
+          "main post",
+          "mounting hardware",
+          "reflective band"
+        ],
+        "bounds": {
+          "min": [
+            -0.12999999523162842,
+            -0.12999999523162842,
+            0
+          ],
+          "max": [
+            0.12999999523162842,
+            0.12999999523162842,
+            0.952750027179718
+          ],
+          "dimensions": [
+            0.25999999046325684,
+            0.25999999046325684,
+            0.952750027179718
+          ]
+        },
+        "requiredComponents": [
+          "anchored base",
+          "main post",
+          "cap",
+          "reflective band",
+          "mounting hardware"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_starline_event_bollard_a_v01/prop_starline_event_bollard_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starline_event_bollard_a_v01/prop_starline_event_bollard_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starline_event_bollard_a_v01/prop_starline_event_bollard_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starline_event_bollard_a_v01/prop_starline_event_bollard_a_v01_view_4.png"
       ]
     }
   ]
