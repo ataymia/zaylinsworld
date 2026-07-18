@@ -1,5 +1,5 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
-import { dirname, extname, join, relative } from 'node:path';
+import { dirname, extname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 
 const ROOT = process.cwd();
 const MASTER_PATH = join(ROOT, 'asset-factory', 'generated', 'master-asset-specs.json');
@@ -7,7 +7,9 @@ const QUEUE_PATH = join(ROOT, 'asset-factory', 'state', 'queue.json');
 const BUILDER_HEALTH_PATH = join(ROOT, 'asset-factory', 'state', 'builder-health.json');
 const REPORT_JSON = join(ROOT, 'reports', 'asset-factory', 'health.json');
 const REPORT_MD = join(ROOT, 'reports', 'asset-factory', 'health.md');
-const GENERATED_ROOT = join(ROOT, 'public', 'assets', 'models', 'generated');
+const MODELS_ROOT = join(ROOT, 'public', 'assets', 'models');
+const GENERATED_ROOT = join(MODELS_ROOT, 'generated');
+const RUNTIME_KINDS = new Set(['runtime-vfx', 'decal', 'shader', 'audio-visual', 'helper']);
 
 function queueObject(queue) {
   if (Array.isArray(queue.assets)) return Object.fromEntries(queue.assets.map((item) => [item.id, item]));
@@ -28,6 +30,10 @@ function glbValid(path) {
   const buffer = readFileSync(path);
   return buffer.subarray(0, 4).toString('ascii') === 'glTF';
 }
+function isInside(parent, child) {
+  const rel = relative(resolve(parent), resolve(child));
+  return rel === '' || (!rel.startsWith(`..${sep}`) && rel !== '..' && !isAbsolute(rel));
+}
 function normalizeError(value) {
   return String(value || 'none')
     .toLowerCase()
@@ -46,6 +52,8 @@ const queueAssets = queueObject(queue);
 const failures = [];
 const warnings = [];
 const paths = new Map();
+const completedGlbPaths = new Set();
+const completedRuntimePaths = new Set();
 const builderStats = {};
 const masterById = new Map(master.assets.map((asset) => [asset.id, asset]));
 
@@ -80,32 +88,54 @@ for (const [id, state] of Object.entries(queueAssets)) {
     if (paths.has(state.generatedPath)) failures.push(`${id}: generatedPath duplicates ${paths.get(state.generatedPath)} at ${state.generatedPath}.`);
     paths.set(state.generatedPath, id);
     const absolute = join(ROOT, state.generatedPath);
-    if (spec.assetKind && ['runtime-vfx', 'decal', 'shader', 'audio-visual', 'helper'].includes(spec.assetKind)) {
-      if (!existsSync(absolute) || statSync(absolute).size < 80) failures.push(`${id}: runtime deliverable is missing or empty at ${state.generatedPath}.`);
-    } else if (!glbValid(absolute)) failures.push(`${id}: completed GLB is missing, too small, or has invalid magic at ${state.generatedPath}.`);
+    if (RUNTIME_KINDS.has(spec.assetKind || state.assetKind)) {
+      if (!existsSync(absolute) || statSync(absolute).size < 80) {
+        failures.push(`${id}: runtime deliverable is missing or empty at ${state.generatedPath}.`);
+      } else {
+        completedRuntimePaths.add(absolute);
+      }
+    } else if (!glbValid(absolute)) {
+      failures.push(`${id}: completed GLB is missing, too small, or has invalid magic at ${state.generatedPath}.`);
+    } else {
+      completedGlbPaths.add(absolute);
+      if (!isInside(MODELS_ROOT, absolute)) {
+        failures.push(`${id}: completed GLB is outside public/assets/models at ${state.generatedPath}.`);
+      }
+    }
   }
 }
 
-const diskGlbs = walk(GENERATED_ROOT).filter((path) => extname(path).toLowerCase() === '.glb');
+const factoryDiskGlbs = walk(GENERATED_ROOT).filter((path) => extname(path).toLowerCase() === '.glb');
+const allRepositoryModelGlbs = walk(MODELS_ROOT).filter((path) => extname(path).toLowerCase() === '.glb');
 const indexedGlbs = new Set([...paths.keys()].filter((path) => path.endsWith('.glb')).map((path) => join(ROOT, path)));
-for (const path of diskGlbs) {
+for (const path of factoryDiskGlbs) {
   if (!glbValid(path)) failures.push(`Invalid GLB on disk: ${relative(ROOT, path)}.`);
   if (!indexedGlbs.has(path)) warnings.push(`Unreferenced generated GLB on disk: ${relative(ROOT, path)}.`);
 }
 
+const completedFactoryGlbs = [...completedGlbPaths].filter((path) => isInside(GENERATED_ROOT, path)).length;
+const completedCuratedOrLegacyGlbs = completedGlbPaths.size - completedFactoryGlbs;
+const completedRecords = Object.values(queueAssets).filter((state) => state.status === 'completed').length;
+
 const health = {
   format: 'zta-asset-factory-health',
-  version: 1,
+  version: 2,
   generatedAt: new Date().toISOString(),
   masterRecords: master.assets.length,
   queueRecords: Object.keys(queueAssets).length,
-  completed: Object.values(queueAssets).filter((state) => state.status === 'completed').length,
+  completed: completedRecords,
+  completedGlbsOnDisk: completedGlbPaths.size,
+  completedFactoryGlbsOnDisk: completedFactoryGlbs,
+  completedCuratedOrLegacyGlbsOnDisk: completedCuratedOrLegacyGlbs,
+  completedRuntimeDeliverablesOnDisk: completedRuntimePaths.size,
+  factoryGeneratedGlbsOnDisk: factoryDiskGlbs.length,
+  allRepositoryModelGlbsOnDisk: allRepositoryModelGlbs.length,
+  generatedGlbsOnDisk: factoryDiskGlbs.length,
   queued: Object.values(queueAssets).filter((state) => state.status === 'queued').length,
   queuedRuntime: Object.values(queueAssets).filter((state) => state.status === 'queued-runtime').length,
   quarantined: Object.values(queueAssets).filter((state) => state.status === 'quarantined').length,
   unsupported: Object.values(queueAssets).filter((state) => state.status === 'unsupported').length,
   referenceOnly: Object.values(queueAssets).filter((state) => state.status === 'reference-only').length,
-  generatedGlbsOnDisk: diskGlbs.length,
   failures,
   warnings,
   builders: Object.values(builderStats).sort((a, b) => a.builder.localeCompare(b.builder)),
@@ -136,13 +166,18 @@ const lines = [
   `- Generated: ${health.generatedAt}`,
   `- Master records: ${health.masterRecords}`,
   `- Queue records: ${health.queueRecords}`,
-  `- Completed: ${health.completed}`,
+  `- Completed records: ${health.completed}`,
+  `- Completed GLBs verified on disk: ${health.completedGlbsOnDisk}`,
+  `- Completed factory-generated GLBs: ${health.completedFactoryGlbsOnDisk}`,
+  `- Completed curated/legacy GLBs: ${health.completedCuratedOrLegacyGlbsOnDisk}`,
+  `- Completed runtime deliverables: ${health.completedRuntimeDeliverablesOnDisk}`,
+  `- All GLBs under public/assets/models: ${health.allRepositoryModelGlbsOnDisk}`,
+  `- GLBs specifically under public/assets/models/generated: ${health.factoryGeneratedGlbsOnDisk}`,
   `- Queued Blender assets: ${health.queued}`,
   `- Queued runtime assets: ${health.queuedRuntime}`,
   `- Quarantined: ${health.quarantined}`,
   `- Unsupported: ${health.unsupported}`,
   `- Reference-only: ${health.referenceOnly}`,
-  `- Generated GLBs on disk: ${health.generatedGlbsOnDisk}`,
   '', '## Builder health', '',
   '| Builder | Completed | Queued | Quarantined | Circuit |',
   '|---|---:|---:|---:|---|',
@@ -154,6 +189,10 @@ for (const stats of health.builders) {
 if (failures.length) lines.push('', '## Failures', '', ...failures.map((item) => `- ${item}`));
 if (warnings.length) lines.push('', '## Warnings', '', ...warnings.map((item) => `- ${item}`));
 writeFileSync(REPORT_MD, `${lines.join('\n')}\n`);
-console.log(`[factory-health] completed=${health.completed}; queued=${health.queued}; runtime=${health.queuedRuntime}; quarantined=${health.quarantined}; unsupported=${health.unsupported}.`);
+console.log(
+  `[factory-health] completed=${health.completed}; completedGlbs=${health.completedGlbsOnDisk}; ` +
+  `factoryGlbs=${health.completedFactoryGlbsOnDisk}; curatedGlbs=${health.completedCuratedOrLegacyGlbsOnDisk}; ` +
+  `queued=${health.queued}; runtime=${health.queuedRuntime}; quarantined=${health.quarantined}; unsupported=${health.unsupported}.`,
+);
 console.log(`[factory-health] failures=${failures.length}; warnings=${warnings.length}.`);
 if (failures.length) process.exitCode = 1;
