@@ -87,6 +87,7 @@ jobs:
             tools/asset-factory/blender/builder_repairs_food.py \
             tools/asset-factory/blender/builder_repairs_screen.py \
             tools/asset-factory/blender/builder_repairs_priority.py \
+            tools/asset-factory/blender/builder_repairs_accessibility.py \
             tools/asset-factory/blender/builder_repairs.py \
             tools/asset-factory/blender/generate_batch.py
 
@@ -94,6 +95,7 @@ jobs:
         shell: bash
         env:
           BATCH_SIZE: ${{ github.event.inputs.batch_size || '20' }}
+          ASSET_FACTORY_RECOMPILE: ${{ (github.event_name == 'pull_request' || github.event_name == 'push') && '1' || '0' }}
           PYTHONPATH: /usr/lib/python3/dist-packages
         run: |
           mkdir -p asset-factory/work
@@ -149,7 +151,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: zta-asset-factory-qa-${{ github.run_number }}
+          name: zaylins-asset-factory-qa-${{ github.run_number }}
           path: |
             asset-factory/work/previews/
             asset-factory/work/current-batch.json
