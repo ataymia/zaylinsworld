@@ -1,8 +1,8 @@
 {
   "format": "zta-deep-asset-spec-shard",
   "version": 1,
-  "generatedAt": "2026-07-18T16:48:15.587Z",
-  "inventoryAuditAt": "2026-07-18T16:48:19.200Z",
+  "generatedAt": "2026-07-18T16:50:17.817Z",
+  "inventoryAuditAt": "2026-07-18T16:50:21.350Z",
   "shardKey": "reference-only",
   "recordCount": 16,
   "canonicalGenerationRequests": 0,
@@ -240,9 +240,9 @@
         "generationPolicy": "reference-only-do-not-generate"
       },
       "briefHash": "2f030706e5da6298b3619d412133720e5782ce12bb2547e255855a263e1b7724",
-      "semanticRefinedAt": "2026-07-18T16:48:16.502Z",
+      "semanticRefinedAt": "2026-07-18T16:50:18.715Z",
       "semanticCategoryReason": "whole species or character token resolves the asset as character",
-      "semanticFinalizedAt": "2026-07-18T16:48:18.549Z",
+      "semanticFinalizedAt": "2026-07-18T16:50:20.747Z",
       "inventoryDisposition": {
         "intent": "workflow-template-reference",
         "generationEligible": false,
@@ -250,7 +250,7 @@
         "action": "Replace it with the documented licensed source character when the dedicated character pipeline is implemented. Do not generate a town asset named Base Character."
       },
       "generationEligible": false,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.195Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.345Z"
     },
     {
       "id": "building_starline_studios_exterior_v01",
@@ -486,9 +486,9 @@
         "generationPolicy": "reference-only-do-not-generate"
       },
       "briefHash": "8c7621ed84615380246f77514ae24c7fc779742e6344c17126dc3f82aba027d9",
-      "semanticRefinedAt": "2026-07-18T16:48:16.467Z",
+      "semanticRefinedAt": "2026-07-18T16:50:18.680Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T16:48:18.496Z",
+      "semanticFinalizedAt": "2026-07-18T16:50:20.696Z",
       "inventoryDisposition": {
         "intent": "naming-example",
         "generationEligible": false,
@@ -496,7 +496,7 @@
         "action": "Use the name only as a formatting example. Do not place it in the generation queue unless a real town blueprint later requests it."
       },
       "generationEligible": false,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.163Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.316Z"
     },
     {
       "id": "cafeteriademoscene",
@@ -749,9 +749,9 @@
         "generationPolicy": "reference-only-do-not-generate"
       },
       "briefHash": "11933001b71fd26ca5b9ffb9a36a937297525b740b197a070fff4a4189dcf2eb",
-      "semanticRefinedAt": "2026-07-18T16:48:16.502Z",
+      "semanticRefinedAt": "2026-07-18T16:50:18.715Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:48:18.549Z",
+      "semanticFinalizedAt": "2026-07-18T16:50:20.747Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Cafeteriademoscene, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “Large unreferenced assets (review candidates)” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -770,10 +770,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Cafeteriademoscene role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:48:17.477Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:50:19.681Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.899Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.090Z",
       "inventoryDisposition": {
         "intent": "existing-asset-reference",
         "generationEligible": false,
@@ -781,7 +781,7 @@
         "action": "Inspect, retain, optimize, replace, or remove the existing repository asset through the asset-audit workflow. Do not generate a duplicate from this brief."
       },
       "generationEligible": false,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.195Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.345Z"
     },
     {
       "id": "chemistrylabdemoscene",
@@ -1034,9 +1034,9 @@
         "generationPolicy": "reference-only-do-not-generate"
       },
       "briefHash": "f1833e076bba1198e73498416148372dd7c30708a86b1993b504cb5c9ab3fbe2",
-      "semanticRefinedAt": "2026-07-18T16:48:16.502Z",
+      "semanticRefinedAt": "2026-07-18T16:50:18.715Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:48:18.549Z",
+      "semanticFinalizedAt": "2026-07-18T16:50:20.747Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Chemistrylabdemoscene, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “Large unreferenced assets (review candidates)” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -1055,10 +1055,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Chemistrylabdemoscene role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:48:17.477Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:50:19.681Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.899Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.090Z",
       "inventoryDisposition": {
         "intent": "existing-asset-reference",
         "generationEligible": false,
@@ -1066,7 +1066,7 @@
         "action": "Inspect, retain, optimize, replace, or remove the existing repository asset through the asset-audit workflow. Do not generate a duplicate from this brief."
       },
       "generationEligible": false,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.195Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.346Z"
     },
     {
       "id": "computerdemoscene",
@@ -1319,9 +1319,9 @@
         "generationPolicy": "reference-only-do-not-generate"
       },
       "briefHash": "a94cb06b056481658127f4a61ab4b9f36c9c54d9c2fedca7b54227cb21651251",
-      "semanticRefinedAt": "2026-07-18T16:48:16.502Z",
+      "semanticRefinedAt": "2026-07-18T16:50:18.716Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:48:18.550Z",
+      "semanticFinalizedAt": "2026-07-18T16:50:20.747Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Computerdemoscene, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “Large unreferenced assets (review candidates)” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -1340,10 +1340,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Computerdemoscene role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:48:17.477Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.899Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.090Z",
       "inventoryDisposition": {
         "intent": "existing-asset-reference",
         "generationEligible": false,
@@ -1351,7 +1351,7 @@
         "action": "Inspect, retain, optimize, replace, or remove the existing repository asset through the asset-audit workflow. Do not generate a duplicate from this brief."
       },
       "generationEligible": false,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.195Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.346Z"
     },
     {
       "id": "debris",
@@ -1604,9 +1604,9 @@
         "generationPolicy": "reference-only-do-not-generate"
       },
       "briefHash": "a1b27d67bd1a7f432df8e91860296c790c59cab937a3f7ff6cd32577ae11f782",
-      "semanticRefinedAt": "2026-07-18T16:48:16.505Z",
+      "semanticRefinedAt": "2026-07-18T16:50:18.718Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:48:18.551Z",
+      "semanticFinalizedAt": "2026-07-18T16:50:20.749Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Debris, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “Safe duplicate candidates” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -1625,10 +1625,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Debris role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:48:17.477Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.899Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.090Z",
       "inventoryDisposition": {
         "intent": "existing-asset-reference",
         "generationEligible": false,
@@ -1636,7 +1636,7 @@
         "action": "Resolve the existing file through cleanup and deduplication. Do not create another model with the same generic name."
       },
       "generationEligible": false,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.196Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.347Z"
     },
     {
       "id": "demoscene",
@@ -1889,9 +1889,9 @@
         "generationPolicy": "reference-only-do-not-generate"
       },
       "briefHash": "f1c2a5808bb0afe24a298473401843b4010692d886fb5b79eb0b5969dc7bf0c2",
-      "semanticRefinedAt": "2026-07-18T16:48:16.505Z",
+      "semanticRefinedAt": "2026-07-18T16:50:18.718Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:48:18.551Z",
+      "semanticFinalizedAt": "2026-07-18T16:50:20.749Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Demoscene, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “Large unreferenced assets (review candidates)” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -1910,10 +1910,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Demoscene role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:48:17.477Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.899Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.090Z",
       "inventoryDisposition": {
         "intent": "existing-asset-reference",
         "generationEligible": false,
@@ -1921,7 +1921,7 @@
         "action": "Inspect, retain, optimize, replace, or remove the existing repository asset through the asset-audit workflow. Do not generate a duplicate from this brief."
       },
       "generationEligible": false,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.197Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.347Z"
     },
     {
       "id": "furniture_richhills_mansion_sofa_a_v01",
@@ -2177,9 +2177,9 @@
         "generationPolicy": "reference-only-do-not-generate"
       },
       "briefHash": "a899cdc04545a61b88ed54b14eed0635d424fdb235909ebbc061c4b8b5ff011b",
-      "semanticRefinedAt": "2026-07-18T16:48:16.505Z",
+      "semanticRefinedAt": "2026-07-18T16:50:18.718Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as furniture",
-      "semanticFinalizedAt": "2026-07-18T16:48:18.552Z",
+      "semanticFinalizedAt": "2026-07-18T16:50:20.749Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Richhills Mansion Sofa, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “Asset naming” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -2198,10 +2198,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "sofa or upholstered seating",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:48:17.477Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named sofa or upholstered seating profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.899Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.090Z",
       "inventoryDisposition": {
         "intent": "naming-example",
         "generationEligible": false,
@@ -2209,7 +2209,7 @@
         "action": "Use the name only as a formatting example. Do not place it in the generation queue unless a real town blueprint later requests it."
       },
       "generationEligible": false,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.197Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.347Z"
     },
     {
       "id": "in",
@@ -2462,9 +2462,9 @@
         "generationPolicy": "reference-only-do-not-generate"
       },
       "briefHash": "1ec98f9a6e0c7a445350f9494266698abdc364af6a132199edf8d48004542ee4",
-      "semanticRefinedAt": "2026-07-18T16:48:16.505Z",
+      "semanticRefinedAt": "2026-07-18T16:50:18.718Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:48:18.552Z",
+      "semanticFinalizedAt": "2026-07-18T16:50:20.749Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready In, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “4. Optimize (free, scriptable — do this for everything)” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -2483,10 +2483,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "In role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:48:17.477Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.899Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.090Z",
       "inventoryDisposition": {
         "intent": "documentation-command-fragment",
         "generationEligible": false,
@@ -2494,7 +2494,7 @@
         "action": "Exclude this token from every generation queue and treat it only as documentation syntax."
       },
       "generationEligible": false,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.197Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.348Z"
     },
     {
       "id": "ktx",
@@ -2747,9 +2747,9 @@
         "generationPolicy": "reference-only-do-not-generate"
       },
       "briefHash": "7cce705fedd94ea5aea47cbc923f7fb5af2a36490d0357f0110fed9bde5de06c",
-      "semanticRefinedAt": "2026-07-18T16:48:16.506Z",
+      "semanticRefinedAt": "2026-07-18T16:50:18.719Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:48:18.552Z",
+      "semanticFinalizedAt": "2026-07-18T16:50:20.750Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Ktx, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “4. Optimize (free, scriptable — do this for everything)” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -2768,10 +2768,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Ktx role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:48:17.477Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.899Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.091Z",
       "inventoryDisposition": {
         "intent": "documentation-command-fragment",
         "generationEligible": false,
@@ -2779,7 +2779,7 @@
         "action": "Exclude this token from every generation queue and treat it only as documentation syntax."
       },
       "generationEligible": false,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.197Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.348Z"
     },
     {
       "id": "out",
@@ -3032,9 +3032,9 @@
         "generationPolicy": "reference-only-do-not-generate"
       },
       "briefHash": "3b9b1f37f2ff575427181c58611595cfcd4948406db5e443d93357942e79cec0",
-      "semanticRefinedAt": "2026-07-18T16:48:16.506Z",
+      "semanticRefinedAt": "2026-07-18T16:50:18.719Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:48:18.553Z",
+      "semanticFinalizedAt": "2026-07-18T16:50:20.750Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Out, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “4. Optimize (free, scriptable — do this for everything)” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -3053,10 +3053,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Out role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:48:17.477Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.899Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.091Z",
       "inventoryDisposition": {
         "intent": "documentation-command-fragment",
         "generationEligible": false,
@@ -3064,7 +3064,7 @@
         "action": "Exclude this token from every generation queue and treat it only as documentation syntax."
       },
       "generationEligible": false,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.197Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.348Z"
     },
     {
       "id": "principalofficedemoscene",
@@ -3317,9 +3317,9 @@
         "generationPolicy": "reference-only-do-not-generate"
       },
       "briefHash": "b4667d74a8020e0eb69b6a88cbe1e589bd1a75fc6e240fc05b497b70845b5bfa",
-      "semanticRefinedAt": "2026-07-18T16:48:16.506Z",
+      "semanticRefinedAt": "2026-07-18T16:50:18.719Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:48:18.553Z",
+      "semanticFinalizedAt": "2026-07-18T16:50:20.750Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Principalofficedemoscene, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “Large unreferenced assets (review candidates)” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -3338,10 +3338,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Principalofficedemoscene role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:48:17.477Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.899Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.091Z",
       "inventoryDisposition": {
         "intent": "existing-asset-reference",
         "generationEligible": false,
@@ -3349,7 +3349,7 @@
         "action": "Inspect, retain, optimize, replace, or remove the existing repository asset through the asset-audit workflow. Do not generate a duplicate from this brief."
       },
       "generationEligible": false,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.197Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.348Z"
     },
     {
       "id": "prop_harbor_fish_crate_a_v01",
@@ -3625,9 +3625,9 @@
         "generationPolicy": "reference-only-do-not-generate"
       },
       "briefHash": "4e73aa56473302df04e625694625f63c90c7a6860a8072331ce6adbec0786cc3",
-      "semanticRefinedAt": "2026-07-18T16:48:16.344Z",
+      "semanticRefinedAt": "2026-07-18T16:50:18.562Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as generic_prop",
-      "semanticFinalizedAt": "2026-07-18T16:48:18.374Z",
+      "semanticFinalizedAt": "2026-07-18T16:50:20.575Z",
       "compactSpecLegacy": {
         "family": "unsupported_character",
         "description": "A production-ready Harbor Fish Crate, designed as a rigged character or creature requiring a dedicated anatomy pipeline for Fishing Harbor. Do not generate with the prop factory. This family is quarantined until a dedicated anatomy, sculpting, retopology, and rigging builder exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: working coastal municipality; weathered wood, painted metal, rope, wet surfaces, practical marine hardware, salt-worn details. This asset appears under the blueprint section “Asset naming” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -3650,10 +3650,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "crate, case, or chest",
       "physicalSpecReason": "The compact compiler falsely inferred a character from a species or profession word; the physical object profile replaces anatomy data.",
-      "physicalSpecDerivedAt": "2026-07-18T16:48:17.465Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:50:19.670Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named crate, case, or chest profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.892Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.084Z",
       "inventoryDisposition": {
         "intent": "naming-example",
         "generationEligible": false,
@@ -3661,7 +3661,7 @@
         "action": "Use the name only as a formatting example. Do not place it in the generation queue unless a real town blueprint later requests it."
       },
       "generationEligible": false,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.084Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.243Z"
     },
     {
       "id": "standard",
@@ -3914,9 +3914,9 @@
         "generationPolicy": "reference-only-do-not-generate"
       },
       "briefHash": "f9adefae645297d5024b0a8fbc0af440a3d75ef4ae65ed14cdf5050463023033",
-      "semanticRefinedAt": "2026-07-18T16:48:16.508Z",
+      "semanticRefinedAt": "2026-07-18T16:50:18.721Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:48:18.554Z",
+      "semanticFinalizedAt": "2026-07-18T16:50:20.752Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Standard, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “Large unreferenced assets (review candidates)” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -3935,10 +3935,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Standard role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:48:17.477Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.899Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.091Z",
       "inventoryDisposition": {
         "intent": "existing-asset-reference",
         "generationEligible": false,
@@ -3946,7 +3946,7 @@
         "action": "Inspect, retain, optimize, replace, or remove the existing repository asset through the asset-audit workflow. Do not generate a duplicate from this brief."
       },
       "generationEligible": false,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.199Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.349Z"
     },
     {
       "id": "toiletdemoscene",
@@ -4199,9 +4199,9 @@
         "generationPolicy": "reference-only-do-not-generate"
       },
       "briefHash": "3ab7dcea848c25dd3eb913869f4ca32a16fc7d9f9ed6aa654d91b1501abcd667",
-      "semanticRefinedAt": "2026-07-18T16:48:16.508Z",
+      "semanticRefinedAt": "2026-07-18T16:50:18.721Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:48:18.554Z",
+      "semanticFinalizedAt": "2026-07-18T16:50:20.752Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Toiletdemoscene, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “Large unreferenced assets (review candidates)” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -4220,10 +4220,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Toiletdemoscene role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:48:17.477Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.899Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.091Z",
       "inventoryDisposition": {
         "intent": "existing-asset-reference",
         "generationEligible": false,
@@ -4231,7 +4231,7 @@
         "action": "Inspect, retain, optimize, replace, or remove the existing repository asset through the asset-audit workflow. Do not generate a duplicate from this brief."
       },
       "generationEligible": false,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.199Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.349Z"
     },
     {
       "id": "trashanddebris",
@@ -4484,9 +4484,9 @@
         "generationPolicy": "reference-only-do-not-generate"
       },
       "briefHash": "f0f2c741d54c85859919981a2afc29d4649162616d5dd7b89b082fafaee2024a",
-      "semanticRefinedAt": "2026-07-18T16:48:16.508Z",
+      "semanticRefinedAt": "2026-07-18T16:50:18.721Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T16:48:18.555Z",
+      "semanticFinalizedAt": "2026-07-18T16:50:20.752Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Trashanddebris, designed as a specialized asset awaiting a dedicated family builder for Shared World. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: cohesive family-friendly open-world realism matching the owning town and gameplay role. This asset appears under the blueprint section “Safe duplicate candidates” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -4505,10 +4505,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Trashanddebris role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T16:48:17.477Z",
+      "physicalSpecDerivedAt": "2026-07-18T16:50:19.682Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T16:48:17.899Z",
+      "physicalSpecSpecializedAt": "2026-07-18T16:50:20.091Z",
       "inventoryDisposition": {
         "intent": "existing-asset-reference",
         "generationEligible": false,
@@ -4516,7 +4516,7 @@
         "action": "Resolve the existing file through cleanup and deduplication. Do not create another model with the same generic name."
       },
       "generationEligible": false,
-      "inventoryDispositionAuditedAt": "2026-07-18T16:48:19.199Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T16:50:21.349Z"
     }
   ]
 }
