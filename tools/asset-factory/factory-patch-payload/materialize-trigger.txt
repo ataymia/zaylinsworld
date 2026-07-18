@@ -1,2 +1,2 @@
 Trusted child-PR materialization trigger for the repaired 2,298-record Zaylins asset factory.
-Retry 3 preserves the 16 audited reference-only records during baseline merge.
+Retry 4 classifies the 16 reference-only records from their baseline documentation sources.
