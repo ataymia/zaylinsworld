@@ -12,6 +12,7 @@ on:
       - 'tools/asset-factory/finalize-deep-semantics.mjs'
       - 'tools/asset-factory/derive-physical-specs.mjs'
       - 'tools/asset-factory/check-deep-specs.mjs'
+      - 'tools/asset-factory/check-physical-specs.mjs'
       - 'asset-factory/quality-policy.json'
       - 'asset-factory/manual-overrides.json'
       - 'asset-factory/generated/master-asset-specs.json'
@@ -27,6 +28,7 @@ on:
       - 'tools/asset-factory/finalize-deep-semantics.mjs'
       - 'tools/asset-factory/derive-physical-specs.mjs'
       - 'tools/asset-factory/check-deep-specs.mjs'
+      - 'tools/asset-factory/check-physical-specs.mjs'
       - 'asset-factory/quality-policy.json'
       - 'asset-factory/manual-overrides.json'
       - 'asset-factory/generated/master-asset-specs.json'
@@ -66,6 +68,7 @@ jobs:
           node --check tools/asset-factory/finalize-deep-semantics.mjs
           node --check tools/asset-factory/derive-physical-specs.mjs
           node --check tools/asset-factory/check-deep-specs.mjs
+          node --check tools/asset-factory/check-physical-specs.mjs
 
       - name: Generate deep production briefs for the complete asset library
         run: node tools/asset-factory/enrich-all-specs.mjs
@@ -87,6 +90,9 @@ jobs:
 
       - name: Require complete unique physically consistent coverage
         run: node tools/asset-factory/check-deep-specs.mjs
+
+      - name: Reject inherited placeholder dimensions and components
+        run: node tools/asset-factory/check-physical-specs.mjs
 
       - name: Commit generated specification library
         if: github.event_name == 'push' && github.actor != 'github-actions[bot]'
