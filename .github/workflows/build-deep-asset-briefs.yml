@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - 'tools/asset-factory/enrich-all-specs.mjs'
+      - 'tools/asset-factory/normalize-deep-specs.mjs'
       - 'tools/asset-factory/check-deep-specs.mjs'
       - 'asset-factory/quality-policy.json'
       - 'asset-factory/manual-overrides.json'
@@ -14,6 +15,7 @@ on:
   pull_request:
     paths:
       - 'tools/asset-factory/enrich-all-specs.mjs'
+      - 'tools/asset-factory/normalize-deep-specs.mjs'
       - 'tools/asset-factory/check-deep-specs.mjs'
       - 'asset-factory/quality-policy.json'
       - 'asset-factory/manual-overrides.json'
@@ -47,10 +49,14 @@ jobs:
       - name: Validate source syntax
         run: |
           node --check tools/asset-factory/enrich-all-specs.mjs
+          node --check tools/asset-factory/normalize-deep-specs.mjs
           node --check tools/asset-factory/check-deep-specs.mjs
 
       - name: Generate deep production briefs for the complete asset library
         run: node tools/asset-factory/enrich-all-specs.mjs
+
+      - name: Expand sparse blueprint-list context
+        run: node tools/asset-factory/normalize-deep-specs.mjs
 
       - name: Require complete unique coverage
         run: node tools/asset-factory/check-deep-specs.mjs
