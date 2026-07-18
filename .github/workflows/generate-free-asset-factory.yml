@@ -55,6 +55,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y \
             blender \
+            python3-numpy \
             libegl1 \
             libgl1 \
             libgl1-mesa-dri \
@@ -65,6 +66,7 @@ jobs:
             libxkbcommon0
           blender --version
           ldconfig -p | grep -E 'libEGL.so.1|libGL.so.1'
+          PYTHONPATH=/usr/lib/python3/dist-packages blender --background --python-expr "import numpy; print('Blender NumPy', numpy.__version__)"
 
       - name: Validate factory source
         shell: bash
@@ -80,6 +82,7 @@ jobs:
         shell: bash
         env:
           BATCH_SIZE: ${{ github.event.inputs.batch_size || '10' }}
+          PYTHONPATH: /usr/lib/python3/dist-packages
         run: |
           mkdir -p asset-factory/work
           set -o pipefail
@@ -90,11 +93,13 @@ jobs:
         shell: bash
         run: |
           node --input-type=module <<'NODE'
-          import { readFileSync } from 'node:fs';
+          import { existsSync, readFileSync, statSync } from 'node:fs';
           const result = JSON.parse(readFileSync('reports/asset-factory/latest.json', 'utf8'));
           console.log(`[asset-factory] proof result: ${result.passed}/${result.requested} passed`);
-          if (result.passed !== result.requested) {
-            console.error('The free asset factory is not mergeable until every first-batch asset passes its quality gate.');
+          const invalidOutputs = result.results.filter((asset) => !asset.outputPath || !existsSync(asset.outputPath) || statSync(asset.outputPath).size < 1024);
+          if (result.passed !== result.requested || invalidOutputs.length) {
+            console.error('The free asset factory is not mergeable until every first-batch asset passes QA and produces a nonempty GLB.');
+            if (invalidOutputs.length) console.error('Invalid outputs:', invalidOutputs.map((asset) => asset.id));
             process.exit(1);
           }
           NODE
@@ -130,6 +135,7 @@ jobs:
             asset-factory/work/factory.log
             asset-factory/generated/master-asset-specs.json
             asset-factory/state/queue.json
+            public/assets/models/generated/
             reports/asset-factory/latest.json
           if-no-files-found: warn
           retention-days: 7
