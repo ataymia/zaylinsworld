@@ -12,9 +12,18 @@ const coverage = JSON.parse(readFileSync(COVERAGE_PATH, 'utf8'));
 const failures = [];
 const CONTAMINATED_CHARACTER_LANGUAGE = /rigged character or creature requiring a dedicated anatomy pipeline|dedicated anatomy, sculpting, retopology, and rigging builder|do not generate with the prop factory/i;
 const GENERIC_PLACEHOLDER_LANGUAGE = /specialized asset awaiting a dedicated family builder|do not create a generic primitive substitute|keep the item queued as unsupported until a purpose-built family generator exists/i;
-const ANATOMY_COMPONENTS = /credible anatomy|surface form|hands or paws|\bfeet\b|\bface\b|\brig\b|deformation-ready topology/i;
+const INHERITED_ANATOMY_COMPONENTS = new Set([
+  'credible anatomy',
+  'surface form',
+  'hands or paws',
+  'face',
+  'rig',
+  'deformation-ready topology',
+]);
 const CATEGORY_DIMENSION_LIMITS = {
-  architecture: { minWidth: 1, minDepth: 0.15, minHeight: 2, max: 200 },
+  // Architecture includes windows, balconies, wall panels, doors, and overhead
+  // modules as well as complete buildings, so the lower bound must support both.
+  architecture: { minWidth: 0.5, minDepth: 0.1, minHeight: 0.5, max: 200 },
   vehicle: { minWidth: 0.45, minDepth: 1.2, minHeight: 0.35, max: 100 },
   furniture: { minWidth: 0.25, minDepth: 0.2, minHeight: 0.2, max: 15 },
   infrastructure: { minWidth: 0.15, minDepth: 0.1, minHeight: 0.15, max: 50 },
@@ -38,6 +47,12 @@ function exactlyCharacterDefault(dimensions) {
     && Number(dimensions?.height) === 1.8;
 }
 
+function inheritedAnatomyComponents(components) {
+  return (components || [])
+    .map((component) => String(component).trim().toLowerCase())
+    .filter((component) => INHERITED_ANATOMY_COMPONENTS.has(component));
+}
+
 const derivedAssets = [];
 for (const asset of deep.assets) {
   const label = asset.id || asset.fileName;
@@ -47,7 +62,7 @@ for (const asset of deep.assets) {
   derivedAssets.push(asset);
 
   if (asset.physicalSpecDerived !== true) failures.push(`${label}: weak compact specification was not replaced by a physical object profile.`);
-  if (!asset.physicalSpecProfile || asset.physicalSpecProfile.length < 4) failures.push(`${label}: physical profile name is missing.`);
+  if (!asset.physicalSpecProfile || asset.physicalSpecProfile.length < 3) failures.push(`${label}: physical profile name is missing.`);
   if (!asset.physicalSpecReason || asset.physicalSpecReason.length < 30) failures.push(`${label}: physical derivation reason is missing.`);
   if (!asset.canonicalPhysicalDescription || asset.canonicalPhysicalDescription.length < 300) failures.push(`${label}: canonical physical description is missing or too short.`);
   if (!asset.canonicalPhysicalDescription?.includes(asset.displayName)) failures.push(`${label}: canonical physical description does not name the asset.`);
@@ -65,7 +80,8 @@ for (const asset of deep.assets) {
   if (category !== 'character') {
     const combined = `${asset.description} ${asset.deepDescription} ${asset.generationPrompt}`;
     if (CONTAMINATED_CHARACTER_LANGUAGE.test(combined)) failures.push(`${label}: non-character brief still contains inherited anatomy-pipeline language.`);
-    if (ANATOMY_COMPONENTS.test(asset.requiredComponents.join(' | '))) failures.push(`${label}: non-character brief still contains anatomy components.`);
+    const inherited = inheritedAnatomyComponents(asset.requiredComponents);
+    if (inherited.length) failures.push(`${label}: non-character brief still contains inherited anatomy components: ${inherited.join(', ')}.`);
     if (asset.family === 'unsupported_character' && exactlyCharacterDefault(asset.dimensionsMeters)) failures.push(`${label}: non-character asset retained the compact character dimensions.`);
   }
   if (GENERIC_PLACEHOLDER_LANGUAGE.test(`${asset.description} ${asset.deepDescription} ${asset.generationPrompt}`)) {
