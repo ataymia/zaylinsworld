@@ -18,6 +18,7 @@ import {
   STARTER_TOWN_GRADE_REPORT,
 } from './StarterTownTerrain.js';
 import { buildStarterTownRoadsideLayer } from './StarterTownRoadside.js';
+import { buildSpecialRoadFormsLayer } from './SpecialRoadForms.js';
 import { auditVisualPerformance } from './VisualPerformanceAudit.js';
 
 const DISTRICT_COLORS = Object.freeze({
@@ -95,6 +96,7 @@ export async function buildLargeStarterTown({
   includeMassing = true,
   includeStreetscape = true,
   includeGeneratedRoadside = true,
+  includeSpecialRoadForms = true,
 } = {}) {
   const plan = worldRegistry.starterPlan;
   const group = new THREE.Group();
@@ -147,6 +149,9 @@ export async function buildLargeStarterTown({
     heightAt: (x, z) => starterTownHeightAt(x, z),
   });
   group.add(roads);
+
+  const specialRoadForms = includeSpecialRoadForms ? buildSpecialRoadFormsLayer() : null;
+  if (specialRoadForms) group.add(specialRoadForms.group);
 
   const generatedRoadside = includeGeneratedRoadside ? buildStarterTownRoadsideLayer() : null;
   if (generatedRoadside) group.add(generatedRoadside.group);
@@ -210,6 +215,7 @@ export async function buildLargeStarterTown({
     },
     districts: plan.districts.length,
     roads: roadNetwork.snapshot(),
+    specialRoadForms: specialRoadForms?.group.userData.snapshot?.() || null,
     locations: plan.locations.length,
     assets: placementReport,
     massing: massing?.group.userData.snapshot?.() || null,
@@ -223,6 +229,7 @@ export async function buildLargeStarterTown({
     terrain,
     roads,
     roadNetwork,
+    specialRoadForms,
     districtLayer,
     locationLayer,
     massing,
