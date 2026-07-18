@@ -94,6 +94,8 @@ def apply_qa_override(spec):
         spec.setdefault("dimensionsMeters", {}).update(override["dimensionsMeters"])
     if override.get("quality"):
         spec.setdefault("quality", {}).update(override["quality"])
+    if override.get("requiredComponents"):
+        spec["requiredComponents"] = list(override["requiredComponents"])
     return override.get("note")
 
 
