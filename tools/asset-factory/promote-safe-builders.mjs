@@ -4,12 +4,12 @@ import { join } from 'node:path';
 const ROOT = process.cwd();
 const MASTER_PATH = join(ROOT, 'asset-factory', 'generated', 'master-asset-specs.json');
 const QUEUE_PATH = join(ROOT, 'asset-factory', 'state', 'queue.json');
-const BUILDER_REVISION = '2026-07-18-r3';
+const BUILDER_REVISION = '2026-07-18-r5';
 
 const REPAIRED_FAMILIES = new Set([
   'charging_pad', 'fuel_pump', 'digital_kiosk', 'office_desk', 'mailbox',
   'road_sign', 'road-sign', 'municipal_trash_can', 'municipal_bench',
-  'streetlight', 'hover_vehicle',
+  'streetlight', 'hover_vehicle', 'wall_screen', 'modular_food',
 ]);
 
 function selectBuilder(asset) {
