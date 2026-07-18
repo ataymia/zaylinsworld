@@ -1,0 +1,223 @@
+{
+  "version": 1,
+  "assets": {
+    "arch_aqualume_bubble_lift_a_v01": {
+      "builder": "bubble_lift",
+      "family": "bubble_lift",
+      "builderStatus": "supported",
+      "town": "aqualume",
+      "displayName": "Aqualume Pressure Bubble Lift",
+      "description": "A full-height underwater civic elevator built around a transparent pressure-rated cylindrical shaft rather than an ordinary box cabin. The lift stands on a broad reef-safe foundation ring and is wrapped by evenly spaced structural pressure ribs. Two opposing docking portals use thick sliding glass doors, illuminated seal tracks, mechanical latches, and exterior emergency-release housings. Inside the shaft, a luminous current-drive core and bubble intake manifold create the visible rising-water column that carries the passenger capsule between districts. A waist-height control pedestal, directional current arrows, service conduits, pressure gauges, emergency red seal bands, and a reinforced roof docking collar make its operation readable from every angle. The silhouette must read instantly as vertical underwater transit, with open glass volume between ring ribs and visible mechanical systems at the base and roof.",
+      "designIntent": "Aqualume's elevator equivalent: elegant civic infrastructure combining marine pressure engineering, bioluminescent navigation, visible water movement, and believable maintenance access. It must feel built for daily residents, not like a decorative aquarium or a glass box with bubbles pasted inside.",
+      "dimensionsMeters": { "width": 4.2, "depth": 4.2, "height": 8.0 },
+      "requiredComponents": [
+        "reef-safe foundation ring",
+        "pressure-glass lift shaft",
+        "structural pressure ribs",
+        "sliding dock doors",
+        "illuminated seal tracks",
+        "current-drive core",
+        "bubble intake manifold",
+        "control pedestal",
+        "service conduits",
+        "emergency pressure seals",
+        "roof docking collar"
+      ],
+      "materials": [
+        "curved pressure glass",
+        "pearl-finished marine alloy",
+        "dark current conduits",
+        "cyan bioluminescent navigation strips",
+        "warning-red emergency seals",
+        "reef-safe stone composite"
+      ],
+      "quality": {
+        "minimumMeshObjects": 30,
+        "minimumTriangles": 6000,
+        "maximumTriangles": 42000,
+        "minimumMaterials": 6,
+        "maximumMaterials": 12,
+        "dimensionTolerance": 0.18,
+        "automaticRetryLimit": 2
+      },
+      "functionalNotes": [
+        "ground-centered origin below foundation ring",
+        "doors and lift capsule remain separable for later animation",
+        "current-drive core and navigation strips remain separately materialed",
+        "clear passenger opening and capsule clearance"
+      ],
+      "forbiddenShortcuts": [
+        "rectangular building with a glowing panel",
+        "single glass cylinder without pressure structure",
+        "bubbles represented only by a texture",
+        "doors painted onto the shaft",
+        "coral pasted randomly onto mechanical surfaces"
+      ]
+    },
+    "gap-aqualume-airlock-conduit-straight-standard-105": {
+      "builder": "airlock_conduit",
+      "family": "airlock_conduit",
+      "builderStatus": "supported",
+      "town": "aqualume",
+      "displayName": "Aqualume Straight Airlock Conduit",
+      "description": "A straight enclosed connector for joining dry Aqualume interiors across wet exterior space. The primary form is a thick pressure-glass pedestrian tube running between two oversized circular docking collars. Each end has layered compression flanges, visible gasket seams, locking dogs, alignment keys, and a short reinforced transition throat that can mate cleanly with neighboring modules. Five external load-bearing pressure hoops wrap the span and connect to a lower service spine carrying current cables, drainage, oxygen lines, and inspection access. One side includes a recessed service hatch with latch hardware, pressure gauge, warning placard, and emergency isolation valve. A narrow illuminated floor strip and repeated directional icons preserve orientation without relying on color alone. The conduit must read as hollow traversable architecture with believable wall thickness, not a solid cylinder or a rectangular bridge wearing round end caps.",
+      "designIntent": "A repeatable modular glassway component that makes Aqualume's architecture visibly pressure-rated, serviceable, and safe while preserving long sightlines through the underwater city.",
+      "dimensionsMeters": { "width": 3.2, "depth": 6.0, "height": 3.2 },
+      "requiredComponents": [
+        "pressure-glass conduit",
+        "start docking collar",
+        "end docking collar",
+        "compression flanges",
+        "gasket seals",
+        "load-bearing pressure hoops",
+        "service spine",
+        "service hatch",
+        "pressure gauge",
+        "emergency isolation valve",
+        "illuminated floor guide"
+      ],
+      "materials": [
+        "thick curved pressure glass",
+        "pearl marine alloy",
+        "dark rubber gasket",
+        "brushed locking hardware",
+        "cyan guide lighting",
+        "warning-red valve hardware"
+      ],
+      "quality": {
+        "minimumMeshObjects": 24,
+        "minimumTriangles": 4500,
+        "maximumTriangles": 32000,
+        "minimumMaterials": 6,
+        "maximumMaterials": 12,
+        "dimensionTolerance": 0.18,
+        "automaticRetryLimit": 2
+      },
+      "functionalNotes": [
+        "forward connection direction follows the long depth axis",
+        "both docking collars share a repeatable socket diameter",
+        "floor guide and service spine remain distinct meshes",
+        "interior traversal clearance remains unobstructed"
+      ],
+      "forbiddenShortcuts": [
+        "solid pipe",
+        "rectangular hallway with decorative circles",
+        "end collars without gasket or locking hardware",
+        "random loose cables crossing the walking path",
+        "opaque tube that hides the city"
+      ]
+    },
+    "elevated_road_support_a_v01": {
+      "builder": "elevated_road_support",
+      "family": "elevated_road_support",
+      "builderStatus": "supported",
+      "town": "techtown",
+      "displayName": "TechTown Elevated Road Support Pier",
+      "description": "A tall engineered support assembly for TechTown's elevated vehicle lanes. It begins with a wide reinforced concrete crash footing and rises through a tapered composite-clad pier with a recessed inspection door, drainage outlet, service conduit, and protected maintenance ladder. A broad transverse cap beam at the top carries four replaceable elastomeric bearing pads, two lateral restraint blocks, expansion-joint catch trays, and visible bolted access plates beneath the roadway deck. Diagonal steel knee braces connect the pier to the cap beam and create a recognizable load path instead of leaving a slab floating on a column. Low collision guards and reflective hazard bands protect the base at street level. Controlled cyan inspection lights may accent access points, but the structure remains primarily concrete, dark metal, and black composite.",
+      "designIntent": "Believable cyberpunk civil engineering. The support should look capable of carrying heavy traffic and being inspected or repaired, while maintaining a strong tapered silhouette readable beneath elevated roads.",
+      "dimensionsMeters": { "width": 6.0, "depth": 2.6, "height": 8.5 },
+      "requiredComponents": [
+        "reinforced crash footing",
+        "tapered support pier",
+        "transverse cap beam",
+        "bearing pads",
+        "lateral restraint blocks",
+        "diagonal knee braces",
+        "inspection door",
+        "maintenance ladder",
+        "drainage outlet",
+        "service conduit",
+        "collision guards",
+        "hazard bands"
+      ],
+      "materials": [
+        "reinforced concrete",
+        "black composite cladding",
+        "dark structural steel",
+        "elastomeric bearings",
+        "galvanized fasteners",
+        "cyan inspection lighting",
+        "reflective hazard marking"
+      ],
+      "quality": {
+        "minimumMeshObjects": 28,
+        "minimumTriangles": 4200,
+        "maximumTriangles": 36000,
+        "minimumMaterials": 6,
+        "maximumMaterials": 12,
+        "dimensionTolerance": 0.16,
+        "automaticRetryLimit": 2
+      },
+      "functionalNotes": [
+        "road deck bearings remain individually named",
+        "simple pier and cap-beam collision can be generated separately",
+        "ladder and inspection side face the service walkway",
+        "base leaves pedestrian clearance outside collision guards"
+      ],
+      "forbiddenShortcuts": [
+        "single rectangular pillar",
+        "floating road slab",
+        "decorative neon replacing structural hardware",
+        "bearings painted onto the cap beam",
+        "ladder with no inspection access"
+      ]
+    },
+    "gap-shared-world-accessibility-gate-locked-standard-310": {
+      "builder": "accessibility_gate",
+      "family": "accessibility_gate",
+      "builderStatus": "supported",
+      "town": "shared-world",
+      "displayName": "Locked Accessible Passage Gate",
+      "description": "A clearly locked but accessibility-compliant pedestrian passage gate used across Zaylins facilities and restricted routes. Two anchored vertical posts frame a full-width gate leaf with rounded horizontal rails and closely spaced lower infill that prevents unsafe gaps without becoming visually prison-like. A heavy hinge barrel, lower pivot, and overhead closing arm show how the gate moves. The locked state is communicated by a visible mechanical latch, shielded electric strike, raised padlock icon, amber status lamp, and a physical CLOSED tab, so players do not have to rely on color. The approach side includes a large wheelchair-height push plate, tactile icon panel, card reader, intercom button, and emergency override housing. A flush threshold strip preserves wheelchair passage when unlocked. Lock actuator, gate leaf, and indicators remain separate for later state animation and quest logic.",
+      "designIntent": "A universal, readable locked-route object that communicates restriction without blocking accessibility design. It should feel like modern public-building hardware, not a tiny fence, jail gate, or abstract state cube.",
+      "dimensionsMeters": { "width": 2.4, "depth": 0.48, "height": 1.35 },
+      "requiredComponents": [
+        "anchored gate posts",
+        "accessible gate leaf",
+        "hinge barrel",
+        "lower pivot",
+        "closing arm",
+        "mechanical latch",
+        "electric strike",
+        "raised lock icon",
+        "status lamp",
+        "closed state tab",
+        "wheelchair-height push plate",
+        "tactile icon panel",
+        "card reader",
+        "emergency override",
+        "flush threshold"
+      ],
+      "materials": [
+        "powder-coated structural metal",
+        "brushed stainless hardware",
+        "dark polymer controls",
+        "amber status lens",
+        "high-contrast tactile plate",
+        "non-slip threshold strip"
+      ],
+      "quality": {
+        "minimumMeshObjects": 26,
+        "minimumTriangles": 3800,
+        "maximumTriangles": 28000,
+        "minimumMaterials": 6,
+        "maximumMaterials": 12,
+        "dimensionTolerance": 0.14,
+        "automaticRetryLimit": 2
+      },
+      "functionalNotes": [
+        "gate leaf, latch, strike, and indicators remain separate",
+        "push plate center is mounted at accessible reach height",
+        "locked state has icon, text-shape, and mechanical cues in addition to color",
+        "threshold remains nearly flush to the ground plane"
+      ],
+      "forbiddenShortcuts": [
+        "generic cube labeled locked",
+        "waist-high turnstile that blocks wheelchairs",
+        "color-only lock communication",
+        "gate bars with no hinge or latch mechanism",
+        "oversized prison aesthetic"
+      ]
+    }
+  }
+}

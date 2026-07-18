@@ -83,6 +83,8 @@ jobs:
             tools/asset-factory/blender/builder_repairs_legacy.py \
             tools/asset-factory/blender/builder_repairs_modular.py \
             tools/asset-factory/blender/builder_repairs_food.py \
+            tools/asset-factory/blender/builder_repairs_screen.py \
+            tools/asset-factory/blender/builder_repairs_priority.py \
             tools/asset-factory/blender/builder_repairs.py \
             tools/asset-factory/blender/generate_batch.py
 
