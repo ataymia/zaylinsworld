@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-18T19:25:20.395Z",
+  "generatedAt": "2026-07-18T19:34:29.721Z",
   "builders": {
     "accessibility_gate": {
       "revision": "2026-07-18-r7",
@@ -168,8 +168,8 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 10,
-      "queued": 220,
+      "completed": 15,
+      "queued": 215,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
@@ -177,8 +177,8 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 3,
-      "queued": 169,
+      "completed": 5,
+      "queued": 167,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
@@ -186,8 +186,8 @@
       "revision": "2026-07-18-r4",
       "state": "closed",
       "reason": null,
-      "completed": 7,
-      "queued": 2,
+      "completed": 9,
+      "queued": 0,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
@@ -195,8 +195,8 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 10,
-      "queued": 130,
+      "completed": 15,
+      "queued": 125,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
@@ -204,8 +204,8 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 10,
-      "queued": 226,
+      "completed": 12,
+      "queued": 224,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
@@ -213,8 +213,8 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 3,
-      "queued": 555,
+      "completed": 4,
+      "queued": 554,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
@@ -222,8 +222,8 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 12,
-      "queued": 24,
+      "completed": 17,
+      "queued": 19,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
@@ -240,10 +240,10 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 13,
-      "queued": 1,
+      "completed": 14,
+      "queued": 0,
       "quarantined": 0,
-      "dominantFailureCount": 1
+      "dominantFailureCount": 0
     },
     "municipal_trash_can": {
       "revision": "2026-07-18-r7",
@@ -312,8 +312,8 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 4,
-      "queued": 75,
+      "completed": 5,
+      "queued": 74,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
