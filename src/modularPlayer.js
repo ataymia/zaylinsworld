@@ -275,12 +275,17 @@ function normalizedBoneName(name) {
 
 function skinnedBoneUsage(root) {
   const bones = new Map();
+  const bonesByName = new Map();
   const weights = new Map();
   const componentGetters = ['getX', 'getY', 'getZ', 'getW'];
   root.traverse((node) => {
     if (!node.isSkinnedMesh || !node.skeleton) return;
     for (const bone of node.skeleton.bones || []) {
-      if (bone?.name && !bones.has(bone.name)) bones.set(bone.name, bone);
+      if (!bone?.name) continue;
+      if (!bones.has(bone.name)) bones.set(bone.name, bone);
+      const named = bonesByName.get(bone.name) || [];
+      if (!named.includes(bone)) named.push(bone);
+      bonesByName.set(bone.name, named);
     }
     const skinIndex = node.geometry?.getAttribute?.('skinIndex');
     const skinWeight = node.geometry?.getAttribute?.('skinWeight');
@@ -296,23 +301,37 @@ function skinnedBoneUsage(root) {
       }
     }
   });
-  return { bones, weights };
+  return { bones, bonesByName, weights };
+}
+
+function weightedCandidates(usage, candidates) {
+  return [...new Set(candidates)]
+    .sort((a, b) => (usage.weights.get(b) || 0) - (usage.weights.get(a) || 0));
 }
 
 function pickWeightedBone(usage, exactNames, matches, excludes = []) {
-  const candidates = new Set();
+  // Exact names are an ordered contract, not a bag of suggestions. The Sunbox
+  // rig contains both deform joints (UpperArm_*) and similarly named control
+  // joints (UpperArm_Anim_*). Sorting those together by aggregate wardrobe
+  // weights can select the control layer and leave the rendered body in a
+  // T-pose. Prefer each exact deform name in order, then fall back to fuzzy
+  // weighted matching only when none of the explicit joints are usable.
   for (const name of exactNames) {
-    const bone = usage.bones.get(name);
-    if (bone) candidates.add(bone);
+    const exact = weightedCandidates(usage, usage.bonesByName.get(name) || []);
+    const weighted = exact.find((bone) => (usage.weights.get(bone) || 0) > 0.000001);
+    if (weighted) return weighted;
+    if (exact[0]) return exact[0];
   }
-  for (const bone of usage.bones.values()) {
-    const key = normalizedBoneName(bone.name);
-    if (excludes.some((term) => key.includes(term))) continue;
-    if (matches.some((term) => key.includes(term))) candidates.add(bone);
+
+  const fuzzy = [];
+  for (const namedBones of usage.bonesByName.values()) {
+    for (const bone of namedBones) {
+      const key = normalizedBoneName(bone.name);
+      if (excludes.some((term) => key.includes(term))) continue;
+      if (matches.some((term) => key.includes(term))) fuzzy.push(bone);
+    }
   }
-  const sorted = [...candidates].sort(
-    (a, b) => (usage.weights.get(b) || 0) - (usage.weights.get(a) || 0),
-  );
+  const sorted = weightedCandidates(usage, fuzzy);
   return sorted.find((bone) => (usage.weights.get(bone) || 0) > 0.000001) || sorted[0] || null;
 }
 
@@ -322,14 +341,14 @@ function findRig(root) {
   const bones = {
     leftArm: pickWeightedBone(
       usage,
-      ['UpperArm_L', 'UpperArm_Anim_L', 'mixamorigLeftArm'],
-      ['upperarml', 'upperarmaniml', 'leftupperarm', 'mixamorigleftarm'],
+      ['UpperArm_L', 'mixamorigLeftArm', 'UpperArm_Anim_L'],
+      ['upperarml', 'leftupperarm', 'mixamorigleftarm', 'upperarmaniml'],
       ['forearm', 'lowerarm', 'hand'],
     ),
     rightArm: pickWeightedBone(
       usage,
-      ['UpperArm_R', 'UpperArm_Anim_R', 'mixamorigRightArm'],
-      ['upperarmr', 'upperarmanimr', 'rightupperarm', 'mixamorigrightarm'],
+      ['UpperArm_R', 'mixamorigRightArm', 'UpperArm_Anim_R'],
+      ['upperarmr', 'rightupperarm', 'mixamorigrightarm', 'upperarmanimr'],
       ['forearm', 'lowerarm', 'hand'],
     ),
     leftLeg: pickWeightedBone(
@@ -371,12 +390,14 @@ function findRig(root) {
 
   root.userData.zwRigSelection = {
     source: 'highest-visible-skin-weight',
+    selectionPolicy: 'ordered-deform-first',
     leftArm: bones.leftArm?.name || '',
     leftArmWeight: usage.weights.get(bones.leftArm) || 0,
     rightArm: bones.rightArm?.name || '',
     rightArmWeight: usage.weights.get(bones.rightArm) || 0,
     leftHand: anchors.leftHand?.name || '',
     rightHand: anchors.rightHand?.name || '',
+    rejectedControlPreference: ['UpperArm_Anim_L', 'UpperArm_Anim_R'],
   };
   return { bones, anchors };
 }
