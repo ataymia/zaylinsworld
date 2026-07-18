@@ -13,6 +13,7 @@ if SCRIPT_DIR not in sys.path:
 
 import common as common_module
 from builders import BUILDERS
+from hero_builders import HERO_BUILDERS
 from common import (
     apply_modifier,
     collect_stats,
@@ -105,6 +106,14 @@ def apply_qa_override(spec):
     if spec.get("family") == "municipal_bench":
         spec["requiredComponents"] = list(MUNICIPAL_BENCH_COMPONENTS)
         notes.append("Municipal bench contract aligned to separately modeled slats, frames, rails, armrests, and anchors.")
+
+    if spec.get("family") == "charging_pad":
+        spec.setdefault("dimensionsMeters", {}).update({"height": 1.15})
+        notes.append("Charging-pad contract includes the service power module above the flush vehicle surface.")
+
+    if spec.get("family") == "digital_kiosk":
+        spec.setdefault("quality", {}).update({"minimumMaterials": 4})
+        notes.append("Digital-kiosk contract accepts four distinct functional material groups when all required assemblies are present.")
 
     override = QA_OVERRIDES.get(spec["id"])
     if override:
@@ -222,7 +231,7 @@ def main():
 
         try:
             builder_name = spec.get("builder")
-            builder = BUILDERS.get(builder_name)
+            builder = HERO_BUILDERS.get(spec.get("family")) or BUILDERS.get(builder_name)
             if not builder:
                 result["failures"].append(f"No purpose-built Blender family builder exists for {builder_name or spec['family']}.")
                 results.append(result)
