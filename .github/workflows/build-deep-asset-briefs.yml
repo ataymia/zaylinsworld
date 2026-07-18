@@ -6,6 +6,8 @@ on:
     paths:
       - 'tools/asset-factory/enrich-all-specs.mjs'
       - 'tools/asset-factory/normalize-deep-specs.mjs'
+      - 'tools/asset-factory/deep-spec-semantics.mjs'
+      - 'tools/asset-factory/refine-deep-semantics.mjs'
       - 'tools/asset-factory/check-deep-specs.mjs'
       - 'asset-factory/quality-policy.json'
       - 'asset-factory/manual-overrides.json'
@@ -16,6 +18,8 @@ on:
     paths:
       - 'tools/asset-factory/enrich-all-specs.mjs'
       - 'tools/asset-factory/normalize-deep-specs.mjs'
+      - 'tools/asset-factory/deep-spec-semantics.mjs'
+      - 'tools/asset-factory/refine-deep-semantics.mjs'
       - 'tools/asset-factory/check-deep-specs.mjs'
       - 'asset-factory/quality-policy.json'
       - 'asset-factory/manual-overrides.json'
@@ -50,6 +54,8 @@ jobs:
         run: |
           node --check tools/asset-factory/enrich-all-specs.mjs
           node --check tools/asset-factory/normalize-deep-specs.mjs
+          node --check tools/asset-factory/deep-spec-semantics.mjs
+          node --check tools/asset-factory/refine-deep-semantics.mjs
           node --check tools/asset-factory/check-deep-specs.mjs
 
       - name: Generate deep production briefs for the complete asset library
@@ -58,7 +64,10 @@ jobs:
       - name: Expand sparse blueprint-list context
         run: node tools/asset-factory/normalize-deep-specs.mjs
 
-      - name: Require complete unique coverage
+      - name: Correct semantic categories and rebuild category-specific doctrine
+        run: node tools/asset-factory/refine-deep-semantics.mjs
+
+      - name: Require complete unique semantically consistent coverage
         run: node tools/asset-factory/check-deep-specs.mjs
 
       - name: Commit generated specification library
