@@ -1,265 +1,322 @@
 // ───────────────────────────────────────────────────────────────────────────
-//  graphics.js — graphics & performance settings (Low / Medium / High / Auto)
+// graphics.js — graphics, density, and adaptive performance settings.
 //
-//  Central place that decides HOW pretty vs HOW fast the game renders. Every
-//  performance-sensitive system reads from here:
-//    • renderer  → render scale (pixel ratio), antialiasing, tone mapping
-//    • shadows   → enabled, shadow-map resolution
-//    • textures  → anisotropic filtering level
-//    • world     → view distance (camera far + fog), NPC / traffic density
-//    • materials → reflection (envMap) intensity
-//    • effects   → bloom / post intensity, interior detail level
-//
-//  Settings persist to localStorage. "Auto" benchmarks the device once and
-//  picks a safe preset so the game never lags badly out of the box.
+// Auto begins conservatively, then watches measured FPS. Sustained low frame
+// rate steps the session down one tier; sustained headroom may restore a tier up
+// to the device-detected ceiling. Manual presets and custom settings are never
+// overridden by the adaptive system.
 // ───────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 
 const STORE_KEY = 'zaylinsworld.graphics.v1';
+const AUTO_TIERS = Object.freeze(['low', 'medium', 'high']);
 
-// Concrete tunables each preset resolves to. Keep these conservative so even
-// "high" stays smooth on a normal laptop GPU inside a browser tab.
 export const PRESETS = {
   low: {
     label: 'Low',
-    renderScale: 0.7,      // internal resolution multiplier
+    renderScale: 0.7,
     maxPixelRatio: 1,
     antialias: false,
     shadows: false,
     shadowMapSize: 1024,
-    anisotropy: 1,         // texture quality
-    viewDistance: 130,     // camera far / fog far baseline (meters)
+    anisotropy: 1,
+    viewDistance: 130,
     fogScale: 0.62,
-    npcDensity: 0.45,      // multiplier on city NPC count
-    trafficDensity: 0.45,  // multiplier on traffic count
-    reflection: 0.45,      // envMap intensity
-    effects: 0.0,          // bloom / extras
-    interiorDetail: 0,     // 0 minimal · 1 normal · 2 rich
+    npcDensity: 0.45,
+    trafficDensity: 0.45,
+    reflection: 0.45,
+    effects: 0,
+    interiorDetail: 0,
   },
   medium: {
     label: 'Medium',
-    renderScale: 0.9,
-    maxPixelRatio: 1.5,
+    renderScale: 0.85,
+    maxPixelRatio: 1.35,
     antialias: true,
     shadows: true,
     shadowMapSize: 1536,
     anisotropy: 4,
-    viewDistance: 200,
-    fogScale: 0.85,
-    npcDensity: 0.8,
-    trafficDensity: 0.8,
-    reflection: 0.85,
-    effects: 0.5,
+    viewDistance: 190,
+    fogScale: 0.82,
+    npcDensity: 0.72,
+    trafficDensity: 0.72,
+    reflection: 0.78,
+    effects: 0.4,
     interiorDetail: 1,
   },
   high: {
     label: 'High',
-    renderScale: 1.0,
-    maxPixelRatio: 2,
+    renderScale: 1,
+    maxPixelRatio: 1.75,
     antialias: true,
     shadows: true,
     shadowMapSize: 2048,
     anisotropy: 8,
-    viewDistance: 280,
-    fogScale: 1.0,
-    npcDensity: 1.0,
-    trafficDensity: 1.0,
-    reflection: 1.0,
-    effects: 1.0,
+    viewDistance: 260,
+    fogScale: 1,
+    npcDensity: 1,
+    trafficDensity: 1,
+    reflection: 1,
+    effects: 1,
     interiorDetail: 2,
   },
 };
 
-// Individual override dimensions the settings menu can tweak on top of a preset.
 export const OPTION_DIMENSIONS = {
-  shadowQuality:   { label: 'Shadow Quality',    steps: ['Off', 'Low', 'Medium', 'High'] },
-  renderScale:     { label: 'Render Scale',       steps: ['70%', '85%', '100%'] },
-  textureQuality:  { label: 'Texture Quality',    steps: ['Low', 'Medium', 'High'] },
-  viewDistance:    { label: 'View Distance',       steps: ['Near', 'Medium', 'Far'] },
-  npcDensity:      { label: 'NPC Density',         steps: ['Sparse', 'Normal', 'Busy'] },
-  trafficDensity:  { label: 'Traffic Density',     steps: ['Sparse', 'Normal', 'Busy'] },
+  shadowQuality:    { label: 'Shadow Quality',     steps: ['Off', 'Low', 'Medium', 'High'] },
+  renderScale:      { label: 'Render Scale',        steps: ['70%', '85%', '100%'] },
+  textureQuality:   { label: 'Texture Quality',     steps: ['Low', 'Medium', 'High'] },
+  viewDistance:     { label: 'View Distance',       steps: ['Near', 'Medium', 'Far'] },
+  npcDensity:       { label: 'NPC Density',         steps: ['Sparse', 'Normal', 'Busy'] },
+  trafficDensity:   { label: 'Traffic Density',     steps: ['Sparse', 'Normal', 'Busy'] },
   reflectionQuality:{ label: 'Reflection Quality', steps: ['Low', 'Medium', 'High'] },
-  antiAliasing:    { label: 'Anti-Aliasing',       steps: ['Off', 'On'] },
-  effectsQuality:  { label: 'Effects Quality',     steps: ['Off', 'Medium', 'High'] },
-  interiorDetail:  { label: 'Interior Detail',     steps: ['Low', 'Medium', 'High'] },
+  antiAliasing:     { label: 'Anti-Aliasing',       steps: ['Off', 'On'] },
+  effectsQuality:   { label: 'Effects Quality',     steps: ['Off', 'Medium', 'High'] },
+  interiorDetail:   { label: 'Interior Detail',     steps: ['Low', 'Medium', 'High'] },
 };
 
-// ── auto detection ────────────────────────────────────────────────────────────
-// Pick a safe preset from device hints. Cheap and synchronous so it can run
-// before the renderer is even built.
-export function detectAutoPreset() {
-  const mem = navigator.deviceMemory || 4;            // GB (Chrome only; default mid)
-  const cores = navigator.hardwareConcurrency || 4;
-  const mobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
-  const dpr = window.devicePixelRatio || 1;
+function clamp(value, min, max) { return Math.max(min, Math.min(max, value)); }
+function clockNow() { return typeof performance !== 'undefined' ? performance.now() : Date.now(); }
 
-  // GPU sniff via WebGL renderer string (best-effort).
+export function detectAutoPreset() {
+  const nav = typeof navigator !== 'undefined' ? navigator : {};
+  const win = typeof window !== 'undefined' ? window : {};
+  const mem = nav.deviceMemory || 4;
+  const cores = nav.hardwareConcurrency || 4;
+  const mobile = /Android|iPhone|iPad|iPod|Mobile/i.test(nav.userAgent || '');
+  const dpr = win.devicePixelRatio || 1;
+
   let weakGPU = false;
   try {
-    const gl = document.createElement('canvas').getContext('webgl');
+    const gl = typeof document !== 'undefined' ? document.createElement('canvas').getContext('webgl') : null;
     const dbg = gl && gl.getExtension('WEBGL_debug_renderer_info');
-    const r = dbg ? (gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) || '') : '';
-    weakGPU = /Intel|Mali|Adreno 5|Adreno 6|PowerVR|Apple GPU|SwiftShader|llvmpipe/i.test(r);
-  } catch { /* ignore */ }
+    const renderer = dbg ? (gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) || '') : '';
+    weakGPU = /Intel|Mali|Adreno 5|Adreno 6|PowerVR|Apple GPU|SwiftShader|llvmpipe/i.test(renderer);
+  } catch { /* best effort only */ }
 
-  if (mobile || mem <= 2 || cores <= 2) return 'low';
-  if (mem >= 8 && cores >= 8 && !weakGPU && dpr <= 2) return 'high';
+  if (mobile || mem <= 3 || cores <= 3 || weakGPU) return 'low';
+  // High is deliberately rare. Browser open worlds, shadows, a second creator
+  // renderer, and high-DPI displays can overwhelm an otherwise decent laptop.
+  if (mem >= 16 && cores >= 12 && !weakGPU && dpr <= 1.5) return 'high';
   return 'medium';
 }
-
-// ── settings model ────────────────────────────────────────────────────────────
-function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
 
 class GraphicsSettings {
   constructor() {
     this.listeners = new Set();
     const saved = this._load();
-    this.mode = saved?.mode || 'auto';          // 'auto' | 'low' | 'medium' | 'high' | 'custom'
-    this.autoResolved = detectAutoPreset();
-    // The base preset values currently active.
-    this.values = { ...PRESETS[this.mode === 'auto' ? this.autoResolved : (PRESETS[this.mode] ? this.mode : this.autoResolved)] };
-    // Apply any saved custom overrides on top.
-    if (saved?.overrides) Object.assign(this.values, saved.overrides);
+    this.mode = saved?.mode || 'auto';
+    this.autoCeiling = detectAutoPreset();
+    this.autoResolved = this.autoCeiling;
+    const base = this.mode === 'auto'
+      ? this.autoResolved
+      : (PRESETS[this.mode] ? this.mode : this.autoResolved);
+    this.values = { ...PRESETS[base] };
     this.overrides = saved?.overrides || {};
+    if (this.mode === 'custom' && saved?.overrides) Object.assign(this.values, saved.overrides);
+    this.adaptive = {
+      enabled: true,
+      lastFps: null,
+      lowSamples: 0,
+      highSamples: 0,
+      lastChangeAt: 0,
+      changes: 0,
+      reason: 'device-detection',
+    };
   }
 
   _load() {
     try { return JSON.parse(localStorage.getItem(STORE_KEY) || 'null'); }
     catch { return null; }
   }
+
   _save() {
     try {
       localStorage.setItem(STORE_KEY, JSON.stringify({ mode: this.mode, overrides: this.overrides }));
-    } catch { /* storage full / private mode — ignore */ }
+    } catch { /* storage full / private mode */ }
   }
 
-  onChange(cb) { this.listeners.add(cb); return () => this.listeners.delete(cb); }
-  _emit() { this.listeners.forEach(cb => { try { cb(this.values); } catch (e) { console.warn(e); } }); }
+  onChange(callback) { this.listeners.add(callback); return () => this.listeners.delete(callback); }
+  _emit() { this.listeners.forEach((callback) => { try { callback(this.values); } catch (error) { console.warn(error); } }); }
 
-  /** Active preset key actually in effect (auto resolves to its detected tier). */
   effectivePreset() {
     if (this.mode === 'auto') return this.autoResolved;
     if (this.mode === 'custom') return 'custom';
     return this.mode;
   }
 
-  /** Switch to one of the named presets (or 'auto'). Clears manual overrides. */
   setPreset(mode) {
     this.mode = mode;
     this.overrides = {};
+    if (mode === 'auto') this.autoResolved = this.autoCeiling;
     const base = mode === 'auto' ? this.autoResolved : (PRESETS[mode] ? mode : this.autoResolved);
     this.values = { ...PRESETS[base] };
+    this.adaptive.lowSamples = 0;
+    this.adaptive.highSamples = 0;
+    this.adaptive.reason = mode === 'auto' ? 'auto-reset' : 'manual-preset';
     this._save();
     this._emit();
   }
 
-  /** Tweak a single dimension by step index → moves the mode to 'custom'. */
+  // Feed this a stable FPS sample about once per 0.5-1 second. Auto waits for
+  // several consecutive bad samples before stepping down, and much longer before
+  // stepping back up, preventing quality from seesawing every few seconds.
+  adaptToFps(fps, timestamp = clockNow()) {
+    const value = Number(fps);
+    if (this.mode !== 'auto' || !this.adaptive.enabled || !Number.isFinite(value) || value <= 0 || value > 300) return false;
+    this.adaptive.lastFps = value;
+    const cooldown = timestamp - this.adaptive.lastChangeAt < 8000;
+    const lowThreshold = this.autoResolved === 'high' ? 50 : 42;
+
+    if (value < lowThreshold) {
+      this.adaptive.lowSamples += 1;
+      this.adaptive.highSamples = 0;
+    } else if (value >= 57) {
+      this.adaptive.highSamples += 1;
+      this.adaptive.lowSamples = Math.max(0, this.adaptive.lowSamples - 1);
+    } else {
+      this.adaptive.lowSamples = Math.max(0, this.adaptive.lowSamples - 1);
+      this.adaptive.highSamples = Math.max(0, this.adaptive.highSamples - 1);
+    }
+
+    if (cooldown) return false;
+    const currentIndex = AUTO_TIERS.indexOf(this.autoResolved);
+    const ceilingIndex = AUTO_TIERS.indexOf(this.autoCeiling);
+    let nextIndex = currentIndex;
+    let reason = '';
+
+    if (this.adaptive.lowSamples >= 4 && currentIndex > 0) {
+      nextIndex = currentIndex - 1;
+      reason = `sustained-low-fps:${Math.round(value)}`;
+    } else if (this.adaptive.highSamples >= 20 && currentIndex < ceilingIndex) {
+      nextIndex = currentIndex + 1;
+      reason = `sustained-headroom:${Math.round(value)}`;
+    }
+
+    if (nextIndex === currentIndex) return false;
+    this.autoResolved = AUTO_TIERS[nextIndex];
+    this.values = { ...PRESETS[this.autoResolved] };
+    this.adaptive.lowSamples = 0;
+    this.adaptive.highSamples = 0;
+    this.adaptive.lastChangeAt = timestamp;
+    this.adaptive.changes += 1;
+    this.adaptive.reason = reason;
+    this._emit();
+    return true;
+  }
+
+  adaptiveSnapshot() {
+    return Object.freeze({
+      mode: this.mode,
+      ceiling: this.autoCeiling,
+      resolved: this.autoResolved,
+      ...this.adaptive,
+    });
+  }
+
   setOption(dim, stepIndex) {
-    const v = this.values;
+    const values = this.values;
     switch (dim) {
       case 'shadowQuality':
-        v.shadows = stepIndex > 0;
-        v.shadowMapSize = [1024, 1024, 1536, 2048][stepIndex] || 1536;
+        values.shadows = stepIndex > 0;
+        values.shadowMapSize = [1024, 1024, 1536, 2048][stepIndex] || 1536;
         break;
-      case 'renderScale':   v.renderScale = [0.7, 0.85, 1.0][stepIndex] ?? 1.0; break;
-      case 'textureQuality':v.anisotropy = [1, 4, 8][stepIndex] ?? 4; break;
-      case 'viewDistance':  v.viewDistance = [130, 200, 280][stepIndex] ?? 200; v.fogScale = [0.62, 0.85, 1.0][stepIndex] ?? 0.85; break;
-      case 'npcDensity':    v.npcDensity = [0.45, 0.8, 1.0][stepIndex] ?? 0.8; break;
-      case 'trafficDensity':v.trafficDensity = [0.45, 0.8, 1.0][stepIndex] ?? 0.8; break;
-      case 'reflectionQuality': v.reflection = [0.45, 0.85, 1.0][stepIndex] ?? 0.85; break;
-      case 'antiAliasing':  v.antialias = stepIndex > 0; break;
-      case 'effectsQuality':v.effects = [0.0, 0.5, 1.0][stepIndex] ?? 0.5; break;
-      case 'interiorDetail':v.interiorDetail = clamp(stepIndex, 0, 2); break;
+      case 'renderScale': values.renderScale = [0.7, 0.85, 1][stepIndex] ?? 1; break;
+      case 'textureQuality': values.anisotropy = [1, 4, 8][stepIndex] ?? 4; break;
+      case 'viewDistance':
+        values.viewDistance = [130, 190, 260][stepIndex] ?? 190;
+        values.fogScale = [0.62, 0.82, 1][stepIndex] ?? 0.82;
+        break;
+      case 'npcDensity': values.npcDensity = [0.45, 0.72, 1][stepIndex] ?? 0.72; break;
+      case 'trafficDensity': values.trafficDensity = [0.45, 0.72, 1][stepIndex] ?? 0.72; break;
+      case 'reflectionQuality': values.reflection = [0.45, 0.78, 1][stepIndex] ?? 0.78; break;
+      case 'antiAliasing': values.antialias = stepIndex > 0; break;
+      case 'effectsQuality': values.effects = [0, 0.4, 1][stepIndex] ?? 0.4; break;
+      case 'interiorDetail': values.interiorDetail = clamp(stepIndex, 0, 2); break;
       default: return;
     }
     this.mode = 'custom';
     this.overrides = { ...this.values };
+    this.adaptive.reason = 'manual-custom';
     this._save();
     this._emit();
   }
 
-  /** Current step index for a dimension, for highlighting the UI. */
   optionIndex(dim) {
-    const v = this.values;
+    const values = this.values;
     switch (dim) {
       case 'shadowQuality':
-        if (!v.shadows) return 0;
-        return v.shadowMapSize >= 2048 ? 3 : v.shadowMapSize >= 1536 ? 2 : 1;
-      case 'renderScale':    return v.renderScale >= 1 ? 2 : v.renderScale >= 0.85 ? 1 : 0;
-      case 'textureQuality': return v.anisotropy >= 8 ? 2 : v.anisotropy >= 4 ? 1 : 0;
-      case 'viewDistance':   return v.viewDistance >= 280 ? 2 : v.viewDistance >= 200 ? 1 : 0;
-      case 'npcDensity':     return v.npcDensity >= 1 ? 2 : v.npcDensity >= 0.8 ? 1 : 0;
-      case 'trafficDensity': return v.trafficDensity >= 1 ? 2 : v.trafficDensity >= 0.8 ? 1 : 0;
-      case 'reflectionQuality': return v.reflection >= 1 ? 2 : v.reflection >= 0.85 ? 1 : 0;
-      case 'antiAliasing':   return v.antialias ? 1 : 0;
-      case 'effectsQuality': return v.effects >= 1 ? 2 : v.effects >= 0.5 ? 1 : 0;
-      case 'interiorDetail': return clamp(v.interiorDetail, 0, 2);
+        if (!values.shadows) return 0;
+        return values.shadowMapSize >= 2048 ? 3 : values.shadowMapSize >= 1536 ? 2 : 1;
+      case 'renderScale': return values.renderScale >= 1 ? 2 : values.renderScale >= 0.85 ? 1 : 0;
+      case 'textureQuality': return values.anisotropy >= 8 ? 2 : values.anisotropy >= 4 ? 1 : 0;
+      case 'viewDistance': return values.viewDistance >= 250 ? 2 : values.viewDistance >= 180 ? 1 : 0;
+      case 'npcDensity': return values.npcDensity >= 0.95 ? 2 : values.npcDensity >= 0.68 ? 1 : 0;
+      case 'trafficDensity': return values.trafficDensity >= 0.95 ? 2 : values.trafficDensity >= 0.68 ? 1 : 0;
+      case 'reflectionQuality': return values.reflection >= 0.95 ? 2 : values.reflection >= 0.72 ? 1 : 0;
+      case 'antiAliasing': return values.antialias ? 1 : 0;
+      case 'effectsQuality': return values.effects >= 0.9 ? 2 : values.effects >= 0.35 ? 1 : 0;
+      case 'interiorDetail': return clamp(values.interiorDetail, 0, 2);
       default: return 0;
     }
   }
 
-  // ── appliers ────────────────────────────────────────────────────────────────
-  /** Renderer options that can only be set at construction time. */
   rendererInitOptions() {
     return { antialias: !!this.values.antialias, powerPreference: 'high-performance' };
   }
 
-  /** Apply render-scale / tone settings to a live renderer + size it. */
   applyToRenderer(renderer) {
-    const v = this.values;
-    const ratio = Math.min(window.devicePixelRatio || 1, v.maxPixelRatio) * v.renderScale;
-    renderer.setPixelRatio(clamp(ratio, 0.5, 3));
-    renderer.shadowMap.enabled = v.shadows;
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    const values = this.values;
+    const dpr = typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1;
+    const ratio = Math.min(dpr, values.maxPixelRatio) * values.renderScale;
+    renderer.setPixelRatio(clamp(ratio, 0.5, 2));
+    renderer.shadowMap.enabled = values.shadows;
+    if (typeof window !== 'undefined') renderer.setSize(window.innerWidth, window.innerHeight);
   }
 
-  /** Configure a directional light's shadow camera/map for current quality. */
   applyToSun(sun) {
-    const v = this.values;
-    sun.castShadow = v.shadows;
-    if (v.shadows) {
-      const s = v.shadowMapSize;
-      if (sun.shadow.mapSize.x !== s) {
-        sun.shadow.mapSize.set(s, s);
+    const values = this.values;
+    sun.castShadow = values.shadows;
+    if (values.shadows) {
+      const size = values.shadowMapSize;
+      if (sun.shadow.mapSize.x !== size) {
+        sun.shadow.mapSize.set(size, size);
         sun.shadow.map?.dispose();
-        sun.shadow.map = null;        // force re-alloc at new resolution
+        sun.shadow.map = null;
       }
     }
   }
 
-  /** Push reflection (envMap) + texture-filtering quality across the scene. */
   applyToScene(scene, renderer) {
-    const v = this.values;
+    const values = this.values;
     const maxAniso = renderer.capabilities.getMaxAnisotropy?.() || 1;
-    const aniso = Math.min(v.anisotropy, maxAniso);
-    scene.traverse((o) => {
-      if (!o.isMesh || !o.material) return;
-      const mats = Array.isArray(o.material) ? o.material : [o.material];
-      for (const m of mats) {
-        if ('envMapIntensity' in m) {
-          // keep emissive/neon untouched, scale reflective surfaces
-          m.envMapIntensity = v.reflection;
-        }
+    const anisotropy = Math.min(values.anisotropy, maxAniso);
+    scene.traverse((object) => {
+      if (!object.isMesh || !object.material) return;
+      const materials = Array.isArray(object.material) ? object.material : [object.material];
+      for (const material of materials) {
+        if ('envMapIntensity' in material) material.envMapIntensity = values.reflection;
         for (const key of ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 'emissiveMap', 'aoMap']) {
-          const tex = m[key];
-          if (tex && tex.anisotropy !== aniso) { tex.anisotropy = aniso; tex.needsUpdate = true; }
+          const texture = material[key];
+          if (texture && texture.anisotropy !== anisotropy) {
+            texture.anisotropy = anisotropy;
+            texture.needsUpdate = true;
+          }
         }
       }
     });
   }
 
-  /** Fog far/near scaled to the chosen view distance. Returns {near, far}. */
   fogRange(baseNear, baseFar) {
-    const s = this.values.fogScale;
-    return { near: baseNear * s, far: baseFar * s };
+    const scale = this.values.fogScale;
+    return { near: baseNear * scale, far: baseFar * scale };
   }
 
   get viewDistance() { return this.values.viewDistance; }
-  get npcDensity()   { return this.values.npcDensity; }
+  get npcDensity() { return this.values.npcDensity; }
   get trafficDensity() { return this.values.trafficDensity; }
-  get effects()      { return this.values.effects; }
+  get effects() { return this.values.effects; }
   get interiorDetail() { return this.values.interiorDetail; }
 }
 
-// Singleton — created synchronously so it's ready before the renderer.
 export const graphics = new GraphicsSettings();
