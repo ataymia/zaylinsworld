@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-18T03:45:37.803Z",
+  "generatedAt": "2026-07-18T03:47:42.616Z",
   "expectedFromMaster": 978,
   "produced": 978,
   "descriptionsAtOrAboveMinimum": 978,
@@ -71,12 +71,12 @@
     "hologram_billboard": 3
   },
   "normalizedSparseContexts": 42,
-  "normalizedAt": "2026-07-18T03:45:38.160Z",
+  "normalizedAt": "2026-07-18T03:47:42.978Z",
   "semanticCategoryCorrections": 405,
-  "semanticRefinedAt": "2026-07-18T03:45:38.715Z",
+  "semanticRefinedAt": "2026-07-18T03:47:43.541Z",
   "finalSemanticCorrections": 0,
   "finalSemanticCorrectedIds": [],
-  "finalSemanticPassAt": "2026-07-18T03:45:40.741Z",
+  "finalSemanticPassAt": "2026-07-18T03:47:45.581Z",
   "physicalSpecsDerived": 667,
   "contaminatedCharacterSpecsRepaired": 23,
   "physicalSpecsDerivedByCategory": {
@@ -90,7 +90,7 @@
     "food": 11,
     "road_surface": 16
   },
-  "physicalSpecPassAt": "2026-07-18T03:45:39.662Z",
+  "physicalSpecPassAt": "2026-07-18T03:47:44.495Z",
   "explicitPhysicalSpecializations": 107,
   "dynamicPhysicalSpecializations": 169,
   "dynamicPhysicalSpecializationIds": [
@@ -264,7 +264,7 @@
     "vehicle_water_motorboat_a_v01",
     "vehicle_water_speedboat_a_v01"
   ],
-  "physicalSpecializationPassAt": "2026-07-18T03:45:40.072Z",
+  "physicalSpecializationPassAt": "2026-07-18T03:47:44.918Z",
   "inventoryDispositionCounts": {
     "canonical-generation-request": 960,
     "manual-canonical-request": 2,
@@ -293,5 +293,5 @@
     "toiletdemoscene",
     "trashanddebris"
   ],
-  "inventoryAuditAt": "2026-07-18T03:45:41.350Z"
+  "inventoryAuditAt": "2026-07-18T03:47:46.207Z"
 }
