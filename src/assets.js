@@ -7,7 +7,12 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { KTX2Loader } from 'three/addons/loaders/KTX2Loader.js';
 import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
-import { loadingManager, trackLoadingFetch, trackLoadingPromise } from './loader.js';
+import {
+  loadingManager,
+  backgroundLoadingManager,
+  trackLoadingFetch,
+  trackLoadingPromise,
+} from './loader.js';
 import { assetRuntimeRegistry } from './runtime/AssetRuntimeRegistry.js';
 
 const CDN = 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/';
@@ -116,11 +121,15 @@ export function makeMixer(root, animations) {
   };
 }
 
-export async function loadHDRI(renderer, url, manager = loadingManager) {
+// HDRI is visual enrichment, not a gameplay dependency. The procedural sky is a
+// complete fallback, so even older callers that pass the critical manager are
+// redirected to the background manager and can never hold the boot screen open.
+export async function loadHDRI(renderer, url, manager = backgroundLoadingManager) {
+  const effectiveManager = manager === loadingManager ? backgroundLoadingManager : manager;
   return new Promise((resolve) => {
     const pmrem = new THREE.PMREMGenerator(renderer);
     pmrem.compileEquirectangularShader();
-    new RGBELoader(manager).load(
+    new RGBELoader(effectiveManager).load(
       url,
       (hdr) => {
         hdr.mapping = THREE.EquirectangularReflectionMapping;
