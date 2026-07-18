@@ -2915,6 +2915,18 @@
     ],
     "zta-free-asset-factory": [
       {
+        "name": "prop_casino_bus_shelter_a_v01",
+        "path": "models/generated/casino-strip/bus_shelter/prop_casino_bus_shelter_a_v01.glb",
+        "type": "glb",
+        "tex": 0,
+        "generated": true,
+        "town": "casino-strip",
+        "family": "bus_shelter",
+        "displayName": "Casino Bus Shelter",
+        "description": "A production-ready Casino Bus Shelter, designed as a municipal bus shelter for Casino Strip. Create a physically supported weather shelter with safe glass thickness, seating, drainage, route information, and pedestrian clearance. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: dense entertainment district realism; layered signage, hotel facades, service infrastructure, parking, backstage logistics, controlled spectacle. This asset appears under the blueprint section “B. Strip roads/street props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
+        "license": "Original ZTA procedural geometry"
+      },
+      {
         "name": "prop_starter_bench_a_v01",
         "path": "models/generated/starter-town/bench/prop_starter_bench_a_v01.glb",
         "type": "glb",
