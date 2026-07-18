@@ -4,9 +4,10 @@ import { dirname, join } from 'node:path';
 
 const ROOT = process.cwd();
 const PAYLOAD_ROOT = join(ROOT, 'tools', 'asset-factory', 'gameplay-gap-expansion-payload');
-const encoded = readdirSync(PAYLOAD_ROOT)
+const chunkNames = readdirSync(PAYLOAD_ROOT)
   .filter((name) => /^chunk-\d+\.txt$/.test(name))
-  .sort()
+  .sort();
+const encoded = chunkNames
   .map((name) => readFileSync(join(PAYLOAD_ROOT, name), 'utf8').trim())
   .join('');
 const packageData = JSON.parse(gunzipSync(Buffer.from(encoded, 'base64')).toString('utf8'));
@@ -20,4 +21,5 @@ for (const [path, content] of Object.entries(packageData.files)) {
   writeFileSync(output, Buffer.from(content, 'base64'));
   written += 1;
 }
+console.log(`[gameplay-gap-bootstrap] decoded ${chunkNames.length} payload chunks.`);
 console.log(`[gameplay-gap-bootstrap] installed ${written} readable source files.`);
