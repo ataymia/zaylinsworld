@@ -100,6 +100,10 @@ const TOKEN_GROUPS = {
     'vine', 'coral', 'kelp', 'seaweed', 'mushroom', 'fungus', 'cactus', 'palm',
     'garden', 'hedge', 'root', 'log', 'stump', 'moss', 'reed', 'fern', 'algae',
   ]),
+  container_prop: new Set([
+    'crate', 'case', 'chest', 'package', 'pouch', 'container', 'box', 'barrel',
+    'basket', 'sack', 'bag', 'cooler', 'tote', 'parcel', 'canister', 'jar',
+  ]),
   character: new Set([
     'character', 'npc', 'humanoid', 'monster', 'creature', 'animal', 'wildlife',
     'shark', 'whale', 'dolphin', 'octopus', 'crab', 'bird', 'dog', 'cat',
@@ -127,6 +131,7 @@ function physicalTokenCategory(tokens) {
   if (hasAny(tokens, 'infrastructure')) return 'infrastructure';
   if (hasAny(tokens, 'food')) return 'food';
   if (hasAny(tokens, 'vegetation')) return 'vegetation';
+  if (hasAny(tokens, 'container_prop')) return 'generic_prop';
   return null;
 }
 
