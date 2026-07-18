@@ -1,13 +1,5 @@
 // ───────────────────────────────────────────────────────────────────────────
-//  assets.js — real glTF asset pipeline + HDRI image-based lighting.
-//  * GLTFLoader with Draco + meshopt decompression for optimized .glb/.gltf
-//  * KTX2 (Basis) compressed-texture support when a transcoder is present
-//  * RGBE HDRI environment loading with graceful fallback to a procedural sky
-//  * a small async cache + skinned-animation helper (AnimationMixer)
-//
-//  Drop properly-licensed (CC0 / commercial-use / original) .glb files into
-//  /assets and reference them from /assets/manifest.json — they load here with
-//  PBR materials, shadows, and animations, no code changes required.
+// assets.js — tracked glTF pipeline, asset-library lookup, and runtime resolver.
 // ───────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -15,69 +7,84 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { KTX2Loader } from 'three/addons/loaders/KTX2Loader.js';
 import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { loadingManager, trackLoadingFetch, trackLoadingPromise } from './loader.js';
+import { assetRuntimeRegistry } from './runtime/AssetRuntimeRegistry.js';
 
 const CDN = 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/';
 
-let _gltf = null;
-let _ktx2 = null;
-let _ktxRenderer = null;
+let gltf = null;
+let ktx2 = null;
+let ktxRenderer = null;
 function gltfLoader(renderer) {
-  if (!_gltf) {
-    const draco = new DRACOLoader().setDecoderPath(CDN + 'draco/');
-    _ktx2 = new KTX2Loader().setTranscoderPath(CDN + 'basis/');
-    _gltf = new GLTFLoader()
+  if (!gltf) {
+    const draco = new DRACOLoader(loadingManager).setDecoderPath(CDN + 'draco/');
+    ktx2 = new KTX2Loader(loadingManager).setTranscoderPath(CDN + 'basis/');
+    gltf = new GLTFLoader(loadingManager)
       .setDRACOLoader(draco)
-      .setKTX2Loader(_ktx2)
+      .setKTX2Loader(ktx2)
       .setMeshoptDecoder(MeshoptDecoder);
   }
-  // NPC loading may initialize the shared loader before the player path has a
-  // renderer. Detect KTX2 support as soon as any later caller supplies one.
-  if (renderer && _ktx2 && _ktxRenderer !== renderer) {
+  if (renderer && ktx2 && ktxRenderer !== renderer) {
     try {
-      _ktx2.detectSupport(renderer);
-      _ktxRenderer = renderer;
+      ktx2.detectSupport(renderer);
+      ktxRenderer = renderer;
     } catch (error) {
       console.warn('[assets] KTX2 renderer detection failed; normal textures still work', error);
     }
   }
-  return _gltf;
+  return gltf;
 }
 
-const _modelCache = new Map();
+const modelCache = new Map();
+const modelFailures = new Map();
+let successfulModels = 0;
 
-// Load a .glb/.gltf. Returns { scene, animations } or null if it can't load.
-// Never throws — callers fall back to procedural meshes.
+// The production indexes begin warming as soon as the asset module is imported.
+// The real loading gate tracks this promise, so gameplay cannot reveal while the
+// resolver is still learning which generated assets exist.
+export const assetRegistryReady = assetRuntimeRegistry.load();
+
 export async function loadModel(url, renderer) {
-  if (_modelCache.has(url)) {
-    // Upgrade the singleton KTX2 loader if this cached call is the first one that
-    // knows about the renderer.
+  if (!url) return null;
+  if (modelCache.has(url)) {
     gltfLoader(renderer);
-    return _modelCache.get(url);
+    return modelCache.get(url);
   }
-  const p = new Promise((resolve) => {
+  const task = new Promise((resolve) => {
     gltfLoader(renderer).load(
       url,
-      (gltf) => {
-        gltf.scene.traverse((o) => {
-          if (!o.isMesh) return;
-          o.castShadow = true;
-          o.receiveShadow = true;
-          const mats = Array.isArray(o.material) ? o.material : [o.material];
-          for (const material of mats) {
-            if (material) material.envMapIntensity = 1.0;
-          }
+      (loaded) => {
+        loaded.scene.traverse((object) => {
+          if (!object.isMesh) return;
+          object.castShadow = true;
+          object.receiveShadow = true;
+          const materials = Array.isArray(object.material) ? object.material : [object.material];
+          for (const material of materials) if (material) material.envMapIntensity = 1.0;
         });
-        resolve({ scene: gltf.scene, animations: gltf.animations || [] });
+        successfulModels += 1;
+        modelFailures.delete(url);
+        resolve({ scene: loaded.scene, animations: loaded.animations || [] });
       },
       undefined,
-      () => resolve(null),   // 404 / decode error → procedural fallback
+      (error) => {
+        modelFailures.set(url, error?.message || 'load/decode error');
+        resolve(null);
+      },
     );
   });
-  _modelCache.set(url, p);
-  return p;
+  modelCache.set(url, task);
+  return task;
 }
 
-// Build an AnimationMixer + named-clip map for a loaded model.
+export function assetCacheSnapshot() {
+  return Object.freeze({
+    modelRequests: modelCache.size,
+    successfulModels,
+    failedModels: Object.fromEntries(modelFailures),
+    assetRegistry: assetRuntimeRegistry.snapshot(),
+  });
+}
+
 export function makeMixer(root, animations) {
   const mixer = new THREE.AnimationMixer(root);
   const clips = {};
@@ -93,20 +100,23 @@ export function makeMixer(root, animations) {
     play(name, { fade = 0.25, loop = true } = {}) {
       const clip = clips[String(name).toLowerCase()];
       if (!clip) return null;
-      let act = this.actions[name];
-      if (!act) { act = mixer.clipAction(clip); this.actions[name] = act; }
-      act.setLoop(loop ? THREE.LoopRepeat : THREE.LoopOnce, Infinity);
-      act.reset().fadeIn(fade).play();
-      return act;
+      let action = this.actions[name];
+      if (!action) { action = mixer.clipAction(clip); this.actions[name] = action; }
+      action.setLoop(loop ? THREE.LoopRepeat : THREE.LoopOnce, Infinity);
+      action.reset().fadeIn(fade).play();
+      return action;
     },
     stop(name, fade = 0.2) { this.actions[name]?.fadeOut(fade); },
     update(dt) { mixer.update(dt); },
+    dispose() {
+      mixer.stopAllAction();
+      for (const action of Object.values(this.actions)) action.stop();
+      this.actions = {};
+    },
   };
 }
 
-// Image-based lighting: load a real CC0 HDRI for reflections + ambient light.
-// Resolves to the equirect/PMREM env texture, or null on failure (use sky).
-export async function loadHDRI(renderer, url, manager) {
+export async function loadHDRI(renderer, url, manager = loadingManager) {
   return new Promise((resolve) => {
     const pmrem = new THREE.PMREMGenerator(renderer);
     pmrem.compileEquirectangularShader();
@@ -116,91 +126,111 @@ export async function loadHDRI(renderer, url, manager) {
         hdr.mapping = THREE.EquirectangularReflectionMapping;
         const env = pmrem.fromEquirectangular(hdr).texture;
         hdr.dispose();
+        pmrem.dispose();
         resolve(env);
       },
       undefined,
-      () => resolve(null),
+      () => { pmrem.dispose(); resolve(null); },
     );
   });
 }
 
-// Load the asset manifest (slots → model URLs). Empty/missing is fine.
 export async function loadManifest(url = './assets/manifest.json') {
   try {
-    const res = await fetch(url);
-    if (!res.ok) return {};
-    return await res.json();
-  } catch {
-    return {};
-  }
+    const response = await trackLoadingFetch(url, undefined, 'Reading asset manifest…');
+    return await response.json();
+  } catch { return {}; }
 }
 
-// ── Imported asset kits (Kenney Retro Urban Kit + mini characters) ──────────
-// kits-index.json is generated by tools/index-kits.mjs and lists every model
-// per kit with its served URL. Returns {} if missing so callers can no-op.
-let _kitsIndex = null;
+let kitsIndex = null;
 export async function loadKitsIndex(url = './assets/models/kits-index.json') {
-  if (_kitsIndex) return _kitsIndex;
+  if (kitsIndex) return kitsIndex;
   try {
-    const res = await fetch(url);
-    _kitsIndex = res.ok ? await res.json() : { kits: {} };
-  } catch {
-    _kitsIndex = { kits: {} };
-  }
-  return _kitsIndex;
+    const response = await trackLoadingFetch(url, undefined, 'Indexing city kits…');
+    kitsIndex = await response.json();
+  } catch { kitsIndex = { kits: {} }; }
+  return kitsIndex;
 }
 
-// Load one model from a kit by name (e.g. loadKitModel('urban-kit','Building_Small_1')).
-// Returns { scene, animations } or null (caller falls back to procedural).
 export async function loadKitModel(kitId, name, renderer) {
-  const idx = await loadKitsIndex();
-  const kit = idx.kits?.[kitId];
+  const index = await loadKitsIndex();
+  const kit = index.kits?.[kitId];
   if (!kit) return null;
-  const entry = kit.models.find((m) => m.name === name);
+  const entry = kit.models.find((model) => model.name === name);
   if (!entry) return null;
   return loadModel('./' + entry.url, renderer);
 }
 
-// ── Organized asset library (tools/organize-assets.mjs → asset-index-v2.json) ─
-// Catalogs every uploaded pack converted to web-ready glTF/GLB, grouped as
-// index[category][packSlug] = [{ name, path, type, tex }]. This is the single
-// lookup the game uses to pull real furniture, food, characters, weapons,
-// building, and animation assets into live scenes.
-let _assetLib = null;
+let assetLibrary = null;
 export async function loadAssetLibrary(url = './assets/models/asset-index-v2.json') {
-  if (_assetLib) return _assetLib;
+  if (assetLibrary) return assetLibrary;
   try {
-    const res = await fetch(url);
-    _assetLib = res.ok ? await res.json() : {};
-  } catch {
-    _assetLib = {};
-  }
-  return _assetLib;
+    const response = await trackLoadingFetch(url, undefined, 'Indexing organized assets…');
+    assetLibrary = await response.json();
+  } catch { assetLibrary = {}; }
+  return assetLibrary;
 }
 
-// List entries in a category/pack, e.g. listAssets('interiors','furniture').
 export async function listAssets(category, pack) {
-  const lib = await loadAssetLibrary();
-  const cat = lib[category] || {};
-  if (pack) return cat[pack] || [];
-  return Object.values(cat).flat();
+  const library = await loadAssetLibrary();
+  const categoryEntries = library[category] || {};
+  if (pack) return categoryEntries[pack] || [];
+  return Object.values(categoryEntries).flat();
 }
 
-// Find an asset entry by (category, pack, name). Exact case-insensitive matches
-// win; substring lookup remains as a compatibility fallback for older callers.
 export async function findAsset(category, pack, nameLike) {
   const list = await listAssets(category, pack);
   if (!nameLike) return list[0] || null;
-  const q = String(nameLike).toLowerCase();
-  return list.find((e) => String(e.name).toLowerCase() === q)
-    || list.find((e) => String(e.name).toLowerCase().includes(q))
+  const query = String(nameLike).toLowerCase();
+  return list.find((entry) => String(entry.name).toLowerCase() === query)
+    || list.find((entry) => String(entry.name).toLowerCase().includes(query))
     || null;
 }
 
-// Load an asset directly from the library by (category, pack, name).
-// Returns { scene, animations } or null (caller falls back to procedural).
 export async function loadAsset(category, pack, nameLike, renderer) {
   const entry = await findAsset(category, pack, nameLike);
   if (!entry) return null;
   return loadModel('./assets/' + entry.path, renderer);
+}
+
+export async function resolveAssetById(id, options = {}) {
+  await assetRegistryReady;
+  return assetRuntimeRegistry.resolve(id, options);
+}
+
+export async function loadRegisteredAsset(id, renderer, options = {}) {
+  const record = await resolveAssetById(id, options);
+  if (!record || record.placeholder || record.kind !== 'model') return null;
+  try {
+    const loaded = await loadModel(record.path, renderer);
+    if (!loaded) assetRuntimeRegistry.markFailure(id, 'model load returned no scene');
+    return loaded ? { ...loaded, record } : null;
+  } catch (error) {
+    assetRuntimeRegistry.markFailure(id, error);
+    return null;
+  }
+}
+
+export async function preloadRegisteredAssets(criteria, renderer, options = {}) {
+  await assetRegistryReady;
+  const records = assetRuntimeRegistry.preloadList({ ...criteria, limit: options.limit || 16 });
+  const concurrency = Math.max(1, Math.min(4, options.concurrency || 2));
+  let cursor = 0;
+  const results = [];
+  const worker = async () => {
+    while (cursor < records.length) {
+      const record = records[cursor++];
+      const loaded = await loadRegisteredAsset(record.id, renderer);
+      results.push({ id: record.id, loaded: !!loaded });
+    }
+  };
+  await trackLoadingPromise(
+    Promise.all(Array.from({ length: Math.min(concurrency, records.length || 1) }, worker)),
+    options.label || 'Preloading nearby assets…',
+  );
+  return results;
+}
+
+if (typeof window !== 'undefined') {
+  window.__ZW_ASSET_CACHE_REPORT__ = assetCacheSnapshot;
 }
