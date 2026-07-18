@@ -41,6 +41,8 @@ const [
   previewHtml,
   previewSource,
   viteConfig,
+  productionBridge,
+  settings,
 ] = await Promise.all([
   source('src/runtime/GameObjectPools.js'),
   source('src/runtime/StarterTownRuntime.js'),
@@ -51,6 +53,8 @@ const [
   source('large-town-preview.html'),
   source('src/largeTownPreview.js'),
   source('vite.config.js'),
+  source('src/runtime/ProductionWorldBridge.js'),
+  source('src/settings.js'),
 ]);
 
 for (const poolId of ['civilians', 'police', 'traffic', 'police-vehicles', 'parked-vehicles', 'litter-pickups', 'effects', 'interaction-markers']) {
@@ -63,6 +67,8 @@ assert.match(runtime, /releaseCellObjects\(job\.cellId\)/, 'unload jobs must rel
 assert.match(runtime, /includeSpecialRoadForms: true/, 'large-town runtime must request special road forms');
 assert.match(largeTown, /buildSpecialRoadFormsLayer/, 'large-town build must render approved special road forms');
 assert.match(largeTown, /includeSpecialRoadForms = true/, 'special road forms must default on in the large-town preview');
+assert.match(largeTown, /heightAt = starterTownHeightAt/, 'large-town builder must accept an explicit terrain-height contract');
+assert.match(largeTown, /compatibilityMode = false/, 'normal gameplay must be able to request the flat compatibility shell');
 assert.match(diagnostics, /buildPhaseSummary/, 'runtime diagnostics must expose the canonical phase ledger');
 assert.match(diagnostics, /nextPhase:/, 'runtime report must print the next phase');
 assert.match(phaseDoc, /Phase 7: Functional-location relocation/, 'active status must name the next phase');
@@ -74,4 +80,15 @@ assert.match(previewSource, /forceBuild: true/, 'preview must force the feature-
 assert.match(previewSource, /placeReadyAssets/, 'preview must offer ready Asset Lab hydration');
 assert.match(viteConfig, /starterTownPreview: resolve\(__dirname, 'large-town-preview\.html'\)/, 'Vite must build the preview page');
 
-console.log('[starter-town-phases] Phase 2–6 contracts, named pools, special roads, isolated preview, status ledger, and direct workflow verified.');
+assert.match(productionBridge, /requestIdleCallback/, 'normal game must quietly preload Starter Town during Character Studio idle time');
+assert.match(productionBridge, /creator-enter/, 'Enter City must pass through the production loading bridge');
+assert.match(productionBridge, /creator-continue/, 'Continue Save must pass through the production loading bridge');
+assert.match(productionBridge, /showLoadingScreen\('Entering Starter Town/, 'entering gameplay must reopen the real loading screen');
+assert.match(productionBridge, /trackLoadingPromise/, 'large-town preparation must contribute to real loading readiness');
+assert.match(productionBridge, /attachPreparedProductionWorld/, 'the prepared large-town group must attach to the actual gameplay scene');
+assert.match(productionBridge, /heightAt: flatHeight/, 'normal gameplay compatibility shell must remain drivable with current vehicle elevation');
+assert.match(settings, /installProductionWorldBridge\(\)/, 'settings dependency must install the production bridge before main scene creation');
+assert.match(settings, /⚙ Graphics/, 'graphics controls must have a visible labeled button');
+assert.match(settings, /z-index:260/, 'graphics button must sit above Character Studio');
+
+console.log('[starter-town-phases] Phase 2–6 contracts, normal-game large-town preload, real entry loader, visible graphics controls, isolated preview, and direct workflow verified.');
