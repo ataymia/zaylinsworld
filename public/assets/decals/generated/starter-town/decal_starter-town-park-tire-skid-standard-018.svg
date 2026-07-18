@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Starter Town park Tire Skid Standard">
+  <title>Starter Town park Tire Skid Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(263 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(301 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(263 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="83.19,50.00 81.74,68.33 65.67,77.15 50.00,85.54 33.15,79.18 23.25,65.44 8.42,50.00 18.66,31.91 29.07,13.75 50.00,15.93 65.37,23.37 77.59,34.07" fill="url(#fade)"/>
+  <polygon points="83.19,50.00 65.67,77.15 33.15,79.18 8.42,50.00 29.07,13.75 65.37,23.37" fill="none" stroke="hsl(263 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

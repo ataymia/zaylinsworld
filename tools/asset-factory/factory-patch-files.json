@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "installedAt": "2026-07-18T16:56:27.745Z",
+  "compressedBytes": 50516,
+  "compressedSha256": "3ab50269563031c5cb8e27b8a49b6b6d92cac794ff58d391d3e4d6d9e24dbe1a",
+  "parts": [
+    "part-01.bin",
+    "part-02.bin",
+    "part-03.bin",
+    "part-04.bin",
+    "part-05.bin",
+    "part-06.bin",
+    "part-07.bin",
+    "part-08.bin",
+    "part-09.bin",
+    "part-10.bin",
+    "part-11.bin"
+  ],
+  "files": [
+    ".github/workflows/build-deep-asset-briefs.yml",
+    ".github/workflows/generate-free-asset-factory.yml",
+    ".github/workflows/install-gameplay-gap-expansion.yml",
+    "package.json",
+    "tools/asset-factory/apply-gameplay-gap-catalog-v2.mjs",
+    "tools/asset-factory/audit-factory-health.mjs",
+    "tools/asset-factory/blender/builder_repair_utils.py",
+    "tools/asset-factory/blender/builder_repairs.py",
+    "tools/asset-factory/blender/builder_repairs_legacy.py",
+    "tools/asset-factory/blender/builder_repairs_modular.py",
+    "tools/asset-factory/blender/generate_batch.py",
+    "tools/asset-factory/build-runtime-deliverables.mjs",
+    "tools/asset-factory/check-gameplay-gap-catalog-v2.mjs",
+    "tools/asset-factory/check-inventory-intent.mjs",
+    "tools/asset-factory/check-sharded-deep-specs.mjs",
+    "tools/asset-factory/commit-generated-specs.mjs",
+    "tools/asset-factory/compile-expanded-specs.mjs",
+    "tools/asset-factory/promote-safe-builders.mjs",
+    "tools/asset-factory/run-batch.mjs"
+  ]
+}

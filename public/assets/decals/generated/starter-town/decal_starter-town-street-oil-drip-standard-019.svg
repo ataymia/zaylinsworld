@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Starter Town street Oil Drip Standard">
+  <title>Starter Town street Oil Drip Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(168 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(206 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(168 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="83.93,50.00 83.98,69.62 66.16,77.99 50.00,91.91 30.06,84.54 23.21,65.47 8.74,50.00 16.26,30.52 34.17,22.57 50.00,12.20 68.67,17.66 77.11,34.35" fill="url(#fade)"/>
+  <polygon points="83.93,50.00 66.16,77.99 30.06,84.54 8.74,50.00 34.17,22.57 68.67,17.66" fill="none" stroke="hsl(168 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

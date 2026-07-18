@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Shared World camera Soot Smear Standard">
+  <title>Shared World camera Soot Smear Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(175 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(213 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(175 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="87.25,50.00 78.55,66.48 65.44,76.75 50.00,86.14 30.22,84.26 20.46,67.06 18.33,50.00 19.38,32.32 34.44,23.05 50.00,13.63 66.53,21.38 76.79,34.53" fill="url(#fade)"/>
+  <polygon points="87.25,50.00 65.44,76.75 30.22,84.26 18.33,50.00 34.44,23.05 66.53,21.38" fill="none" stroke="hsl(175 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

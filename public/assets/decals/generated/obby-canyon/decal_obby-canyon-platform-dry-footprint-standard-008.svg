@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Obby Canyon platform Dry Footprint Standard">
+  <title>Obby Canyon platform Dry Footprint Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(315 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(353 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(315 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="82.18,50.00 81.22,68.03 68.51,82.06 50.00,80.66 29.05,86.29 18.62,68.12 15.06,50.00 21.22,33.38 29.48,14.47 50.00,8.88 68.07,18.70 79.54,32.94" fill="url(#fade)"/>
+  <polygon points="82.18,50.00 68.51,82.06 29.05,86.29 15.06,50.00 29.48,14.47 68.07,18.70" fill="none" stroke="hsl(315 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

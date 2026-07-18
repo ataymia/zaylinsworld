@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Aqualume docking Algae Growth Standard">
+  <title>Aqualume docking Algae Growth Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(102 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(140 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(102 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="80.66,50.00 78.35,66.37 67.36,80.06 50.00,90.99 34.79,76.35 20.38,67.10 8.65,50.00 21.06,33.29 32.74,20.10 50.00,14.32 70.38,14.71 80.78,32.23" fill="url(#fade)"/>
+  <polygon points="80.66,50.00 67.36,80.06 34.79,76.35 8.65,50.00 32.74,20.10 70.38,14.71" fill="none" stroke="hsl(102 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

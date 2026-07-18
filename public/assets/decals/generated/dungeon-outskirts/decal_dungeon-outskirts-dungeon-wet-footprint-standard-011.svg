@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Dungeon Outskirts dungeon Wet Footprint Standard">
+  <title>Dungeon Outskirts dungeon Wet Footprint Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(191 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(229 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(191 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="83.65,50.00 86.09,70.84 69.87,84.42 50.00,91.86 33.89,77.91 20.26,67.17 18.01,50.00 19.42,32.34 31.88,18.62 50.00,11.00 69.52,16.18 85.45,29.53" fill="url(#fade)"/>
+  <polygon points="83.65,50.00 69.87,84.42 33.89,77.91 18.01,50.00 31.88,18.62 69.52,16.18" fill="none" stroke="hsl(191 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Shared World water Water Stain Standard">
+  <title>Shared World water Water Stain Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(124 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(162 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(124 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="83.74,50.00 82.66,68.86 68.72,82.42 50.00,86.05 30.20,84.30 19.10,67.84 14.92,50.00 23.73,34.83 32.02,18.86 50.00,10.54 66.13,22.05 86.09,29.16" fill="url(#fade)"/>
+  <polygon points="83.74,50.00 68.72,82.42 30.20,84.30 14.92,50.00 32.02,18.86 66.13,22.05" fill="none" stroke="hsl(124 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

@@ -27,6 +27,10 @@ const files = new Set([
   deepManifestPath,
   'asset-factory/generated/deep-spec-coverage.json',
   'asset-factory/state/queue.json',
+  'asset-factory/state/builder-health.json',
+  'public/assets/models/asset-index-v2.json',
+  'reports/asset-factory/health.json',
+  'reports/asset-factory/health.md',
 ]);
 
 if (existsSync(sourceManifestPath)) {
@@ -35,6 +39,8 @@ if (existsSync(sourceManifestPath)) {
 }
 for (const path of walk(join(ROOT, 'asset-factory', 'gameplay-gaps'))) files.add(path);
 for (const path of walk(join(ROOT, 'asset-factory', 'generated', 'deep-specs'))) files.add(path);
+for (const path of walk(join(ROOT, 'public', 'assets', 'runtime', 'generated'))) files.add(path);
+for (const path of walk(join(ROOT, 'public', 'assets', 'decals', 'generated'))) files.add(path);
 for (const name of existsSync(join(ROOT, 'docs')) ? readdirSync(join(ROOT, 'docs')) : []) {
   if (/GAMEPLAY_GAPS/i.test(name)) files.add(`docs/${name}`);
 }
@@ -125,7 +131,7 @@ const tree = await request('POST', `/repos/${repository}/git/trees`, {
   tree: treeEntries,
 });
 const commit = await request('POST', `/repos/${repository}/git/commits`, {
-  message: 'Materialize expanded asset catalogs and deep briefs [skip ci]',
+  message: 'Materialize expanded asset catalogs, runtime assets, and deep briefs [skip ci]',
   tree: tree.sha,
   parents: [parentSha],
   author: { name: 'github-actions[bot]', email: '41898282+github-actions[bot]@users.noreply.github.com' },

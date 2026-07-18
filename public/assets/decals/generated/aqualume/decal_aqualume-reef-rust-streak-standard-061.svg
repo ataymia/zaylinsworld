@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Aqualume reef Rust Streak Standard">
+  <title>Aqualume reef Rust Streak Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(318 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(356 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(318 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="91.08,50.00 78.43,66.41 65.54,76.91 50.00,86.65 29.85,84.90 15.62,69.85 15.93,50.00 15.98,30.36 30.84,16.82 50.00,19.11 69.66,15.94 80.34,32.48" fill="url(#fade)"/>
+  <polygon points="91.08,50.00 65.54,76.91 29.85,84.90 15.93,50.00 30.84,16.82 69.66,15.94" fill="none" stroke="hsl(318 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

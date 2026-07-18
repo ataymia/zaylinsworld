@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Shared World vehicles Rust Streak Standard">
+  <title>Shared World vehicles Rust Streak Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(40 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(78 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(40 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="92.00,50.00 78.66,66.55 66.46,78.51 50.00,86.56 32.46,80.38 23.25,65.44 15.98,50.00 19.90,32.62 31.74,18.38 50.00,19.02 66.02,22.25 81.66,31.72" fill="url(#fade)"/>
+  <polygon points="92.00,50.00 66.46,78.51 32.46,80.38 15.98,50.00 31.74,18.38 66.02,22.25" fill="none" stroke="hsl(40 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

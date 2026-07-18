@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Shared World damage Impact Crack Standard">
+  <title>Shared World damage Impact Crack Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(8 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(46 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(8 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="92.00,50.00 83.02,69.06 65.49,76.83 50.00,86.83 34.00,77.71 21.38,66.53 18.65,50.00 21.45,33.52 30.54,16.30 50.00,16.21 69.75,15.78 76.47,34.72" fill="url(#fade)"/>
+  <polygon points="92.00,50.00 65.49,76.83 34.00,77.71 18.65,50.00 30.54,16.30 69.75,15.78" fill="none" stroke="hsl(8 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

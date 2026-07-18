@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Techtown robotics Wet Footprint Standard">
+  <title>Techtown robotics Wet Footprint Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(258 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(296 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(258 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="81.58,50.00 79.90,67.26 70.10,84.82 50.00,88.13 34.30,77.19 17.18,68.95 9.15,50.00 19.30,32.27 29.28,14.11 50.00,10.17 69.06,16.98 84.66,29.99" fill="url(#fade)"/>
+  <polygon points="81.58,50.00 70.10,84.82 34.30,77.19 9.15,50.00 29.28,14.11 69.06,16.98" fill="none" stroke="hsl(258 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>
