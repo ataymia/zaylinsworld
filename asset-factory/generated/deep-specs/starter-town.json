@@ -1,8 +1,8 @@
 {
   "format": "zta-deep-asset-spec-shard",
   "version": 1,
-  "generatedAt": "2026-07-18T14:46:53.119Z",
-  "inventoryAuditAt": "2026-07-18T14:46:56.810Z",
+  "generatedAt": "2026-07-18T14:49:55.868Z",
+  "inventoryAuditAt": "2026-07-18T14:49:59.477Z",
   "shardKey": "starter-town",
   "recordCount": 102,
   "canonicalGenerationRequests": 102,
@@ -279,9 +279,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "463b14f8e53e070cda7d9b0ed5f85256ccff5df236027d81293c5a9cc311edba",
-      "semanticRefinedAt": "2026-07-18T14:46:53.870Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.595Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.938Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.630Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -289,7 +289,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.654Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.325Z"
     },
     {
       "id": "building_starter_apartment_mid_a_v01",
@@ -527,9 +527,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "2185e78f5740d034c8d865e6046267fed992bd564174ee0d8677a49df7333c18",
-      "semanticRefinedAt": "2026-07-18T14:46:53.870Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.595Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.938Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.630Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -537,7 +537,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.654Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.326Z"
     },
     {
       "id": "building_starter_apartment_small_a_v01",
@@ -775,9 +775,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "82da4301b7570aa53b411be6c99e7a146bf123c9cbbdd9062112e72344ac347f",
-      "semanticRefinedAt": "2026-07-18T14:46:53.870Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.595Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.939Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.631Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -785,7 +785,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.654Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.326Z"
     },
     {
       "id": "building_starter_auto_haus_exterior_v02",
@@ -1023,9 +1023,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "edd82821ee5cb124b89e609bd5190447311d8aace4ce2090dd2840608af2b6d0",
-      "semanticRefinedAt": "2026-07-18T14:46:53.871Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.596Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.939Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.631Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -1033,7 +1033,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.654Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.326Z"
     },
     {
       "id": "building_starter_barbershop_shell_a_v01",
@@ -1271,9 +1271,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "5ded2fd331716b2f133a0632616037ab679ee0b1a9079d8d890da04b0b320af1",
-      "semanticRefinedAt": "2026-07-18T14:46:53.871Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.596Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.939Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.631Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -1281,7 +1281,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.654Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.326Z"
     },
     {
       "id": "building_starter_block_supply_exterior_v02",
@@ -1519,9 +1519,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "522eea4f027aeaec43286a7c276b2be94af647f4b3e22562649befe3835f3f89",
-      "semanticRefinedAt": "2026-07-18T14:46:53.871Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.596Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.939Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.631Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -1529,7 +1529,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.654Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.326Z"
     },
     {
       "id": "building_starter_chicken_spot_exterior_v02",
@@ -1767,9 +1767,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "720d7a8ca53027e43f495f2fcb2382a0f4e0bdf78057d2e58d0d74cfdc8ba44b",
-      "semanticRefinedAt": "2026-07-18T14:46:53.871Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.596Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.939Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.632Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -1777,7 +1777,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.655Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.326Z"
     },
     {
       "id": "building_starter_city_garage_exterior_v02",
@@ -2015,9 +2015,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "1aad57d7142621ecd66978cc83c980304261582cc0e265a5640d6c5ca158ba7c",
-      "semanticRefinedAt": "2026-07-18T14:46:53.871Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.597Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.940Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.632Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -2025,7 +2025,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.655Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.327Z"
     },
     {
       "id": "building_starter_cityhall_annex_shell_a_v01",
@@ -2263,9 +2263,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "55f1cdea02c4aace0a39c19976f8004d20bee5a412fddf87b315ff5258017cd6",
-      "semanticRefinedAt": "2026-07-18T14:46:53.872Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.597Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.940Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.632Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -2273,7 +2273,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.655Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.327Z"
     },
     {
       "id": "building_starter_corner_store_shell_a_v01",
@@ -2511,9 +2511,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "0749f26082f92d1fef2b204a1a0e7597af789fc8e402250160d9f2a624eff701",
-      "semanticRefinedAt": "2026-07-18T14:46:53.872Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.597Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.940Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.632Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -2521,7 +2521,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.655Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.327Z"
     },
     {
       "id": "building_starter_duplex_a_v01",
@@ -2759,9 +2759,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "10ec9cc67aff45cddd90cd0b239c344733ffb57633985aeee149bdaa53c2a22c",
-      "semanticRefinedAt": "2026-07-18T14:46:53.872Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.597Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.940Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.632Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -2769,7 +2769,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.655Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.327Z"
     },
     {
       "id": "building_starter_fire_rescue_bay_shell_a_v01",
@@ -3007,9 +3007,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "2ac6760cd229c9e01b03b2be86213127c30fac3717c27b546c7e99ca5fb8bc04",
-      "semanticRefinedAt": "2026-07-18T14:46:53.872Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.597Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.940Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.633Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -3017,7 +3017,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.656Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.327Z"
     },
     {
       "id": "building_starter_frostbox_exterior_v02",
@@ -3255,9 +3255,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "4e26dbec036443de86688f5a19698bace064cf082a5c41f6d5260eda2d72f0ba",
-      "semanticRefinedAt": "2026-07-18T14:46:53.872Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.597Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.941Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.633Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -3265,7 +3265,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.656Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.327Z"
     },
     {
       "id": "building_starter_house_a_v01",
@@ -3503,9 +3503,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "f30289f0f877bc598a56efaf9390591134323c3ad1c64b81144718fcab155e4d",
-      "semanticRefinedAt": "2026-07-18T14:46:53.873Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.598Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.941Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.633Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -3513,7 +3513,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.657Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.327Z"
     },
     {
       "id": "building_starter_house_b_v01",
@@ -3751,9 +3751,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "dfc2303581c21aa69ceddc907698e9eb98ffa0ffbd75bcb5b6f24ce4b805495e",
-      "semanticRefinedAt": "2026-07-18T14:46:53.873Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.598Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.941Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.633Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -3761,7 +3761,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.657Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.328Z"
     },
     {
       "id": "building_starter_house_c_v01",
@@ -3999,9 +3999,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "4715c2d75f029f8ec267d2a28127d37ba009e54ff3f65ffcc4bb260fa53109ab",
-      "semanticRefinedAt": "2026-07-18T14:46:53.873Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.598Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.941Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.633Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -4009,7 +4009,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.657Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.328Z"
     },
     {
       "id": "building_starter_iron_city_gym_exterior_v02",
@@ -4247,9 +4247,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "87ea2602e7c230d61bb16aa1bf71ed63d3d2ce9e93ab87e22c2b5ad01ca48d10",
-      "semanticRefinedAt": "2026-07-18T14:46:53.873Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.598Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.942Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.634Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -4257,7 +4257,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.657Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.328Z"
     },
     {
       "id": "building_starter_kicks_fits_exterior_v02",
@@ -4495,9 +4495,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "868a9fdc068f2910b7630eba2f7d72248958ba69883b4aa81dcada217940e9a3",
-      "semanticRefinedAt": "2026-07-18T14:46:53.873Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.598Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.942Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.634Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -4505,7 +4505,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.657Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.328Z"
     },
     {
       "id": "building_starter_laundromat_shell_a_v01",
@@ -4743,9 +4743,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "c1df250c6d20aca0c9dc6eb87d286b581a9a071d087615644aa15eb4b7899681",
-      "semanticRefinedAt": "2026-07-18T14:46:53.874Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.599Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.942Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.634Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -4753,7 +4753,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.657Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.328Z"
     },
     {
       "id": "building_starter_library_shell_a_v01",
@@ -4991,9 +4991,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "610048bd0e0cabdff38cd051a9cb782aaedbf235428b8db1fe5db5da828bd524",
-      "semanticRefinedAt": "2026-07-18T14:46:53.874Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.599Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.942Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.634Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -5001,7 +5001,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.657Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.328Z"
     },
     {
       "id": "building_starter_motel_shell_a_v01",
@@ -5239,9 +5239,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "0c0e9b91cb62393fc77817856206f247d4afa5e7eeda64e6c3fdcec01eaeefd6",
-      "semanticRefinedAt": "2026-07-18T14:46:53.874Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.599Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.942Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.634Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -5249,7 +5249,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.658Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.329Z"
     },
     {
       "id": "building_starter_pharmacy_shell_a_v01",
@@ -5487,9 +5487,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "1d1bfde6e85d2b6fcd02fd30dfaef5f391c01d572c83ad260413150effc8d5b3",
-      "semanticRefinedAt": "2026-07-18T14:46:53.874Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.599Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.943Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.635Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -5497,7 +5497,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.658Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.329Z"
     },
     {
       "id": "building_starter_police_station_exterior_v02",
@@ -5735,9 +5735,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "f1a74b7df2f32580e0b067f05d565fddb9b109621c9129a865b5ad52b87c854c",
-      "semanticRefinedAt": "2026-07-18T14:46:53.874Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.599Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.943Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.635Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -5745,7 +5745,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.658Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.329Z"
     },
     {
       "id": "building_starter_rowshop_a_v01",
@@ -5983,9 +5983,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "47ddfb24b89874d5c9417dd3d76c792fbf377c1a789ce5b9d3148f63249f0635",
-      "semanticRefinedAt": "2026-07-18T14:46:53.875Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.600Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.943Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.635Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -5993,7 +5993,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.658Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.329Z"
     },
     {
       "id": "building_starter_school_annex_a_v01",
@@ -6231,9 +6231,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "366c743260955a1d62c7ad0a183fafa21f11cd8e25bed47e20eba3d484224d19",
-      "semanticRefinedAt": "2026-07-18T14:46:53.875Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.600Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.943Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.635Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -6241,7 +6241,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.658Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.329Z"
     },
     {
       "id": "building_starter_small_office_a_v01",
@@ -6479,9 +6479,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "0cd43fed966acc99d71e3f64b6429f1dd2dba810563df8cbb4c0c5cfac67818c",
-      "semanticRefinedAt": "2026-07-18T14:46:53.875Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.600Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.943Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.635Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -6489,7 +6489,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.658Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.329Z"
     },
     {
       "id": "building_starter_stripmall_module_a_v01",
@@ -6727,9 +6727,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "d68c934d1c14f89632b4dde93099f14c2154fc19934c7a7d9ab48ee81510d663",
-      "semanticRefinedAt": "2026-07-18T14:46:53.875Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.600Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.944Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.636Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -6737,7 +6737,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.658Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.329Z"
     },
     {
       "id": "building_starter_townhouse_a_v01",
@@ -6975,9 +6975,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "26e0365656abcc6aea55283bef347fd89e7a572b578636cb52c0add705c8d27c",
-      "semanticRefinedAt": "2026-07-18T14:46:53.875Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.600Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.944Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.636Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -6985,7 +6985,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.659Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.329Z"
     },
     {
       "id": "building_starter_utility_shed_a_v01",
@@ -7223,9 +7223,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "963f3296283408239d2199fe21b4b90c47aa1ad6c2f8c8846f3aaa3d66cdff50",
-      "semanticRefinedAt": "2026-07-18T14:46:53.875Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.601Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.944Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.636Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -7233,7 +7233,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.659Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.330Z"
     },
     {
       "id": "building_starter_warehouse_a_v01",
@@ -7471,9 +7471,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "ae2363b29eaa5d6613f32bddf4b219be38ac9ac4e1b15ad9b379121bf82eacee",
-      "semanticRefinedAt": "2026-07-18T14:46:53.876Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.601Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.944Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.636Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -7481,7 +7481,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.659Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.330Z"
     },
     {
       "id": "building_starter_warehouse_b_v01",
@@ -7719,9 +7719,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "405db9189d62f99ed0da40c7e12eaf019ff1cb7bfbcfdd401514e408ebd0f3e1",
-      "semanticRefinedAt": "2026-07-18T14:46:53.876Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.601Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.945Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.637Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -7729,7 +7729,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.659Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.330Z"
     },
     {
       "id": "building_starter_worktower_exterior_v02",
@@ -7967,9 +7967,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "3596413e392b0828a8132233430ec0bf0776e10456dc9ec159180a54b8919b1d",
-      "semanticRefinedAt": "2026-07-18T14:46:53.876Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.601Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.945Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.637Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -7977,7 +7977,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.659Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.330Z"
     },
     {
       "id": "building_starter_zaylins_home_exterior_v02",
@@ -8215,9 +8215,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "1daa8c3be5aeeb8f5fe34744f25f89cd89a09862511ee25de8a981694dccd987",
-      "semanticRefinedAt": "2026-07-18T14:46:53.876Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.601Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.945Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.637Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -8225,7 +8225,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.659Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.330Z"
     },
     {
       "id": "building_starter_zaylins_prep_exterior_v02",
@@ -8463,9 +8463,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "0feb2db8fc4e45e57fd95d67b0268908ddf1ce4db00c838234b2cdf600e859c6",
-      "semanticRefinedAt": "2026-07-18T14:46:53.877Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.602Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as architecture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.945Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.638Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -8473,7 +8473,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.659Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.330Z"
     },
     {
       "id": "crosswalk_starter_school_raised_a_v01",
@@ -8705,9 +8705,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "ca98f5114746ef7bc6da2ed42fa5bc9ccb2b1e3911f51eb5f7c5c24f9329d8db",
-      "semanticRefinedAt": "2026-07-18T14:46:53.877Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.602Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as road_surface",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.945Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.638Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -8715,7 +8715,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.660Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.330Z"
     },
     {
       "id": "crosswalk_starter_standard_a_v01",
@@ -8947,9 +8947,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "9f4f21756d341d8a089b53baeb81b6b9ceddce5a939cb8893c78af99cb040dfb",
-      "semanticRefinedAt": "2026-07-18T14:46:53.877Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.602Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as road_surface",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.946Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.638Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -8957,7 +8957,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.660Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.331Z"
     },
     {
       "id": "prop_dreamdrop_basketball_hoop_a_v01",
@@ -9216,9 +9216,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "2ccf0dfe97ff964dda1688d786ff1fab9365af82c4cc78ad8fc7c1b4ea3d8bc9",
-      "semanticRefinedAt": "2026-07-18T14:46:53.878Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.603Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.946Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.639Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dreamdrop Basketball Hoop, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “H. Park assets” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -9237,10 +9237,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "public basketball hoop assembly",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.042Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.770Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated public basketball hoop assembly profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.483Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.190Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -9248,7 +9248,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.660Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.331Z"
     },
     {
       "id": "prop_dreamdrop_community_garden_bed_a_v01",
@@ -9481,9 +9481,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "6a2b40d98b5c0c269fd090dcea7f99aeceb1a0d55f1a917b959f103313b6dbe7",
-      "semanticRefinedAt": "2026-07-18T14:46:53.867Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.592Z",
       "semanticCategoryReason": "dedicated family planter resolves the physical object as vegetation",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.935Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.627Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -9491,7 +9491,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.651Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.323Z"
     },
     {
       "id": "prop_dreamdrop_event_stage_a_v01",
@@ -9750,9 +9750,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "3f344750eaf06d7b9cb7398dd8681ba6531a19f2fa6c0c936d26b9a9c62b1455",
-      "semanticRefinedAt": "2026-07-18T14:46:53.878Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.603Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.947Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.639Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dreamdrop Event Stage, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “H. Park assets” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -9771,10 +9771,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "event or performance stage",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.042Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.770Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated event or performance stage profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.483Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.190Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -9782,7 +9782,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.660Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.331Z"
     },
     {
       "id": "prop_dreamdrop_jogging_marker_a_v01",
@@ -10059,9 +10059,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "d1009071283d0710d358317a4fb25dbed253a676861dd47c02a30fe3dafa9c61",
-      "semanticRefinedAt": "2026-07-18T14:46:53.878Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.603Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.947Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.639Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dreamdrop Jogging Marker, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “H. Park assets” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -10080,10 +10080,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Dreamdrop Jogging Marker role-specific infrastructure profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.042Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.770Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -10091,7 +10091,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.660Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.331Z"
     },
     {
       "id": "prop_dreamdrop_park_sign_a_v01",
@@ -10369,9 +10369,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "d81d2df95670f4c49334b1d6f7d52ffaa9166164cb52e447c78215c179dcaa77",
-      "semanticRefinedAt": "2026-07-18T14:46:53.878Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.603Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as signage",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.947Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.639Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dreamdrop Park Sign, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “H. Park assets” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -10390,10 +10390,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "freestanding or wall sign",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.042Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.770Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named freestanding or wall sign profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -10401,7 +10401,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.660Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.331Z"
     },
     {
       "id": "prop_dreamdrop_picnic_table_a_v01",
@@ -10637,9 +10637,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "b99f0abb5dba1e3c67417aaa2dffbe17bc4cd37c2fca8197245e71ccb9235b6d",
-      "semanticRefinedAt": "2026-07-18T14:46:53.867Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.592Z",
       "semanticCategoryReason": "dedicated family picnic_table resolves the physical object as furniture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.935Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.627Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -10647,7 +10647,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.652Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.323Z"
     },
     {
       "id": "prop_dreamdrop_playground_a_v01",
@@ -10909,9 +10909,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "6e78c8dfe1b041248efeb41c969f2c4ba1cc34a87079f4464eb24a1a98a0f310",
-      "semanticRefinedAt": "2026-07-18T14:46:53.879Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.604Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.947Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.640Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Dreamdrop Playground, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “H. Park assets” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -10930,10 +10930,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "integrated playground structure",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.042Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.770Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated integrated playground structure profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -10941,7 +10941,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.661Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.331Z"
     },
     {
       "id": "prop_home_deed_folder_a_v01",
@@ -11215,9 +11215,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "f5f0e888f0a05c0240982a82c15310d01ca925ac0bcdc0c0c1bb963adfa18057",
-      "semanticRefinedAt": "2026-07-18T14:46:53.879Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.604Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.948Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.640Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Home Deed Folder, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “I. Interior/service assets” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -11236,10 +11236,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Home Deed Folder role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.042Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.770Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -11247,7 +11247,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.661Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.331Z"
     },
     {
       "id": "prop_home_upgrade_terminal_a_v01",
@@ -11526,9 +11526,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "578d66a9f8260cc019587b58d364d344a8c2e4e5cf6c93fa3c6b904e1c962fd3",
-      "semanticRefinedAt": "2026-07-18T14:46:53.879Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.604Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.948Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.640Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Home Upgrade Terminal, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “I. Interior/service assets” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -11547,10 +11547,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "terminal, kiosk, station, or console",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.042Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.771Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named terminal, kiosk, station, or console profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -11558,7 +11558,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.661Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.332Z"
     },
     {
       "id": "prop_police_community_service_board_a_v01",
@@ -11836,9 +11836,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "52ff9d9c2f5484a717966ec48916a0381c2d633d0a507b6ef5a6836d31f9a8b7",
-      "semanticRefinedAt": "2026-07-18T14:46:53.879Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.604Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as signage",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.948Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.640Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Police Community Service Board, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “I. Interior/service assets” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -11857,10 +11857,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "information board or digital display",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.042Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.771Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named information board or digital display profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -11868,7 +11868,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.661Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.332Z"
     },
     {
       "id": "prop_police_impound_terminal_a_v01",
@@ -12147,9 +12147,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "44cf6c2f81a34d07204c347aa6a6bf407f0b5934f8d621cdac7bbc07a739af34",
-      "semanticRefinedAt": "2026-07-18T14:46:53.879Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.604Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.949Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.641Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Police Impound Terminal, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “I. Interior/service assets” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -12168,10 +12168,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "terminal, kiosk, station, or console",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.043Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.771Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named terminal, kiosk, station, or console profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -12179,7 +12179,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.661Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.332Z"
     },
     {
       "id": "prop_school_civics_board_a_v01",
@@ -12457,9 +12457,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "5393c36db9d395fcec22f4e72f757917619e87b165b2cbc7961ddbe9a5cfdb47",
-      "semanticRefinedAt": "2026-07-18T14:46:53.880Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.605Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as signage",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.949Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.641Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready School Civics Board, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “I. Interior/service assets” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -12478,10 +12478,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "information board or digital display",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.043Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.771Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named information board or digital display profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -12489,7 +12489,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.661Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.332Z"
     },
     {
       "id": "prop_school_computer_station_a_v01",
@@ -12754,9 +12754,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "e96a423eaf5791e7711e856a62d2b0e7b15779fe1f24330488a6e3a6a0bb48d0",
-      "semanticRefinedAt": "2026-07-18T14:46:53.880Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.605Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.949Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.641Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready School Computer Station, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “I. Interior/service assets” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -12775,10 +12775,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "computer learning workstation",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.043Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.771Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "Filename and blueprint role match the dedicated computer learning workstation profile.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -12786,7 +12786,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.661Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.332Z"
     },
     {
       "id": "prop_school_math_station_a_v01",
@@ -13065,9 +13065,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "65660ea6b39a9b81a67c16a6db3345c04117d595d846203d76f752559c5b9799",
-      "semanticRefinedAt": "2026-07-18T14:46:53.880Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.605Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.949Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.642Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready School Math Station, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “I. Interior/service assets” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -13086,10 +13086,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "terminal, kiosk, station, or console",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.043Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.771Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named terminal, kiosk, station, or console profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -13097,7 +13097,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.662Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.332Z"
     },
     {
       "id": "prop_starter_bench_a_v01",
@@ -13341,9 +13341,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "bfe475e53b6fe0091a35709c5c3e3945fc45b92bd6b17cc671c602e5b5e63557",
-      "semanticRefinedAt": "2026-07-18T14:46:53.866Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.591Z",
       "semanticCategoryReason": "dedicated family bench resolves the physical object as furniture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.933Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.626Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -13351,7 +13351,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.651Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.323Z"
     },
     {
       "id": "prop_starter_bus_shelter_a_v01",
@@ -13590,9 +13590,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "0148547c8271c1b7c6cc78405004c4f45c2e1a739046c8f4ff56b9f840eaa1a9",
-      "semanticRefinedAt": "2026-07-18T14:46:53.867Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.593Z",
       "semanticCategoryReason": "dedicated family bus_shelter resolves the physical object as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.935Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.627Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -13600,7 +13600,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.652Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.324Z"
     },
     {
       "id": "prop_starter_chainlink_fence_a_v01",
@@ -13877,9 +13877,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "058c71f880f10302f3bb7f8a2e931f707dde0c50be32ca8adffd133306352d30",
-      "semanticRefinedAt": "2026-07-18T14:46:53.880Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.605Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.950Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.642Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Starter Chainlink Fence, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “C. Residential filler” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -13898,10 +13898,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "gate, barrier, or fence",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.043Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.771Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named gate, barrier, or fence profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -13909,7 +13909,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.662Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.333Z"
     },
     {
       "id": "prop_starter_city_map_kiosk_a_v01",
@@ -14188,9 +14188,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "b25a0792d3062fe06e22d000002fbbbc2d2bac4e6a48de5566f9a6470e13dd88",
-      "semanticRefinedAt": "2026-07-18T14:46:53.880Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.605Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.950Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.642Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Starter City Map Kiosk, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “E. Civic and school filler” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -14209,10 +14209,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "terminal, kiosk, station, or console",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.043Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.771Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named terminal, kiosk, station, or console profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -14220,7 +14220,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.662Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.333Z"
     },
     {
       "id": "prop_starter_crossing_guard_sign_a_v01",
@@ -14452,9 +14452,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "ca8925db7301c62f50f7589e9a4ac3c133251748c72294d638dc889857f2eab8",
-      "semanticRefinedAt": "2026-07-18T14:46:53.868Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.593Z",
       "semanticCategoryReason": "dedicated family road_sign resolves the physical object as signage",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.935Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.628Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -14462,7 +14462,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.652Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.324Z"
     },
     {
       "id": "prop_starter_district_sign_a_v01",
@@ -14708,9 +14708,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "ab58e8258a97701d75f8227b4080785205af7b04fc2b20f39ceba218bc6157a3",
-      "semanticRefinedAt": "2026-07-18T14:46:53.866Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.591Z",
       "semanticCategoryReason": "dedicated family district-sign resolves the physical object as signage",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.933Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.625Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -14718,7 +14718,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.650Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.322Z"
     },
     {
       "id": "prop_starter_driveway_gate_a_v01",
@@ -14995,9 +14995,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "8b053e93e7db75df99d30d2975a66af9e8fd364e29c950ddcb3bb246169d81d8",
-      "semanticRefinedAt": "2026-07-18T14:46:53.881Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.606Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.950Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.642Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Starter Driveway Gate, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “C. Residential filler” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -15016,10 +15016,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "gate, barrier, or fence",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.043Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.771Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named gate, barrier, or fence profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -15027,7 +15027,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.662Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.333Z"
     },
     {
       "id": "prop_starter_fire_hydrant_a_v01",
@@ -15281,9 +15281,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "402e944d0770d4380ad5fb69cb00480407f256c23bd433148188dc77d31f2f89",
-      "semanticRefinedAt": "2026-07-18T14:46:53.866Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.591Z",
       "semanticCategoryReason": "dedicated family fire-hydrant resolves the physical object as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.933Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.625Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -15291,7 +15291,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.650Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.322Z"
     },
     {
       "id": "prop_starter_for_sale_sign_a_v01",
@@ -15569,9 +15569,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "4458d205efa76c266901fc3205484b0c9bc76756a6f27c03398713b280ff9435",
-      "semanticRefinedAt": "2026-07-18T14:46:53.881Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.606Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as signage",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.950Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.643Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Starter For Sale Sign, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “C. Residential filler” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -15590,10 +15590,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "freestanding or wall sign",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.043Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.771Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named freestanding or wall sign profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -15601,7 +15601,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.662Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.333Z"
     },
     {
       "id": "prop_starter_guardrail_a_v01",
@@ -15833,9 +15833,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "f513fea2c418415270ae62fd8fe92b4e0960bfd2278782946cf3051812204fcc",
-      "semanticRefinedAt": "2026-07-18T14:46:53.868Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.593Z",
       "semanticCategoryReason": "dedicated family guardrail resolves the physical object as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.936Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.628Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -15843,7 +15843,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.652Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.324Z"
     },
     {
       "id": "prop_starter_industrial_dumpster_a_v01",
@@ -16081,9 +16081,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "64194e7867037a884aa78b7a28eaaba60d10017c2281b7803e3ac1091aa256fe",
-      "semanticRefinedAt": "2026-07-18T14:46:53.868Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.593Z",
       "semanticCategoryReason": "dedicated family municipal_trash_can resolves the physical object as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.936Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.628Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -16091,7 +16091,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.652Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.324Z"
     },
     {
       "id": "prop_starter_loading_crate_a_v01",
@@ -16323,9 +16323,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "f3714be666646cc1a87670e600a2c89e935e85b94972e4760455c5178bf9272b",
-      "semanticRefinedAt": "2026-07-18T14:46:53.868Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.593Z",
       "semanticCategoryReason": "dedicated family loading_crate resolves the physical object as generic_prop",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.936Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.628Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -16333,7 +16333,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.652Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.324Z"
     },
     {
       "id": "prop_starter_loading_dock_a_v01",
@@ -16611,9 +16611,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "d663e2f45e23f7860a7ae96dfc819fa09bc9e04823d829f339c44dccec13dcec",
-      "semanticRefinedAt": "2026-07-18T14:46:53.881Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.606Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.951Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.643Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Starter Loading Dock, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “D. Commercial filler” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -16632,10 +16632,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "dock, crane, hoist, or marine service equipment",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.043Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.771Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named dock, crane, hoist, or marine service equipment profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -16643,7 +16643,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.662Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.333Z"
     },
     {
       "id": "prop_starter_mailbox_a_v01",
@@ -16884,9 +16884,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "83f5e76a8c4a979703b5420e78e50518803f13f1aaa2209fb57d75854fe63082",
-      "semanticRefinedAt": "2026-07-18T14:46:53.868Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.593Z",
       "semanticCategoryReason": "dedicated family mailbox resolves the physical object as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.936Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.628Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -16894,7 +16894,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.652Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.324Z"
     },
     {
       "id": "prop_starter_pallet_stack_a_v01",
@@ -17126,9 +17126,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "91afbc0e821c1d72fe9befd2154159850f5e3cbb73b058e73f2d1350a0daef54",
-      "semanticRefinedAt": "2026-07-18T14:46:53.868Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.594Z",
       "semanticCategoryReason": "dedicated family pallet_stack resolves the physical object as generic_prop",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.936Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.629Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -17136,7 +17136,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.653Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.324Z"
     },
     {
       "id": "prop_starter_parking_bollard_a_v01",
@@ -17368,9 +17368,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "4f5d0b9e3205586efe6b6676ad5e9d4896afad5e239f66b5fbfe4e0b9ad7939e",
-      "semanticRefinedAt": "2026-07-18T14:46:53.868Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.594Z",
       "semanticCategoryReason": "dedicated family bollard resolves the physical object as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.937Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.629Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -17378,7 +17378,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.653Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.325Z"
     },
     {
       "id": "prop_starter_planter_a_v01",
@@ -17610,9 +17610,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "7b77eb5a435eb584ac3d3d20175c8553af9bfb31dbf7475ebbd3ca7e9c8365c0",
-      "semanticRefinedAt": "2026-07-18T14:46:53.869Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.594Z",
       "semanticCategoryReason": "dedicated family planter resolves the physical object as vegetation",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.937Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.629Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -17620,7 +17620,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.653Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.325Z"
     },
     {
       "id": "prop_starter_power_pole_a_v01",
@@ -17897,9 +17897,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "4d4cfeac7108f0fc73ef5700a29992ef2453e04af28011f9630b62cc7a6a51e6",
-      "semanticRefinedAt": "2026-07-18T14:46:53.881Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.606Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.951Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.643Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Starter Power Pole, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “G. Street and terrain props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -17918,10 +17918,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Starter Power Pole role-specific infrastructure profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.043Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.771Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -17929,7 +17929,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.663Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.333Z"
     },
     {
       "id": "prop_starter_public_service_kiosk_a_v01",
@@ -18208,9 +18208,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "266470453cd6d26e1df980d27f218a224142d29061176ca2c4630883214735fe",
-      "semanticRefinedAt": "2026-07-18T14:46:53.881Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.606Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.951Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.643Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Starter Public Service Kiosk, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “E. Civic and school filler” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -18229,10 +18229,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "terminal, kiosk, station, or console",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.043Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.771Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named terminal, kiosk, station, or console profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -18240,7 +18240,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.663Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.333Z"
     },
     {
       "id": "prop_starter_residential_bin_a_v01",
@@ -18519,9 +18519,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "44af8c34bf52f0a30657f424d6ac50511ad2dc4e15d7dee8a92a9e4c4819b47d",
-      "semanticRefinedAt": "2026-07-18T14:46:53.882Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.607Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.951Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.644Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Starter Residential Bin, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “C. Residential filler” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -18540,10 +18540,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "bin, dumpster, or waste receptacle",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.043Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.771Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named bin, dumpster, or waste receptacle profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -18551,7 +18551,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.663Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.334Z"
     },
     {
       "id": "prop_starter_retaining_wall_a_v01",
@@ -18825,9 +18825,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "f5b296756b55ad7cc1623e9b235c0a952a031e298c7f54dde619dd6b4346b52f",
-      "semanticRefinedAt": "2026-07-18T14:46:53.882Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.607Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.952Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.644Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Starter Retaining Wall, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “G. Street and terrain props” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -18846,10 +18846,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Starter Retaining Wall role-specific generic prop profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.043Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.771Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -18857,7 +18857,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.663Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.334Z"
     },
     {
       "id": "prop_starter_school_bus_stop_a_v01",
@@ -19096,9 +19096,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "3c358af1b84ea1af6e7e6018d205f011a3e57af6a5b05fa9bc466a69d74d085c",
-      "semanticRefinedAt": "2026-07-18T14:46:53.869Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.594Z",
       "semanticCategoryReason": "dedicated family bus_shelter resolves the physical object as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.937Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.629Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -19106,7 +19106,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.653Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.325Z"
     },
     {
       "id": "prop_starter_stop_sign_a_v01",
@@ -19349,9 +19349,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "4ad09bf4c8f2d6740a914fce4a709ada20bd7587c76671bac23c9db8b300af91",
-      "semanticRefinedAt": "2026-07-18T14:46:53.865Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.591Z",
       "semanticCategoryReason": "dedicated family road-sign resolves the physical object as signage",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.932Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.625Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -19359,7 +19359,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.650Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.322Z"
     },
     {
       "id": "prop_starter_store_awning_a_v01",
@@ -19636,9 +19636,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "54efb71a7aa9030ce4e8e72e4deec8e13483e804cbb8db4e762780d78c1230d4",
-      "semanticRefinedAt": "2026-07-18T14:46:53.882Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.607Z",
       "semanticCategoryReason": "no stronger physical category was found, so the asset remains a generic prop",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.952Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.644Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Starter Store Awning, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “D. Commercial filler” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -19657,10 +19657,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "canopy or temporary cover",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.043Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.771Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named canopy or temporary cover profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -19668,7 +19668,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.663Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.334Z"
     },
     {
       "id": "prop_starter_storm_drain_a_v01",
@@ -19900,9 +19900,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "9c497af05b8ac13df198a3132c8dda6bf9312d9e7a3f025d4b62040b6109d8ea",
-      "semanticRefinedAt": "2026-07-18T14:46:53.869Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.594Z",
       "semanticCategoryReason": "dedicated family storm_drain resolves the physical object as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.937Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.630Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -19910,7 +19910,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.653Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.325Z"
     },
     {
       "id": "prop_starter_street_name_sign_a_v01",
@@ -20151,9 +20151,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "4ee92690e75540f6e7b8d252abe2d9205cf7ca2df9903bd6059dd80f44a34da8",
-      "semanticRefinedAt": "2026-07-18T14:46:53.865Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.591Z",
       "semanticCategoryReason": "dedicated family road-sign resolves the physical object as signage",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.932Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.625Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -20161,7 +20161,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.650Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.322Z"
     },
     {
       "id": "prop_starter_streetlight_main_a_v01",
@@ -20412,9 +20412,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "4a44f807c03eda24aeeabf3e8dda21a0e97ae3d5a64625855eef7878c65822a4",
-      "semanticRefinedAt": "2026-07-18T14:46:53.864Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.589Z",
       "semanticCategoryReason": "dedicated family streetlight resolves the physical object as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.930Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.623Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -20422,7 +20422,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.648Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.320Z"
     },
     {
       "id": "prop_starter_streetlight_residential_a_v01",
@@ -20666,9 +20666,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "b35cde20dbad4febd283caea2fd1984ed7a4b882135c2a3b9106295a540276bf",
-      "semanticRefinedAt": "2026-07-18T14:46:53.865Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.590Z",
       "semanticCategoryReason": "dedicated family streetlight resolves the physical object as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.932Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.624Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -20676,7 +20676,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.649Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.321Z"
     },
     {
       "id": "prop_starter_substation_a_v01",
@@ -20955,9 +20955,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "2caa7f4767f311f28d8c64e8ac4d2855c913b2026a549cd63ae23c254f0539d7",
-      "semanticRefinedAt": "2026-07-18T14:46:53.882Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.607Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.952Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.645Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Starter Substation, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “F. Industrial filler” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -20976,10 +20976,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "terminal, kiosk, station, or console",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.043Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.771Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named terminal, kiosk, station, or console profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -20987,7 +20987,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.671Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.343Z"
     },
     {
       "id": "prop_starter_tow_yard_fence_a_v01",
@@ -21264,9 +21264,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "9e3f290122106738bf77d80c83bcb9e918ded69fc5731c008fdbb272114c6efc",
-      "semanticRefinedAt": "2026-07-18T14:46:53.882Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.607Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.958Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.651Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Starter Tow Yard Fence, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “F. Industrial filler” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -21285,10 +21285,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "gate, barrier, or fence",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.043Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.771Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named gate, barrier, or fence profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -21296,7 +21296,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.672Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.343Z"
     },
     {
       "id": "prop_starter_traffic_light_a_v01",
@@ -21559,9 +21559,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "43c3972cbabf71dc5fb5d3d61e96716cdb3c68790c23d237186b9f00e8e981fe",
-      "semanticRefinedAt": "2026-07-18T14:46:53.865Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.590Z",
       "semanticCategoryReason": "dedicated family traffic-light resolves the physical object as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.932Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.624Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -21569,7 +21569,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.650Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.322Z"
     },
     {
       "id": "prop_starter_trash_can_a_v01",
@@ -21816,9 +21816,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "354cd6eb896429a30b5c5d0b5ad28fe7ea1f2151c7507a8b9965e014406f316c",
-      "semanticRefinedAt": "2026-07-18T14:46:53.866Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.592Z",
       "semanticCategoryReason": "dedicated family trash-can resolves the physical object as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.934Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.626Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -21826,7 +21826,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.651Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.323Z"
     },
     {
       "id": "prop_starter_utility_box_a_v01",
@@ -22079,9 +22079,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "8d8d5232417d34c0255cf6f9b9010b381ca28b01b662c4e6adf276b59e2d58aa",
-      "semanticRefinedAt": "2026-07-18T14:46:53.866Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.591Z",
       "semanticCategoryReason": "dedicated family utility-box resolves the physical object as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.933Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.625Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -22089,7 +22089,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.651Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.322Z"
     },
     {
       "id": "prop_starter_wood_fence_a_v01",
@@ -22366,9 +22366,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "90f72315f6b55e322b21498fd4a4277739423c6026096a8731c28d0ea3a6ced5",
-      "semanticRefinedAt": "2026-07-18T14:46:53.883Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.608Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.958Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.651Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Starter Wood Fence, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “C. Residential filler” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -22387,10 +22387,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "gate, barrier, or fence",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.043Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.771Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named gate, barrier, or fence profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -22398,7 +22398,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.672Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.343Z"
     },
     {
       "id": "prop_starter_work_truck_parked_a_v01",
@@ -22676,9 +22676,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "c215b71c2fbbbe9790aced4a759f766eacf731e74b9c64104acdd196945e35c8",
-      "semanticRefinedAt": "2026-07-18T14:46:53.883Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.608Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as vehicle",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.959Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.651Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Starter Work Truck Parked, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “F. Industrial filler” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -22697,10 +22697,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "Starter Work Truck Parked role-specific vehicle profile",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.043Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.771Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The asset did not match a reusable named profile, so a unique role-specific profile was generated from its display name, category, blueprint context, existing components, dimensions, and materials.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -22708,7 +22708,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.672Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.343Z"
     },
     {
       "id": "prop_worktower_bank_kiosk_a_v01",
@@ -22987,9 +22987,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "76ff40b68084713abca7cd77b6b1dcedf19404e2e4d8aa9e4ccaf2f6c639788f",
-      "semanticRefinedAt": "2026-07-18T14:46:53.883Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.608Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as infrastructure",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.959Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.651Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Worktower Bank Kiosk, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “I. Interior/service assets” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -23008,10 +23008,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "terminal, kiosk, station, or console",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.043Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.771Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named terminal, kiosk, station, or console profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -23019,7 +23019,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.672Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.343Z"
     },
     {
       "id": "prop_worktower_health_desk_a_v01",
@@ -23254,9 +23254,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "1530aae166a8bef5e588087c5ed878d0c049a409135d0ff331632f1a676ae845",
-      "semanticRefinedAt": "2026-07-18T14:46:53.869Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.595Z",
       "semanticCategoryReason": "dedicated family office_desk resolves the physical object as furniture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.938Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.630Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -23264,7 +23264,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.653Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.325Z"
     },
     {
       "id": "prop_worktower_job_board_a_v01",
@@ -23542,9 +23542,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "0578dd1c9d3368157e0f02195f219681e47e6102f5bcbb4b506110c5b2452a86",
-      "semanticRefinedAt": "2026-07-18T14:46:53.883Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.608Z",
       "semanticCategoryReason": "whole physical-object token resolves the asset as signage",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.959Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.652Z",
       "compactSpecLegacy": {
         "family": "unsupported_generic",
         "description": "A production-ready Worktower Job Board, designed as a specialized asset awaiting a dedicated family builder for Starter Town. Do not create a generic primitive substitute. Keep the item queued as unsupported until a purpose-built family generator exists. The object must remain immediately recognizable from silhouette and required components, use physically coherent construction and human or vehicle scale, and follow the town direction: welcoming, lived-in American city realism; warm brick, stucco, concrete, patched asphalt, painted metal, ordinary civic and residential materials. This asset appears under the blueprint section “I. Interior/service assets” and should visibly support that gameplay or environmental role rather than acting as generic filler.",
@@ -23563,10 +23563,10 @@
       "physicalSpecDerived": true,
       "physicalSpecProfile": "information board or digital display",
       "physicalSpecReason": "The compact compiler had only a generic unsupported placeholder; the deep layer supplies a purpose-built physical profile.",
-      "physicalSpecDerivedAt": "2026-07-18T14:46:55.043Z",
+      "physicalSpecDerivedAt": "2026-07-18T14:49:57.772Z",
       "physicalSpecSpecialized": true,
       "physicalSpecSpecializationReason": "The existing named information board or digital display profile is already specific enough for this object.",
-      "physicalSpecSpecializedAt": "2026-07-18T14:46:55.484Z",
+      "physicalSpecSpecializedAt": "2026-07-18T14:49:58.191Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -23574,7 +23574,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.672Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.343Z"
     },
     {
       "id": "prop_worktower_property_desk_a_v01",
@@ -23809,9 +23809,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "fad1eb226b8b48a15fab3b52b7c29443335cfb34b3cbe25634bf5f3ed8826e85",
-      "semanticRefinedAt": "2026-07-18T14:46:53.870Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.595Z",
       "semanticCategoryReason": "dedicated family office_desk resolves the physical object as furniture",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.938Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.630Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -23819,7 +23819,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.653Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.325Z"
     },
     {
       "id": "road_starter_alley_a_v01",
@@ -24051,9 +24051,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "d27c53713e83a820f98f8a7cb24ac6eb735b8abba26581da8694f3876fb1c4b6",
-      "semanticRefinedAt": "2026-07-18T14:46:53.884Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.608Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as road_surface",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.960Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.652Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -24061,7 +24061,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.672Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.344Z"
     },
     {
       "id": "road_starter_arterial_curve_a_v01",
@@ -24293,9 +24293,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "df4d593427a83ee08c19b0b08a610c9a0463ebccb102bc7aefc1e6644930c1e8",
-      "semanticRefinedAt": "2026-07-18T14:46:53.884Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.609Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as road_surface",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.960Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.652Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -24303,7 +24303,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.673Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.344Z"
     },
     {
       "id": "road_starter_arterial_straight_a_v01",
@@ -24535,9 +24535,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "5791229039350b95d3befa26119b8127d32cb3f5fc1ac0ec4b7c229971a666fa",
-      "semanticRefinedAt": "2026-07-18T14:46:53.884Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.609Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as road_surface",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.960Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.652Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -24545,7 +24545,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.673Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.344Z"
     },
     {
       "id": "road_starter_highway_ramp_a_v01",
@@ -24777,9 +24777,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "72615e50e8e89c903b2c8a1c4f5a5301c87ca1acb6df5b17ab176963762115f8",
-      "semanticRefinedAt": "2026-07-18T14:46:53.884Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.609Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as road_surface",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.960Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.653Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -24787,7 +24787,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.673Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.344Z"
     },
     {
       "id": "road_starter_hill_curve_a_v01",
@@ -25019,9 +25019,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "6a41e353271aea28251ac7d1288aad8d767d950957f64c50d40590f8fd09fd07",
-      "semanticRefinedAt": "2026-07-18T14:46:53.884Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.609Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as road_surface",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.960Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.653Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -25029,7 +25029,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.673Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.344Z"
     },
     {
       "id": "road_starter_local_curve_a_v01",
@@ -25261,9 +25261,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "a5a0d0119054c706ccee27abed466e97e1701c2c39696e3a12db12815fb3a7d8",
-      "semanticRefinedAt": "2026-07-18T14:46:53.885Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.609Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as road_surface",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.961Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.653Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -25271,7 +25271,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.673Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.344Z"
     },
     {
       "id": "road_starter_local_straight_a_v01",
@@ -25503,9 +25503,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "539fbd4f0c99dd79930d9d9e028991cc301ded33155acef0deef47e9cff5d22b",
-      "semanticRefinedAt": "2026-07-18T14:46:53.885Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.610Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as road_surface",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.961Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.653Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -25513,7 +25513,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.673Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.344Z"
     },
     {
       "id": "road_starter_main_curve_a_v01",
@@ -25745,9 +25745,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "20b598a013d273b1a4ec800f6bb43a2fa5fd0c67d38a68198216c6e972681d30",
-      "semanticRefinedAt": "2026-07-18T14:46:53.885Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.610Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as road_surface",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.961Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.654Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -25755,7 +25755,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.673Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.345Z"
     },
     {
       "id": "road_starter_main_straight_a_v01",
@@ -25987,9 +25987,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "dc5934b83c4a72325685de6b0455485b80d6af2a136c8c4935f3fb0dc9491b83",
-      "semanticRefinedAt": "2026-07-18T14:46:53.885Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.610Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as road_surface",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.961Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.654Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -25997,7 +25997,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.674Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.345Z"
     },
     {
       "id": "road_starter_roundabout_a_v01",
@@ -26229,9 +26229,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "e0f283cff2c3711e8d9effec244b196684d74feb95e076574a2a6a9091edaa99",
-      "semanticRefinedAt": "2026-07-18T14:46:53.885Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.610Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as road_surface",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.961Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.654Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -26239,7 +26239,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.674Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.345Z"
     },
     {
       "id": "road_starter_service_a_v01",
@@ -26471,9 +26471,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "816952c24703d498ad431fe12161b04dd514ff1c594d200dca4a554531f86f4a",
-      "semanticRefinedAt": "2026-07-18T14:46:53.886Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.610Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as road_surface",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.962Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.655Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -26481,7 +26481,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.674Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.345Z"
     },
     {
       "id": "sidewalk_starter_main_a_v01",
@@ -26713,9 +26713,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "a6c09c4f5217f36320330ab9aaa93967d77aea422abd8c40cf0bfb1fc1e13b3e",
-      "semanticRefinedAt": "2026-07-18T14:46:53.886Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.611Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as road_surface",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.962Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.655Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -26723,7 +26723,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.674Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.345Z"
     },
     {
       "id": "sidewalk_starter_residential_a_v01",
@@ -26955,9 +26955,9 @@
         "generationPolicy": "eligible-when-builder-and-town-are-ready"
       },
       "briefHash": "ebbf6a4a09940d54f49c64a7d7879174806daec4d893b750e5b5c09dffe25398",
-      "semanticRefinedAt": "2026-07-18T14:46:53.886Z",
+      "semanticRefinedAt": "2026-07-18T14:49:56.611Z",
       "semanticCategoryReason": "strong filename prefix resolves the physical object as road_surface",
-      "semanticFinalizedAt": "2026-07-18T14:46:55.962Z",
+      "semanticFinalizedAt": "2026-07-18T14:49:58.655Z",
       "inventoryDisposition": {
         "intent": "canonical-generation-request",
         "generationEligible": true,
@@ -26965,7 +26965,7 @@
         "action": "Generate when its town palette, family builder, dependencies, and quality gates are production-ready."
       },
       "generationEligible": true,
-      "inventoryDispositionAuditedAt": "2026-07-18T14:46:56.674Z"
+      "inventoryDispositionAuditedAt": "2026-07-18T14:49:59.345Z"
     }
   ]
 }
