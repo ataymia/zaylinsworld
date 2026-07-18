@@ -47,15 +47,21 @@ jobs:
           const path = 'tools/asset-factory/apply-gameplay-gap-catalog-v2.mjs';
           const source = readFileSync(path, 'utf8');
           const before = "const baseAssets = master.assets.filter((asset) => !gapIds.has(asset.id) && !gapFiles.has(asset.fileName));";
-          const after = `const baseAssets = master.assets
+          const after = `const referenceOnlySources = new Set([
+            'docs/ASSET_USAGE_REPORT.md',
+            'docs/ASSET_CLEANUP_PLAN.md',
+            'docs/CITY_BLUEPRINT_STANDARD.md',
+            'docs/ASSET_CREATION_WORKFLOW.md',
+          ]);
+          const baseAssets = master.assets
             .filter((asset) => !gapIds.has(asset.id) && !gapFiles.has(asset.fileName))
             .map((asset) => ({
               ...asset,
-              generationEligible: asset.generationEligible ?? asset.inventoryDisposition?.generationEligible ?? true,
+              generationEligible: asset.generationEligible ?? !referenceOnlySources.has(asset.sourceDoc),
             }));`;
           if (!source.includes(before)) throw new Error('Expected baseline merge statement was not found.');
           writeFileSync(path, source.replace(before, after));
-          console.log('[factory-hotfix] preserved audited generation eligibility for baseline records.');
+          console.log('[factory-hotfix] classified baseline reference-only records from canonical source documents.');
           NODE
 
       - name: Validate repaired source syntax
