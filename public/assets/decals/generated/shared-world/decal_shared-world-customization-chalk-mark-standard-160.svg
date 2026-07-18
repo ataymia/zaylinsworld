@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Shared World customization Chalk Mark Standard">
+  <title>Shared World customization Chalk Mark Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(208 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(246 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(208 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="86.24,50.00 76.43,65.26 70.63,85.73 50.00,82.13 30.78,83.30 17.50,68.76 19.58,50.00 17.98,31.51 30.61,16.42 50.00,19.11 66.55,21.34 78.58,33.50" fill="url(#fade)"/>
+  <polygon points="86.24,50.00 70.63,85.73 30.78,83.30 19.58,50.00 30.61,16.42 66.55,21.34" fill="none" stroke="hsl(208 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

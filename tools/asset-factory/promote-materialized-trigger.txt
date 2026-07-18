@@ -1,2 +1,0 @@
-Promote the successful 2,298-record materialization artifact from Actions run 29652925908.
-Retry 2 restores each protected workflow independently and refuses to push if any workflow change remains staged.

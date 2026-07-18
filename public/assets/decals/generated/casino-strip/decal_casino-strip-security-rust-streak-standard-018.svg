@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Casino Strip security Rust Streak Standard">
+  <title>Casino Strip security Rust Streak Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(280 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(318 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(280 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="90.11,50.00 82.02,68.49 65.54,76.91 50.00,91.26 32.32,80.62 13.99,70.79 14.83,50.00 17.02,30.96 31.10,17.26 50.00,16.99 69.02,17.06 81.58,31.77" fill="url(#fade)"/>
+  <polygon points="90.11,50.00 65.54,76.91 32.32,80.62 14.83,50.00 31.10,17.26 69.02,17.06" fill="none" stroke="hsl(280 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

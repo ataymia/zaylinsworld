@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Starline City media Water Stain Standard">
+  <title>Starline City media Water Stain Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(103 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(141 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(103 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="84.81,50.00 77.35,65.79 71.00,86.37 50.00,87.80 34.26,77.27 16.74,69.20 16.99,50.00 20.50,32.97 29.25,14.07 50.00,18.47 66.23,21.89 85.97,29.23" fill="url(#fade)"/>
+  <polygon points="84.81,50.00 71.00,86.37 34.26,77.27 16.99,50.00 29.25,14.07 66.23,21.89" fill="none" stroke="hsl(103 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

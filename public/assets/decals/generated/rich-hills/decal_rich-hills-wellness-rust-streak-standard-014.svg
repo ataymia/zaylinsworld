@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Rich Hills wellness Rust Streak Standard">
+  <title>Rich Hills wellness Rust Streak Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(278 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(316 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(278 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="81.81,50.00 84.94,70.17 66.99,79.42 50.00,83.01 30.20,84.30 16.54,69.32 16.90,50.00 16.66,30.75 29.81,15.02 50.00,9.52 65.77,22.69 81.34,31.91" fill="url(#fade)"/>
+  <polygon points="81.81,50.00 66.99,79.42 30.20,84.30 16.90,50.00 29.81,15.02 65.77,22.69" fill="none" stroke="hsl(278 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

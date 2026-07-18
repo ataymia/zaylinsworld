@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Fishing Harbor sea life Barnacle Patch Standard">
+  <title>Fishing Harbor sea life Barnacle Patch Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(51 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(89 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(51 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="86.24,50.00 85.97,70.77 69.02,82.94 50.00,89.69 33.50,78.58 22.05,66.13 17.27,50.00 23.29,34.58 34.67,23.45 50.00,19.30 67.31,20.02 86.17,29.12" fill="url(#fade)"/>
+  <polygon points="86.24,50.00 69.02,82.94 33.50,78.58 17.27,50.00 34.67,23.45 67.31,20.02" fill="none" stroke="hsl(51 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

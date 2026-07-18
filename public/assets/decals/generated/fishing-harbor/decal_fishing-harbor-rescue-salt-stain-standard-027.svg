@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Fishing Harbor rescue Salt Stain Standard">
+  <title>Fishing Harbor rescue Salt Stain Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(326 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(4 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(326 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="85.13,50.00 83.86,69.55 68.05,81.26 50.00,84.62 32.00,81.18 19.42,67.66 18.15,50.00 19.22,32.23 31.33,17.66 50.00,8.09 68.88,17.30 86.13,29.14" fill="url(#fade)"/>
+  <polygon points="85.13,50.00 68.05,81.26 32.00,81.18 18.15,50.00 31.33,17.66 68.88,17.30" fill="none" stroke="hsl(326 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

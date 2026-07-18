@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Casino Strip casino Wet Footprint Standard">
+  <title>Casino Strip casino Wet Footprint Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(145 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(183 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(145 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="85.45,50.00 76.55,65.33 66.66,78.86 50.00,90.02 29.97,84.70 22.17,66.07 8.28,50.00 14.43,29.46 31.26,17.54 50.00,16.58 66.78,20.94 82.50,31.24" fill="url(#fade)"/>
+  <polygon points="85.45,50.00 66.66,78.86 29.97,84.70 8.28,50.00 31.26,17.54 66.78,20.94" fill="none" stroke="hsl(145 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

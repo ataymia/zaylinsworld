@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Shared World optics Hazard Stripe Wear Standard">
+  <title>Shared World optics Hazard Stripe Wear Standard</title>
+  <defs>
+    <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="hsl(301 72% 58%)" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="hsl(339 64% 45%)" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="hsl(301 30% 15%)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+  </defs>
+  <polygon points="82.08,50.00 83.94,69.59 68.30,81.70 50.00,83.47 34.07,77.59 23.77,65.14 12.01,50.00 19.58,32.44 34.58,23.29 50.00,18.28 67.17,20.26 84.06,30.34" fill="url(#fade)"/>
+  <polygon points="82.08,50.00 68.30,81.70 34.07,77.59 12.01,50.00 34.58,23.29 67.17,20.26" fill="none" stroke="hsl(301 72% 58%)" stroke-opacity="0.45" stroke-width="1.2" filter="url(#soft)"/>
+</svg>

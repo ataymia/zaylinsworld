@@ -1,0 +1,91 @@
+{
+  "format": "zta-runtime-asset",
+  "version": 1,
+  "id": "gap-aqualume-life-support-accessibility-effect-router-compact-206",
+  "displayName": "Aqualume life support Accessibility Effect Router Compact",
+  "town": "aqualume",
+  "assetKind": "helper",
+  "family": "runtime_helper",
+  "sourceDoc": "asset-factory/gameplay-gaps/aqualume.json",
+  "description": "Aqualume life support Accessibility Effect Router Compact is a runtime-helper-builder added by the final Zaylins gameplay, sensory, environmental, interaction, customization, and cohesion sweep for aqualume. It closes the “life support helper” gap with a named production asset rather than an invisible placeholder, a recycled generic puff, an unrelated object, or a crude primitive approximation. The result must communicate its purpose immediately through silhouette, motion, timing, optical response, state, surface contact, or interaction while following pressure-rated underwater engineering, thick framed glass, current response, mineral haze, reef-safe anchors, marine seals, and controlled bioluminescence.\n\nRequired production anatomy: named helper origin, input contract, output contract, validation rules, editor visualization, runtime lifecycle, network behavior, failure fallback. Every component is functional. Components connect through believable supports, timing relationships, strand roots, anatomy, attachment points, projection rules, emitter origins, service paths, collision-safe boundaries, or state transitions appropriate to Aqualume life support Accessibility Effect Router Compact. Materials and response layers include editor visualization layer, runtime metadata, debug state, accessibility metadata. Separation follows real construction, biological growth, light transport, contamination, weather, particle behavior, hair-fiber behavior, or gameplay state rather than arbitrary color blocks.\n\nImplementation defines a stable named origin, deterministic forward or projection direction, scale envelope, spawn or placement conditions, looping or one-shot lifecycle, transition timing, cleanup and pooling, network relevance, quality tiers, editor-preview metadata, and validation thresholds. Dependencies on surfaces, bodies, vehicles, weapons, water, wind, camera, lighting, audio, quests, or interaction sockets are explicit and testable. Close-range presentation needs convincing breakup, thickness, depth, hardware, strand structure, species anatomy, or layered motion. Distant presentation preserves the primary read without excessive triangles, overdraw, alpha sorting, particle count, shadows, or replication traffic.\n\nAccessibility is mandatory. The asset does not rely on color alone. Flashing, injury feedback, camera motion, particle density, and hazard communication include reduced-flash, reduced-motion, reduced-particle, high-contrast, or icon alternatives where relevant. Injury effects default to non-graphic presentation. Stylized blood is abstract and optional, contains no gore or exposed anatomy, and has paint, spark, dust, and comic-impact alternatives. Hair uses a scalp-conforming root field, purposeful hairline, believable density and gravity, style-specific structure, silhouette variation, ear and nape clearance, recolor support, and secondary-motion planning. Afros are not bunched spheres. Locs are not identical cylinders. Braids and twists show interwoven rhythm, parting, tension, taper, and purposeful styling.\n\nThis specification never authorizes crude geometry. Every layer reinforces Aqualume life support Accessibility Effect Router Compact, integrates with adjacent Zaylins systems, and passes recognition, lifecycle, town-style, accessibility, performance, and state review. Specialized GLBs remain outside the generic primitive Blender lane until a dedicated builder can satisfy this contract.",
+  "designIntent": "Close the life support helper gap with Aqualume life support Accessibility Effect Router Compact. Preserve its full component, material, lifecycle, accessibility, performance, and state contract without primitive substitutions.",
+  "requiredComponents": [
+    "named helper origin",
+    "input contract",
+    "output contract",
+    "validation rules",
+    "editor visualization",
+    "runtime lifecycle",
+    "network behavior",
+    "failure fallback"
+  ],
+  "materials": [
+    "editor visualization layer",
+    "runtime metadata",
+    "debug state",
+    "accessibility metadata"
+  ],
+  "lifecycle": {
+    "spawnPolicy": "event-or-volume-driven",
+    "pooling": true,
+    "deterministicSeed": "gap-aqualume-life-support-accessibility-effect-router-compact-206",
+    "cleanup": "return-to-pool-after-envelope-and-linger",
+    "networkPolicy": "replicate-trigger-and-seed-not-individual-particles"
+  },
+  "accessibility": {
+    "reducedMotion": true,
+    "reducedFlash": true,
+    "reducedParticles": true,
+    "highContrastFallback": true,
+    "colorIndependentCue": true,
+    "nonGraphicInjuryDefault": true
+  },
+  "qualityTiers": {
+    "low": {
+      "densityScale": 0.35,
+      "updateRate": 30,
+      "shadowing": false
+    },
+    "medium": {
+      "densityScale": 0.65,
+      "updateRate": 45,
+      "shadowing": false
+    },
+    "high": {
+      "densityScale": 1,
+      "updateRate": 60,
+      "shadowing": false
+    }
+  },
+  "engine": "zta-runtime-helper",
+  "contract": {
+    "inputs": [
+      "worldPosition",
+      "worldNormal",
+      "cameraDistance",
+      "qualityTier",
+      "accessibilitySettings",
+      "networkSeed"
+    ],
+    "outputs": [
+      "spawnDecision",
+      "intensity",
+      "orientation",
+      "cleanupToken",
+      "debugGeometry"
+    ],
+    "validation": [
+      "finite-vectors",
+      "bounded-intensity",
+      "deterministic-seed",
+      "pool-return",
+      "editor-preview"
+    ]
+  },
+  "editor": {
+    "visibleByDefault": false,
+    "gizmo": "wireframe-volume",
+    "label": "Aqualume life support Accessibility Effect Router Compact"
+  },
+  "failureFallback": "disable-helper-and-log-once-without-blocking-gameplay"
+}

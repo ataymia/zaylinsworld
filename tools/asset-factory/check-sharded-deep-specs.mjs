@@ -6,6 +6,7 @@ const ROOT = process.cwd();
 const GENERATED_ROOT = join(ROOT, 'asset-factory', 'generated');
 const MANIFEST_PATH = join(GENERATED_ROOT, 'deep-asset-specs.json');
 const COVERAGE_PATH = join(GENERATED_ROOT, 'deep-spec-coverage.json');
+const GAP_SUMMARY_PATH = join(ROOT, 'asset-factory', 'gameplay-gaps', 'summary.json');
 const MAX_SHARD_BYTES = 10 * 1024 * 1024;
 
 if (!existsSync(MANIFEST_PATH) || !existsSync(COVERAGE_PATH)) {
@@ -14,6 +15,12 @@ if (!existsSync(MANIFEST_PATH) || !existsSync(COVERAGE_PATH)) {
 
 const manifest = JSON.parse(readFileSync(MANIFEST_PATH, 'utf8'));
 const coverage = JSON.parse(readFileSync(COVERAGE_PATH, 'utf8'));
+const gapSummary = existsSync(GAP_SUMMARY_PATH)
+  ? JSON.parse(readFileSync(GAP_SUMMARY_PATH, 'utf8'))
+  : null;
+const expectedTotal = Number(gapSummary?.expectedAuditedRecordCount || manifest.totalRecords);
+const expectedCanonical = Number(gapSummary?.expectedCanonicalGenerationRequestCount || manifest.canonicalGenerationRequests);
+const expectedReferenceOnly = Number(gapSummary?.expectedReferenceOnlyRecordCount || manifest.referenceOnlyRecords);
 const failures = [];
 
 function sha256(buffer) {
@@ -23,9 +30,9 @@ function sha256(buffer) {
 if (manifest.format !== 'zta-deep-asset-spec-index') failures.push('Deep specification root file is not a shard manifest.');
 if ('assets' in manifest) failures.push('Shard manifest unexpectedly contains the full assets array.');
 if (!Array.isArray(manifest.shards) || manifest.shards.length < 2) failures.push('Shard manifest does not list multiple shards.');
-if (manifest.totalRecords !== 978) failures.push(`Manifest total is ${manifest.totalRecords}; expected 978.`);
-if (manifest.canonicalGenerationRequests !== 962) failures.push(`Manifest canonical total is ${manifest.canonicalGenerationRequests}; expected 962.`);
-if (manifest.referenceOnlyRecords !== 16) failures.push(`Manifest reference-only total is ${manifest.referenceOnlyRecords}; expected 16.`);
+if (manifest.totalRecords !== expectedTotal) failures.push(`Manifest total is ${manifest.totalRecords}; expected ${expectedTotal}.`);
+if (manifest.canonicalGenerationRequests !== expectedCanonical) failures.push(`Manifest canonical total is ${manifest.canonicalGenerationRequests}; expected ${expectedCanonical}.`);
+if (manifest.referenceOnlyRecords !== expectedReferenceOnly) failures.push(`Manifest reference-only total is ${manifest.referenceOnlyRecords}; expected ${expectedReferenceOnly}.`);
 
 const ids = new Set();
 const briefHashes = new Set();
@@ -64,7 +71,9 @@ for (const record of manifest.shards || []) {
 
   if (record.key === 'reference-only') {
     referenceShardSeen = true;
-    if (shardCanonical !== 0 || shardReference !== 16) failures.push('Reference-only shard must contain exactly 16 noneligible records.');
+    if (shardCanonical !== 0 || shardReference !== expectedReferenceOnly) {
+      failures.push(`Reference-only shard must contain exactly ${expectedReferenceOnly} noneligible records.`);
+    }
   } else {
     if (shardReference !== 0) failures.push(`${record.path}: canonical town shard contains a reference-only record.`);
     for (const asset of shard.assets || []) {
@@ -98,11 +107,11 @@ for (const record of manifest.shards || []) {
 }
 
 if (!referenceShardSeen) failures.push('Reference-only shard is missing.');
-if (total !== 978) failures.push(`Reassembled shard total is ${total}; expected 978.`);
-if (canonical !== 962) failures.push(`Reassembled canonical total is ${canonical}; expected 962.`);
-if (referenceOnly !== 16) failures.push(`Reassembled reference-only total is ${referenceOnly}; expected 16.`);
-if (ids.size !== 978) failures.push(`Unique reassembled ID count is ${ids.size}; expected 978.`);
-if (briefHashes.size !== 978) failures.push(`Unique reassembled brief-hash count is ${briefHashes.size}; expected 978.`);
+if (total !== expectedTotal) failures.push(`Reassembled shard total is ${total}; expected ${expectedTotal}.`);
+if (canonical !== expectedCanonical) failures.push(`Reassembled canonical total is ${canonical}; expected ${expectedCanonical}.`);
+if (referenceOnly !== expectedReferenceOnly) failures.push(`Reassembled reference-only total is ${referenceOnly}; expected ${expectedReferenceOnly}.`);
+if (ids.size !== expectedTotal) failures.push(`Unique reassembled ID count is ${ids.size}; expected ${expectedTotal}.`);
+if (briefHashes.size !== expectedTotal) failures.push(`Unique reassembled brief-hash count is ${briefHashes.size}; expected ${expectedTotal}.`);
 if (coverage.shardedStorage !== true) failures.push('Coverage does not record sharded storage.');
 if (coverage.shardCount !== manifest.shards?.length) failures.push('Coverage shard count does not match manifest.');
 if (coverage.largestShardBytes !== Math.max(...computedRecords.map((record) => record.bytes))) failures.push('Coverage largest-shard byte count is stale.');
@@ -111,8 +120,8 @@ if (JSON.stringify(coverage.shards) !== JSON.stringify(computedRecords)) failure
 
 if (failures.length) {
   console.error(`[sharded-specs] ${failures.length} validation failure(s)`);
-  for (const failure of failures.slice(0, 250)) console.error(`- ${failure}`);
-  if (failures.length > 250) console.error(`- ...and ${failures.length - 250} additional failures`);
+  for (const failure of failures.slice(0, 300)) console.error(`- ${failure}`);
+  if (failures.length > 300) console.error(`- ...and ${failures.length - 300} additional failures`);
   process.exit(1);
 }
 

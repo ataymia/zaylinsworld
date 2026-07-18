@@ -1,2 +1,0 @@
-Trusted child-PR materialization trigger for the repaired 2,298-record Zaylins asset factory.
-Retry 5 uses byte-aware town sub-shards capped safely below the 10 MB repository limit.
