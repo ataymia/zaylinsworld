@@ -15,6 +15,11 @@ import { StreamingController } from './StreamingController.js';
 import { LODPolicy } from './LODPolicy.js';
 import { runtimeDiagnostics } from './RuntimeDiagnostics.js';
 import { sceneLifecycle } from './SceneLifecycle.js';
+import {
+  ensureGameObjectPools,
+  releaseCellObjects,
+  resizeGameObjectPools,
+} from './GameObjectPools.js';
 import { RoadNetwork } from '../world/RoadNetwork.js';
 import { RoadGraph } from '../world/RoadGraph.js';
 import { RoadValidator } from '../world/RoadValidator.js';
@@ -31,6 +36,7 @@ export class StarterTownRuntime {
     plan = STARTER_TOWN_RUNTIME_PLAN,
     maxJobsPerFrame = 3,
     graphicsPreset = graphics.effectivePreset(),
+    poolFactories = {},
   } = {}) {
     this.plan = plan;
     this.worldRegistry = worldRegistry;
@@ -50,7 +56,12 @@ export class StarterTownRuntime {
     this.streaming = new StreamingController({ grid: this.grid, maxJobsPerFrame });
     this.lod = new LODPolicy({ graphicsPreset });
     this.boundary = starterTownBoundaryGuard;
+    this.pools = ensureGameObjectPools({ preset: graphicsPreset, factories: poolFactories });
     this.handlers = new Map();
+    this.registerJobHandler('unload', ({ job }) => ({
+      released: releaseCellObjects(job.cellId),
+      cellId: job.cellId,
+    }));
     this.scene = null;
     this.renderer = null;
     this.playerPosition = null;
@@ -68,6 +79,7 @@ export class StarterTownRuntime {
       recoveries: 0,
       clamps: 0,
       featureBuilds: 0,
+      pooledReleases: 0,
     };
   }
 
@@ -103,6 +115,7 @@ export class StarterTownRuntime {
         includeMassing: true,
         includeStreetscape: true,
         includeGeneratedRoadside: true,
+        includeSpecialRoadForms: true,
       });
       scene.add(this.largeTown.group);
       this.scope.object3D(this.largeTown.group, {}, 'large-town-group');
@@ -142,6 +155,7 @@ export class StarterTownRuntime {
         console.warn(`[starter-runtime] ${job.kind} handler failed for ${job.cellId}`, error);
         result = { failed: true, message: error?.message || String(error) };
       }
+      if (job.kind === 'unload') this.stats.pooledReleases += Number(result?.released) || 0;
       this.streaming.complete(job);
       this.stats.jobsProcessed += 1;
       results.push({ job, cell, result });
@@ -217,6 +231,7 @@ export class StarterTownRuntime {
 
   setGraphicsPreset(preset) {
     this.lod.setGraphicsPreset(preset);
+    resizeGameObjectPools(preset);
     this._updateDiagnostics();
   }
 
@@ -244,6 +259,7 @@ export class StarterTownRuntime {
       lod: this.lod.snapshot(),
       boundary: this.lastBoundary,
       environment: this.lastEnvironment,
+      pools: Object.fromEntries(Object.entries(this.pools).map(([id, pool]) => [id, pool.snapshot()])),
       lastJobs: this.lastJobs.map(({ job, result }) => ({ key: job.key, kind: job.kind, cellId: job.cellId, result })),
       stats: { ...this.stats },
     };
