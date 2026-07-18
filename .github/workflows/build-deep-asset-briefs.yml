@@ -60,6 +60,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -119,9 +120,10 @@ jobs:
         run: node tools/asset-factory/check-inventory-intent.mjs
 
       - name: Commit generated specification library
-        if: github.event_name == 'push' && github.actor != 'github-actions[bot]'
+        if: github.actor != 'github-actions[bot]'
         shell: bash
         run: |
+          TARGET_BRANCH="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add asset-factory/generated/deep-asset-specs.json
@@ -131,8 +133,8 @@ jobs:
             exit 0
           fi
           git commit -m "Generate all deep asset production briefs [skip ci]"
-          git pull --rebase origin "${GITHUB_REF_NAME}"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+          git pull --rebase origin "$TARGET_BRANCH"
+          git push origin "HEAD:$TARGET_BRANCH"
 
       - name: Upload deep specification artifact
         if: always()
