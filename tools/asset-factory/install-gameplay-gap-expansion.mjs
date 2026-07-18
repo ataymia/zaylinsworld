@@ -41,5 +41,6 @@ writeFileSync(MANIFEST_PATH, `${JSON.stringify({
   parts,
   files,
 }, null, 2)}\n`);
+console.log('[factory-bootstrap] trusted follow-up trigger accepted.');
 console.log(`[factory-bootstrap] verified ${compressed.length} compressed bytes (${digest}).`);
 console.log(`[factory-bootstrap] installed ${files.length} repaired production files.`);
