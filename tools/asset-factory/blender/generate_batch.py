@@ -121,7 +121,8 @@ def refine_retry_geometry(spec):
     for obj in mesh_objects():
         if not obj.data or len(obj.data.polygons) == 0:
             continue
-        minimum_dimension = min(abs(value) for value in obj.dimensions if abs(value) > 0.0001) if any(abs(value) > 0.0001 for value in obj.dimensions) else 0
+        nonzero_dimensions = [abs(value) for value in obj.dimensions if abs(value) > 0.0001]
+        minimum_dimension = min(nonzero_dimensions) if nonzero_dimensions else 0
         if minimum_dimension <= 0.008:
             continue
         modifier = obj.modifiers.new(name=f"retry_refinement_{attempt}", type="BEVEL")
@@ -142,6 +143,19 @@ def refine_retry_geometry(spec):
 
     bpy.context.view_layer.update()
     return f"attempt {attempt} hard-surface refinement applied to {refined} mesh objects"
+
+
+def verify_export(output_path):
+    if not os.path.exists(output_path):
+        raise RuntimeError("Blender reported export completion but the GLB file does not exist.")
+    size = os.path.getsize(output_path)
+    if size < 1024:
+        raise RuntimeError(f"Exported GLB is unexpectedly small: {size} bytes.")
+    with open(output_path, "rb") as handle:
+        magic = handle.read(4)
+    if magic != b"glTF":
+        raise RuntimeError(f"Exported file has invalid GLB magic bytes: {magic!r}.")
+    return size
 
 
 def main():
@@ -166,6 +180,9 @@ def main():
             "attempt": spec.get("factoryAttempt", 1),
             "qaOverride": None,
             "retryEnhancement": None,
+            "qualityPassed": False,
+            "exportVerified": False,
+            "exportBytes": 0,
             "passed": False,
             "failures": [],
             "exception": None,
@@ -200,21 +217,29 @@ def main():
             result["stats"] = stats
             result["previewPaths"] = [relative_to_cwd(path) for path in preview_paths]
             result["previewCoverage"] = preview_coverage
-            result["failures"] = quality["failures"]
-            result["passed"] = quality["passed"]
+            result["failures"] = list(quality["failures"])
+            result["qualityPassed"] = bool(quality["passed"])
 
-            if quality["passed"]:
-                output_path = os.path.join(args.output_root, spec["town"], spec["family"], spec["fileName"])
-                export_glb(root, output_path)
-                result["outputPath"] = relative_to_cwd(output_path)
-                print(
-                    f"[asset-factory] PASS {asset_id}: {stats['meshObjects']} meshes, "
-                    f"{stats['triangles']} triangles, {stats['materialCount']} materials",
-                    flush=True,
-                )
-            else:
+            if not quality["passed"]:
                 print(f"[asset-factory] FAIL {asset_id}: {'; '.join(quality['failures'])}", flush=True)
+                continue
+
+            output_path = os.path.join(args.output_root, spec["town"], spec["family"], spec["fileName"])
+            export_glb(root, output_path)
+            result["exportBytes"] = verify_export(output_path)
+            result["exportVerified"] = True
+            result["outputPath"] = relative_to_cwd(output_path)
+            result["passed"] = True
+            print(
+                f"[asset-factory] PASS {asset_id}: {stats['meshObjects']} meshes, "
+                f"{stats['triangles']} triangles, {stats['materialCount']} materials, "
+                f"{result['exportBytes']} GLB bytes",
+                flush=True,
+            )
         except Exception as error:
+            result["passed"] = False
+            result["exportVerified"] = False
+            result["outputPath"] = None
             result["exception"] = f"{type(error).__name__}: {error}"
             result["failures"].append(result["exception"])
             result["traceback"] = traceback.format_exc()
