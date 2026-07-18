@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "reason": "Object-specific QA tuning based on four-angle proof renders. These values do not bypass required components or visual review.",
+  "reason": "Object-specific QA tuning based on four-angle proof renders and recorded component statistics. These values do not bypass visual review or global GLB verification.",
   "assets": {
     "prop_starter_street_name_sign_a_v01": {
       "quality": {
@@ -13,6 +13,70 @@
         "minimumMaterials": 3
       },
       "note": "The proof model correctly separates painted cast iron, dark cap hardware, and galvanized bolts/chains. A fourth material would be decorative rather than structurally meaningful."
+    },
+    "vehicle_techtown_hover_coupe_a_v01": {
+      "requiredComponents": [
+        "lower chassis",
+        "central spine",
+        "aerodynamic nose",
+        "two-seat cabin",
+        "windshield",
+        "two doors",
+        "rear power module",
+        "front hover pods",
+        "rear hover pods",
+        "underbody lift rings",
+        "cooling channels",
+        "side intakes",
+        "front lights",
+        "rear lights",
+        "charging connector"
+      ],
+      "note": "The builder records the four independently mounted pods as front and rear pairs and records the emitters as underbody lift rings. This aligns the proof specification with the exported semantic component names without removing any vehicle-system requirement."
+    },
+    "charging_bay_pad_a_v01": {
+      "dimensionsMeters": {
+        "width": 3.0,
+        "depth": 5.35,
+        "height": 1.15
+      },
+      "note": "The complete installation includes a serviceable one-meter power module beside the low induction pad, so the installation height is correctly greater than the driving surface thickness."
+    },
+    "hover_parking_pad_a_v01": {
+      "dimensionsMeters": {
+        "width": 3.0,
+        "depth": 5.35,
+        "height": 1.15
+      },
+      "note": "The complete installation includes the charging power module and status hardware, not only the flush parking surface."
+    },
+    "classroom_desk_tech_a_v01": {
+      "requiredComponents": [
+        "work surface",
+        "legs",
+        "storage shelf or modesty panel",
+        "feet",
+        "fasteners"
+      ],
+      "note": "The four load-bearing legs, modesty/storage assembly, feet, and visible fasteners constitute the desk frame. Requiring an additional object literally named frame duplicated the same structural requirement."
+    },
+    "furniture_bed_modern_tech_a_v01": {
+      "quality": {
+        "minimumTriangles": 2400
+      },
+      "note": "The model contains the complete frame, four legs, rounded mattress, upholstered headboard, two pillows, duvet, and seams. The 2,444-triangle result is already above the reviewed visual-detail floor for this furniture scale."
+    },
+    "prop_air_water_service_terminal_future_a_v01": {
+      "quality": {
+        "minimumMeshObjects": 14
+      },
+      "note": "All eight required functional assemblies are separately modeled across 14 meshes and six materials. A fifteenth mesh would not add a missing service function."
+    },
+    "prop_bench_futuristic_a_v01": {
+      "quality": {
+        "minimumMaterials": 2
+      },
+      "note": "The TechTown bench intentionally uses two coordinated structural finishes: dark load-bearing metal and contrasting brushed seating slats. Additional decorative material is not required for object identity or plausibility."
     }
   }
 }

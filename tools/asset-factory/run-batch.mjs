@@ -16,6 +16,7 @@ const PREVIEW_DIR = join(WORK_DIR, 'previews');
 const OUTPUT_ROOT = join(ROOT, 'public', 'assets', 'models', 'generated');
 const INDEX_PATH = join(ROOT, 'public', 'assets', 'models', 'asset-index-v2.json');
 const POLICY_PATH = join(FACTORY_DIR, 'quality-policy.json');
+const READY_TOWNS = new Set(['starter-town', 'techtown']);
 
 function parseArgs(argv) {
   const options = { batchSize: null, dryRun: false };
@@ -69,6 +70,18 @@ function indexCategory(spec) {
   return 'props';
 }
 
+function builderReady(spec) {
+  if (!spec?.builderStatus || spec.builderStatus !== 'supported' || !spec.builder) return false;
+  if (!READY_TOWNS.has(spec.town)) return false;
+
+  // The current road-sign builder intentionally supports regulation stop signs
+  // and cross-street blades. Bespoke district/town wayfinding remains held until
+  // its own family builder exists rather than becoming a disguised stop sign.
+  if (spec.builder === 'road_sign' && !/(stop_sign|street_name_sign)/.test(spec.fileName)) return false;
+
+  return true;
+}
+
 function indexPassedAssets(masterById, blenderReport) {
   const index = readJson(INDEX_PATH);
   const pack = 'zta-free-asset-factory';
@@ -118,8 +131,8 @@ function createMarkdownReport({ batch, blenderReport, masterById, queue }) {
     '',
     '## Batch results',
     '',
-    '| Asset | Town | Family | Result | Meshes | Triangles | Materials | Notes |',
-    '|---|---|---|---|---:|---:|---:|---|',
+    '| Asset | Town | Family | Result | Meshes | Triangles | Materials | GLB bytes | Notes |',
+    '|---|---|---|---|---:|---:|---:|---:|---|',
   ];
 
   for (const result of blenderReport.results) {
@@ -129,13 +142,14 @@ function createMarkdownReport({ batch, blenderReport, masterById, queue }) {
       ? `Registered at ${result.outputPath}`
       : `${result.failures.join('; ')}. Queue status: ${state?.status || 'unknown'}`;
     lines.push(
-      `| ${markdownEscape(spec?.displayName || result.id)} | ${markdownEscape(result.town)} | ${markdownEscape(result.family)} | ${result.passed ? 'PASS' : 'FAIL'} | ${result.stats?.meshObjects ?? 0} | ${result.stats?.triangles ?? 0} | ${result.stats?.materialCount ?? 0} | ${markdownEscape(notes)} |`,
+      `| ${markdownEscape(spec?.displayName || result.id)} | ${markdownEscape(result.town)} | ${markdownEscape(result.family)} | ${result.passed ? 'PASS' : 'FAIL'} | ${result.stats?.meshObjects ?? 0} | ${result.stats?.triangles ?? 0} | ${result.stats?.materialCount ?? 0} | ${result.exportBytes ?? 0} | ${markdownEscape(notes)} |`,
     );
   }
 
   lines.push('', '## Quality contract', '');
   lines.push('- A technically valid GLB is not automatically accepted.');
   lines.push('- Required components, scale, materials, pivot, silhouette coverage, and geometry budgets are checked.');
+  lines.push('- Passing additionally requires a verified nonempty GLB with valid binary magic bytes.');
   lines.push('- Unsupported families are never replaced by generic primitive placeholders.');
   lines.push('- Persistent failures are quarantined while the rest of the queue continues.');
   lines.push('');
@@ -163,6 +177,9 @@ function createLatestSummary({ batch, blenderReport, queue }) {
     results: blenderReport.results.map((item) => ({
       id: item.id,
       passed: item.passed,
+      qualityPassed: item.qualityPassed,
+      exportVerified: item.exportVerified,
+      exportBytes: item.exportBytes,
       outputPath: item.outputPath,
       failures: item.failures,
       stats: item.stats,
@@ -176,16 +193,17 @@ function chooseBatch(master, queue, batchSize) {
   const chosen = Object.values(queue.assets)
     .filter((item) => item.status === 'queued')
     .map((item) => ({ state: item, spec: masterById.get(item.id) }))
-    .filter(({ spec }) => spec?.builderStatus === 'supported' && spec.builder)
+    .filter(({ spec }) => builderReady(spec))
     .sort((a, b) => {
       if (a.state.priority !== b.state.priority) return a.state.priority - b.state.priority;
-      if (a.state.attempts !== b.state.attempts) return a.state.attempts - b.state.attempts;
+      if (a.state.attempts !== b.state.attempts) return b.state.attempts - a.state.attempts;
       return a.state.id.localeCompare(b.state.id);
     })
     .slice(0, batchSize)
     .map(({ state, spec }) => ({
       ...spec,
       factoryAttempt: state.attempts + 1,
+      previousError: state.lastError || null,
     }));
   return { chosen, masterById };
 }
@@ -233,11 +251,11 @@ function main() {
     const summary = {
       version: 1,
       completedAt: isoNow(),
-      message: 'No supported queued assets remain. Unsupported and quarantined assets require purpose-built family work, not generic fallback generation.',
+      message: 'No production-ready queued assets remain. Other fully specified assets are waiting for their town palette or purpose-built family variant rather than using generic fallback geometry.',
     };
     writeJson(join(REPORTS_DIR, 'latest.json'), summary);
     writeJson(QUEUE_PATH, queue);
-    console.log('[asset-factory] no supported queued assets remain');
+    console.log('[asset-factory] no production-ready queued assets remain');
     return;
   }
 
