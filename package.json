@@ -33,7 +33,9 @@
     "asset:check-physical": "node tools/asset-factory/check-physical-specs.mjs",
     "asset:check-specialized": "node tools/asset-factory/check-specialized-physical-specs.mjs",
     "asset:check-inventory": "node tools/asset-factory/check-inventory-intent.mjs",
-    "asset:deep": "npm run asset:enrich && npm run asset:normalize-deep && npm run asset:refine-deep && npm run asset:finalize-deep && npm run asset:derive-physical && npm run asset:specialize-physical && npm run asset:finalize-deep && npm run asset:audit-inventory && npm run asset:check-deep && npm run asset:check-physical && npm run asset:check-specialized && npm run asset:check-inventory",
+    "asset:shard-deep": "node tools/asset-factory/shard-deep-specs.mjs",
+    "asset:check-shards": "node tools/asset-factory/check-sharded-deep-specs.mjs",
+    "asset:deep": "npm run asset:enrich && npm run asset:normalize-deep && npm run asset:refine-deep && npm run asset:finalize-deep && npm run asset:derive-physical && npm run asset:specialize-physical && npm run asset:finalize-deep && npm run asset:audit-inventory && npm run asset:check-deep && npm run asset:check-physical && npm run asset:check-specialized && npm run asset:check-inventory && npm run asset:shard-deep && npm run asset:check-shards",
     "asset:batch": "node tools/asset-factory/run-batch.mjs --batch-size 10",
     "asset:dry-run": "node tools/asset-factory/run-batch.mjs --batch-size 10 --dry-run"
   },
