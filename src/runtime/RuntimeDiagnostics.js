@@ -4,6 +4,7 @@
 import { loadingSnapshot } from '../loader.js';
 import { graphics } from '../graphics.js';
 import { performanceBudget, budgetViolations } from '../config/performanceBudgets.js';
+import { buildPhaseSummary } from '../config/buildPhaseStatus.js';
 import { worldRegistry } from './WorldRegistry.js';
 import { assetRuntimeRegistry } from './AssetRuntimeRegistry.js';
 import { sceneLifecycle } from './SceneLifecycle.js';
@@ -91,6 +92,7 @@ export class RuntimeDiagnostics {
       lifecycle: sceneLifecycle.snapshot(),
       pools: poolRegistry.snapshot(),
       world: worldRegistry.snapshot(),
+      buildPhases: buildPhaseSummary(),
       ...this.extra,
     };
     metrics.budget = performanceBudget(metrics.preset === 'custom' ? 'medium' : metrics.preset);
@@ -110,6 +112,7 @@ export class RuntimeDiagnostics {
       town: snapshot.townId,
       district: snapshot.districtId,
       preset: snapshot.preset,
+      nextPhase: snapshot.buildPhases?.next || null,
       violations: snapshot.violations.length,
     });
     return snapshot;
