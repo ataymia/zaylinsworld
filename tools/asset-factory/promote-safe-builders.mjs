@@ -1,16 +1,22 @@
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const ROOT = process.cwd();
 const MASTER_PATH = join(ROOT, 'asset-factory', 'generated', 'master-asset-specs.json');
 const QUEUE_PATH = join(ROOT, 'asset-factory', 'state', 'queue.json');
-const BUILDER_REVISION = '2026-07-18-r5';
+const PRIORITY_OVERRIDE_PATH = join(ROOT, 'asset-factory', 'priority-shape-overrides.json');
+const BUILDER_REVISION = '2026-07-18-r6';
 
 const REPAIRED_FAMILIES = new Set([
   'charging_pad', 'fuel_pump', 'digital_kiosk', 'office_desk', 'mailbox',
   'road_sign', 'road-sign', 'municipal_trash_can', 'municipal_bench',
   'streetlight', 'hover_vehicle', 'wall_screen', 'modular_food',
+  'bubble_lift', 'airlock_conduit', 'elevated_road_support', 'accessibility_gate',
 ]);
+
+const priorityOverrides = existsSync(PRIORITY_OVERRIDE_PATH)
+  ? JSON.parse(readFileSync(PRIORITY_OVERRIDE_PATH, 'utf8')).assets || {}
+  : {};
 
 function selectBuilder(asset) {
   if (asset.generationEligible === false) return null;
@@ -56,10 +62,24 @@ const queueAssets = Array.isArray(queue.assets)
   : (queue.assets || {});
 let promoted = 0;
 let requeued = 0;
+let priorityApplied = 0;
+let priorityRebuilds = 0;
 
 for (const asset of master.assets) {
-  const selected = selectBuilder(asset);
   const state = queueAssets[asset.id];
+  const previousBuilder = state?.builder || asset.builder || null;
+  const previousRevision = state?.builderRevision || asset.builderRevision || null;
+  const previousStatus = state?.status || null;
+  const priorityOverride = priorityOverrides[asset.id];
+
+  if (priorityOverride) {
+    const preservedQuality = asset.quality || {};
+    Object.assign(asset, priorityOverride);
+    asset.quality = { ...preservedQuality, ...(priorityOverride.quality || {}) };
+    priorityApplied += 1;
+  }
+
+  const selected = selectBuilder(asset);
   if (!selected) {
     if (asset.builderStatus !== 'runtime' && asset.generationEligible !== false) {
       asset.builder = null;
@@ -75,13 +95,21 @@ for (const asset of master.assets) {
   asset.builderStatus = 'supported';
   asset.builderRevision = BUILDER_REVISION;
   asset.quality = qualityFor(builder, asset.quality || {});
+
   if (state) {
     state.family = family;
     state.builder = builder;
     state.builderStatus = 'supported';
     state.builderRevision = BUILDER_REVISION;
-    const repaired = REPAIRED_FAMILIES.has(family) || REPAIRED_FAMILIES.has(asset.family) || builder.startsWith('modular_') || builder === 'state_variant';
-    if (state.status !== 'completed' && repaired && ['unsupported', 'quarantined', 'failed', undefined, null].includes(state.status)) {
+    const repaired = REPAIRED_FAMILIES.has(family) || builder.startsWith('modular_') || builder === 'state_variant';
+    const priorityNeedsRebuild = Boolean(priorityOverride)
+      && previousStatus === 'completed'
+      && (previousBuilder !== builder || previousRevision !== BUILDER_REVISION);
+    const recoverableFailure = previousStatus !== 'completed'
+      && repaired
+      && ['unsupported', 'quarantined', 'failed', undefined, null].includes(previousStatus);
+
+    if (priorityNeedsRebuild || recoverableFailure) {
       state.status = 'queued';
       state.attempts = 0;
       state.lastError = null;
@@ -89,7 +117,9 @@ for (const asset of master.assets) {
       state.generatedPath = null;
       state.updatedAt = new Date().toISOString();
       state.requeuedByBuilderRevision = BUILDER_REVISION;
+      state.priorityShapeRebuild = priorityNeedsRebuild;
       requeued += 1;
+      if (priorityNeedsRebuild) priorityRebuilds += 1;
     }
   }
 }
@@ -98,6 +128,7 @@ const statuses = {};
 for (const state of Object.values(queueAssets)) statuses[state.status] = (statuses[state.status] || 0) + 1;
 master.generatedAt = new Date().toISOString();
 master.builderRevision = BUILDER_REVISION;
+master.priorityShapeOverrideVersion = 1;
 master.counts = {
   ...(master.counts || {}),
   total: master.assets.length,
@@ -121,5 +152,6 @@ queue.counts = {
 writeFileSync(MASTER_PATH, `${JSON.stringify(master, null, 2)}\n`);
 writeFileSync(QUEUE_PATH, `${JSON.stringify(queue, null, 2)}\n`);
 console.log(`[builder-promotion] revision=${BUILDER_REVISION}; promoted=${promoted}; requeued=${requeued}.`);
+console.log(`[builder-promotion] priority-overrides=${priorityApplied}; priority-rebuilds=${priorityRebuilds}.`);
 console.log(`[builder-promotion] supported=${master.counts.supported}; runtime=${master.counts.runtime}; unsupported=${master.counts.unsupported}.`);
 console.log(`[builder-promotion] queue=${JSON.stringify(statuses)}.`);
