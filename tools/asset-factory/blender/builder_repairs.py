@@ -13,13 +13,13 @@ from builder_repairs_legacy import (
 from builder_repairs_modular import (
     build_modular_building,
     build_modular_connector,
-    build_modular_food,
     build_modular_furniture,
     build_modular_infrastructure,
     build_modular_prop,
     build_modular_road,
     build_state_variant,
 )
+from builder_repairs_food import build_modular_food_fixed
 
 
 def install_repairs(builders):
@@ -41,6 +41,6 @@ def install_repairs(builders):
         "state_variant": build_state_variant,
         "modular_building": build_modular_building,
         "modular_road": build_modular_road,
-        "modular_food": build_modular_food,
+        "modular_food": build_modular_food_fixed,
     })
     return builders
