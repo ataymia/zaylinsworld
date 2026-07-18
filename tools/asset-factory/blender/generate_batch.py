@@ -33,6 +33,16 @@ if os.path.exists(QA_OVERRIDES_PATH):
 else:
     QA_OVERRIDES = {}
 
+MUNICIPAL_BENCH_COMPONENTS = [
+    "seat slats",
+    "back slats",
+    "left side frame",
+    "right side frame",
+    "armrests",
+    "rear support rails",
+    "anchored feet",
+]
+
 
 def configure_render_compatible():
     scene = bpy.context.scene
@@ -87,16 +97,27 @@ def relative_to_cwd(path):
 
 
 def apply_qa_override(spec):
+    notes = []
+
+    # Family contracts must match the semantic components emitted by the
+    # corresponding purpose-built builder. This is stricter than vague generic
+    # nouns such as "seat structure" because every structural member is named.
+    if spec.get("family") == "municipal_bench":
+        spec["requiredComponents"] = list(MUNICIPAL_BENCH_COMPONENTS)
+        notes.append("Municipal bench contract aligned to separately modeled slats, frames, rails, armrests, and anchors.")
+
     override = QA_OVERRIDES.get(spec["id"])
-    if not override:
-        return None
-    if override.get("dimensionsMeters"):
-        spec.setdefault("dimensionsMeters", {}).update(override["dimensionsMeters"])
-    if override.get("quality"):
-        spec.setdefault("quality", {}).update(override["quality"])
-    if override.get("requiredComponents"):
-        spec["requiredComponents"] = list(override["requiredComponents"])
-    return override.get("note")
+    if override:
+        if override.get("dimensionsMeters"):
+            spec.setdefault("dimensionsMeters", {}).update(override["dimensionsMeters"])
+        if override.get("quality"):
+            spec.setdefault("quality", {}).update(override["quality"])
+        if override.get("requiredComponents"):
+            spec["requiredComponents"] = list(override["requiredComponents"])
+        if override.get("note"):
+            notes.append(override["note"])
+
+    return " ".join(notes) if notes else None
 
 
 def saved_preview_coverage(paths):
@@ -119,6 +140,11 @@ def refine_retry_geometry(spec):
     if attempt <= 1:
         return "base detail"
 
+    previous_error = str(spec.get("previousError") or "").lower()
+    needs_more_geometry = "triangle count" in previous_error and "below" in previous_error
+    if not needs_more_geometry:
+        return f"attempt {attempt} applies corrected specifications without unnecessary geometry inflation"
+
     refined = 0
     for obj in mesh_objects():
         if not obj.data or len(obj.data.polygons) == 0:
@@ -128,8 +154,8 @@ def refine_retry_geometry(spec):
         if minimum_dimension <= 0.008:
             continue
         modifier = obj.modifiers.new(name=f"retry_refinement_{attempt}", type="BEVEL")
-        modifier.width = min(0.018 * attempt, minimum_dimension * 0.08)
-        modifier.segments = 2 + attempt
+        modifier.width = min(0.012 * attempt, minimum_dimension * 0.06)
+        modifier.segments = 2 + min(attempt, 2)
         modifier.limit_method = "ANGLE"
         apply_modifier(obj, modifier.name)
         refined += 1
@@ -144,7 +170,7 @@ def refine_retry_geometry(spec):
                 refined += 1
 
     bpy.context.view_layer.update()
-    return f"attempt {attempt} hard-surface refinement applied to {refined} mesh objects"
+    return f"attempt {attempt} geometry refinement applied to {refined} mesh objects because the previous failure was below the detail floor"
 
 
 def verify_export(output_path):
