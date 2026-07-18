@@ -5,7 +5,8 @@
 // meshes/textures behind those ids, so a later Genies/full-pack migration does
 // not require rebuilding the wardrobe or invalidating saved outfits.
 // ─────────────────────────────────────────────────────────────────────────────
-import { SKIN_TONES, JEWELRY, HAIR_GLTF, HAIR_COLORS } from '../avatar.js';
+import { JEWELRY, HAIR_GLTF, HAIR_COLORS } from '../avatar.js';
+import { PLAYER_SKIN_TONES } from './skinPalette.js';
 
 export const PLAYER_MODEL_URL = './assets/models/characters/player/sunbox-male-free.glb';
 export const PLAYER_TEXTURE_ROOT = './assets/models/characters/player/sunbox-male-free/textures/';
@@ -32,7 +33,7 @@ export const PLAYER_AVATAR_CATALOG = Object.freeze({
     item('sunbox-male-free', 'Male Base', { modelUrl: PLAYER_MODEL_URL, status: 'available' }),
     item('future-base', 'More Bases', { status: 'coming-soon', disabled: true }),
   ]),
-  skinTones: SKIN_TONES,
+  skinTones: PLAYER_SKIN_TONES,
   jewelry: JEWELRY,
   hairColors: HAIR_COLORS,
   slots: Object.freeze({
