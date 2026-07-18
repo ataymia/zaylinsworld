@@ -6,6 +6,7 @@ on:
       - 'tools/asset-factory/priority-builder-proof-trigger.txt'
       - 'asset-factory/priority-shape-overrides.json'
       - 'tools/asset-factory/blender/builder_repairs_priority.py'
+      - 'tools/asset-factory/blender/builder_repairs_accessibility.py'
       - 'tools/asset-factory/blender/builder_repairs.py'
       - 'tools/asset-factory/promote-safe-builders.mjs'
       - '.github/workflows/verify-priority-builders.yml'
@@ -41,6 +42,7 @@ jobs:
             tools/asset-factory/blender/common.py \
             tools/asset-factory/blender/builder_repair_utils.py \
             tools/asset-factory/blender/builder_repairs_priority.py \
+            tools/asset-factory/blender/builder_repairs_accessibility.py \
             tools/asset-factory/blender/builder_repairs.py \
             tools/asset-factory/blender/generate_batch.py
           node tools/asset-factory/compile-expanded-specs.mjs
@@ -105,7 +107,7 @@ jobs:
               throw new Error(`Invalid output for ${result.id}.`);
             }
           }
-          console.log('[priority-proof] dedicated airlock conduit and accessibility gate both passed.');
+          console.log('[priority-proof] dedicated airlock conduit and open accessibility gate both passed.');
           NODE
 
       - name: Upload exact shape proof
