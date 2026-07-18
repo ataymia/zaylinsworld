@@ -1,0 +1,83 @@
+name: Build Deep Asset Briefs
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'tools/asset-factory/enrich-all-specs.mjs'
+      - 'tools/asset-factory/check-deep-specs.mjs'
+      - 'asset-factory/quality-policy.json'
+      - 'asset-factory/manual-overrides.json'
+      - 'asset-factory/generated/master-asset-specs.json'
+      - 'docs/**/*.md'
+      - '.github/workflows/build-deep-asset-briefs.yml'
+  pull_request:
+    paths:
+      - 'tools/asset-factory/enrich-all-specs.mjs'
+      - 'tools/asset-factory/check-deep-specs.mjs'
+      - 'asset-factory/quality-policy.json'
+      - 'asset-factory/manual-overrides.json'
+      - 'asset-factory/generated/master-asset-specs.json'
+      - 'docs/**/*.md'
+      - '.github/workflows/build-deep-asset-briefs.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: zta-deep-asset-briefs-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate source syntax
+        run: |
+          node --check tools/asset-factory/enrich-all-specs.mjs
+          node --check tools/asset-factory/check-deep-specs.mjs
+
+      - name: Generate deep production briefs for the complete asset library
+        run: node tools/asset-factory/enrich-all-specs.mjs
+
+      - name: Require complete unique coverage
+        run: node tools/asset-factory/check-deep-specs.mjs
+
+      - name: Commit generated specification library
+        if: github.event_name == 'push' && github.actor != 'github-actions[bot]'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add asset-factory/generated/deep-asset-specs.json
+          git add asset-factory/generated/deep-spec-coverage.json
+          if git diff --cached --quiet; then
+            echo "Deep asset specification library is already current."
+            exit 0
+          fi
+          git commit -m "Generate all deep asset production briefs [skip ci]"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: Upload deep specification artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zta-deep-asset-briefs-${{ github.run_number }}
+          path: |
+            asset-factory/generated/deep-asset-specs.json
+            asset-factory/generated/deep-spec-coverage.json
+          if-no-files-found: warn
+          retention-days: 7
