@@ -4,11 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       batch_size:
-        description: Assets to process in this run, capped at 20
+        description: Assets per pass, capped at 20
         required: false
         default: '20'
+      batch_passes:
+        description: Sequential production passes in one runner
+        required: false
+        default: '2'
   schedule:
-    - cron: '17,47 * * * *'
+    - cron: '2,17,32,47 * * * *'
   pull_request:
     paths:
       - 'asset-factory/**'
@@ -30,19 +34,23 @@ permissions:
 
 concurrency:
   group: zta-free-asset-factory-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   generate:
     if: github.actor != 'github-actions[bot]' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    timeout-minutes: 150
+    timeout-minutes: 180
+    env:
+      BATCH_SIZE: ${{ github.event.inputs.batch_size || '20' }}
+      BATCH_PASSES: ${{ github.event_name == 'pull_request' && '1' || github.event.inputs.batch_passes || '2' }}
+      PYTHONPATH: /usr/lib/python3/dist-packages
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repository without full binary history
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -76,7 +84,6 @@ jobs:
           node --check tools/asset-factory/build-runtime-deliverables.mjs
           node --check tools/asset-factory/audit-factory-health.mjs
           node --check tools/asset-factory/run-batch.mjs
-          node --check tools/asset-factory/run-fair-batch.mjs
           python3 -m py_compile \
             tools/asset-factory/blender/common.py \
             tools/asset-factory/blender/builders.py \
@@ -90,15 +97,18 @@ jobs:
             tools/asset-factory/blender/builder_repairs.py \
             tools/asset-factory/blender/generate_batch.py
 
-      - name: Generate and quality-check next fair diversified batch
+      - name: Generate and quality-check diversified production passes
         shell: bash
-        env:
-          BATCH_SIZE: ${{ github.event.inputs.batch_size || '20' }}
-          PYTHONPATH: /usr/lib/python3/dist-packages
         run: |
-          mkdir -p asset-factory/work
-          set -o pipefail
-          node tools/asset-factory/run-fair-batch.mjs --batch-size "$BATCH_SIZE" 2>&1 | tee asset-factory/work/factory.log
+          set -euo pipefail
+          mkdir -p asset-factory/work reports/asset-factory/production-passes
+          : > asset-factory/work/factory.log
+          echo "[asset-factory] passes=$BATCH_PASSES; assets-per-pass=$BATCH_SIZE" | tee -a asset-factory/work/factory.log
+          for pass in $(seq 1 "$BATCH_PASSES"); do
+            echo "[asset-factory] starting pass $pass/$BATCH_PASSES" | tee -a asset-factory/work/factory.log
+            node tools/asset-factory/run-batch.mjs --batch-size "$BATCH_SIZE" 2>&1 | tee -a asset-factory/work/factory.log
+            cp reports/asset-factory/latest.json "reports/asset-factory/production-passes/pass-${pass}.json"
+          done
 
       - name: Require a healthy proof batch
         if: github.event_name == 'pull_request'
@@ -122,7 +132,7 @@ jobs:
           }
           NODE
 
-      - name: Commit passing assets, runtime deliverables, queue state, and reports
+      - name: Commit passing assets, queue state, and compact reports
         if: github.event_name != 'pull_request'
         shell: bash
         run: |
@@ -141,7 +151,7 @@ jobs:
             echo "No asset-factory changes to commit."
             exit 0
           fi
-          git commit -m "Generate free asset-factory batch [skip ci]"
+          git commit -m "Generate free asset-factory production passes [skip ci]"
           git pull --rebase origin "$GITHUB_REF_NAME"
           git push origin "HEAD:$GITHUB_REF_NAME"
 
@@ -164,5 +174,6 @@ jobs:
             reports/asset-factory/latest.json
             reports/asset-factory/health.json
             reports/asset-factory/health.md
+            reports/asset-factory/production-passes/
           if-no-files-found: warn
           retention-days: 7
