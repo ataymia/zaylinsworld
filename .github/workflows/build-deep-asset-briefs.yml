@@ -13,6 +13,7 @@ on:
       - 'tools/asset-factory/derive-physical-specs.mjs'
       - 'tools/asset-factory/specialize-physical-specs.mjs'
       - 'tools/asset-factory/classify-inventory-intent.mjs'
+      - 'tools/asset-factory/commit-generated-specs.mjs'
       - 'tools/asset-factory/check-deep-specs.mjs'
       - 'tools/asset-factory/check-physical-specs.mjs'
       - 'tools/asset-factory/check-specialized-physical-specs.mjs'
@@ -33,6 +34,7 @@ on:
       - 'tools/asset-factory/derive-physical-specs.mjs'
       - 'tools/asset-factory/specialize-physical-specs.mjs'
       - 'tools/asset-factory/classify-inventory-intent.mjs'
+      - 'tools/asset-factory/commit-generated-specs.mjs'
       - 'tools/asset-factory/check-deep-specs.mjs'
       - 'tools/asset-factory/check-physical-specs.mjs'
       - 'tools/asset-factory/check-specialized-physical-specs.mjs'
@@ -78,6 +80,7 @@ jobs:
           node --check tools/asset-factory/derive-physical-specs.mjs
           node --check tools/asset-factory/specialize-physical-specs.mjs
           node --check tools/asset-factory/classify-inventory-intent.mjs
+          node --check tools/asset-factory/commit-generated-specs.mjs
           node --check tools/asset-factory/check-deep-specs.mjs
           node --check tools/asset-factory/check-physical-specs.mjs
           node --check tools/asset-factory/check-specialized-physical-specs.mjs
@@ -121,20 +124,10 @@ jobs:
 
       - name: Commit generated specification library
         if: github.actor != 'github-actions[bot]'
-        shell: bash
-        run: |
-          TARGET_BRANCH="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add asset-factory/generated/deep-asset-specs.json
-          git add asset-factory/generated/deep-spec-coverage.json
-          if git diff --cached --quiet; then
-            echo "Deep asset specification library is already current."
-            exit 0
-          fi
-          git commit -m "Generate all deep asset production briefs [skip ci]"
-          git pull --rebase origin "$TARGET_BRANCH"
-          git push origin "HEAD:$TARGET_BRANCH"
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET_BRANCH: ${{ github.head_ref || github.ref_name }}
+        run: node tools/asset-factory/commit-generated-specs.mjs
 
       - name: Upload deep specification artifact
         if: always()
