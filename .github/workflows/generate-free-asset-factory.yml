@@ -84,6 +84,7 @@ jobs:
           node --check tools/asset-factory/build-runtime-deliverables.mjs
           node --check tools/asset-factory/audit-factory-health.mjs
           node --check tools/asset-factory/run-batch.mjs
+          node --check tools/asset-factory/run-fair-batch.mjs
           python3 -m py_compile \
             tools/asset-factory/blender/common.py \
             tools/asset-factory/blender/builders.py \
@@ -94,10 +95,11 @@ jobs:
             tools/asset-factory/blender/builder_repairs_food.py \
             tools/asset-factory/blender/builder_repairs_screen.py \
             tools/asset-factory/blender/builder_repairs_priority.py \
+            tools/asset-factory/blender/builder_repairs_accessibility.py \
             tools/asset-factory/blender/builder_repairs.py \
             tools/asset-factory/blender/generate_batch.py
 
-      - name: Generate and quality-check diversified production passes
+      - name: Generate and quality-check fair diversified production passes
         shell: bash
         run: |
           set -euo pipefail
@@ -106,7 +108,7 @@ jobs:
           echo "[asset-factory] passes=$BATCH_PASSES; assets-per-pass=$BATCH_SIZE" | tee -a asset-factory/work/factory.log
           for pass in $(seq 1 "$BATCH_PASSES"); do
             echo "[asset-factory] starting pass $pass/$BATCH_PASSES" | tee -a asset-factory/work/factory.log
-            node tools/asset-factory/run-batch.mjs --batch-size "$BATCH_SIZE" 2>&1 | tee -a asset-factory/work/factory.log
+            node tools/asset-factory/run-fair-batch.mjs --batch-size "$BATCH_SIZE" 2>&1 | tee -a asset-factory/work/factory.log
             cp reports/asset-factory/latest.json "reports/asset-factory/production-passes/pass-${pass}.json"
           done
 
