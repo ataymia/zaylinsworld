@@ -1,6 +1,5 @@
 from builder_repairs_legacy import (
     build_bench_fixed,
-    build_charging_pad_fixed,
     build_digital_kiosk_fixed,
     build_fuel_pump_fixed,
     build_hover_vehicle_fixed,
@@ -19,6 +18,10 @@ from builder_repairs_modular import (
     build_modular_road,
     build_state_variant,
 )
+from builder_repairs_contracts import (
+    build_charging_pad_fixed_r7,
+    build_classroom_desk_fixed,
+)
 from builder_repairs_food import build_modular_food_fixed
 from builder_repairs_screen import build_wall_screen_fixed
 from builder_repairs_priority import (
@@ -36,7 +39,8 @@ def install_repairs(builders):
         "mailbox": build_mailbox_fixed,
         "municipal_bench": build_bench_fixed,
         "municipal_trash_can": build_trash_can_fixed,
-        "charging_pad": build_charging_pad_fixed,
+        "charging_pad": build_charging_pad_fixed_r7,
+        "classroom_desk": build_classroom_desk_fixed,
         "fuel_pump": build_fuel_pump_fixed,
         "digital_kiosk": build_digital_kiosk_fixed,
         "office_desk": build_office_desk_fixed,
