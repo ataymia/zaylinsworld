@@ -10,6 +10,7 @@ on:
       - 'tools/asset-factory/refine-deep-semantics.mjs'
       - 'tools/asset-factory/deep-spec-final-classifier.mjs'
       - 'tools/asset-factory/finalize-deep-semantics.mjs'
+      - 'tools/asset-factory/derive-physical-specs.mjs'
       - 'tools/asset-factory/check-deep-specs.mjs'
       - 'asset-factory/quality-policy.json'
       - 'asset-factory/manual-overrides.json'
@@ -24,6 +25,7 @@ on:
       - 'tools/asset-factory/refine-deep-semantics.mjs'
       - 'tools/asset-factory/deep-spec-final-classifier.mjs'
       - 'tools/asset-factory/finalize-deep-semantics.mjs'
+      - 'tools/asset-factory/derive-physical-specs.mjs'
       - 'tools/asset-factory/check-deep-specs.mjs'
       - 'asset-factory/quality-policy.json'
       - 'asset-factory/manual-overrides.json'
@@ -62,6 +64,7 @@ jobs:
           node --check tools/asset-factory/refine-deep-semantics.mjs
           node --check tools/asset-factory/deep-spec-final-classifier.mjs
           node --check tools/asset-factory/finalize-deep-semantics.mjs
+          node --check tools/asset-factory/derive-physical-specs.mjs
           node --check tools/asset-factory/check-deep-specs.mjs
 
       - name: Generate deep production briefs for the complete asset library
@@ -73,7 +76,13 @@ jobs:
       - name: Build category-specific doctrine
         run: node tools/asset-factory/refine-deep-semantics.mjs
 
-      - name: Finalize physical-object categories and rebuild affected briefs
+      - name: Resolve final physical-object categories
+        run: node tools/asset-factory/finalize-deep-semantics.mjs
+
+      - name: Replace weak compact placeholders with object-specific physical specs
+        run: node tools/asset-factory/derive-physical-specs.mjs
+
+      - name: Rebuild descriptions from corrected dimensions and components
         run: node tools/asset-factory/finalize-deep-semantics.mjs
 
       - name: Require complete unique physically consistent coverage
