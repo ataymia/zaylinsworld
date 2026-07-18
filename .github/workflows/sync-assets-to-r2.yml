@@ -93,6 +93,7 @@ jobs:
         run: npx --yes wrangler@latest --version
 
       - name: Diagnose Cloudflare account and ensure R2 bucket exists
+        id: r2
         if: github.event_name != 'pull_request'
         shell: bash
         run: |
@@ -102,10 +103,10 @@ jobs:
           : > "$LOG"
           {
             echo "== Wrangler identity =="
-            npx --yes wrangler@latest whoami
+            npx --yes wrangler@latest whoami || true
             echo
             echo "== R2 bucket list =="
-            npx --yes wrangler@latest r2 bucket list
+            npx --yes wrangler@latest r2 bucket list || true
             echo
             echo "== Requested bucket info: $R2_BUCKET =="
           } 2>&1 | tee -a "$LOG"
@@ -113,23 +114,35 @@ jobs:
           if npx --yes wrangler@latest r2 bucket info "$R2_BUCKET" --json 2>&1 | tee /tmp/r2-bucket-info-attempt.log | tee -a "$LOG"; then
             cp /tmp/r2-bucket-info-attempt.log /tmp/r2-bucket-info.json
             echo "R2 bucket $R2_BUCKET already exists." | tee -a "$LOG"
-          else
-            echo "Bucket lookup failed. Attempting account-level bucket creation." | tee -a "$LOG"
-            if ! npx --yes wrangler@latest r2 bucket create "$R2_BUCKET" 2>&1 | tee -a "$LOG"; then
-              echo "::error::Cloudflare authentication succeeded, but R2 bucket access failed. Enable R2 in the Cloudflare dashboard and ensure the token has Account > Workers R2 Storage > Edit."
-              exit 1
-            fi
-            npx --yes wrangler@latest r2 bucket info "$R2_BUCKET" --json 2>&1 | tee /tmp/r2-bucket-info.json | tee -a "$LOG"
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
 
+          echo "Bucket lookup failed. Attempting account-level bucket creation." | tee -a "$LOG"
+          if npx --yes wrangler@latest r2 bucket create "$R2_BUCKET" 2>&1 | tee /tmp/r2-create.log | tee -a "$LOG"; then
+            npx --yes wrangler@latest r2 bucket info "$R2_BUCKET" --json 2>&1 | tee /tmp/r2-bucket-info.json | tee -a "$LOG"
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if grep -qE '10042|enable R2|Please enable R2' /tmp/r2-create.log /tmp/r2-bucket-info-attempt.log 2>/dev/null; then
+            echo "::warning::Cloudflare authentication succeeded, but R2 is not enabled for this account yet. Open R2 Object Storage in the Cloudflare dashboard and complete the one-time activation. Upload steps are safely skipped until then."
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "::error::Cloudflare authentication succeeded, but R2 bucket access failed for a reason other than the known activation gate. Inspect the uploaded diagnostic and verify Account > Workers R2 Storage > Edit permission."
+          echo "enabled=false" >> "$GITHUB_OUTPUT"
+          exit 1
+
       - name: Configure read-only browser CORS
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && steps.r2.outputs.enabled == 'true'
         run: |
           npx --yes wrangler@latest r2 bucket cors set "$R2_BUCKET" --file cloudflare/r2-cors.json
           npx --yes wrangler@latest r2 bucket cors list "$R2_BUCKET"
 
       - name: Attach optional production asset domain
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && steps.r2.outputs.enabled == 'true'
         shell: bash
         run: |
           if [[ -z "$R2_ASSET_DOMAIN" || -z "$CLOUDFLARE_ZONE_ID" ]]; then
@@ -147,7 +160,7 @@ jobs:
           fi
 
       - name: Upload immutable binary objects
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && steps.r2.outputs.enabled == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -169,7 +182,7 @@ jobs:
           echo "Uploaded $uploaded immutable objects to R2."
 
       - name: Verify an uploaded object by checksum
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && steps.r2.outputs.enabled == 'true'
         shell: bash
         run: |
           PLAN=reports/asset-factory/r2-upload-plan.tsv
@@ -182,7 +195,7 @@ jobs:
           echo "Verified $key against its SHA-256 content address."
 
       - name: Commit compact remote manifest
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && steps.r2.outputs.enabled == 'true'
         shell: bash
         env:
           TARGET_BRANCH: ${{ github.ref_name }}
