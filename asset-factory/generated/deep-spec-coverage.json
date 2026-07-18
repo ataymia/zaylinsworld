@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-18T03:48:30.873Z",
+  "generatedAt": "2026-07-18T03:50:39.844Z",
   "expectedFromMaster": 978,
   "produced": 978,
   "descriptionsAtOrAboveMinimum": 978,
@@ -71,12 +71,12 @@
     "hologram_billboard": 3
   },
   "normalizedSparseContexts": 42,
-  "normalizedAt": "2026-07-18T03:48:31.230Z",
+  "normalizedAt": "2026-07-18T03:50:40.464Z",
   "semanticCategoryCorrections": 405,
-  "semanticRefinedAt": "2026-07-18T03:48:31.786Z",
+  "semanticRefinedAt": "2026-07-18T03:50:41.044Z",
   "finalSemanticCorrections": 0,
   "finalSemanticCorrectedIds": [],
-  "finalSemanticPassAt": "2026-07-18T03:48:33.811Z",
+  "finalSemanticPassAt": "2026-07-18T03:50:43.130Z",
   "physicalSpecsDerived": 667,
   "contaminatedCharacterSpecsRepaired": 23,
   "physicalSpecsDerivedByCategory": {
@@ -90,7 +90,7 @@
     "food": 11,
     "road_surface": 16
   },
-  "physicalSpecPassAt": "2026-07-18T03:48:32.749Z",
+  "physicalSpecPassAt": "2026-07-18T03:50:42.024Z",
   "explicitPhysicalSpecializations": 107,
   "dynamicPhysicalSpecializations": 169,
   "dynamicPhysicalSpecializationIds": [
@@ -264,7 +264,7 @@
     "vehicle_water_motorboat_a_v01",
     "vehicle_water_speedboat_a_v01"
   ],
-  "physicalSpecializationPassAt": "2026-07-18T03:48:33.155Z",
+  "physicalSpecializationPassAt": "2026-07-18T03:50:42.452Z",
   "inventoryDispositionCounts": {
     "canonical-generation-request": 960,
     "manual-canonical-request": 2,
@@ -293,5 +293,133 @@
     "toiletdemoscene",
     "trashanddebris"
   ],
-  "inventoryAuditAt": "2026-07-18T03:48:34.411Z"
+  "inventoryAuditAt": "2026-07-18T03:50:43.746Z",
+  "shardedStorage": true,
+  "shardedAt": "2026-07-18T03:50:45.558Z",
+  "shardCount": 11,
+  "shards": [
+    {
+      "key": "aqualume",
+      "path": "asset-factory/generated/deep-specs/aqualume.json",
+      "recordCount": 116,
+      "canonicalGenerationRequests": 116,
+      "referenceOnlyRecords": 0,
+      "bytes": 4720343,
+      "sha256": "00f23d8c3fc396890548cdc8db3669fc1c3a1008c702a4402bdc8ba80c9e1be2",
+      "firstAssetId": "arch_aqualume_bubble_lift_a_v01",
+      "lastAssetId": "vehicle_underwater_sea_scooter_a_v01"
+    },
+    {
+      "key": "casino-strip",
+      "path": "asset-factory/generated/deep-specs/casino-strip.json",
+      "recordCount": 71,
+      "canonicalGenerationRequests": 71,
+      "referenceOnlyRecords": 0,
+      "bytes": 2801047,
+      "sha256": "945970662d49487aa67da1b08ab858b3401d30f0618643b0e6a9c5c60d3392e9",
+      "firstAssetId": "building_brighthouse_institute_exterior_v01",
+      "lastAssetId": "sidewalk_casino_strip_a_v01"
+    },
+    {
+      "key": "dungeon-outskirts",
+      "path": "asset-factory/generated/deep-specs/dungeon-outskirts.json",
+      "recordCount": 81,
+      "canonicalGenerationRequests": 81,
+      "referenceOnlyRecords": 0,
+      "bytes": 3270059,
+      "sha256": "b2dd8a9f9b258a36b46d98bcbadb59f4484b284e20295ce1f2406860c976c6a3",
+      "firstAssetId": "arch_dungeon_boss_gate_a_v01",
+      "lastAssetId": "prop_wayfarer_warning_sign_a_v01"
+    },
+    {
+      "key": "fishing-harbor",
+      "path": "asset-factory/generated/deep-specs/fishing-harbor.json",
+      "recordCount": 121,
+      "canonicalGenerationRequests": 121,
+      "referenceOnlyRecords": 0,
+      "bytes": 4901141,
+      "sha256": "4a7a3bc08bf2493d270d7892b9c5c620520ccecb18c540139103922fa183b7c2",
+      "firstAssetId": "arch_harbor_boardwalk_railing_a_v01",
+      "lastAssetId": "vehicle_water_fishing_boat_a_v01"
+    },
+    {
+      "key": "obby-canyon",
+      "path": "asset-factory/generated/deep-specs/obby-canyon.json",
+      "recordCount": 77,
+      "canonicalGenerationRequests": 77,
+      "referenceOnlyRecords": 0,
+      "bytes": 3130973,
+      "sha256": "4cecc2805bba2d2d10ed19100236d760405605fd582ff13f3f8f715ecb445b4b",
+      "firstAssetId": "arch_canyon_cliff_wall_a_v01",
+      "lastAssetId": "road_canyon_base_loop_a_v01"
+    },
+    {
+      "key": "reference-only",
+      "path": "asset-factory/generated/deep-specs/reference-only.json",
+      "recordCount": 16,
+      "canonicalGenerationRequests": 0,
+      "referenceOnlyRecords": 16,
+      "bytes": 717702,
+      "sha256": "e915971eb6c28b6b92368fac12676daa639569454cc72676b01a1770ca146394",
+      "firstAssetId": "base_character",
+      "lastAssetId": "trashanddebris"
+    },
+    {
+      "key": "rich-hills",
+      "path": "asset-factory/generated/deep-specs/rich-hills.json",
+      "recordCount": 70,
+      "canonicalGenerationRequests": 70,
+      "referenceOnlyRecords": 0,
+      "bytes": 2767442,
+      "sha256": "412868095404ddf9930ee9472b22a9e80d2b4e3d1c576d963c9231c1b5c5cb00",
+      "firstAssetId": "arch_richhills_property_gate_a_v01",
+      "lastAssetId": "vehicle_richhills_yacht_a_v01"
+    },
+    {
+      "key": "shared-world",
+      "path": "asset-factory/generated/deep-specs/shared-world.json",
+      "recordCount": 25,
+      "canonicalGenerationRequests": 25,
+      "referenceOnlyRecords": 0,
+      "bytes": 952756,
+      "sha256": "909eb25ceef5907559d2682854b48daa5f6bb63680d22ca8718183ec6c415b31",
+      "firstAssetId": "creature_crab_a_v01",
+      "lastAssetId": "vehicle_water_yacht_a_v01"
+    },
+    {
+      "key": "starline-city",
+      "path": "asset-factory/generated/deep-specs/starline-city.json",
+      "recordCount": 116,
+      "canonicalGenerationRequests": 116,
+      "referenceOnlyRecords": 0,
+      "bytes": 4657183,
+      "sha256": "21df644619579314204d59bc35d494522b34679d6d83fa031605fb755f1e28b8",
+      "firstAssetId": "arch_starline_backlot_wall_a_v01",
+      "lastAssetId": "sidewalk_starline_premiere_a_v01"
+    },
+    {
+      "key": "starter-town",
+      "path": "asset-factory/generated/deep-specs/starter-town.json",
+      "recordCount": 102,
+      "canonicalGenerationRequests": 102,
+      "referenceOnlyRecords": 0,
+      "bytes": 3667473,
+      "sha256": "1dcadc7c974379997aa587c188f5eaed0789c6d2861b1535509737d6f416c3d2",
+      "firstAssetId": "building_starter_6twelve_exterior_v02",
+      "lastAssetId": "sidewalk_starter_residential_a_v01"
+    },
+    {
+      "key": "techtown",
+      "path": "asset-factory/generated/deep-specs/techtown.json",
+      "recordCount": 183,
+      "canonicalGenerationRequests": 183,
+      "referenceOnlyRecords": 0,
+      "bytes": 7123237,
+      "sha256": "f6e9ac36f28a6491d90b838d0147e32fabfb85d87b57fc18f32d7e7197aa5319",
+      "firstAssetId": "arch_balcony_modern_a_v01",
+      "lastAssetId": "vehicle_techtown_hover_sedan_a_v01"
+    }
+  ],
+  "manifestBytes": 7551,
+  "largestShardBytes": 7123237
 }
