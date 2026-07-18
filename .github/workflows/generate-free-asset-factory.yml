@@ -44,6 +44,7 @@ jobs:
     env:
       BATCH_SIZE: ${{ github.event.inputs.batch_size || '20' }}
       BATCH_PASSES: ${{ github.event_name == 'pull_request' && '1' || github.event.inputs.batch_passes || '2' }}
+      ASSET_FACTORY_RECOMPILE: ${{ (github.event_name == 'pull_request' || github.event_name == 'push') && '1' || '0' }}
       PYTHONPATH: /usr/lib/python3/dist-packages
 
     steps:
@@ -105,11 +106,12 @@ jobs:
           set -euo pipefail
           mkdir -p asset-factory/work reports/asset-factory/production-passes
           : > asset-factory/work/factory.log
-          echo "[asset-factory] passes=$BATCH_PASSES; assets-per-pass=$BATCH_SIZE" | tee -a asset-factory/work/factory.log
+          echo "[asset-factory] passes=$BATCH_PASSES; assets-per-pass=$BATCH_SIZE; recompile=$ASSET_FACTORY_RECOMPILE" | tee -a asset-factory/work/factory.log
           for pass in $(seq 1 "$BATCH_PASSES"); do
             echo "[asset-factory] starting pass $pass/$BATCH_PASSES" | tee -a asset-factory/work/factory.log
             node tools/asset-factory/run-fair-batch.mjs --batch-size "$BATCH_SIZE" 2>&1 | tee -a asset-factory/work/factory.log
             cp reports/asset-factory/latest.json "reports/asset-factory/production-passes/pass-${pass}.json"
+            export ASSET_FACTORY_RECOMPILE=0
           done
 
       - name: Require a healthy proof batch
