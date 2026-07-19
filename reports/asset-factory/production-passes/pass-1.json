@@ -1,24 +1,23 @@
 {
   "version": 2,
-  "batchId": "batch-00106",
-  "completedAt": "2026-07-19T21:22:26.957Z",
-  "requested": 20,
-  "passed": 20,
+  "batchId": "batch-00108",
+  "completedAt": "2026-07-19T21:49:16.020Z",
+  "requested": 5,
+  "passed": 5,
   "failed": 0,
   "queueCounts": {
-    "completed": 2067,
+    "completed": 2092,
     "reference-only": 16,
     "unsupported": 189,
-    "queued": 25,
     "quarantined": 1
   },
   "results": [
     {
-      "id": "prop_underwater_reef_cluster_a_v01",
+      "id": "vehicle_water_motorboat_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/modular_prop/prop_underwater_reef_cluster_a_v01.glb",
+      "outputPath": "public/assets/models/generated/shared-world/modular_prop/vehicle_water_motorboat_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -68,18 +67,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_underwater_reef_cluster_a_v01/prop_underwater_reef_cluster_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_underwater_reef_cluster_a_v01/prop_underwater_reef_cluster_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_underwater_reef_cluster_a_v01/prop_underwater_reef_cluster_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_underwater_reef_cluster_a_v01/prop_underwater_reef_cluster_a_v01_view_4.png"
+        "asset-factory/work/previews/vehicle_water_motorboat_a_v01/vehicle_water_motorboat_a_v01_view_1.png",
+        "asset-factory/work/previews/vehicle_water_motorboat_a_v01/vehicle_water_motorboat_a_v01_view_2.png",
+        "asset-factory/work/previews/vehicle_water_motorboat_a_v01/vehicle_water_motorboat_a_v01_view_3.png",
+        "asset-factory/work/previews/vehicle_water_motorboat_a_v01/vehicle_water_motorboat_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_underwater_rock_shelf_a_v01",
+      "id": "vehicle_water_patrol_boat_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/modular_prop/prop_underwater_rock_shelf_a_v01.glb",
+      "outputPath": "public/assets/models/generated/shared-world/modular_prop/vehicle_water_patrol_boat_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -129,18 +128,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_underwater_rock_shelf_a_v01/prop_underwater_rock_shelf_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_underwater_rock_shelf_a_v01/prop_underwater_rock_shelf_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_underwater_rock_shelf_a_v01/prop_underwater_rock_shelf_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_underwater_rock_shelf_a_v01/prop_underwater_rock_shelf_a_v01_view_4.png"
+        "asset-factory/work/previews/vehicle_water_patrol_boat_a_v01/vehicle_water_patrol_boat_a_v01_view_1.png",
+        "asset-factory/work/previews/vehicle_water_patrol_boat_a_v01/vehicle_water_patrol_boat_a_v01_view_2.png",
+        "asset-factory/work/previews/vehicle_water_patrol_boat_a_v01/vehicle_water_patrol_boat_a_v01_view_3.png",
+        "asset-factory/work/previews/vehicle_water_patrol_boat_a_v01/vehicle_water_patrol_boat_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_underwater_sanctuary_marker_a_v01",
+      "id": "vehicle_water_skiff_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/modular_prop/prop_underwater_sanctuary_marker_a_v01.glb",
+      "outputPath": "public/assets/models/generated/shared-world/modular_prop/vehicle_water_skiff_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -190,18 +189,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_underwater_sanctuary_marker_a_v01/prop_underwater_sanctuary_marker_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_underwater_sanctuary_marker_a_v01/prop_underwater_sanctuary_marker_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_underwater_sanctuary_marker_a_v01/prop_underwater_sanctuary_marker_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_underwater_sanctuary_marker_a_v01/prop_underwater_sanctuary_marker_a_v01_view_4.png"
+        "asset-factory/work/previews/vehicle_water_skiff_a_v01/vehicle_water_skiff_a_v01_view_1.png",
+        "asset-factory/work/previews/vehicle_water_skiff_a_v01/vehicle_water_skiff_a_v01_view_2.png",
+        "asset-factory/work/previews/vehicle_water_skiff_a_v01/vehicle_water_skiff_a_v01_view_3.png",
+        "asset-factory/work/previews/vehicle_water_skiff_a_v01/vehicle_water_skiff_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_underwater_seagrass_cluster_a_v01",
+      "id": "vehicle_water_speedboat_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/modular_prop/prop_underwater_seagrass_cluster_a_v01.glb",
+      "outputPath": "public/assets/models/generated/shared-world/modular_prop/vehicle_water_speedboat_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -251,18 +250,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_underwater_seagrass_cluster_a_v01/prop_underwater_seagrass_cluster_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_underwater_seagrass_cluster_a_v01/prop_underwater_seagrass_cluster_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_underwater_seagrass_cluster_a_v01/prop_underwater_seagrass_cluster_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_underwater_seagrass_cluster_a_v01/prop_underwater_seagrass_cluster_a_v01_view_4.png"
+        "asset-factory/work/previews/vehicle_water_speedboat_a_v01/vehicle_water_speedboat_a_v01_view_1.png",
+        "asset-factory/work/previews/vehicle_water_speedboat_a_v01/vehicle_water_speedboat_a_v01_view_2.png",
+        "asset-factory/work/previews/vehicle_water_speedboat_a_v01/vehicle_water_speedboat_a_v01_view_3.png",
+        "asset-factory/work/previews/vehicle_water_speedboat_a_v01/vehicle_water_speedboat_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_underwater_shipwreck_small_a_v01",
+      "id": "vehicle_water_yacht_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/modular_prop/prop_underwater_shipwreck_small_a_v01.glb",
+      "outputPath": "public/assets/models/generated/shared-world/modular_prop/vehicle_water_yacht_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -312,925 +311,10 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_underwater_shipwreck_small_a_v01/prop_underwater_shipwreck_small_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_underwater_shipwreck_small_a_v01/prop_underwater_shipwreck_small_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_underwater_shipwreck_small_a_v01/prop_underwater_shipwreck_small_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_underwater_shipwreck_small_a_v01/prop_underwater_shipwreck_small_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_warden_front_desk_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_warden_front_desk_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_warden_front_desk_a_v01/prop_warden_front_desk_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_warden_front_desk_a_v01/prop_warden_front_desk_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_warden_front_desk_a_v01/prop_warden_front_desk_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_warden_front_desk_a_v01/prop_warden_front_desk_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_warden_holding_cell_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_warden_holding_cell_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_warden_holding_cell_a_v01/prop_warden_holding_cell_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_warden_holding_cell_a_v01/prop_warden_holding_cell_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_warden_holding_cell_a_v01/prop_warden_holding_cell_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_warden_holding_cell_a_v01/prop_warden_holding_cell_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_warden_relic_vault_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_warden_relic_vault_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_warden_relic_vault_a_v01/prop_warden_relic_vault_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_warden_relic_vault_a_v01/prop_warden_relic_vault_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_warden_relic_vault_a_v01/prop_warden_relic_vault_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_warden_relic_vault_a_v01/prop_warden_relic_vault_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_warden_rescue_gear_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_warden_rescue_gear_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_warden_rescue_gear_a_v01/prop_warden_rescue_gear_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_warden_rescue_gear_a_v01/prop_warden_rescue_gear_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_warden_rescue_gear_a_v01/prop_warden_rescue_gear_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_warden_rescue_gear_a_v01/prop_warden_rescue_gear_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_wardrobe_clothing_rack_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_wardrobe_clothing_rack_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_wardrobe_clothing_rack_a_v01/prop_wardrobe_clothing_rack_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_wardrobe_clothing_rack_a_v01/prop_wardrobe_clothing_rack_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_wardrobe_clothing_rack_a_v01/prop_wardrobe_clothing_rack_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_wardrobe_clothing_rack_a_v01/prop_wardrobe_clothing_rack_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_wardrobe_costume_bin_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_wardrobe_costume_bin_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_wardrobe_costume_bin_a_v01/prop_wardrobe_costume_bin_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_wardrobe_costume_bin_a_v01/prop_wardrobe_costume_bin_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_wardrobe_costume_bin_a_v01/prop_wardrobe_costume_bin_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_wardrobe_costume_bin_a_v01/prop_wardrobe_costume_bin_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_wardrobe_shoe_wall_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_wardrobe_shoe_wall_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_wardrobe_shoe_wall_a_v01/prop_wardrobe_shoe_wall_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_wardrobe_shoe_wall_a_v01/prop_wardrobe_shoe_wall_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_wardrobe_shoe_wall_a_v01/prop_wardrobe_shoe_wall_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_wardrobe_shoe_wall_a_v01/prop_wardrobe_shoe_wall_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_water_buoy_navigation_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/modular_prop/prop_water_buoy_navigation_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_water_buoy_navigation_a_v01/prop_water_buoy_navigation_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_water_buoy_navigation_a_v01/prop_water_buoy_navigation_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_water_buoy_navigation_a_v01/prop_water_buoy_navigation_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_water_buoy_navigation_a_v01/prop_water_buoy_navigation_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_water_buoy_protected_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/modular_prop/prop_water_buoy_protected_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_water_buoy_protected_a_v01/prop_water_buoy_protected_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_water_buoy_protected_a_v01/prop_water_buoy_protected_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_water_buoy_protected_a_v01/prop_water_buoy_protected_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_water_buoy_protected_a_v01/prop_water_buoy_protected_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_water_rescue_float_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/modular_prop/prop_water_rescue_float_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_water_rescue_float_a_v01/prop_water_rescue_float_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_water_rescue_float_a_v01/prop_water_rescue_float_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_water_rescue_float_a_v01/prop_water_rescue_float_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_water_rescue_float_a_v01/prop_water_rescue_float_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_wayfarer_canopy_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_wayfarer_canopy_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_wayfarer_canopy_a_v01/prop_wayfarer_canopy_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_wayfarer_canopy_a_v01/prop_wayfarer_canopy_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_wayfarer_canopy_a_v01/prop_wayfarer_canopy_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_wayfarer_canopy_a_v01/prop_wayfarer_canopy_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_wayfarer_food_warmer_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_wayfarer_food_warmer_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_wayfarer_food_warmer_a_v01/prop_wayfarer_food_warmer_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_wayfarer_food_warmer_a_v01/prop_wayfarer_food_warmer_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_wayfarer_food_warmer_a_v01/prop_wayfarer_food_warmer_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_wayfarer_food_warmer_a_v01/prop_wayfarer_food_warmer_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_wayfarer_map_board_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_wayfarer_map_board_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_wayfarer_map_board_a_v01/prop_wayfarer_map_board_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_wayfarer_map_board_a_v01/prop_wayfarer_map_board_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_wayfarer_map_board_a_v01/prop_wayfarer_map_board_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_wayfarer_map_board_a_v01/prop_wayfarer_map_board_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_wayfarer_package_locker_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_wayfarer_package_locker_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_wayfarer_package_locker_a_v01/prop_wayfarer_package_locker_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_wayfarer_package_locker_a_v01/prop_wayfarer_package_locker_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_wayfarer_package_locker_a_v01/prop_wayfarer_package_locker_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_wayfarer_package_locker_a_v01/prop_wayfarer_package_locker_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_wayfarer_repair_bay_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_wayfarer_repair_bay_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_wayfarer_repair_bay_a_v01/prop_wayfarer_repair_bay_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_wayfarer_repair_bay_a_v01/prop_wayfarer_repair_bay_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_wayfarer_repair_bay_a_v01/prop_wayfarer_repair_bay_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_wayfarer_repair_bay_a_v01/prop_wayfarer_repair_bay_a_v01_view_4.png"
+        "asset-factory/work/previews/vehicle_water_yacht_a_v01/vehicle_water_yacht_a_v01_view_1.png",
+        "asset-factory/work/previews/vehicle_water_yacht_a_v01/vehicle_water_yacht_a_v01_view_2.png",
+        "asset-factory/work/previews/vehicle_water_yacht_a_v01/vehicle_water_yacht_a_v01_view_3.png",
+        "asset-factory/work/previews/vehicle_water_yacht_a_v01/vehicle_water_yacht_a_v01_view_4.png"
       ]
     }
   ]
