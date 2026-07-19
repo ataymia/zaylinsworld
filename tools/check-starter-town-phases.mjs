@@ -15,14 +15,15 @@ const {
 } = await importLocal('src/config/buildPhaseStatus.js');
 
 assert.ok(BUILD_PHASES.length >= 30, 'phase ledger must retain detailed subphases');
-assert.equal(NEXT_BUILD_PHASE.id, '7', 'functional-location relocation must be the next construction phase');
+assert.equal(NEXT_BUILD_PHASE, null, 'the active construction ledger must have no unfinished implementation phase');
+assert.equal(BUILD_PHASE_BY_ID['7'].status, 'implemented', 'functional-location relocation must be implemented');
 for (const id of ['2A', '2B', '2C', '2D', '2E', '3A', '3B', '3C', '3D', '3E', '4A', '4B', '4C', '4D', '4E', '4F', '4G', '5A', '5B', '5C', '5D', '5E', '5F', '5G', '6A', '6B', '6C', '6D', '6E']) {
   assert.ok(BUILD_PHASE_BY_ID[id], `phase ledger is missing ${id}`);
   assert.notEqual(BUILD_PHASE_BY_ID[id].status, 'planned', `${id} must record its implemented foundation`);
 }
 assert.equal(BUILD_PHASE_BY_ID['3F'].status, 'planned', 'performance acceptance must remain an honest live-verification phase');
 assert.equal(BUILD_PHASE_BY_ID['5H'].status, 'planned', 'geographic drive-time acceptance must remain live verification');
-assert.equal(buildPhaseSummary().next, '7');
+assert.equal(buildPhaseSummary().next, null);
 
 const { createSpecialRoadForms } = await importLocal('src/world/SpecialRoadForms.js');
 const special = createSpecialRoadForms();

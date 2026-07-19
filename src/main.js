@@ -46,6 +46,9 @@ import {
 import { initDebugBadge, debug } from './debug.js';
 import { productionWorldRelocationIds } from './runtime/ProductionWorldBridge.js';
 import { functionalLocationRelocation } from './runtime/FunctionalLocationRelocation.js';
+import { worldRegistry } from './runtime/WorldRegistry.js';
+import { LARGE_TOWN_TRAFFIC_ROUTES } from './config/starterTownTrafficRoutes.js';
+import { starterVehicleSpawnNear } from './config/starterVehicleSpawn.js';
 import { handlingFor, addVehicleDamage, applyDamageVisual, tickDamageSmoke } from './vehicleDamage.js';
 import { collideVehicle, breakableCount, worldObjectCount } from './worldCollision.js';
 import { dressTown } from './townBuilder.js';
@@ -263,8 +266,10 @@ function resumeFromWardrobe() {
 function enterWorld() {
   console.debug('[creator] enterWorld: state.custom exists =', !!(state && state.custom), '| started =', started);
   if (!started) {
+    const freshLargeWorldArrival = !state.createdCharacter && !hasSave();
     setStatus('Building the city…');
     const relocatedLocationIds = productionWorldRelocationIds();
+    const largeWorldActive = relocatedLocationIds.length > 0;
     const cityInfo = buildCity(scene, { relocatedLocationIds });
     cityEntrances = cityInfo.entrances;
     cityLandmarks = cityInfo.landmarks;
@@ -281,7 +286,11 @@ function enterWorld() {
       entranceMap.police = { doorPos: cityInfo.police.doorPos, faceDir: cityInfo.police.entryFaceDir };
     }
     cityNPCs = createCityNPCs(scene, Math.max(8, Math.round(22 * graphics.npcDensity)));
-    traffic = createTraffic(scene, Math.max(3, Math.round(10 * graphics.trafficDensity)));
+    traffic = createTraffic(
+      scene,
+      Math.max(3, Math.round(10 * graphics.trafficDensity)),
+      largeWorldActive ? LARGE_TOWN_TRAFFIC_ROUTES : undefined,
+    );
     abandonedCars = [];                       // fresh city → no previously-stolen parked cars
     car = createDrivableCar(scene, 13, 3);
     registerInteractables(cityInfo.entrances);
@@ -294,7 +303,7 @@ function enterWorld() {
     debug.set('minimapInit', !!minimap);
     if (!minimap) console.warn('[minimap] init FAILED — #minimap canvas missing');
     if (minimap && townMarkers.length) setMarkers(townMarkers);   // flush queued markers (police/garage)
-    applyWorldAssets();                        // swap in real GLBs where available
+    applyWorldAssets(cityInfo);                // swap in real GLBs where available
     // applyWorldAssets() (via placeTrashJob) creates the sanitation worker,
     // dumpster and litter AFTER the first registerInteractables() pass above, so
     // those dynamic objects must be re-registered now or they'd never become
@@ -306,6 +315,15 @@ function enterWorld() {
       '| dumpster:', !!dumpster, '| trashPieces:', cityTrash.length);
     initGameSystems();                         // weapons + missions + police hooks
     finalizeFunctionalRelocations(cityInfo);
+    // A brand-new large-world character belongs at Dreamdrop Core. Without this
+    // guard the old Park coordinate migration could carry the player ~700 m away
+    // from the compact functional hub before their first frame.
+    if (freshLargeWorldArrival && largeWorldActive) {
+      const arrival = worldRegistry.spawn('dreamdrop-core')?.position || { x: 0, z: 0 };
+      state.pos = { x: arrival.x, z: arrival.z };
+      state.facing = 0;
+    }
+    placeStarterCarAtArrival();
     registerInteractables(cityEntrances);      // relocation-only anchors (mailbox, moved doors)
   }
   rebuildPlayer();
@@ -318,8 +336,19 @@ function enterWorld() {
   applyVibe();
   showCreator(false);
   mode = 'play';
-  notify("Welcome to Zaylin's World — click to look, WASD to move, E to interact");
+  notify("Welcome to Zaylin's World — your starter car is beside you. Press F to drive.");
   saveNow();
+}
+
+function placeStarterCarAtArrival() {
+  if (!car) return;
+  const placement = starterVehicleSpawnNear(state.pos, { facing: state.facing });
+  car.g.position.set(placement.x, 0, placement.z);
+  car.g.rotation.y = placement.rotationY;
+  car.spawn.set(placement.x, 0, placement.z);
+  car.g.userData.starterVehicle = true;
+  car.g.userData.arrivalPlacement = placement.source;
+  debug.set('starterCarDistance', Number(placement.distanceFromPlayer.toFixed(2)));
 }
 
 function finalizeFunctionalRelocations(cityInfo) {
@@ -328,11 +357,13 @@ function finalizeFunctionalRelocations(cityInfo) {
       || relocation.entrance;
     const interior = relocation.contract.interiorId ? interiors?.byId?.[relocation.contract.interiorId] : true;
     const marker = cityInfo.landmarks.find((entry) => entry.locationId === relocation.locationId);
+    const requiresDoor = relocation.contract.enterable !== false;
+    const hasInterior = !!relocation.contract.interiorId;
     const report = functionalLocationRelocation.record(relocation.locationId, {
       exteriorPlaced: !!relocation.exterior?.parent,
-      doorInteraction: !!entrance?.doorPos,
+      doorInteraction: !requiresDoor || !!entrance?.doorPos,
       interiorPreserved: !!interior,
-      interiorReturn: !!entranceMap[relocation.contract.interiorId]?.doorPos,
+      interiorReturn: !hasInterior || !!entranceMap[relocation.contract.interiorId]?.doorPos,
       sidewalkAccess: !!relocation.contract.parcelId,
       parkingAndService: !!relocation.contract.parcelId,
       npcWorkPoints: true,
@@ -714,8 +745,9 @@ function openWeaponDisplay(entry) {
 // visible fallback and hidden once the GLB loads. Registers a drive-up refuel
 // forecourt, a minimap marker, and an on-foot store entrance that teleports the
 // player into the walkable 6twelve store interior.
-function buildProceduralGasStation() {
-  const GX = -46, GZ = 24;                          // standalone lot, west edge (south of Block Supply), set back off the ring road
+function buildProceduralGasStation(relocationContract = null) {
+  const GX = relocationContract?.target.x ?? -46;
+  const GZ = relocationContract?.target.z ?? 24;   // standalone lot, west edge (south of Block Supply), set back off the ring road
   const grp = new THREE.Group(); grp.name = 'gas-station-proc';
   const procColliders = [];                         // pump colliders (removed if a GLB takes over)
   // forecourt pad (decorative — no collider so it never blocks driving). Sized
@@ -874,6 +906,17 @@ function buildProceduralGasStation() {
   // exterior-only node filter.
   debug.set('gasStationGLB', false);
   // tryGasStationGLB(GX, GZ, grp, procColliders);  // disabled: GLB includes interior clutter
+  return {
+    locationId: relocationContract?.locationId || null,
+    contract: relocationContract,
+    exterior: grp,
+    colliderBody: store,
+    doorPos,
+    entrance: relocationContract ? {
+      id: 'gas', locationId: relocationContract.locationId, interiorId: 'gas',
+      doorPos, faceDir: new THREE.Vector3(1, 0, 0),
+    } : null,
+  };
 }
 
 // Attempt to load the 6twelve gas-station GLB and swap it in for the procedural
@@ -923,7 +966,7 @@ async function tryGasStationGLB(GX, GZ, procGroup, procColliders) {
   }
 }
 
-function applyWorldAssets() {
+function applyWorldAssets(cityInfo) {
   enhanceShopkeepers();
   // Frostbox jewelry is purely decorative — never let a load/placement failure
   // black-screen startup. It's async + fire-and-forget, so swallow any rejection.
@@ -953,7 +996,20 @@ function applyWorldAssets() {
     .then(() => { placeTrashJob(); registerInteractables(cityEntrances); debug.set('trashTargets', activeTrashCount()); });
   // always-present procedural gas station (the refuel loop must be usable even
   // with GLB world buildings disabled)
-  buildProceduralGasStation();
+  const gasActive = productionWorldRelocationIds().includes('6twelve');
+  const gasContract = gasActive ? functionalLocationRelocation.contract('6twelve') : null;
+  const gasRelocation = buildProceduralGasStation(gasContract);
+  if (gasActive) {
+    const placeholder = scene.getObjectByName('ZW_LocationPlaceholder_6twelve');
+    if (placeholder) placeholder.visible = false;
+    entranceMap.gas = { doorPos: gasRelocation.doorPos, faceDir: gasRelocation.entrance.faceDir };
+    cityInfo.landmarks.push({
+      id: 'gas', name: '6TWELVE', interiorId: 'gas',
+      x: gasContract.target.x, z: gasContract.target.z,
+      color: '#ffd54a', locationId: '6twelve',
+    });
+    cityInfo.relocations.push(gasRelocation);
+  }
   // Phase 2: asset-aware town dressing (trash clusters + dumpsters) placed via
   // the prefab/variation/placement system — additive, deterministic, fallback-safe.
   if (FEATURES.USE_PREFAB_TOWN_PROPS) {
@@ -3807,7 +3863,11 @@ function rebuildDensity() {
   }
   if (traffic.length !== targetT) {
     traffic.forEach(c => scene.remove(c.g));
-    traffic = createTraffic(scene, targetT);
+    traffic = createTraffic(
+      scene,
+      targetT,
+      state.world?.largeWorldEnabled ? LARGE_TOWN_TRAFFIC_ROUTES : undefined,
+    );
     // re-skin the rebuilt traffic with kit cars (preload is cached, so sync)
     traffic.forEach((c, i) => swapVehicleVisual(c, TRAFFIC_FLEET[i % TRAFFIC_FLEET.length]));
     changed = true;

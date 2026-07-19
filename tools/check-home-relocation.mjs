@@ -30,7 +30,7 @@ assert.match(main, /home-mailbox/);
 assert.match(main, /primaryResidenceId = 'zaylins-home'/);
 assert.match(main, /migrateLegacyPosition\(relocation\.locationId, state\.pos\)/);
 assert.match(minimap, /landmarkLayout = landmarks/);
-assert.match(state, /SAVE_SCHEMA_VERSION = 5/);
+assert.match(state, /SAVE_SCHEMA_VERSION = 6/);
 assert.match(state, /relocatedLocations:/);
 
 const harness = new RelocationParityHarness();

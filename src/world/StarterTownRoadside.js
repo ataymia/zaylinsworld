@@ -302,11 +302,24 @@ function instanceTransform(placement, type, matrix) {
   matrix.compose(position, quaternion, scale);
 }
 
-export function buildStarterTownRoadsideLayer({ plan = createStarterTownRoadsidePlan() } = {}) {
+export function buildStarterTownRoadsideLayer({
+  plan = createStarterTownRoadsidePlan(),
+  heightAt = null,
+} = {}) {
   const group = new THREE.Group();
   group.name = 'ZW_GeneratedRoadsideInfrastructure';
+  const placements = typeof heightAt === 'function'
+    ? plan.placements.map((placement) => {
+      const authoredGround = starterTownHeightAt(placement.x, placement.z);
+      const authoredOffset = (Number(placement.y) || 0) - authoredGround;
+      return {
+        ...placement,
+        y: (Number(heightAt(placement.x, placement.z)) || 0) + authoredOffset,
+      };
+    })
+    : plan.placements;
   const expanded = [];
-  for (const placement of plan.placements) {
+  for (const placement of placements) {
     if (placement.type === 'streetlight') {
       expanded.push({ ...placement, type: 'streetlight-pole' });
       expanded.push({ ...placement, type: 'streetlight-lamp' });

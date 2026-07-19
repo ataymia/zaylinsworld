@@ -17,6 +17,8 @@ import {
   STARTER_TOWN_GRADE_REPORT,
 } from './StarterTownTerrain.js';
 import { buildStarterTownRoadsideLayer } from './StarterTownRoadside.js';
+import { buildStarterTownGroundCover } from './StarterTownGroundCover.js';
+import { buildStarterTownBuildingAssets } from './StarterTownBuildingAssets.js';
 import { buildSpecialRoadFormsLayer } from './SpecialRoadForms.js';
 import { auditVisualPerformance } from './VisualPerformanceAudit.js';
 
@@ -55,6 +57,26 @@ function applyHeightFunctionToPlane(geometry, heightAt) {
   geometry.computeVertexNormals?.();
   geometry.computeBoundingBox?.();
   geometry.computeBoundingSphere?.();
+  return geometry;
+}
+
+function applyTerrainColors(geometry) {
+  const position = geometry?.getAttribute?.('position');
+  if (!position) return geometry;
+  const colors = new Float32Array(position.count * 3);
+  const color = new THREE.Color();
+  for (let index = 0; index < position.count; index++) {
+    const x = position.getX(index);
+    const z = -position.getY(index);
+    const district = worldRegistry.districtAt({ x, z }, 'starter-town');
+    color.set(DISTRICT_COLORS[district?.id] || '#66785b');
+    const variation = Math.sin(x * 0.019 + z * 0.013) * 0.025;
+    color.offsetHSL(0, 0, variation);
+    colors[index * 3] = color.r;
+    colors[index * 3 + 1] = color.g;
+    colors[index * 3 + 2] = color.b;
+  }
+  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
   return geometry;
 }
 
@@ -110,6 +132,8 @@ export async function buildLargeStarterTown({
   includeMassing = true,
   includeStreetscape = true,
   includeGeneratedRoadside = true,
+  includeGroundCover = true,
+  includeBuildingAssets = true,
   includeSpecialRoadForms = true,
   heightAt = starterTownHeightAt,
   compatibilityMode = false,
@@ -121,13 +145,15 @@ export async function buildLargeStarterTown({
 
   const terrainWidth = plan.terrainBounds.maxX - plan.terrainBounds.minX;
   const terrainDepth = plan.terrainBounds.maxZ - plan.terrainBounds.minZ;
-  const terrainGeometry = applyHeightFunctionToPlane(
-    new THREE.PlaneGeometry(terrainWidth, terrainDepth, 48, 48),
-    heightAt,
+  const terrainGeometry = applyTerrainColors(
+    applyHeightFunctionToPlane(
+      new THREE.PlaneGeometry(terrainWidth, terrainDepth, 48, 48),
+      heightAt,
+    ),
   );
   const terrain = new THREE.Mesh(
     terrainGeometry,
-    new THREE.MeshStandardMaterial({ color: '#6f7f61', roughness: 1, metalness: 0 }),
+    new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 1, metalness: 0 }),
   );
   terrain.name = 'ZW_StarterTerrain';
   terrain.rotation.x = -Math.PI / 2;
@@ -167,17 +193,33 @@ export async function buildLargeStarterTown({
   });
   group.add(roads);
 
-  // Roadside and special-form modules currently use the authored graded terrain.
-  // The normal-game compatibility layer disables them until vehicle elevation is
-  // bound in Phase 7. The isolated engineering preview keeps them enabled.
+  // Special road forms remain graded-only, while roadside infrastructure can
+  // now follow either the authored grade or the flat gameplay compatibility map.
   const specialRoadForms = includeSpecialRoadForms ? buildSpecialRoadFormsLayer() : null;
   if (specialRoadForms) group.add(specialRoadForms.group);
 
-  const generatedRoadside = includeGeneratedRoadside ? buildStarterTownRoadsideLayer() : null;
+  const generatedRoadside = includeGeneratedRoadside
+    ? buildStarterTownRoadsideLayer({ heightAt })
+    : null;
   if (generatedRoadside) group.add(generatedRoadside.group);
+
+  const groundCover = includeGroundCover
+    ? await buildStarterTownGroundCover({ renderer, heightAt })
+    : null;
+  if (groundCover) group.add(groundCover.group);
 
   const massing = includeMassing ? buildDistrictMassing({ heightAt }) : null;
   if (massing) group.add(massing.group);
+
+  const buildingAssets = includeBuildingAssets && massing
+    ? await buildStarterTownBuildingAssets({ renderer, placements: massing.placements, heightAt })
+    : null;
+  if (buildingAssets) {
+    // The procedural instanced layer remains an emergency fallback contract,
+    // but the visible production town is built from the shipped GLBs.
+    massing.group.visible = false;
+    group.add(buildingAssets.group);
+  }
 
   const locationLayer = new THREE.Group();
   locationLayer.name = 'ZW_StarterLocationParcels';
@@ -217,7 +259,7 @@ export async function buildLargeStarterTown({
   }
 
   const streetscape = includeStreetscape
-    ? await buildStreetscapeLayer({ renderer })
+    ? await buildStreetscapeLayer({ renderer, heightAt })
     : null;
   if (streetscape) group.add(streetscape.group);
 
@@ -244,6 +286,8 @@ export async function buildLargeStarterTown({
     locations: plan.locations.length,
     assets: placementReport,
     massing: massing?.group.userData.snapshot?.() || null,
+    buildingAssets: buildingAssets?.group.userData.snapshot?.() || null,
+    groundCover: groundCover?.group.userData.snapshot?.() || null,
     generatedRoadside: generatedRoadside?.group.userData.snapshot?.() || null,
     streetscape: streetscape?.group.userData.snapshot?.() || null,
     visualAudit: auditVisualPerformance(group, { preset: 'medium' }),
@@ -258,6 +302,8 @@ export async function buildLargeStarterTown({
     districtLayer,
     locationLayer,
     massing,
+    buildingAssets,
+    groundCover,
     generatedRoadside,
     streetscape,
     placementReport,

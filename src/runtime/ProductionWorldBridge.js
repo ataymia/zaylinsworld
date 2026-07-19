@@ -6,7 +6,8 @@
 // Enter/Continue then shows the real loader, waits for the prepared world, attaches
 // it to the actual gameplay scene, and allows the existing compact functional core
 // to initialize inside the larger city. Functional-location relocation remains a
-// later phase, so this compatibility build is deliberately flat and drivable.
+// later phase, so this compatibility build stays flat and drivable while its
+// parcel surfaces, real prop assets, landscaping, and road dressing are visible.
 // ─────────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 import { buildLargeStarterTown } from '../world/LargeStarterTown.js';
@@ -32,6 +33,8 @@ const ACTIVE_FUNCTIONAL_RELOCATIONS = Object.freeze([
   'police-station',
   'worktower',
   'iron-city-gym',
+  '6twelve',
+  'dreamdrop-park',
 ]);
 
 const bridge = {
@@ -91,11 +94,13 @@ export function beginProductionWorldPreload() {
   setCreatorPreloadStatus('Starter Town is loading quietly while you customize…');
   bridge.preparePromise = buildLargeStarterTown({
     renderer: null,
-    placeReadyAssets: false,
+    placeReadyAssets: true,
     showDistricts: false,
     includeMassing: true,
-    includeStreetscape: false,
-    includeGeneratedRoadside: false,
+    includeStreetscape: true,
+    includeGeneratedRoadside: true,
+    includeGroundCover: true,
+    includeBuildingAssets: true,
     includeSpecialRoadForms: false,
     heightAt: flatHeight,
     compatibilityMode: true,

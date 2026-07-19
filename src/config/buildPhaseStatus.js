@@ -135,10 +135,9 @@ export const BUILD_PHASES = freeze([
     completed: freeze(['instancing audit', 'triangle/draw estimate', 'shadow/unculled/repeated-geometry warnings', 'performance budgets']),
     verify: freeze(['live low/medium/high visual and FPS capture']),
   }),
-  phase('7', 'Functional location relocation', 'in-progress', {
-    next: true,
-    completed: freeze(['Phase 7A stable contracts', '15-field parity evidence gate', 'legacy-coordinate migration guard', 'production diagnostics report', 'Phase 7B Zaylins Home fallback-safe cutover', 'Phase 7C Zaylins Prep fallback-safe cutover', 'Phase 7D Chicken Spot fallback-safe cutover', 'Phase 7E–7G retail cutovers', 'Phase 7H–7I vehicle-service cutovers', 'Phase 7J–7L civic/work cutovers']),
-    verify: freeze(['Phase 7M 6twelve cutover', 'Phase 7N Dreamdrop Park cutover']),
+  phase('7', 'Functional location relocation', 'implemented', {
+    completed: freeze(['Phase 7A stable contracts', '15-field parity evidence gate', 'legacy-coordinate migration guard', 'production diagnostics report', 'Phase 7B Zaylins Home fallback-safe cutover', 'Phase 7C Zaylins Prep fallback-safe cutover', 'Phase 7D Chicken Spot fallback-safe cutover', 'Phase 7E–7G retail cutovers', 'Phase 7H–7I vehicle-service cutovers', 'Phase 7J–7L civic/work cutovers', 'Phase 7M–7N infrastructure/public-space cutovers']),
+    verify: freeze(['live full-town preview, save/load, and performance acceptance pass']),
     dependsOn: freeze(['Phase 2–6 live feature-preview review']),
   }),
 ]);

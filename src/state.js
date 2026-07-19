@@ -4,12 +4,15 @@
 import { defaultCustom } from './avatar.js';
 import { ensurePlayerCustom } from './config/playerAvatarCatalog.js';
 import { SPAWN } from './config/mapConfig.js';
+import { repairLegacyParkArrival } from './config/saveMigrations.js';
 import { worldRegistry } from './runtime/WorldRegistry.js';
+
+export { repairLegacyParkArrival } from './config/saveMigrations.js';
 
 const SAVE_KEY = 'zaylinsworld.save.v2';
 const BACKUP_KEY = 'zaylinsworld.save.backup';
 const CORRUPT_KEY = 'zaylinsworld.save.corrupt';
-export const SAVE_SCHEMA_VERSION = 5;
+export const SAVE_SCHEMA_VERSION = 6;
 let lastSerialized = '';
 let lastSavedAt = 0;
 
@@ -105,7 +108,7 @@ function migrateAndNormalize(data = {}) {
     ...(data.custom || {}),
     faceMorphs: { ...base.custom.faceMorphs, ...(data.custom?.faceMorphs || {}) },
   });
-  const position = safePosition(data.pos, base.pos);
+  const position = repairLegacyParkArrival(safePosition(data.pos, base.pos), data);
   const district = worldRegistry.districtAt(position, 'starter-town');
   const world = {
     ...base.world,
