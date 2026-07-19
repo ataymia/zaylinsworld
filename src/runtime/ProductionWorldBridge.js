@@ -20,7 +20,14 @@ import {
 
 const flatHeight = () => 0;
 const nextFrame = () => new Promise((resolve) => requestAnimationFrame(resolve));
-const ACTIVE_FUNCTIONAL_RELOCATIONS = Object.freeze(['zaylins-home', 'zaylins-prep', 'chicken-spot']);
+const ACTIVE_FUNCTIONAL_RELOCATIONS = Object.freeze([
+  'zaylins-home',
+  'zaylins-prep',
+  'chicken-spot',
+  'frostbox',
+  'kicks-fits',
+  'block-supply',
+]);
 
 const bridge = {
   installed: false,

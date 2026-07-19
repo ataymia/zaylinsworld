@@ -19,7 +19,7 @@ assert.deepEqual(chicken.legacy, { sourceId: 'chicken', x: 15, z: -15, interiorI
 assert.deepEqual(chicken.target, { x: 192, y: 0, z: -152 });
 assert.equal(chicken.parcelId, 'parcel-chicken-spot');
 
-assert.match(bridge, /ACTIVE_FUNCTIONAL_RELOCATIONS = Object\.freeze\(\['zaylins-home', 'zaylins-prep', 'chicken-spot'\]\)/);
+assert.match(bridge, /ACTIVE_FUNCTIONAL_RELOCATIONS = Object\.freeze\([\s\S]*'chicken-spot'/);
 assert.match(world, /interiorId: b\.interiorId/, 'the restaurant must preserve its stable interior id');
 assert.match(main, /cityLandmarks = cityInfo\.landmarks/, 'runtime lookups must use relocated landmark positions');
 assert.match(main, /cityLandmarks\.find\(l => l\.id === 'chicken'\)/, 'diner teleport must resolve the relocated exterior');
