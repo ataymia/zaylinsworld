@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-19T16:56:02.165Z",
+  "generatedAt": "2026-07-19T17:30:39.850Z",
   "builders": {
     "accessibility_gate": {
       "revision": "2026-07-18-r7",
@@ -204,8 +204,8 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 217,
-      "queued": 19,
+      "completed": 236,
+      "queued": 0,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
@@ -213,8 +213,8 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 212,
-      "queued": 346,
+      "completed": 233,
+      "queued": 325,
       "quarantined": 0,
       "dominantFailureCount": 0
     },

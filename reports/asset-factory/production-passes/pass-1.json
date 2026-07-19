@@ -1,24 +1,24 @@
 {
   "version": 2,
-  "batchId": "batch-00088",
-  "completedAt": "2026-07-19T16:52:47.148Z",
+  "batchId": "batch-00090",
+  "completedAt": "2026-07-19T17:27:26.292Z",
   "requested": 20,
   "passed": 20,
   "failed": 0,
   "queueCounts": {
-    "completed": 1707,
+    "completed": 1747,
     "reference-only": 16,
     "unsupported": 189,
-    "queued": 385,
+    "queued": 345,
     "quarantined": 1
   },
   "results": [
     {
-      "id": "prop_home_upgrade_terminal_a_v01",
+      "id": "prop_starter_public_service_kiosk_a_v01",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/prop_home_upgrade_terminal_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/prop_starter_public_service_kiosk_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -69,18 +69,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_home_upgrade_terminal_a_v01/prop_home_upgrade_terminal_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_home_upgrade_terminal_a_v01/prop_home_upgrade_terminal_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_home_upgrade_terminal_a_v01/prop_home_upgrade_terminal_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_home_upgrade_terminal_a_v01/prop_home_upgrade_terminal_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starter_public_service_kiosk_a_v01/prop_starter_public_service_kiosk_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starter_public_service_kiosk_a_v01/prop_starter_public_service_kiosk_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starter_public_service_kiosk_a_v01/prop_starter_public_service_kiosk_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starter_public_service_kiosk_a_v01/prop_starter_public_service_kiosk_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_bluecore_scooter_rack_a_v01",
+      "id": "prop_casino_roulette_table_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/modular_prop/prop_bluecore_scooter_rack_a_v01.glb",
+      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_casino_roulette_table_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -130,18 +130,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_bluecore_scooter_rack_a_v01/prop_bluecore_scooter_rack_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_bluecore_scooter_rack_a_v01/prop_bluecore_scooter_rack_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_bluecore_scooter_rack_a_v01/prop_bluecore_scooter_rack_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_bluecore_scooter_rack_a_v01/prop_bluecore_scooter_rack_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_casino_roulette_table_a_v01/prop_casino_roulette_table_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_casino_roulette_table_a_v01/prop_casino_roulette_table_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_casino_roulette_table_a_v01/prop_casino_roulette_table_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_casino_roulette_table_a_v01/prop_casino_roulette_table_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_hotel_event_table_a_v01",
+      "id": "prop_starter_tow_yard_fence_a_v01",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_infrastructure/prop_hotel_event_table_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/prop_starter_tow_yard_fence_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -192,18 +192,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_hotel_event_table_a_v01/prop_hotel_event_table_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_hotel_event_table_a_v01/prop_hotel_event_table_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_hotel_event_table_a_v01/prop_hotel_event_table_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_hotel_event_table_a_v01/prop_hotel_event_table_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starter_tow_yard_fence_a_v01/prop_starter_tow_yard_fence_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starter_tow_yard_fence_a_v01/prop_starter_tow_yard_fence_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starter_tow_yard_fence_a_v01/prop_starter_tow_yard_fence_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starter_tow_yard_fence_a_v01/prop_starter_tow_yard_fence_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_bluecore_sub_charge_bay_a_v01",
+      "id": "prop_casino_security_scanner_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/modular_prop/prop_bluecore_sub_charge_bay_a_v01.glb",
+      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_casino_security_scanner_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -253,18 +253,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_bluecore_sub_charge_bay_a_v01/prop_bluecore_sub_charge_bay_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_bluecore_sub_charge_bay_a_v01/prop_bluecore_sub_charge_bay_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_bluecore_sub_charge_bay_a_v01/prop_bluecore_sub_charge_bay_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_bluecore_sub_charge_bay_a_v01/prop_bluecore_sub_charge_bay_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_casino_security_scanner_a_v01/prop_casino_security_scanner_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_casino_security_scanner_a_v01/prop_casino_security_scanner_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_casino_security_scanner_a_v01/prop_casino_security_scanner_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_casino_security_scanner_a_v01/prop_casino_security_scanner_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_hotel_room_service_cart_a_v01",
+      "id": "prop_starter_wood_fence_a_v01",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_infrastructure/prop_hotel_room_service_cart_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/prop_starter_wood_fence_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -315,510 +315,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_hotel_room_service_cart_a_v01/prop_hotel_room_service_cart_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_hotel_room_service_cart_a_v01/prop_hotel_room_service_cart_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_hotel_room_service_cart_a_v01/prop_hotel_room_service_cart_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_hotel_room_service_cart_a_v01/prop_hotel_room_service_cart_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starter_wood_fence_a_v01/prop_starter_wood_fence_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starter_wood_fence_a_v01/prop_starter_wood_fence_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starter_wood_fence_a_v01/prop_starter_wood_fence_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starter_wood_fence_a_v01/prop_starter_wood_fence_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_boat_engine_stand_a_v01",
+      "id": "prop_checkout_counter_tech_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/modular_prop/prop_boat_engine_stand_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_boat_engine_stand_a_v01/prop_boat_engine_stand_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_boat_engine_stand_a_v01/prop_boat_engine_stand_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_boat_engine_stand_a_v01/prop_boat_engine_stand_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_boat_engine_stand_a_v01/prop_boat_engine_stand_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_illegal_terminal_a_v01",
-      "builder": "modular_infrastructure",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/prop_illegal_terminal_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2172,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_concrete",
-          "tech_cyan_emissive",
-          "tech_dark_metal",
-          "tech_white_light"
-        ],
-        "materialCount": 6,
-        "components": [
-          "anchored base or mount",
-          "appropriate materials",
-          "fasteners and identification",
-          "functional secondary components",
-          "power, conduit, drainage, or network path",
-          "primary operating surface",
-          "recognizable primary structure",
-          "safety and weather protection",
-          "service access",
-          "structural enclosure or frame",
-          "user control or connection"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6899999976158142,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6899999976158142,
-            1.3050000667572021
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3799999952316284,
-            1.3050000667572021
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_illegal_terminal_a_v01/prop_illegal_terminal_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_illegal_terminal_a_v01/prop_illegal_terminal_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_illegal_terminal_a_v01/prop_illegal_terminal_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_illegal_terminal_a_v01/prop_illegal_terminal_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_boat_parts_shelf_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/modular_prop/prop_boat_parts_shelf_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_boat_parts_shelf_a_v01/prop_boat_parts_shelf_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_boat_parts_shelf_a_v01/prop_boat_parts_shelf_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_boat_parts_shelf_a_v01/prop_boat_parts_shelf_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_boat_parts_shelf_a_v01/prop_boat_parts_shelf_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_library_terminal_a_v01",
-      "builder": "modular_infrastructure",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/prop_library_terminal_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2172,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_concrete",
-          "tech_cyan_emissive",
-          "tech_dark_metal",
-          "tech_white_light"
-        ],
-        "materialCount": 6,
-        "components": [
-          "anchored base or mount",
-          "appropriate materials",
-          "fasteners and identification",
-          "functional secondary components",
-          "power, conduit, drainage, or network path",
-          "primary operating surface",
-          "recognizable primary structure",
-          "safety and weather protection",
-          "service access",
-          "structural enclosure or frame",
-          "user control or connection"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6899999976158142,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6899999976158142,
-            1.3050000667572021
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3799999952316284,
-            1.3050000667572021
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_library_terminal_a_v01/prop_library_terminal_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_library_terminal_a_v01/prop_library_terminal_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_library_terminal_a_v01/prop_library_terminal_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_library_terminal_a_v01/prop_library_terminal_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_boat_safety_simulator_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/modular_prop/prop_boat_safety_simulator_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_boat_safety_simulator_a_v01/prop_boat_safety_simulator_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_boat_safety_simulator_a_v01/prop_boat_safety_simulator_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_boat_safety_simulator_a_v01/prop_boat_safety_simulator_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_boat_safety_simulator_a_v01/prop_boat_safety_simulator_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_luckyline_service_key_board_a_v01",
-      "builder": "modular_infrastructure",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_infrastructure/prop_luckyline_service_key_board_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2172,
-        "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 6,
-        "components": [
-          "anchored base or mount",
-          "appropriate materials",
-          "fasteners and identification",
-          "functional secondary components",
-          "power, conduit, drainage, or network path",
-          "primary operating surface",
-          "recognizable primary structure",
-          "safety and weather protection",
-          "service access",
-          "structural enclosure or frame",
-          "user control or connection"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6899999976158142,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6899999976158142,
-            1.3050000667572021
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3799999952316284,
-            1.3050000667572021
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_luckyline_service_key_board_a_v01/prop_luckyline_service_key_board_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_luckyline_service_key_board_a_v01/prop_luckyline_service_key_board_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_luckyline_service_key_board_a_v01/prop_luckyline_service_key_board_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_luckyline_service_key_board_a_v01/prop_luckyline_service_key_board_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_boat_tool_cart_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/modular_prop/prop_boat_tool_cart_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_boat_tool_cart_a_v01/prop_boat_tool_cart_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_boat_tool_cart_a_v01/prop_boat_tool_cart_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_boat_tool_cart_a_v01/prop_boat_tool_cart_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_boat_tool_cart_a_v01/prop_boat_tool_cart_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_marina_fuel_pedestal_rich_a_v01",
-      "builder": "modular_infrastructure",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/modular_infrastructure/prop_marina_fuel_pedestal_rich_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2172,
-        "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 6,
-        "components": [
-          "anchored base or mount",
-          "appropriate materials",
-          "fasteners and identification",
-          "functional secondary components",
-          "power, conduit, drainage, or network path",
-          "primary operating surface",
-          "recognizable primary structure",
-          "safety and weather protection",
-          "service access",
-          "structural enclosure or frame",
-          "user control or connection"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6899999976158142,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6899999976158142,
-            1.3050000667572021
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3799999952316284,
-            1.3050000667572021
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_marina_fuel_pedestal_rich_a_v01/prop_marina_fuel_pedestal_rich_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_marina_fuel_pedestal_rich_a_v01/prop_marina_fuel_pedestal_rich_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_marina_fuel_pedestal_rich_a_v01/prop_marina_fuel_pedestal_rich_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_marina_fuel_pedestal_rich_a_v01/prop_marina_fuel_pedestal_rich_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_cable_cluster_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_cable_cluster_a_v01.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_checkout_counter_tech_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -868,18 +376,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_cable_cluster_a_v01/prop_cable_cluster_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_cable_cluster_a_v01/prop_cable_cluster_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_cable_cluster_a_v01/prop_cable_cluster_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_cable_cluster_a_v01/prop_cable_cluster_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_checkout_counter_tech_a_v01/prop_checkout_counter_tech_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_checkout_counter_tech_a_v01/prop_checkout_counter_tech_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_checkout_counter_tech_a_v01/prop_checkout_counter_tech_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_checkout_counter_tech_a_v01/prop_checkout_counter_tech_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_marina_service_cart_a_v01",
+      "id": "prop_studio_equipment_cart_a_v01",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/modular_infrastructure/prop_marina_service_cart_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_infrastructure/prop_studio_equipment_cart_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -930,18 +438,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_marina_service_cart_a_v01/prop_marina_service_cart_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_marina_service_cart_a_v01/prop_marina_service_cart_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_marina_service_cart_a_v01/prop_marina_service_cart_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_marina_service_cart_a_v01/prop_marina_service_cart_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_studio_equipment_cart_a_v01/prop_studio_equipment_cart_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_studio_equipment_cart_a_v01/prop_studio_equipment_cart_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_studio_equipment_cart_a_v01/prop_studio_equipment_cart_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_studio_equipment_cart_a_v01/prop_studio_equipment_cart_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_camera_training_rig_a_v01",
+      "id": "prop_checkpoint_control_console_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_camera_training_rig_a_v01.glb",
+      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_checkpoint_control_console_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -991,18 +499,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_camera_training_rig_a_v01/prop_camera_training_rig_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_camera_training_rig_a_v01/prop_camera_training_rig_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_camera_training_rig_a_v01/prop_camera_training_rig_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_camera_training_rig_a_v01/prop_camera_training_rig_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_checkpoint_control_console_a_v01/prop_checkpoint_control_console_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_checkpoint_control_console_a_v01/prop_checkpoint_control_console_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_checkpoint_control_console_a_v01/prop_checkpoint_control_console_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_checkpoint_control_console_a_v01/prop_checkpoint_control_console_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_police_community_service_board_a_v01",
+      "id": "prop_tidefuel_bait_cooler_a_v01",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/prop_police_community_service_board_a_v01.glb",
+      "outputPath": "public/assets/models/generated/fishing-harbor/modular_infrastructure/prop_tidefuel_bait_cooler_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -1053,18 +561,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_police_community_service_board_a_v01/prop_police_community_service_board_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_police_community_service_board_a_v01/prop_police_community_service_board_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_police_community_service_board_a_v01/prop_police_community_service_board_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_police_community_service_board_a_v01/prop_police_community_service_board_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_tidefuel_bait_cooler_a_v01/prop_tidefuel_bait_cooler_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_tidefuel_bait_cooler_a_v01/prop_tidefuel_bait_cooler_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_tidefuel_bait_cooler_a_v01/prop_tidefuel_bait_cooler_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_tidefuel_bait_cooler_a_v01/prop_tidefuel_bait_cooler_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_canyon_rescue_bell_a_v01",
+      "id": "prop_checkpoint_course_map_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_canyon_rescue_bell_a_v01.glb",
+      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_checkpoint_course_map_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -1114,18 +622,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_canyon_rescue_bell_a_v01/prop_canyon_rescue_bell_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_canyon_rescue_bell_a_v01/prop_canyon_rescue_bell_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_canyon_rescue_bell_a_v01/prop_canyon_rescue_bell_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_canyon_rescue_bell_a_v01/prop_canyon_rescue_bell_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_checkpoint_course_map_a_v01/prop_checkpoint_course_map_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_checkpoint_course_map_a_v01/prop_checkpoint_course_map_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_checkpoint_course_map_a_v01/prop_checkpoint_course_map_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_checkpoint_course_map_a_v01/prop_checkpoint_course_map_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_police_impound_terminal_a_v01",
+      "id": "prop_tidefuel_boat_pump_a_v01",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/prop_police_impound_terminal_a_v01.glb",
+      "outputPath": "public/assets/models/generated/fishing-harbor/modular_infrastructure/prop_tidefuel_boat_pump_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -1176,18 +684,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_police_impound_terminal_a_v01/prop_police_impound_terminal_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_police_impound_terminal_a_v01/prop_police_impound_terminal_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_police_impound_terminal_a_v01/prop_police_impound_terminal_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_police_impound_terminal_a_v01/prop_police_impound_terminal_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_tidefuel_boat_pump_a_v01/prop_tidefuel_boat_pump_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_tidefuel_boat_pump_a_v01/prop_tidefuel_boat_pump_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_tidefuel_boat_pump_a_v01/prop_tidefuel_boat_pump_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_tidefuel_boat_pump_a_v01/prop_tidefuel_boat_pump_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_canyon_shade_canopy_a_v01",
+      "id": "prop_checkpoint_ev_charger_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_canyon_shade_canopy_a_v01.glb",
+      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_checkpoint_ev_charger_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -1237,10 +745,502 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_canyon_shade_canopy_a_v01/prop_canyon_shade_canopy_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_canyon_shade_canopy_a_v01/prop_canyon_shade_canopy_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_canyon_shade_canopy_a_v01/prop_canyon_shade_canopy_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_canyon_shade_canopy_a_v01/prop_canyon_shade_canopy_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_checkpoint_ev_charger_a_v01/prop_checkpoint_ev_charger_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_checkpoint_ev_charger_a_v01/prop_checkpoint_ev_charger_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_checkpoint_ev_charger_a_v01/prop_checkpoint_ev_charger_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_checkpoint_ev_charger_a_v01/prop_checkpoint_ev_charger_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_tidefuel_car_pump_a_v01",
+      "builder": "modular_infrastructure",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/fishing-harbor/modular_infrastructure/prop_tidefuel_car_pump_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2172,
+        "materials": [
+          "starter_black",
+          "starter_concrete",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 6,
+        "components": [
+          "anchored base or mount",
+          "appropriate materials",
+          "fasteners and identification",
+          "functional secondary components",
+          "power, conduit, drainage, or network path",
+          "primary operating surface",
+          "recognizable primary structure",
+          "safety and weather protection",
+          "service access",
+          "structural enclosure or frame",
+          "user control or connection"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6899999976158142,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6899999976158142,
+            1.3050000667572021
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3799999952316284,
+            1.3050000667572021
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_tidefuel_car_pump_a_v01/prop_tidefuel_car_pump_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_tidefuel_car_pump_a_v01/prop_tidefuel_car_pump_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_tidefuel_car_pump_a_v01/prop_tidefuel_car_pump_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_tidefuel_car_pump_a_v01/prop_tidefuel_car_pump_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_checkpoint_tire_pad_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_checkpoint_tire_pad_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_checkpoint_tire_pad_a_v01/prop_checkpoint_tire_pad_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_checkpoint_tire_pad_a_v01/prop_checkpoint_tire_pad_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_checkpoint_tire_pad_a_v01/prop_checkpoint_tire_pad_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_checkpoint_tire_pad_a_v01/prop_checkpoint_tire_pad_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_tidefuel_delivery_locker_a_v01",
+      "builder": "modular_infrastructure",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/fishing-harbor/modular_infrastructure/prop_tidefuel_delivery_locker_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2172,
+        "materials": [
+          "starter_black",
+          "starter_concrete",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 6,
+        "components": [
+          "anchored base or mount",
+          "appropriate materials",
+          "fasteners and identification",
+          "functional secondary components",
+          "power, conduit, drainage, or network path",
+          "primary operating surface",
+          "recognizable primary structure",
+          "safety and weather protection",
+          "service access",
+          "structural enclosure or frame",
+          "user control or connection"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6899999976158142,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6899999976158142,
+            1.3050000667572021
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3799999952316284,
+            1.3050000667572021
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_tidefuel_delivery_locker_a_v01/prop_tidefuel_delivery_locker_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_tidefuel_delivery_locker_a_v01/prop_tidefuel_delivery_locker_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_tidefuel_delivery_locker_a_v01/prop_tidefuel_delivery_locker_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_tidefuel_delivery_locker_a_v01/prop_tidefuel_delivery_locker_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_checkpoint_water_station_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_checkpoint_water_station_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_checkpoint_water_station_a_v01/prop_checkpoint_water_station_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_checkpoint_water_station_a_v01/prop_checkpoint_water_station_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_checkpoint_water_station_a_v01/prop_checkpoint_water_station_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_checkpoint_water_station_a_v01/prop_checkpoint_water_station_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_tidefuel_dock_power_pedestal_a_v01",
+      "builder": "modular_infrastructure",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/fishing-harbor/modular_infrastructure/prop_tidefuel_dock_power_pedestal_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2172,
+        "materials": [
+          "starter_black",
+          "starter_concrete",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 6,
+        "components": [
+          "anchored base or mount",
+          "appropriate materials",
+          "fasteners and identification",
+          "functional secondary components",
+          "power, conduit, drainage, or network path",
+          "primary operating surface",
+          "recognizable primary structure",
+          "safety and weather protection",
+          "service access",
+          "structural enclosure or frame",
+          "user control or connection"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6899999976158142,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6899999976158142,
+            1.3050000667572021
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3799999952316284,
+            1.3050000667572021
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_tidefuel_dock_power_pedestal_a_v01/prop_tidefuel_dock_power_pedestal_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_tidefuel_dock_power_pedestal_a_v01/prop_tidefuel_dock_power_pedestal_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_tidefuel_dock_power_pedestal_a_v01/prop_tidefuel_dock_power_pedestal_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_tidefuel_dock_power_pedestal_a_v01/prop_tidefuel_dock_power_pedestal_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_circuit_table_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_circuit_table_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_cyan_emissive",
+          "tech_dark_metal",
+          "tech_white_light"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_circuit_table_a_v01/prop_circuit_table_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_circuit_table_a_v01/prop_circuit_table_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_circuit_table_a_v01/prop_circuit_table_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_circuit_table_a_v01/prop_circuit_table_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_tidefuel_ev_charger_a_v01",
+      "builder": "modular_infrastructure",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/fishing-harbor/modular_infrastructure/prop_tidefuel_ev_charger_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2172,
+        "materials": [
+          "starter_black",
+          "starter_concrete",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 6,
+        "components": [
+          "anchored base or mount",
+          "appropriate materials",
+          "fasteners and identification",
+          "functional secondary components",
+          "power, conduit, drainage, or network path",
+          "primary operating surface",
+          "recognizable primary structure",
+          "safety and weather protection",
+          "service access",
+          "structural enclosure or frame",
+          "user control or connection"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6899999976158142,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6899999976158142,
+            1.3050000667572021
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3799999952316284,
+            1.3050000667572021
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_tidefuel_ev_charger_a_v01/prop_tidefuel_ev_charger_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_tidefuel_ev_charger_a_v01/prop_tidefuel_ev_charger_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_tidefuel_ev_charger_a_v01/prop_tidefuel_ev_charger_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_tidefuel_ev_charger_a_v01/prop_tidefuel_ev_charger_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_clinic_firstaid_cabinet_canyon_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_clinic_firstaid_cabinet_canyon_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_clinic_firstaid_cabinet_canyon_a_v01/prop_clinic_firstaid_cabinet_canyon_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_clinic_firstaid_cabinet_canyon_a_v01/prop_clinic_firstaid_cabinet_canyon_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_clinic_firstaid_cabinet_canyon_a_v01/prop_clinic_firstaid_cabinet_canyon_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_clinic_firstaid_cabinet_canyon_a_v01/prop_clinic_firstaid_cabinet_canyon_a_v01_view_4.png"
       ]
     }
   ]

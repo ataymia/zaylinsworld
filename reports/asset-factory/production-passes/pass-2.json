@@ -1,24 +1,147 @@
 {
   "version": 2,
-  "batchId": "batch-00089",
-  "completedAt": "2026-07-19T16:56:01.797Z",
+  "batchId": "batch-00091",
+  "completedAt": "2026-07-19T17:30:39.478Z",
   "requested": 20,
   "passed": 20,
   "failed": 0,
   "queueCounts": {
-    "completed": 1727,
+    "completed": 1767,
     "reference-only": 16,
     "unsupported": 189,
-    "queued": 365,
+    "queued": 325,
     "quarantined": 1
   },
   "results": [
     {
-      "id": "prop_canyon_water_station_a_v01",
+      "id": "prop_clinic_reception_desk_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_canyon_water_station_a_v01.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_clinic_reception_desk_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_cyan_emissive",
+          "tech_dark_metal",
+          "tech_white_light"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_clinic_reception_desk_a_v01/prop_clinic_reception_desk_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_clinic_reception_desk_a_v01/prop_clinic_reception_desk_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_clinic_reception_desk_a_v01/prop_clinic_reception_desk_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_clinic_reception_desk_a_v01/prop_clinic_reception_desk_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_tidefuel_ice_freezer_a_v01",
+      "builder": "modular_infrastructure",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/fishing-harbor/modular_infrastructure/prop_tidefuel_ice_freezer_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2172,
+        "materials": [
+          "starter_black",
+          "starter_concrete",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 6,
+        "components": [
+          "anchored base or mount",
+          "appropriate materials",
+          "fasteners and identification",
+          "functional secondary components",
+          "power, conduit, drainage, or network path",
+          "primary operating surface",
+          "recognizable primary structure",
+          "safety and weather protection",
+          "service access",
+          "structural enclosure or frame",
+          "user control or connection"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6899999976158142,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6899999976158142,
+            1.3050000667572021
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3799999952316284,
+            1.3050000667572021
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_tidefuel_ice_freezer_a_v01/prop_tidefuel_ice_freezer_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_tidefuel_ice_freezer_a_v01/prop_tidefuel_ice_freezer_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_tidefuel_ice_freezer_a_v01/prop_tidefuel_ice_freezer_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_tidefuel_ice_freezer_a_v01/prop_tidefuel_ice_freezer_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_clinic_recovery_bed_canyon_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_clinic_recovery_bed_canyon_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -68,18 +191,264 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_canyon_water_station_a_v01/prop_canyon_water_station_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_canyon_water_station_a_v01/prop_canyon_water_station_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_canyon_water_station_a_v01/prop_canyon_water_station_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_canyon_water_station_a_v01/prop_canyon_water_station_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_clinic_recovery_bed_canyon_a_v01/prop_clinic_recovery_bed_canyon_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_clinic_recovery_bed_canyon_a_v01/prop_clinic_recovery_bed_canyon_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_clinic_recovery_bed_canyon_a_v01/prop_clinic_recovery_bed_canyon_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_clinic_recovery_bed_canyon_a_v01/prop_clinic_recovery_bed_canyon_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_police_terminal_a_v01",
+      "id": "prop_tidefuel_price_sign_a_v01",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/prop_police_terminal_a_v01.glb",
+      "outputPath": "public/assets/models/generated/fishing-harbor/modular_infrastructure/prop_tidefuel_price_sign_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2172,
+        "materials": [
+          "starter_black",
+          "starter_concrete",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 6,
+        "components": [
+          "anchored base or mount",
+          "appropriate materials",
+          "fasteners and identification",
+          "functional secondary components",
+          "power, conduit, drainage, or network path",
+          "primary operating surface",
+          "recognizable primary structure",
+          "safety and weather protection",
+          "service access",
+          "structural enclosure or frame",
+          "user control or connection"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6899999976158142,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6899999976158142,
+            1.3050000667572021
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3799999952316284,
+            1.3050000667572021
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_tidefuel_price_sign_a_v01/prop_tidefuel_price_sign_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_tidefuel_price_sign_a_v01/prop_tidefuel_price_sign_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_tidefuel_price_sign_a_v01/prop_tidefuel_price_sign_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_tidefuel_price_sign_a_v01/prop_tidefuel_price_sign_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_clubhouse_reception_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_clubhouse_reception_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_clubhouse_reception_a_v01/prop_clubhouse_reception_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_clubhouse_reception_a_v01/prop_clubhouse_reception_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_clubhouse_reception_a_v01/prop_clubhouse_reception_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_clubhouse_reception_a_v01/prop_clubhouse_reception_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_tidefuel_spill_kit_a_v01",
+      "builder": "modular_infrastructure",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/fishing-harbor/modular_infrastructure/prop_tidefuel_spill_kit_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2172,
+        "materials": [
+          "starter_black",
+          "starter_concrete",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 6,
+        "components": [
+          "anchored base or mount",
+          "appropriate materials",
+          "fasteners and identification",
+          "functional secondary components",
+          "power, conduit, drainage, or network path",
+          "primary operating surface",
+          "recognizable primary structure",
+          "safety and weather protection",
+          "service access",
+          "structural enclosure or frame",
+          "user control or connection"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6899999976158142,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6899999976158142,
+            1.3050000667572021
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3799999952316284,
+            1.3050000667572021
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_tidefuel_spill_kit_a_v01/prop_tidefuel_spill_kit_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_tidefuel_spill_kit_a_v01/prop_tidefuel_spill_kit_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_tidefuel_spill_kit_a_v01/prop_tidefuel_spill_kit_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_tidefuel_spill_kit_a_v01/prop_tidefuel_spill_kit_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_clubhouse_valet_podium_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_clubhouse_valet_podium_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_clubhouse_valet_podium_a_v01/prop_clubhouse_valet_podium_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_clubhouse_valet_podium_a_v01/prop_clubhouse_valet_podium_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_clubhouse_valet_podium_a_v01/prop_clubhouse_valet_podium_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_clubhouse_valet_podium_a_v01/prop_clubhouse_valet_podium_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_transit_gate_a_v01",
+      "builder": "modular_infrastructure",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/prop_transit_gate_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -130,28 +499,28 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_police_terminal_a_v01/prop_police_terminal_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_police_terminal_a_v01/prop_police_terminal_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_police_terminal_a_v01/prop_police_terminal_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_police_terminal_a_v01/prop_police_terminal_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_transit_gate_a_v01/prop_transit_gate_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_transit_gate_a_v01/prop_transit_gate_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_transit_gate_a_v01/prop_transit_gate_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_transit_gate_a_v01/prop_transit_gate_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_casino_blackjack_table_a_v01",
+      "id": "prop_computer_lab_station_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_casino_blackjack_table_a_v01.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_computer_lab_station_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
         "triangles": 2336,
         "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_cyan_emissive",
+          "tech_dark_metal",
+          "tech_white_light"
         ],
         "materialCount": 5,
         "components": [
@@ -191,18 +560,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_casino_blackjack_table_a_v01/prop_casino_blackjack_table_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_casino_blackjack_table_a_v01/prop_casino_blackjack_table_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_casino_blackjack_table_a_v01/prop_casino_blackjack_table_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_casino_blackjack_table_a_v01/prop_casino_blackjack_table_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_computer_lab_station_a_v01/prop_computer_lab_station_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_computer_lab_station_a_v01/prop_computer_lab_station_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_computer_lab_station_a_v01/prop_computer_lab_station_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_computer_lab_station_a_v01/prop_computer_lab_station_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_richhills_security_gate_booth_a_v01",
+      "id": "prop_underwater_current_vent_a_v01",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_infrastructure/prop_richhills_security_gate_booth_a_v01.glb",
+      "outputPath": "public/assets/models/generated/aqualume/modular_infrastructure/prop_underwater_current_vent_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -253,28 +622,28 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_richhills_security_gate_booth_a_v01/prop_richhills_security_gate_booth_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_richhills_security_gate_booth_a_v01/prop_richhills_security_gate_booth_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_richhills_security_gate_booth_a_v01/prop_richhills_security_gate_booth_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_richhills_security_gate_booth_a_v01/prop_richhills_security_gate_booth_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_underwater_current_vent_a_v01/prop_underwater_current_vent_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_underwater_current_vent_a_v01/prop_underwater_current_vent_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_underwater_current_vent_a_v01/prop_underwater_current_vent_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_underwater_current_vent_a_v01/prop_underwater_current_vent_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_casino_carpet_tile_a_v01",
+      "id": "prop_console_display_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_casino_carpet_tile_a_v01.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_console_display_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
         "triangles": 2336,
         "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_cyan_emissive",
+          "tech_dark_metal",
+          "tech_white_light"
         ],
         "materialCount": 5,
         "components": [
@@ -314,18 +683,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_casino_carpet_tile_a_v01/prop_casino_carpet_tile_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_casino_carpet_tile_a_v01/prop_casino_carpet_tile_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_casino_carpet_tile_a_v01/prop_casino_carpet_tile_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_casino_carpet_tile_a_v01/prop_casino_carpet_tile_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_console_display_a_v01/prop_console_display_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_console_display_a_v01/prop_console_display_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_console_display_a_v01/prop_console_display_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_console_display_a_v01/prop_console_display_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_security_scanner_gate_a_v01",
+      "id": "prop_voltfuel_canopy_neon_v01",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/prop_security_scanner_gate_a_v01.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/prop_voltfuel_canopy_neon_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -376,18 +745,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_security_scanner_gate_a_v01/prop_security_scanner_gate_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_security_scanner_gate_a_v01/prop_security_scanner_gate_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_security_scanner_gate_a_v01/prop_security_scanner_gate_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_security_scanner_gate_a_v01/prop_security_scanner_gate_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_voltfuel_canopy_neon_v01/prop_voltfuel_canopy_neon_v01_view_1.png",
+        "asset-factory/work/previews/prop_voltfuel_canopy_neon_v01/prop_voltfuel_canopy_neon_v01_view_2.png",
+        "asset-factory/work/previews/prop_voltfuel_canopy_neon_v01/prop_voltfuel_canopy_neon_v01_view_3.png",
+        "asset-factory/work/previews/prop_voltfuel_canopy_neon_v01/prop_voltfuel_canopy_neon_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_casino_chip_exchange_counter_a_v01",
+      "id": "prop_costume_rack_school_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_casino_chip_exchange_counter_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_costume_rack_school_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -437,18 +806,141 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_casino_chip_exchange_counter_a_v01/prop_casino_chip_exchange_counter_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_casino_chip_exchange_counter_a_v01/prop_casino_chip_exchange_counter_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_casino_chip_exchange_counter_a_v01/prop_casino_chip_exchange_counter_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_casino_chip_exchange_counter_a_v01/prop_casino_chip_exchange_counter_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_costume_rack_school_a_v01/prop_costume_rack_school_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_costume_rack_school_a_v01/prop_costume_rack_school_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_costume_rack_school_a_v01/prop_costume_rack_school_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_costume_rack_school_a_v01/prop_costume_rack_school_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_service_landscape_tool_rack_a_v01",
+      "id": "prop_voltfuel_digital_price_sign_v01",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_infrastructure/prop_service_landscape_tool_rack_a_v01.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/prop_voltfuel_digital_price_sign_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2172,
+        "materials": [
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_concrete",
+          "tech_cyan_emissive",
+          "tech_dark_metal",
+          "tech_white_light"
+        ],
+        "materialCount": 6,
+        "components": [
+          "anchored base or mount",
+          "appropriate materials",
+          "fasteners and identification",
+          "functional secondary components",
+          "power, conduit, drainage, or network path",
+          "primary operating surface",
+          "recognizable primary structure",
+          "safety and weather protection",
+          "service access",
+          "structural enclosure or frame",
+          "user control or connection"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6899999976158142,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6899999976158142,
+            1.3050000667572021
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3799999952316284,
+            1.3050000667572021
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_voltfuel_digital_price_sign_v01/prop_voltfuel_digital_price_sign_v01_view_1.png",
+        "asset-factory/work/previews/prop_voltfuel_digital_price_sign_v01/prop_voltfuel_digital_price_sign_v01_view_2.png",
+        "asset-factory/work/previews/prop_voltfuel_digital_price_sign_v01/prop_voltfuel_digital_price_sign_v01_view_3.png",
+        "asset-factory/work/previews/prop_voltfuel_digital_price_sign_v01/prop_voltfuel_digital_price_sign_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_course_arrow_sign_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_course_arrow_sign_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_course_arrow_sign_a_v01/prop_course_arrow_sign_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_course_arrow_sign_a_v01/prop_course_arrow_sign_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_course_arrow_sign_a_v01/prop_course_arrow_sign_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_course_arrow_sign_a_v01/prop_course_arrow_sign_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_wayfarer_utility_charger_a_v01",
+      "builder": "modular_infrastructure",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_infrastructure/prop_wayfarer_utility_charger_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -499,18 +991,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_service_landscape_tool_rack_a_v01/prop_service_landscape_tool_rack_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_service_landscape_tool_rack_a_v01/prop_service_landscape_tool_rack_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_service_landscape_tool_rack_a_v01/prop_service_landscape_tool_rack_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_service_landscape_tool_rack_a_v01/prop_service_landscape_tool_rack_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_wayfarer_utility_charger_a_v01/prop_wayfarer_utility_charger_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_wayfarer_utility_charger_a_v01/prop_wayfarer_utility_charger_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_wayfarer_utility_charger_a_v01/prop_wayfarer_utility_charger_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_wayfarer_utility_charger_a_v01/prop_wayfarer_utility_charger_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_casino_floor_security_desk_a_v01",
+      "id": "prop_course_checkpoint_beam_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_casino_floor_security_desk_a_v01.glb",
+      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_course_checkpoint_beam_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -560,18 +1052,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_casino_floor_security_desk_a_v01/prop_casino_floor_security_desk_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_casino_floor_security_desk_a_v01/prop_casino_floor_security_desk_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_casino_floor_security_desk_a_v01/prop_casino_floor_security_desk_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_casino_floor_security_desk_a_v01/prop_casino_floor_security_desk_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_course_checkpoint_beam_a_v01/prop_course_checkpoint_beam_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_course_checkpoint_beam_a_v01/prop_course_checkpoint_beam_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_course_checkpoint_beam_a_v01/prop_course_checkpoint_beam_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_course_checkpoint_beam_a_v01/prop_course_checkpoint_beam_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_service_laundry_cart_a_v01",
+      "id": "prop_worktower_bank_kiosk_a_v01",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_infrastructure/prop_service_laundry_cart_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/prop_worktower_bank_kiosk_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -622,18 +1114,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_service_laundry_cart_a_v01/prop_service_laundry_cart_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_service_laundry_cart_a_v01/prop_service_laundry_cart_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_service_laundry_cart_a_v01/prop_service_laundry_cart_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_service_laundry_cart_a_v01/prop_service_laundry_cart_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_worktower_bank_kiosk_a_v01/prop_worktower_bank_kiosk_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_worktower_bank_kiosk_a_v01/prop_worktower_bank_kiosk_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_worktower_bank_kiosk_a_v01/prop_worktower_bank_kiosk_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_worktower_bank_kiosk_a_v01/prop_worktower_bank_kiosk_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_casino_hologram_sign_a_v01",
+      "id": "prop_course_difficulty_sign_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_casino_hologram_sign_a_v01.glb",
+      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_course_difficulty_sign_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -683,80 +1175,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_casino_hologram_sign_a_v01/prop_casino_hologram_sign_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_casino_hologram_sign_a_v01/prop_casino_hologram_sign_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_casino_hologram_sign_a_v01/prop_casino_hologram_sign_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_casino_hologram_sign_a_v01/prop_casino_hologram_sign_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_course_difficulty_sign_a_v01/prop_course_difficulty_sign_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_course_difficulty_sign_a_v01/prop_course_difficulty_sign_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_course_difficulty_sign_a_v01/prop_course_difficulty_sign_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_course_difficulty_sign_a_v01/prop_course_difficulty_sign_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_service_sanitation_bin_a_v01",
-      "builder": "modular_infrastructure",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_infrastructure/prop_service_sanitation_bin_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2172,
-        "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 6,
-        "components": [
-          "anchored base or mount",
-          "appropriate materials",
-          "fasteners and identification",
-          "functional secondary components",
-          "power, conduit, drainage, or network path",
-          "primary operating surface",
-          "recognizable primary structure",
-          "safety and weather protection",
-          "service access",
-          "structural enclosure or frame",
-          "user control or connection"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6899999976158142,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6899999976158142,
-            1.3050000667572021
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3799999952316284,
-            1.3050000667572021
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_service_sanitation_bin_a_v01/prop_service_sanitation_bin_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_service_sanitation_bin_a_v01/prop_service_sanitation_bin_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_service_sanitation_bin_a_v01/prop_service_sanitation_bin_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_service_sanitation_bin_a_v01/prop_service_sanitation_bin_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_casino_pedestrian_barrier_a_v01",
+      "id": "prop_course_disappearing_tile_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_casino_pedestrian_barrier_a_v01.glb",
+      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_course_disappearing_tile_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -806,441 +1236,10 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_casino_pedestrian_barrier_a_v01/prop_casino_pedestrian_barrier_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_casino_pedestrian_barrier_a_v01/prop_casino_pedestrian_barrier_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_casino_pedestrian_barrier_a_v01/prop_casino_pedestrian_barrier_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_casino_pedestrian_barrier_a_v01/prop_casino_pedestrian_barrier_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_starline_venue_scanner_gate_a_v01",
-      "builder": "modular_infrastructure",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_infrastructure/prop_starline_venue_scanner_gate_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2172,
-        "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 6,
-        "components": [
-          "anchored base or mount",
-          "appropriate materials",
-          "fasteners and identification",
-          "functional secondary components",
-          "power, conduit, drainage, or network path",
-          "primary operating surface",
-          "recognizable primary structure",
-          "safety and weather protection",
-          "service access",
-          "structural enclosure or frame",
-          "user control or connection"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6899999976158142,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6899999976158142,
-            1.3050000667572021
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3799999952316284,
-            1.3050000667572021
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_starline_venue_scanner_gate_a_v01/prop_starline_venue_scanner_gate_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starline_venue_scanner_gate_a_v01/prop_starline_venue_scanner_gate_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starline_venue_scanner_gate_a_v01/prop_starline_venue_scanner_gate_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starline_venue_scanner_gate_a_v01/prop_starline_venue_scanner_gate_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_casino_prize_wheel_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_casino_prize_wheel_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_casino_prize_wheel_a_v01/prop_casino_prize_wheel_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_casino_prize_wheel_a_v01/prop_casino_prize_wheel_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_casino_prize_wheel_a_v01/prop_casino_prize_wheel_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_casino_prize_wheel_a_v01/prop_casino_prize_wheel_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_starter_chainlink_fence_a_v01",
-      "builder": "modular_infrastructure",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/prop_starter_chainlink_fence_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2172,
-        "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 6,
-        "components": [
-          "anchored base or mount",
-          "appropriate materials",
-          "fasteners and identification",
-          "functional secondary components",
-          "power, conduit, drainage, or network path",
-          "primary operating surface",
-          "recognizable primary structure",
-          "safety and weather protection",
-          "service access",
-          "structural enclosure or frame",
-          "user control or connection"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6899999976158142,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6899999976158142,
-            1.3050000667572021
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3799999952316284,
-            1.3050000667572021
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_starter_chainlink_fence_a_v01/prop_starter_chainlink_fence_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starter_chainlink_fence_a_v01/prop_starter_chainlink_fence_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starter_chainlink_fence_a_v01/prop_starter_chainlink_fence_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starter_chainlink_fence_a_v01/prop_starter_chainlink_fence_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_casino_prize_wheel_exterior_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_casino_prize_wheel_exterior_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_casino_prize_wheel_exterior_a_v01/prop_casino_prize_wheel_exterior_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_casino_prize_wheel_exterior_a_v01/prop_casino_prize_wheel_exterior_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_casino_prize_wheel_exterior_a_v01/prop_casino_prize_wheel_exterior_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_casino_prize_wheel_exterior_a_v01/prop_casino_prize_wheel_exterior_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_starter_city_map_kiosk_a_v01",
-      "builder": "modular_infrastructure",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/prop_starter_city_map_kiosk_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2172,
-        "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 6,
-        "components": [
-          "anchored base or mount",
-          "appropriate materials",
-          "fasteners and identification",
-          "functional secondary components",
-          "power, conduit, drainage, or network path",
-          "primary operating surface",
-          "recognizable primary structure",
-          "safety and weather protection",
-          "service access",
-          "structural enclosure or frame",
-          "user control or connection"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6899999976158142,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6899999976158142,
-            1.3050000667572021
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3799999952316284,
-            1.3050000667572021
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_starter_city_map_kiosk_a_v01/prop_starter_city_map_kiosk_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starter_city_map_kiosk_a_v01/prop_starter_city_map_kiosk_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starter_city_map_kiosk_a_v01/prop_starter_city_map_kiosk_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starter_city_map_kiosk_a_v01/prop_starter_city_map_kiosk_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_casino_queue_barrier_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_casino_queue_barrier_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_casino_queue_barrier_a_v01/prop_casino_queue_barrier_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_casino_queue_barrier_a_v01/prop_casino_queue_barrier_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_casino_queue_barrier_a_v01/prop_casino_queue_barrier_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_casino_queue_barrier_a_v01/prop_casino_queue_barrier_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_starter_driveway_gate_a_v01",
-      "builder": "modular_infrastructure",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/prop_starter_driveway_gate_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2172,
-        "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 6,
-        "components": [
-          "anchored base or mount",
-          "appropriate materials",
-          "fasteners and identification",
-          "functional secondary components",
-          "power, conduit, drainage, or network path",
-          "primary operating surface",
-          "recognizable primary structure",
-          "safety and weather protection",
-          "service access",
-          "structural enclosure or frame",
-          "user control or connection"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6899999976158142,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6899999976158142,
-            1.3050000667572021
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3799999952316284,
-            1.3050000667572021
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_starter_driveway_gate_a_v01/prop_starter_driveway_gate_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starter_driveway_gate_a_v01/prop_starter_driveway_gate_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starter_driveway_gate_a_v01/prop_starter_driveway_gate_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starter_driveway_gate_a_v01/prop_starter_driveway_gate_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_course_disappearing_tile_a_v01/prop_course_disappearing_tile_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_course_disappearing_tile_a_v01/prop_course_disappearing_tile_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_course_disappearing_tile_a_v01/prop_course_disappearing_tile_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_course_disappearing_tile_a_v01/prop_course_disappearing_tile_a_v01_view_4.png"
       ]
     }
   ]
