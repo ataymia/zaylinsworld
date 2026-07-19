@@ -135,9 +135,11 @@ export const BUILD_PHASES = freeze([
     completed: freeze(['instancing audit', 'triangle/draw estimate', 'shadow/unculled/repeated-geometry warnings', 'performance budgets']),
     verify: freeze(['live low/medium/high visual and FPS capture']),
   }),
-  phase('7', 'Functional location relocation', 'planned', {
+  phase('7', 'Functional location relocation', 'in-progress', {
     next: true,
-    dependsOn: freeze(['Phase 2–6 live feature-preview review', 'legacy location parity harness']),
+    completed: freeze(['Phase 7A stable contracts', '15-field parity evidence gate', 'legacy-coordinate migration guard', 'production diagnostics report']),
+    verify: freeze(['Phase 7B Zaylins Home cutover', 'live preview and save/load parity']),
+    dependsOn: freeze(['Phase 2–6 live feature-preview review']),
   }),
 ]);
 

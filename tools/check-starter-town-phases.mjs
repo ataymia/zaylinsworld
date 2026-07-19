@@ -86,6 +86,7 @@ assert.match(productionBridge, /creator-continue/, 'Continue Save must pass thro
 assert.match(productionBridge, /showLoadingScreen\('Entering Starter Town/, 'entering gameplay must reopen the real loading screen');
 assert.match(productionBridge, /trackLoadingPromise/, 'large-town preparation must contribute to real loading readiness');
 assert.match(productionBridge, /attachPreparedProductionWorld/, 'the prepared large-town group must attach to the actual gameplay scene');
+assert.match(productionBridge, /functionalLocationRelocation\.snapshot\(\)/, 'the production report must expose the Phase 7A relocation gate');
 assert.match(productionBridge, /heightAt: flatHeight/, 'normal gameplay compatibility shell must remain drivable with current vehicle elevation');
 assert.match(settings, /installProductionWorldBridge\(\)/, 'settings dependency must install the production bridge before main scene creation');
 assert.match(settings, /⚙ Graphics/, 'graphics controls must have a visible labeled button');
