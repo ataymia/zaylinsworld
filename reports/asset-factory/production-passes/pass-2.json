@@ -1,277 +1,24 @@
 {
   "version": 2,
-  "batchId": "batch-00035",
-  "completedAt": "2026-07-18T23:54:27.753Z",
+  "batchId": "batch-00037",
+  "completedAt": "2026-07-19T00:44:42.888Z",
   "requested": 20,
   "passed": 20,
   "failed": 0,
   "queueCounts": {
-    "completed": 1019,
+    "completed": 1059,
     "reference-only": 16,
-    "queued": 1073,
+    "queued": 1033,
     "unsupported": 189,
     "quarantined": 1
   },
   "results": [
     {
-      "id": "gap-fishing-harbor-shoreline-recycling-station-standard-110",
-      "builder": "modular_infrastructure",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/modular_infrastructure/infrastructure_fishing-harbor-shoreline-recycling-station-standard-110.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 17,
-        "triangles": 3112,
-        "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 6,
-        "components": [
-          "anchored base or mount",
-          "fasteners and identification",
-          "power, conduit, drainage, or network path",
-          "primary operating surface",
-          "safety and weather protection",
-          "service access",
-          "structural enclosure or frame",
-          "user control or connection"
-        ],
-        "bounds": {
-          "min": [
-            -0.5519999861717224,
-            -0.36800000071525574,
-            0
-          ],
-          "max": [
-            0.5519999861717224,
-            0.36800000071525574,
-            1.565999984741211
-          ],
-          "dimensions": [
-            1.1039999723434448,
-            0.7360000014305115,
-            1.565999984741211
-          ]
-        },
-        "requiredComponents": [
-          "anchored base or mount",
-          "structural enclosure or frame",
-          "primary operating surface",
-          "user control or connection",
-          "service access",
-          "power, conduit, drainage, or network path",
-          "safety and weather protection",
-          "fasteners and identification"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-fishing-harbor-shoreline-recycling-station-standard-110/gap-fishing-harbor-shoreline-recycling-station-standard-110_view_1.png",
-        "asset-factory/work/previews/gap-fishing-harbor-shoreline-recycling-station-standard-110/gap-fishing-harbor-shoreline-recycling-station-standard-110_view_2.png",
-        "asset-factory/work/previews/gap-fishing-harbor-shoreline-recycling-station-standard-110/gap-fishing-harbor-shoreline-recycling-station-standard-110_view_3.png",
-        "asset-factory/work/previews/gap-fishing-harbor-shoreline-recycling-station-standard-110/gap-fishing-harbor-shoreline-recycling-station-standard-110_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-starline-city-retail-dining-table-standard-046",
-      "builder": "modular_furniture",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_furniture/furniture_starline-city-retail-dining-table-standard-046.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 21,
-        "triangles": 4044,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "floor or wall contact detail",
-          "interaction clearance",
-          "joinery and fasteners",
-          "legs, pedestal, or wall mount",
-          "load-bearing frame",
-          "primary use surface",
-          "storage or access component",
-          "user contact surface"
-        ],
-        "bounds": {
-          "min": [
-            -0.6510000228881836,
-            -0.33924999833106995,
-            0
-          ],
-          "max": [
-            0.6510000228881836,
-            0.33924999833106995,
-            0.8500000238418579
-          ],
-          "dimensions": [
-            1.3020000457763672,
-            0.6784999966621399,
-            0.8500000238418579
-          ]
-        },
-        "requiredComponents": [
-          "primary use surface",
-          "load-bearing frame",
-          "legs, pedestal, or wall mount",
-          "user contact surface",
-          "storage or access component",
-          "joinery and fasteners",
-          "floor or wall contact detail",
-          "interaction clearance"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-starline-city-retail-dining-table-standard-046/gap-starline-city-retail-dining-table-standard-046_view_1.png",
-        "asset-factory/work/previews/gap-starline-city-retail-dining-table-standard-046/gap-starline-city-retail-dining-table-standard-046_view_2.png",
-        "asset-factory/work/previews/gap-starline-city-retail-dining-table-standard-046/gap-starline-city-retail-dining-table-standard-046_view_3.png",
-        "asset-factory/work/previews/gap-starline-city-retail-dining-table-standard-046/gap-starline-city-retail-dining-table-standard-046_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-aqualume-sonar-pipe-tee-standard-097",
-      "builder": "modular_connector",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/modular_connector/connector_aqualume-sonar-pipe-tee-standard-097.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 19,
-        "triangles": 3572,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "LOD-preserved silhouette",
-          "collision-safe boundary",
-          "end connection socket",
-          "load-bearing frame",
-          "primary structural span",
-          "seal or transition trim",
-          "service access",
-          "start connection socket"
-        ],
-        "bounds": {
-          "min": [
-            -1.0399999618530273,
-            -0.8425000309944153,
-            0
-          ],
-          "max": [
-            1.0399999618530273,
-            0.8425000309944153,
-            1.440000057220459
-          ],
-          "dimensions": [
-            2.0799999237060547,
-            1.6850000619888306,
-            1.440000057220459
-          ]
-        },
-        "requiredComponents": [
-          "primary structural span",
-          "start connection socket",
-          "end connection socket",
-          "load-bearing frame",
-          "service access",
-          "seal or transition trim",
-          "collision-safe boundary",
-          "LOD-preserved silhouette"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-aqualume-sonar-pipe-tee-standard-097/gap-aqualume-sonar-pipe-tee-standard-097_view_1.png",
-        "asset-factory/work/previews/gap-aqualume-sonar-pipe-tee-standard-097/gap-aqualume-sonar-pipe-tee-standard-097_view_2.png",
-        "asset-factory/work/previews/gap-aqualume-sonar-pipe-tee-standard-097/gap-aqualume-sonar-pipe-tee-standard-097_view_3.png",
-        "asset-factory/work/previews/gap-aqualume-sonar-pipe-tee-standard-097/gap-aqualume-sonar-pipe-tee-standard-097_view_4.png"
-      ]
-    },
-    {
-      "id": "building_canyon_base_apartments_exterior_v01",
-      "builder": "modular_building",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/obby-canyon/building_shell/building_canyon_base_apartments_exterior_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 32,
-        "triangles": 6016,
-        "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_glass",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 7,
-        "components": [
-          "entrance",
-          "facade material breaks",
-          "foundation",
-          "primary massing",
-          "roof line",
-          "service side",
-          "window system"
-        ],
-        "bounds": {
-          "min": [
-            -8.640000343322754,
-            -6.75499963760376,
-            0
-          ],
-          "max": [
-            8.640000343322754,
-            6.755000114440918,
-            8.729999542236328
-          ],
-          "dimensions": [
-            17.280000686645508,
-            13.510000228881836,
-            8.729999542236328
-          ]
-        },
-        "requiredComponents": [
-          "primary massing",
-          "roof line",
-          "entrance",
-          "window system",
-          "facade material breaks",
-          "service side",
-          "foundation"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/building_canyon_base_apartments_exterior_v01/building_canyon_base_apartments_exterior_v01_view_1.png",
-        "asset-factory/work/previews/building_canyon_base_apartments_exterior_v01/building_canyon_base_apartments_exterior_v01_view_2.png",
-        "asset-factory/work/previews/building_canyon_base_apartments_exterior_v01/building_canyon_base_apartments_exterior_v01_view_3.png",
-        "asset-factory/work/previews/building_canyon_base_apartments_exterior_v01/building_canyon_base_apartments_exterior_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-shared-world-damage-food-warmer-empty-standard-317",
+      "id": "gap-shared-world-inventory-sign-lit-standard-306",
       "builder": "state_variant",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-damage-food-warmer-empty-standard-317.glb",
+      "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-inventory-sign-lit-standard-306.glb",
       "failures": [],
       "stats": {
         "meshObjects": 16,
@@ -323,18 +70,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-damage-food-warmer-empty-standard-317/gap-shared-world-damage-food-warmer-empty-standard-317_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-damage-food-warmer-empty-standard-317/gap-shared-world-damage-food-warmer-empty-standard-317_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-damage-food-warmer-empty-standard-317/gap-shared-world-damage-food-warmer-empty-standard-317_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-damage-food-warmer-empty-standard-317/gap-shared-world-damage-food-warmer-empty-standard-317_view_4.png"
+        "asset-factory/work/previews/gap-shared-world-inventory-sign-lit-standard-306/gap-shared-world-inventory-sign-lit-standard-306_view_1.png",
+        "asset-factory/work/previews/gap-shared-world-inventory-sign-lit-standard-306/gap-shared-world-inventory-sign-lit-standard-306_view_2.png",
+        "asset-factory/work/previews/gap-shared-world-inventory-sign-lit-standard-306/gap-shared-world-inventory-sign-lit-standard-306_view_3.png",
+        "asset-factory/work/previews/gap-shared-world-inventory-sign-lit-standard-306/gap-shared-world-inventory-sign-lit-standard-306_view_4.png"
       ]
     },
     {
-      "id": "gap-casino-strip-security-keys-and-lanyard-standard-042",
+      "id": "gap-casino-strip-stage-water-bottle-standard-039",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_casino-strip-security-keys-and-lanyard-standard-042.glb",
+      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_casino-strip-stage-water-bottle-standard-039.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -386,18 +133,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-casino-strip-security-keys-and-lanyard-standard-042/gap-casino-strip-security-keys-and-lanyard-standard-042_view_1.png",
-        "asset-factory/work/previews/gap-casino-strip-security-keys-and-lanyard-standard-042/gap-casino-strip-security-keys-and-lanyard-standard-042_view_2.png",
-        "asset-factory/work/previews/gap-casino-strip-security-keys-and-lanyard-standard-042/gap-casino-strip-security-keys-and-lanyard-standard-042_view_3.png",
-        "asset-factory/work/previews/gap-casino-strip-security-keys-and-lanyard-standard-042/gap-casino-strip-security-keys-and-lanyard-standard-042_view_4.png"
+        "asset-factory/work/previews/gap-casino-strip-stage-water-bottle-standard-039/gap-casino-strip-stage-water-bottle-standard-039_view_1.png",
+        "asset-factory/work/previews/gap-casino-strip-stage-water-bottle-standard-039/gap-casino-strip-stage-water-bottle-standard-039_view_2.png",
+        "asset-factory/work/previews/gap-casino-strip-stage-water-bottle-standard-039/gap-casino-strip-stage-water-bottle-standard-039_view_3.png",
+        "asset-factory/work/previews/gap-casino-strip-stage-water-bottle-standard-039/gap-casino-strip-stage-water-bottle-standard-039_view_4.png"
       ]
     },
     {
-      "id": "gap-fishing-harbor-shoreline-road-barrier-standard-100",
+      "id": "gap-starter-town-clinic-bike-rack-standard-077",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/modular_infrastructure/infrastructure_fishing-harbor-shoreline-road-barrier-standard-100.glb",
+      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-clinic-bike-rack-standard-077.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -450,18 +197,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-fishing-harbor-shoreline-road-barrier-standard-100/gap-fishing-harbor-shoreline-road-barrier-standard-100_view_1.png",
-        "asset-factory/work/previews/gap-fishing-harbor-shoreline-road-barrier-standard-100/gap-fishing-harbor-shoreline-road-barrier-standard-100_view_2.png",
-        "asset-factory/work/previews/gap-fishing-harbor-shoreline-road-barrier-standard-100/gap-fishing-harbor-shoreline-road-barrier-standard-100_view_3.png",
-        "asset-factory/work/previews/gap-fishing-harbor-shoreline-road-barrier-standard-100/gap-fishing-harbor-shoreline-road-barrier-standard-100_view_4.png"
+        "asset-factory/work/previews/gap-starter-town-clinic-bike-rack-standard-077/gap-starter-town-clinic-bike-rack-standard-077_view_1.png",
+        "asset-factory/work/previews/gap-starter-town-clinic-bike-rack-standard-077/gap-starter-town-clinic-bike-rack-standard-077_view_2.png",
+        "asset-factory/work/previews/gap-starter-town-clinic-bike-rack-standard-077/gap-starter-town-clinic-bike-rack-standard-077_view_3.png",
+        "asset-factory/work/previews/gap-starter-town-clinic-bike-rack-standard-077/gap-starter-town-clinic-bike-rack-standard-077_view_4.png"
       ]
     },
     {
-      "id": "gap-starline-city-retail-display-shelf-standard-056",
+      "id": "gap-starline-city-security-bookcase-standard-055",
       "builder": "modular_furniture",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_furniture/furniture_starline-city-retail-display-shelf-standard-056.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_furniture/furniture_starline-city-security-bookcase-standard-055.glb",
       "failures": [],
       "stats": {
         "meshObjects": 21,
@@ -513,18 +260,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-starline-city-retail-display-shelf-standard-056/gap-starline-city-retail-display-shelf-standard-056_view_1.png",
-        "asset-factory/work/previews/gap-starline-city-retail-display-shelf-standard-056/gap-starline-city-retail-display-shelf-standard-056_view_2.png",
-        "asset-factory/work/previews/gap-starline-city-retail-display-shelf-standard-056/gap-starline-city-retail-display-shelf-standard-056_view_3.png",
-        "asset-factory/work/previews/gap-starline-city-retail-display-shelf-standard-056/gap-starline-city-retail-display-shelf-standard-056_view_4.png"
+        "asset-factory/work/previews/gap-starline-city-security-bookcase-standard-055/gap-starline-city-security-bookcase-standard-055_view_1.png",
+        "asset-factory/work/previews/gap-starline-city-security-bookcase-standard-055/gap-starline-city-security-bookcase-standard-055_view_2.png",
+        "asset-factory/work/previews/gap-starline-city-security-bookcase-standard-055/gap-starline-city-security-bookcase-standard-055_view_3.png",
+        "asset-factory/work/previews/gap-starline-city-security-bookcase-standard-055/gap-starline-city-security-bookcase-standard-055_view_4.png"
       ]
     },
     {
-      "id": "gap-aqualume-sonar-transit-tube-maintenance-alcove-standard-086",
+      "id": "gap-aqualume-submersible-transit-tube-external-strut-standard-090",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/modular_connector/connector_aqualume-sonar-transit-tube-maintenance-alcove-standard-086.glb",
+      "outputPath": "public/assets/models/generated/aqualume/modular_connector/connector_aqualume-submersible-transit-tube-external-strut-standard-090.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
@@ -576,18 +323,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-aqualume-sonar-transit-tube-maintenance-alcove-standard-086/gap-aqualume-sonar-transit-tube-maintenance-alcove-standard-086_view_1.png",
-        "asset-factory/work/previews/gap-aqualume-sonar-transit-tube-maintenance-alcove-standard-086/gap-aqualume-sonar-transit-tube-maintenance-alcove-standard-086_view_2.png",
-        "asset-factory/work/previews/gap-aqualume-sonar-transit-tube-maintenance-alcove-standard-086/gap-aqualume-sonar-transit-tube-maintenance-alcove-standard-086_view_3.png",
-        "asset-factory/work/previews/gap-aqualume-sonar-transit-tube-maintenance-alcove-standard-086/gap-aqualume-sonar-transit-tube-maintenance-alcove-standard-086_view_4.png"
+        "asset-factory/work/previews/gap-aqualume-submersible-transit-tube-external-strut-standard-090/gap-aqualume-submersible-transit-tube-external-strut-standard-090_view_1.png",
+        "asset-factory/work/previews/gap-aqualume-submersible-transit-tube-external-strut-standard-090/gap-aqualume-submersible-transit-tube-external-strut-standard-090_view_2.png",
+        "asset-factory/work/previews/gap-aqualume-submersible-transit-tube-external-strut-standard-090/gap-aqualume-submersible-transit-tube-external-strut-standard-090_view_3.png",
+        "asset-factory/work/previews/gap-aqualume-submersible-transit-tube-external-strut-standard-090/gap-aqualume-submersible-transit-tube-external-strut-standard-090_view_4.png"
       ]
     },
     {
-      "id": "building_canyon_cabin_a_v01",
+      "id": "building_casino_strip_police_exterior_v01",
       "builder": "modular_building",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/obby-canyon/building_shell/building_canyon_cabin_a_v01.glb",
+      "outputPath": "public/assets/models/generated/casino-strip/building_shell/building_casino_strip_police_exterior_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 32,
@@ -639,18 +386,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/building_canyon_cabin_a_v01/building_canyon_cabin_a_v01_view_1.png",
-        "asset-factory/work/previews/building_canyon_cabin_a_v01/building_canyon_cabin_a_v01_view_2.png",
-        "asset-factory/work/previews/building_canyon_cabin_a_v01/building_canyon_cabin_a_v01_view_3.png",
-        "asset-factory/work/previews/building_canyon_cabin_a_v01/building_canyon_cabin_a_v01_view_4.png"
+        "asset-factory/work/previews/building_casino_strip_police_exterior_v01/building_casino_strip_police_exterior_v01_view_1.png",
+        "asset-factory/work/previews/building_casino_strip_police_exterior_v01/building_casino_strip_police_exterior_v01_view_2.png",
+        "asset-factory/work/previews/building_casino_strip_police_exterior_v01/building_casino_strip_police_exterior_v01_view_3.png",
+        "asset-factory/work/previews/building_casino_strip_police_exterior_v01/building_casino_strip_police_exterior_v01_view_4.png"
       ]
     },
     {
-      "id": "gap-shared-world-damage-medical-cabinet-stocked-standard-347",
+      "id": "gap-shared-world-inventory-streetlight-off-standard-321",
       "builder": "state_variant",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-damage-medical-cabinet-stocked-standard-347.glb",
+      "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-inventory-streetlight-off-standard-321.glb",
       "failures": [],
       "stats": {
         "meshObjects": 16,
@@ -702,18 +449,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-damage-medical-cabinet-stocked-standard-347/gap-shared-world-damage-medical-cabinet-stocked-standard-347_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-damage-medical-cabinet-stocked-standard-347/gap-shared-world-damage-medical-cabinet-stocked-standard-347_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-damage-medical-cabinet-stocked-standard-347/gap-shared-world-damage-medical-cabinet-stocked-standard-347_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-damage-medical-cabinet-stocked-standard-347/gap-shared-world-damage-medical-cabinet-stocked-standard-347_view_4.png"
+        "asset-factory/work/previews/gap-shared-world-inventory-streetlight-off-standard-321/gap-shared-world-inventory-streetlight-off-standard-321_view_1.png",
+        "asset-factory/work/previews/gap-shared-world-inventory-streetlight-off-standard-321/gap-shared-world-inventory-streetlight-off-standard-321_view_2.png",
+        "asset-factory/work/previews/gap-shared-world-inventory-streetlight-off-standard-321/gap-shared-world-inventory-streetlight-off-standard-321_view_3.png",
+        "asset-factory/work/previews/gap-shared-world-inventory-streetlight-off-standard-321/gap-shared-world-inventory-streetlight-off-standard-321_view_4.png"
       ]
     },
     {
-      "id": "gap-casino-strip-security-milk-crate-standard-032",
+      "id": "gap-dungeon-outskirts-bridge-napkin-dispenser-standard-032",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_casino-strip-security-milk-crate-standard-032.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_dungeon-outskirts-bridge-napkin-dispenser-standard-032.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -765,18 +512,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-casino-strip-security-milk-crate-standard-032/gap-casino-strip-security-milk-crate-standard-032_view_1.png",
-        "asset-factory/work/previews/gap-casino-strip-security-milk-crate-standard-032/gap-casino-strip-security-milk-crate-standard-032_view_2.png",
-        "asset-factory/work/previews/gap-casino-strip-security-milk-crate-standard-032/gap-casino-strip-security-milk-crate-standard-032_view_3.png",
-        "asset-factory/work/previews/gap-casino-strip-security-milk-crate-standard-032/gap-casino-strip-security-milk-crate-standard-032_view_4.png"
+        "asset-factory/work/previews/gap-dungeon-outskirts-bridge-napkin-dispenser-standard-032/gap-dungeon-outskirts-bridge-napkin-dispenser-standard-032_view_1.png",
+        "asset-factory/work/previews/gap-dungeon-outskirts-bridge-napkin-dispenser-standard-032/gap-dungeon-outskirts-bridge-napkin-dispenser-standard-032_view_2.png",
+        "asset-factory/work/previews/gap-dungeon-outskirts-bridge-napkin-dispenser-standard-032/gap-dungeon-outskirts-bridge-napkin-dispenser-standard-032_view_3.png",
+        "asset-factory/work/previews/gap-dungeon-outskirts-bridge-napkin-dispenser-standard-032/gap-dungeon-outskirts-bridge-napkin-dispenser-standard-032_view_4.png"
       ]
     },
     {
-      "id": "gap-fishing-harbor-shoreline-school-intercom-standard-140",
+      "id": "gap-starter-town-clinic-fish-weigh-station-standard-097",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/modular_infrastructure/infrastructure_fishing-harbor-shoreline-school-intercom-standard-140.glb",
+      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-clinic-fish-weigh-station-standard-097.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -829,18 +576,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-fishing-harbor-shoreline-school-intercom-standard-140/gap-fishing-harbor-shoreline-school-intercom-standard-140_view_1.png",
-        "asset-factory/work/previews/gap-fishing-harbor-shoreline-school-intercom-standard-140/gap-fishing-harbor-shoreline-school-intercom-standard-140_view_2.png",
-        "asset-factory/work/previews/gap-fishing-harbor-shoreline-school-intercom-standard-140/gap-fishing-harbor-shoreline-school-intercom-standard-140_view_3.png",
-        "asset-factory/work/previews/gap-fishing-harbor-shoreline-school-intercom-standard-140/gap-fishing-harbor-shoreline-school-intercom-standard-140_view_4.png"
+        "asset-factory/work/previews/gap-starter-town-clinic-fish-weigh-station-standard-097/gap-starter-town-clinic-fish-weigh-station-standard-097_view_1.png",
+        "asset-factory/work/previews/gap-starter-town-clinic-fish-weigh-station-standard-097/gap-starter-town-clinic-fish-weigh-station-standard-097_view_2.png",
+        "asset-factory/work/previews/gap-starter-town-clinic-fish-weigh-station-standard-097/gap-starter-town-clinic-fish-weigh-station-standard-097_view_3.png",
+        "asset-factory/work/previews/gap-starter-town-clinic-fish-weigh-station-standard-097/gap-starter-town-clinic-fish-weigh-station-standard-097_view_4.png"
       ]
     },
     {
-      "id": "gap-starline-city-retail-high-chair-standard-066",
+      "id": "gap-starline-city-security-counter-stool-standard-065",
       "builder": "modular_furniture",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_furniture/furniture_starline-city-retail-high-chair-standard-066.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_furniture/furniture_starline-city-security-counter-stool-standard-065.glb",
       "failures": [],
       "stats": {
         "meshObjects": 21,
@@ -892,18 +639,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-starline-city-retail-high-chair-standard-066/gap-starline-city-retail-high-chair-standard-066_view_1.png",
-        "asset-factory/work/previews/gap-starline-city-retail-high-chair-standard-066/gap-starline-city-retail-high-chair-standard-066_view_2.png",
-        "asset-factory/work/previews/gap-starline-city-retail-high-chair-standard-066/gap-starline-city-retail-high-chair-standard-066_view_3.png",
-        "asset-factory/work/previews/gap-starline-city-retail-high-chair-standard-066/gap-starline-city-retail-high-chair-standard-066_view_4.png"
+        "asset-factory/work/previews/gap-starline-city-security-counter-stool-standard-065/gap-starline-city-security-counter-stool-standard-065_view_1.png",
+        "asset-factory/work/previews/gap-starline-city-security-counter-stool-standard-065/gap-starline-city-security-counter-stool-standard-065_view_2.png",
+        "asset-factory/work/previews/gap-starline-city-security-counter-stool-standard-065/gap-starline-city-security-counter-stool-standard-065_view_3.png",
+        "asset-factory/work/previews/gap-starline-city-security-counter-stool-standard-065/gap-starline-city-security-counter-stool-standard-065_view_4.png"
       ]
     },
     {
-      "id": "gap-aqualume-sonar-transit-tube-sharp-curve-standard-075",
+      "id": "gap-aqualume-submersible-transit-tube-y-split-standard-079",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/modular_connector/connector_aqualume-sonar-transit-tube-sharp-curve-standard-075.glb",
+      "outputPath": "public/assets/models/generated/aqualume/modular_connector/connector_aqualume-submersible-transit-tube-y-split-standard-079.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
@@ -955,18 +702,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-aqualume-sonar-transit-tube-sharp-curve-standard-075/gap-aqualume-sonar-transit-tube-sharp-curve-standard-075_view_1.png",
-        "asset-factory/work/previews/gap-aqualume-sonar-transit-tube-sharp-curve-standard-075/gap-aqualume-sonar-transit-tube-sharp-curve-standard-075_view_2.png",
-        "asset-factory/work/previews/gap-aqualume-sonar-transit-tube-sharp-curve-standard-075/gap-aqualume-sonar-transit-tube-sharp-curve-standard-075_view_3.png",
-        "asset-factory/work/previews/gap-aqualume-sonar-transit-tube-sharp-curve-standard-075/gap-aqualume-sonar-transit-tube-sharp-curve-standard-075_view_4.png"
+        "asset-factory/work/previews/gap-aqualume-submersible-transit-tube-y-split-standard-079/gap-aqualume-submersible-transit-tube-y-split-standard-079_view_1.png",
+        "asset-factory/work/previews/gap-aqualume-submersible-transit-tube-y-split-standard-079/gap-aqualume-submersible-transit-tube-y-split-standard-079_view_2.png",
+        "asset-factory/work/previews/gap-aqualume-submersible-transit-tube-y-split-standard-079/gap-aqualume-submersible-transit-tube-y-split-standard-079_view_3.png",
+        "asset-factory/work/previews/gap-aqualume-submersible-transit-tube-y-split-standard-079/gap-aqualume-submersible-transit-tube-y-split-standard-079_view_4.png"
       ]
     },
     {
-      "id": "building_canyon_cosmetics_exterior_v01",
+      "id": "building_casino_welcome_arch_v01",
       "builder": "modular_building",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/obby-canyon/building_shell/building_canyon_cosmetics_exterior_v01.glb",
+      "outputPath": "public/assets/models/generated/casino-strip/building_shell/building_casino_welcome_arch_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 32,
@@ -1018,18 +765,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/building_canyon_cosmetics_exterior_v01/building_canyon_cosmetics_exterior_v01_view_1.png",
-        "asset-factory/work/previews/building_canyon_cosmetics_exterior_v01/building_canyon_cosmetics_exterior_v01_view_2.png",
-        "asset-factory/work/previews/building_canyon_cosmetics_exterior_v01/building_canyon_cosmetics_exterior_v01_view_3.png",
-        "asset-factory/work/previews/building_canyon_cosmetics_exterior_v01/building_canyon_cosmetics_exterior_v01_view_4.png"
+        "asset-factory/work/previews/building_casino_welcome_arch_v01/building_casino_welcome_arch_v01_view_1.png",
+        "asset-factory/work/previews/building_casino_welcome_arch_v01/building_casino_welcome_arch_v01_view_2.png",
+        "asset-factory/work/previews/building_casino_welcome_arch_v01/building_casino_welcome_arch_v01_view_3.png",
+        "asset-factory/work/previews/building_casino_welcome_arch_v01/building_casino_welcome_arch_v01_view_4.png"
       ]
     },
     {
-      "id": "gap-shared-world-damage-power-grid-offline-standard-362",
+      "id": "gap-shared-world-inventory-vending-machine-stocked-standard-351",
       "builder": "state_variant",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-damage-power-grid-offline-standard-362.glb",
+      "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-inventory-vending-machine-stocked-standard-351.glb",
       "failures": [],
       "stats": {
         "meshObjects": 16,
@@ -1081,18 +828,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-damage-power-grid-offline-standard-362/gap-shared-world-damage-power-grid-offline-standard-362_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-damage-power-grid-offline-standard-362/gap-shared-world-damage-power-grid-offline-standard-362_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-damage-power-grid-offline-standard-362/gap-shared-world-damage-power-grid-offline-standard-362_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-damage-power-grid-offline-standard-362/gap-shared-world-damage-power-grid-offline-standard-362_view_4.png"
+        "asset-factory/work/previews/gap-shared-world-inventory-vending-machine-stocked-standard-351/gap-shared-world-inventory-vending-machine-stocked-standard-351_view_1.png",
+        "asset-factory/work/previews/gap-shared-world-inventory-vending-machine-stocked-standard-351/gap-shared-world-inventory-vending-machine-stocked-standard-351_view_2.png",
+        "asset-factory/work/previews/gap-shared-world-inventory-vending-machine-stocked-standard-351/gap-shared-world-inventory-vending-machine-stocked-standard-351_view_3.png",
+        "asset-factory/work/previews/gap-shared-world-inventory-vending-machine-stocked-standard-351/gap-shared-world-inventory-vending-machine-stocked-standard-351_view_4.png"
       ]
     },
     {
-      "id": "gap-casino-strip-security-replacement-bulb-box-standard-062",
+      "id": "gap-dungeon-outskirts-bridge-phone-charger-cable-standard-042",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_casino-strip-security-replacement-bulb-box-standard-062.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_dungeon-outskirts-bridge-phone-charger-cable-standard-042.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -1144,18 +891,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-casino-strip-security-replacement-bulb-box-standard-062/gap-casino-strip-security-replacement-bulb-box-standard-062_view_1.png",
-        "asset-factory/work/previews/gap-casino-strip-security-replacement-bulb-box-standard-062/gap-casino-strip-security-replacement-bulb-box-standard-062_view_2.png",
-        "asset-factory/work/previews/gap-casino-strip-security-replacement-bulb-box-standard-062/gap-casino-strip-security-replacement-bulb-box-standard-062_view_3.png",
-        "asset-factory/work/previews/gap-casino-strip-security-replacement-bulb-box-standard-062/gap-casino-strip-security-replacement-bulb-box-standard-062_view_4.png"
+        "asset-factory/work/previews/gap-dungeon-outskirts-bridge-phone-charger-cable-standard-042/gap-dungeon-outskirts-bridge-phone-charger-cable-standard-042_view_1.png",
+        "asset-factory/work/previews/gap-dungeon-outskirts-bridge-phone-charger-cable-standard-042/gap-dungeon-outskirts-bridge-phone-charger-cable-standard-042_view_2.png",
+        "asset-factory/work/previews/gap-dungeon-outskirts-bridge-phone-charger-cable-standard-042/gap-dungeon-outskirts-bridge-phone-charger-cable-standard-042_view_3.png",
+        "asset-factory/work/previews/gap-dungeon-outskirts-bridge-phone-charger-cable-standard-042/gap-dungeon-outskirts-bridge-phone-charger-cable-standard-042_view_4.png"
       ]
     },
     {
-      "id": "gap-fishing-harbor-weather-bike-rack-standard-106",
+      "id": "gap-starter-town-clinic-fuse-box-standard-047",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/modular_infrastructure/infrastructure_fishing-harbor-weather-bike-rack-standard-106.glb",
+      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-clinic-fuse-box-standard-047.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -1208,18 +955,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-fishing-harbor-weather-bike-rack-standard-106/gap-fishing-harbor-weather-bike-rack-standard-106_view_1.png",
-        "asset-factory/work/previews/gap-fishing-harbor-weather-bike-rack-standard-106/gap-fishing-harbor-weather-bike-rack-standard-106_view_2.png",
-        "asset-factory/work/previews/gap-fishing-harbor-weather-bike-rack-standard-106/gap-fishing-harbor-weather-bike-rack-standard-106_view_3.png",
-        "asset-factory/work/previews/gap-fishing-harbor-weather-bike-rack-standard-106/gap-fishing-harbor-weather-bike-rack-standard-106_view_4.png"
+        "asset-factory/work/previews/gap-starter-town-clinic-fuse-box-standard-047/gap-starter-town-clinic-fuse-box-standard-047_view_1.png",
+        "asset-factory/work/previews/gap-starter-town-clinic-fuse-box-standard-047/gap-starter-town-clinic-fuse-box-standard-047_view_2.png",
+        "asset-factory/work/previews/gap-starter-town-clinic-fuse-box-standard-047/gap-starter-town-clinic-fuse-box-standard-047_view_3.png",
+        "asset-factory/work/previews/gap-starter-town-clinic-fuse-box-standard-047/gap-starter-town-clinic-fuse-box-standard-047_view_4.png"
       ]
     },
     {
-      "id": "gap-starline-city-retail-laboratory-bench-standard-086",
+      "id": "gap-starline-city-security-dungeon-camp-bedroll-standard-095",
       "builder": "modular_furniture",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_furniture/furniture_starline-city-retail-laboratory-bench-standard-086.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_furniture/furniture_starline-city-security-dungeon-camp-bedroll-standard-095.glb",
       "failures": [],
       "stats": {
         "meshObjects": 21,
@@ -1271,10 +1018,262 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-starline-city-retail-laboratory-bench-standard-086/gap-starline-city-retail-laboratory-bench-standard-086_view_1.png",
-        "asset-factory/work/previews/gap-starline-city-retail-laboratory-bench-standard-086/gap-starline-city-retail-laboratory-bench-standard-086_view_2.png",
-        "asset-factory/work/previews/gap-starline-city-retail-laboratory-bench-standard-086/gap-starline-city-retail-laboratory-bench-standard-086_view_3.png",
-        "asset-factory/work/previews/gap-starline-city-retail-laboratory-bench-standard-086/gap-starline-city-retail-laboratory-bench-standard-086_view_4.png"
+        "asset-factory/work/previews/gap-starline-city-security-dungeon-camp-bedroll-standard-095/gap-starline-city-security-dungeon-camp-bedroll-standard-095_view_1.png",
+        "asset-factory/work/previews/gap-starline-city-security-dungeon-camp-bedroll-standard-095/gap-starline-city-security-dungeon-camp-bedroll-standard-095_view_2.png",
+        "asset-factory/work/previews/gap-starline-city-security-dungeon-camp-bedroll-standard-095/gap-starline-city-security-dungeon-camp-bedroll-standard-095_view_3.png",
+        "asset-factory/work/previews/gap-starline-city-security-dungeon-camp-bedroll-standard-095/gap-starline-city-security-dungeon-camp-bedroll-standard-095_view_4.png"
+      ]
+    },
+    {
+      "id": "gap-aqualume-transit-tube-cable-tray-tee-standard-104",
+      "builder": "modular_connector",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/aqualume/modular_connector/connector_aqualume-transit-tube-cable-tray-tee-standard-104.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 19,
+        "triangles": 3572,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "LOD-preserved silhouette",
+          "collision-safe boundary",
+          "end connection socket",
+          "load-bearing frame",
+          "primary structural span",
+          "seal or transition trim",
+          "service access",
+          "start connection socket"
+        ],
+        "bounds": {
+          "min": [
+            -1.0399999618530273,
+            -0.8425000309944153,
+            0
+          ],
+          "max": [
+            1.0399999618530273,
+            0.8425000309944153,
+            1.440000057220459
+          ],
+          "dimensions": [
+            2.0799999237060547,
+            1.6850000619888306,
+            1.440000057220459
+          ]
+        },
+        "requiredComponents": [
+          "primary structural span",
+          "start connection socket",
+          "end connection socket",
+          "load-bearing frame",
+          "service access",
+          "seal or transition trim",
+          "collision-safe boundary",
+          "LOD-preserved silhouette"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/gap-aqualume-transit-tube-cable-tray-tee-standard-104/gap-aqualume-transit-tube-cable-tray-tee-standard-104_view_1.png",
+        "asset-factory/work/previews/gap-aqualume-transit-tube-cable-tray-tee-standard-104/gap-aqualume-transit-tube-cable-tray-tee-standard-104_view_2.png",
+        "asset-factory/work/previews/gap-aqualume-transit-tube-cable-tray-tee-standard-104/gap-aqualume-transit-tube-cable-tray-tee-standard-104_view_3.png",
+        "asset-factory/work/previews/gap-aqualume-transit-tube-cable-tray-tee-standard-104/gap-aqualume-transit-tube-cable-tray-tee-standard-104_view_4.png"
+      ]
+    },
+    {
+      "id": "building_castaway_bait_shop_exterior_v01",
+      "builder": "modular_building",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/fishing-harbor/building_shell/building_castaway_bait_shop_exterior_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 32,
+        "triangles": 6016,
+        "materials": [
+          "starter_black",
+          "starter_concrete",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_glass",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 7,
+        "components": [
+          "entrance",
+          "facade material breaks",
+          "foundation",
+          "primary massing",
+          "roof line",
+          "service side",
+          "window system"
+        ],
+        "bounds": {
+          "min": [
+            -8.640000343322754,
+            -6.75499963760376,
+            0
+          ],
+          "max": [
+            8.640000343322754,
+            6.755000114440918,
+            8.729999542236328
+          ],
+          "dimensions": [
+            17.280000686645508,
+            13.510000228881836,
+            8.729999542236328
+          ]
+        },
+        "requiredComponents": [
+          "primary massing",
+          "roof line",
+          "entrance",
+          "window system",
+          "facade material breaks",
+          "service side",
+          "foundation"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/building_castaway_bait_shop_exterior_v01/building_castaway_bait_shop_exterior_v01_view_1.png",
+        "asset-factory/work/previews/building_castaway_bait_shop_exterior_v01/building_castaway_bait_shop_exterior_v01_view_2.png",
+        "asset-factory/work/previews/building_castaway_bait_shop_exterior_v01/building_castaway_bait_shop_exterior_v01_view_3.png",
+        "asset-factory/work/previews/building_castaway_bait_shop_exterior_v01/building_castaway_bait_shop_exterior_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "gap-shared-world-missions-crate-full-standard-292",
+      "builder": "state_variant",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-missions-crate-full-standard-292.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 16,
+        "triangles": 3024,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "LOD and swap policy",
+          "animation transition socket",
+          "base object relationship",
+          "collision state",
+          "damage or repair metadata",
+          "interaction state",
+          "state-defining geometry",
+          "state-defining material layer"
+        ],
+        "bounds": {
+          "min": [
+            -0.4375,
+            -0.4399999976158142,
+            2.7939677238464355e-9
+          ],
+          "max": [
+            0.4375,
+            0.4399999976158142,
+            0.7325000762939453
+          ],
+          "dimensions": [
+            0.875,
+            0.8799999952316284,
+            0.7325000762939453
+          ]
+        },
+        "requiredComponents": [
+          "base object relationship",
+          "state-defining geometry",
+          "state-defining material layer",
+          "animation transition socket",
+          "collision state",
+          "interaction state",
+          "damage or repair metadata",
+          "LOD and swap policy"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/gap-shared-world-missions-crate-full-standard-292/gap-shared-world-missions-crate-full-standard-292_view_1.png",
+        "asset-factory/work/previews/gap-shared-world-missions-crate-full-standard-292/gap-shared-world-missions-crate-full-standard-292_view_2.png",
+        "asset-factory/work/previews/gap-shared-world-missions-crate-full-standard-292/gap-shared-world-missions-crate-full-standard-292_view_3.png",
+        "asset-factory/work/previews/gap-shared-world-missions-crate-full-standard-292/gap-shared-world-missions-crate-full-standard-292_view_4.png"
+      ]
+    },
+    {
+      "id": "gap-dungeon-outskirts-camp-headphones-standard-043",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_dungeon-outskirts-camp-headphones-standard-043.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 17,
+        "triangles": 3212,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "fasteners and seams",
+          "functional opening or access",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.36800000071525574,
+            -0.27300000190734863,
+            0
+          ],
+          "max": [
+            0.36800000071525574,
+            0.27300000190734863,
+            0.5679999589920044
+          ],
+          "dimensions": [
+            0.7360000014305115,
+            0.5460000038146973,
+            0.5679999589920044
+          ]
+        },
+        "requiredComponents": [
+          "object-specific primary body",
+          "support or contact structure",
+          "functional opening or access",
+          "handle, control, or closure",
+          "secondary functional assembly",
+          "fasteners and seams",
+          "placement contact",
+          "interaction or inventory socket"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/gap-dungeon-outskirts-camp-headphones-standard-043/gap-dungeon-outskirts-camp-headphones-standard-043_view_1.png",
+        "asset-factory/work/previews/gap-dungeon-outskirts-camp-headphones-standard-043/gap-dungeon-outskirts-camp-headphones-standard-043_view_2.png",
+        "asset-factory/work/previews/gap-dungeon-outskirts-camp-headphones-standard-043/gap-dungeon-outskirts-camp-headphones-standard-043_view_3.png",
+        "asset-factory/work/previews/gap-dungeon-outskirts-camp-headphones-standard-043/gap-dungeon-outskirts-camp-headphones-standard-043_view_4.png"
       ]
     }
   ]
