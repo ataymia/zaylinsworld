@@ -1,24 +1,24 @@
 {
   "version": 2,
-  "batchId": "batch-00104",
-  "completedAt": "2026-07-19T20:51:30.335Z",
+  "batchId": "batch-00106",
+  "completedAt": "2026-07-19T21:22:26.957Z",
   "requested": 20,
   "passed": 20,
   "failed": 0,
   "queueCounts": {
-    "completed": 2027,
+    "completed": 2067,
     "reference-only": 16,
     "unsupported": 189,
-    "queued": 65,
+    "queued": 25,
     "quarantined": 1
   },
   "results": [
     {
-      "id": "prop_starstop_snack_shelf_a_v01",
+      "id": "prop_underwater_reef_cluster_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_starstop_snack_shelf_a_v01.glb",
+      "outputPath": "public/assets/models/generated/aqualume/modular_prop/prop_underwater_reef_cluster_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -68,18 +68,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_starstop_snack_shelf_a_v01/prop_starstop_snack_shelf_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starstop_snack_shelf_a_v01/prop_starstop_snack_shelf_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starstop_snack_shelf_a_v01/prop_starstop_snack_shelf_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starstop_snack_shelf_a_v01/prop_starstop_snack_shelf_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_underwater_reef_cluster_a_v01/prop_underwater_reef_cluster_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_underwater_reef_cluster_a_v01/prop_underwater_reef_cluster_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_underwater_reef_cluster_a_v01/prop_underwater_reef_cluster_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_underwater_reef_cluster_a_v01/prop_underwater_reef_cluster_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_starter_for_sale_sign_a_v01",
+      "id": "prop_underwater_rock_shelf_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_prop/prop_starter_for_sale_sign_a_v01.glb",
+      "outputPath": "public/assets/models/generated/aqualume/modular_prop/prop_underwater_rock_shelf_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -129,18 +129,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_starter_for_sale_sign_a_v01/prop_starter_for_sale_sign_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starter_for_sale_sign_a_v01/prop_starter_for_sale_sign_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starter_for_sale_sign_a_v01/prop_starter_for_sale_sign_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starter_for_sale_sign_a_v01/prop_starter_for_sale_sign_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_underwater_rock_shelf_a_v01/prop_underwater_rock_shelf_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_underwater_rock_shelf_a_v01/prop_underwater_rock_shelf_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_underwater_rock_shelf_a_v01/prop_underwater_rock_shelf_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_underwater_rock_shelf_a_v01/prop_underwater_rock_shelf_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_starter_loading_dock_a_v01",
+      "id": "prop_underwater_sanctuary_marker_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_prop/prop_starter_loading_dock_a_v01.glb",
+      "outputPath": "public/assets/models/generated/aqualume/modular_prop/prop_underwater_sanctuary_marker_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -190,18 +190,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_starter_loading_dock_a_v01/prop_starter_loading_dock_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starter_loading_dock_a_v01/prop_starter_loading_dock_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starter_loading_dock_a_v01/prop_starter_loading_dock_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starter_loading_dock_a_v01/prop_starter_loading_dock_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_underwater_sanctuary_marker_a_v01/prop_underwater_sanctuary_marker_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_underwater_sanctuary_marker_a_v01/prop_underwater_sanctuary_marker_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_underwater_sanctuary_marker_a_v01/prop_underwater_sanctuary_marker_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_underwater_sanctuary_marker_a_v01/prop_underwater_sanctuary_marker_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_starter_power_pole_a_v01",
+      "id": "prop_underwater_seagrass_cluster_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_prop/prop_starter_power_pole_a_v01.glb",
+      "outputPath": "public/assets/models/generated/aqualume/modular_prop/prop_underwater_seagrass_cluster_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -251,18 +251,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_starter_power_pole_a_v01/prop_starter_power_pole_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starter_power_pole_a_v01/prop_starter_power_pole_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starter_power_pole_a_v01/prop_starter_power_pole_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starter_power_pole_a_v01/prop_starter_power_pole_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_underwater_seagrass_cluster_a_v01/prop_underwater_seagrass_cluster_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_underwater_seagrass_cluster_a_v01/prop_underwater_seagrass_cluster_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_underwater_seagrass_cluster_a_v01/prop_underwater_seagrass_cluster_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_underwater_seagrass_cluster_a_v01/prop_underwater_seagrass_cluster_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_starter_residential_bin_a_v01",
+      "id": "prop_underwater_shipwreck_small_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_prop/prop_starter_residential_bin_a_v01.glb",
+      "outputPath": "public/assets/models/generated/aqualume/modular_prop/prop_underwater_shipwreck_small_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -312,18 +312,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_starter_residential_bin_a_v01/prop_starter_residential_bin_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starter_residential_bin_a_v01/prop_starter_residential_bin_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starter_residential_bin_a_v01/prop_starter_residential_bin_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starter_residential_bin_a_v01/prop_starter_residential_bin_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_underwater_shipwreck_small_a_v01/prop_underwater_shipwreck_small_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_underwater_shipwreck_small_a_v01/prop_underwater_shipwreck_small_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_underwater_shipwreck_small_a_v01/prop_underwater_shipwreck_small_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_underwater_shipwreck_small_a_v01/prop_underwater_shipwreck_small_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_starter_retaining_wall_a_v01",
+      "id": "prop_warden_front_desk_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_prop/prop_starter_retaining_wall_a_v01.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_warden_front_desk_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -373,18 +373,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_starter_retaining_wall_a_v01/prop_starter_retaining_wall_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starter_retaining_wall_a_v01/prop_starter_retaining_wall_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starter_retaining_wall_a_v01/prop_starter_retaining_wall_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starter_retaining_wall_a_v01/prop_starter_retaining_wall_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_warden_front_desk_a_v01/prop_warden_front_desk_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_warden_front_desk_a_v01/prop_warden_front_desk_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_warden_front_desk_a_v01/prop_warden_front_desk_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_warden_front_desk_a_v01/prop_warden_front_desk_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_starter_store_awning_a_v01",
+      "id": "prop_warden_holding_cell_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_prop/prop_starter_store_awning_a_v01.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_warden_holding_cell_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -434,18 +434,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_starter_store_awning_a_v01/prop_starter_store_awning_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starter_store_awning_a_v01/prop_starter_store_awning_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starter_store_awning_a_v01/prop_starter_store_awning_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starter_store_awning_a_v01/prop_starter_store_awning_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_warden_holding_cell_a_v01/prop_warden_holding_cell_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_warden_holding_cell_a_v01/prop_warden_holding_cell_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_warden_holding_cell_a_v01/prop_warden_holding_cell_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_warden_holding_cell_a_v01/prop_warden_holding_cell_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_starter_substation_a_v01",
+      "id": "prop_warden_relic_vault_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_prop/prop_starter_substation_a_v01.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_warden_relic_vault_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -495,18 +495,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_starter_substation_a_v01/prop_starter_substation_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starter_substation_a_v01/prop_starter_substation_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starter_substation_a_v01/prop_starter_substation_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starter_substation_a_v01/prop_starter_substation_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_warden_relic_vault_a_v01/prop_warden_relic_vault_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_warden_relic_vault_a_v01/prop_warden_relic_vault_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_warden_relic_vault_a_v01/prop_warden_relic_vault_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_warden_relic_vault_a_v01/prop_warden_relic_vault_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_starter_work_truck_parked_a_v01",
+      "id": "prop_warden_rescue_gear_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_prop/prop_starter_work_truck_parked_a_v01.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_warden_rescue_gear_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -556,79 +556,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_starter_work_truck_parked_a_v01/prop_starter_work_truck_parked_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_starter_work_truck_parked_a_v01/prop_starter_work_truck_parked_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_starter_work_truck_parked_a_v01/prop_starter_work_truck_parked_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_starter_work_truck_parked_a_v01/prop_starter_work_truck_parked_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_warden_rescue_gear_a_v01/prop_warden_rescue_gear_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_warden_rescue_gear_a_v01/prop_warden_rescue_gear_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_warden_rescue_gear_a_v01/prop_warden_rescue_gear_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_warden_rescue_gear_a_v01/prop_warden_rescue_gear_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_store_locker_delivery_a_v01",
+      "id": "prop_wardrobe_clothing_rack_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_store_locker_delivery_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_cyan_emissive",
-          "tech_dark_metal",
-          "tech_white_light"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_store_locker_delivery_a_v01/prop_store_locker_delivery_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_store_locker_delivery_a_v01/prop_store_locker_delivery_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_store_locker_delivery_a_v01/prop_store_locker_delivery_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_store_locker_delivery_a_v01/prop_store_locker_delivery_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_strip_police_front_desk_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_strip_police_front_desk_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_wardrobe_clothing_rack_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -678,18 +617,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_strip_police_front_desk_a_v01/prop_strip_police_front_desk_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_strip_police_front_desk_a_v01/prop_strip_police_front_desk_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_strip_police_front_desk_a_v01/prop_strip_police_front_desk_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_strip_police_front_desk_a_v01/prop_strip_police_front_desk_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_wardrobe_clothing_rack_a_v01/prop_wardrobe_clothing_rack_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_wardrobe_clothing_rack_a_v01/prop_wardrobe_clothing_rack_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_wardrobe_clothing_rack_a_v01/prop_wardrobe_clothing_rack_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_wardrobe_clothing_rack_a_v01/prop_wardrobe_clothing_rack_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_studio_boom_mic_a_v01",
+      "id": "prop_wardrobe_costume_bin_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_studio_boom_mic_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_wardrobe_costume_bin_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -739,18 +678,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_studio_boom_mic_a_v01/prop_studio_boom_mic_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_studio_boom_mic_a_v01/prop_studio_boom_mic_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_studio_boom_mic_a_v01/prop_studio_boom_mic_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_studio_boom_mic_a_v01/prop_studio_boom_mic_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_wardrobe_costume_bin_a_v01/prop_wardrobe_costume_bin_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_wardrobe_costume_bin_a_v01/prop_wardrobe_costume_bin_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_wardrobe_costume_bin_a_v01/prop_wardrobe_costume_bin_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_wardrobe_costume_bin_a_v01/prop_wardrobe_costume_bin_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_studio_camera_dolly_a_v01",
+      "id": "prop_wardrobe_shoe_wall_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_studio_camera_dolly_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_wardrobe_shoe_wall_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -800,18 +739,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_studio_camera_dolly_a_v01/prop_studio_camera_dolly_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_studio_camera_dolly_a_v01/prop_studio_camera_dolly_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_studio_camera_dolly_a_v01/prop_studio_camera_dolly_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_studio_camera_dolly_a_v01/prop_studio_camera_dolly_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_wardrobe_shoe_wall_a_v01/prop_wardrobe_shoe_wall_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_wardrobe_shoe_wall_a_v01/prop_wardrobe_shoe_wall_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_wardrobe_shoe_wall_a_v01/prop_wardrobe_shoe_wall_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_wardrobe_shoe_wall_a_v01/prop_wardrobe_shoe_wall_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_studio_camera_tripod_a_v01",
+      "id": "prop_water_buoy_navigation_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_studio_camera_tripod_a_v01.glb",
+      "outputPath": "public/assets/models/generated/shared-world/modular_prop/prop_water_buoy_navigation_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -861,18 +800,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_studio_camera_tripod_a_v01/prop_studio_camera_tripod_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_studio_camera_tripod_a_v01/prop_studio_camera_tripod_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_studio_camera_tripod_a_v01/prop_studio_camera_tripod_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_studio_camera_tripod_a_v01/prop_studio_camera_tripod_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_water_buoy_navigation_a_v01/prop_water_buoy_navigation_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_water_buoy_navigation_a_v01/prop_water_buoy_navigation_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_water_buoy_navigation_a_v01/prop_water_buoy_navigation_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_water_buoy_navigation_a_v01/prop_water_buoy_navigation_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_studio_catering_table_a_v01",
+      "id": "prop_water_buoy_protected_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_studio_catering_table_a_v01.glb",
+      "outputPath": "public/assets/models/generated/shared-world/modular_prop/prop_water_buoy_protected_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -922,18 +861,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_studio_catering_table_a_v01/prop_studio_catering_table_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_studio_catering_table_a_v01/prop_studio_catering_table_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_studio_catering_table_a_v01/prop_studio_catering_table_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_studio_catering_table_a_v01/prop_studio_catering_table_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_water_buoy_protected_a_v01/prop_water_buoy_protected_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_water_buoy_protected_a_v01/prop_water_buoy_protected_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_water_buoy_protected_a_v01/prop_water_buoy_protected_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_water_buoy_protected_a_v01/prop_water_buoy_protected_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_studio_clapperboard_a_v01",
+      "id": "prop_water_rescue_float_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_studio_clapperboard_a_v01.glb",
+      "outputPath": "public/assets/models/generated/shared-world/modular_prop/prop_water_rescue_float_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -983,18 +922,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_studio_clapperboard_a_v01/prop_studio_clapperboard_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_studio_clapperboard_a_v01/prop_studio_clapperboard_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_studio_clapperboard_a_v01/prop_studio_clapperboard_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_studio_clapperboard_a_v01/prop_studio_clapperboard_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_water_rescue_float_a_v01/prop_water_rescue_float_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_water_rescue_float_a_v01/prop_water_rescue_float_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_water_rescue_float_a_v01/prop_water_rescue_float_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_water_rescue_float_a_v01/prop_water_rescue_float_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_studio_costume_rack_a_v01",
+      "id": "prop_wayfarer_canopy_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_studio_costume_rack_a_v01.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_wayfarer_canopy_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -1044,18 +983,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_studio_costume_rack_a_v01/prop_studio_costume_rack_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_studio_costume_rack_a_v01/prop_studio_costume_rack_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_studio_costume_rack_a_v01/prop_studio_costume_rack_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_studio_costume_rack_a_v01/prop_studio_costume_rack_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_wayfarer_canopy_a_v01/prop_wayfarer_canopy_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_wayfarer_canopy_a_v01/prop_wayfarer_canopy_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_wayfarer_canopy_a_v01/prop_wayfarer_canopy_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_wayfarer_canopy_a_v01/prop_wayfarer_canopy_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_studio_director_chair_a_v01",
+      "id": "prop_wayfarer_food_warmer_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_studio_director_chair_a_v01.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_wayfarer_food_warmer_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -1105,18 +1044,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_studio_director_chair_a_v01/prop_studio_director_chair_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_studio_director_chair_a_v01/prop_studio_director_chair_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_studio_director_chair_a_v01/prop_studio_director_chair_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_studio_director_chair_a_v01/prop_studio_director_chair_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_wayfarer_food_warmer_a_v01/prop_wayfarer_food_warmer_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_wayfarer_food_warmer_a_v01/prop_wayfarer_food_warmer_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_wayfarer_food_warmer_a_v01/prop_wayfarer_food_warmer_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_wayfarer_food_warmer_a_v01/prop_wayfarer_food_warmer_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_studio_floor_mark_a_v01",
+      "id": "prop_wayfarer_map_board_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_studio_floor_mark_a_v01.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_wayfarer_map_board_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -1166,18 +1105,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_studio_floor_mark_a_v01/prop_studio_floor_mark_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_studio_floor_mark_a_v01/prop_studio_floor_mark_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_studio_floor_mark_a_v01/prop_studio_floor_mark_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_studio_floor_mark_a_v01/prop_studio_floor_mark_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_wayfarer_map_board_a_v01/prop_wayfarer_map_board_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_wayfarer_map_board_a_v01/prop_wayfarer_map_board_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_wayfarer_map_board_a_v01/prop_wayfarer_map_board_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_wayfarer_map_board_a_v01/prop_wayfarer_map_board_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_studio_light_stand_a_v01",
+      "id": "prop_wayfarer_package_locker_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_studio_light_stand_a_v01.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_wayfarer_package_locker_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -1227,10 +1166,71 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_studio_light_stand_a_v01/prop_studio_light_stand_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_studio_light_stand_a_v01/prop_studio_light_stand_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_studio_light_stand_a_v01/prop_studio_light_stand_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_studio_light_stand_a_v01/prop_studio_light_stand_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_wayfarer_package_locker_a_v01/prop_wayfarer_package_locker_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_wayfarer_package_locker_a_v01/prop_wayfarer_package_locker_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_wayfarer_package_locker_a_v01/prop_wayfarer_package_locker_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_wayfarer_package_locker_a_v01/prop_wayfarer_package_locker_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_wayfarer_repair_bay_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_wayfarer_repair_bay_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_wayfarer_repair_bay_a_v01/prop_wayfarer_repair_bay_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_wayfarer_repair_bay_a_v01/prop_wayfarer_repair_bay_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_wayfarer_repair_bay_a_v01/prop_wayfarer_repair_bay_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_wayfarer_repair_bay_a_v01/prop_wayfarer_repair_bay_a_v01_view_4.png"
       ]
     }
   ]
