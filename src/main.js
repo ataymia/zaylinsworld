@@ -294,7 +294,7 @@ function enterWorld() {
     debug.set('minimapInit', !!minimap);
     if (!minimap) console.warn('[minimap] init FAILED — #minimap canvas missing');
     if (minimap && townMarkers.length) setMarkers(townMarkers);   // flush queued markers (police/garage)
-    applyWorldAssets();                        // swap in real GLBs where available
+    applyWorldAssets(cityInfo);                // swap in real GLBs where available
     // applyWorldAssets() (via placeTrashJob) creates the sanitation worker,
     // dumpster and litter AFTER the first registerInteractables() pass above, so
     // those dynamic objects must be re-registered now or they'd never become
@@ -328,11 +328,13 @@ function finalizeFunctionalRelocations(cityInfo) {
       || relocation.entrance;
     const interior = relocation.contract.interiorId ? interiors?.byId?.[relocation.contract.interiorId] : true;
     const marker = cityInfo.landmarks.find((entry) => entry.locationId === relocation.locationId);
+    const requiresDoor = relocation.contract.enterable !== false;
+    const hasInterior = !!relocation.contract.interiorId;
     const report = functionalLocationRelocation.record(relocation.locationId, {
       exteriorPlaced: !!relocation.exterior?.parent,
-      doorInteraction: !!entrance?.doorPos,
+      doorInteraction: !requiresDoor || !!entrance?.doorPos,
       interiorPreserved: !!interior,
-      interiorReturn: !!entranceMap[relocation.contract.interiorId]?.doorPos,
+      interiorReturn: !hasInterior || !!entranceMap[relocation.contract.interiorId]?.doorPos,
       sidewalkAccess: !!relocation.contract.parcelId,
       parkingAndService: !!relocation.contract.parcelId,
       npcWorkPoints: true,
@@ -714,8 +716,9 @@ function openWeaponDisplay(entry) {
 // visible fallback and hidden once the GLB loads. Registers a drive-up refuel
 // forecourt, a minimap marker, and an on-foot store entrance that teleports the
 // player into the walkable 6twelve store interior.
-function buildProceduralGasStation() {
-  const GX = -46, GZ = 24;                          // standalone lot, west edge (south of Block Supply), set back off the ring road
+function buildProceduralGasStation(relocationContract = null) {
+  const GX = relocationContract?.target.x ?? -46;
+  const GZ = relocationContract?.target.z ?? 24;   // standalone lot, west edge (south of Block Supply), set back off the ring road
   const grp = new THREE.Group(); grp.name = 'gas-station-proc';
   const procColliders = [];                         // pump colliders (removed if a GLB takes over)
   // forecourt pad (decorative — no collider so it never blocks driving). Sized
@@ -874,6 +877,17 @@ function buildProceduralGasStation() {
   // exterior-only node filter.
   debug.set('gasStationGLB', false);
   // tryGasStationGLB(GX, GZ, grp, procColliders);  // disabled: GLB includes interior clutter
+  return {
+    locationId: relocationContract?.locationId || null,
+    contract: relocationContract,
+    exterior: grp,
+    colliderBody: store,
+    doorPos,
+    entrance: relocationContract ? {
+      id: 'gas', locationId: relocationContract.locationId, interiorId: 'gas',
+      doorPos, faceDir: new THREE.Vector3(1, 0, 0),
+    } : null,
+  };
 }
 
 // Attempt to load the 6twelve gas-station GLB and swap it in for the procedural
@@ -923,7 +937,7 @@ async function tryGasStationGLB(GX, GZ, procGroup, procColliders) {
   }
 }
 
-function applyWorldAssets() {
+function applyWorldAssets(cityInfo) {
   enhanceShopkeepers();
   // Frostbox jewelry is purely decorative — never let a load/placement failure
   // black-screen startup. It's async + fire-and-forget, so swallow any rejection.
@@ -953,7 +967,20 @@ function applyWorldAssets() {
     .then(() => { placeTrashJob(); registerInteractables(cityEntrances); debug.set('trashTargets', activeTrashCount()); });
   // always-present procedural gas station (the refuel loop must be usable even
   // with GLB world buildings disabled)
-  buildProceduralGasStation();
+  const gasActive = productionWorldRelocationIds().includes('6twelve');
+  const gasContract = gasActive ? functionalLocationRelocation.contract('6twelve') : null;
+  const gasRelocation = buildProceduralGasStation(gasContract);
+  if (gasActive) {
+    const placeholder = scene.getObjectByName('ZW_LocationPlaceholder_6twelve');
+    if (placeholder) placeholder.visible = false;
+    entranceMap.gas = { doorPos: gasRelocation.doorPos, faceDir: gasRelocation.entrance.faceDir };
+    cityInfo.landmarks.push({
+      id: 'gas', name: '6TWELVE', interiorId: 'gas',
+      x: gasContract.target.x, z: gasContract.target.z,
+      color: '#ffd54a', locationId: '6twelve',
+    });
+    cityInfo.relocations.push(gasRelocation);
+  }
   // Phase 2: asset-aware town dressing (trash clusters + dumpsters) placed via
   // the prefab/variation/placement system — additive, deterministic, fallback-safe.
   if (FEATURES.USE_PREFAB_TOWN_PROPS) {

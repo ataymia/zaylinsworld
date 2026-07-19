@@ -49,6 +49,7 @@ export const FUNCTIONAL_LOCATION_CONTRACTS = freeze(STARTER_TOWN_LOCATIONS.map((
     locationId: location.id,
     stableId: location.id,
     name: location.name,
+    enterable: location.enterable !== false,
     interiorId: location.interiorId || null,
     parcelId: parcel.id,
     districtId: location.districtId,

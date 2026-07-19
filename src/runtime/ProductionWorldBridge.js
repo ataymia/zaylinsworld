@@ -32,6 +32,8 @@ const ACTIVE_FUNCTIONAL_RELOCATIONS = Object.freeze([
   'police-station',
   'worktower',
   'iron-city-gym',
+  '6twelve',
+  'dreamdrop-park',
 ]);
 
 const bridge = {

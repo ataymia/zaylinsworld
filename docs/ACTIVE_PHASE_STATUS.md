@@ -351,7 +351,7 @@ Status: **Implemented foundation**
 
 ## Phase 7: Functional-location relocation
 
-Status: **In progress — Phases 7A through 7L implemented; Phase 7M is next**
+Status: **Implemented — all Phase 7 functional locations are cut over; live full-town acceptance remains**
 
 Required first:
 
@@ -376,6 +376,6 @@ Recommended Phase 7 order:
 7J Dreamdrop Public Safety — implemented
 7K WorkTower — implemented
 7L Iron City Gym — implemented
-7M 6twelve — next controlled cutover
-7N Dreamdrop Park
+7M 6twelve — implemented
+7N Dreamdrop Park — implemented
 ```
