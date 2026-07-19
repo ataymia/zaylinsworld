@@ -351,7 +351,7 @@ Status: **Implemented foundation**
 
 ## Phase 7: Functional-location relocation
 
-Status: **In progress — Phases 7A through 7D implemented; Phase 7E is next**
+Status: **In progress — Phases 7A through 7G implemented; Phase 7H is next**
 
 Required first:
 
@@ -368,10 +368,10 @@ Recommended Phase 7 order:
 7B Zaylins Home — implemented
 7C Zaylins Prep — implemented
 7D Chicken Spot — implemented
-7E Frostbox — next controlled cutover
-7F Kicks & Fits
-7G Block Supply
-7H Auto Haus
+7E Frostbox — implemented
+7F Kicks & Fits — implemented
+7G Block Supply — implemented
+7H Auto Haus — next controlled cutover
 7I City Garage
 7J Dreamdrop Public Safety
 7K WorkTower
