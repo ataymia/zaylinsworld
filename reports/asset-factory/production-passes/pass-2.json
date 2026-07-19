@@ -1,154 +1,28 @@
 {
   "version": 2,
-  "batchId": "batch-00075",
-  "completedAt": "2026-07-19T13:17:18.180Z",
+  "batchId": "batch-00097",
+  "completedAt": "2026-07-19T18:55:58.632Z",
   "requested": 20,
   "passed": 20,
   "failed": 0,
   "queueCounts": {
-    "completed": 1447,
+    "completed": 1887,
     "reference-only": 16,
     "unsupported": 189,
-    "queued": 645,
+    "queued": 205,
     "quarantined": 1
   },
   "results": [
     {
-      "id": "gap-shared-world-camera-pipe-elbow-standard-191",
-      "builder": "modular_connector",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/modular_connector/connector_shared-world-camera-pipe-elbow-standard-191.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 19,
-        "triangles": 3572,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "LOD-preserved silhouette",
-          "collision-safe boundary",
-          "end connection socket",
-          "load-bearing frame",
-          "primary structural span",
-          "seal or transition trim",
-          "service access",
-          "start connection socket"
-        ],
-        "bounds": {
-          "min": [
-            -1.0399999618530273,
-            -0.8425000309944153,
-            0
-          ],
-          "max": [
-            1.0399999618530273,
-            0.8425000309944153,
-            1.440000057220459
-          ],
-          "dimensions": [
-            2.0799999237060547,
-            1.6850000619888306,
-            1.440000057220459
-          ]
-        },
-        "requiredComponents": [
-          "primary structural span",
-          "start connection socket",
-          "end connection socket",
-          "load-bearing frame",
-          "service access",
-          "seal or transition trim",
-          "collision-safe boundary",
-          "LOD-preserved silhouette"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-camera-pipe-elbow-standard-191/gap-shared-world-camera-pipe-elbow-standard-191_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-camera-pipe-elbow-standard-191/gap-shared-world-camera-pipe-elbow-standard-191_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-camera-pipe-elbow-standard-191/gap-shared-world-camera-pipe-elbow-standard-191_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-camera-pipe-elbow-standard-191/gap-shared-world-camera-pipe-elbow-standard-191_view_4.png"
-      ]
-    },
-    {
-      "id": "building_tidefuel_market_shell_v01",
-      "builder": "modular_building",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/building_shell/building_tidefuel_market_shell_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 32,
-        "triangles": 6016,
-        "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_glass",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 7,
-        "components": [
-          "entrance",
-          "facade material breaks",
-          "foundation",
-          "primary massing",
-          "roof line",
-          "service side",
-          "window system"
-        ],
-        "bounds": {
-          "min": [
-            -8.640000343322754,
-            -6.75499963760376,
-            0
-          ],
-          "max": [
-            8.640000343322754,
-            6.755000114440918,
-            8.729999542236328
-          ],
-          "dimensions": [
-            17.280000686645508,
-            13.510000228881836,
-            8.729999542236328
-          ]
-        },
-        "requiredComponents": [
-          "primary massing",
-          "roof line",
-          "entrance",
-          "window system",
-          "facade material breaks",
-          "service side",
-          "foundation"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/building_tidefuel_market_shell_v01/building_tidefuel_market_shell_v01_view_1.png",
-        "asset-factory/work/previews/building_tidefuel_market_shell_v01/building_tidefuel_market_shell_v01_view_2.png",
-        "asset-factory/work/previews/building_tidefuel_market_shell_v01/building_tidefuel_market_shell_v01_view_3.png",
-        "asset-factory/work/previews/building_tidefuel_market_shell_v01/building_tidefuel_market_shell_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-rich-hills-pool-package-small-standard-063",
+      "id": "prop_home_aqualume_scooter_dock_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_rich-hills-pool-package-small-standard-063.glb",
+      "outputPath": "public/assets/models/generated/fishing-harbor/modular_prop/prop_home_aqualume_scooter_dock_a_v01.glb",
       "failures": [],
       "stats": {
-        "meshObjects": 17,
-        "triangles": 3212,
+        "meshObjects": 12,
+        "triangles": 2336,
         "materials": [
           "starter_black",
           "starter_dark_metal",
@@ -158,250 +32,58 @@
         ],
         "materialCount": 5,
         "components": [
+          "appropriate materials",
           "fasteners and seams",
           "functional opening or access",
+          "functional secondary components",
           "handle, control, or closure",
           "interaction or inventory socket",
           "object-specific primary body",
           "placement contact",
+          "recognizable primary structure",
           "secondary functional assembly",
           "support or contact structure"
         ],
         "bounds": {
           "min": [
-            -0.36800000071525574,
-            -0.27300000190734863,
+            -0.6899999976158142,
+            -0.6825000047683716,
             0
           ],
           "max": [
-            0.36800000071525574,
-            0.27300000190734863,
-            0.5679999589920044
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
           ],
           "dimensions": [
-            0.7360000014305115,
-            0.5460000038146973,
-            0.5679999589920044
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
           ]
         },
         "requiredComponents": [
-          "object-specific primary body",
-          "support or contact structure",
-          "functional opening or access",
-          "handle, control, or closure",
-          "secondary functional assembly",
-          "fasteners and seams",
-          "placement contact",
-          "interaction or inventory socket"
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-rich-hills-pool-package-small-standard-063/gap-rich-hills-pool-package-small-standard-063_view_1.png",
-        "asset-factory/work/previews/gap-rich-hills-pool-package-small-standard-063/gap-rich-hills-pool-package-small-standard-063_view_2.png",
-        "asset-factory/work/previews/gap-rich-hills-pool-package-small-standard-063/gap-rich-hills-pool-package-small-standard-063_view_3.png",
-        "asset-factory/work/previews/gap-rich-hills-pool-package-small-standard-063/gap-rich-hills-pool-package-small-standard-063_view_4.png"
+        "asset-factory/work/previews/prop_home_aqualume_scooter_dock_a_v01/prop_home_aqualume_scooter_dock_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_aqualume_scooter_dock_a_v01/prop_home_aqualume_scooter_dock_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_aqualume_scooter_dock_a_v01/prop_home_aqualume_scooter_dock_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_aqualume_scooter_dock_a_v01/prop_home_aqualume_scooter_dock_a_v01_view_4.png"
       ]
     },
     {
-      "id": "gap-starter-town-retail-parking-meter-standard-076",
-      "builder": "modular_infrastructure",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-retail-parking-meter-standard-076.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 17,
-        "triangles": 3112,
-        "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 6,
-        "components": [
-          "anchored base or mount",
-          "fasteners and identification",
-          "power, conduit, drainage, or network path",
-          "primary operating surface",
-          "safety and weather protection",
-          "service access",
-          "structural enclosure or frame",
-          "user control or connection"
-        ],
-        "bounds": {
-          "min": [
-            -0.5519999861717224,
-            -0.36800000071525574,
-            0
-          ],
-          "max": [
-            0.5519999861717224,
-            0.36800000071525574,
-            1.565999984741211
-          ],
-          "dimensions": [
-            1.1039999723434448,
-            0.7360000014305115,
-            1.565999984741211
-          ]
-        },
-        "requiredComponents": [
-          "anchored base or mount",
-          "structural enclosure or frame",
-          "primary operating surface",
-          "user control or connection",
-          "service access",
-          "power, conduit, drainage, or network path",
-          "safety and weather protection",
-          "fasteners and identification"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-starter-town-retail-parking-meter-standard-076/gap-starter-town-retail-parking-meter-standard-076_view_1.png",
-        "asset-factory/work/previews/gap-starter-town-retail-parking-meter-standard-076/gap-starter-town-retail-parking-meter-standard-076_view_2.png",
-        "asset-factory/work/previews/gap-starter-town-retail-parking-meter-standard-076/gap-starter-town-retail-parking-meter-standard-076_view_3.png",
-        "asset-factory/work/previews/gap-starter-town-retail-parking-meter-standard-076/gap-starter-town-retail-parking-meter-standard-076_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-shared-world-camera-transit-tube-merge-standard-176",
-      "builder": "modular_connector",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/modular_connector/connector_shared-world-camera-transit-tube-merge-standard-176.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 19,
-        "triangles": 3572,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "LOD-preserved silhouette",
-          "collision-safe boundary",
-          "end connection socket",
-          "load-bearing frame",
-          "primary structural span",
-          "seal or transition trim",
-          "service access",
-          "start connection socket"
-        ],
-        "bounds": {
-          "min": [
-            -1.0399999618530273,
-            -0.8425000309944153,
-            0
-          ],
-          "max": [
-            1.0399999618530273,
-            0.8425000309944153,
-            1.440000057220459
-          ],
-          "dimensions": [
-            2.0799999237060547,
-            1.6850000619888306,
-            1.440000057220459
-          ]
-        },
-        "requiredComponents": [
-          "primary structural span",
-          "start connection socket",
-          "end connection socket",
-          "load-bearing frame",
-          "service access",
-          "seal or transition trim",
-          "collision-safe boundary",
-          "LOD-preserved silhouette"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-camera-transit-tube-merge-standard-176/gap-shared-world-camera-transit-tube-merge-standard-176_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-camera-transit-tube-merge-standard-176/gap-shared-world-camera-transit-tube-merge-standard-176_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-camera-transit-tube-merge-standard-176/gap-shared-world-camera-transit-tube-merge-standard-176_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-camera-transit-tube-merge-standard-176/gap-shared-world-camera-transit-tube-merge-standard-176_view_4.png"
-      ]
-    },
-    {
-      "id": "building_tideglass_academy_exterior_v01",
-      "builder": "modular_building",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/building_shell/building_tideglass_academy_exterior_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 32,
-        "triangles": 6016,
-        "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_glass",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 7,
-        "components": [
-          "entrance",
-          "facade material breaks",
-          "foundation",
-          "primary massing",
-          "roof line",
-          "service side",
-          "window system"
-        ],
-        "bounds": {
-          "min": [
-            -8.640000343322754,
-            -6.75499963760376,
-            0
-          ],
-          "max": [
-            8.640000343322754,
-            6.755000114440918,
-            8.729999542236328
-          ],
-          "dimensions": [
-            17.280000686645508,
-            13.510000228881836,
-            8.729999542236328
-          ]
-        },
-        "requiredComponents": [
-          "primary massing",
-          "roof line",
-          "entrance",
-          "window system",
-          "facade material breaks",
-          "service side",
-          "foundation"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/building_tideglass_academy_exterior_v01/building_tideglass_academy_exterior_v01_view_1.png",
-        "asset-factory/work/previews/building_tideglass_academy_exterior_v01/building_tideglass_academy_exterior_v01_view_2.png",
-        "asset-factory/work/previews/building_tideglass_academy_exterior_v01/building_tideglass_academy_exterior_v01_view_3.png",
-        "asset-factory/work/previews/building_tideglass_academy_exterior_v01/building_tideglass_academy_exterior_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-rich-hills-pool-rolled-blanket-standard-045",
+      "id": "prop_home_aqualume_sonar_map_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_rich-hills-pool-rolled-blanket-standard-045.glb",
+      "outputPath": "public/assets/models/generated/aqualume/modular_prop/prop_home_aqualume_sonar_map_a_v01.glb",
       "failures": [],
       "stats": {
-        "meshObjects": 17,
-        "triangles": 3212,
+        "meshObjects": 12,
+        "triangles": 2336,
         "materials": [
           "starter_black",
           "starter_dark_metal",
@@ -411,250 +93,58 @@
         ],
         "materialCount": 5,
         "components": [
+          "appropriate materials",
           "fasteners and seams",
           "functional opening or access",
+          "functional secondary components",
           "handle, control, or closure",
           "interaction or inventory socket",
           "object-specific primary body",
           "placement contact",
+          "recognizable primary structure",
           "secondary functional assembly",
           "support or contact structure"
         ],
         "bounds": {
           "min": [
-            -0.36800000071525574,
-            -0.27300000190734863,
+            -0.6899999976158142,
+            -0.6825000047683716,
             0
           ],
           "max": [
-            0.36800000071525574,
-            0.27300000190734863,
-            0.5679999589920044
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
           ],
           "dimensions": [
-            0.7360000014305115,
-            0.5460000038146973,
-            0.5679999589920044
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
           ]
         },
         "requiredComponents": [
-          "object-specific primary body",
-          "support or contact structure",
-          "functional opening or access",
-          "handle, control, or closure",
-          "secondary functional assembly",
-          "fasteners and seams",
-          "placement contact",
-          "interaction or inventory socket"
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-rich-hills-pool-rolled-blanket-standard-045/gap-rich-hills-pool-rolled-blanket-standard-045_view_1.png",
-        "asset-factory/work/previews/gap-rich-hills-pool-rolled-blanket-standard-045/gap-rich-hills-pool-rolled-blanket-standard-045_view_2.png",
-        "asset-factory/work/previews/gap-rich-hills-pool-rolled-blanket-standard-045/gap-rich-hills-pool-rolled-blanket-standard-045_view_3.png",
-        "asset-factory/work/previews/gap-rich-hills-pool-rolled-blanket-standard-045/gap-rich-hills-pool-rolled-blanket-standard-045_view_4.png"
+        "asset-factory/work/previews/prop_home_aqualume_sonar_map_a_v01/prop_home_aqualume_sonar_map_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_aqualume_sonar_map_a_v01/prop_home_aqualume_sonar_map_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_aqualume_sonar_map_a_v01/prop_home_aqualume_sonar_map_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_aqualume_sonar_map_a_v01/prop_home_aqualume_sonar_map_a_v01_view_4.png"
       ]
     },
     {
-      "id": "gap-starter-town-retail-retail-checkout-standard-116",
-      "builder": "modular_infrastructure",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-retail-retail-checkout-standard-116.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 17,
-        "triangles": 3112,
-        "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 6,
-        "components": [
-          "anchored base or mount",
-          "fasteners and identification",
-          "power, conduit, drainage, or network path",
-          "primary operating surface",
-          "safety and weather protection",
-          "service access",
-          "structural enclosure or frame",
-          "user control or connection"
-        ],
-        "bounds": {
-          "min": [
-            -0.5519999861717224,
-            -0.36800000071525574,
-            0
-          ],
-          "max": [
-            0.5519999861717224,
-            0.36800000071525574,
-            1.565999984741211
-          ],
-          "dimensions": [
-            1.1039999723434448,
-            0.7360000014305115,
-            1.565999984741211
-          ]
-        },
-        "requiredComponents": [
-          "anchored base or mount",
-          "structural enclosure or frame",
-          "primary operating surface",
-          "user control or connection",
-          "service access",
-          "power, conduit, drainage, or network path",
-          "safety and weather protection",
-          "fasteners and identification"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-starter-town-retail-retail-checkout-standard-116/gap-starter-town-retail-retail-checkout-standard-116_view_1.png",
-        "asset-factory/work/previews/gap-starter-town-retail-retail-checkout-standard-116/gap-starter-town-retail-retail-checkout-standard-116_view_2.png",
-        "asset-factory/work/previews/gap-starter-town-retail-retail-checkout-standard-116/gap-starter-town-retail-retail-checkout-standard-116_view_3.png",
-        "asset-factory/work/previews/gap-starter-town-retail-retail-checkout-standard-116/gap-starter-town-retail-retail-checkout-standard-116_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-shared-world-characters-transit-tube-cable-carrier-standard-187",
-      "builder": "modular_connector",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/modular_connector/connector_shared-world-characters-transit-tube-cable-carrier-standard-187.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 19,
-        "triangles": 3572,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "LOD-preserved silhouette",
-          "collision-safe boundary",
-          "end connection socket",
-          "load-bearing frame",
-          "primary structural span",
-          "seal or transition trim",
-          "service access",
-          "start connection socket"
-        ],
-        "bounds": {
-          "min": [
-            -1.0399999618530273,
-            -0.8425000309944153,
-            0
-          ],
-          "max": [
-            1.0399999618530273,
-            0.8425000309944153,
-            1.440000057220459
-          ],
-          "dimensions": [
-            2.0799999237060547,
-            1.6850000619888306,
-            1.440000057220459
-          ]
-        },
-        "requiredComponents": [
-          "primary structural span",
-          "start connection socket",
-          "end connection socket",
-          "load-bearing frame",
-          "service access",
-          "seal or transition trim",
-          "collision-safe boundary",
-          "LOD-preserved silhouette"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-characters-transit-tube-cable-carrier-standard-187/gap-shared-world-characters-transit-tube-cable-carrier-standard-187_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-characters-transit-tube-cable-carrier-standard-187/gap-shared-world-characters-transit-tube-cable-carrier-standard-187_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-characters-transit-tube-cable-carrier-standard-187/gap-shared-world-characters-transit-tube-cable-carrier-standard-187_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-characters-transit-tube-cable-carrier-standard-187/gap-shared-world-characters-transit-tube-cable-carrier-standard-187_view_4.png"
-      ]
-    },
-    {
-      "id": "building_tidetable_market_exterior_v01",
-      "builder": "modular_building",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/building_shell/building_tidetable_market_exterior_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 32,
-        "triangles": 6016,
-        "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_glass",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 7,
-        "components": [
-          "entrance",
-          "facade material breaks",
-          "foundation",
-          "primary massing",
-          "roof line",
-          "service side",
-          "window system"
-        ],
-        "bounds": {
-          "min": [
-            -8.640000343322754,
-            -6.75499963760376,
-            0
-          ],
-          "max": [
-            8.640000343322754,
-            6.755000114440918,
-            8.729999542236328
-          ],
-          "dimensions": [
-            17.280000686645508,
-            13.510000228881836,
-            8.729999542236328
-          ]
-        },
-        "requiredComponents": [
-          "primary massing",
-          "roof line",
-          "entrance",
-          "window system",
-          "facade material breaks",
-          "service side",
-          "foundation"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/building_tidetable_market_exterior_v01/building_tidetable_market_exterior_v01_view_1.png",
-        "asset-factory/work/previews/building_tidetable_market_exterior_v01/building_tidetable_market_exterior_v01_view_2.png",
-        "asset-factory/work/previews/building_tidetable_market_exterior_v01/building_tidetable_market_exterior_v01_view_3.png",
-        "asset-factory/work/previews/building_tidetable_market_exterior_v01/building_tidetable_market_exterior_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-rich-hills-pool-tape-roll-standard-054",
+      "id": "prop_home_arcade_cabinet_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_rich-hills-pool-tape-roll-standard-054.glb",
+      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_home_arcade_cabinet_a_v01.glb",
       "failures": [],
       "stats": {
-        "meshObjects": 17,
-        "triangles": 3212,
+        "meshObjects": 12,
+        "triangles": 2336,
         "materials": [
           "starter_black",
           "starter_dark_metal",
@@ -664,250 +154,58 @@
         ],
         "materialCount": 5,
         "components": [
+          "appropriate materials",
           "fasteners and seams",
           "functional opening or access",
+          "functional secondary components",
           "handle, control, or closure",
           "interaction or inventory socket",
           "object-specific primary body",
           "placement contact",
+          "recognizable primary structure",
           "secondary functional assembly",
           "support or contact structure"
         ],
         "bounds": {
           "min": [
-            -0.36800000071525574,
-            -0.27300000190734863,
+            -0.6899999976158142,
+            -0.6825000047683716,
             0
           ],
           "max": [
-            0.36800000071525574,
-            0.27300000190734863,
-            0.5679999589920044
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
           ],
           "dimensions": [
-            0.7360000014305115,
-            0.5460000038146973,
-            0.5679999589920044
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
           ]
         },
         "requiredComponents": [
-          "object-specific primary body",
-          "support or contact structure",
-          "functional opening or access",
-          "handle, control, or closure",
-          "secondary functional assembly",
-          "fasteners and seams",
-          "placement contact",
-          "interaction or inventory socket"
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-rich-hills-pool-tape-roll-standard-054/gap-rich-hills-pool-tape-roll-standard-054_view_1.png",
-        "asset-factory/work/previews/gap-rich-hills-pool-tape-roll-standard-054/gap-rich-hills-pool-tape-roll-standard-054_view_2.png",
-        "asset-factory/work/previews/gap-rich-hills-pool-tape-roll-standard-054/gap-rich-hills-pool-tape-roll-standard-054_view_3.png",
-        "asset-factory/work/previews/gap-rich-hills-pool-tape-roll-standard-054/gap-rich-hills-pool-tape-roll-standard-054_view_4.png"
+        "asset-factory/work/previews/prop_home_arcade_cabinet_a_v01/prop_home_arcade_cabinet_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_arcade_cabinet_a_v01/prop_home_arcade_cabinet_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_arcade_cabinet_a_v01/prop_home_arcade_cabinet_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_arcade_cabinet_a_v01/prop_home_arcade_cabinet_a_v01_view_4.png"
       ]
     },
     {
-      "id": "gap-starter-town-retail-security-camera-standard-066",
-      "builder": "modular_infrastructure",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-retail-security-camera-standard-066.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 17,
-        "triangles": 3112,
-        "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 6,
-        "components": [
-          "anchored base or mount",
-          "fasteners and identification",
-          "power, conduit, drainage, or network path",
-          "primary operating surface",
-          "safety and weather protection",
-          "service access",
-          "structural enclosure or frame",
-          "user control or connection"
-        ],
-        "bounds": {
-          "min": [
-            -0.5519999861717224,
-            -0.36800000071525574,
-            0
-          ],
-          "max": [
-            0.5519999861717224,
-            0.36800000071525574,
-            1.565999984741211
-          ],
-          "dimensions": [
-            1.1039999723434448,
-            0.7360000014305115,
-            1.565999984741211
-          ]
-        },
-        "requiredComponents": [
-          "anchored base or mount",
-          "structural enclosure or frame",
-          "primary operating surface",
-          "user control or connection",
-          "service access",
-          "power, conduit, drainage, or network path",
-          "safety and weather protection",
-          "fasteners and identification"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-starter-town-retail-security-camera-standard-066/gap-starter-town-retail-security-camera-standard-066_view_1.png",
-        "asset-factory/work/previews/gap-starter-town-retail-security-camera-standard-066/gap-starter-town-retail-security-camera-standard-066_view_2.png",
-        "asset-factory/work/previews/gap-starter-town-retail-security-camera-standard-066/gap-starter-town-retail-security-camera-standard-066_view_3.png",
-        "asset-factory/work/previews/gap-starter-town-retail-security-camera-standard-066/gap-starter-town-retail-security-camera-standard-066_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-shared-world-characters-transit-tube-decline-standard-172",
-      "builder": "modular_connector",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/modular_connector/connector_shared-world-characters-transit-tube-decline-standard-172.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 19,
-        "triangles": 3572,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "LOD-preserved silhouette",
-          "collision-safe boundary",
-          "end connection socket",
-          "load-bearing frame",
-          "primary structural span",
-          "seal or transition trim",
-          "service access",
-          "start connection socket"
-        ],
-        "bounds": {
-          "min": [
-            -1.0399999618530273,
-            -0.8425000309944153,
-            0
-          ],
-          "max": [
-            1.0399999618530273,
-            0.8425000309944153,
-            1.440000057220459
-          ],
-          "dimensions": [
-            2.0799999237060547,
-            1.6850000619888306,
-            1.440000057220459
-          ]
-        },
-        "requiredComponents": [
-          "primary structural span",
-          "start connection socket",
-          "end connection socket",
-          "load-bearing frame",
-          "service access",
-          "seal or transition trim",
-          "collision-safe boundary",
-          "LOD-preserved silhouette"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-characters-transit-tube-decline-standard-172/gap-shared-world-characters-transit-tube-decline-standard-172_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-characters-transit-tube-decline-standard-172/gap-shared-world-characters-transit-tube-decline-standard-172_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-characters-transit-tube-decline-standard-172/gap-shared-world-characters-transit-tube-decline-standard-172_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-characters-transit-tube-decline-standard-172/gap-shared-world-characters-transit-tube-decline-standard-172_view_4.png"
-      ]
-    },
-    {
-      "id": "building_trailmart_exterior_v01",
-      "builder": "modular_building",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/obby-canyon/building_shell/building_trailmart_exterior_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 32,
-        "triangles": 6016,
-        "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_glass",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 7,
-        "components": [
-          "entrance",
-          "facade material breaks",
-          "foundation",
-          "primary massing",
-          "roof line",
-          "service side",
-          "window system"
-        ],
-        "bounds": {
-          "min": [
-            -8.640000343322754,
-            -6.75499963760376,
-            0
-          ],
-          "max": [
-            8.640000343322754,
-            6.755000114440918,
-            8.729999542236328
-          ],
-          "dimensions": [
-            17.280000686645508,
-            13.510000228881836,
-            8.729999542236328
-          ]
-        },
-        "requiredComponents": [
-          "primary massing",
-          "roof line",
-          "entrance",
-          "window system",
-          "facade material breaks",
-          "service side",
-          "foundation"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/building_trailmart_exterior_v01/building_trailmart_exterior_v01_view_1.png",
-        "asset-factory/work/previews/building_trailmart_exterior_v01/building_trailmart_exterior_v01_view_2.png",
-        "asset-factory/work/previews/building_trailmart_exterior_v01/building_trailmart_exterior_v01_view_3.png",
-        "asset-factory/work/previews/building_trailmart_exterior_v01/building_trailmart_exterior_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-rich-hills-pool-vacuum-standard-072",
+      "id": "prop_home_balance_beam_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_rich-hills-pool-vacuum-standard-072.glb",
+      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_home_balance_beam_a_v01.glb",
       "failures": [],
       "stats": {
-        "meshObjects": 17,
-        "triangles": 3212,
+        "meshObjects": 12,
+        "triangles": 2336,
         "materials": [
           "starter_black",
           "starter_dark_metal",
@@ -917,124 +215,58 @@
         ],
         "materialCount": 5,
         "components": [
+          "appropriate materials",
           "fasteners and seams",
           "functional opening or access",
+          "functional secondary components",
           "handle, control, or closure",
           "interaction or inventory socket",
           "object-specific primary body",
           "placement contact",
+          "recognizable primary structure",
           "secondary functional assembly",
           "support or contact structure"
         ],
         "bounds": {
           "min": [
-            -0.36800000071525574,
-            -0.27300000190734863,
+            -0.6899999976158142,
+            -0.6825000047683716,
             0
           ],
           "max": [
-            0.36800000071525574,
-            0.27300000190734863,
-            0.5679999589920044
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
           ],
           "dimensions": [
-            0.7360000014305115,
-            0.5460000038146973,
-            0.5679999589920044
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
           ]
         },
         "requiredComponents": [
-          "object-specific primary body",
-          "support or contact structure",
-          "functional opening or access",
-          "handle, control, or closure",
-          "secondary functional assembly",
-          "fasteners and seams",
-          "placement contact",
-          "interaction or inventory socket"
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-rich-hills-pool-vacuum-standard-072/gap-rich-hills-pool-vacuum-standard-072_view_1.png",
-        "asset-factory/work/previews/gap-rich-hills-pool-vacuum-standard-072/gap-rich-hills-pool-vacuum-standard-072_view_2.png",
-        "asset-factory/work/previews/gap-rich-hills-pool-vacuum-standard-072/gap-rich-hills-pool-vacuum-standard-072_view_3.png",
-        "asset-factory/work/previews/gap-rich-hills-pool-vacuum-standard-072/gap-rich-hills-pool-vacuum-standard-072_view_4.png"
+        "asset-factory/work/previews/prop_home_balance_beam_a_v01/prop_home_balance_beam_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_balance_beam_a_v01/prop_home_balance_beam_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_balance_beam_a_v01/prop_home_balance_beam_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_balance_beam_a_v01/prop_home_balance_beam_a_v01_view_4.png"
       ]
     },
     {
-      "id": "gap-starter-town-retail-underwater-shuttle-stop-standard-106",
-      "builder": "modular_infrastructure",
+      "id": "prop_home_course_map_a_v01",
+      "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-retail-underwater-shuttle-stop-standard-106.glb",
+      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_home_course_map_a_v01.glb",
       "failures": [],
       "stats": {
-        "meshObjects": 17,
-        "triangles": 3112,
-        "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 6,
-        "components": [
-          "anchored base or mount",
-          "fasteners and identification",
-          "power, conduit, drainage, or network path",
-          "primary operating surface",
-          "safety and weather protection",
-          "service access",
-          "structural enclosure or frame",
-          "user control or connection"
-        ],
-        "bounds": {
-          "min": [
-            -0.5519999861717224,
-            -0.36800000071525574,
-            0
-          ],
-          "max": [
-            0.5519999861717224,
-            0.36800000071525574,
-            1.565999984741211
-          ],
-          "dimensions": [
-            1.1039999723434448,
-            0.7360000014305115,
-            1.565999984741211
-          ]
-        },
-        "requiredComponents": [
-          "anchored base or mount",
-          "structural enclosure or frame",
-          "primary operating surface",
-          "user control or connection",
-          "service access",
-          "power, conduit, drainage, or network path",
-          "safety and weather protection",
-          "fasteners and identification"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-starter-town-retail-underwater-shuttle-stop-standard-106/gap-starter-town-retail-underwater-shuttle-stop-standard-106_view_1.png",
-        "asset-factory/work/previews/gap-starter-town-retail-underwater-shuttle-stop-standard-106/gap-starter-town-retail-underwater-shuttle-stop-standard-106_view_2.png",
-        "asset-factory/work/previews/gap-starter-town-retail-underwater-shuttle-stop-standard-106/gap-starter-town-retail-underwater-shuttle-stop-standard-106_view_3.png",
-        "asset-factory/work/previews/gap-starter-town-retail-underwater-shuttle-stop-standard-106/gap-starter-town-retail-underwater-shuttle-stop-standard-106_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-shared-world-combat-transit-tube-maintenance-alcove-standard-181",
-      "builder": "modular_connector",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/modular_connector/connector_shared-world-combat-transit-tube-maintenance-alcove-standard-181.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 19,
-        "triangles": 3572,
+        "meshObjects": 12,
+        "triangles": 2336,
         "materials": [
           "starter_black",
           "starter_dark_metal",
@@ -1044,123 +276,363 @@
         ],
         "materialCount": 5,
         "components": [
-          "LOD-preserved silhouette",
-          "collision-safe boundary",
-          "end connection socket",
-          "load-bearing frame",
-          "primary structural span",
-          "seal or transition trim",
-          "service access",
-          "start connection socket"
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
         ],
         "bounds": {
           "min": [
-            -1.0399999618530273,
-            -0.8425000309944153,
+            -0.6899999976158142,
+            -0.6825000047683716,
             0
           ],
           "max": [
-            1.0399999618530273,
-            0.8425000309944153,
-            1.440000057220459
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
           ],
           "dimensions": [
-            2.0799999237060547,
-            1.6850000619888306,
-            1.440000057220459
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
           ]
         },
         "requiredComponents": [
-          "primary structural span",
-          "start connection socket",
-          "end connection socket",
-          "load-bearing frame",
-          "service access",
-          "seal or transition trim",
-          "collision-safe boundary",
-          "LOD-preserved silhouette"
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-combat-transit-tube-maintenance-alcove-standard-181/gap-shared-world-combat-transit-tube-maintenance-alcove-standard-181_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-combat-transit-tube-maintenance-alcove-standard-181/gap-shared-world-combat-transit-tube-maintenance-alcove-standard-181_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-combat-transit-tube-maintenance-alcove-standard-181/gap-shared-world-combat-transit-tube-maintenance-alcove-standard-181_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-combat-transit-tube-maintenance-alcove-standard-181/gap-shared-world-combat-transit-tube-maintenance-alcove-standard-181_view_4.png"
+        "asset-factory/work/previews/prop_home_course_map_a_v01/prop_home_course_map_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_course_map_a_v01/prop_home_course_map_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_course_map_a_v01/prop_home_course_map_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_course_map_a_v01/prop_home_course_map_a_v01_view_4.png"
       ]
     },
     {
-      "id": "building_voltbyte_academy_exterior_v01",
-      "builder": "modular_building",
+      "id": "prop_home_deed_folder_a_v01",
+      "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/building_shell/building_voltbyte_academy_exterior_v01.glb",
+      "outputPath": "public/assets/models/generated/starter-town/modular_prop/prop_home_deed_folder_a_v01.glb",
       "failures": [],
       "stats": {
-        "meshObjects": 32,
-        "triangles": 6016,
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_home_deed_folder_a_v01/prop_home_deed_folder_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_deed_folder_a_v01/prop_home_deed_folder_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_deed_folder_a_v01/prop_home_deed_folder_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_deed_folder_a_v01/prop_home_deed_folder_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_home_dungeon_map_board_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_home_dungeon_map_board_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_home_dungeon_map_board_a_v01/prop_home_dungeon_map_board_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_dungeon_map_board_a_v01/prop_home_dungeon_map_board_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_dungeon_map_board_a_v01/prop_home_dungeon_map_board_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_dungeon_map_board_a_v01/prop_home_dungeon_map_board_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_home_game_table_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_home_game_table_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_home_game_table_a_v01/prop_home_game_table_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_game_table_a_v01/prop_home_game_table_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_game_table_a_v01/prop_home_game_table_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_game_table_a_v01/prop_home_game_table_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_home_material_chest_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_home_material_chest_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_home_material_chest_a_v01/prop_home_material_chest_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_material_chest_a_v01/prop_home_material_chest_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_material_chest_a_v01/prop_home_material_chest_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_material_chest_a_v01/prop_home_material_chest_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_home_neon_sign_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_home_neon_sign_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
         "materials": [
           "tech_brushed_metal",
           "tech_composite",
-          "tech_concrete",
           "tech_cyan_emissive",
           "tech_dark_metal",
-          "tech_smoked_glass",
           "tech_white_light"
         ],
-        "materialCount": 7,
+        "materialCount": 5,
         "components": [
-          "entrance",
-          "facade material breaks",
-          "foundation",
-          "primary massing",
-          "roof line",
-          "service side",
-          "window system"
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
         ],
         "bounds": {
           "min": [
-            -8.640000343322754,
-            -6.75499963760376,
+            -0.6899999976158142,
+            -0.6825000047683716,
             0
           ],
           "max": [
-            8.640000343322754,
-            6.755000114440918,
-            8.729999542236328
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
           ],
           "dimensions": [
-            17.280000686645508,
-            13.510000228881836,
-            8.729999542236328
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
           ]
         },
         "requiredComponents": [
-          "primary massing",
-          "roof line",
-          "entrance",
-          "window system",
-          "facade material breaks",
-          "service side",
-          "foundation"
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/building_voltbyte_academy_exterior_v01/building_voltbyte_academy_exterior_v01_view_1.png",
-        "asset-factory/work/previews/building_voltbyte_academy_exterior_v01/building_voltbyte_academy_exterior_v01_view_2.png",
-        "asset-factory/work/previews/building_voltbyte_academy_exterior_v01/building_voltbyte_academy_exterior_v01_view_3.png",
-        "asset-factory/work/previews/building_voltbyte_academy_exterior_v01/building_voltbyte_academy_exterior_v01_view_4.png"
+        "asset-factory/work/previews/prop_home_neon_sign_a_v01/prop_home_neon_sign_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_neon_sign_a_v01/prop_home_neon_sign_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_neon_sign_a_v01/prop_home_neon_sign_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_neon_sign_a_v01/prop_home_neon_sign_a_v01_view_4.png"
       ]
     },
     {
-      "id": "gap-rich-hills-private-event-condiment-station-standard-031",
+      "id": "prop_home_pet_bed_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_rich-hills-private-event-condiment-station-standard-031.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_home_pet_bed_a_v01.glb",
       "failures": [],
       "stats": {
-        "meshObjects": 17,
-        "triangles": 3212,
+        "meshObjects": 12,
+        "triangles": 2336,
         "materials": [
           "starter_black",
           "starter_dark_metal",
@@ -1170,112 +642,595 @@
         ],
         "materialCount": 5,
         "components": [
+          "appropriate materials",
           "fasteners and seams",
           "functional opening or access",
+          "functional secondary components",
           "handle, control, or closure",
           "interaction or inventory socket",
           "object-specific primary body",
           "placement contact",
+          "recognizable primary structure",
           "secondary functional assembly",
           "support or contact structure"
         ],
         "bounds": {
           "min": [
-            -0.36800000071525574,
-            -0.27300000190734863,
+            -0.6899999976158142,
+            -0.6825000047683716,
             0
           ],
           "max": [
-            0.36800000071525574,
-            0.27300000190734863,
-            0.5679999589920044
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
           ],
           "dimensions": [
-            0.7360000014305115,
-            0.5460000038146973,
-            0.5679999589920044
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
           ]
         },
         "requiredComponents": [
-          "object-specific primary body",
-          "support or contact structure",
-          "functional opening or access",
-          "handle, control, or closure",
-          "secondary functional assembly",
-          "fasteners and seams",
-          "placement contact",
-          "interaction or inventory socket"
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-rich-hills-private-event-condiment-station-standard-031/gap-rich-hills-private-event-condiment-station-standard-031_view_1.png",
-        "asset-factory/work/previews/gap-rich-hills-private-event-condiment-station-standard-031/gap-rich-hills-private-event-condiment-station-standard-031_view_2.png",
-        "asset-factory/work/previews/gap-rich-hills-private-event-condiment-station-standard-031/gap-rich-hills-private-event-condiment-station-standard-031_view_3.png",
-        "asset-factory/work/previews/gap-rich-hills-private-event-condiment-station-standard-031/gap-rich-hills-private-event-condiment-station-standard-031_view_4.png"
+        "asset-factory/work/previews/prop_home_pet_bed_a_v01/prop_home_pet_bed_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_pet_bed_a_v01/prop_home_pet_bed_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_pet_bed_a_v01/prop_home_pet_bed_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_pet_bed_a_v01/prop_home_pet_bed_a_v01_view_4.png"
       ]
     },
     {
-      "id": "gap-starter-town-school-battery-backup-standard-062",
-      "builder": "modular_infrastructure",
+      "id": "prop_home_potion_shelf_a_v01",
+      "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-school-battery-backup-standard-062.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_home_potion_shelf_a_v01.glb",
       "failures": [],
       "stats": {
-        "meshObjects": 17,
-        "triangles": 3112,
+        "meshObjects": 12,
+        "triangles": 2336,
         "materials": [
           "starter_black",
-          "starter_concrete",
           "starter_dark_metal",
           "starter_galvanized",
           "starter_warm_light",
           "starter_white"
         ],
-        "materialCount": 6,
+        "materialCount": 5,
         "components": [
-          "anchored base or mount",
-          "fasteners and identification",
-          "power, conduit, drainage, or network path",
-          "primary operating surface",
-          "safety and weather protection",
-          "service access",
-          "structural enclosure or frame",
-          "user control or connection"
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
         ],
         "bounds": {
           "min": [
-            -0.5519999861717224,
-            -0.36800000071525574,
+            -0.6899999976158142,
+            -0.6825000047683716,
             0
           ],
           "max": [
-            0.5519999861717224,
-            0.36800000071525574,
-            1.565999984741211
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
           ],
           "dimensions": [
-            1.1039999723434448,
-            0.7360000014305115,
-            1.565999984741211
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
           ]
         },
         "requiredComponents": [
-          "anchored base or mount",
-          "structural enclosure or frame",
-          "primary operating surface",
-          "user control or connection",
-          "service access",
-          "power, conduit, drainage, or network path",
-          "safety and weather protection",
-          "fasteners and identification"
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-starter-town-school-battery-backup-standard-062/gap-starter-town-school-battery-backup-standard-062_view_1.png",
-        "asset-factory/work/previews/gap-starter-town-school-battery-backup-standard-062/gap-starter-town-school-battery-backup-standard-062_view_2.png",
-        "asset-factory/work/previews/gap-starter-town-school-battery-backup-standard-062/gap-starter-town-school-battery-backup-standard-062_view_3.png",
-        "asset-factory/work/previews/gap-starter-town-school-battery-backup-standard-062/gap-starter-town-school-battery-backup-standard-062_view_4.png"
+        "asset-factory/work/previews/prop_home_potion_shelf_a_v01/prop_home_potion_shelf_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_potion_shelf_a_v01/prop_home_potion_shelf_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_potion_shelf_a_v01/prop_home_potion_shelf_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_potion_shelf_a_v01/prop_home_potion_shelf_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_home_prize_shelf_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_home_prize_shelf_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_home_prize_shelf_a_v01/prop_home_prize_shelf_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_prize_shelf_a_v01/prop_home_prize_shelf_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_prize_shelf_a_v01/prop_home_prize_shelf_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_prize_shelf_a_v01/prop_home_prize_shelf_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_home_recovery_mat_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_home_recovery_mat_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_home_recovery_mat_a_v01/prop_home_recovery_mat_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_recovery_mat_a_v01/prop_home_recovery_mat_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_recovery_mat_a_v01/prop_home_recovery_mat_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_recovery_mat_a_v01/prop_home_recovery_mat_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_home_relic_wall_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_home_relic_wall_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_home_relic_wall_a_v01/prop_home_relic_wall_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_relic_wall_a_v01/prop_home_relic_wall_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_relic_wall_a_v01/prop_home_relic_wall_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_relic_wall_a_v01/prop_home_relic_wall_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_home_richhills_art_wall_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_home_richhills_art_wall_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_home_richhills_art_wall_a_v01/prop_home_richhills_art_wall_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_richhills_art_wall_a_v01/prop_home_richhills_art_wall_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_richhills_art_wall_a_v01/prop_home_richhills_art_wall_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_richhills_art_wall_a_v01/prop_home_richhills_art_wall_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_home_richhills_garage_display_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_home_richhills_garage_display_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_home_richhills_garage_display_a_v01/prop_home_richhills_garage_display_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_richhills_garage_display_a_v01/prop_home_richhills_garage_display_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_richhills_garage_display_a_v01/prop_home_richhills_garage_display_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_richhills_garage_display_a_v01/prop_home_richhills_garage_display_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_home_richhills_gym_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_home_richhills_gym_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_home_richhills_gym_a_v01/prop_home_richhills_gym_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_richhills_gym_a_v01/prop_home_richhills_gym_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_richhills_gym_a_v01/prop_home_richhills_gym_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_richhills_gym_a_v01/prop_home_richhills_gym_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_home_richhills_pool_module_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_home_richhills_pool_module_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_home_richhills_pool_module_a_v01/prop_home_richhills_pool_module_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_richhills_pool_module_a_v01/prop_home_richhills_pool_module_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_richhills_pool_module_a_v01/prop_home_richhills_pool_module_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_richhills_pool_module_a_v01/prop_home_richhills_pool_module_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_home_trophy_shelf_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_home_trophy_shelf_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_home_trophy_shelf_a_v01/prop_home_trophy_shelf_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_trophy_shelf_a_v01/prop_home_trophy_shelf_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_trophy_shelf_a_v01/prop_home_trophy_shelf_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_trophy_shelf_a_v01/prop_home_trophy_shelf_a_v01_view_4.png"
       ]
     }
   ]
