@@ -20,7 +20,7 @@ import {
 
 const flatHeight = () => 0;
 const nextFrame = () => new Promise((resolve) => requestAnimationFrame(resolve));
-const ACTIVE_FUNCTIONAL_RELOCATIONS = Object.freeze(['zaylins-home']);
+const ACTIVE_FUNCTIONAL_RELOCATIONS = Object.freeze(['zaylins-home', 'zaylins-prep']);
 
 const bridge = {
   installed: false,

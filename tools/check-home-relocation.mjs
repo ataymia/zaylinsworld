@@ -21,7 +21,7 @@ assert.deepEqual(home.target, { x: 48, y: 0, z: 828 });
 assert.deepEqual(home.spawn, { x: 48, y: 0, z: 802 });
 assert.equal(home.parcelId, 'parcel-zaylins-home');
 
-assert.match(bridge, /ACTIVE_FUNCTIONAL_RELOCATIONS = Object\.freeze\(\['zaylins-home'\]\)/);
+assert.match(bridge, /ACTIVE_FUNCTIONAL_RELOCATIONS = Object\.freeze\(\[[^\]]*'zaylins-home'/);
 assert.match(bridge, /return bridge\.attached \? ACTIVE_FUNCTIONAL_RELOCATIONS : \[\]/, 'compact fallback must remain available');
 assert.match(world, /relocatedLocationIds = \[\]/, 'city builder must accept bounded relocation input');
 assert.match(world, /ZW_LocationPlaceholder_\$\{b\.locationId\}/, 'live exterior must hide its large-shell placeholder');
