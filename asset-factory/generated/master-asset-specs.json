@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-19T01:39:45.849Z",
+  "generatedAt": "2026-07-19T01:47:16.787Z",
   "source": "All .glb names harvested from docs/**/*.md plus explicit manual canonical additions.",
   "policy": "asset-factory/quality-policy.json",
   "counts": {
@@ -183923,7 +183923,7 @@
   "count": 2298,
   "gameplayGapExpansion": {
     "version": 3,
-    "appliedAt": "2026-07-19T01:39:45.420Z",
+    "appliedAt": "2026-07-19T01:47:16.359Z",
     "newCanonicalRequestCount": 1320,
     "expectedAuditedRecordCount": 2298,
     "expectedCanonicalGenerationRequestCount": 2282,

@@ -1,18 +1,159 @@
 {
   "version": 2,
-  "batchId": "batch-00040",
-  "completedAt": "2026-07-19T01:43:01.714Z",
+  "batchId": "batch-00042",
+  "completedAt": "2026-07-19T01:50:27.926Z",
   "requested": 20,
   "passed": 20,
   "failed": 0,
   "queueCounts": {
-    "completed": 851,
+    "completed": 856,
     "reference-only": 16,
-    "queued": 1241,
+    "queued": 1236,
     "unsupported": 189,
     "quarantined": 1
   },
   "results": [
+    {
+      "id": "gap-shared-world-accessibility-gate-locked-standard-310",
+      "builder": "accessibility_gate",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/shared-world/accessibility_gate/state_variant_shared-world-accessibility-gate-locked-standard-310.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 28,
+        "triangles": 5300,
+        "materials": [
+          "access_gate_amber_status",
+          "access_gate_tactile",
+          "access_gate_threshold",
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized"
+        ],
+        "materialCount": 6,
+        "components": [
+          "accessible gate leaf",
+          "anchored gate posts",
+          "card reader",
+          "closed state tab",
+          "closing arm",
+          "electric strike",
+          "emergency override",
+          "flush threshold",
+          "hinge barrel",
+          "lower pivot",
+          "mechanical latch",
+          "raised lock icon",
+          "status lamp",
+          "tactile icon panel",
+          "wheelchair-height push plate"
+        ],
+        "bounds": {
+          "min": [
+            -1.2360000610351562,
+            -0.2207999974489212,
+            0
+          ],
+          "max": [
+            1.2360000610351562,
+            0.2207999974489212,
+            1.3777745962142944
+          ],
+          "dimensions": [
+            2.4720001220703125,
+            0.4415999948978424,
+            1.3777745962142944
+          ]
+        },
+        "requiredComponents": [
+          "anchored gate posts",
+          "accessible gate leaf",
+          "hinge barrel",
+          "lower pivot",
+          "closing arm",
+          "mechanical latch",
+          "electric strike",
+          "raised lock icon",
+          "status lamp",
+          "closed state tab",
+          "wheelchair-height push plate",
+          "tactile icon panel",
+          "card reader",
+          "emergency override",
+          "flush threshold"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/gap-shared-world-accessibility-gate-locked-standard-310/gap-shared-world-accessibility-gate-locked-standard-310_view_1.png",
+        "asset-factory/work/previews/gap-shared-world-accessibility-gate-locked-standard-310/gap-shared-world-accessibility-gate-locked-standard-310_view_2.png",
+        "asset-factory/work/previews/gap-shared-world-accessibility-gate-locked-standard-310/gap-shared-world-accessibility-gate-locked-standard-310_view_3.png",
+        "asset-factory/work/previews/gap-shared-world-accessibility-gate-locked-standard-310/gap-shared-world-accessibility-gate-locked-standard-310_view_4.png"
+      ]
+    },
+    {
+      "id": "gap-shared-world-accessibility-plant-dry-standard-340",
+      "builder": "state_variant",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-accessibility-plant-dry-standard-340.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 16,
+        "triangles": 3024,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "LOD and swap policy",
+          "animation transition socket",
+          "base object relationship",
+          "collision state",
+          "damage or repair metadata",
+          "interaction state",
+          "state-defining geometry",
+          "state-defining material layer"
+        ],
+        "bounds": {
+          "min": [
+            -0.4375,
+            -0.4399999976158142,
+            2.7939677238464355e-9
+          ],
+          "max": [
+            0.4375,
+            0.4399999976158142,
+            0.7325000762939453
+          ],
+          "dimensions": [
+            0.875,
+            0.8799999952316284,
+            0.7325000762939453
+          ]
+        },
+        "requiredComponents": [
+          "base object relationship",
+          "state-defining geometry",
+          "state-defining material layer",
+          "animation transition socket",
+          "collision state",
+          "interaction state",
+          "damage or repair metadata",
+          "LOD and swap policy"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/gap-shared-world-accessibility-plant-dry-standard-340/gap-shared-world-accessibility-plant-dry-standard-340_view_1.png",
+        "asset-factory/work/previews/gap-shared-world-accessibility-plant-dry-standard-340/gap-shared-world-accessibility-plant-dry-standard-340_view_2.png",
+        "asset-factory/work/previews/gap-shared-world-accessibility-plant-dry-standard-340/gap-shared-world-accessibility-plant-dry-standard-340_view_3.png",
+        "asset-factory/work/previews/gap-shared-world-accessibility-plant-dry-standard-340/gap-shared-world-accessibility-plant-dry-standard-340_view_4.png"
+      ]
+    },
     {
       "id": "gap-casino-strip-arcade-backpack-standard-030",
       "builder": "modular_prop",
@@ -267,11 +408,11 @@
       ]
     },
     {
-      "id": "building_crown_reef_hall_exterior_v01",
+      "id": "building_dockside_diner_exterior_v01",
       "builder": "modular_building",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/building_shell/building_crown_reef_hall_exterior_v01.glb",
+      "outputPath": "public/assets/models/generated/fishing-harbor/building_shell/building_dockside_diner_exterior_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 32,
@@ -323,10 +464,10 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/building_crown_reef_hall_exterior_v01/building_crown_reef_hall_exterior_v01_view_1.png",
-        "asset-factory/work/previews/building_crown_reef_hall_exterior_v01/building_crown_reef_hall_exterior_v01_view_2.png",
-        "asset-factory/work/previews/building_crown_reef_hall_exterior_v01/building_crown_reef_hall_exterior_v01_view_3.png",
-        "asset-factory/work/previews/building_crown_reef_hall_exterior_v01/building_crown_reef_hall_exterior_v01_view_4.png"
+        "asset-factory/work/previews/building_dockside_diner_exterior_v01/building_dockside_diner_exterior_v01_view_1.png",
+        "asset-factory/work/previews/building_dockside_diner_exterior_v01/building_dockside_diner_exterior_v01_view_2.png",
+        "asset-factory/work/previews/building_dockside_diner_exterior_v01/building_dockside_diner_exterior_v01_view_3.png",
+        "asset-factory/work/previews/building_dockside_diner_exterior_v01/building_dockside_diner_exterior_v01_view_4.png"
       ]
     },
     {
@@ -546,89 +687,11 @@
       ]
     },
     {
-      "id": "gap-shared-world-accessibility-gate-locked-standard-310",
-      "builder": "accessibility_gate",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/accessibility_gate/state_variant_shared-world-accessibility-gate-locked-standard-310.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 28,
-        "triangles": 5300,
-        "materials": [
-          "access_gate_amber_status",
-          "access_gate_tactile",
-          "access_gate_threshold",
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized"
-        ],
-        "materialCount": 6,
-        "components": [
-          "accessible gate leaf",
-          "anchored gate posts",
-          "card reader",
-          "closed state tab",
-          "closing arm",
-          "electric strike",
-          "emergency override",
-          "flush threshold",
-          "hinge barrel",
-          "lower pivot",
-          "mechanical latch",
-          "raised lock icon",
-          "status lamp",
-          "tactile icon panel",
-          "wheelchair-height push plate"
-        ],
-        "bounds": {
-          "min": [
-            -1.2360000610351562,
-            -0.2207999974489212,
-            0
-          ],
-          "max": [
-            1.2360000610351562,
-            0.2207999974489212,
-            1.3777745962142944
-          ],
-          "dimensions": [
-            2.4720001220703125,
-            0.4415999948978424,
-            1.3777745962142944
-          ]
-        },
-        "requiredComponents": [
-          "anchored gate posts",
-          "accessible gate leaf",
-          "hinge barrel",
-          "lower pivot",
-          "closing arm",
-          "mechanical latch",
-          "electric strike",
-          "raised lock icon",
-          "status lamp",
-          "closed state tab",
-          "wheelchair-height push plate",
-          "tactile icon panel",
-          "card reader",
-          "emergency override",
-          "flush threshold"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-accessibility-gate-locked-standard-310/gap-shared-world-accessibility-gate-locked-standard-310_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-accessibility-gate-locked-standard-310/gap-shared-world-accessibility-gate-locked-standard-310_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-accessibility-gate-locked-standard-310/gap-shared-world-accessibility-gate-locked-standard-310_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-accessibility-gate-locked-standard-310/gap-shared-world-accessibility-gate-locked-standard-310_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-shared-world-accessibility-plant-dry-standard-340",
+      "id": "gap-shared-world-accessibility-quest-object-active-standard-325",
       "builder": "state_variant",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-accessibility-plant-dry-standard-340.glb",
+      "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-accessibility-quest-object-active-standard-325.glb",
       "failures": [],
       "stats": {
         "meshObjects": 16,
@@ -680,10 +743,10 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-accessibility-plant-dry-standard-340/gap-shared-world-accessibility-plant-dry-standard-340_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-accessibility-plant-dry-standard-340/gap-shared-world-accessibility-plant-dry-standard-340_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-accessibility-plant-dry-standard-340/gap-shared-world-accessibility-plant-dry-standard-340_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-accessibility-plant-dry-standard-340/gap-shared-world-accessibility-plant-dry-standard-340_view_4.png"
+        "asset-factory/work/previews/gap-shared-world-accessibility-quest-object-active-standard-325/gap-shared-world-accessibility-quest-object-active-standard-325_view_1.png",
+        "asset-factory/work/previews/gap-shared-world-accessibility-quest-object-active-standard-325/gap-shared-world-accessibility-quest-object-active-standard-325_view_2.png",
+        "asset-factory/work/previews/gap-shared-world-accessibility-quest-object-active-standard-325/gap-shared-world-accessibility-quest-object-active-standard-325_view_3.png",
+        "asset-factory/work/previews/gap-shared-world-accessibility-quest-object-active-standard-325/gap-shared-world-accessibility-quest-object-active-standard-325_view_4.png"
       ]
     },
     {
@@ -940,23 +1003,23 @@
       ]
     },
     {
-      "id": "building_crownline_motors_exterior_v01",
+      "id": "building_drone_district_exterior_v01",
       "builder": "modular_building",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/building_shell/building_crownline_motors_exterior_v01.glb",
+      "outputPath": "public/assets/models/generated/techtown/building_shell/building_drone_district_exterior_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 32,
         "triangles": 6016,
         "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_glass",
-          "starter_warm_light",
-          "starter_white"
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_concrete",
+          "tech_cyan_emissive",
+          "tech_dark_metal",
+          "tech_smoked_glass",
+          "tech_white_light"
         ],
         "materialCount": 7,
         "components": [
@@ -996,18 +1059,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/building_crownline_motors_exterior_v01/building_crownline_motors_exterior_v01_view_1.png",
-        "asset-factory/work/previews/building_crownline_motors_exterior_v01/building_crownline_motors_exterior_v01_view_2.png",
-        "asset-factory/work/previews/building_crownline_motors_exterior_v01/building_crownline_motors_exterior_v01_view_3.png",
-        "asset-factory/work/previews/building_crownline_motors_exterior_v01/building_crownline_motors_exterior_v01_view_4.png"
+        "asset-factory/work/previews/building_drone_district_exterior_v01/building_drone_district_exterior_v01_view_1.png",
+        "asset-factory/work/previews/building_drone_district_exterior_v01/building_drone_district_exterior_v01_view_2.png",
+        "asset-factory/work/previews/building_drone_district_exterior_v01/building_drone_district_exterior_v01_view_3.png",
+        "asset-factory/work/previews/building_drone_district_exterior_v01/building_drone_district_exterior_v01_view_4.png"
       ]
     },
     {
-      "id": "gap-shared-world-accessibility-quest-object-active-standard-325",
+      "id": "gap-shared-world-accessibility-shelf-empty-standard-295",
       "builder": "state_variant",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-accessibility-quest-object-active-standard-325.glb",
+      "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-accessibility-shelf-empty-standard-295.glb",
       "failures": [],
       "stats": {
         "meshObjects": 16,
@@ -1059,10 +1122,10 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-accessibility-quest-object-active-standard-325/gap-shared-world-accessibility-quest-object-active-standard-325_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-accessibility-quest-object-active-standard-325/gap-shared-world-accessibility-quest-object-active-standard-325_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-accessibility-quest-object-active-standard-325/gap-shared-world-accessibility-quest-object-active-standard-325_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-accessibility-quest-object-active-standard-325/gap-shared-world-accessibility-quest-object-active-standard-325_view_4.png"
+        "asset-factory/work/previews/gap-shared-world-accessibility-shelf-empty-standard-295/gap-shared-world-accessibility-shelf-empty-standard-295_view_1.png",
+        "asset-factory/work/previews/gap-shared-world-accessibility-shelf-empty-standard-295/gap-shared-world-accessibility-shelf-empty-standard-295_view_2.png",
+        "asset-factory/work/previews/gap-shared-world-accessibility-shelf-empty-standard-295/gap-shared-world-accessibility-shelf-empty-standard-295_view_3.png",
+        "asset-factory/work/previews/gap-shared-world-accessibility-shelf-empty-standard-295/gap-shared-world-accessibility-shelf-empty-standard-295_view_4.png"
       ]
     },
     {
@@ -1253,69 +1316,6 @@
         "asset-factory/work/previews/gap-rich-hills-mansion-classroom-desk-standard-025/gap-rich-hills-mansion-classroom-desk-standard-025_view_2.png",
         "asset-factory/work/previews/gap-rich-hills-mansion-classroom-desk-standard-025/gap-rich-hills-mansion-classroom-desk-standard-025_view_3.png",
         "asset-factory/work/previews/gap-rich-hills-mansion-classroom-desk-standard-025/gap-rich-hills-mansion-classroom-desk-standard-025_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-aqualume-airlock-transit-tube-lane-divider-standard-094",
-      "builder": "modular_connector",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/modular_connector/connector_aqualume-airlock-transit-tube-lane-divider-standard-094.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 19,
-        "triangles": 3572,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "LOD-preserved silhouette",
-          "collision-safe boundary",
-          "end connection socket",
-          "load-bearing frame",
-          "primary structural span",
-          "seal or transition trim",
-          "service access",
-          "start connection socket"
-        ],
-        "bounds": {
-          "min": [
-            -1.0399999618530273,
-            -0.8425000309944153,
-            0
-          ],
-          "max": [
-            1.0399999618530273,
-            0.8425000309944153,
-            1.440000057220459
-          ],
-          "dimensions": [
-            2.0799999237060547,
-            1.6850000619888306,
-            1.440000057220459
-          ]
-        },
-        "requiredComponents": [
-          "primary structural span",
-          "start connection socket",
-          "end connection socket",
-          "load-bearing frame",
-          "service access",
-          "seal or transition trim",
-          "collision-safe boundary",
-          "LOD-preserved silhouette"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-lane-divider-standard-094/gap-aqualume-airlock-transit-tube-lane-divider-standard-094_view_1.png",
-        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-lane-divider-standard-094/gap-aqualume-airlock-transit-tube-lane-divider-standard-094_view_2.png",
-        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-lane-divider-standard-094/gap-aqualume-airlock-transit-tube-lane-divider-standard-094_view_3.png",
-        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-lane-divider-standard-094/gap-aqualume-airlock-transit-tube-lane-divider-standard-094_view_4.png"
       ]
     }
   ]
