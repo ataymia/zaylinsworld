@@ -32,6 +32,12 @@ assert.match(interiors, /byId\.gas = \{/);
 assert.match(interiors, /id: 'gas-checkout', type: 'buy-snack'/);
 assert.match(world, /PARK\.trees\.map\(\(\[x, z\]\) => \[x \+ parkDx, z \+ parkDz\]\)/);
 assert.match(world, /ZW_FunctionalLocation_dreamdrop-park/);
+assert.match(world, /const landmarkMarkers = \\[\\.\\.\\.landmarkLayout\\]/,
+  'public-space markers must be kept separate from enterable-building blueprints');
+assert.match(world, /landmarkMarkers\\.push\\(\\{[\\s\\S]*locationId: 'dreamdrop-park'/,
+  'Dreamdrop Park must be registered as a marker without entering the building loop');
+assert.doesNotMatch(world, /landmarkLayout\\.push\\(\\{[\\s\\S]*locationId: 'dreamdrop-park'/,
+  'Dreamdrop Park cannot be passed to makeBuilding because it has no facing tuple');
 assert.match(main, /doorInteraction: !requiresDoor \|\|/, 'non-enterable public space parity must not require a fake door');
 assert.match(phase, /phase\('7', 'Functional location relocation', 'implemented'/);
 

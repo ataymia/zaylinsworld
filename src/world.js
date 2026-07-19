@@ -324,6 +324,10 @@ export function buildCity(scene, { relocatedLocationIds = [] } = {}) {
       ? { ...landmark, x: contract.target.x, z: contract.target.z, locationId: contract.locationId }
       : { ...landmark, locationId: contract?.locationId || null };
   });
+  // Keep minimap/world markers separate from building blueprints. Public spaces
+  // such as Dreamdrop Park are landmarks, but do not have building dimensions,
+  // a facing tuple, a door, or an interior.
+  const landmarkMarkers = [...landmarkLayout];
   const parkContract = FUNCTIONAL_LOCATION_CONTRACTS.find((entry) => entry.locationId === 'dreamdrop-park');
   const parkRelocated = activeRelocations.has('dreamdrop-park');
   const parkDx = parkRelocated ? parkContract.target.x - PARK.cx : 0;
@@ -415,7 +419,7 @@ export function buildCity(scene, { relocatedLocationIds = [] } = {}) {
   if (parkRelocated) {
     const placeholder = scene.getObjectByName('ZW_LocationPlaceholder_dreamdrop-park');
     if (placeholder) placeholder.visible = false;
-    landmarkLayout.push({
+    landmarkMarkers.push({
       id: 'park', name: 'DREAMDROP PARK', x: parkLayout.cx, z: parkLayout.cz,
       color: '#53b86a', locationId: 'dreamdrop-park',
     });
@@ -476,7 +480,7 @@ export function buildCity(scene, { relocatedLocationIds = [] } = {}) {
   if (policeRelocated) {
     const placeholder = scene.getObjectByName('ZW_LocationPlaceholder_police-station');
     if (placeholder) placeholder.visible = false;
-    landmarkLayout.push({
+    landmarkMarkers.push({
       id: 'police',
       name: 'DREAMDROP PUBLIC SAFETY',
       interiorId: 'police',
@@ -503,7 +507,7 @@ export function buildCity(scene, { relocatedLocationIds = [] } = {}) {
 
   return {
     spawn: new THREE.Vector3(SPAWN.x, 0, SPAWN.z), spawnFaceY: SPAWN.faceY,
-    entrances, police, landmarks: landmarkLayout, relocations,
+    entrances, police, landmarks: landmarkMarkers, relocations,
   };
 }
 
