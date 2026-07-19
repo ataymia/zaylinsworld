@@ -24,7 +24,29 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      - run: npm run build
+      - name: Build production bundles
+        run: npm run build
+        env:
+          ZTA_PAGES_DEPLOYMENT: '1'
+      - name: Assemble Starter Town runtime assets
+        run: |
+          mkdir -p dist/assets/models/generated
+          cp public/sw.js dist/
+          cp -R public/assets/decals dist/assets/
+          cp -R public/assets/hdr dist/assets/
+          cp -R public/assets/runtime dist/assets/
+          cp -R public/assets/textures dist/assets/
+          cp -R public/assets/models/animations dist/assets/models/
+          cp -R public/assets/models/characters dist/assets/models/
+          cp -R public/assets/models/hair dist/assets/models/
+          cp -R public/assets/models/jewelry dist/assets/models/
+          cp -R public/assets/models/props dist/assets/models/
+          cp -R public/assets/models/vehicles dist/assets/models/
+          cp -R public/assets/models/weapons dist/assets/models/
+          cp -R public/assets/models/generated/shared-world dist/assets/models/generated/
+          cp -R public/assets/models/generated/starter-town dist/assets/models/generated/
+          cp public/assets/models/asset-index-v2.json dist/assets/models/
+          cp public/assets/models/kits-index.json dist/assets/models/
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
