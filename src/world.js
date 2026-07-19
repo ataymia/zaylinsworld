@@ -444,7 +444,36 @@ export function buildCity(scene, { relocatedLocationIds = [] } = {}) {
   STREET_TREES.forEach(([x, z]) => { if (clearOfRoads(x, z, 0.3)) tree(scene, x, z); });
 
   // ── police post (Phase 3J) ────────────────────────────────────────────────
-  const police = buildPolicePost(scene, walkM, stripeM);
+  const policeContract = FUNCTIONAL_LOCATION_CONTRACTS.find((entry) => entry.locationId === 'police-station');
+  const policeRelocated = activeRelocations.has('police-station');
+  const police = buildPolicePost(scene, walkM, stripeM, policeRelocated ? policeContract : null);
+  if (policeRelocated) {
+    const placeholder = scene.getObjectByName('ZW_LocationPlaceholder_police-station');
+    if (placeholder) placeholder.visible = false;
+    landmarkLayout.push({
+      id: 'police',
+      name: 'DREAMDROP PUBLIC SAFETY',
+      interiorId: 'police',
+      x: policeContract.target.x,
+      z: policeContract.target.z,
+      color: '#3aa0ff',
+      locationId: 'police-station',
+    });
+    relocations.push({
+      locationId: 'police-station',
+      contract: policeContract,
+      exterior: police.exterior,
+      colliderBody: police.colliderBody,
+      doorPos: police.doorPos,
+      entrance: {
+        id: 'police',
+        locationId: 'police-station',
+        interiorId: 'police',
+        doorPos: police.doorPos,
+        faceDir: police.entryFaceDir,
+      },
+    });
+  }
 
   return {
     spawn: new THREE.Vector3(SPAWN.x, 0, SPAWN.z), spawnFaceY: SPAWN.faceY,
@@ -455,12 +484,21 @@ export function buildCity(scene, { relocatedLocationIds = [] } = {}) {
 // Visible civic-safety HQ: labelled building, a small cruiser lot, and two
 // parked cruiser pads. Returns { deskPos, faceDir, cruisers:[{x,z,ry}] } so the
 // game layer can wire a front-desk interaction and spawn stealable cruisers.
-function buildPolicePost(scene, walkM, stripeM) {
-  const P = POLICE_POST;
+function buildPolicePost(scene, walkM, stripeM, relocationContract = null) {
+  const dx = relocationContract ? relocationContract.target.x - POLICE_POST.x : 0;
+  const dz = relocationContract ? relocationContract.target.z - POLICE_POST.z : 0;
+  const P = {
+    ...POLICE_POST,
+    x: POLICE_POST.x + dx,
+    z: POLICE_POST.z + dz,
+    lot: { ...POLICE_POST.lot, cx: POLICE_POST.lot.cx + dx, cz: POLICE_POST.lot.cz + dz },
+    cruisers: POLICE_POST.cruisers.map(([x, z]) => [x + dx, z + dz]),
+  };
   const fd = new THREE.Vector3(P.face[0], 0, P.face[1]).normalize();
   const r = makeBuilding(scene, {
     x: P.x, z: P.z, w: P.w, d: P.d, h: P.h, color: P.color,
     name: P.name, signColor: P.sign, faceDir: fd, door: true, kind: 'police',
+    locationId: relocationContract?.locationId || null,
   });
 
   // cruiser lot pavement + stall lines
@@ -487,5 +525,7 @@ function buildPolicePost(scene, walkM, stripeM) {
     entryFaceDir: fd.clone(),                   // direction the player faces walking in
     faceDir: fd.clone().multiplyScalar(-1),     // cars face out toward town
     cruisers: P.cruisers.map(([x, z]) => ({ x, z })),
+    exterior: r.group,
+    colliderBody: r.body,
   };
 }

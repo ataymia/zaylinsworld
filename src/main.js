@@ -324,7 +324,8 @@ function enterWorld() {
 
 function finalizeFunctionalRelocations(cityInfo) {
   for (const relocation of cityInfo.relocations || []) {
-    const entrance = cityInfo.entrances.find((entry) => entry.locationId === relocation.locationId);
+    const entrance = cityInfo.entrances.find((entry) => entry.locationId === relocation.locationId)
+      || relocation.entrance;
     const interior = relocation.contract.interiorId ? interiors?.byId?.[relocation.contract.interiorId] : true;
     const marker = cityInfo.landmarks.find((entry) => entry.locationId === relocation.locationId);
     const report = functionalLocationRelocation.record(relocation.locationId, {
