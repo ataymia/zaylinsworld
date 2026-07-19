@@ -137,8 +137,8 @@ export const BUILD_PHASES = freeze([
   }),
   phase('7', 'Functional location relocation', 'in-progress', {
     next: true,
-    completed: freeze(['Phase 7A stable contracts', '15-field parity evidence gate', 'legacy-coordinate migration guard', 'production diagnostics report']),
-    verify: freeze(['Phase 7B Zaylins Home cutover', 'live preview and save/load parity']),
+    completed: freeze(['Phase 7A stable contracts', '15-field parity evidence gate', 'legacy-coordinate migration guard', 'production diagnostics report', 'Phase 7B Zaylins Home fallback-safe cutover']),
+    verify: freeze(['Phase 7C Zaylins Prep cutover', 'live preview and save/load parity']),
     dependsOn: freeze(['Phase 2–6 live feature-preview review']),
   }),
 ]);

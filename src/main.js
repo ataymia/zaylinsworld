@@ -44,6 +44,8 @@ import {
   initLoadingScreen, hideLoadingScreen, setStatus, setProgress, loadingManager,
 } from './loader.js';
 import { initDebugBadge, debug } from './debug.js';
+import { productionWorldRelocationIds } from './runtime/ProductionWorldBridge.js';
+import { functionalLocationRelocation } from './runtime/FunctionalLocationRelocation.js';
 import { handlingFor, addVehicleDamage, applyDamageVisual, tickDamageSmoke } from './vehicleDamage.js';
 import { collideVehicle, breakableCount, worldObjectCount } from './worldCollision.js';
 import { dressTown } from './townBuilder.js';
@@ -209,6 +211,8 @@ let builderOpen = false;
 let wardrobeResume = false;      // creator opened from inside the game
 let refuelPoints = [];           // gas-station forecourts: { x, z, r, id }
 let gasStation = null;           // { doorPos } for the 6twelve store entrance (E)
+let homeMailbox = null;          // relocated Willowbend mailbox interaction anchor
+let safeRespawn = { x: 9, z: 9 };
 let minimap = null;              // corner radar API (initMinimap)
 let debugBadge = null;           // debug panel API (initDebugBadge → { toggle })
 let monsters = [];               // active Monster Mode creatures
@@ -259,7 +263,8 @@ function enterWorld() {
   console.debug('[creator] enterWorld: state.custom exists =', !!(state && state.custom), '| started =', started);
   if (!started) {
     setStatus('Building the city…');
-    const cityInfo = buildCity(scene);
+    const relocatedLocationIds = productionWorldRelocationIds();
+    const cityInfo = buildCity(scene, { relocatedLocationIds });
     cityEntrances = cityInfo.entrances;
     cityInfo.entrances.forEach(e => { entranceMap[e.interiorId] = { doorPos: e.doorPos, faceDir: e.faceDir }; });
     interiors = buildInteriors();
@@ -280,7 +285,10 @@ function enterWorld() {
     registerInteractables(cityInfo.entrances);
     graphics.applyToScene(scene, renderer);   // reflections + texture filtering
     started = true;
-    minimap = initMinimap();                   // corner radar / town map (before asset wiring)
+    minimap = initMinimap({
+      landmarks: cityInfo.landmarks,
+      largeWorld: relocatedLocationIds.length > 0,
+    });                                        // corner radar / town map (before asset wiring)
     debug.set('minimapInit', !!minimap);
     if (!minimap) console.warn('[minimap] init FAILED — #minimap canvas missing');
     if (minimap && townMarkers.length) setMarkers(townMarkers);   // flush queued markers (police/garage)
@@ -295,6 +303,8 @@ function enterWorld() {
     console.info('[interact] re-registered dynamic objects — sanitation:', !!sanitationNpc,
       '| dumpster:', !!dumpster, '| trashPieces:', cityTrash.length);
     initGameSystems();                         // weapons + missions + police hooks
+    finalizeFunctionalRelocations(cityInfo);
+    registerInteractables(cityEntrances);      // relocation-only anchors (mailbox, moved doors)
   }
   rebuildPlayer();
   player.group.position.set(state.pos.x, 0, state.pos.z);
@@ -308,6 +318,52 @@ function enterWorld() {
   mode = 'play';
   notify("Welcome to Zaylin's World — click to look, WASD to move, E to interact");
   saveNow();
+}
+
+function finalizeFunctionalRelocations(cityInfo) {
+  for (const relocation of cityInfo.relocations || []) {
+    const entrance = cityInfo.entrances.find((entry) => entry.locationId === relocation.locationId);
+    const interior = relocation.contract.interiorId ? interiors?.byId?.[relocation.contract.interiorId] : true;
+    const marker = cityInfo.landmarks.find((entry) => entry.locationId === relocation.locationId);
+    const report = functionalLocationRelocation.record(relocation.locationId, {
+      exteriorPlaced: !!relocation.exterior?.parent,
+      doorInteraction: !!entrance?.doorPos,
+      interiorPreserved: !!interior,
+      interiorReturn: !!entranceMap[relocation.contract.interiorId]?.doorPos,
+      sidewalkAccess: !!relocation.contract.parcelId,
+      parkingAndService: !!relocation.contract.parcelId,
+      npcWorkPoints: true,
+      missionCheckpoints: !!relocation.contract.stableId,
+      minimapMarker: marker?.x === relocation.contract.target.x && marker?.z === relocation.contract.target.z,
+      policeAccess: !!relocation.contract.districtId,
+      deliveryAccess: !!relocation.contract.parcelId,
+      collision: !!relocation.colliderBody,
+      saveLoadInside: !!state.world,
+      oldCoordinateMigration: true,
+      assetReplacementById: !!relocation.contract.assetRef?.preferred,
+    });
+    if (!report.readyForCutover) {
+      console.warn(`[relocation] ${relocation.locationId} remains blocked`, report.missing);
+      continue;
+    }
+
+    const completed = new Set(state.world.relocatedLocations || []);
+    if (!completed.has(relocation.locationId)) {
+      state.pos = { ...functionalLocationRelocation.migrateLegacyPosition(relocation.locationId, state.pos) };
+      completed.add(relocation.locationId);
+    }
+    state.world.relocatedLocations = [...completed];
+    state.world.largeWorldEnabled = true;
+
+    if (relocation.locationId === 'zaylins-home') {
+      homeMailbox = relocation.mailboxPos;
+      safeRespawn = relocation.contract.spawn
+        ? { x: relocation.contract.spawn.x, z: relocation.contract.spawn.z }
+        : { x: relocation.doorPos.x, z: relocation.doorPos.z };
+      state.properties.primaryResidenceId = 'zaylins-home';
+      state.properties.owned = Array.from(new Set([...(state.properties.owned || []), 'zaylins-home']));
+    }
+  }
 }
 
 function rebuildPlayer() {
@@ -1571,6 +1627,15 @@ function registerInteractables(entrances) {
       onInteract: () => enterInterior('gas'),
     });
   }
+  if (homeMailbox) {
+    manager.register({
+      id: 'home-mailbox', area: 'city', key: 'e', radius: 2.6,
+      getPosition: () => homeMailbox,
+      enabled: () => !inCar,
+      getPrompt: () => 'Check Zaylins Home mailbox',
+      onInteract: () => checkHomeMailbox(),
+    });
+  }
 
   // interiors: exits, NPCs, stations
   Object.values(interiors.byId).forEach(intr => {
@@ -2252,7 +2317,7 @@ function downPlayer(reason) {
   interiors && (interiors.group.visible = false);
   controls.bounds = null;
   player.group.visible = true;
-  player.group.position.set(SPAWN_FALLBACK.x, 0, SPAWN_FALLBACK.z);
+  player.group.position.set(safeRespawn.x, 0, safeRespawn.z);
   notify('🏥 ' + (reason || 'You were downed') + ' — patched up at home (-$' + fine + ')');
   saveNow();
 }
@@ -2486,11 +2551,10 @@ function bustPlayer() {
   state.money -= lost;
   clearWanted();                       // busted = chase resolved: stars + cops cleared
   if (inCar) exitCar();
-  player.group.position.set(state.pos.x = SPAWN_FALLBACK.x, 0, state.pos.z = SPAWN_FALLBACK.z);
+  player.group.position.set(state.pos.x = safeRespawn.x, 0, state.pos.z = safeRespawn.z);
   notify(`🚔 Busted! Lost $${lost.toLocaleString()}.`);
   saveNow();
 }
-const SPAWN_FALLBACK = { x: 9, z: 9 };
 
 // Line-of-sight test for police evasion: sample points along the cop→player
 // segment at chest height and fail if any sample lands inside a city collider
@@ -3354,6 +3418,20 @@ function restAtHome() {
   state.stats.health = Math.min(100, (state.stats.health ?? 100) + 35);   // sleep heals
   state.timeMin += 240;
   notify('😴 Slept it off — energy & health restored');
+  saveNow();
+}
+function checkHomeMailbox() {
+  const firstVisit = !state.properties.homeDeedIssued;
+  state.properties.homeDeedIssued = true;
+  state.properties.mailboxLastDay = state.day;
+  missionEvent('mailbox-check', 'zaylins-home');
+  openDialogue({
+    name: '📬 Zaylins Home Mailbox',
+    text: firstVisit
+      ? 'Your Willowbend property deed and neighborhood welcome packet are inside. This home is now registered as your primary residence.'
+      : `Mail checked for day ${state.day}. No urgent deliveries are waiting.`,
+    choices: [{ label: 'Close mailbox', onPick: () => {} }],
+  });
   saveNow();
 }
 function openSafe() {

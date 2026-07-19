@@ -9,7 +9,7 @@ import { worldRegistry } from './runtime/WorldRegistry.js';
 const SAVE_KEY = 'zaylinsworld.save.v2';
 const BACKUP_KEY = 'zaylinsworld.save.backup';
 const CORRUPT_KEY = 'zaylinsworld.save.corrupt';
-export const SAVE_SCHEMA_VERSION = 4;
+export const SAVE_SCHEMA_VERSION = 5;
 let lastSerialized = '';
 let lastSavedAt = 0;
 
@@ -86,8 +86,9 @@ export function defaultState() {
       spawnId: 'dreamdrop-core',
       discoveredTowns: ['starter-town'],
       largeWorldEnabled: false,
+      relocatedLocations: [],
     },
-    properties: { primaryResidenceId: null, owned: [] },
+    properties: { primaryResidenceId: null, owned: [], homeDeedIssued: false, mailboxLastDay: null },
     education: { schoolId: null, certificates: [], subjects: {}, attendance: 0 },
     careers: { activeId: null, records: {} },
     crimeRecord: { official: [], hidden: [], convictionsByTown: {} },
@@ -115,6 +116,7 @@ function migrateAndNormalize(data = {}) {
     discoveredTowns: Array.from(new Set(['starter-town', ...(data.world?.discoveredTowns || [])]))
       .filter((id) => worldRegistry.town(id)),
     largeWorldEnabled: !!data.world?.largeWorldEnabled,
+    relocatedLocations: Array.from(new Set(data.world?.relocatedLocations || [])),
   };
   return {
     ...base,

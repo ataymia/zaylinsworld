@@ -351,7 +351,7 @@ Status: **Implemented foundation**
 
 ## Phase 7: Functional-location relocation
 
-Status: **In progress — Phase 7A shared relocation gate implemented; Phase 7B is next**
+Status: **In progress — Phases 7A and 7B implemented; Phase 7C is next**
 
 Required first:
 
@@ -365,8 +365,8 @@ Recommended Phase 7 order:
 
 ```txt
 7A Shared relocation framework — implemented
-7B Zaylins Home — next controlled cutover
-7C Zaylins Prep
+7B Zaylins Home — implemented
+7C Zaylins Prep — next controlled cutover
 7D Chicken Spot
 7E Frostbox
 7F Kicks & Fits

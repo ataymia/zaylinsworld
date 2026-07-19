@@ -9,6 +9,7 @@ import {
 } from './config/mapConfig.js';
 import { clearOfRoads } from './config/placementRules.js';
 import { registerWorldObject, clearWorldObjects } from './worldCollision.js';
+import { FUNCTIONAL_LOCATION_CONTRACTS } from './runtime/FunctionalLocationRelocation.js';
 
 function mat(color, opts = {}) {
   return new THREE.MeshStandardMaterial({
@@ -68,8 +69,10 @@ function textSign(text, color) {
 
 // Build a detailed building. faceDir = unit vector the storefront/door faces.
 function makeBuilding(scene, opt) {
-  const { x, z, w, d, h, color, name, signColor, faceDir, door = true, kind = null } = opt;
+  const { x, z, w, d, h, color, name, signColor, faceDir, door = true, kind = null, locationId = null } = opt;
   const g = new THREE.Group();
+  g.name = locationId ? `ZW_FunctionalLocation_${locationId}` : `ZW_Building_${kind || 'generic'}`;
+  g.userData.locationId = locationId;
 
   const body = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat(color, { rough: 0.85 }));
   body.position.set(x, h / 2, z);
@@ -164,7 +167,10 @@ function makeBuilding(scene, opt) {
 
   scene.add(g);
   addCollider(body);
-  return { doorPos, faceDir: fd, body };
+  const mailboxPos = kind === 'home'
+    ? faceCenter.clone().addScaledVector(fd, 2.2).addScaledVector(rightV, 2.4).setY(0)
+    : null;
+  return { doorPos, faceDir: fd, body, group: g, mailboxPos };
 }
 
 // Cheap, reliable procedural props that signal what a building IS. Additive and
@@ -306,9 +312,17 @@ function bench(scene, x, z, ry = 0) {
   scene.add(g);
 }
 
-export function buildCity(scene) {
+export function buildCity(scene, { relocatedLocationIds = [] } = {}) {
   colliders.length = 0;
   clearWorldObjects();
+  const activeRelocations = new Set(relocatedLocationIds);
+  const contractByLegacyId = new Map(FUNCTIONAL_LOCATION_CONTRACTS.map((contract) => [contract.legacy.sourceId, contract]));
+  const landmarkLayout = LANDMARKS.map((landmark) => {
+    const contract = contractByLegacyId.get(landmark.id);
+    return contract && activeRelocations.has(contract.locationId)
+      ? { ...landmark, x: contract.target.x, z: contract.target.z, locationId: contract.locationId }
+      : { ...landmark, locationId: contract?.locationId || null };
+  });
 
   const grassTex = noiseTexture('#3f7140', ['#356030', '#4c8048', '#2e5a2c', '#5a8a52'], 2600, 60);
   const ground = new THREE.Mesh(new THREE.PlaneGeometry(260, 260),
@@ -388,12 +402,26 @@ export function buildCity(scene) {
   // ── enterable landmarks (working doors + interiors) ───────────────────────
   const dirOf = ([dx, dz]) => new THREE.Vector3(dx, 0, dz).normalize();
   const entrances = [];
-  LANDMARKS.forEach(b => {
+  const relocations = [];
+  landmarkLayout.forEach(b => {
     const r = makeBuilding(scene, {
       x: b.x, z: b.z, w: b.w, d: b.d, h: b.h, color: b.color,
       name: b.name, signColor: b.sign, faceDir: dirOf(b.face), door: true, kind: b.id,
+      locationId: b.locationId,
     });
-    entrances.push({ id: b.id, name: b.name, interiorId: b.interiorId, doorPos: r.doorPos, faceDir: r.faceDir });
+    entrances.push({ id: b.id, locationId: b.locationId, name: b.name, interiorId: b.interiorId, doorPos: r.doorPos, faceDir: r.faceDir });
+    if (b.locationId && activeRelocations.has(b.locationId)) {
+      const placeholder = scene.getObjectByName(`ZW_LocationPlaceholder_${b.locationId}`);
+      if (placeholder) placeholder.visible = false;
+      relocations.push({
+        locationId: b.locationId,
+        contract: FUNCTIONAL_LOCATION_CONTRACTS.find((entry) => entry.locationId === b.locationId),
+        exterior: r.group,
+        colliderBody: r.body,
+        doorPos: r.doorPos,
+        mailboxPos: r.mailboxPos,
+      });
+    }
   });
 
   // ── non-enterable feature buildings (no prompt) ───────────────────────────
@@ -420,7 +448,7 @@ export function buildCity(scene) {
 
   return {
     spawn: new THREE.Vector3(SPAWN.x, 0, SPAWN.z), spawnFaceY: SPAWN.faceY,
-    entrances, police,
+    entrances, police, landmarks: landmarkLayout, relocations,
   };
 }
 
