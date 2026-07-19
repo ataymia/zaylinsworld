@@ -10,6 +10,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 import { buildLargeStarterTown } from '../world/LargeStarterTown.js';
+import { functionalLocationRelocation } from './FunctionalLocationRelocation.js';
 import {
   hideLoadingScreen,
   setProgress,
@@ -233,6 +234,7 @@ export function productionWorldBridgeSnapshot() {
     entering: bridge.entering,
     preloadMs: bridge.preparedAt && bridge.startedAt ? Math.round(bridge.preparedAt - bridge.startedAt) : null,
     lastError: bridge.lastError?.message || null,
+    relocation: functionalLocationRelocation.snapshot(),
   });
 }
 
