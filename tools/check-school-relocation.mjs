@@ -21,7 +21,7 @@ assert.deepEqual(school.target, { x: -724, y: 0, z: 72 });
 assert.equal(school.parcelId, 'parcel-zaylins-prep');
 assert.equal(school.stableId, 'zaylins-prep');
 
-assert.match(bridge, /ACTIVE_FUNCTIONAL_RELOCATIONS = Object\.freeze\(\['zaylins-home', 'zaylins-prep'\]\)/);
+assert.match(bridge, /ACTIVE_FUNCTIONAL_RELOCATIONS = Object\.freeze\(\[[^\]]*'zaylins-prep'/);
 assert.match(bridge, /return bridge\.attached \? ACTIVE_FUNCTIONAL_RELOCATIONS : \[\]/, 'compact fallback must remain available');
 assert.match(world, /contractByLegacyId/, 'the relocated school must resolve from its stable legacy binding');
 assert.match(world, /interiorId: b\.interiorId/, 'the school entrance must preserve its stable interior id');

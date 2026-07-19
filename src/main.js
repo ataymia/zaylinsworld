@@ -186,6 +186,7 @@ let player = null;
 let cityNPCs = [], traffic = [], car = null, interiors = null;
 let trafficControl = null;       // traffic lights + stop signs controller (traffic.js)
 let cityEntrances = [];           // saved for live density re-registration
+let cityLandmarks = LANDMARKS;    // resolved compact/production positions for teleports and runtime lookups
 let entranceMap = {};            // interiorId -> { doorPos, faceDir }
 let townMarkers = [];            // accumulated minimap markers (gas, buildings, police, garage)
 let area = 'city';
@@ -266,6 +267,7 @@ function enterWorld() {
     const relocatedLocationIds = productionWorldRelocationIds();
     const cityInfo = buildCity(scene, { relocatedLocationIds });
     cityEntrances = cityInfo.entrances;
+    cityLandmarks = cityInfo.landmarks;
     cityInfo.entrances.forEach(e => { entranceMap[e.interiorId] = { doorPos: e.doorPos, faceDir: e.faceDir }; });
     interiors = buildInteriors();
     scene.add(interiors.group);
@@ -1432,7 +1434,7 @@ function setupPolicePost(info) {
   // minimap markers: police HQ + the city garage (repair shop)
   const markers = [];
   if (info.deskPos) markers.push({ x: info.deskPos.x, z: info.deskPos.z, color: '#3aa0ff', icon: '🚔' });
-  const garage = LANDMARKS.find(b => b.id === 'garage');
+  const garage = cityLandmarks.find(b => b.id === 'garage');
   if (garage) markers.push({ x: garage.x, z: garage.z, color: '#ffb04a', icon: '🔧' });
   addTownMarkers(markers);   // queued; flushed once the minimap initializes
 }
@@ -4056,11 +4058,11 @@ function teleportTo(which) {
   if (which === 'gas') {
     const p = refuelPoints[0];
     if (p) { goCity(p.x, p.z + (p.r || 7) + 2); notify('Teleported to the gas station ⛽'); }
-    else { const lm = LANDMARKS.find(l => l.id === 'garage') || LANDMARKS[0]; goCity(lm.x, lm.z + 6); notify('Gas forecourt not placed — moved near garage'); }
+    else { const lm = cityLandmarks.find(l => l.id === 'garage') || cityLandmarks[0]; goCity(lm.x, lm.z + 6); notify('Gas forecourt not placed — moved near garage'); }
     return;
   }
   if (which === 'diner') {
-    const lm = LANDMARKS.find(l => l.id === 'chicken') || LANDMARKS[0];
+    const lm = cityLandmarks.find(l => l.id === 'chicken') || cityLandmarks[0];
     goCity(lm.x, lm.z + 6); notify('Teleported toward the diner / chicken spot 🍔');
     return;
   }
