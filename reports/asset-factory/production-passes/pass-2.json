@@ -1,24 +1,24 @@
 {
   "version": 2,
-  "batchId": "batch-00101",
-  "completedAt": "2026-07-19T20:02:04.137Z",
+  "batchId": "batch-00103",
+  "completedAt": "2026-07-19T20:27:47.683Z",
   "requested": 20,
   "passed": 20,
   "failed": 0,
   "queueCounts": {
-    "completed": 1967,
+    "completed": 2007,
     "reference-only": 16,
     "unsupported": 189,
-    "queued": 125,
+    "queued": 85,
     "quarantined": 1
   },
   "results": [
     {
-      "id": "prop_ranger_holding_room_a_v01",
+      "id": "prop_stage_mark_floor_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_ranger_holding_room_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_stage_mark_floor_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -68,18 +68,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_ranger_holding_room_a_v01/prop_ranger_holding_room_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_ranger_holding_room_a_v01/prop_ranger_holding_room_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_ranger_holding_room_a_v01/prop_ranger_holding_room_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_ranger_holding_room_a_v01/prop_ranger_holding_room_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_stage_mark_floor_a_v01/prop_stage_mark_floor_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_stage_mark_floor_a_v01/prop_stage_mark_floor_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_stage_mark_floor_a_v01/prop_stage_mark_floor_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_stage_mark_floor_a_v01/prop_stage_mark_floor_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_realty_contract_desk_a_v01",
+      "id": "prop_starline_clinic_exam_bed_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_realty_contract_desk_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_starline_clinic_exam_bed_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -129,18 +129,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_realty_contract_desk_a_v01/prop_realty_contract_desk_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_realty_contract_desk_a_v01/prop_realty_contract_desk_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_realty_contract_desk_a_v01/prop_realty_contract_desk_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_realty_contract_desk_a_v01/prop_realty_contract_desk_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starline_clinic_exam_bed_a_v01/prop_starline_clinic_exam_bed_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starline_clinic_exam_bed_a_v01/prop_starline_clinic_exam_bed_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starline_clinic_exam_bed_a_v01/prop_starline_clinic_exam_bed_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starline_clinic_exam_bed_a_v01/prop_starline_clinic_exam_bed_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_realty_house_model_a_v01",
+      "id": "prop_starline_clinic_reception_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_realty_house_model_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_starline_clinic_reception_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -190,18 +190,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_realty_house_model_a_v01/prop_realty_house_model_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_realty_house_model_a_v01/prop_realty_house_model_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_realty_house_model_a_v01/prop_realty_house_model_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_realty_house_model_a_v01/prop_realty_house_model_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starline_clinic_reception_a_v01/prop_starline_clinic_reception_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starline_clinic_reception_a_v01/prop_starline_clinic_reception_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starline_clinic_reception_a_v01/prop_starline_clinic_reception_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starline_clinic_reception_a_v01/prop_starline_clinic_reception_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_realty_property_display_a_v01",
+      "id": "prop_starline_evidence_prop_locker_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_realty_property_display_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_starline_evidence_prop_locker_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -251,18 +251,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_realty_property_display_a_v01/prop_realty_property_display_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_realty_property_display_a_v01/prop_realty_property_display_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_realty_property_display_a_v01/prop_realty_property_display_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_realty_property_display_a_v01/prop_realty_property_display_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starline_evidence_prop_locker_a_v01/prop_starline_evidence_prop_locker_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starline_evidence_prop_locker_a_v01/prop_starline_evidence_prop_locker_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starline_evidence_prop_locker_a_v01/prop_starline_evidence_prop_locker_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starline_evidence_prop_locker_a_v01/prop_starline_evidence_prop_locker_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_relic_display_case_a_v01",
+      "id": "prop_starline_holding_cell_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_relic_display_case_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_starline_holding_cell_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -312,18 +312,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_relic_display_case_a_v01/prop_relic_display_case_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_relic_display_case_a_v01/prop_relic_display_case_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_relic_display_case_a_v01/prop_relic_display_case_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_relic_display_case_a_v01/prop_relic_display_case_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starline_holding_cell_a_v01/prop_starline_holding_cell_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starline_holding_cell_a_v01/prop_starline_holding_cell_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starline_holding_cell_a_v01/prop_starline_holding_cell_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starline_holding_cell_a_v01/prop_starline_holding_cell_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_relic_scale_a_v01",
+      "id": "prop_starline_home_award_shelf_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_relic_scale_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_starline_home_award_shelf_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -373,140 +373,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_relic_scale_a_v01/prop_relic_scale_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_relic_scale_a_v01/prop_relic_scale_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_relic_scale_a_v01/prop_relic_scale_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_relic_scale_a_v01/prop_relic_scale_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starline_home_award_shelf_a_v01/prop_starline_home_award_shelf_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starline_home_award_shelf_a_v01/prop_starline_home_award_shelf_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starline_home_award_shelf_a_v01/prop_starline_home_award_shelf_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starline_home_award_shelf_a_v01/prop_starline_home_award_shelf_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_repair_board_minigame_a_v01",
+      "id": "prop_starline_home_projector_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_repair_board_minigame_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_cyan_emissive",
-          "tech_dark_metal",
-          "tech_white_light"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_repair_board_minigame_a_v01/prop_repair_board_minigame_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_repair_board_minigame_a_v01/prop_repair_board_minigame_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_repair_board_minigame_a_v01/prop_repair_board_minigame_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_repair_board_minigame_a_v01/prop_repair_board_minigame_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_repair_counter_tech_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_repair_counter_tech_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_cyan_emissive",
-          "tech_dark_metal",
-          "tech_white_light"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_repair_counter_tech_a_v01/prop_repair_counter_tech_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_repair_counter_tech_a_v01/prop_repair_counter_tech_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_repair_counter_tech_a_v01/prop_repair_counter_tech_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_repair_counter_tech_a_v01/prop_repair_counter_tech_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_rescue_gear_rack_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_rescue_gear_rack_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_starline_home_projector_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -556,18 +434,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_rescue_gear_rack_a_v01/prop_rescue_gear_rack_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_rescue_gear_rack_a_v01/prop_rescue_gear_rack_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_rescue_gear_rack_a_v01/prop_rescue_gear_rack_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_rescue_gear_rack_a_v01/prop_rescue_gear_rack_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starline_home_projector_a_v01/prop_starline_home_projector_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starline_home_projector_a_v01/prop_starline_home_projector_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starline_home_projector_a_v01/prop_starline_home_projector_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starline_home_projector_a_v01/prop_starline_home_projector_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_rescue_stretcher_cart_a_v01",
+      "id": "prop_starline_home_rehearsal_mirror_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_rescue_stretcher_cart_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_starline_home_rehearsal_mirror_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -617,79 +495,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_rescue_stretcher_cart_a_v01/prop_rescue_stretcher_cart_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_rescue_stretcher_cart_a_v01/prop_rescue_stretcher_cart_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_rescue_stretcher_cart_a_v01/prop_rescue_stretcher_cart_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_rescue_stretcher_cart_a_v01/prop_rescue_stretcher_cart_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starline_home_rehearsal_mirror_a_v01/prop_starline_home_rehearsal_mirror_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starline_home_rehearsal_mirror_a_v01/prop_starline_home_rehearsal_mirror_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starline_home_rehearsal_mirror_a_v01/prop_starline_home_rehearsal_mirror_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starline_home_rehearsal_mirror_a_v01/prop_starline_home_rehearsal_mirror_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_restricted_door_panel_a_v01",
+      "id": "prop_starline_home_wardrobe_wall_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_restricted_door_panel_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_cyan_emissive",
-          "tech_dark_metal",
-          "tech_white_light"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_restricted_door_panel_a_v01/prop_restricted_door_panel_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_restricted_door_panel_a_v01/prop_restricted_door_panel_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_restricted_door_panel_a_v01/prop_restricted_door_panel_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_restricted_door_panel_a_v01/prop_restricted_door_panel_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_richhills_evidence_locker_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_richhills_evidence_locker_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_starline_home_wardrobe_wall_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -739,18 +556,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_richhills_evidence_locker_a_v01/prop_richhills_evidence_locker_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_richhills_evidence_locker_a_v01/prop_richhills_evidence_locker_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_richhills_evidence_locker_a_v01/prop_richhills_evidence_locker_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_richhills_evidence_locker_a_v01/prop_richhills_evidence_locker_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starline_home_wardrobe_wall_a_v01/prop_starline_home_wardrobe_wall_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starline_home_wardrobe_wall_a_v01/prop_starline_home_wardrobe_wall_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starline_home_wardrobe_wall_a_v01/prop_starline_home_wardrobe_wall_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starline_home_wardrobe_wall_a_v01/prop_starline_home_wardrobe_wall_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_richhills_fountain_a_v01",
+      "id": "prop_starline_marquee_billboard_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_richhills_fountain_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_starline_marquee_billboard_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -800,18 +617,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_richhills_fountain_a_v01/prop_richhills_fountain_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_richhills_fountain_a_v01/prop_richhills_fountain_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_richhills_fountain_a_v01/prop_richhills_fountain_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_richhills_fountain_a_v01/prop_richhills_fountain_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starline_marquee_billboard_a_v01/prop_starline_marquee_billboard_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starline_marquee_billboard_a_v01/prop_starline_marquee_billboard_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starline_marquee_billboard_a_v01/prop_starline_marquee_billboard_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starline_marquee_billboard_a_v01/prop_starline_marquee_billboard_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_richhills_hedge_a_v01",
+      "id": "prop_starline_police_front_desk_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_richhills_hedge_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_starline_police_front_desk_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -861,18 +678,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_richhills_hedge_a_v01/prop_richhills_hedge_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_richhills_hedge_a_v01/prop_richhills_hedge_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_richhills_hedge_a_v01/prop_richhills_hedge_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_richhills_hedge_a_v01/prop_richhills_hedge_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starline_police_front_desk_a_v01/prop_starline_police_front_desk_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starline_police_front_desk_a_v01/prop_starline_police_front_desk_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starline_police_front_desk_a_v01/prop_starline_police_front_desk_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starline_police_front_desk_a_v01/prop_starline_police_front_desk_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_richhills_police_front_desk_a_v01",
+      "id": "prop_starline_red_carpet_barrier_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_richhills_police_front_desk_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_starline_red_carpet_barrier_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -922,18 +739,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_richhills_police_front_desk_a_v01/prop_richhills_police_front_desk_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_richhills_police_front_desk_a_v01/prop_richhills_police_front_desk_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_richhills_police_front_desk_a_v01/prop_richhills_police_front_desk_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_richhills_police_front_desk_a_v01/prop_richhills_police_front_desk_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starline_red_carpet_barrier_a_v01/prop_starline_red_carpet_barrier_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starline_red_carpet_barrier_a_v01/prop_starline_red_carpet_barrier_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starline_red_carpet_barrier_a_v01/prop_starline_red_carpet_barrier_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starline_red_carpet_barrier_a_v01/prop_starline_red_carpet_barrier_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_richhills_security_camera_a_v01",
+      "id": "prop_starline_spotlight_tower_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_richhills_security_camera_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_starline_spotlight_tower_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -983,79 +800,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_richhills_security_camera_a_v01/prop_richhills_security_camera_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_richhills_security_camera_a_v01/prop_richhills_security_camera_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_richhills_security_camera_a_v01/prop_richhills_security_camera_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_richhills_security_camera_a_v01/prop_richhills_security_camera_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starline_spotlight_tower_a_v01/prop_starline_spotlight_tower_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starline_spotlight_tower_a_v01/prop_starline_spotlight_tower_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starline_spotlight_tower_a_v01/prop_starline_spotlight_tower_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starline_spotlight_tower_a_v01/prop_starline_spotlight_tower_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_rooftop_access_hatch_a_v01",
+      "id": "prop_starstop_canopy_marquee_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_rooftop_access_hatch_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_cyan_emissive",
-          "tech_dark_metal",
-          "tech_white_light"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_rooftop_access_hatch_a_v01/prop_rooftop_access_hatch_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_rooftop_access_hatch_a_v01/prop_rooftop_access_hatch_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_rooftop_access_hatch_a_v01/prop_rooftop_access_hatch_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_rooftop_access_hatch_a_v01/prop_rooftop_access_hatch_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_runway_platform_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_runway_platform_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_starstop_canopy_marquee_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -1105,18 +861,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_runway_platform_a_v01/prop_runway_platform_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_runway_platform_a_v01/prop_runway_platform_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_runway_platform_a_v01/prop_runway_platform_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_runway_platform_a_v01/prop_runway_platform_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starstop_canopy_marquee_v01/prop_starstop_canopy_marquee_v01_view_1.png",
+        "asset-factory/work/previews/prop_starstop_canopy_marquee_v01/prop_starstop_canopy_marquee_v01_view_2.png",
+        "asset-factory/work/previews/prop_starstop_canopy_marquee_v01/prop_starstop_canopy_marquee_v01_view_3.png",
+        "asset-factory/work/previews/prop_starstop_canopy_marquee_v01/prop_starstop_canopy_marquee_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_sanctuary_coral_nursery_a_v01",
+      "id": "prop_starstop_detail_station_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/modular_prop/prop_sanctuary_coral_nursery_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_starstop_detail_station_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -1166,18 +922,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_sanctuary_coral_nursery_a_v01/prop_sanctuary_coral_nursery_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_sanctuary_coral_nursery_a_v01/prop_sanctuary_coral_nursery_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_sanctuary_coral_nursery_a_v01/prop_sanctuary_coral_nursery_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_sanctuary_coral_nursery_a_v01/prop_sanctuary_coral_nursery_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starstop_detail_station_v01/prop_starstop_detail_station_v01_view_1.png",
+        "asset-factory/work/previews/prop_starstop_detail_station_v01/prop_starstop_detail_station_v01_view_2.png",
+        "asset-factory/work/previews/prop_starstop_detail_station_v01/prop_starstop_detail_station_v01_view_3.png",
+        "asset-factory/work/previews/prop_starstop_detail_station_v01/prop_starstop_detail_station_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_sanctuary_dolphin_harness_station_a_v01",
+      "id": "prop_starstop_drink_cooler_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/modular_prop/prop_sanctuary_dolphin_harness_station_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_starstop_drink_cooler_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -1227,10 +983,254 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_sanctuary_dolphin_harness_station_a_v01/prop_sanctuary_dolphin_harness_station_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_sanctuary_dolphin_harness_station_a_v01/prop_sanctuary_dolphin_harness_station_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_sanctuary_dolphin_harness_station_a_v01/prop_sanctuary_dolphin_harness_station_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_sanctuary_dolphin_harness_station_a_v01/prop_sanctuary_dolphin_harness_station_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_starstop_drink_cooler_a_v01/prop_starstop_drink_cooler_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starstop_drink_cooler_a_v01/prop_starstop_drink_cooler_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starstop_drink_cooler_a_v01/prop_starstop_drink_cooler_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starstop_drink_cooler_a_v01/prop_starstop_drink_cooler_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_starstop_ev_charger_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_starstop_ev_charger_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_starstop_ev_charger_a_v01/prop_starstop_ev_charger_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_starstop_ev_charger_a_v01/prop_starstop_ev_charger_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_starstop_ev_charger_a_v01/prop_starstop_ev_charger_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_starstop_ev_charger_a_v01/prop_starstop_ev_charger_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_starstop_package_locker_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_starstop_package_locker_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_starstop_package_locker_v01/prop_starstop_package_locker_v01_view_1.png",
+        "asset-factory/work/previews/prop_starstop_package_locker_v01/prop_starstop_package_locker_v01_view_2.png",
+        "asset-factory/work/previews/prop_starstop_package_locker_v01/prop_starstop_package_locker_v01_view_3.png",
+        "asset-factory/work/previews/prop_starstop_package_locker_v01/prop_starstop_package_locker_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_starstop_price_sign_digital_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_starstop_price_sign_digital_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_starstop_price_sign_digital_v01/prop_starstop_price_sign_digital_v01_view_1.png",
+        "asset-factory/work/previews/prop_starstop_price_sign_digital_v01/prop_starstop_price_sign_digital_v01_view_2.png",
+        "asset-factory/work/previews/prop_starstop_price_sign_digital_v01/prop_starstop_price_sign_digital_v01_view_3.png",
+        "asset-factory/work/previews/prop_starstop_price_sign_digital_v01/prop_starstop_price_sign_digital_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_starstop_production_van_bay_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_starstop_production_van_bay_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_starstop_production_van_bay_v01/prop_starstop_production_van_bay_v01_view_1.png",
+        "asset-factory/work/previews/prop_starstop_production_van_bay_v01/prop_starstop_production_van_bay_v01_view_2.png",
+        "asset-factory/work/previews/prop_starstop_production_van_bay_v01/prop_starstop_production_van_bay_v01_view_3.png",
+        "asset-factory/work/previews/prop_starstop_production_van_bay_v01/prop_starstop_production_van_bay_v01_view_4.png"
       ]
     }
   ]
