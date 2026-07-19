@@ -129,10 +129,16 @@ async function templateFor(type, renderer, report) {
     report.failedAssets.push(record.id);
   }
   report.fallbackTypes.push(type);
-  return fallback(type);
+  const procedural = fallback(type);
+  normalize(procedural, TYPES[type].targetHeight);
+  return procedural;
 }
 
-export async function buildStreetscapeLayer({ renderer = null, placements = PLACEMENTS } = {}) {
+export async function buildStreetscapeLayer({
+  renderer = null,
+  placements = PLACEMENTS,
+  heightAt = () => 0,
+} = {}) {
   await assetRuntimeRegistry.load();
   const group = new THREE.Group();
   group.name = 'ZW_StarterStreetscape';
@@ -149,6 +155,7 @@ export async function buildStreetscapeLayer({ renderer = null, placements = PLAC
     const object = source.clone(true);
     object.name = `ZW_Streetscape_${placement.id}`;
     object.position.x += placement.x;
+    object.position.y += Number(heightAt(placement.x, placement.z)) || 0;
     object.position.z += placement.z;
     object.rotation.y += placement.rotationY || 0;
     if (placement.scaleZ) object.scale.z *= placement.scaleZ;

@@ -46,6 +46,9 @@ import {
 import { initDebugBadge, debug } from './debug.js';
 import { productionWorldRelocationIds } from './runtime/ProductionWorldBridge.js';
 import { functionalLocationRelocation } from './runtime/FunctionalLocationRelocation.js';
+import { worldRegistry } from './runtime/WorldRegistry.js';
+import { LARGE_TOWN_TRAFFIC_ROUTES } from './config/starterTownTrafficRoutes.js';
+import { starterVehicleSpawnNear } from './config/starterVehicleSpawn.js';
 import { handlingFor, addVehicleDamage, applyDamageVisual, tickDamageSmoke } from './vehicleDamage.js';
 import { collideVehicle, breakableCount, worldObjectCount } from './worldCollision.js';
 import { dressTown } from './townBuilder.js';
@@ -263,8 +266,10 @@ function resumeFromWardrobe() {
 function enterWorld() {
   console.debug('[creator] enterWorld: state.custom exists =', !!(state && state.custom), '| started =', started);
   if (!started) {
+    const freshLargeWorldArrival = !state.createdCharacter && !hasSave();
     setStatus('Building the city…');
     const relocatedLocationIds = productionWorldRelocationIds();
+    const largeWorldActive = relocatedLocationIds.length > 0;
     const cityInfo = buildCity(scene, { relocatedLocationIds });
     cityEntrances = cityInfo.entrances;
     cityLandmarks = cityInfo.landmarks;
@@ -281,7 +286,11 @@ function enterWorld() {
       entranceMap.police = { doorPos: cityInfo.police.doorPos, faceDir: cityInfo.police.entryFaceDir };
     }
     cityNPCs = createCityNPCs(scene, Math.max(8, Math.round(22 * graphics.npcDensity)));
-    traffic = createTraffic(scene, Math.max(3, Math.round(10 * graphics.trafficDensity)));
+    traffic = createTraffic(
+      scene,
+      Math.max(3, Math.round(10 * graphics.trafficDensity)),
+      largeWorldActive ? LARGE_TOWN_TRAFFIC_ROUTES : undefined,
+    );
     abandonedCars = [];                       // fresh city → no previously-stolen parked cars
     car = createDrivableCar(scene, 13, 3);
     registerInteractables(cityInfo.entrances);
@@ -306,6 +315,15 @@ function enterWorld() {
       '| dumpster:', !!dumpster, '| trashPieces:', cityTrash.length);
     initGameSystems();                         // weapons + missions + police hooks
     finalizeFunctionalRelocations(cityInfo);
+    // A brand-new large-world character belongs at Dreamdrop Core. Without this
+    // guard the old Park coordinate migration could carry the player ~700 m away
+    // from the compact functional hub before their first frame.
+    if (freshLargeWorldArrival && largeWorldActive) {
+      const arrival = worldRegistry.spawn('dreamdrop-core')?.position || { x: 0, z: 0 };
+      state.pos = { x: arrival.x, z: arrival.z };
+      state.facing = 0;
+    }
+    placeStarterCarAtArrival();
     registerInteractables(cityEntrances);      // relocation-only anchors (mailbox, moved doors)
   }
   rebuildPlayer();
@@ -318,8 +336,19 @@ function enterWorld() {
   applyVibe();
   showCreator(false);
   mode = 'play';
-  notify("Welcome to Zaylin's World — click to look, WASD to move, E to interact");
+  notify("Welcome to Zaylin's World — your starter car is beside you. Press F to drive.");
   saveNow();
+}
+
+function placeStarterCarAtArrival() {
+  if (!car) return;
+  const placement = starterVehicleSpawnNear(state.pos, { facing: state.facing });
+  car.g.position.set(placement.x, 0, placement.z);
+  car.g.rotation.y = placement.rotationY;
+  car.spawn.set(placement.x, 0, placement.z);
+  car.g.userData.starterVehicle = true;
+  car.g.userData.arrivalPlacement = placement.source;
+  debug.set('starterCarDistance', Number(placement.distanceFromPlayer.toFixed(2)));
 }
 
 function finalizeFunctionalRelocations(cityInfo) {
@@ -3834,7 +3863,11 @@ function rebuildDensity() {
   }
   if (traffic.length !== targetT) {
     traffic.forEach(c => scene.remove(c.g));
-    traffic = createTraffic(scene, targetT);
+    traffic = createTraffic(
+      scene,
+      targetT,
+      state.world?.largeWorldEnabled ? LARGE_TOWN_TRAFFIC_ROUTES : undefined,
+    );
     // re-skin the rebuilt traffic with kit cars (preload is cached, so sync)
     traffic.forEach((c, i) => swapVehicleVisual(c, TRAFFIC_FLEET[i % TRAFFIC_FLEET.length]));
     changed = true;

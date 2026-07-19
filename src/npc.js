@@ -133,7 +133,7 @@ function makeDriver() {
   return g;
 }
 
-// Spawn cars onto the closed loops defined in mapConfig.TRAFFIC_ROUTES. Each car
+// Spawn cars onto caller-provided closed loops (or the compact-map defaults).
 // drives toward its next waypoint, rotates to face its heading, brakes for
 // obstacles ahead, and loops forever. The {g,speed,damage,wheels} shape stays
 // compatible with main.js (drive/steal/collision) and vehicleKit visual swaps.
@@ -166,16 +166,19 @@ function pointAtDistance(wps, s) {
   return { pos: wps[0].clone(), nextWp: 1 % wps.length, a: wps[0], b: wps[1 % wps.length] };
 }
 
-export function createTraffic(scene, count = 6) {
+export function createTraffic(scene, count = 6, routeDefinitions = TRAFFIC_ROUTES) {
   const colors = ['#c0392b', '#2980b9', '#27ae60', '#f1c40f', '#8e44ad', '#e67e22', '#ecf0f1', '#16a085'];
   const cars = [];
   const MIN_GAP = 9;                                   // metres between cars on the same loop
+  const routes = Array.isArray(routeDefinitions) && routeDefinitions.length
+    ? routeDefinitions
+    : TRAFFIC_ROUTES;
   // bucket cars per route so we can evenly space each route's share around it
-  const perRoute = TRAFFIC_ROUTES.map(() => 0);
-  for (let i = 0; i < count; i++) perRoute[i % TRAFFIC_ROUTES.length]++;
+  const perRoute = routes.map(() => 0);
+  for (let i = 0; i < count; i++) perRoute[i % routes.length]++;
 
-  for (let r = 0; r < TRAFFIC_ROUTES.length; r++) {
-    const routeDef = TRAFFIC_ROUTES[r];
+  for (let r = 0; r < routes.length; r++) {
+    const routeDef = routes[r];
     const route = toWaypoints(routeDef.loop);
     const n = perRoute[r];
     if (!n) continue;

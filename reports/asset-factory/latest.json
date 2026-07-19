@@ -1,24 +1,24 @@
 {
   "version": 2,
-  "batchId": "batch-00045",
-  "completedAt": "2026-07-19T02:02:44.919Z",
+  "batchId": "batch-00075",
+  "completedAt": "2026-07-19T13:17:18.180Z",
   "requested": 20,
   "passed": 20,
   "failed": 0,
   "queueCounts": {
-    "completed": 881,
+    "completed": 1447,
     "reference-only": 16,
-    "queued": 1211,
     "unsupported": 189,
+    "queued": 645,
     "quarantined": 1
   },
   "results": [
     {
-      "id": "gap-aqualume-airlock-transit-tube-lane-divider-standard-094",
+      "id": "gap-shared-world-camera-pipe-elbow-standard-191",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/modular_connector/connector_aqualume-airlock-transit-tube-lane-divider-standard-094.glb",
+      "outputPath": "public/assets/models/generated/shared-world/modular_connector/connector_shared-world-camera-pipe-elbow-standard-191.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
@@ -70,18 +70,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-lane-divider-standard-094/gap-aqualume-airlock-transit-tube-lane-divider-standard-094_view_1.png",
-        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-lane-divider-standard-094/gap-aqualume-airlock-transit-tube-lane-divider-standard-094_view_2.png",
-        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-lane-divider-standard-094/gap-aqualume-airlock-transit-tube-lane-divider-standard-094_view_3.png",
-        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-lane-divider-standard-094/gap-aqualume-airlock-transit-tube-lane-divider-standard-094_view_4.png"
+        "asset-factory/work/previews/gap-shared-world-camera-pipe-elbow-standard-191/gap-shared-world-camera-pipe-elbow-standard-191_view_1.png",
+        "asset-factory/work/previews/gap-shared-world-camera-pipe-elbow-standard-191/gap-shared-world-camera-pipe-elbow-standard-191_view_2.png",
+        "asset-factory/work/previews/gap-shared-world-camera-pipe-elbow-standard-191/gap-shared-world-camera-pipe-elbow-standard-191_view_3.png",
+        "asset-factory/work/previews/gap-shared-world-camera-pipe-elbow-standard-191/gap-shared-world-camera-pipe-elbow-standard-191_view_4.png"
       ]
     },
     {
-      "id": "building_gallery_crown_exterior_v01",
+      "id": "building_tidefuel_market_shell_v01",
       "builder": "modular_building",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/building_shell/building_gallery_crown_exterior_v01.glb",
+      "outputPath": "public/assets/models/generated/fishing-harbor/building_shell/building_tidefuel_market_shell_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 32,
@@ -133,81 +133,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/building_gallery_crown_exterior_v01/building_gallery_crown_exterior_v01_view_1.png",
-        "asset-factory/work/previews/building_gallery_crown_exterior_v01/building_gallery_crown_exterior_v01_view_2.png",
-        "asset-factory/work/previews/building_gallery_crown_exterior_v01/building_gallery_crown_exterior_v01_view_3.png",
-        "asset-factory/work/previews/building_gallery_crown_exterior_v01/building_gallery_crown_exterior_v01_view_4.png"
+        "asset-factory/work/previews/building_tidefuel_market_shell_v01/building_tidefuel_market_shell_v01_view_1.png",
+        "asset-factory/work/previews/building_tidefuel_market_shell_v01/building_tidefuel_market_shell_v01_view_2.png",
+        "asset-factory/work/previews/building_tidefuel_market_shell_v01/building_tidefuel_market_shell_v01_view_3.png",
+        "asset-factory/work/previews/building_tidefuel_market_shell_v01/building_tidefuel_market_shell_v01_view_4.png"
       ]
     },
     {
-      "id": "gap-shared-world-accessibility-traffic-signal-normal-standard-355",
-      "builder": "state_variant",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-accessibility-traffic-signal-normal-standard-355.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 16,
-        "triangles": 3024,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "LOD and swap policy",
-          "animation transition socket",
-          "base object relationship",
-          "collision state",
-          "damage or repair metadata",
-          "interaction state",
-          "state-defining geometry",
-          "state-defining material layer"
-        ],
-        "bounds": {
-          "min": [
-            -0.4375,
-            -0.4399999976158142,
-            2.7939677238464355e-9
-          ],
-          "max": [
-            0.4375,
-            0.4399999976158142,
-            0.7325000762939453
-          ],
-          "dimensions": [
-            0.875,
-            0.8799999952316284,
-            0.7325000762939453
-          ]
-        },
-        "requiredComponents": [
-          "base object relationship",
-          "state-defining geometry",
-          "state-defining material layer",
-          "animation transition socket",
-          "collision state",
-          "interaction state",
-          "damage or repair metadata",
-          "LOD and swap policy"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-accessibility-traffic-signal-normal-standard-355/gap-shared-world-accessibility-traffic-signal-normal-standard-355_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-accessibility-traffic-signal-normal-standard-355/gap-shared-world-accessibility-traffic-signal-normal-standard-355_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-accessibility-traffic-signal-normal-standard-355/gap-shared-world-accessibility-traffic-signal-normal-standard-355_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-accessibility-traffic-signal-normal-standard-355/gap-shared-world-accessibility-traffic-signal-normal-standard-355_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-casino-strip-arcade-toy-clutter-standard-050",
+      "id": "gap-rich-hills-pool-package-small-standard-063",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_casino-strip-arcade-toy-clutter-standard-050.glb",
+      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_rich-hills-pool-package-small-standard-063.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -259,18 +196,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-casino-strip-arcade-toy-clutter-standard-050/gap-casino-strip-arcade-toy-clutter-standard-050_view_1.png",
-        "asset-factory/work/previews/gap-casino-strip-arcade-toy-clutter-standard-050/gap-casino-strip-arcade-toy-clutter-standard-050_view_2.png",
-        "asset-factory/work/previews/gap-casino-strip-arcade-toy-clutter-standard-050/gap-casino-strip-arcade-toy-clutter-standard-050_view_3.png",
-        "asset-factory/work/previews/gap-casino-strip-arcade-toy-clutter-standard-050/gap-casino-strip-arcade-toy-clutter-standard-050_view_4.png"
+        "asset-factory/work/previews/gap-rich-hills-pool-package-small-standard-063/gap-rich-hills-pool-package-small-standard-063_view_1.png",
+        "asset-factory/work/previews/gap-rich-hills-pool-package-small-standard-063/gap-rich-hills-pool-package-small-standard-063_view_2.png",
+        "asset-factory/work/previews/gap-rich-hills-pool-package-small-standard-063/gap-rich-hills-pool-package-small-standard-063_view_3.png",
+        "asset-factory/work/previews/gap-rich-hills-pool-package-small-standard-063/gap-rich-hills-pool-package-small-standard-063_view_4.png"
       ]
     },
     {
-      "id": "gap-fishing-harbor-boat-service-route-map-kiosk-standard-104",
+      "id": "gap-starter-town-retail-parking-meter-standard-076",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/modular_infrastructure/infrastructure_fishing-harbor-boat-service-route-map-kiosk-standard-104.glb",
+      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-retail-parking-meter-standard-076.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -323,81 +260,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-fishing-harbor-boat-service-route-map-kiosk-standard-104/gap-fishing-harbor-boat-service-route-map-kiosk-standard-104_view_1.png",
-        "asset-factory/work/previews/gap-fishing-harbor-boat-service-route-map-kiosk-standard-104/gap-fishing-harbor-boat-service-route-map-kiosk-standard-104_view_2.png",
-        "asset-factory/work/previews/gap-fishing-harbor-boat-service-route-map-kiosk-standard-104/gap-fishing-harbor-boat-service-route-map-kiosk-standard-104_view_3.png",
-        "asset-factory/work/previews/gap-fishing-harbor-boat-service-route-map-kiosk-standard-104/gap-fishing-harbor-boat-service-route-map-kiosk-standard-104_view_4.png"
+        "asset-factory/work/previews/gap-starter-town-retail-parking-meter-standard-076/gap-starter-town-retail-parking-meter-standard-076_view_1.png",
+        "asset-factory/work/previews/gap-starter-town-retail-parking-meter-standard-076/gap-starter-town-retail-parking-meter-standard-076_view_2.png",
+        "asset-factory/work/previews/gap-starter-town-retail-parking-meter-standard-076/gap-starter-town-retail-parking-meter-standard-076_view_3.png",
+        "asset-factory/work/previews/gap-starter-town-retail-parking-meter-standard-076/gap-starter-town-retail-parking-meter-standard-076_view_4.png"
       ]
     },
     {
-      "id": "gap-rich-hills-pool-office-desk-standard-027",
-      "builder": "modular_furniture",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_furniture/furniture_rich-hills-pool-office-desk-standard-027.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 21,
-        "triangles": 4044,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "floor or wall contact detail",
-          "interaction clearance",
-          "joinery and fasteners",
-          "legs, pedestal, or wall mount",
-          "load-bearing frame",
-          "primary use surface",
-          "storage or access component",
-          "user contact surface"
-        ],
-        "bounds": {
-          "min": [
-            -0.6510000228881836,
-            -0.33924999833106995,
-            0
-          ],
-          "max": [
-            0.6510000228881836,
-            0.33924999833106995,
-            0.8500000238418579
-          ],
-          "dimensions": [
-            1.3020000457763672,
-            0.6784999966621399,
-            0.8500000238418579
-          ]
-        },
-        "requiredComponents": [
-          "primary use surface",
-          "load-bearing frame",
-          "legs, pedestal, or wall mount",
-          "user contact surface",
-          "storage or access component",
-          "joinery and fasteners",
-          "floor or wall contact detail",
-          "interaction clearance"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-rich-hills-pool-office-desk-standard-027/gap-rich-hills-pool-office-desk-standard-027_view_1.png",
-        "asset-factory/work/previews/gap-rich-hills-pool-office-desk-standard-027/gap-rich-hills-pool-office-desk-standard-027_view_2.png",
-        "asset-factory/work/previews/gap-rich-hills-pool-office-desk-standard-027/gap-rich-hills-pool-office-desk-standard-027_view_3.png",
-        "asset-factory/work/previews/gap-rich-hills-pool-office-desk-standard-027/gap-rich-hills-pool-office-desk-standard-027_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-aqualume-airlock-transit-tube-short-straight-standard-072",
+      "id": "gap-shared-world-camera-transit-tube-merge-standard-176",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/modular_connector/connector_aqualume-airlock-transit-tube-short-straight-standard-072.glb",
+      "outputPath": "public/assets/models/generated/shared-world/modular_connector/connector_shared-world-camera-transit-tube-merge-standard-176.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
@@ -449,18 +323,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-short-straight-standard-072/gap-aqualume-airlock-transit-tube-short-straight-standard-072_view_1.png",
-        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-short-straight-standard-072/gap-aqualume-airlock-transit-tube-short-straight-standard-072_view_2.png",
-        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-short-straight-standard-072/gap-aqualume-airlock-transit-tube-short-straight-standard-072_view_3.png",
-        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-short-straight-standard-072/gap-aqualume-airlock-transit-tube-short-straight-standard-072_view_4.png"
+        "asset-factory/work/previews/gap-shared-world-camera-transit-tube-merge-standard-176/gap-shared-world-camera-transit-tube-merge-standard-176_view_1.png",
+        "asset-factory/work/previews/gap-shared-world-camera-transit-tube-merge-standard-176/gap-shared-world-camera-transit-tube-merge-standard-176_view_2.png",
+        "asset-factory/work/previews/gap-shared-world-camera-transit-tube-merge-standard-176/gap-shared-world-camera-transit-tube-merge-standard-176_view_3.png",
+        "asset-factory/work/previews/gap-shared-world-camera-transit-tube-merge-standard-176/gap-shared-world-camera-transit-tube-merge-standard-176_view_4.png"
       ]
     },
     {
-      "id": "building_glamlab_salon_exterior_v01",
+      "id": "building_tideglass_academy_exterior_v01",
       "builder": "modular_building",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/building_shell/building_glamlab_salon_exterior_v01.glb",
+      "outputPath": "public/assets/models/generated/aqualume/building_shell/building_tideglass_academy_exterior_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 32,
@@ -512,81 +386,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/building_glamlab_salon_exterior_v01/building_glamlab_salon_exterior_v01_view_1.png",
-        "asset-factory/work/previews/building_glamlab_salon_exterior_v01/building_glamlab_salon_exterior_v01_view_2.png",
-        "asset-factory/work/previews/building_glamlab_salon_exterior_v01/building_glamlab_salon_exterior_v01_view_3.png",
-        "asset-factory/work/previews/building_glamlab_salon_exterior_v01/building_glamlab_salon_exterior_v01_view_4.png"
+        "asset-factory/work/previews/building_tideglass_academy_exterior_v01/building_tideglass_academy_exterior_v01_view_1.png",
+        "asset-factory/work/previews/building_tideglass_academy_exterior_v01/building_tideglass_academy_exterior_v01_view_2.png",
+        "asset-factory/work/previews/building_tideglass_academy_exterior_v01/building_tideglass_academy_exterior_v01_view_3.png",
+        "asset-factory/work/previews/building_tideglass_academy_exterior_v01/building_tideglass_academy_exterior_v01_view_4.png"
       ]
     },
     {
-      "id": "gap-shared-world-audio-crate-empty-standard-293",
-      "builder": "state_variant",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-audio-crate-empty-standard-293.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 16,
-        "triangles": 3024,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "LOD and swap policy",
-          "animation transition socket",
-          "base object relationship",
-          "collision state",
-          "damage or repair metadata",
-          "interaction state",
-          "state-defining geometry",
-          "state-defining material layer"
-        ],
-        "bounds": {
-          "min": [
-            -0.4375,
-            -0.4399999976158142,
-            2.7939677238464355e-9
-          ],
-          "max": [
-            0.4375,
-            0.4399999976158142,
-            0.7325000762939453
-          ],
-          "dimensions": [
-            0.875,
-            0.8799999952316284,
-            0.7325000762939453
-          ]
-        },
-        "requiredComponents": [
-          "base object relationship",
-          "state-defining geometry",
-          "state-defining material layer",
-          "animation transition socket",
-          "collision state",
-          "interaction state",
-          "damage or repair metadata",
-          "LOD and swap policy"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-audio-crate-empty-standard-293/gap-shared-world-audio-crate-empty-standard-293_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-audio-crate-empty-standard-293/gap-shared-world-audio-crate-empty-standard-293_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-audio-crate-empty-standard-293/gap-shared-world-audio-crate-empty-standard-293_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-audio-crate-empty-standard-293/gap-shared-world-audio-crate-empty-standard-293_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-casino-strip-arcade-wrench-set-standard-060",
+      "id": "gap-rich-hills-pool-rolled-blanket-standard-045",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_casino-strip-arcade-wrench-set-standard-060.glb",
+      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_rich-hills-pool-rolled-blanket-standard-045.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -638,18 +449,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-casino-strip-arcade-wrench-set-standard-060/gap-casino-strip-arcade-wrench-set-standard-060_view_1.png",
-        "asset-factory/work/previews/gap-casino-strip-arcade-wrench-set-standard-060/gap-casino-strip-arcade-wrench-set-standard-060_view_2.png",
-        "asset-factory/work/previews/gap-casino-strip-arcade-wrench-set-standard-060/gap-casino-strip-arcade-wrench-set-standard-060_view_3.png",
-        "asset-factory/work/previews/gap-casino-strip-arcade-wrench-set-standard-060/gap-casino-strip-arcade-wrench-set-standard-060_view_4.png"
+        "asset-factory/work/previews/gap-rich-hills-pool-rolled-blanket-standard-045/gap-rich-hills-pool-rolled-blanket-standard-045_view_1.png",
+        "asset-factory/work/previews/gap-rich-hills-pool-rolled-blanket-standard-045/gap-rich-hills-pool-rolled-blanket-standard-045_view_2.png",
+        "asset-factory/work/previews/gap-rich-hills-pool-rolled-blanket-standard-045/gap-rich-hills-pool-rolled-blanket-standard-045_view_3.png",
+        "asset-factory/work/previews/gap-rich-hills-pool-rolled-blanket-standard-045/gap-rich-hills-pool-rolled-blanket-standard-045_view_4.png"
       ]
     },
     {
-      "id": "gap-fishing-harbor-cargo-ice-machine-standard-128",
+      "id": "gap-starter-town-retail-retail-checkout-standard-116",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/modular_infrastructure/infrastructure_fishing-harbor-cargo-ice-machine-standard-128.glb",
+      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-retail-retail-checkout-standard-116.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -702,81 +513,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-fishing-harbor-cargo-ice-machine-standard-128/gap-fishing-harbor-cargo-ice-machine-standard-128_view_1.png",
-        "asset-factory/work/previews/gap-fishing-harbor-cargo-ice-machine-standard-128/gap-fishing-harbor-cargo-ice-machine-standard-128_view_2.png",
-        "asset-factory/work/previews/gap-fishing-harbor-cargo-ice-machine-standard-128/gap-fishing-harbor-cargo-ice-machine-standard-128_view_3.png",
-        "asset-factory/work/previews/gap-fishing-harbor-cargo-ice-machine-standard-128/gap-fishing-harbor-cargo-ice-machine-standard-128_view_4.png"
+        "asset-factory/work/previews/gap-starter-town-retail-retail-checkout-standard-116/gap-starter-town-retail-retail-checkout-standard-116_view_1.png",
+        "asset-factory/work/previews/gap-starter-town-retail-retail-checkout-standard-116/gap-starter-town-retail-retail-checkout-standard-116_view_2.png",
+        "asset-factory/work/previews/gap-starter-town-retail-retail-checkout-standard-116/gap-starter-town-retail-retail-checkout-standard-116_view_3.png",
+        "asset-factory/work/previews/gap-starter-town-retail-retail-checkout-standard-116/gap-starter-town-retail-retail-checkout-standard-116_view_4.png"
       ]
     },
     {
-      "id": "gap-rich-hills-security-editing-workstation-standard-029",
-      "builder": "modular_furniture",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_furniture/furniture_rich-hills-security-editing-workstation-standard-029.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 21,
-        "triangles": 4044,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "floor or wall contact detail",
-          "interaction clearance",
-          "joinery and fasteners",
-          "legs, pedestal, or wall mount",
-          "load-bearing frame",
-          "primary use surface",
-          "storage or access component",
-          "user contact surface"
-        ],
-        "bounds": {
-          "min": [
-            -0.6510000228881836,
-            -0.33924999833106995,
-            0
-          ],
-          "max": [
-            0.6510000228881836,
-            0.33924999833106995,
-            0.8500000238418579
-          ],
-          "dimensions": [
-            1.3020000457763672,
-            0.6784999966621399,
-            0.8500000238418579
-          ]
-        },
-        "requiredComponents": [
-          "primary use surface",
-          "load-bearing frame",
-          "legs, pedestal, or wall mount",
-          "user contact surface",
-          "storage or access component",
-          "joinery and fasteners",
-          "floor or wall contact detail",
-          "interaction clearance"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-rich-hills-security-editing-workstation-standard-029/gap-rich-hills-security-editing-workstation-standard-029_view_1.png",
-        "asset-factory/work/previews/gap-rich-hills-security-editing-workstation-standard-029/gap-rich-hills-security-editing-workstation-standard-029_view_2.png",
-        "asset-factory/work/previews/gap-rich-hills-security-editing-workstation-standard-029/gap-rich-hills-security-editing-workstation-standard-029_view_3.png",
-        "asset-factory/work/previews/gap-rich-hills-security-editing-workstation-standard-029/gap-rich-hills-security-editing-workstation-standard-029_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-aqualume-current-conduit-junction-standard-107",
+      "id": "gap-shared-world-characters-transit-tube-cable-carrier-standard-187",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/modular_connector/connector_aqualume-current-conduit-junction-standard-107.glb",
+      "outputPath": "public/assets/models/generated/shared-world/modular_connector/connector_shared-world-characters-transit-tube-cable-carrier-standard-187.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
@@ -828,18 +576,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-aqualume-current-conduit-junction-standard-107/gap-aqualume-current-conduit-junction-standard-107_view_1.png",
-        "asset-factory/work/previews/gap-aqualume-current-conduit-junction-standard-107/gap-aqualume-current-conduit-junction-standard-107_view_2.png",
-        "asset-factory/work/previews/gap-aqualume-current-conduit-junction-standard-107/gap-aqualume-current-conduit-junction-standard-107_view_3.png",
-        "asset-factory/work/previews/gap-aqualume-current-conduit-junction-standard-107/gap-aqualume-current-conduit-junction-standard-107_view_4.png"
+        "asset-factory/work/previews/gap-shared-world-characters-transit-tube-cable-carrier-standard-187/gap-shared-world-characters-transit-tube-cable-carrier-standard-187_view_1.png",
+        "asset-factory/work/previews/gap-shared-world-characters-transit-tube-cable-carrier-standard-187/gap-shared-world-characters-transit-tube-cable-carrier-standard-187_view_2.png",
+        "asset-factory/work/previews/gap-shared-world-characters-transit-tube-cable-carrier-standard-187/gap-shared-world-characters-transit-tube-cable-carrier-standard-187_view_3.png",
+        "asset-factory/work/previews/gap-shared-world-characters-transit-tube-cable-carrier-standard-187/gap-shared-world-characters-transit-tube-cable-carrier-standard-187_view_4.png"
       ]
     },
     {
-      "id": "building_glassway_towers_exterior_v01",
+      "id": "building_tidetable_market_exterior_v01",
       "builder": "modular_building",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/building_shell/building_glassway_towers_exterior_v01.glb",
+      "outputPath": "public/assets/models/generated/fishing-harbor/building_shell/building_tidetable_market_exterior_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 32,
@@ -891,81 +639,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/building_glassway_towers_exterior_v01/building_glassway_towers_exterior_v01_view_1.png",
-        "asset-factory/work/previews/building_glassway_towers_exterior_v01/building_glassway_towers_exterior_v01_view_2.png",
-        "asset-factory/work/previews/building_glassway_towers_exterior_v01/building_glassway_towers_exterior_v01_view_3.png",
-        "asset-factory/work/previews/building_glassway_towers_exterior_v01/building_glassway_towers_exterior_v01_view_4.png"
+        "asset-factory/work/previews/building_tidetable_market_exterior_v01/building_tidetable_market_exterior_v01_view_1.png",
+        "asset-factory/work/previews/building_tidetable_market_exterior_v01/building_tidetable_market_exterior_v01_view_2.png",
+        "asset-factory/work/previews/building_tidetable_market_exterior_v01/building_tidetable_market_exterior_v01_view_3.png",
+        "asset-factory/work/previews/building_tidetable_market_exterior_v01/building_tidetable_market_exterior_v01_view_4.png"
       ]
     },
     {
-      "id": "gap-shared-world-audio-elevator-arrived-standard-353",
-      "builder": "state_variant",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-audio-elevator-arrived-standard-353.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 16,
-        "triangles": 3024,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "LOD and swap policy",
-          "animation transition socket",
-          "base object relationship",
-          "collision state",
-          "damage or repair metadata",
-          "interaction state",
-          "state-defining geometry",
-          "state-defining material layer"
-        ],
-        "bounds": {
-          "min": [
-            -0.4375,
-            -0.4399999976158142,
-            2.7939677238464355e-9
-          ],
-          "max": [
-            0.4375,
-            0.4399999976158142,
-            0.7325000762939453
-          ],
-          "dimensions": [
-            0.875,
-            0.8799999952316284,
-            0.7325000762939453
-          ]
-        },
-        "requiredComponents": [
-          "base object relationship",
-          "state-defining geometry",
-          "state-defining material layer",
-          "animation transition socket",
-          "collision state",
-          "interaction state",
-          "damage or repair metadata",
-          "LOD and swap policy"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-audio-elevator-arrived-standard-353/gap-shared-world-audio-elevator-arrived-standard-353_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-audio-elevator-arrived-standard-353/gap-shared-world-audio-elevator-arrived-standard-353_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-audio-elevator-arrived-standard-353/gap-shared-world-audio-elevator-arrived-standard-353_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-audio-elevator-arrived-standard-353/gap-shared-world-audio-elevator-arrived-standard-353_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-casino-strip-casino-battery-pack-standard-057",
+      "id": "gap-rich-hills-pool-tape-roll-standard-054",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_casino-strip-casino-battery-pack-standard-057.glb",
+      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_rich-hills-pool-tape-roll-standard-054.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -1017,18 +702,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-casino-strip-casino-battery-pack-standard-057/gap-casino-strip-casino-battery-pack-standard-057_view_1.png",
-        "asset-factory/work/previews/gap-casino-strip-casino-battery-pack-standard-057/gap-casino-strip-casino-battery-pack-standard-057_view_2.png",
-        "asset-factory/work/previews/gap-casino-strip-casino-battery-pack-standard-057/gap-casino-strip-casino-battery-pack-standard-057_view_3.png",
-        "asset-factory/work/previews/gap-casino-strip-casino-battery-pack-standard-057/gap-casino-strip-casino-battery-pack-standard-057_view_4.png"
+        "asset-factory/work/previews/gap-rich-hills-pool-tape-roll-standard-054/gap-rich-hills-pool-tape-roll-standard-054_view_1.png",
+        "asset-factory/work/previews/gap-rich-hills-pool-tape-roll-standard-054/gap-rich-hills-pool-tape-roll-standard-054_view_2.png",
+        "asset-factory/work/previews/gap-rich-hills-pool-tape-roll-standard-054/gap-rich-hills-pool-tape-roll-standard-054_view_3.png",
+        "asset-factory/work/previews/gap-rich-hills-pool-tape-roll-standard-054/gap-rich-hills-pool-tape-roll-standard-054_view_4.png"
       ]
     },
     {
-      "id": "gap-fishing-harbor-cargo-intake-grate-standard-138",
+      "id": "gap-starter-town-retail-security-camera-standard-066",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/modular_infrastructure/infrastructure_fishing-harbor-cargo-intake-grate-standard-138.glb",
+      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-retail-security-camera-standard-066.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -1081,81 +766,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-fishing-harbor-cargo-intake-grate-standard-138/gap-fishing-harbor-cargo-intake-grate-standard-138_view_1.png",
-        "asset-factory/work/previews/gap-fishing-harbor-cargo-intake-grate-standard-138/gap-fishing-harbor-cargo-intake-grate-standard-138_view_2.png",
-        "asset-factory/work/previews/gap-fishing-harbor-cargo-intake-grate-standard-138/gap-fishing-harbor-cargo-intake-grate-standard-138_view_3.png",
-        "asset-factory/work/previews/gap-fishing-harbor-cargo-intake-grate-standard-138/gap-fishing-harbor-cargo-intake-grate-standard-138_view_4.png"
+        "asset-factory/work/previews/gap-starter-town-retail-security-camera-standard-066/gap-starter-town-retail-security-camera-standard-066_view_1.png",
+        "asset-factory/work/previews/gap-starter-town-retail-security-camera-standard-066/gap-starter-town-retail-security-camera-standard-066_view_2.png",
+        "asset-factory/work/previews/gap-starter-town-retail-security-camera-standard-066/gap-starter-town-retail-security-camera-standard-066_view_3.png",
+        "asset-factory/work/previews/gap-starter-town-retail-security-camera-standard-066/gap-starter-town-retail-security-camera-standard-066_view_4.png"
       ]
     },
     {
-      "id": "gap-starline-city-delivery-bar-stool-standard-064",
-      "builder": "modular_furniture",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_furniture/furniture_starline-city-delivery-bar-stool-standard-064.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 21,
-        "triangles": 4044,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "floor or wall contact detail",
-          "interaction clearance",
-          "joinery and fasteners",
-          "legs, pedestal, or wall mount",
-          "load-bearing frame",
-          "primary use surface",
-          "storage or access component",
-          "user contact surface"
-        ],
-        "bounds": {
-          "min": [
-            -0.6510000228881836,
-            -0.33924999833106995,
-            0
-          ],
-          "max": [
-            0.6510000228881836,
-            0.33924999833106995,
-            0.8500000238418579
-          ],
-          "dimensions": [
-            1.3020000457763672,
-            0.6784999966621399,
-            0.8500000238418579
-          ]
-        },
-        "requiredComponents": [
-          "primary use surface",
-          "load-bearing frame",
-          "legs, pedestal, or wall mount",
-          "user contact surface",
-          "storage or access component",
-          "joinery and fasteners",
-          "floor or wall contact detail",
-          "interaction clearance"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-starline-city-delivery-bar-stool-standard-064/gap-starline-city-delivery-bar-stool-standard-064_view_1.png",
-        "asset-factory/work/previews/gap-starline-city-delivery-bar-stool-standard-064/gap-starline-city-delivery-bar-stool-standard-064_view_2.png",
-        "asset-factory/work/previews/gap-starline-city-delivery-bar-stool-standard-064/gap-starline-city-delivery-bar-stool-standard-064_view_3.png",
-        "asset-factory/work/previews/gap-starline-city-delivery-bar-stool-standard-064/gap-starline-city-delivery-bar-stool-standard-064_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-aqualume-current-handrail-corner-standard-118",
+      "id": "gap-shared-world-characters-transit-tube-decline-standard-172",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/modular_connector/connector_aqualume-current-handrail-corner-standard-118.glb",
+      "outputPath": "public/assets/models/generated/shared-world/modular_connector/connector_shared-world-characters-transit-tube-decline-standard-172.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
@@ -1207,18 +829,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-aqualume-current-handrail-corner-standard-118/gap-aqualume-current-handrail-corner-standard-118_view_1.png",
-        "asset-factory/work/previews/gap-aqualume-current-handrail-corner-standard-118/gap-aqualume-current-handrail-corner-standard-118_view_2.png",
-        "asset-factory/work/previews/gap-aqualume-current-handrail-corner-standard-118/gap-aqualume-current-handrail-corner-standard-118_view_3.png",
-        "asset-factory/work/previews/gap-aqualume-current-handrail-corner-standard-118/gap-aqualume-current-handrail-corner-standard-118_view_4.png"
+        "asset-factory/work/previews/gap-shared-world-characters-transit-tube-decline-standard-172/gap-shared-world-characters-transit-tube-decline-standard-172_view_1.png",
+        "asset-factory/work/previews/gap-shared-world-characters-transit-tube-decline-standard-172/gap-shared-world-characters-transit-tube-decline-standard-172_view_2.png",
+        "asset-factory/work/previews/gap-shared-world-characters-transit-tube-decline-standard-172/gap-shared-world-characters-transit-tube-decline-standard-172_view_3.png",
+        "asset-factory/work/previews/gap-shared-world-characters-transit-tube-decline-standard-172/gap-shared-world-characters-transit-tube-decline-standard-172_view_4.png"
       ]
     },
     {
-      "id": "building_golden_key_realty_exterior_v01",
+      "id": "building_trailmart_exterior_v01",
       "builder": "modular_building",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/building_shell/building_golden_key_realty_exterior_v01.glb",
+      "outputPath": "public/assets/models/generated/obby-canyon/building_shell/building_trailmart_exterior_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 32,
@@ -1270,10 +892,390 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/building_golden_key_realty_exterior_v01/building_golden_key_realty_exterior_v01_view_1.png",
-        "asset-factory/work/previews/building_golden_key_realty_exterior_v01/building_golden_key_realty_exterior_v01_view_2.png",
-        "asset-factory/work/previews/building_golden_key_realty_exterior_v01/building_golden_key_realty_exterior_v01_view_3.png",
-        "asset-factory/work/previews/building_golden_key_realty_exterior_v01/building_golden_key_realty_exterior_v01_view_4.png"
+        "asset-factory/work/previews/building_trailmart_exterior_v01/building_trailmart_exterior_v01_view_1.png",
+        "asset-factory/work/previews/building_trailmart_exterior_v01/building_trailmart_exterior_v01_view_2.png",
+        "asset-factory/work/previews/building_trailmart_exterior_v01/building_trailmart_exterior_v01_view_3.png",
+        "asset-factory/work/previews/building_trailmart_exterior_v01/building_trailmart_exterior_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "gap-rich-hills-pool-vacuum-standard-072",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_rich-hills-pool-vacuum-standard-072.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 17,
+        "triangles": 3212,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "fasteners and seams",
+          "functional opening or access",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.36800000071525574,
+            -0.27300000190734863,
+            0
+          ],
+          "max": [
+            0.36800000071525574,
+            0.27300000190734863,
+            0.5679999589920044
+          ],
+          "dimensions": [
+            0.7360000014305115,
+            0.5460000038146973,
+            0.5679999589920044
+          ]
+        },
+        "requiredComponents": [
+          "object-specific primary body",
+          "support or contact structure",
+          "functional opening or access",
+          "handle, control, or closure",
+          "secondary functional assembly",
+          "fasteners and seams",
+          "placement contact",
+          "interaction or inventory socket"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/gap-rich-hills-pool-vacuum-standard-072/gap-rich-hills-pool-vacuum-standard-072_view_1.png",
+        "asset-factory/work/previews/gap-rich-hills-pool-vacuum-standard-072/gap-rich-hills-pool-vacuum-standard-072_view_2.png",
+        "asset-factory/work/previews/gap-rich-hills-pool-vacuum-standard-072/gap-rich-hills-pool-vacuum-standard-072_view_3.png",
+        "asset-factory/work/previews/gap-rich-hills-pool-vacuum-standard-072/gap-rich-hills-pool-vacuum-standard-072_view_4.png"
+      ]
+    },
+    {
+      "id": "gap-starter-town-retail-underwater-shuttle-stop-standard-106",
+      "builder": "modular_infrastructure",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-retail-underwater-shuttle-stop-standard-106.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 17,
+        "triangles": 3112,
+        "materials": [
+          "starter_black",
+          "starter_concrete",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 6,
+        "components": [
+          "anchored base or mount",
+          "fasteners and identification",
+          "power, conduit, drainage, or network path",
+          "primary operating surface",
+          "safety and weather protection",
+          "service access",
+          "structural enclosure or frame",
+          "user control or connection"
+        ],
+        "bounds": {
+          "min": [
+            -0.5519999861717224,
+            -0.36800000071525574,
+            0
+          ],
+          "max": [
+            0.5519999861717224,
+            0.36800000071525574,
+            1.565999984741211
+          ],
+          "dimensions": [
+            1.1039999723434448,
+            0.7360000014305115,
+            1.565999984741211
+          ]
+        },
+        "requiredComponents": [
+          "anchored base or mount",
+          "structural enclosure or frame",
+          "primary operating surface",
+          "user control or connection",
+          "service access",
+          "power, conduit, drainage, or network path",
+          "safety and weather protection",
+          "fasteners and identification"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/gap-starter-town-retail-underwater-shuttle-stop-standard-106/gap-starter-town-retail-underwater-shuttle-stop-standard-106_view_1.png",
+        "asset-factory/work/previews/gap-starter-town-retail-underwater-shuttle-stop-standard-106/gap-starter-town-retail-underwater-shuttle-stop-standard-106_view_2.png",
+        "asset-factory/work/previews/gap-starter-town-retail-underwater-shuttle-stop-standard-106/gap-starter-town-retail-underwater-shuttle-stop-standard-106_view_3.png",
+        "asset-factory/work/previews/gap-starter-town-retail-underwater-shuttle-stop-standard-106/gap-starter-town-retail-underwater-shuttle-stop-standard-106_view_4.png"
+      ]
+    },
+    {
+      "id": "gap-shared-world-combat-transit-tube-maintenance-alcove-standard-181",
+      "builder": "modular_connector",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/shared-world/modular_connector/connector_shared-world-combat-transit-tube-maintenance-alcove-standard-181.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 19,
+        "triangles": 3572,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "LOD-preserved silhouette",
+          "collision-safe boundary",
+          "end connection socket",
+          "load-bearing frame",
+          "primary structural span",
+          "seal or transition trim",
+          "service access",
+          "start connection socket"
+        ],
+        "bounds": {
+          "min": [
+            -1.0399999618530273,
+            -0.8425000309944153,
+            0
+          ],
+          "max": [
+            1.0399999618530273,
+            0.8425000309944153,
+            1.440000057220459
+          ],
+          "dimensions": [
+            2.0799999237060547,
+            1.6850000619888306,
+            1.440000057220459
+          ]
+        },
+        "requiredComponents": [
+          "primary structural span",
+          "start connection socket",
+          "end connection socket",
+          "load-bearing frame",
+          "service access",
+          "seal or transition trim",
+          "collision-safe boundary",
+          "LOD-preserved silhouette"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/gap-shared-world-combat-transit-tube-maintenance-alcove-standard-181/gap-shared-world-combat-transit-tube-maintenance-alcove-standard-181_view_1.png",
+        "asset-factory/work/previews/gap-shared-world-combat-transit-tube-maintenance-alcove-standard-181/gap-shared-world-combat-transit-tube-maintenance-alcove-standard-181_view_2.png",
+        "asset-factory/work/previews/gap-shared-world-combat-transit-tube-maintenance-alcove-standard-181/gap-shared-world-combat-transit-tube-maintenance-alcove-standard-181_view_3.png",
+        "asset-factory/work/previews/gap-shared-world-combat-transit-tube-maintenance-alcove-standard-181/gap-shared-world-combat-transit-tube-maintenance-alcove-standard-181_view_4.png"
+      ]
+    },
+    {
+      "id": "building_voltbyte_academy_exterior_v01",
+      "builder": "modular_building",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/techtown/building_shell/building_voltbyte_academy_exterior_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 32,
+        "triangles": 6016,
+        "materials": [
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_concrete",
+          "tech_cyan_emissive",
+          "tech_dark_metal",
+          "tech_smoked_glass",
+          "tech_white_light"
+        ],
+        "materialCount": 7,
+        "components": [
+          "entrance",
+          "facade material breaks",
+          "foundation",
+          "primary massing",
+          "roof line",
+          "service side",
+          "window system"
+        ],
+        "bounds": {
+          "min": [
+            -8.640000343322754,
+            -6.75499963760376,
+            0
+          ],
+          "max": [
+            8.640000343322754,
+            6.755000114440918,
+            8.729999542236328
+          ],
+          "dimensions": [
+            17.280000686645508,
+            13.510000228881836,
+            8.729999542236328
+          ]
+        },
+        "requiredComponents": [
+          "primary massing",
+          "roof line",
+          "entrance",
+          "window system",
+          "facade material breaks",
+          "service side",
+          "foundation"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/building_voltbyte_academy_exterior_v01/building_voltbyte_academy_exterior_v01_view_1.png",
+        "asset-factory/work/previews/building_voltbyte_academy_exterior_v01/building_voltbyte_academy_exterior_v01_view_2.png",
+        "asset-factory/work/previews/building_voltbyte_academy_exterior_v01/building_voltbyte_academy_exterior_v01_view_3.png",
+        "asset-factory/work/previews/building_voltbyte_academy_exterior_v01/building_voltbyte_academy_exterior_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "gap-rich-hills-private-event-condiment-station-standard-031",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_rich-hills-private-event-condiment-station-standard-031.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 17,
+        "triangles": 3212,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "fasteners and seams",
+          "functional opening or access",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.36800000071525574,
+            -0.27300000190734863,
+            0
+          ],
+          "max": [
+            0.36800000071525574,
+            0.27300000190734863,
+            0.5679999589920044
+          ],
+          "dimensions": [
+            0.7360000014305115,
+            0.5460000038146973,
+            0.5679999589920044
+          ]
+        },
+        "requiredComponents": [
+          "object-specific primary body",
+          "support or contact structure",
+          "functional opening or access",
+          "handle, control, or closure",
+          "secondary functional assembly",
+          "fasteners and seams",
+          "placement contact",
+          "interaction or inventory socket"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/gap-rich-hills-private-event-condiment-station-standard-031/gap-rich-hills-private-event-condiment-station-standard-031_view_1.png",
+        "asset-factory/work/previews/gap-rich-hills-private-event-condiment-station-standard-031/gap-rich-hills-private-event-condiment-station-standard-031_view_2.png",
+        "asset-factory/work/previews/gap-rich-hills-private-event-condiment-station-standard-031/gap-rich-hills-private-event-condiment-station-standard-031_view_3.png",
+        "asset-factory/work/previews/gap-rich-hills-private-event-condiment-station-standard-031/gap-rich-hills-private-event-condiment-station-standard-031_view_4.png"
+      ]
+    },
+    {
+      "id": "gap-starter-town-school-battery-backup-standard-062",
+      "builder": "modular_infrastructure",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-school-battery-backup-standard-062.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 17,
+        "triangles": 3112,
+        "materials": [
+          "starter_black",
+          "starter_concrete",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 6,
+        "components": [
+          "anchored base or mount",
+          "fasteners and identification",
+          "power, conduit, drainage, or network path",
+          "primary operating surface",
+          "safety and weather protection",
+          "service access",
+          "structural enclosure or frame",
+          "user control or connection"
+        ],
+        "bounds": {
+          "min": [
+            -0.5519999861717224,
+            -0.36800000071525574,
+            0
+          ],
+          "max": [
+            0.5519999861717224,
+            0.36800000071525574,
+            1.565999984741211
+          ],
+          "dimensions": [
+            1.1039999723434448,
+            0.7360000014305115,
+            1.565999984741211
+          ]
+        },
+        "requiredComponents": [
+          "anchored base or mount",
+          "structural enclosure or frame",
+          "primary operating surface",
+          "user control or connection",
+          "service access",
+          "power, conduit, drainage, or network path",
+          "safety and weather protection",
+          "fasteners and identification"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/gap-starter-town-school-battery-backup-standard-062/gap-starter-town-school-battery-backup-standard-062_view_1.png",
+        "asset-factory/work/previews/gap-starter-town-school-battery-backup-standard-062/gap-starter-town-school-battery-backup-standard-062_view_2.png",
+        "asset-factory/work/previews/gap-starter-town-school-battery-backup-standard-062/gap-starter-town-school-battery-backup-standard-062_view_3.png",
+        "asset-factory/work/previews/gap-starter-town-school-battery-backup-standard-062/gap-starter-town-school-battery-backup-standard-062_view_4.png"
       ]
     }
   ]
