@@ -1,16 +1,16 @@
 # Zaylins Asset Factory Health
 
-- Generated: 2026-07-19T02:02:45.151Z
+- Generated: 2026-07-19T02:19:25.538Z
 - Master records: 2298
 - Queue records: 2298
-- Completed records: 881
-- Completed GLBs verified on disk: 351
-- Completed factory-generated GLBs: 351
+- Completed records: 887
+- Completed GLBs verified on disk: 357
+- Completed factory-generated GLBs: 357
 - Completed curated/legacy GLBs: 0
 - Completed runtime deliverables: 530
-- All GLBs under public/assets/models: 1156
-- GLBs specifically under public/assets/models/generated: 556
-- Queued Blender assets: 1211
+- All GLBs under public/assets/models: 1162
+- GLBs specifically under public/assets/models/generated: 562
+- Queued Blender assets: 1205
 - Queued runtime assets: 0
 - Quarantined: 1
 - Unsupported: 189
@@ -38,11 +38,11 @@
 | loading_crate | 3 | 0 | 0 | closed |
 | mailbox | 1 | 0 | 0 | closed |
 | modern_bed | 1 | 0 | 0 | closed |
-| modular_building | 117 | 113 | 0 | closed |
-| modular_connector | 6 | 166 | 0 | closed |
+| modular_building | 123 | 107 | 0 | closed |
+| modular_connector | 5 | 167 | 0 | closed |
 | modular_food | 9 | 0 | 0 | closed |
 | modular_furniture | 55 | 85 | 0 | closed |
-| modular_infrastructure | 14 | 222 | 0 | closed |
+| modular_infrastructure | 15 | 221 | 0 | closed |
 | modular_prop | 6 | 552 | 0 | closed |
 | modular_road | 36 | 0 | 0 | closed |
 | multi_monitor | 6 | 0 | 0 | closed |
@@ -66,6 +66,7 @@
 
 - Unreferenced generated GLB on disk: public/assets/models/generated/aqualume/building_shell/arch_aqualume_bubble_lift_a_v01.glb.
 - Unreferenced generated GLB on disk: public/assets/models/generated/aqualume/modular_connector/connector_aqualume-airlock-conduit-straight-standard-105.glb.
+- Unreferenced generated GLB on disk: public/assets/models/generated/aqualume/modular_connector/connector_aqualume-current-handrail-corner-standard-118.glb.
 - Unreferenced generated GLB on disk: public/assets/models/generated/aqualume/modular_connector/connector_aqualume-current-pipe-elbow-standard-096.glb.
 - Unreferenced generated GLB on disk: public/assets/models/generated/aqualume/modular_connector/connector_aqualume-current-transit-tube-gentle-curve-standard-074.glb.
 - Unreferenced generated GLB on disk: public/assets/models/generated/aqualume/modular_connector/connector_aqualume-current-transit-tube-observation-dome-standard-085.glb.
@@ -146,7 +147,6 @@
 - Unreferenced generated GLB on disk: public/assets/models/generated/dungeon-outskirts/modular_prop/prop_dungeon-outskirts-bridge-napkin-dispenser-standard-032.glb.
 - Unreferenced generated GLB on disk: public/assets/models/generated/dungeon-outskirts/modular_prop/prop_dungeon-outskirts-bridge-phone-charger-cable-standard-042.glb.
 - Unreferenced generated GLB on disk: public/assets/models/generated/dungeon-outskirts/modular_prop/prop_dungeon-outskirts-camp-headphones-standard-043.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/fishing-harbor/modular_infrastructure/infrastructure_fishing-harbor-cargo-manhole-cover-standard-108.glb.
 - Unreferenced generated GLB on disk: public/assets/models/generated/fishing-harbor/modular_infrastructure/infrastructure_fishing-harbor-cargo-navigation-beacon-standard-118.glb.
 - Unreferenced generated GLB on disk: public/assets/models/generated/fishing-harbor/modular_infrastructure/infrastructure_fishing-harbor-dock-construction-barrier-standard-101.glb.
 - Unreferenced generated GLB on disk: public/assets/models/generated/fishing-harbor/modular_infrastructure/infrastructure_fishing-harbor-dock-dock-cleat-standard-121.glb.
