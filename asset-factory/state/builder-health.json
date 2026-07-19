@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-19T17:57:03.553Z",
+  "generatedAt": "2026-07-19T18:28:20.503Z",
   "builders": {
     "accessibility_gate": {
       "revision": "2026-07-18-r7",
@@ -213,8 +213,8 @@
       "revision": "2026-07-18-r7",
       "state": "closed",
       "reason": null,
-      "completed": 273,
-      "queued": 285,
+      "completed": 313,
+      "queued": 245,
       "quarantined": 0,
       "dominantFailureCount": 0
     },
