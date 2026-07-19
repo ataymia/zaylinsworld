@@ -11,13 +11,17 @@ import { ROAD, LANDMARKS } from './config/mapConfig.js';
 
 let canvas = null, ctx = null, expanded = false;
 let markers = [];            // [{ x, z, color, icon }] extra points (gas/diner)
+let landmarkLayout = LANDMARKS;
+let expandedView = 70;
 
 const COMPACT = 168;         // px size of the corner radar (small so it never covers HUD)
 const EXPANDED = 460;        // px size of the expanded map
 const VIEW_COMPACT = 46;     // world-units radius shown when compact (player-centred)
 const VIEW_EXPANDED = 70;    // world-units radius shown when expanded (origin-centred)
 
-export function initMinimap() {
+export function initMinimap({ landmarks = LANDMARKS, largeWorld = false } = {}) {
+  landmarkLayout = landmarks;
+  expandedView = largeWorld ? 1100 : 70;
   canvas = document.getElementById('minimap');
   if (!canvas) return null;
   ctx = canvas.getContext('2d');
@@ -63,7 +67,7 @@ export function toggleExpand() {
 export function draw(playerPos, headingRad, traffic = [], npcs = []) {
   if (!ctx) return;
   const css = expanded ? EXPANDED : COMPACT;
-  const view = expanded ? VIEW_EXPANDED : VIEW_COMPACT;
+  const view = expanded ? expandedView : VIEW_COMPACT;
   const cx = expanded ? 0 : playerPos.x;   // map centre in world coords
   const cz = expanded ? 0 : playerPos.z;
   const scale = (css / 2) / view;          // px per world-unit
@@ -99,7 +103,7 @@ export function draw(playerPos, headingRad, traffic = [], npcs = []) {
   ctx.setLineDash([]);
 
   // landmarks — coloured squares with first letter
-  for (const lm of LANDMARKS) {
+  for (const lm of landmarkLayout) {
     const x = px(lm.x), y = py(lm.z);
     ctx.fillStyle = lm.color || '#888';
     const s = expanded ? 10 : 7;

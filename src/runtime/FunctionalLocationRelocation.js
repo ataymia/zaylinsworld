@@ -1,7 +1,7 @@
 // Phase 7A: shared relocation contracts and cutover parity gate.
 // Pure runtime data: no scene mutation and no save migration occurs until a
 // location explicitly records every required piece of live evidence.
-import { STARTER_TOWN_LOCATIONS } from '../config/starterTownRuntimePlan.js';
+import { STARTER_TOWN_LOCATIONS, STARTER_TOWN_SPAWNS } from '../config/starterTownRuntimePlan.js';
 import { PARCEL_BY_LOCATION_ID } from '../config/starterTownParcelPlan.js';
 
 const freeze = (value) => Object.freeze(value);
@@ -43,6 +43,7 @@ const LEGACY_BINDINGS = freeze({
 export const FUNCTIONAL_LOCATION_CONTRACTS = freeze(STARTER_TOWN_LOCATIONS.map((location) => {
   const parcel = PARCEL_BY_LOCATION_ID[location.id];
   const legacy = LEGACY_BINDINGS[location.id];
+  const spawn = STARTER_TOWN_SPAWNS.find((entry) => entry.id === location.spawnId)?.position || null;
   if (!parcel || !legacy) throw new Error(`Missing Phase 7A binding for ${location.id}`);
   return freeze({
     locationId: location.id,
@@ -53,6 +54,7 @@ export const FUNCTIONAL_LOCATION_CONTRACTS = freeze(STARTER_TOWN_LOCATIONS.map((
     districtId: location.districtId,
     legacy: freeze({ ...legacy, interiorId: location.interiorId || null }),
     target: freeze({ ...location.position }),
+    spawn: spawn ? freeze({ ...spawn }) : null,
     assetRef: location.assetRef,
     parityFields: RELOCATION_PARITY_FIELDS,
   });

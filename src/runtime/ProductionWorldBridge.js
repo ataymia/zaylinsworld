@@ -20,6 +20,7 @@ import {
 
 const flatHeight = () => 0;
 const nextFrame = () => new Promise((resolve) => requestAnimationFrame(resolve));
+const ACTIVE_FUNCTIONAL_RELOCATIONS = Object.freeze(['zaylins-home']);
 
 const bridge = {
   installed: false,
@@ -118,6 +119,10 @@ export function attachPreparedProductionWorld(scene = bridge.scene) {
   bridge.attached = true;
   bridge.attachedAt = performance.now();
   return bridge.prepared.group;
+}
+
+export function productionWorldRelocationIds() {
+  return bridge.attached ? ACTIVE_FUNCTIONAL_RELOCATIONS : [];
 }
 
 function isWardrobeReturn() {
@@ -234,6 +239,7 @@ export function productionWorldBridgeSnapshot() {
     entering: bridge.entering,
     preloadMs: bridge.preparedAt && bridge.startedAt ? Math.round(bridge.preparedAt - bridge.startedAt) : null,
     lastError: bridge.lastError?.message || null,
+    activeRelocations: productionWorldRelocationIds(),
     relocation: functionalLocationRelocation.snapshot(),
   });
 }
