@@ -1,276 +1,24 @@
 {
   "version": 2,
-  "batchId": "batch-00064",
-  "completedAt": "2026-07-19T10:49:30.109Z",
+  "batchId": "batch-00066",
+  "completedAt": "2026-07-19T11:17:15.829Z",
   "requested": 20,
   "passed": 20,
   "failed": 0,
   "queueCounts": {
-    "completed": 1227,
+    "completed": 1267,
     "reference-only": 16,
     "unsupported": 189,
-    "queued": 865,
+    "queued": 825,
     "quarantined": 1
   },
   "results": [
     {
-      "id": "gap-starline-city-studio-picnic-table-standard-048",
-      "builder": "modular_furniture",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_furniture/furniture_starline-city-studio-picnic-table-standard-048.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 21,
-        "triangles": 4044,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "floor or wall contact detail",
-          "interaction clearance",
-          "joinery and fasteners",
-          "legs, pedestal, or wall mount",
-          "load-bearing frame",
-          "primary use surface",
-          "storage or access component",
-          "user contact surface"
-        ],
-        "bounds": {
-          "min": [
-            -0.6510000228881836,
-            -0.33924999833106995,
-            0
-          ],
-          "max": [
-            0.6510000228881836,
-            0.33924999833106995,
-            0.8500000238418579
-          ],
-          "dimensions": [
-            1.3020000457763672,
-            0.6784999966621399,
-            0.8500000238418579
-          ]
-        },
-        "requiredComponents": [
-          "primary use surface",
-          "load-bearing frame",
-          "legs, pedestal, or wall mount",
-          "user contact surface",
-          "storage or access component",
-          "joinery and fasteners",
-          "floor or wall contact detail",
-          "interaction clearance"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-starline-city-studio-picnic-table-standard-048/gap-starline-city-studio-picnic-table-standard-048_view_1.png",
-        "asset-factory/work/previews/gap-starline-city-studio-picnic-table-standard-048/gap-starline-city-studio-picnic-table-standard-048_view_2.png",
-        "asset-factory/work/previews/gap-starline-city-studio-picnic-table-standard-048/gap-starline-city-studio-picnic-table-standard-048_view_3.png",
-        "asset-factory/work/previews/gap-starline-city-studio-picnic-table-standard-048/gap-starline-city-studio-picnic-table-standard-048_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-dungeon-outskirts-hazard-transit-tube-short-straight-standard-017",
-      "builder": "modular_connector",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_connector/connector_dungeon-outskirts-hazard-transit-tube-short-straight-standard-017.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 19,
-        "triangles": 3572,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "LOD-preserved silhouette",
-          "collision-safe boundary",
-          "end connection socket",
-          "load-bearing frame",
-          "primary structural span",
-          "seal or transition trim",
-          "service access",
-          "start connection socket"
-        ],
-        "bounds": {
-          "min": [
-            -1.0399999618530273,
-            -0.8425000309944153,
-            0
-          ],
-          "max": [
-            1.0399999618530273,
-            0.8425000309944153,
-            1.440000057220459
-          ],
-          "dimensions": [
-            2.0799999237060547,
-            1.6850000619888306,
-            1.440000057220459
-          ]
-        },
-        "requiredComponents": [
-          "primary structural span",
-          "start connection socket",
-          "end connection socket",
-          "load-bearing frame",
-          "service access",
-          "seal or transition trim",
-          "collision-safe boundary",
-          "LOD-preserved silhouette"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-dungeon-outskirts-hazard-transit-tube-short-straight-standard-017/gap-dungeon-outskirts-hazard-transit-tube-short-straight-standard-017_view_1.png",
-        "asset-factory/work/previews/gap-dungeon-outskirts-hazard-transit-tube-short-straight-standard-017/gap-dungeon-outskirts-hazard-transit-tube-short-straight-standard-017_view_2.png",
-        "asset-factory/work/previews/gap-dungeon-outskirts-hazard-transit-tube-short-straight-standard-017/gap-dungeon-outskirts-hazard-transit-tube-short-straight-standard-017_view_3.png",
-        "asset-factory/work/previews/gap-dungeon-outskirts-hazard-transit-tube-short-straight-standard-017/gap-dungeon-outskirts-hazard-transit-tube-short-straight-standard-017_view_4.png"
-      ]
-    },
-    {
-      "id": "building_starter_6twelve_exterior_v02",
-      "builder": "modular_building",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/building_shell/building_starter_6twelve_exterior_v02.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 32,
-        "triangles": 6016,
-        "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_glass",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 7,
-        "components": [
-          "entrance",
-          "facade material breaks",
-          "foundation",
-          "primary massing",
-          "roof line",
-          "service side",
-          "window system"
-        ],
-        "bounds": {
-          "min": [
-            -8.640000343322754,
-            -6.75499963760376,
-            0
-          ],
-          "max": [
-            8.640000343322754,
-            6.755000114440918,
-            8.729999542236328
-          ],
-          "dimensions": [
-            17.280000686645508,
-            13.510000228881836,
-            8.729999542236328
-          ]
-        },
-        "requiredComponents": [
-          "primary massing",
-          "roof line",
-          "entrance",
-          "window system",
-          "facade material breaks",
-          "service side",
-          "foundation"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/building_starter_6twelve_exterior_v02/building_starter_6twelve_exterior_v02_view_1.png",
-        "asset-factory/work/previews/building_starter_6twelve_exterior_v02/building_starter_6twelve_exterior_v02_view_2.png",
-        "asset-factory/work/previews/building_starter_6twelve_exterior_v02/building_starter_6twelve_exterior_v02_view_3.png",
-        "asset-factory/work/previews/building_starter_6twelve_exterior_v02/building_starter_6twelve_exterior_v02_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-shared-world-services-dock-dry-standard-342",
-      "builder": "state_variant",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-services-dock-dry-standard-342.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 16,
-        "triangles": 3024,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "LOD and swap policy",
-          "animation transition socket",
-          "base object relationship",
-          "collision state",
-          "damage or repair metadata",
-          "interaction state",
-          "state-defining geometry",
-          "state-defining material layer"
-        ],
-        "bounds": {
-          "min": [
-            -0.4375,
-            -0.4399999976158142,
-            2.7939677238464355e-9
-          ],
-          "max": [
-            0.4375,
-            0.4399999976158142,
-            0.7325000762939453
-          ],
-          "dimensions": [
-            0.875,
-            0.8799999952316284,
-            0.7325000762939453
-          ]
-        },
-        "requiredComponents": [
-          "base object relationship",
-          "state-defining geometry",
-          "state-defining material layer",
-          "animation transition socket",
-          "collision state",
-          "interaction state",
-          "damage or repair metadata",
-          "LOD and swap policy"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-services-dock-dry-standard-342/gap-shared-world-services-dock-dry-standard-342_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-services-dock-dry-standard-342/gap-shared-world-services-dock-dry-standard-342_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-services-dock-dry-standard-342/gap-shared-world-services-dock-dry-standard-342_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-services-dock-dry-standard-342/gap-shared-world-services-dock-dry-standard-342_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-dungeon-outskirts-quest-keys-and-lanyard-standard-040",
+      "id": "gap-dungeon-outskirts-shrine-pencil-cup-standard-027",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_dungeon-outskirts-quest-keys-and-lanyard-standard-040.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_dungeon-outskirts-shrine-pencil-cup-standard-027.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -322,18 +70,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-dungeon-outskirts-quest-keys-and-lanyard-standard-040/gap-dungeon-outskirts-quest-keys-and-lanyard-standard-040_view_1.png",
-        "asset-factory/work/previews/gap-dungeon-outskirts-quest-keys-and-lanyard-standard-040/gap-dungeon-outskirts-quest-keys-and-lanyard-standard-040_view_2.png",
-        "asset-factory/work/previews/gap-dungeon-outskirts-quest-keys-and-lanyard-standard-040/gap-dungeon-outskirts-quest-keys-and-lanyard-standard-040_view_3.png",
-        "asset-factory/work/previews/gap-dungeon-outskirts-quest-keys-and-lanyard-standard-040/gap-dungeon-outskirts-quest-keys-and-lanyard-standard-040_view_4.png"
+        "asset-factory/work/previews/gap-dungeon-outskirts-shrine-pencil-cup-standard-027/gap-dungeon-outskirts-shrine-pencil-cup-standard-027_view_1.png",
+        "asset-factory/work/previews/gap-dungeon-outskirts-shrine-pencil-cup-standard-027/gap-dungeon-outskirts-shrine-pencil-cup-standard-027_view_2.png",
+        "asset-factory/work/previews/gap-dungeon-outskirts-shrine-pencil-cup-standard-027/gap-dungeon-outskirts-shrine-pencil-cup-standard-027_view_3.png",
+        "asset-factory/work/previews/gap-dungeon-outskirts-shrine-pencil-cup-standard-027/gap-dungeon-outskirts-shrine-pencil-cup-standard-027_view_4.png"
       ]
     },
     {
-      "id": "gap-starter-town-delivery-reef-barrier-standard-108",
+      "id": "gap-starter-town-home-dock-ladder-standard-093",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-delivery-reef-barrier-standard-108.glb",
+      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-home-dock-ladder-standard-093.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -386,18 +134,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-starter-town-delivery-reef-barrier-standard-108/gap-starter-town-delivery-reef-barrier-standard-108_view_1.png",
-        "asset-factory/work/previews/gap-starter-town-delivery-reef-barrier-standard-108/gap-starter-town-delivery-reef-barrier-standard-108_view_2.png",
-        "asset-factory/work/previews/gap-starter-town-delivery-reef-barrier-standard-108/gap-starter-town-delivery-reef-barrier-standard-108_view_3.png",
-        "asset-factory/work/previews/gap-starter-town-delivery-reef-barrier-standard-108/gap-starter-town-delivery-reef-barrier-standard-108_view_4.png"
+        "asset-factory/work/previews/gap-starter-town-home-dock-ladder-standard-093/gap-starter-town-home-dock-ladder-standard-093_view_1.png",
+        "asset-factory/work/previews/gap-starter-town-home-dock-ladder-standard-093/gap-starter-town-home-dock-ladder-standard-093_view_2.png",
+        "asset-factory/work/previews/gap-starter-town-home-dock-ladder-standard-093/gap-starter-town-home-dock-ladder-standard-093_view_3.png",
+        "asset-factory/work/previews/gap-starter-town-home-dock-ladder-standard-093/gap-starter-town-home-dock-ladder-standard-093_view_4.png"
       ]
     },
     {
-      "id": "gap-starline-city-studio-tool-cabinet-standard-058",
+      "id": "gap-starline-city-transit-teacher-desk-standard-039",
       "builder": "modular_furniture",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_furniture/furniture_starline-city-studio-tool-cabinet-standard-058.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_furniture/furniture_starline-city-transit-teacher-desk-standard-039.glb",
       "failures": [],
       "stats": {
         "meshObjects": 21,
@@ -449,18 +197,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-starline-city-studio-tool-cabinet-standard-058/gap-starline-city-studio-tool-cabinet-standard-058_view_1.png",
-        "asset-factory/work/previews/gap-starline-city-studio-tool-cabinet-standard-058/gap-starline-city-studio-tool-cabinet-standard-058_view_2.png",
-        "asset-factory/work/previews/gap-starline-city-studio-tool-cabinet-standard-058/gap-starline-city-studio-tool-cabinet-standard-058_view_3.png",
-        "asset-factory/work/previews/gap-starline-city-studio-tool-cabinet-standard-058/gap-starline-city-studio-tool-cabinet-standard-058_view_4.png"
+        "asset-factory/work/previews/gap-starline-city-transit-teacher-desk-standard-039/gap-starline-city-transit-teacher-desk-standard-039_view_1.png",
+        "asset-factory/work/previews/gap-starline-city-transit-teacher-desk-standard-039/gap-starline-city-transit-teacher-desk-standard-039_view_2.png",
+        "asset-factory/work/previews/gap-starline-city-transit-teacher-desk-standard-039/gap-starline-city-transit-teacher-desk-standard-039_view_3.png",
+        "asset-factory/work/previews/gap-starline-city-transit-teacher-desk-standard-039/gap-starline-city-transit-teacher-desk-standard-039_view_4.png"
       ]
     },
     {
-      "id": "gap-dungeon-outskirts-quest-transit-tube-incline-standard-021",
+      "id": "gap-fishing-harbor-cargo-transit-tube-support-ring-standard-053",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_connector/connector_dungeon-outskirts-quest-transit-tube-incline-standard-021.glb",
+      "outputPath": "public/assets/models/generated/fishing-harbor/modular_connector/connector_fishing-harbor-cargo-transit-tube-support-ring-standard-053.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
@@ -512,18 +260,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-dungeon-outskirts-quest-transit-tube-incline-standard-021/gap-dungeon-outskirts-quest-transit-tube-incline-standard-021_view_1.png",
-        "asset-factory/work/previews/gap-dungeon-outskirts-quest-transit-tube-incline-standard-021/gap-dungeon-outskirts-quest-transit-tube-incline-standard-021_view_2.png",
-        "asset-factory/work/previews/gap-dungeon-outskirts-quest-transit-tube-incline-standard-021/gap-dungeon-outskirts-quest-transit-tube-incline-standard-021_view_3.png",
-        "asset-factory/work/previews/gap-dungeon-outskirts-quest-transit-tube-incline-standard-021/gap-dungeon-outskirts-quest-transit-tube-incline-standard-021_view_4.png"
+        "asset-factory/work/previews/gap-fishing-harbor-cargo-transit-tube-support-ring-standard-053/gap-fishing-harbor-cargo-transit-tube-support-ring-standard-053_view_1.png",
+        "asset-factory/work/previews/gap-fishing-harbor-cargo-transit-tube-support-ring-standard-053/gap-fishing-harbor-cargo-transit-tube-support-ring-standard-053_view_2.png",
+        "asset-factory/work/previews/gap-fishing-harbor-cargo-transit-tube-support-ring-standard-053/gap-fishing-harbor-cargo-transit-tube-support-ring-standard-053_view_3.png",
+        "asset-factory/work/previews/gap-fishing-harbor-cargo-transit-tube-support-ring-standard-053/gap-fishing-harbor-cargo-transit-tube-support-ring-standard-053_view_4.png"
       ]
     },
     {
-      "id": "building_starter_apartment_mid_a_v01",
+      "id": "building_starter_chicken_spot_exterior_v02",
       "builder": "modular_building",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/building_shell/building_starter_apartment_mid_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starter-town/building_shell/building_starter_chicken_spot_exterior_v02.glb",
       "failures": [],
       "stats": {
         "meshObjects": 32,
@@ -575,18 +323,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/building_starter_apartment_mid_a_v01/building_starter_apartment_mid_a_v01_view_1.png",
-        "asset-factory/work/previews/building_starter_apartment_mid_a_v01/building_starter_apartment_mid_a_v01_view_2.png",
-        "asset-factory/work/previews/building_starter_apartment_mid_a_v01/building_starter_apartment_mid_a_v01_view_3.png",
-        "asset-factory/work/previews/building_starter_apartment_mid_a_v01/building_starter_apartment_mid_a_v01_view_4.png"
+        "asset-factory/work/previews/building_starter_chicken_spot_exterior_v02/building_starter_chicken_spot_exterior_v02_view_1.png",
+        "asset-factory/work/previews/building_starter_chicken_spot_exterior_v02/building_starter_chicken_spot_exterior_v02_view_2.png",
+        "asset-factory/work/previews/building_starter_chicken_spot_exterior_v02/building_starter_chicken_spot_exterior_v02_view_3.png",
+        "asset-factory/work/previews/building_starter_chicken_spot_exterior_v02/building_starter_chicken_spot_exterior_v02_view_4.png"
       ]
     },
     {
-      "id": "gap-shared-world-services-trash-bin-empty-standard-297",
+      "id": "gap-shared-world-vehicles-window-cracked-standard-334",
       "builder": "state_variant",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-services-trash-bin-empty-standard-297.glb",
+      "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-vehicles-window-cracked-standard-334.glb",
       "failures": [],
       "stats": {
         "meshObjects": 16,
@@ -638,18 +386,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-services-trash-bin-empty-standard-297/gap-shared-world-services-trash-bin-empty-standard-297_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-services-trash-bin-empty-standard-297/gap-shared-world-services-trash-bin-empty-standard-297_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-services-trash-bin-empty-standard-297/gap-shared-world-services-trash-bin-empty-standard-297_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-services-trash-bin-empty-standard-297/gap-shared-world-services-trash-bin-empty-standard-297_view_4.png"
+        "asset-factory/work/previews/gap-shared-world-vehicles-window-cracked-standard-334/gap-shared-world-vehicles-window-cracked-standard-334_view_1.png",
+        "asset-factory/work/previews/gap-shared-world-vehicles-window-cracked-standard-334/gap-shared-world-vehicles-window-cracked-standard-334_view_2.png",
+        "asset-factory/work/previews/gap-shared-world-vehicles-window-cracked-standard-334/gap-shared-world-vehicles-window-cracked-standard-334_view_3.png",
+        "asset-factory/work/previews/gap-shared-world-vehicles-window-cracked-standard-334/gap-shared-world-vehicles-window-cracked-standard-334_view_4.png"
       ]
     },
     {
-      "id": "gap-dungeon-outskirts-quest-milk-crate-standard-030",
+      "id": "gap-dungeon-outskirts-shrine-water-bottle-standard-037",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_dungeon-outskirts-quest-milk-crate-standard-030.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_dungeon-outskirts-shrine-water-bottle-standard-037.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -701,18 +449,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-dungeon-outskirts-quest-milk-crate-standard-030/gap-dungeon-outskirts-quest-milk-crate-standard-030_view_1.png",
-        "asset-factory/work/previews/gap-dungeon-outskirts-quest-milk-crate-standard-030/gap-dungeon-outskirts-quest-milk-crate-standard-030_view_2.png",
-        "asset-factory/work/previews/gap-dungeon-outskirts-quest-milk-crate-standard-030/gap-dungeon-outskirts-quest-milk-crate-standard-030_view_3.png",
-        "asset-factory/work/previews/gap-dungeon-outskirts-quest-milk-crate-standard-030/gap-dungeon-outskirts-quest-milk-crate-standard-030_view_4.png"
+        "asset-factory/work/previews/gap-dungeon-outskirts-shrine-water-bottle-standard-037/gap-dungeon-outskirts-shrine-water-bottle-standard-037_view_1.png",
+        "asset-factory/work/previews/gap-dungeon-outskirts-shrine-water-bottle-standard-037/gap-dungeon-outskirts-shrine-water-bottle-standard-037_view_2.png",
+        "asset-factory/work/previews/gap-dungeon-outskirts-shrine-water-bottle-standard-037/gap-dungeon-outskirts-shrine-water-bottle-standard-037_view_3.png",
+        "asset-factory/work/previews/gap-dungeon-outskirts-shrine-water-bottle-standard-037/gap-dungeon-outskirts-shrine-water-bottle-standard-037_view_4.png"
       ]
     },
     {
-      "id": "gap-starter-town-delivery-storm-drain-standard-078",
+      "id": "gap-starter-town-home-first-aid-station-standard-043",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-delivery-storm-drain-standard-078.glb",
+      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-home-first-aid-station-standard-043.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -765,18 +513,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-starter-town-delivery-storm-drain-standard-078/gap-starter-town-delivery-storm-drain-standard-078_view_1.png",
-        "asset-factory/work/previews/gap-starter-town-delivery-storm-drain-standard-078/gap-starter-town-delivery-storm-drain-standard-078_view_2.png",
-        "asset-factory/work/previews/gap-starter-town-delivery-storm-drain-standard-078/gap-starter-town-delivery-storm-drain-standard-078_view_3.png",
-        "asset-factory/work/previews/gap-starter-town-delivery-storm-drain-standard-078/gap-starter-town-delivery-storm-drain-standard-078_view_4.png"
+        "asset-factory/work/previews/gap-starter-town-home-first-aid-station-standard-043/gap-starter-town-home-first-aid-station-standard-043_view_1.png",
+        "asset-factory/work/previews/gap-starter-town-home-first-aid-station-standard-043/gap-starter-town-home-first-aid-station-standard-043_view_2.png",
+        "asset-factory/work/previews/gap-starter-town-home-first-aid-station-standard-043/gap-starter-town-home-first-aid-station-standard-043_view_3.png",
+        "asset-factory/work/previews/gap-starter-town-home-first-aid-station-standard-043/gap-starter-town-home-first-aid-station-standard-043_view_4.png"
       ]
     },
     {
-      "id": "gap-starline-city-studio-transit-tube-emergency-bench-standard-098",
+      "id": "gap-starline-city-transit-wardrobe-standard-059",
       "builder": "modular_furniture",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_furniture/furniture_starline-city-studio-transit-tube-emergency-bench-standard-098.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_furniture/furniture_starline-city-transit-wardrobe-standard-059.glb",
       "failures": [],
       "stats": {
         "meshObjects": 21,
@@ -828,18 +576,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-starline-city-studio-transit-tube-emergency-bench-standard-098/gap-starline-city-studio-transit-tube-emergency-bench-standard-098_view_1.png",
-        "asset-factory/work/previews/gap-starline-city-studio-transit-tube-emergency-bench-standard-098/gap-starline-city-studio-transit-tube-emergency-bench-standard-098_view_2.png",
-        "asset-factory/work/previews/gap-starline-city-studio-transit-tube-emergency-bench-standard-098/gap-starline-city-studio-transit-tube-emergency-bench-standard-098_view_3.png",
-        "asset-factory/work/previews/gap-starline-city-studio-transit-tube-emergency-bench-standard-098/gap-starline-city-studio-transit-tube-emergency-bench-standard-098_view_4.png"
+        "asset-factory/work/previews/gap-starline-city-transit-wardrobe-standard-059/gap-starline-city-transit-wardrobe-standard-059_view_1.png",
+        "asset-factory/work/previews/gap-starline-city-transit-wardrobe-standard-059/gap-starline-city-transit-wardrobe-standard-059_view_2.png",
+        "asset-factory/work/previews/gap-starline-city-transit-wardrobe-standard-059/gap-starline-city-transit-wardrobe-standard-059_view_3.png",
+        "asset-factory/work/previews/gap-starline-city-transit-wardrobe-standard-059/gap-starline-city-transit-wardrobe-standard-059_view_4.png"
       ]
     },
     {
-      "id": "gap-dungeon-outskirts-ruin-transit-tube-sharp-curve-standard-020",
+      "id": "gap-fishing-harbor-cargo-transit-tube-t-junction-standard-043",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_connector/connector_dungeon-outskirts-ruin-transit-tube-sharp-curve-standard-020.glb",
+      "outputPath": "public/assets/models/generated/fishing-harbor/modular_connector/connector_fishing-harbor-cargo-transit-tube-t-junction-standard-043.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
@@ -891,18 +639,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-dungeon-outskirts-ruin-transit-tube-sharp-curve-standard-020/gap-dungeon-outskirts-ruin-transit-tube-sharp-curve-standard-020_view_1.png",
-        "asset-factory/work/previews/gap-dungeon-outskirts-ruin-transit-tube-sharp-curve-standard-020/gap-dungeon-outskirts-ruin-transit-tube-sharp-curve-standard-020_view_2.png",
-        "asset-factory/work/previews/gap-dungeon-outskirts-ruin-transit-tube-sharp-curve-standard-020/gap-dungeon-outskirts-ruin-transit-tube-sharp-curve-standard-020_view_3.png",
-        "asset-factory/work/previews/gap-dungeon-outskirts-ruin-transit-tube-sharp-curve-standard-020/gap-dungeon-outskirts-ruin-transit-tube-sharp-curve-standard-020_view_4.png"
+        "asset-factory/work/previews/gap-fishing-harbor-cargo-transit-tube-t-junction-standard-043/gap-fishing-harbor-cargo-transit-tube-t-junction-standard-043_view_1.png",
+        "asset-factory/work/previews/gap-fishing-harbor-cargo-transit-tube-t-junction-standard-043/gap-fishing-harbor-cargo-transit-tube-t-junction-standard-043_view_2.png",
+        "asset-factory/work/previews/gap-fishing-harbor-cargo-transit-tube-t-junction-standard-043/gap-fishing-harbor-cargo-transit-tube-t-junction-standard-043_view_3.png",
+        "asset-factory/work/previews/gap-fishing-harbor-cargo-transit-tube-t-junction-standard-043/gap-fishing-harbor-cargo-transit-tube-t-junction-standard-043_view_4.png"
       ]
     },
     {
-      "id": "building_starter_apartment_small_a_v01",
+      "id": "building_starter_city_garage_exterior_v02",
       "builder": "modular_building",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/building_shell/building_starter_apartment_small_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starter-town/building_shell/building_starter_city_garage_exterior_v02.glb",
       "failures": [],
       "stats": {
         "meshObjects": 32,
@@ -954,18 +702,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/building_starter_apartment_small_a_v01/building_starter_apartment_small_a_v01_view_1.png",
-        "asset-factory/work/previews/building_starter_apartment_small_a_v01/building_starter_apartment_small_a_v01_view_2.png",
-        "asset-factory/work/previews/building_starter_apartment_small_a_v01/building_starter_apartment_small_a_v01_view_3.png",
-        "asset-factory/work/previews/building_starter_apartment_small_a_v01/building_starter_apartment_small_a_v01_view_4.png"
+        "asset-factory/work/previews/building_starter_city_garage_exterior_v02/building_starter_city_garage_exterior_v02_view_1.png",
+        "asset-factory/work/previews/building_starter_city_garage_exterior_v02/building_starter_city_garage_exterior_v02_view_2.png",
+        "asset-factory/work/previews/building_starter_city_garage_exterior_v02/building_starter_city_garage_exterior_v02_view_3.png",
+        "asset-factory/work/previews/building_starter_city_garage_exterior_v02/building_starter_city_garage_exterior_v02_view_4.png"
       ]
     },
     {
-      "id": "gap-shared-world-vehicles-arcade-out-of-order-standard-319",
+      "id": "gap-shared-world-water-arcade-active-standard-318",
       "builder": "state_variant",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-vehicles-arcade-out-of-order-standard-319.glb",
+      "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-water-arcade-active-standard-318.glb",
       "failures": [],
       "stats": {
         "meshObjects": 16,
@@ -1017,18 +765,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-vehicles-arcade-out-of-order-standard-319/gap-shared-world-vehicles-arcade-out-of-order-standard-319_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-vehicles-arcade-out-of-order-standard-319/gap-shared-world-vehicles-arcade-out-of-order-standard-319_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-vehicles-arcade-out-of-order-standard-319/gap-shared-world-vehicles-arcade-out-of-order-standard-319_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-vehicles-arcade-out-of-order-standard-319/gap-shared-world-vehicles-arcade-out-of-order-standard-319_view_4.png"
+        "asset-factory/work/previews/gap-shared-world-water-arcade-active-standard-318/gap-shared-world-water-arcade-active-standard-318_view_1.png",
+        "asset-factory/work/previews/gap-shared-world-water-arcade-active-standard-318/gap-shared-world-water-arcade-active-standard-318_view_2.png",
+        "asset-factory/work/previews/gap-shared-world-water-arcade-active-standard-318/gap-shared-world-water-arcade-active-standard-318_view_3.png",
+        "asset-factory/work/previews/gap-shared-world-water-arcade-active-standard-318/gap-shared-world-water-arcade-active-standard-318_view_4.png"
       ]
     },
     {
-      "id": "gap-dungeon-outskirts-ruin-loose-shoes-standard-049",
+      "id": "gap-dungeon-outskirts-trap-condiment-station-standard-031",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_dungeon-outskirts-ruin-loose-shoes-standard-049.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_dungeon-outskirts-trap-condiment-station-standard-031.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -1080,18 +828,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-dungeon-outskirts-ruin-loose-shoes-standard-049/gap-dungeon-outskirts-ruin-loose-shoes-standard-049_view_1.png",
-        "asset-factory/work/previews/gap-dungeon-outskirts-ruin-loose-shoes-standard-049/gap-dungeon-outskirts-ruin-loose-shoes-standard-049_view_2.png",
-        "asset-factory/work/previews/gap-dungeon-outskirts-ruin-loose-shoes-standard-049/gap-dungeon-outskirts-ruin-loose-shoes-standard-049_view_3.png",
-        "asset-factory/work/previews/gap-dungeon-outskirts-ruin-loose-shoes-standard-049/gap-dungeon-outskirts-ruin-loose-shoes-standard-049_view_4.png"
+        "asset-factory/work/previews/gap-dungeon-outskirts-trap-condiment-station-standard-031/gap-dungeon-outskirts-trap-condiment-station-standard-031_view_1.png",
+        "asset-factory/work/previews/gap-dungeon-outskirts-trap-condiment-station-standard-031/gap-dungeon-outskirts-trap-condiment-station-standard-031_view_2.png",
+        "asset-factory/work/previews/gap-dungeon-outskirts-trap-condiment-station-standard-031/gap-dungeon-outskirts-trap-condiment-station-standard-031_view_3.png",
+        "asset-factory/work/previews/gap-dungeon-outskirts-trap-condiment-station-standard-031/gap-dungeon-outskirts-trap-condiment-station-standard-031_view_4.png"
       ]
     },
     {
-      "id": "gap-starter-town-delivery-streetlight-standard-088",
+      "id": "gap-starter-town-home-inspection-platform-standard-053",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-delivery-streetlight-standard-088.glb",
+      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-home-inspection-platform-standard-053.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -1144,28 +892,28 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-starter-town-delivery-streetlight-standard-088/gap-starter-town-delivery-streetlight-standard-088_view_1.png",
-        "asset-factory/work/previews/gap-starter-town-delivery-streetlight-standard-088/gap-starter-town-delivery-streetlight-standard-088_view_2.png",
-        "asset-factory/work/previews/gap-starter-town-delivery-streetlight-standard-088/gap-starter-town-delivery-streetlight-standard-088_view_3.png",
-        "asset-factory/work/previews/gap-starter-town-delivery-streetlight-standard-088/gap-starter-town-delivery-streetlight-standard-088_view_4.png"
+        "asset-factory/work/previews/gap-starter-town-home-inspection-platform-standard-053/gap-starter-town-home-inspection-platform-standard-053_view_1.png",
+        "asset-factory/work/previews/gap-starter-town-home-inspection-platform-standard-053/gap-starter-town-home-inspection-platform-standard-053_view_2.png",
+        "asset-factory/work/previews/gap-starter-town-home-inspection-platform-standard-053/gap-starter-town-home-inspection-platform-standard-053_view_3.png",
+        "asset-factory/work/previews/gap-starter-town-home-inspection-platform-standard-053/gap-starter-town-home-inspection-platform-standard-053_view_4.png"
       ]
     },
     {
-      "id": "gap-starline-city-transit-airlock-equipment-rack-standard-099",
+      "id": "gap-techtown-automation-pool-lounger-standard-089",
       "builder": "modular_furniture",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_furniture/furniture_starline-city-transit-airlock-equipment-rack-standard-099.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_furniture/furniture_techtown-automation-pool-lounger-standard-089.glb",
       "failures": [],
       "stats": {
         "meshObjects": 21,
         "triangles": 4044,
         "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_cyan_emissive",
+          "tech_dark_metal",
+          "tech_white_light"
         ],
         "materialCount": 5,
         "components": [
@@ -1207,18 +955,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-starline-city-transit-airlock-equipment-rack-standard-099/gap-starline-city-transit-airlock-equipment-rack-standard-099_view_1.png",
-        "asset-factory/work/previews/gap-starline-city-transit-airlock-equipment-rack-standard-099/gap-starline-city-transit-airlock-equipment-rack-standard-099_view_2.png",
-        "asset-factory/work/previews/gap-starline-city-transit-airlock-equipment-rack-standard-099/gap-starline-city-transit-airlock-equipment-rack-standard-099_view_3.png",
-        "asset-factory/work/previews/gap-starline-city-transit-airlock-equipment-rack-standard-099/gap-starline-city-transit-airlock-equipment-rack-standard-099_view_4.png"
+        "asset-factory/work/previews/gap-techtown-automation-pool-lounger-standard-089/gap-techtown-automation-pool-lounger-standard-089_view_1.png",
+        "asset-factory/work/previews/gap-techtown-automation-pool-lounger-standard-089/gap-techtown-automation-pool-lounger-standard-089_view_2.png",
+        "asset-factory/work/previews/gap-techtown-automation-pool-lounger-standard-089/gap-techtown-automation-pool-lounger-standard-089_view_3.png",
+        "asset-factory/work/previews/gap-techtown-automation-pool-lounger-standard-089/gap-techtown-automation-pool-lounger-standard-089_view_4.png"
       ]
     },
     {
-      "id": "gap-dungeon-outskirts-shrine-transit-tube-long-straight-standard-018",
+      "id": "gap-fishing-harbor-dock-transit-tube-merge-standard-046",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_connector/connector_dungeon-outskirts-shrine-transit-tube-long-straight-standard-018.glb",
+      "outputPath": "public/assets/models/generated/fishing-harbor/modular_connector/connector_fishing-harbor-dock-transit-tube-merge-standard-046.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
@@ -1270,10 +1018,263 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-dungeon-outskirts-shrine-transit-tube-long-straight-standard-018/gap-dungeon-outskirts-shrine-transit-tube-long-straight-standard-018_view_1.png",
-        "asset-factory/work/previews/gap-dungeon-outskirts-shrine-transit-tube-long-straight-standard-018/gap-dungeon-outskirts-shrine-transit-tube-long-straight-standard-018_view_2.png",
-        "asset-factory/work/previews/gap-dungeon-outskirts-shrine-transit-tube-long-straight-standard-018/gap-dungeon-outskirts-shrine-transit-tube-long-straight-standard-018_view_3.png",
-        "asset-factory/work/previews/gap-dungeon-outskirts-shrine-transit-tube-long-straight-standard-018/gap-dungeon-outskirts-shrine-transit-tube-long-straight-standard-018_view_4.png"
+        "asset-factory/work/previews/gap-fishing-harbor-dock-transit-tube-merge-standard-046/gap-fishing-harbor-dock-transit-tube-merge-standard-046_view_1.png",
+        "asset-factory/work/previews/gap-fishing-harbor-dock-transit-tube-merge-standard-046/gap-fishing-harbor-dock-transit-tube-merge-standard-046_view_2.png",
+        "asset-factory/work/previews/gap-fishing-harbor-dock-transit-tube-merge-standard-046/gap-fishing-harbor-dock-transit-tube-merge-standard-046_view_3.png",
+        "asset-factory/work/previews/gap-fishing-harbor-dock-transit-tube-merge-standard-046/gap-fishing-harbor-dock-transit-tube-merge-standard-046_view_4.png"
+      ]
+    },
+    {
+      "id": "building_starter_cityhall_annex_shell_a_v01",
+      "builder": "modular_building",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/starter-town/building_shell/building_starter_cityhall_annex_shell_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 32,
+        "triangles": 6016,
+        "materials": [
+          "starter_black",
+          "starter_concrete",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_glass",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 7,
+        "components": [
+          "entrance",
+          "facade material breaks",
+          "foundation",
+          "primary massing",
+          "roof line",
+          "service side",
+          "window system"
+        ],
+        "bounds": {
+          "min": [
+            -8.640000343322754,
+            -6.75499963760376,
+            0
+          ],
+          "max": [
+            8.640000343322754,
+            6.755000114440918,
+            8.729999542236328
+          ],
+          "dimensions": [
+            17.280000686645508,
+            13.510000228881836,
+            8.729999542236328
+          ]
+        },
+        "requiredComponents": [
+          "primary massing",
+          "roof line",
+          "entrance",
+          "window system",
+          "facade material breaks",
+          "service side",
+          "foundation"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/building_starter_cityhall_annex_shell_a_v01/building_starter_cityhall_annex_shell_a_v01_view_1.png",
+        "asset-factory/work/previews/building_starter_cityhall_annex_shell_a_v01/building_starter_cityhall_annex_shell_a_v01_view_2.png",
+        "asset-factory/work/previews/building_starter_cityhall_annex_shell_a_v01/building_starter_cityhall_annex_shell_a_v01_view_3.png",
+        "asset-factory/work/previews/building_starter_cityhall_annex_shell_a_v01/building_starter_cityhall_annex_shell_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "gap-shared-world-water-cabinet-open-standard-288",
+      "builder": "state_variant",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-water-cabinet-open-standard-288.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 16,
+        "triangles": 3024,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "LOD and swap policy",
+          "animation transition socket",
+          "base object relationship",
+          "collision state",
+          "damage or repair metadata",
+          "interaction state",
+          "state-defining geometry",
+          "state-defining material layer"
+        ],
+        "bounds": {
+          "min": [
+            -0.4375,
+            -0.4399999976158142,
+            2.7939677238464355e-9
+          ],
+          "max": [
+            0.4375,
+            0.4399999976158142,
+            0.7325000762939453
+          ],
+          "dimensions": [
+            0.875,
+            0.8799999952316284,
+            0.7325000762939453
+          ]
+        },
+        "requiredComponents": [
+          "base object relationship",
+          "state-defining geometry",
+          "state-defining material layer",
+          "animation transition socket",
+          "collision state",
+          "interaction state",
+          "damage or repair metadata",
+          "LOD and swap policy"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/gap-shared-world-water-cabinet-open-standard-288/gap-shared-world-water-cabinet-open-standard-288_view_1.png",
+        "asset-factory/work/previews/gap-shared-world-water-cabinet-open-standard-288/gap-shared-world-water-cabinet-open-standard-288_view_2.png",
+        "asset-factory/work/previews/gap-shared-world-water-cabinet-open-standard-288/gap-shared-world-water-cabinet-open-standard-288_view_3.png",
+        "asset-factory/work/previews/gap-shared-world-water-cabinet-open-standard-288/gap-shared-world-water-cabinet-open-standard-288_view_4.png"
+      ]
+    },
+    {
+      "id": "gap-dungeon-outskirts-trap-id-badge-standard-041",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_dungeon-outskirts-trap-id-badge-standard-041.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 17,
+        "triangles": 3212,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "fasteners and seams",
+          "functional opening or access",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.36800000071525574,
+            -0.27300000190734863,
+            0
+          ],
+          "max": [
+            0.36800000071525574,
+            0.27300000190734863,
+            0.5679999589920044
+          ],
+          "dimensions": [
+            0.7360000014305115,
+            0.5460000038146973,
+            0.5679999589920044
+          ]
+        },
+        "requiredComponents": [
+          "object-specific primary body",
+          "support or contact structure",
+          "functional opening or access",
+          "handle, control, or closure",
+          "secondary functional assembly",
+          "fasteners and seams",
+          "placement contact",
+          "interaction or inventory socket"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/gap-dungeon-outskirts-trap-id-badge-standard-041/gap-dungeon-outskirts-trap-id-badge-standard-041_view_1.png",
+        "asset-factory/work/previews/gap-dungeon-outskirts-trap-id-badge-standard-041/gap-dungeon-outskirts-trap-id-badge-standard-041_view_2.png",
+        "asset-factory/work/previews/gap-dungeon-outskirts-trap-id-badge-standard-041/gap-dungeon-outskirts-trap-id-badge-standard-041_view_3.png",
+        "asset-factory/work/previews/gap-dungeon-outskirts-trap-id-badge-standard-041/gap-dungeon-outskirts-trap-id-badge-standard-041_view_4.png"
+      ]
+    },
+    {
+      "id": "gap-starter-town-home-mail-parcel-locker-standard-083",
+      "builder": "modular_infrastructure",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-home-mail-parcel-locker-standard-083.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 17,
+        "triangles": 3112,
+        "materials": [
+          "starter_black",
+          "starter_concrete",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 6,
+        "components": [
+          "anchored base or mount",
+          "fasteners and identification",
+          "power, conduit, drainage, or network path",
+          "primary operating surface",
+          "safety and weather protection",
+          "service access",
+          "structural enclosure or frame",
+          "user control or connection"
+        ],
+        "bounds": {
+          "min": [
+            -0.5519999861717224,
+            -0.36800000071525574,
+            0
+          ],
+          "max": [
+            0.5519999861717224,
+            0.36800000071525574,
+            1.565999984741211
+          ],
+          "dimensions": [
+            1.1039999723434448,
+            0.7360000014305115,
+            1.565999984741211
+          ]
+        },
+        "requiredComponents": [
+          "anchored base or mount",
+          "structural enclosure or frame",
+          "primary operating surface",
+          "user control or connection",
+          "service access",
+          "power, conduit, drainage, or network path",
+          "safety and weather protection",
+          "fasteners and identification"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/gap-starter-town-home-mail-parcel-locker-standard-083/gap-starter-town-home-mail-parcel-locker-standard-083_view_1.png",
+        "asset-factory/work/previews/gap-starter-town-home-mail-parcel-locker-standard-083/gap-starter-town-home-mail-parcel-locker-standard-083_view_2.png",
+        "asset-factory/work/previews/gap-starter-town-home-mail-parcel-locker-standard-083/gap-starter-town-home-mail-parcel-locker-standard-083_view_3.png",
+        "asset-factory/work/previews/gap-starter-town-home-mail-parcel-locker-standard-083/gap-starter-town-home-mail-parcel-locker-standard-083_view_4.png"
       ]
     }
   ]
