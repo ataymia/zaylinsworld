@@ -45,6 +45,10 @@ function stampServiceWorker() {
 //   not touch the normal player save or replace the main game entry.
 export default defineConfig({
   base: './',
+  // GitHub Pages receives a deliberately bounded Starter Town runtime pack.
+  // Copying every in-production town asset makes the deployment artifact
+  // unnecessarily large and can leave Pages serving HTML before its bundles.
+  publicDir: process.env.ZTA_PAGES_DEPLOYMENT === '1' ? false : 'public',
   define: {
     __BUILD_COMMIT__: JSON.stringify(BUILD_COMMIT),
     __BUILD_TIME__: JSON.stringify(BUILD_TIME),
