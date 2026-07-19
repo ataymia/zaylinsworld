@@ -1,24 +1,24 @@
 {
   "version": 2,
-  "batchId": "batch-00077",
-  "completedAt": "2026-07-19T13:56:11.326Z",
+  "batchId": "batch-00079",
+  "completedAt": "2026-07-19T14:36:39.996Z",
   "requested": 20,
   "passed": 20,
   "failed": 0,
   "queueCounts": {
-    "completed": 1487,
+    "completed": 1527,
     "reference-only": 16,
     "unsupported": 189,
-    "queued": 605,
+    "queued": 565,
     "quarantined": 1
   },
   "results": [
     {
-      "id": "gap-rich-hills-security-magazine-stack-standard-047",
+      "id": "gap-rich-hills-smart-home-phone-charger-cable-standard-042",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_rich-hills-security-magazine-stack-standard-047.glb",
+      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_rich-hills-smart-home-phone-charger-cable-standard-042.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -70,29 +70,29 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-rich-hills-security-magazine-stack-standard-047/gap-rich-hills-security-magazine-stack-standard-047_view_1.png",
-        "asset-factory/work/previews/gap-rich-hills-security-magazine-stack-standard-047/gap-rich-hills-security-magazine-stack-standard-047_view_2.png",
-        "asset-factory/work/previews/gap-rich-hills-security-magazine-stack-standard-047/gap-rich-hills-security-magazine-stack-standard-047_view_3.png",
-        "asset-factory/work/previews/gap-rich-hills-security-magazine-stack-standard-047/gap-rich-hills-security-magazine-stack-standard-047_view_4.png"
+        "asset-factory/work/previews/gap-rich-hills-smart-home-phone-charger-cable-standard-042/gap-rich-hills-smart-home-phone-charger-cable-standard-042_view_1.png",
+        "asset-factory/work/previews/gap-rich-hills-smart-home-phone-charger-cable-standard-042/gap-rich-hills-smart-home-phone-charger-cable-standard-042_view_2.png",
+        "asset-factory/work/previews/gap-rich-hills-smart-home-phone-charger-cable-standard-042/gap-rich-hills-smart-home-phone-charger-cable-standard-042_view_3.png",
+        "asset-factory/work/previews/gap-rich-hills-smart-home-phone-charger-cable-standard-042/gap-rich-hills-smart-home-phone-charger-cable-standard-042_view_4.png"
       ]
     },
     {
-      "id": "gap-starter-town-school-pressure-equalizer-standard-102",
+      "id": "gap-techtown-charging-charging-pedestal-standard-071",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-school-pressure-equalizer-standard-102.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/infrastructure_techtown-charging-charging-pedestal-standard-071.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
         "triangles": 3112,
         "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_concrete",
+          "tech_cyan_emissive",
+          "tech_dark_metal",
+          "tech_white_light"
         ],
         "materialCount": 6,
         "components": [
@@ -134,18 +134,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-starter-town-school-pressure-equalizer-standard-102/gap-starter-town-school-pressure-equalizer-standard-102_view_1.png",
-        "asset-factory/work/previews/gap-starter-town-school-pressure-equalizer-standard-102/gap-starter-town-school-pressure-equalizer-standard-102_view_2.png",
-        "asset-factory/work/previews/gap-starter-town-school-pressure-equalizer-standard-102/gap-starter-town-school-pressure-equalizer-standard-102_view_3.png",
-        "asset-factory/work/previews/gap-starter-town-school-pressure-equalizer-standard-102/gap-starter-town-school-pressure-equalizer-standard-102_view_4.png"
+        "asset-factory/work/previews/gap-techtown-charging-charging-pedestal-standard-071/gap-techtown-charging-charging-pedestal-standard-071_view_1.png",
+        "asset-factory/work/previews/gap-techtown-charging-charging-pedestal-standard-071/gap-techtown-charging-charging-pedestal-standard-071_view_2.png",
+        "asset-factory/work/previews/gap-techtown-charging-charging-pedestal-standard-071/gap-techtown-charging-charging-pedestal-standard-071_view_3.png",
+        "asset-factory/work/previews/gap-techtown-charging-charging-pedestal-standard-071/gap-techtown-charging-charging-pedestal-standard-071_view_4.png"
       ]
     },
     {
-      "id": "gap-shared-world-damage-transit-tube-anchor-footing-standard-184",
+      "id": "gap-shared-world-water-transit-tube-sharp-curve-standard-170",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/modular_connector/connector_shared-world-damage-transit-tube-anchor-footing-standard-184.glb",
+      "outputPath": "public/assets/models/generated/shared-world/modular_connector/connector_shared-world-water-transit-tube-sharp-curve-standard-170.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
@@ -197,81 +197,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-damage-transit-tube-anchor-footing-standard-184/gap-shared-world-damage-transit-tube-anchor-footing-standard-184_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-damage-transit-tube-anchor-footing-standard-184/gap-shared-world-damage-transit-tube-anchor-footing-standard-184_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-damage-transit-tube-anchor-footing-standard-184/gap-shared-world-damage-transit-tube-anchor-footing-standard-184_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-damage-transit-tube-anchor-footing-standard-184/gap-shared-world-damage-transit-tube-anchor-footing-standard-184_view_4.png"
+        "asset-factory/work/previews/gap-shared-world-water-transit-tube-sharp-curve-standard-170/gap-shared-world-water-transit-tube-sharp-curve-standard-170_view_1.png",
+        "asset-factory/work/previews/gap-shared-world-water-transit-tube-sharp-curve-standard-170/gap-shared-world-water-transit-tube-sharp-curve-standard-170_view_2.png",
+        "asset-factory/work/previews/gap-shared-world-water-transit-tube-sharp-curve-standard-170/gap-shared-world-water-transit-tube-sharp-curve-standard-170_view_3.png",
+        "asset-factory/work/previews/gap-shared-world-water-transit-tube-sharp-curve-standard-170/gap-shared-world-water-transit-tube-sharp-curve-standard-170_view_4.png"
       ]
     },
     {
-      "id": "building_wayfarer_fuel_supply_exterior_v01",
-      "builder": "modular_building",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/dungeon-outskirts/building_shell/building_wayfarer_fuel_supply_exterior_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 32,
-        "triangles": 6016,
-        "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_glass",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 7,
-        "components": [
-          "entrance",
-          "facade material breaks",
-          "foundation",
-          "primary massing",
-          "roof line",
-          "service side",
-          "window system"
-        ],
-        "bounds": {
-          "min": [
-            -8.640000343322754,
-            -6.75499963760376,
-            0
-          ],
-          "max": [
-            8.640000343322754,
-            6.755000114440918,
-            8.729999542236328
-          ],
-          "dimensions": [
-            17.280000686645508,
-            13.510000228881836,
-            8.729999542236328
-          ]
-        },
-        "requiredComponents": [
-          "primary massing",
-          "roof line",
-          "entrance",
-          "window system",
-          "facade material breaks",
-          "service side",
-          "foundation"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/building_wayfarer_fuel_supply_exterior_v01/building_wayfarer_fuel_supply_exterior_v01_view_1.png",
-        "asset-factory/work/previews/building_wayfarer_fuel_supply_exterior_v01/building_wayfarer_fuel_supply_exterior_v01_view_2.png",
-        "asset-factory/work/previews/building_wayfarer_fuel_supply_exterior_v01/building_wayfarer_fuel_supply_exterior_v01_view_3.png",
-        "asset-factory/work/previews/building_wayfarer_fuel_supply_exterior_v01/building_wayfarer_fuel_supply_exterior_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-rich-hills-security-mug-standard-038",
+      "id": "gap-rich-hills-smart-home-replacement-bulb-box-standard-060",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_rich-hills-security-mug-standard-038.glb",
+      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_rich-hills-smart-home-replacement-bulb-box-standard-060.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -323,29 +260,29 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-rich-hills-security-mug-standard-038/gap-rich-hills-security-mug-standard-038_view_1.png",
-        "asset-factory/work/previews/gap-rich-hills-security-mug-standard-038/gap-rich-hills-security-mug-standard-038_view_2.png",
-        "asset-factory/work/previews/gap-rich-hills-security-mug-standard-038/gap-rich-hills-security-mug-standard-038_view_3.png",
-        "asset-factory/work/previews/gap-rich-hills-security-mug-standard-038/gap-rich-hills-security-mug-standard-038_view_4.png"
+        "asset-factory/work/previews/gap-rich-hills-smart-home-replacement-bulb-box-standard-060/gap-rich-hills-smart-home-replacement-bulb-box-standard-060_view_1.png",
+        "asset-factory/work/previews/gap-rich-hills-smart-home-replacement-bulb-box-standard-060/gap-rich-hills-smart-home-replacement-bulb-box-standard-060_view_2.png",
+        "asset-factory/work/previews/gap-rich-hills-smart-home-replacement-bulb-box-standard-060/gap-rich-hills-smart-home-replacement-bulb-box-standard-060_view_3.png",
+        "asset-factory/work/previews/gap-rich-hills-smart-home-replacement-bulb-box-standard-060/gap-rich-hills-smart-home-replacement-bulb-box-standard-060_view_4.png"
       ]
     },
     {
-      "id": "gap-starter-town-school-trash-receptacle-standard-082",
+      "id": "gap-techtown-charging-first-aid-station-standard-051",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-school-trash-receptacle-standard-082.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/infrastructure_techtown-charging-first-aid-station-standard-051.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
         "triangles": 3112,
         "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_concrete",
+          "tech_cyan_emissive",
+          "tech_dark_metal",
+          "tech_white_light"
         ],
         "materialCount": 6,
         "components": [
@@ -387,18 +324,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-starter-town-school-trash-receptacle-standard-082/gap-starter-town-school-trash-receptacle-standard-082_view_1.png",
-        "asset-factory/work/previews/gap-starter-town-school-trash-receptacle-standard-082/gap-starter-town-school-trash-receptacle-standard-082_view_2.png",
-        "asset-factory/work/previews/gap-starter-town-school-trash-receptacle-standard-082/gap-starter-town-school-trash-receptacle-standard-082_view_3.png",
-        "asset-factory/work/previews/gap-starter-town-school-trash-receptacle-standard-082/gap-starter-town-school-trash-receptacle-standard-082_view_4.png"
+        "asset-factory/work/previews/gap-techtown-charging-first-aid-station-standard-051/gap-techtown-charging-first-aid-station-standard-051_view_1.png",
+        "asset-factory/work/previews/gap-techtown-charging-first-aid-station-standard-051/gap-techtown-charging-first-aid-station-standard-051_view_2.png",
+        "asset-factory/work/previews/gap-techtown-charging-first-aid-station-standard-051/gap-techtown-charging-first-aid-station-standard-051_view_3.png",
+        "asset-factory/work/previews/gap-techtown-charging-first-aid-station-standard-051/gap-techtown-charging-first-aid-station-standard-051_view_4.png"
       ]
     },
     {
-      "id": "gap-shared-world-damage-transit-tube-gentle-curve-standard-169",
+      "id": "gap-shared-world-weather-transit-tube-docking-connector-standard-182",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/modular_connector/connector_shared-world-damage-transit-tube-gentle-curve-standard-169.glb",
+      "outputPath": "public/assets/models/generated/shared-world/modular_connector/connector_shared-world-weather-transit-tube-docking-connector-standard-182.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
@@ -450,18 +387,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-damage-transit-tube-gentle-curve-standard-169/gap-shared-world-damage-transit-tube-gentle-curve-standard-169_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-damage-transit-tube-gentle-curve-standard-169/gap-shared-world-damage-transit-tube-gentle-curve-standard-169_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-damage-transit-tube-gentle-curve-standard-169/gap-shared-world-damage-transit-tube-gentle-curve-standard-169_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-damage-transit-tube-gentle-curve-standard-169/gap-shared-world-damage-transit-tube-gentle-curve-standard-169_view_4.png"
+        "asset-factory/work/previews/gap-shared-world-weather-transit-tube-docking-connector-standard-182/gap-shared-world-weather-transit-tube-docking-connector-standard-182_view_1.png",
+        "asset-factory/work/previews/gap-shared-world-weather-transit-tube-docking-connector-standard-182/gap-shared-world-weather-transit-tube-docking-connector-standard-182_view_2.png",
+        "asset-factory/work/previews/gap-shared-world-weather-transit-tube-docking-connector-standard-182/gap-shared-world-weather-transit-tube-docking-connector-standard-182_view_3.png",
+        "asset-factory/work/previews/gap-shared-world-weather-transit-tube-docking-connector-standard-182/gap-shared-world-weather-transit-tube-docking-connector-standard-182_view_4.png"
       ]
     },
     {
-      "id": "gap-rich-hills-security-package-large-standard-065",
+      "id": "gap-rich-hills-smart-home-spray-bottle-set-standard-069",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_rich-hills-security-package-large-standard-065.glb",
+      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_rich-hills-smart-home-spray-bottle-set-standard-069.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -513,29 +450,29 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-rich-hills-security-package-large-standard-065/gap-rich-hills-security-package-large-standard-065_view_1.png",
-        "asset-factory/work/previews/gap-rich-hills-security-package-large-standard-065/gap-rich-hills-security-package-large-standard-065_view_2.png",
-        "asset-factory/work/previews/gap-rich-hills-security-package-large-standard-065/gap-rich-hills-security-package-large-standard-065_view_3.png",
-        "asset-factory/work/previews/gap-rich-hills-security-package-large-standard-065/gap-rich-hills-security-package-large-standard-065_view_4.png"
+        "asset-factory/work/previews/gap-rich-hills-smart-home-spray-bottle-set-standard-069/gap-rich-hills-smart-home-spray-bottle-set-standard-069_view_1.png",
+        "asset-factory/work/previews/gap-rich-hills-smart-home-spray-bottle-set-standard-069/gap-rich-hills-smart-home-spray-bottle-set-standard-069_view_2.png",
+        "asset-factory/work/previews/gap-rich-hills-smart-home-spray-bottle-set-standard-069/gap-rich-hills-smart-home-spray-bottle-set-standard-069_view_3.png",
+        "asset-factory/work/previews/gap-rich-hills-smart-home-spray-bottle-set-standard-069/gap-rich-hills-smart-home-spray-bottle-set-standard-069_view_4.png"
       ]
     },
     {
-      "id": "gap-starter-town-street-aed-cabinet-standard-045",
+      "id": "gap-techtown-charging-inspection-platform-standard-061",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-street-aed-cabinet-standard-045.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/infrastructure_techtown-charging-inspection-platform-standard-061.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
         "triangles": 3112,
         "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_concrete",
+          "tech_cyan_emissive",
+          "tech_dark_metal",
+          "tech_white_light"
         ],
         "materialCount": 6,
         "components": [
@@ -577,18 +514,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-starter-town-street-aed-cabinet-standard-045/gap-starter-town-street-aed-cabinet-standard-045_view_1.png",
-        "asset-factory/work/previews/gap-starter-town-street-aed-cabinet-standard-045/gap-starter-town-street-aed-cabinet-standard-045_view_2.png",
-        "asset-factory/work/previews/gap-starter-town-street-aed-cabinet-standard-045/gap-starter-town-street-aed-cabinet-standard-045_view_3.png",
-        "asset-factory/work/previews/gap-starter-town-street-aed-cabinet-standard-045/gap-starter-town-street-aed-cabinet-standard-045_view_4.png"
+        "asset-factory/work/previews/gap-techtown-charging-inspection-platform-standard-061/gap-techtown-charging-inspection-platform-standard-061_view_1.png",
+        "asset-factory/work/previews/gap-techtown-charging-inspection-platform-standard-061/gap-techtown-charging-inspection-platform-standard-061_view_2.png",
+        "asset-factory/work/previews/gap-techtown-charging-inspection-platform-standard-061/gap-techtown-charging-inspection-platform-standard-061_view_3.png",
+        "asset-factory/work/previews/gap-techtown-charging-inspection-platform-standard-061/gap-techtown-charging-inspection-platform-standard-061_view_4.png"
       ]
     },
     {
-      "id": "gap-shared-world-inventory-transit-tube-light-housing-standard-188",
+      "id": "gap-shared-world-weather-transit-tube-short-straight-standard-167",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/modular_connector/connector_shared-world-inventory-transit-tube-light-housing-standard-188.glb",
+      "outputPath": "public/assets/models/generated/shared-world/modular_connector/connector_shared-world-weather-transit-tube-short-straight-standard-167.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
@@ -640,18 +577,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-inventory-transit-tube-light-housing-standard-188/gap-shared-world-inventory-transit-tube-light-housing-standard-188_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-inventory-transit-tube-light-housing-standard-188/gap-shared-world-inventory-transit-tube-light-housing-standard-188_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-inventory-transit-tube-light-housing-standard-188/gap-shared-world-inventory-transit-tube-light-housing-standard-188_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-inventory-transit-tube-light-housing-standard-188/gap-shared-world-inventory-transit-tube-light-housing-standard-188_view_4.png"
+        "asset-factory/work/previews/gap-shared-world-weather-transit-tube-short-straight-standard-167/gap-shared-world-weather-transit-tube-short-straight-standard-167_view_1.png",
+        "asset-factory/work/previews/gap-shared-world-weather-transit-tube-short-straight-standard-167/gap-shared-world-weather-transit-tube-short-straight-standard-167_view_2.png",
+        "asset-factory/work/previews/gap-shared-world-weather-transit-tube-short-straight-standard-167/gap-shared-world-weather-transit-tube-short-straight-standard-167_view_3.png",
+        "asset-factory/work/previews/gap-shared-world-weather-transit-tube-short-straight-standard-167/gap-shared-world-weather-transit-tube-short-straight-standard-167_view_4.png"
       ]
     },
     {
-      "id": "gap-rich-hills-security-sticky-note-set-standard-056",
+      "id": "gap-rich-hills-smart-home-utensil-dispenser-standard-033",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_rich-hills-security-sticky-note-set-standard-056.glb",
+      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_rich-hills-smart-home-utensil-dispenser-standard-033.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -703,29 +640,29 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-rich-hills-security-sticky-note-set-standard-056/gap-rich-hills-security-sticky-note-set-standard-056_view_1.png",
-        "asset-factory/work/previews/gap-rich-hills-security-sticky-note-set-standard-056/gap-rich-hills-security-sticky-note-set-standard-056_view_2.png",
-        "asset-factory/work/previews/gap-rich-hills-security-sticky-note-set-standard-056/gap-rich-hills-security-sticky-note-set-standard-056_view_3.png",
-        "asset-factory/work/previews/gap-rich-hills-security-sticky-note-set-standard-056/gap-rich-hills-security-sticky-note-set-standard-056_view_4.png"
+        "asset-factory/work/previews/gap-rich-hills-smart-home-utensil-dispenser-standard-033/gap-rich-hills-smart-home-utensil-dispenser-standard-033_view_1.png",
+        "asset-factory/work/previews/gap-rich-hills-smart-home-utensil-dispenser-standard-033/gap-rich-hills-smart-home-utensil-dispenser-standard-033_view_2.png",
+        "asset-factory/work/previews/gap-rich-hills-smart-home-utensil-dispenser-standard-033/gap-rich-hills-smart-home-utensil-dispenser-standard-033_view_3.png",
+        "asset-factory/work/previews/gap-rich-hills-smart-home-utensil-dispenser-standard-033/gap-rich-hills-smart-home-utensil-dispenser-standard-033_view_4.png"
       ]
     },
     {
-      "id": "gap-starter-town-street-emergency-exit-pod-standard-105",
+      "id": "gap-techtown-charging-traffic-cone-set-standard-081",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-street-emergency-exit-pod-standard-105.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/infrastructure_techtown-charging-traffic-cone-set-standard-081.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
         "triangles": 3112,
         "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_concrete",
+          "tech_cyan_emissive",
+          "tech_dark_metal",
+          "tech_white_light"
         ],
         "materialCount": 6,
         "components": [
@@ -767,18 +704,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-starter-town-street-emergency-exit-pod-standard-105/gap-starter-town-street-emergency-exit-pod-standard-105_view_1.png",
-        "asset-factory/work/previews/gap-starter-town-street-emergency-exit-pod-standard-105/gap-starter-town-street-emergency-exit-pod-standard-105_view_2.png",
-        "asset-factory/work/previews/gap-starter-town-street-emergency-exit-pod-standard-105/gap-starter-town-street-emergency-exit-pod-standard-105_view_3.png",
-        "asset-factory/work/previews/gap-starter-town-street-emergency-exit-pod-standard-105/gap-starter-town-street-emergency-exit-pod-standard-105_view_4.png"
+        "asset-factory/work/previews/gap-techtown-charging-traffic-cone-set-standard-081/gap-techtown-charging-traffic-cone-set-standard-081_view_1.png",
+        "asset-factory/work/previews/gap-techtown-charging-traffic-cone-set-standard-081/gap-techtown-charging-traffic-cone-set-standard-081_view_2.png",
+        "asset-factory/work/previews/gap-techtown-charging-traffic-cone-set-standard-081/gap-techtown-charging-traffic-cone-set-standard-081_view_3.png",
+        "asset-factory/work/previews/gap-techtown-charging-traffic-cone-set-standard-081/gap-techtown-charging-traffic-cone-set-standard-081_view_4.png"
       ]
     },
     {
-      "id": "gap-shared-world-inventory-transit-tube-t-junction-standard-173",
+      "id": "gap-starline-city-delivery-transit-tube-decline-standard-030",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/modular_connector/connector_shared-world-inventory-transit-tube-t-junction-standard-173.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_connector/connector_starline-city-delivery-transit-tube-decline-standard-030.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
@@ -830,18 +767,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-inventory-transit-tube-t-junction-standard-173/gap-shared-world-inventory-transit-tube-t-junction-standard-173_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-inventory-transit-tube-t-junction-standard-173/gap-shared-world-inventory-transit-tube-t-junction-standard-173_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-inventory-transit-tube-t-junction-standard-173/gap-shared-world-inventory-transit-tube-t-junction-standard-173_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-inventory-transit-tube-t-junction-standard-173/gap-shared-world-inventory-transit-tube-t-junction-standard-173_view_4.png"
+        "asset-factory/work/previews/gap-starline-city-delivery-transit-tube-decline-standard-030/gap-starline-city-delivery-transit-tube-decline-standard-030_view_1.png",
+        "asset-factory/work/previews/gap-starline-city-delivery-transit-tube-decline-standard-030/gap-starline-city-delivery-transit-tube-decline-standard-030_view_2.png",
+        "asset-factory/work/previews/gap-starline-city-delivery-transit-tube-decline-standard-030/gap-starline-city-delivery-transit-tube-decline-standard-030_view_3.png",
+        "asset-factory/work/previews/gap-starline-city-delivery-transit-tube-decline-standard-030/gap-starline-city-delivery-transit-tube-decline-standard-030_view_4.png"
       ]
     },
     {
-      "id": "gap-rich-hills-security-tackle-box-standard-074",
+      "id": "gap-rich-hills-wellness-fishing-rod-holder-standard-075",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_rich-hills-security-tackle-box-standard-074.glb",
+      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_rich-hills-wellness-fishing-rod-holder-standard-075.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -893,29 +830,29 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-rich-hills-security-tackle-box-standard-074/gap-rich-hills-security-tackle-box-standard-074_view_1.png",
-        "asset-factory/work/previews/gap-rich-hills-security-tackle-box-standard-074/gap-rich-hills-security-tackle-box-standard-074_view_2.png",
-        "asset-factory/work/previews/gap-rich-hills-security-tackle-box-standard-074/gap-rich-hills-security-tackle-box-standard-074_view_3.png",
-        "asset-factory/work/previews/gap-rich-hills-security-tackle-box-standard-074/gap-rich-hills-security-tackle-box-standard-074_view_4.png"
+        "asset-factory/work/previews/gap-rich-hills-wellness-fishing-rod-holder-standard-075/gap-rich-hills-wellness-fishing-rod-holder-standard-075_view_1.png",
+        "asset-factory/work/previews/gap-rich-hills-wellness-fishing-rod-holder-standard-075/gap-rich-hills-wellness-fishing-rod-holder-standard-075_view_2.png",
+        "asset-factory/work/previews/gap-rich-hills-wellness-fishing-rod-holder-standard-075/gap-rich-hills-wellness-fishing-rod-holder-standard-075_view_3.png",
+        "asset-factory/work/previews/gap-rich-hills-wellness-fishing-rod-holder-standard-075/gap-rich-hills-wellness-fishing-rod-holder-standard-075_view_4.png"
       ]
     },
     {
-      "id": "gap-starter-town-street-hose-reel-standard-055",
+      "id": "gap-techtown-data-bus-stop-pole-standard-082",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-street-hose-reel-standard-055.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/infrastructure_techtown-data-bus-stop-pole-standard-082.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
         "triangles": 3112,
         "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_concrete",
+          "tech_cyan_emissive",
+          "tech_dark_metal",
+          "tech_white_light"
         ],
         "materialCount": 6,
         "components": [
@@ -957,18 +894,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-starter-town-street-hose-reel-standard-055/gap-starter-town-street-hose-reel-standard-055_view_1.png",
-        "asset-factory/work/previews/gap-starter-town-street-hose-reel-standard-055/gap-starter-town-street-hose-reel-standard-055_view_2.png",
-        "asset-factory/work/previews/gap-starter-town-street-hose-reel-standard-055/gap-starter-town-street-hose-reel-standard-055_view_3.png",
-        "asset-factory/work/previews/gap-starter-town-street-hose-reel-standard-055/gap-starter-town-street-hose-reel-standard-055_view_4.png"
+        "asset-factory/work/previews/gap-techtown-data-bus-stop-pole-standard-082/gap-techtown-data-bus-stop-pole-standard-082_view_1.png",
+        "asset-factory/work/previews/gap-techtown-data-bus-stop-pole-standard-082/gap-techtown-data-bus-stop-pole-standard-082_view_2.png",
+        "asset-factory/work/previews/gap-techtown-data-bus-stop-pole-standard-082/gap-techtown-data-bus-stop-pole-standard-082_view_3.png",
+        "asset-factory/work/previews/gap-techtown-data-bus-stop-pole-standard-082/gap-techtown-data-bus-stop-pole-standard-082_view_4.png"
       ]
     },
     {
-      "id": "gap-shared-world-missions-transit-tube-lane-divider-standard-189",
+      "id": "gap-starline-city-high-rise-transit-tube-long-straight-standard-026",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/modular_connector/connector_shared-world-missions-transit-tube-lane-divider-standard-189.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_connector/connector_starline-city-high-rise-transit-tube-long-straight-standard-026.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
@@ -1020,18 +957,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-missions-transit-tube-lane-divider-standard-189/gap-shared-world-missions-transit-tube-lane-divider-standard-189_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-missions-transit-tube-lane-divider-standard-189/gap-shared-world-missions-transit-tube-lane-divider-standard-189_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-missions-transit-tube-lane-divider-standard-189/gap-shared-world-missions-transit-tube-lane-divider-standard-189_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-missions-transit-tube-lane-divider-standard-189/gap-shared-world-missions-transit-tube-lane-divider-standard-189_view_4.png"
+        "asset-factory/work/previews/gap-starline-city-high-rise-transit-tube-long-straight-standard-026/gap-starline-city-high-rise-transit-tube-long-straight-standard-026_view_1.png",
+        "asset-factory/work/previews/gap-starline-city-high-rise-transit-tube-long-straight-standard-026/gap-starline-city-high-rise-transit-tube-long-straight-standard-026_view_2.png",
+        "asset-factory/work/previews/gap-starline-city-high-rise-transit-tube-long-straight-standard-026/gap-starline-city-high-rise-transit-tube-long-straight-standard-026_view_3.png",
+        "asset-factory/work/previews/gap-starline-city-high-rise-transit-tube-long-straight-standard-026/gap-starline-city-high-rise-transit-tube-long-straight-standard-026_view_4.png"
       ]
     },
     {
-      "id": "gap-rich-hills-service-coat-on-hook-standard-050",
+      "id": "gap-rich-hills-wellness-insulated-delivery-bag-standard-066",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_rich-hills-service-coat-on-hook-standard-050.glb",
+      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_rich-hills-wellness-insulated-delivery-bag-standard-066.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -1083,29 +1020,29 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-rich-hills-service-coat-on-hook-standard-050/gap-rich-hills-service-coat-on-hook-standard-050_view_1.png",
-        "asset-factory/work/previews/gap-rich-hills-service-coat-on-hook-standard-050/gap-rich-hills-service-coat-on-hook-standard-050_view_2.png",
-        "asset-factory/work/previews/gap-rich-hills-service-coat-on-hook-standard-050/gap-rich-hills-service-coat-on-hook-standard-050_view_3.png",
-        "asset-factory/work/previews/gap-rich-hills-service-coat-on-hook-standard-050/gap-rich-hills-service-coat-on-hook-standard-050_view_4.png"
+        "asset-factory/work/previews/gap-rich-hills-wellness-insulated-delivery-bag-standard-066/gap-rich-hills-wellness-insulated-delivery-bag-standard-066_view_1.png",
+        "asset-factory/work/previews/gap-rich-hills-wellness-insulated-delivery-bag-standard-066/gap-rich-hills-wellness-insulated-delivery-bag-standard-066_view_2.png",
+        "asset-factory/work/previews/gap-rich-hills-wellness-insulated-delivery-bag-standard-066/gap-rich-hills-wellness-insulated-delivery-bag-standard-066_view_3.png",
+        "asset-factory/work/previews/gap-rich-hills-wellness-insulated-delivery-bag-standard-066/gap-rich-hills-wellness-insulated-delivery-bag-standard-066_view_4.png"
       ]
     },
     {
-      "id": "gap-starter-town-street-medical-waste-station-standard-115",
+      "id": "gap-techtown-data-cable-reel-standard-062",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-street-medical-waste-station-standard-115.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/infrastructure_techtown-data-cable-reel-standard-062.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
         "triangles": 3112,
         "materials": [
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_concrete",
+          "tech_cyan_emissive",
+          "tech_dark_metal",
+          "tech_white_light"
         ],
         "materialCount": 6,
         "components": [
@@ -1147,18 +1084,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-starter-town-street-medical-waste-station-standard-115/gap-starter-town-street-medical-waste-station-standard-115_view_1.png",
-        "asset-factory/work/previews/gap-starter-town-street-medical-waste-station-standard-115/gap-starter-town-street-medical-waste-station-standard-115_view_2.png",
-        "asset-factory/work/previews/gap-starter-town-street-medical-waste-station-standard-115/gap-starter-town-street-medical-waste-station-standard-115_view_3.png",
-        "asset-factory/work/previews/gap-starter-town-street-medical-waste-station-standard-115/gap-starter-town-street-medical-waste-station-standard-115_view_4.png"
+        "asset-factory/work/previews/gap-techtown-data-cable-reel-standard-062/gap-techtown-data-cable-reel-standard-062_view_1.png",
+        "asset-factory/work/previews/gap-techtown-data-cable-reel-standard-062/gap-techtown-data-cable-reel-standard-062_view_2.png",
+        "asset-factory/work/previews/gap-techtown-data-cable-reel-standard-062/gap-techtown-data-cable-reel-standard-062_view_3.png",
+        "asset-factory/work/previews/gap-techtown-data-cable-reel-standard-062/gap-techtown-data-cable-reel-standard-062_view_4.png"
       ]
     },
     {
-      "id": "gap-shared-world-missions-transit-tube-y-split-standard-174",
+      "id": "gap-starline-city-media-transit-tube-sharp-curve-standard-028",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/modular_connector/connector_shared-world-missions-transit-tube-y-split-standard-174.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_connector/connector_starline-city-media-transit-tube-sharp-curve-standard-028.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
@@ -1210,18 +1147,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-missions-transit-tube-y-split-standard-174/gap-shared-world-missions-transit-tube-y-split-standard-174_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-missions-transit-tube-y-split-standard-174/gap-shared-world-missions-transit-tube-y-split-standard-174_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-missions-transit-tube-y-split-standard-174/gap-shared-world-missions-transit-tube-y-split-standard-174_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-missions-transit-tube-y-split-standard-174/gap-shared-world-missions-transit-tube-y-split-standard-174_view_4.png"
+        "asset-factory/work/previews/gap-starline-city-media-transit-tube-sharp-curve-standard-028/gap-starline-city-media-transit-tube-sharp-curve-standard-028_view_1.png",
+        "asset-factory/work/previews/gap-starline-city-media-transit-tube-sharp-curve-standard-028/gap-starline-city-media-transit-tube-sharp-curve-standard-028_view_2.png",
+        "asset-factory/work/previews/gap-starline-city-media-transit-tube-sharp-curve-standard-028/gap-starline-city-media-transit-tube-sharp-curve-standard-028_view_3.png",
+        "asset-factory/work/previews/gap-starline-city-media-transit-tube-sharp-curve-standard-028/gap-starline-city-media-transit-tube-sharp-curve-standard-028_view_4.png"
       ]
     },
     {
-      "id": "gap-rich-hills-service-id-badge-standard-041",
+      "id": "gap-rich-hills-wellness-milk-crate-standard-030",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_rich-hills-service-id-badge-standard-041.glb",
+      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_rich-hills-wellness-milk-crate-standard-030.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -1273,10 +1210,74 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-rich-hills-service-id-badge-standard-041/gap-rich-hills-service-id-badge-standard-041_view_1.png",
-        "asset-factory/work/previews/gap-rich-hills-service-id-badge-standard-041/gap-rich-hills-service-id-badge-standard-041_view_2.png",
-        "asset-factory/work/previews/gap-rich-hills-service-id-badge-standard-041/gap-rich-hills-service-id-badge-standard-041_view_3.png",
-        "asset-factory/work/previews/gap-rich-hills-service-id-badge-standard-041/gap-rich-hills-service-id-badge-standard-041_view_4.png"
+        "asset-factory/work/previews/gap-rich-hills-wellness-milk-crate-standard-030/gap-rich-hills-wellness-milk-crate-standard-030_view_1.png",
+        "asset-factory/work/previews/gap-rich-hills-wellness-milk-crate-standard-030/gap-rich-hills-wellness-milk-crate-standard-030_view_2.png",
+        "asset-factory/work/previews/gap-rich-hills-wellness-milk-crate-standard-030/gap-rich-hills-wellness-milk-crate-standard-030_view_3.png",
+        "asset-factory/work/previews/gap-rich-hills-wellness-milk-crate-standard-030/gap-rich-hills-wellness-milk-crate-standard-030_view_4.png"
+      ]
+    },
+    {
+      "id": "gap-techtown-data-fire-extinguisher-cabinet-standard-052",
+      "builder": "modular_infrastructure",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/infrastructure_techtown-data-fire-extinguisher-cabinet-standard-052.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 17,
+        "triangles": 3112,
+        "materials": [
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_concrete",
+          "tech_cyan_emissive",
+          "tech_dark_metal",
+          "tech_white_light"
+        ],
+        "materialCount": 6,
+        "components": [
+          "anchored base or mount",
+          "fasteners and identification",
+          "power, conduit, drainage, or network path",
+          "primary operating surface",
+          "safety and weather protection",
+          "service access",
+          "structural enclosure or frame",
+          "user control or connection"
+        ],
+        "bounds": {
+          "min": [
+            -0.5519999861717224,
+            -0.36800000071525574,
+            0
+          ],
+          "max": [
+            0.5519999861717224,
+            0.36800000071525574,
+            1.565999984741211
+          ],
+          "dimensions": [
+            1.1039999723434448,
+            0.7360000014305115,
+            1.565999984741211
+          ]
+        },
+        "requiredComponents": [
+          "anchored base or mount",
+          "structural enclosure or frame",
+          "primary operating surface",
+          "user control or connection",
+          "service access",
+          "power, conduit, drainage, or network path",
+          "safety and weather protection",
+          "fasteners and identification"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/gap-techtown-data-fire-extinguisher-cabinet-standard-052/gap-techtown-data-fire-extinguisher-cabinet-standard-052_view_1.png",
+        "asset-factory/work/previews/gap-techtown-data-fire-extinguisher-cabinet-standard-052/gap-techtown-data-fire-extinguisher-cabinet-standard-052_view_2.png",
+        "asset-factory/work/previews/gap-techtown-data-fire-extinguisher-cabinet-standard-052/gap-techtown-data-fire-extinguisher-cabinet-standard-052_view_3.png",
+        "asset-factory/work/previews/gap-techtown-data-fire-extinguisher-cabinet-standard-052/gap-techtown-data-fire-extinguisher-cabinet-standard-052_view_4.png"
       ]
     }
   ]
