@@ -1,16 +1,16 @@
 # Zaylins Asset Factory Health
 
-- Generated: 2026-07-19T07:41:51.506Z
+- Generated: 2026-07-19T08:39:30.545Z
 - Master records: 2298
 - Queue records: 2298
-- Completed records: 1087
-- Completed GLBs verified on disk: 557
-- Completed factory-generated GLBs: 557
+- Completed records: 1127
+- Completed GLBs verified on disk: 597
+- Completed factory-generated GLBs: 597
 - Completed curated/legacy GLBs: 0
 - Completed runtime deliverables: 530
-- All GLBs under public/assets/models: 1196
-- GLBs specifically under public/assets/models/generated: 596
-- Queued Blender assets: 1005
+- All GLBs under public/assets/models: 1203
+- GLBs specifically under public/assets/models/generated: 603
+- Queued Blender assets: 965
 - Queued runtime assets: 0
 - Quarantined: 1
 - Unsupported: 189
@@ -38,12 +38,12 @@
 | loading_crate | 3 | 0 | 0 | closed |
 | mailbox | 1 | 0 | 0 | closed |
 | modern_bed | 1 | 0 | 0 | closed |
-| modular_building | 157 | 73 | 0 | closed |
-| modular_connector | 38 | 134 | 0 | closed |
+| modular_building | 163 | 67 | 0 | closed |
+| modular_connector | 45 | 127 | 0 | closed |
 | modular_food | 9 | 0 | 0 | closed |
-| modular_furniture | 87 | 53 | 0 | closed |
-| modular_infrastructure | 48 | 188 | 0 | closed |
-| modular_prop | 40 | 518 | 0 | closed |
+| modular_furniture | 95 | 45 | 0 | closed |
+| modular_infrastructure | 55 | 181 | 0 | closed |
+| modular_prop | 46 | 512 | 0 | closed |
 | modular_road | 36 | 0 | 0 | closed |
 | multi_monitor | 6 | 0 | 0 | closed |
 | municipal_bench | 14 | 0 | 0 | closed |
@@ -55,7 +55,7 @@
 | planter | 4 | 0 | 0 | closed |
 | restaurant_booth | 1 | 0 | 0 | closed |
 | road_sign | 9 | 0 | 0 | closed |
-| state_variant | 40 | 39 | 0 | closed |
+| state_variant | 46 | 33 | 0 | closed |
 | storm_drain | 1 | 0 | 0 | closed |
 | streetlight | 8 | 0 | 0 | closed |
 | traffic_light | 1 | 0 | 0 | closed |
@@ -66,40 +66,7 @@
 
 - Unreferenced generated GLB on disk: public/assets/models/generated/aqualume/building_shell/arch_aqualume_bubble_lift_a_v01.glb.
 - Unreferenced generated GLB on disk: public/assets/models/generated/aqualume/modular_connector/connector_aqualume-airlock-conduit-straight-standard-105.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/aqualume/modular_connector/connector_aqualume-sonar-transit-tube-sharp-curve-standard-075.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/aqualume/modular_connector/connector_aqualume-sonar-vent-straight-standard-108.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/aqualume/modular_connector/connector_aqualume-submersible-fence-corner-standard-112.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/aqualume/modular_connector/connector_aqualume-submersible-pipe-wall-flange-standard-101.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/aqualume/modular_connector/connector_aqualume-submersible-transit-tube-external-strut-standard-090.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/aqualume/modular_connector/connector_aqualume-submersible-transit-tube-y-split-standard-079.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/aqualume/modular_connector/connector_aqualume-transit-tube-cable-tray-tee-standard-104.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/casino-strip/modular_prop/prop_casino-strip-stage-pencil-cup-standard-029.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/casino-strip/modular_prop/prop_casino-strip-stage-return-parcel-bin-standard-069.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/casino-strip/modular_prop/prop_casino-strip-stage-toolbox-standard-059.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/casino-strip/modular_prop/prop_casino-strip-stage-water-bottle-standard-039.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/dungeon-outskirts/modular_prop/prop_dungeon-outskirts-bridge-napkin-dispenser-standard-032.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/dungeon-outskirts/modular_prop/prop_dungeon-outskirts-bridge-phone-charger-cable-standard-042.glb.
 - Unreferenced generated GLB on disk: public/assets/models/generated/dungeon-outskirts/modular_prop/prop_dungeon-outskirts-camp-headphones-standard-043.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/fishing-harbor/modular_infrastructure/infrastructure_fishing-harbor-weather-shade-sail-standard-116.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/fishing-harbor/modular_infrastructure/infrastructure_fishing-harbor-weather-submersible-charger-standard-136.glb.
 - Unreferenced generated GLB on disk: public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-accessibility-gate-locked-standard-310.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-damage-vehicle-clean-standard-302.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-inventory-furniture-pristine-standard-336.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-inventory-locker-closed-standard-291.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-inventory-sign-lit-standard-306.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-inventory-streetlight-off-standard-321.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-inventory-vending-machine-stocked-standard-351.glb.
 - Unreferenced generated GLB on disk: public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-missions-crate-full-standard-292.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/starline-city/modular_furniture/furniture_starline-city-retail-high-chair-standard-066.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/starline-city/modular_furniture/furniture_starline-city-retail-laboratory-bench-standard-086.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/starline-city/modular_furniture/furniture_starline-city-retail-shower-bench-standard-076.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/starline-city/modular_furniture/furniture_starline-city-retail-underwater-observation-seat-standard-096.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/starline-city/modular_furniture/furniture_starline-city-security-bathroom-vanity-standard-075.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/starline-city/modular_furniture/furniture_starline-city-security-bookcase-standard-055.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/starline-city/modular_furniture/furniture_starline-city-security-counter-stool-standard-065.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/starline-city/modular_furniture/furniture_starline-city-security-dungeon-camp-bedroll-standard-095.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-clinic-access-reader-standard-067.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-clinic-bike-rack-standard-077.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-clinic-fish-weigh-station-standard-097.glb.
-- Unreferenced generated GLB on disk: public/assets/models/generated/starter-town/modular_infrastructure/infrastructure_starter-town-clinic-fuse-box-standard-047.glb.
 - Unreferenced generated GLB on disk: public/assets/models/generated/techtown/modular_prop/elevated_road_support_a_v01.glb.
