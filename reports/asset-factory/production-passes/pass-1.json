@@ -1,24 +1,24 @@
 {
   "version": 2,
-  "batchId": "batch-00098",
-  "completedAt": "2026-07-19T19:30:42.428Z",
+  "batchId": "batch-00100",
+  "completedAt": "2026-07-19T19:58:53.995Z",
   "requested": 20,
   "passed": 20,
   "failed": 0,
   "queueCounts": {
-    "completed": 1907,
+    "completed": 1947,
     "reference-only": 16,
     "unsupported": 189,
-    "queued": 185,
+    "queued": 145,
     "quarantined": 1
   },
   "results": [
     {
-      "id": "prop_hotel_bell_cart_a_v01",
+      "id": "prop_navigation_chart_table_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_hotel_bell_cart_a_v01.glb",
+      "outputPath": "public/assets/models/generated/fishing-harbor/modular_prop/prop_navigation_chart_table_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -68,18 +68,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_hotel_bell_cart_a_v01/prop_hotel_bell_cart_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_hotel_bell_cart_a_v01/prop_hotel_bell_cart_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_hotel_bell_cart_a_v01/prop_hotel_bell_cart_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_hotel_bell_cart_a_v01/prop_hotel_bell_cart_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_navigation_chart_table_a_v01/prop_navigation_chart_table_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_navigation_chart_table_a_v01/prop_navigation_chart_table_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_navigation_chart_table_a_v01/prop_navigation_chart_table_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_navigation_chart_table_a_v01/prop_navigation_chart_table_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_hotel_housekeeping_cart_a_v01",
+      "id": "prop_net_mending_table_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_hotel_housekeeping_cart_a_v01.glb",
+      "outputPath": "public/assets/models/generated/fishing-harbor/modular_prop/prop_net_mending_table_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -129,18 +129,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_hotel_housekeeping_cart_a_v01/prop_hotel_housekeeping_cart_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_hotel_housekeeping_cart_a_v01/prop_hotel_housekeeping_cart_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_hotel_housekeeping_cart_a_v01/prop_hotel_housekeeping_cart_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_hotel_housekeeping_cart_a_v01/prop_hotel_housekeeping_cart_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_net_mending_table_a_v01/prop_net_mending_table_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_net_mending_table_a_v01/prop_net_mending_table_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_net_mending_table_a_v01/prop_net_mending_table_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_net_mending_table_a_v01/prop_net_mending_table_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_hotel_luggage_a_v01",
+      "id": "prop_outpost_communal_fire_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_hotel_luggage_a_v01.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_outpost_communal_fire_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -190,18 +190,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_hotel_luggage_a_v01/prop_hotel_luggage_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_hotel_luggage_a_v01/prop_hotel_luggage_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_hotel_luggage_a_v01/prop_hotel_luggage_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_hotel_luggage_a_v01/prop_hotel_luggage_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_outpost_communal_fire_a_v01/prop_outpost_communal_fire_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_outpost_communal_fire_a_v01/prop_outpost_communal_fire_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_outpost_communal_fire_a_v01/prop_outpost_communal_fire_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_outpost_communal_fire_a_v01/prop_outpost_communal_fire_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_hotel_room_door_a_v01",
+      "id": "prop_outpost_direction_sign_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_hotel_room_door_a_v01.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_outpost_direction_sign_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -251,18 +251,384 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_hotel_room_door_a_v01/prop_hotel_room_door_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_hotel_room_door_a_v01/prop_hotel_room_door_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_hotel_room_door_a_v01/prop_hotel_room_door_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_hotel_room_door_a_v01/prop_hotel_room_door_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_outpost_direction_sign_a_v01/prop_outpost_direction_sign_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_outpost_direction_sign_a_v01/prop_outpost_direction_sign_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_outpost_direction_sign_a_v01/prop_outpost_direction_sign_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_outpost_direction_sign_a_v01/prop_outpost_direction_sign_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_hover_charge_pedestal_a_v01",
+      "id": "prop_outpost_lantern_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_hover_charge_pedestal_a_v01.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_outpost_lantern_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_outpost_lantern_a_v01/prop_outpost_lantern_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_outpost_lantern_a_v01/prop_outpost_lantern_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_outpost_lantern_a_v01/prop_outpost_lantern_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_outpost_lantern_a_v01/prop_outpost_lantern_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_outpost_quest_board_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_outpost_quest_board_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_outpost_quest_board_a_v01/prop_outpost_quest_board_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_outpost_quest_board_a_v01/prop_outpost_quest_board_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_outpost_quest_board_a_v01/prop_outpost_quest_board_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_outpost_quest_board_a_v01/prop_outpost_quest_board_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_outpost_rescue_bell_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_outpost_rescue_bell_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_outpost_rescue_bell_a_v01/prop_outpost_rescue_bell_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_outpost_rescue_bell_a_v01/prop_outpost_rescue_bell_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_outpost_rescue_bell_a_v01/prop_outpost_rescue_bell_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_outpost_rescue_bell_a_v01/prop_outpost_rescue_bell_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_outpost_supply_crate_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_outpost_supply_crate_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_outpost_supply_crate_a_v01/prop_outpost_supply_crate_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_outpost_supply_crate_a_v01/prop_outpost_supply_crate_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_outpost_supply_crate_a_v01/prop_outpost_supply_crate_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_outpost_supply_crate_a_v01/prop_outpost_supply_crate_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_outpost_training_dummy_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_outpost_training_dummy_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_outpost_training_dummy_a_v01/prop_outpost_training_dummy_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_outpost_training_dummy_a_v01/prop_outpost_training_dummy_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_outpost_training_dummy_a_v01/prop_outpost_training_dummy_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_outpost_training_dummy_a_v01/prop_outpost_training_dummy_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_outpost_well_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_outpost_well_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_outpost_well_a_v01/prop_outpost_well_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_outpost_well_a_v01/prop_outpost_well_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_outpost_well_a_v01/prop_outpost_well_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_outpost_well_a_v01/prop_outpost_well_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_phone_display_table_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_phone_display_table_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -312,18 +678,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_hover_charge_pedestal_a_v01/prop_hover_charge_pedestal_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_hover_charge_pedestal_a_v01/prop_hover_charge_pedestal_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_hover_charge_pedestal_a_v01/prop_hover_charge_pedestal_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_hover_charge_pedestal_a_v01/prop_hover_charge_pedestal_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_phone_display_table_a_v01/prop_phone_display_table_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_phone_display_table_a_v01/prop_phone_display_table_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_phone_display_table_a_v01/prop_phone_display_table_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_phone_display_table_a_v01/prop_phone_display_table_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_institute_arcade_repair_station_a_v01",
+      "id": "prop_photo_backdrop_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_institute_arcade_repair_station_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_photo_backdrop_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -373,18 +739,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_institute_arcade_repair_station_a_v01/prop_institute_arcade_repair_station_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_institute_arcade_repair_station_a_v01/prop_institute_arcade_repair_station_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_institute_arcade_repair_station_a_v01/prop_institute_arcade_repair_station_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_institute_arcade_repair_station_a_v01/prop_institute_arcade_repair_station_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_photo_backdrop_a_v01/prop_photo_backdrop_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_photo_backdrop_a_v01/prop_photo_backdrop_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_photo_backdrop_a_v01/prop_photo_backdrop_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_photo_backdrop_a_v01/prop_photo_backdrop_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_institute_probability_board_a_v01",
+      "id": "prop_photo_pose_marker_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_institute_probability_board_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_photo_pose_marker_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -434,18 +800,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_institute_probability_board_a_v01/prop_institute_probability_board_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_institute_probability_board_a_v01/prop_institute_probability_board_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_institute_probability_board_a_v01/prop_institute_probability_board_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_institute_probability_board_a_v01/prop_institute_probability_board_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_photo_pose_marker_a_v01/prop_photo_pose_marker_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_photo_pose_marker_a_v01/prop_photo_pose_marker_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_photo_pose_marker_a_v01/prop_photo_pose_marker_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_photo_pose_marker_a_v01/prop_photo_pose_marker_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_institute_security_monitor_a_v01",
+      "id": "prop_photo_softbox_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_institute_security_monitor_a_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_photo_softbox_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -495,18 +861,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_institute_security_monitor_a_v01/prop_institute_security_monitor_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_institute_security_monitor_a_v01/prop_institute_security_monitor_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_institute_security_monitor_a_v01/prop_institute_security_monitor_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_institute_security_monitor_a_v01/prop_institute_security_monitor_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_photo_softbox_a_v01/prop_photo_softbox_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_photo_softbox_a_v01/prop_photo_softbox_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_photo_softbox_a_v01/prop_photo_softbox_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_photo_softbox_a_v01/prop_photo_softbox_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_institute_training_table_a_v01",
+      "id": "prop_potion_cauldron_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_institute_training_table_a_v01.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_potion_cauldron_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -556,201 +922,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_institute_training_table_a_v01/prop_institute_training_table_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_institute_training_table_a_v01/prop_institute_training_table_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_institute_training_table_a_v01/prop_institute_training_table_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_institute_training_table_a_v01/prop_institute_training_table_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_potion_cauldron_a_v01/prop_potion_cauldron_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_potion_cauldron_a_v01/prop_potion_cauldron_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_potion_cauldron_a_v01/prop_potion_cauldron_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_potion_cauldron_a_v01/prop_potion_cauldron_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_interview_room_table_a_v01",
+      "id": "prop_potion_ingredient_shelf_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_interview_room_table_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_cyan_emissive",
-          "tech_dark_metal",
-          "tech_white_light"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_interview_room_table_a_v01/prop_interview_room_table_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_interview_room_table_a_v01/prop_interview_room_table_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_interview_room_table_a_v01/prop_interview_room_table_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_interview_room_table_a_v01/prop_interview_room_table_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_keycard_reader_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_keycard_reader_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_cyan_emissive",
-          "tech_dark_metal",
-          "tech_white_light"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_keycard_reader_a_v01/prop_keycard_reader_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_keycard_reader_a_v01/prop_keycard_reader_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_keycard_reader_a_v01/prop_keycard_reader_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_keycard_reader_a_v01/prop_keycard_reader_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_kitchen_prep_counter_future_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_kitchen_prep_counter_future_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_cyan_emissive",
-          "tech_dark_metal",
-          "tech_white_light"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_kitchen_prep_counter_future_a_v01/prop_kitchen_prep_counter_future_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_kitchen_prep_counter_future_a_v01/prop_kitchen_prep_counter_future_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_kitchen_prep_counter_future_a_v01/prop_kitchen_prep_counter_future_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_kitchen_prep_counter_future_a_v01/prop_kitchen_prep_counter_future_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_knot_training_board_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/modular_prop/prop_knot_training_board_a_v01.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_potion_ingredient_shelf_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -800,140 +983,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_knot_training_board_a_v01/prop_knot_training_board_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_knot_training_board_a_v01/prop_knot_training_board_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_knot_training_board_a_v01/prop_knot_training_board_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_knot_training_board_a_v01/prop_knot_training_board_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_potion_ingredient_shelf_a_v01/prop_potion_ingredient_shelf_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_potion_ingredient_shelf_a_v01/prop_potion_ingredient_shelf_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_potion_ingredient_shelf_a_v01/prop_potion_ingredient_shelf_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_potion_ingredient_shelf_a_v01/prop_potion_ingredient_shelf_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_laptop_station_a_v01",
+      "id": "prop_potion_mix_table_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_laptop_station_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_cyan_emissive",
-          "tech_dark_metal",
-          "tech_white_light"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_laptop_station_a_v01/prop_laptop_station_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_laptop_station_a_v01/prop_laptop_station_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_laptop_station_a_v01/prop_laptop_station_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_laptop_station_a_v01/prop_laptop_station_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_led_light_strip_home_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_led_light_strip_home_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_cyan_emissive",
-          "tech_dark_metal",
-          "tech_white_light"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_led_light_strip_home_a_v01/prop_led_light_strip_home_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_led_light_strip_home_a_v01/prop_led_light_strip_home_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_led_light_strip_home_a_v01/prop_led_light_strip_home_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_led_light_strip_home_a_v01/prop_led_light_strip_home_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_light_board_training_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_light_board_training_a_v01.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_potion_mix_table_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -983,18 +1044,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_light_board_training_a_v01/prop_light_board_training_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_light_board_training_a_v01/prop_light_board_training_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_light_board_training_a_v01/prop_light_board_training_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_light_board_training_a_v01/prop_light_board_training_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_potion_mix_table_a_v01/prop_potion_mix_table_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_potion_mix_table_a_v01/prop_potion_mix_table_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_potion_mix_table_a_v01/prop_potion_mix_table_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_potion_mix_table_a_v01/prop_potion_mix_table_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_luckyline_canopy_a_v01",
+      "id": "prop_ranger_checkpoint_monitor_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_luckyline_canopy_a_v01.glb",
+      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_ranger_checkpoint_monitor_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -1044,18 +1105,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_luckyline_canopy_a_v01/prop_luckyline_canopy_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_luckyline_canopy_a_v01/prop_luckyline_canopy_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_luckyline_canopy_a_v01/prop_luckyline_canopy_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_luckyline_canopy_a_v01/prop_luckyline_canopy_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_ranger_checkpoint_monitor_a_v01/prop_ranger_checkpoint_monitor_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_ranger_checkpoint_monitor_a_v01/prop_ranger_checkpoint_monitor_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_ranger_checkpoint_monitor_a_v01/prop_ranger_checkpoint_monitor_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_ranger_checkpoint_monitor_a_v01/prop_ranger_checkpoint_monitor_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_luckyline_carwash_a_v01",
+      "id": "prop_ranger_evidence_locker_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_luckyline_carwash_a_v01.glb",
+      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_ranger_evidence_locker_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -1105,18 +1166,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_luckyline_carwash_a_v01/prop_luckyline_carwash_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_luckyline_carwash_a_v01/prop_luckyline_carwash_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_luckyline_carwash_a_v01/prop_luckyline_carwash_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_luckyline_carwash_a_v01/prop_luckyline_carwash_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_ranger_evidence_locker_a_v01/prop_ranger_evidence_locker_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_ranger_evidence_locker_a_v01/prop_ranger_evidence_locker_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_ranger_evidence_locker_a_v01/prop_ranger_evidence_locker_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_ranger_evidence_locker_a_v01/prop_ranger_evidence_locker_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_luckyline_ev_charger_a_v01",
+      "id": "prop_ranger_front_desk_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_luckyline_ev_charger_a_v01.glb",
+      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_ranger_front_desk_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -1166,71 +1227,10 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_luckyline_ev_charger_a_v01/prop_luckyline_ev_charger_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_luckyline_ev_charger_a_v01/prop_luckyline_ev_charger_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_luckyline_ev_charger_a_v01/prop_luckyline_ev_charger_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_luckyline_ev_charger_a_v01/prop_luckyline_ev_charger_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_luckyline_market_shelf_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_luckyline_market_shelf_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_luckyline_market_shelf_a_v01/prop_luckyline_market_shelf_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_luckyline_market_shelf_a_v01/prop_luckyline_market_shelf_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_luckyline_market_shelf_a_v01/prop_luckyline_market_shelf_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_luckyline_market_shelf_a_v01/prop_luckyline_market_shelf_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_ranger_front_desk_a_v01/prop_ranger_front_desk_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_ranger_front_desk_a_v01/prop_ranger_front_desk_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_ranger_front_desk_a_v01/prop_ranger_front_desk_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_ranger_front_desk_a_v01/prop_ranger_front_desk_a_v01_view_4.png"
       ]
     }
   ]
