@@ -1,16 +1,16 @@
 # Zaylins Asset Factory Health
 
-- Generated: 2026-07-19T14:57:46.025Z
+- Generated: 2026-07-19T15:30:23.738Z
 - Master records: 2298
 - Queue records: 2298
-- Completed records: 1567
-- Completed GLBs verified on disk: 1037
-- Completed factory-generated GLBs: 1037
+- Completed records: 1607
+- Completed GLBs verified on disk: 1077
+- Completed factory-generated GLBs: 1077
 - Completed curated/legacy GLBs: 0
 - Completed runtime deliverables: 530
-- All GLBs under public/assets/models: 1641
-- GLBs specifically under public/assets/models/generated: 1041
-- Queued Blender assets: 525
+- All GLBs under public/assets/models: 1681
+- GLBs specifically under public/assets/models/generated: 1081
+- Queued Blender assets: 485
 - Queued runtime assets: 0
 - Quarantined: 1
 - Unsupported: 189
@@ -39,11 +39,11 @@
 | mailbox | 1 | 0 | 0 | closed |
 | modern_bed | 1 | 0 | 0 | closed |
 | modular_building | 230 | 0 | 0 | closed |
-| modular_connector | 143 | 29 | 0 | closed |
+| modular_connector | 156 | 16 | 0 | closed |
 | modular_food | 9 | 0 | 0 | closed |
 | modular_furniture | 140 | 0 | 0 | closed |
-| modular_infrastructure | 152 | 84 | 0 | closed |
-| modular_prop | 146 | 412 | 0 | closed |
+| modular_infrastructure | 165 | 71 | 0 | closed |
+| modular_prop | 160 | 398 | 0 | closed |
 | modular_road | 36 | 0 | 0 | closed |
 | multi_monitor | 6 | 0 | 0 | closed |
 | municipal_bench | 14 | 0 | 0 | closed |

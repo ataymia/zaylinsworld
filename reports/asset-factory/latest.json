@@ -1,88 +1,24 @@
 {
   "version": 2,
-  "batchId": "batch-00081",
-  "completedAt": "2026-07-19T14:57:45.743Z",
+  "batchId": "batch-00083",
+  "completedAt": "2026-07-19T15:30:23.367Z",
   "requested": 20,
   "passed": 20,
   "failed": 0,
   "queueCounts": {
-    "completed": 1567,
+    "completed": 1607,
     "reference-only": 16,
     "unsupported": 189,
-    "queued": 525,
+    "queued": 485,
     "quarantined": 1
   },
   "results": [
     {
-      "id": "gap-techtown-fabrication-storm-drain-standard-086",
-      "builder": "modular_infrastructure",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/infrastructure_techtown-fabrication-storm-drain-standard-086.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 17,
-        "triangles": 3112,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_concrete",
-          "tech_cyan_emissive",
-          "tech_dark_metal",
-          "tech_white_light"
-        ],
-        "materialCount": 6,
-        "components": [
-          "anchored base or mount",
-          "fasteners and identification",
-          "power, conduit, drainage, or network path",
-          "primary operating surface",
-          "safety and weather protection",
-          "service access",
-          "structural enclosure or frame",
-          "user control or connection"
-        ],
-        "bounds": {
-          "min": [
-            -0.5519999861717224,
-            -0.36800000071525574,
-            0
-          ],
-          "max": [
-            0.5519999861717224,
-            0.36800000071525574,
-            1.565999984741211
-          ],
-          "dimensions": [
-            1.1039999723434448,
-            0.7360000014305115,
-            1.565999984741211
-          ]
-        },
-        "requiredComponents": [
-          "anchored base or mount",
-          "structural enclosure or frame",
-          "primary operating surface",
-          "user control or connection",
-          "service access",
-          "power, conduit, drainage, or network path",
-          "safety and weather protection",
-          "fasteners and identification"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-techtown-fabrication-storm-drain-standard-086/gap-techtown-fabrication-storm-drain-standard-086_view_1.png",
-        "asset-factory/work/previews/gap-techtown-fabrication-storm-drain-standard-086/gap-techtown-fabrication-storm-drain-standard-086_view_2.png",
-        "asset-factory/work/previews/gap-techtown-fabrication-storm-drain-standard-086/gap-techtown-fabrication-storm-drain-standard-086_view_3.png",
-        "asset-factory/work/previews/gap-techtown-fabrication-storm-drain-standard-086/gap-techtown-fabrication-storm-drain-standard-086_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-starline-city-transit-transit-tube-end-cap-standard-035",
+      "id": "gap-starter-town-street-transit-tube-gentle-curve-standard-029",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_connector/connector_starline-city-transit-transit-tube-end-cap-standard-035.glb",
+      "outputPath": "public/assets/models/generated/starter-town/modular_connector/connector_starter-town-street-transit-tube-gentle-curve-standard-029.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
@@ -134,18 +70,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-starline-city-transit-transit-tube-end-cap-standard-035/gap-starline-city-transit-transit-tube-end-cap-standard-035_view_1.png",
-        "asset-factory/work/previews/gap-starline-city-transit-transit-tube-end-cap-standard-035/gap-starline-city-transit-transit-tube-end-cap-standard-035_view_2.png",
-        "asset-factory/work/previews/gap-starline-city-transit-transit-tube-end-cap-standard-035/gap-starline-city-transit-transit-tube-end-cap-standard-035_view_3.png",
-        "asset-factory/work/previews/gap-starline-city-transit-transit-tube-end-cap-standard-035/gap-starline-city-transit-transit-tube-end-cap-standard-035_view_4.png"
+        "asset-factory/work/previews/gap-starter-town-street-transit-tube-gentle-curve-standard-029/gap-starter-town-street-transit-tube-gentle-curve-standard-029_view_1.png",
+        "asset-factory/work/previews/gap-starter-town-street-transit-tube-gentle-curve-standard-029/gap-starter-town-street-transit-tube-gentle-curve-standard-029_view_2.png",
+        "asset-factory/work/previews/gap-starter-town-street-transit-tube-gentle-curve-standard-029/gap-starter-town-street-transit-tube-gentle-curve-standard-029_view_3.png",
+        "asset-factory/work/previews/gap-starter-town-street-transit-tube-gentle-curve-standard-029/gap-starter-town-street-transit-tube-gentle-curve-standard-029_view_4.png"
       ]
     },
     {
-      "id": "prop_academy_course_builder_table_a_v01",
+      "id": "prop_aqualume_current_turbine_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_academy_course_builder_table_a_v01.glb",
+      "outputPath": "public/assets/models/generated/aqualume/modular_prop/prop_aqualume_current_turbine_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -195,18 +131,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_academy_course_builder_table_a_v01/prop_academy_course_builder_table_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_academy_course_builder_table_a_v01/prop_academy_course_builder_table_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_academy_course_builder_table_a_v01/prop_academy_course_builder_table_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_academy_course_builder_table_a_v01/prop_academy_course_builder_table_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_aqualume_current_turbine_a_v01/prop_aqualume_current_turbine_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_aqualume_current_turbine_a_v01/prop_aqualume_current_turbine_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_aqualume_current_turbine_a_v01/prop_aqualume_current_turbine_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_aqualume_current_turbine_a_v01/prop_aqualume_current_turbine_a_v01_view_4.png"
       ]
     },
     {
-      "id": "gap-techtown-fabrication-valve-station-standard-056",
+      "id": "gap-techtown-robotics-maintenance-catwalk-standard-060",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/infrastructure_techtown-fabrication-valve-station-standard-056.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/infrastructure_techtown-robotics-maintenance-catwalk-standard-060.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -259,28 +195,28 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-techtown-fabrication-valve-station-standard-056/gap-techtown-fabrication-valve-station-standard-056_view_1.png",
-        "asset-factory/work/previews/gap-techtown-fabrication-valve-station-standard-056/gap-techtown-fabrication-valve-station-standard-056_view_2.png",
-        "asset-factory/work/previews/gap-techtown-fabrication-valve-station-standard-056/gap-techtown-fabrication-valve-station-standard-056_view_3.png",
-        "asset-factory/work/previews/gap-techtown-fabrication-valve-station-standard-056/gap-techtown-fabrication-valve-station-standard-056_view_4.png"
+        "asset-factory/work/previews/gap-techtown-robotics-maintenance-catwalk-standard-060/gap-techtown-robotics-maintenance-catwalk-standard-060_view_1.png",
+        "asset-factory/work/previews/gap-techtown-robotics-maintenance-catwalk-standard-060/gap-techtown-robotics-maintenance-catwalk-standard-060_view_2.png",
+        "asset-factory/work/previews/gap-techtown-robotics-maintenance-catwalk-standard-060/gap-techtown-robotics-maintenance-catwalk-standard-060_view_3.png",
+        "asset-factory/work/previews/gap-techtown-robotics-maintenance-catwalk-standard-060/gap-techtown-robotics-maintenance-catwalk-standard-060_view_4.png"
       ]
     },
     {
-      "id": "gap-starline-city-transit-transit-tube-short-straight-standard-025",
+      "id": "gap-techtown-automation-transit-tube-external-strut-standard-046",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_connector/connector_starline-city-transit-transit-tube-short-straight-standard-025.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_connector/connector_techtown-automation-transit-tube-external-strut-standard-046.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
         "triangles": 3572,
         "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_cyan_emissive",
+          "tech_dark_metal",
+          "tech_white_light"
         ],
         "materialCount": 5,
         "components": [
@@ -322,18 +258,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-starline-city-transit-transit-tube-short-straight-standard-025/gap-starline-city-transit-transit-tube-short-straight-standard-025_view_1.png",
-        "asset-factory/work/previews/gap-starline-city-transit-transit-tube-short-straight-standard-025/gap-starline-city-transit-transit-tube-short-straight-standard-025_view_2.png",
-        "asset-factory/work/previews/gap-starline-city-transit-transit-tube-short-straight-standard-025/gap-starline-city-transit-transit-tube-short-straight-standard-025_view_3.png",
-        "asset-factory/work/previews/gap-starline-city-transit-transit-tube-short-straight-standard-025/gap-starline-city-transit-transit-tube-short-straight-standard-025_view_4.png"
+        "asset-factory/work/previews/gap-techtown-automation-transit-tube-external-strut-standard-046/gap-techtown-automation-transit-tube-external-strut-standard-046_view_1.png",
+        "asset-factory/work/previews/gap-techtown-automation-transit-tube-external-strut-standard-046/gap-techtown-automation-transit-tube-external-strut-standard-046_view_2.png",
+        "asset-factory/work/previews/gap-techtown-automation-transit-tube-external-strut-standard-046/gap-techtown-automation-transit-tube-external-strut-standard-046_view_3.png",
+        "asset-factory/work/previews/gap-techtown-automation-transit-tube-external-strut-standard-046/gap-techtown-automation-transit-tube-external-strut-standard-046_view_4.png"
       ]
     },
     {
-      "id": "prop_academy_marquee_sign_v01",
+      "id": "prop_aqualume_emergency_air_bubble_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/modular_prop/prop_academy_marquee_sign_v01.glb",
+      "outputPath": "public/assets/models/generated/aqualume/modular_prop/prop_aqualume_emergency_air_bubble_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -383,18 +319,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_academy_marquee_sign_v01/prop_academy_marquee_sign_v01_view_1.png",
-        "asset-factory/work/previews/prop_academy_marquee_sign_v01/prop_academy_marquee_sign_v01_view_2.png",
-        "asset-factory/work/previews/prop_academy_marquee_sign_v01/prop_academy_marquee_sign_v01_view_3.png",
-        "asset-factory/work/previews/prop_academy_marquee_sign_v01/prop_academy_marquee_sign_v01_view_4.png"
+        "asset-factory/work/previews/prop_aqualume_emergency_air_bubble_a_v01/prop_aqualume_emergency_air_bubble_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_aqualume_emergency_air_bubble_a_v01/prop_aqualume_emergency_air_bubble_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_aqualume_emergency_air_bubble_a_v01/prop_aqualume_emergency_air_bubble_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_aqualume_emergency_air_bubble_a_v01/prop_aqualume_emergency_air_bubble_a_v01_view_4.png"
       ]
     },
     {
-      "id": "gap-techtown-fabrication-water-filter-standard-066",
+      "id": "gap-techtown-security-aed-cabinet-standard-053",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/infrastructure_techtown-fabrication-water-filter-standard-066.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/infrastructure_techtown-security-aed-cabinet-standard-053.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -447,28 +383,28 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-techtown-fabrication-water-filter-standard-066/gap-techtown-fabrication-water-filter-standard-066_view_1.png",
-        "asset-factory/work/previews/gap-techtown-fabrication-water-filter-standard-066/gap-techtown-fabrication-water-filter-standard-066_view_2.png",
-        "asset-factory/work/previews/gap-techtown-fabrication-water-filter-standard-066/gap-techtown-fabrication-water-filter-standard-066_view_3.png",
-        "asset-factory/work/previews/gap-techtown-fabrication-water-filter-standard-066/gap-techtown-fabrication-water-filter-standard-066_view_4.png"
+        "asset-factory/work/previews/gap-techtown-security-aed-cabinet-standard-053/gap-techtown-security-aed-cabinet-standard-053_view_1.png",
+        "asset-factory/work/previews/gap-techtown-security-aed-cabinet-standard-053/gap-techtown-security-aed-cabinet-standard-053_view_2.png",
+        "asset-factory/work/previews/gap-techtown-security-aed-cabinet-standard-053/gap-techtown-security-aed-cabinet-standard-053_view_3.png",
+        "asset-factory/work/previews/gap-techtown-security-aed-cabinet-standard-053/gap-techtown-security-aed-cabinet-standard-053_view_4.png"
       ]
     },
     {
-      "id": "gap-starter-town-clinic-transit-tube-incline-standard-031",
+      "id": "gap-techtown-automation-transit-tube-four-way-standard-036",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_connector/connector_starter-town-clinic-transit-tube-incline-standard-031.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_connector/connector_techtown-automation-transit-tube-four-way-standard-036.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
         "triangles": 3572,
         "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_cyan_emissive",
+          "tech_dark_metal",
+          "tech_white_light"
         ],
         "materialCount": 5,
         "components": [
@@ -510,18 +446,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-starter-town-clinic-transit-tube-incline-standard-031/gap-starter-town-clinic-transit-tube-incline-standard-031_view_1.png",
-        "asset-factory/work/previews/gap-starter-town-clinic-transit-tube-incline-standard-031/gap-starter-town-clinic-transit-tube-incline-standard-031_view_2.png",
-        "asset-factory/work/previews/gap-starter-town-clinic-transit-tube-incline-standard-031/gap-starter-town-clinic-transit-tube-incline-standard-031_view_3.png",
-        "asset-factory/work/previews/gap-starter-town-clinic-transit-tube-incline-standard-031/gap-starter-town-clinic-transit-tube-incline-standard-031_view_4.png"
+        "asset-factory/work/previews/gap-techtown-automation-transit-tube-four-way-standard-036/gap-techtown-automation-transit-tube-four-way-standard-036_view_1.png",
+        "asset-factory/work/previews/gap-techtown-automation-transit-tube-four-way-standard-036/gap-techtown-automation-transit-tube-four-way-standard-036_view_2.png",
+        "asset-factory/work/previews/gap-techtown-automation-transit-tube-four-way-standard-036/gap-techtown-automation-transit-tube-four-way-standard-036_view_3.png",
+        "asset-factory/work/previews/gap-techtown-automation-transit-tube-four-way-standard-036/gap-techtown-automation-transit-tube-four-way-standard-036_view_4.png"
       ]
     },
     {
-      "id": "prop_academy_route_board_a_v01",
+      "id": "prop_aqualume_energy_core_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_academy_route_board_a_v01.glb",
+      "outputPath": "public/assets/models/generated/aqualume/modular_prop/prop_aqualume_energy_core_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -571,18 +507,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_academy_route_board_a_v01/prop_academy_route_board_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_academy_route_board_a_v01/prop_academy_route_board_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_academy_route_board_a_v01/prop_academy_route_board_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_academy_route_board_a_v01/prop_academy_route_board_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_aqualume_energy_core_a_v01/prop_aqualume_energy_core_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_aqualume_energy_core_a_v01/prop_aqualume_energy_core_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_aqualume_energy_core_a_v01/prop_aqualume_energy_core_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_aqualume_energy_core_a_v01/prop_aqualume_energy_core_a_v01_view_4.png"
       ]
     },
     {
-      "id": "gap-techtown-hologram-dumpster-standard-088",
+      "id": "gap-techtown-security-hose-reel-standard-063",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/infrastructure_techtown-hologram-dumpster-standard-088.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/infrastructure_techtown-security-hose-reel-standard-063.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -635,28 +571,28 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-techtown-hologram-dumpster-standard-088/gap-techtown-hologram-dumpster-standard-088_view_1.png",
-        "asset-factory/work/previews/gap-techtown-hologram-dumpster-standard-088/gap-techtown-hologram-dumpster-standard-088_view_2.png",
-        "asset-factory/work/previews/gap-techtown-hologram-dumpster-standard-088/gap-techtown-hologram-dumpster-standard-088_view_3.png",
-        "asset-factory/work/previews/gap-techtown-hologram-dumpster-standard-088/gap-techtown-hologram-dumpster-standard-088_view_4.png"
+        "asset-factory/work/previews/gap-techtown-security-hose-reel-standard-063/gap-techtown-security-hose-reel-standard-063_view_1.png",
+        "asset-factory/work/previews/gap-techtown-security-hose-reel-standard-063/gap-techtown-security-hose-reel-standard-063_view_2.png",
+        "asset-factory/work/previews/gap-techtown-security-hose-reel-standard-063/gap-techtown-security-hose-reel-standard-063_view_3.png",
+        "asset-factory/work/previews/gap-techtown-security-hose-reel-standard-063/gap-techtown-security-hose-reel-standard-063_view_4.png"
       ]
     },
     {
-      "id": "gap-starter-town-community-transit-tube-four-way-standard-035",
+      "id": "gap-techtown-charging-transit-tube-cable-carrier-standard-048",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_connector/connector_starter-town-community-transit-tube-four-way-standard-035.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_connector/connector_techtown-charging-transit-tube-cable-carrier-standard-048.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
         "triangles": 3572,
         "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_cyan_emissive",
+          "tech_dark_metal",
+          "tech_white_light"
         ],
         "materialCount": 5,
         "components": [
@@ -698,18 +634,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-starter-town-community-transit-tube-four-way-standard-035/gap-starter-town-community-transit-tube-four-way-standard-035_view_1.png",
-        "asset-factory/work/previews/gap-starter-town-community-transit-tube-four-way-standard-035/gap-starter-town-community-transit-tube-four-way-standard-035_view_2.png",
-        "asset-factory/work/previews/gap-starter-town-community-transit-tube-four-way-standard-035/gap-starter-town-community-transit-tube-four-way-standard-035_view_3.png",
-        "asset-factory/work/previews/gap-starter-town-community-transit-tube-four-way-standard-035/gap-starter-town-community-transit-tube-four-way-standard-035_view_4.png"
+        "asset-factory/work/previews/gap-techtown-charging-transit-tube-cable-carrier-standard-048/gap-techtown-charging-transit-tube-cable-carrier-standard-048_view_1.png",
+        "asset-factory/work/previews/gap-techtown-charging-transit-tube-cable-carrier-standard-048/gap-techtown-charging-transit-tube-cable-carrier-standard-048_view_2.png",
+        "asset-factory/work/previews/gap-techtown-charging-transit-tube-cable-carrier-standard-048/gap-techtown-charging-transit-tube-cable-carrier-standard-048_view_3.png",
+        "asset-factory/work/previews/gap-techtown-charging-transit-tube-cable-carrier-standard-048/gap-techtown-charging-transit-tube-cable-carrier-standard-048_view_4.png"
       ]
     },
     {
-      "id": "prop_academy_timing_pad_a_v01",
+      "id": "prop_aqualume_import_crate_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_academy_timing_pad_a_v01.glb",
+      "outputPath": "public/assets/models/generated/aqualume/modular_prop/prop_aqualume_import_crate_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -759,18 +695,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_academy_timing_pad_a_v01/prop_academy_timing_pad_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_academy_timing_pad_a_v01/prop_academy_timing_pad_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_academy_timing_pad_a_v01/prop_academy_timing_pad_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_academy_timing_pad_a_v01/prop_academy_timing_pad_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_aqualume_import_crate_a_v01/prop_aqualume_import_crate_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_aqualume_import_crate_a_v01/prop_aqualume_import_crate_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_aqualume_import_crate_a_v01/prop_aqualume_import_crate_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_aqualume_import_crate_a_v01/prop_aqualume_import_crate_a_v01_view_4.png"
       ]
     },
     {
-      "id": "gap-techtown-hologram-traffic-bollard-standard-078",
+      "id": "gap-techtown-security-route-map-kiosk-standard-083",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/infrastructure_techtown-hologram-traffic-bollard-standard-078.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/infrastructure_techtown-security-route-map-kiosk-standard-083.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -823,28 +759,28 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-techtown-hologram-traffic-bollard-standard-078/gap-techtown-hologram-traffic-bollard-standard-078_view_1.png",
-        "asset-factory/work/previews/gap-techtown-hologram-traffic-bollard-standard-078/gap-techtown-hologram-traffic-bollard-standard-078_view_2.png",
-        "asset-factory/work/previews/gap-techtown-hologram-traffic-bollard-standard-078/gap-techtown-hologram-traffic-bollard-standard-078_view_3.png",
-        "asset-factory/work/previews/gap-techtown-hologram-traffic-bollard-standard-078/gap-techtown-hologram-traffic-bollard-standard-078_view_4.png"
+        "asset-factory/work/previews/gap-techtown-security-route-map-kiosk-standard-083/gap-techtown-security-route-map-kiosk-standard-083_view_1.png",
+        "asset-factory/work/previews/gap-techtown-security-route-map-kiosk-standard-083/gap-techtown-security-route-map-kiosk-standard-083_view_2.png",
+        "asset-factory/work/previews/gap-techtown-security-route-map-kiosk-standard-083/gap-techtown-security-route-map-kiosk-standard-083_view_3.png",
+        "asset-factory/work/previews/gap-techtown-security-route-map-kiosk-standard-083/gap-techtown-security-route-map-kiosk-standard-083_view_4.png"
       ]
     },
     {
-      "id": "gap-starter-town-delivery-transit-tube-decline-standard-032",
+      "id": "gap-techtown-charging-transit-tube-end-cap-standard-038",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_connector/connector_starter-town-delivery-transit-tube-decline-standard-032.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_connector/connector_techtown-charging-transit-tube-end-cap-standard-038.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
         "triangles": 3572,
         "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_cyan_emissive",
+          "tech_dark_metal",
+          "tech_white_light"
         ],
         "materialCount": 5,
         "components": [
@@ -886,18 +822,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-starter-town-delivery-transit-tube-decline-standard-032/gap-starter-town-delivery-transit-tube-decline-standard-032_view_1.png",
-        "asset-factory/work/previews/gap-starter-town-delivery-transit-tube-decline-standard-032/gap-starter-town-delivery-transit-tube-decline-standard-032_view_2.png",
-        "asset-factory/work/previews/gap-starter-town-delivery-transit-tube-decline-standard-032/gap-starter-town-delivery-transit-tube-decline-standard-032_view_3.png",
-        "asset-factory/work/previews/gap-starter-town-delivery-transit-tube-decline-standard-032/gap-starter-town-delivery-transit-tube-decline-standard-032_view_4.png"
+        "asset-factory/work/previews/gap-techtown-charging-transit-tube-end-cap-standard-038/gap-techtown-charging-transit-tube-end-cap-standard-038_view_1.png",
+        "asset-factory/work/previews/gap-techtown-charging-transit-tube-end-cap-standard-038/gap-techtown-charging-transit-tube-end-cap-standard-038_view_2.png",
+        "asset-factory/work/previews/gap-techtown-charging-transit-tube-end-cap-standard-038/gap-techtown-charging-transit-tube-end-cap-standard-038_view_3.png",
+        "asset-factory/work/previews/gap-techtown-charging-transit-tube-end-cap-standard-038/gap-techtown-charging-transit-tube-end-cap-standard-038_view_4.png"
       ]
     },
     {
-      "id": "prop_appraisal_lens_a_v01",
+      "id": "prop_aqualume_kelp_food_counter_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_appraisal_lens_a_v01.glb",
+      "outputPath": "public/assets/models/generated/aqualume/modular_prop/prop_aqualume_kelp_food_counter_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -947,18 +883,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_appraisal_lens_a_v01/prop_appraisal_lens_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_appraisal_lens_a_v01/prop_appraisal_lens_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_appraisal_lens_a_v01/prop_appraisal_lens_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_appraisal_lens_a_v01/prop_appraisal_lens_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_aqualume_kelp_food_counter_a_v01/prop_aqualume_kelp_food_counter_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_aqualume_kelp_food_counter_a_v01/prop_aqualume_kelp_food_counter_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_aqualume_kelp_food_counter_a_v01/prop_aqualume_kelp_food_counter_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_aqualume_kelp_food_counter_a_v01/prop_aqualume_kelp_food_counter_a_v01_view_4.png"
       ]
     },
     {
-      "id": "gap-techtown-hologram-utility-meter-standard-058",
+      "id": "gap-techtown-security-vehicle-air-pump-standard-073",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/infrastructure_techtown-hologram-utility-meter-standard-058.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/infrastructure_techtown-security-vehicle-air-pump-standard-073.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -1011,28 +947,28 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-techtown-hologram-utility-meter-standard-058/gap-techtown-hologram-utility-meter-standard-058_view_1.png",
-        "asset-factory/work/previews/gap-techtown-hologram-utility-meter-standard-058/gap-techtown-hologram-utility-meter-standard-058_view_2.png",
-        "asset-factory/work/previews/gap-techtown-hologram-utility-meter-standard-058/gap-techtown-hologram-utility-meter-standard-058_view_3.png",
-        "asset-factory/work/previews/gap-techtown-hologram-utility-meter-standard-058/gap-techtown-hologram-utility-meter-standard-058_view_4.png"
+        "asset-factory/work/previews/gap-techtown-security-vehicle-air-pump-standard-073/gap-techtown-security-vehicle-air-pump-standard-073_view_1.png",
+        "asset-factory/work/previews/gap-techtown-security-vehicle-air-pump-standard-073/gap-techtown-security-vehicle-air-pump-standard-073_view_2.png",
+        "asset-factory/work/previews/gap-techtown-security-vehicle-air-pump-standard-073/gap-techtown-security-vehicle-air-pump-standard-073_view_3.png",
+        "asset-factory/work/previews/gap-techtown-security-vehicle-air-pump-standard-073/gap-techtown-security-vehicle-air-pump-standard-073_view_4.png"
       ]
     },
     {
-      "id": "gap-starter-town-home-transit-tube-end-cap-standard-037",
+      "id": "gap-techtown-charging-transit-tube-short-straight-standard-028",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_connector/connector_starter-town-home-transit-tube-end-cap-standard-037.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_connector/connector_techtown-charging-transit-tube-short-straight-standard-028.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
         "triangles": 3572,
         "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_cyan_emissive",
+          "tech_dark_metal",
+          "tech_white_light"
         ],
         "materialCount": 5,
         "components": [
@@ -1074,18 +1010,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-starter-town-home-transit-tube-end-cap-standard-037/gap-starter-town-home-transit-tube-end-cap-standard-037_view_1.png",
-        "asset-factory/work/previews/gap-starter-town-home-transit-tube-end-cap-standard-037/gap-starter-town-home-transit-tube-end-cap-standard-037_view_2.png",
-        "asset-factory/work/previews/gap-starter-town-home-transit-tube-end-cap-standard-037/gap-starter-town-home-transit-tube-end-cap-standard-037_view_3.png",
-        "asset-factory/work/previews/gap-starter-town-home-transit-tube-end-cap-standard-037/gap-starter-town-home-transit-tube-end-cap-standard-037_view_4.png"
+        "asset-factory/work/previews/gap-techtown-charging-transit-tube-short-straight-standard-028/gap-techtown-charging-transit-tube-short-straight-standard-028_view_1.png",
+        "asset-factory/work/previews/gap-techtown-charging-transit-tube-short-straight-standard-028/gap-techtown-charging-transit-tube-short-straight-standard-028_view_2.png",
+        "asset-factory/work/previews/gap-techtown-charging-transit-tube-short-straight-standard-028/gap-techtown-charging-transit-tube-short-straight-standard-028_view_3.png",
+        "asset-factory/work/previews/gap-techtown-charging-transit-tube-short-straight-standard-028/gap-techtown-charging-transit-tube-short-straight-standard-028_view_4.png"
       ]
     },
     {
-      "id": "prop_appraisal_table_a_v01",
+      "id": "prop_aqualume_market_stall_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_appraisal_table_a_v01.glb",
+      "outputPath": "public/assets/models/generated/aqualume/modular_prop/prop_aqualume_market_stall_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -1135,18 +1071,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_appraisal_table_a_v01/prop_appraisal_table_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_appraisal_table_a_v01/prop_appraisal_table_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_appraisal_table_a_v01/prop_appraisal_table_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_appraisal_table_a_v01/prop_appraisal_table_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_aqualume_market_stall_a_v01/prop_aqualume_market_stall_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_aqualume_market_stall_a_v01/prop_aqualume_market_stall_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_aqualume_market_stall_a_v01/prop_aqualume_market_stall_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_aqualume_market_stall_a_v01/prop_aqualume_market_stall_a_v01_view_4.png"
       ]
     },
     {
-      "id": "gap-techtown-hologram-ventilation-fan-standard-068",
+      "id": "gap-techtown-transit-breaker-panel-standard-054",
       "builder": "modular_infrastructure",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/infrastructure_techtown-hologram-ventilation-fan-standard-068.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_infrastructure/infrastructure_techtown-transit-breaker-panel-standard-054.glb",
       "failures": [],
       "stats": {
         "meshObjects": 17,
@@ -1199,28 +1135,28 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-techtown-hologram-ventilation-fan-standard-068/gap-techtown-hologram-ventilation-fan-standard-068_view_1.png",
-        "asset-factory/work/previews/gap-techtown-hologram-ventilation-fan-standard-068/gap-techtown-hologram-ventilation-fan-standard-068_view_2.png",
-        "asset-factory/work/previews/gap-techtown-hologram-ventilation-fan-standard-068/gap-techtown-hologram-ventilation-fan-standard-068_view_3.png",
-        "asset-factory/work/previews/gap-techtown-hologram-ventilation-fan-standard-068/gap-techtown-hologram-ventilation-fan-standard-068_view_4.png"
+        "asset-factory/work/previews/gap-techtown-transit-breaker-panel-standard-054/gap-techtown-transit-breaker-panel-standard-054_view_1.png",
+        "asset-factory/work/previews/gap-techtown-transit-breaker-panel-standard-054/gap-techtown-transit-breaker-panel-standard-054_view_2.png",
+        "asset-factory/work/previews/gap-techtown-transit-breaker-panel-standard-054/gap-techtown-transit-breaker-panel-standard-054_view_3.png",
+        "asset-factory/work/previews/gap-techtown-transit-breaker-panel-standard-054/gap-techtown-transit-breaker-panel-standard-054_view_4.png"
       ]
     },
     {
-      "id": "gap-starter-town-home-transit-tube-short-straight-standard-027",
+      "id": "gap-techtown-data-transit-tube-emergency-bulkhead-standard-039",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starter-town/modular_connector/connector_starter-town-home-transit-tube-short-straight-standard-027.glb",
+      "outputPath": "public/assets/models/generated/techtown/modular_connector/connector_techtown-data-transit-tube-emergency-bulkhead-standard-039.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
         "triangles": 3572,
         "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
+          "tech_brushed_metal",
+          "tech_composite",
+          "tech_cyan_emissive",
+          "tech_dark_metal",
+          "tech_white_light"
         ],
         "materialCount": 5,
         "components": [
@@ -1262,10 +1198,71 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-starter-town-home-transit-tube-short-straight-standard-027/gap-starter-town-home-transit-tube-short-straight-standard-027_view_1.png",
-        "asset-factory/work/previews/gap-starter-town-home-transit-tube-short-straight-standard-027/gap-starter-town-home-transit-tube-short-straight-standard-027_view_2.png",
-        "asset-factory/work/previews/gap-starter-town-home-transit-tube-short-straight-standard-027/gap-starter-town-home-transit-tube-short-straight-standard-027_view_3.png",
-        "asset-factory/work/previews/gap-starter-town-home-transit-tube-short-straight-standard-027/gap-starter-town-home-transit-tube-short-straight-standard-027_view_4.png"
+        "asset-factory/work/previews/gap-techtown-data-transit-tube-emergency-bulkhead-standard-039/gap-techtown-data-transit-tube-emergency-bulkhead-standard-039_view_1.png",
+        "asset-factory/work/previews/gap-techtown-data-transit-tube-emergency-bulkhead-standard-039/gap-techtown-data-transit-tube-emergency-bulkhead-standard-039_view_2.png",
+        "asset-factory/work/previews/gap-techtown-data-transit-tube-emergency-bulkhead-standard-039/gap-techtown-data-transit-tube-emergency-bulkhead-standard-039_view_3.png",
+        "asset-factory/work/previews/gap-techtown-data-transit-tube-emergency-bulkhead-standard-039/gap-techtown-data-transit-tube-emergency-bulkhead-standard-039_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_aqualume_pearl_case_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/aqualume/modular_prop/prop_aqualume_pearl_case_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_aqualume_pearl_case_a_v01/prop_aqualume_pearl_case_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_aqualume_pearl_case_a_v01/prop_aqualume_pearl_case_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_aqualume_pearl_case_a_v01/prop_aqualume_pearl_case_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_aqualume_pearl_case_a_v01/prop_aqualume_pearl_case_a_v01_view_4.png"
       ]
     }
   ]
