@@ -243,7 +243,11 @@ export class StarterTownCellIndex {
       x: cell.x,
       z: cell.z,
       bounds: cell.bounds,
-      content: Object.freeze(Object.fromEntries(CONTENT_TYPES.map((type) => [type, Object.freeze([...cell.content[type])]))),
+      content: Object.freeze(
+        Object.fromEntries(
+          CONTENT_TYPES.map((type) => [type, Object.freeze([...cell.content[type]])]),
+        ),
+      ),
       borderDependencies: Object.freeze([...cell.borderDependencies]),
     });
   }
