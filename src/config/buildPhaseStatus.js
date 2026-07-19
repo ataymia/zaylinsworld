@@ -137,8 +137,8 @@ export const BUILD_PHASES = freeze([
   }),
   phase('7', 'Functional location relocation', 'in-progress', {
     next: true,
-    completed: freeze(['Phase 7A stable contracts', '15-field parity evidence gate', 'legacy-coordinate migration guard', 'production diagnostics report', 'Phase 7B Zaylins Home fallback-safe cutover', 'Phase 7C Zaylins Prep fallback-safe cutover', 'Phase 7D Chicken Spot fallback-safe cutover', 'Phase 7E–7G retail cutovers', 'Phase 7H–7I vehicle-service cutovers']),
-    verify: freeze(['Phase 7J Dreamdrop Public Safety cutover', 'live preview and save/load parity']),
+    completed: freeze(['Phase 7A stable contracts', '15-field parity evidence gate', 'legacy-coordinate migration guard', 'production diagnostics report', 'Phase 7B Zaylins Home fallback-safe cutover', 'Phase 7C Zaylins Prep fallback-safe cutover', 'Phase 7D Chicken Spot fallback-safe cutover', 'Phase 7E–7G retail cutovers', 'Phase 7H–7I vehicle-service cutovers', 'Phase 7J–7L civic/work cutovers']),
+    verify: freeze(['Phase 7M 6twelve cutover', 'Phase 7N Dreamdrop Park cutover']),
     dependsOn: freeze(['Phase 2–6 live feature-preview review']),
   }),
 ]);
