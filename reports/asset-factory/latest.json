@@ -1,24 +1,24 @@
 {
   "version": 2,
-  "batchId": "batch-00095",
-  "completedAt": "2026-07-19T18:28:20.128Z",
+  "batchId": "batch-00097",
+  "completedAt": "2026-07-19T18:55:58.632Z",
   "requested": 20,
   "passed": 20,
   "failed": 0,
   "queueCounts": {
-    "completed": 1847,
+    "completed": 1887,
     "reference-only": 16,
     "unsupported": 189,
-    "queued": 245,
+    "queued": 205,
     "quarantined": 1
   },
   "results": [
     {
-      "id": "prop_golf_flag_hole_a_v01",
+      "id": "prop_home_aqualume_scooter_dock_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_golf_flag_hole_a_v01.glb",
+      "outputPath": "public/assets/models/generated/fishing-harbor/modular_prop/prop_home_aqualume_scooter_dock_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -68,18 +68,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_golf_flag_hole_a_v01/prop_golf_flag_hole_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_golf_flag_hole_a_v01/prop_golf_flag_hole_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_golf_flag_hole_a_v01/prop_golf_flag_hole_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_golf_flag_hole_a_v01/prop_golf_flag_hole_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_home_aqualume_scooter_dock_a_v01/prop_home_aqualume_scooter_dock_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_aqualume_scooter_dock_a_v01/prop_home_aqualume_scooter_dock_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_aqualume_scooter_dock_a_v01/prop_home_aqualume_scooter_dock_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_aqualume_scooter_dock_a_v01/prop_home_aqualume_scooter_dock_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_golf_practice_target_a_v01",
+      "id": "prop_home_aqualume_sonar_map_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_golf_practice_target_a_v01.glb",
+      "outputPath": "public/assets/models/generated/aqualume/modular_prop/prop_home_aqualume_sonar_map_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -129,18 +129,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_golf_practice_target_a_v01/prop_golf_practice_target_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_golf_practice_target_a_v01/prop_golf_practice_target_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_golf_practice_target_a_v01/prop_golf_practice_target_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_golf_practice_target_a_v01/prop_golf_practice_target_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_home_aqualume_sonar_map_a_v01/prop_home_aqualume_sonar_map_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_aqualume_sonar_map_a_v01/prop_home_aqualume_sonar_map_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_aqualume_sonar_map_a_v01/prop_home_aqualume_sonar_map_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_aqualume_sonar_map_a_v01/prop_home_aqualume_sonar_map_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_golf_tee_marker_a_v01",
+      "id": "prop_home_arcade_cabinet_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_golf_tee_marker_a_v01.glb",
+      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_home_arcade_cabinet_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -190,18 +190,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_golf_tee_marker_a_v01/prop_golf_tee_marker_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_golf_tee_marker_a_v01/prop_golf_tee_marker_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_golf_tee_marker_a_v01/prop_golf_tee_marker_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_golf_tee_marker_a_v01/prop_golf_tee_marker_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_home_arcade_cabinet_a_v01/prop_home_arcade_cabinet_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_arcade_cabinet_a_v01/prop_home_arcade_cabinet_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_arcade_cabinet_a_v01/prop_home_arcade_cabinet_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_arcade_cabinet_a_v01/prop_home_arcade_cabinet_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_gridlink_arrival_pad_a_v01",
+      "id": "prop_home_balance_beam_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/modular_prop/prop_gridlink_arrival_pad_a_v01.glb",
+      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_home_balance_beam_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -251,18 +251,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_gridlink_arrival_pad_a_v01/prop_gridlink_arrival_pad_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_gridlink_arrival_pad_a_v01/prop_gridlink_arrival_pad_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_gridlink_arrival_pad_a_v01/prop_gridlink_arrival_pad_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_gridlink_arrival_pad_a_v01/prop_gridlink_arrival_pad_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_home_balance_beam_a_v01/prop_home_balance_beam_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_balance_beam_a_v01/prop_home_balance_beam_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_balance_beam_a_v01/prop_home_balance_beam_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_balance_beam_a_v01/prop_home_balance_beam_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_gridlink_sync_beacon_a_v01",
+      "id": "prop_home_course_map_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/modular_prop/prop_gridlink_sync_beacon_a_v01.glb",
+      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_home_course_map_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -312,18 +312,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_gridlink_sync_beacon_a_v01/prop_gridlink_sync_beacon_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_gridlink_sync_beacon_a_v01/prop_gridlink_sync_beacon_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_gridlink_sync_beacon_a_v01/prop_gridlink_sync_beacon_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_gridlink_sync_beacon_a_v01/prop_gridlink_sync_beacon_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_home_course_map_a_v01/prop_home_course_map_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_course_map_a_v01/prop_home_course_map_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_course_map_a_v01/prop_home_course_map_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_course_map_a_v01/prop_home_course_map_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_gridlink_vendor_display_v01",
+      "id": "prop_home_deed_folder_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/modular_prop/prop_gridlink_vendor_display_v01.glb",
+      "outputPath": "public/assets/models/generated/starter-town/modular_prop/prop_home_deed_folder_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -373,18 +373,201 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_gridlink_vendor_display_v01/prop_gridlink_vendor_display_v01_view_1.png",
-        "asset-factory/work/previews/prop_gridlink_vendor_display_v01/prop_gridlink_vendor_display_v01_view_2.png",
-        "asset-factory/work/previews/prop_gridlink_vendor_display_v01/prop_gridlink_vendor_display_v01_view_3.png",
-        "asset-factory/work/previews/prop_gridlink_vendor_display_v01/prop_gridlink_vendor_display_v01_view_4.png"
+        "asset-factory/work/previews/prop_home_deed_folder_a_v01/prop_home_deed_folder_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_deed_folder_a_v01/prop_home_deed_folder_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_deed_folder_a_v01/prop_home_deed_folder_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_deed_folder_a_v01/prop_home_deed_folder_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_grill_station_future_a_v01",
+      "id": "prop_home_dungeon_map_board_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_grill_station_future_a_v01.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_home_dungeon_map_board_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_home_dungeon_map_board_a_v01/prop_home_dungeon_map_board_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_dungeon_map_board_a_v01/prop_home_dungeon_map_board_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_dungeon_map_board_a_v01/prop_home_dungeon_map_board_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_dungeon_map_board_a_v01/prop_home_dungeon_map_board_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_home_game_table_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_home_game_table_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_home_game_table_a_v01/prop_home_game_table_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_game_table_a_v01/prop_home_game_table_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_game_table_a_v01/prop_home_game_table_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_game_table_a_v01/prop_home_game_table_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_home_material_chest_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_home_material_chest_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_home_material_chest_a_v01/prop_home_material_chest_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_material_chest_a_v01/prop_home_material_chest_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_material_chest_a_v01/prop_home_material_chest_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_material_chest_a_v01/prop_home_material_chest_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_home_neon_sign_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_home_neon_sign_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -434,262 +617,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_grill_station_future_a_v01/prop_grill_station_future_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_grill_station_future_a_v01/prop_grill_station_future_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_grill_station_future_a_v01/prop_grill_station_future_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_grill_station_future_a_v01/prop_grill_station_future_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_home_neon_sign_a_v01/prop_home_neon_sign_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_neon_sign_a_v01/prop_home_neon_sign_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_neon_sign_a_v01/prop_home_neon_sign_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_neon_sign_a_v01/prop_home_neon_sign_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_gym_locker_future_a_v01",
+      "id": "prop_home_pet_bed_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_gym_locker_future_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_cyan_emissive",
-          "tech_dark_metal",
-          "tech_white_light"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_gym_locker_future_a_v01/prop_gym_locker_future_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_gym_locker_future_a_v01/prop_gym_locker_future_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_gym_locker_future_a_v01/prop_gym_locker_future_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_gym_locker_future_a_v01/prop_gym_locker_future_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_gym_reception_desk_future_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_gym_reception_desk_future_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_cyan_emissive",
-          "tech_dark_metal",
-          "tech_white_light"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_gym_reception_desk_future_a_v01/prop_gym_reception_desk_future_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_gym_reception_desk_future_a_v01/prop_gym_reception_desk_future_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_gym_reception_desk_future_a_v01/prop_gym_reception_desk_future_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_gym_reception_desk_future_a_v01/prop_gym_reception_desk_future_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_hack_port_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_hack_port_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_cyan_emissive",
-          "tech_dark_metal",
-          "tech_white_light"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_hack_port_a_v01/prop_hack_port_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_hack_port_a_v01/prop_hack_port_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_hack_port_a_v01/prop_hack_port_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_hack_port_a_v01/prop_hack_port_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_hacked_panel_open_a_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/modular_prop/prop_hacked_panel_open_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 12,
-        "triangles": 2336,
-        "materials": [
-          "tech_brushed_metal",
-          "tech_composite",
-          "tech_cyan_emissive",
-          "tech_dark_metal",
-          "tech_white_light"
-        ],
-        "materialCount": 5,
-        "components": [
-          "appropriate materials",
-          "fasteners and seams",
-          "functional opening or access",
-          "functional secondary components",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "recognizable primary structure",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.6899999976158142,
-            -0.6825000047683716,
-            0
-          ],
-          "max": [
-            0.6899999976158142,
-            0.6825000047683716,
-            1.065000057220459
-          ],
-          "dimensions": [
-            1.3799999952316284,
-            1.3650000095367432,
-            1.065000057220459
-          ]
-        },
-        "requiredComponents": [
-          "recognizable primary structure",
-          "functional secondary components",
-          "appropriate materials"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/prop_hacked_panel_open_a_v01/prop_hacked_panel_open_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_hacked_panel_open_a_v01/prop_hacked_panel_open_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_hacked_panel_open_a_v01/prop_hacked_panel_open_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_hacked_panel_open_a_v01/prop_hacked_panel_open_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "prop_harbor_academy_sign_v01",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/modular_prop/prop_harbor_academy_sign_v01.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_home_pet_bed_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -739,18 +678,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_harbor_academy_sign_v01/prop_harbor_academy_sign_v01_view_1.png",
-        "asset-factory/work/previews/prop_harbor_academy_sign_v01/prop_harbor_academy_sign_v01_view_2.png",
-        "asset-factory/work/previews/prop_harbor_academy_sign_v01/prop_harbor_academy_sign_v01_view_3.png",
-        "asset-factory/work/previews/prop_harbor_academy_sign_v01/prop_harbor_academy_sign_v01_view_4.png"
+        "asset-factory/work/previews/prop_home_pet_bed_a_v01/prop_home_pet_bed_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_pet_bed_a_v01/prop_home_pet_bed_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_pet_bed_a_v01/prop_home_pet_bed_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_pet_bed_a_v01/prop_home_pet_bed_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_harbor_buoy_a_v01",
+      "id": "prop_home_potion_shelf_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/modular_prop/prop_harbor_buoy_a_v01.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_home_potion_shelf_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -800,18 +739,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_harbor_buoy_a_v01/prop_harbor_buoy_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_harbor_buoy_a_v01/prop_harbor_buoy_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_harbor_buoy_a_v01/prop_harbor_buoy_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_harbor_buoy_a_v01/prop_harbor_buoy_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_home_potion_shelf_a_v01/prop_home_potion_shelf_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_potion_shelf_a_v01/prop_home_potion_shelf_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_potion_shelf_a_v01/prop_home_potion_shelf_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_potion_shelf_a_v01/prop_home_potion_shelf_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_harbor_clinic_exam_bed_a_v01",
+      "id": "prop_home_prize_shelf_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/modular_prop/prop_harbor_clinic_exam_bed_a_v01.glb",
+      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_home_prize_shelf_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -861,18 +800,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_harbor_clinic_exam_bed_a_v01/prop_harbor_clinic_exam_bed_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_harbor_clinic_exam_bed_a_v01/prop_harbor_clinic_exam_bed_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_harbor_clinic_exam_bed_a_v01/prop_harbor_clinic_exam_bed_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_harbor_clinic_exam_bed_a_v01/prop_harbor_clinic_exam_bed_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_home_prize_shelf_a_v01/prop_home_prize_shelf_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_prize_shelf_a_v01/prop_home_prize_shelf_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_prize_shelf_a_v01/prop_home_prize_shelf_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_prize_shelf_a_v01/prop_home_prize_shelf_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_harbor_clinic_reception_a_v01",
+      "id": "prop_home_recovery_mat_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/modular_prop/prop_harbor_clinic_reception_a_v01.glb",
+      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_home_recovery_mat_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -922,18 +861,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_harbor_clinic_reception_a_v01/prop_harbor_clinic_reception_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_harbor_clinic_reception_a_v01/prop_harbor_clinic_reception_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_harbor_clinic_reception_a_v01/prop_harbor_clinic_reception_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_harbor_clinic_reception_a_v01/prop_harbor_clinic_reception_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_home_recovery_mat_a_v01/prop_home_recovery_mat_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_recovery_mat_a_v01/prop_home_recovery_mat_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_recovery_mat_a_v01/prop_home_recovery_mat_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_recovery_mat_a_v01/prop_home_recovery_mat_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_harbor_evidence_freezer_a_v01",
+      "id": "prop_home_relic_wall_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/modular_prop/prop_harbor_evidence_freezer_a_v01.glb",
+      "outputPath": "public/assets/models/generated/dungeon-outskirts/modular_prop/prop_home_relic_wall_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -983,18 +922,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_harbor_evidence_freezer_a_v01/prop_harbor_evidence_freezer_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_harbor_evidence_freezer_a_v01/prop_harbor_evidence_freezer_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_harbor_evidence_freezer_a_v01/prop_harbor_evidence_freezer_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_harbor_evidence_freezer_a_v01/prop_harbor_evidence_freezer_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_home_relic_wall_a_v01/prop_home_relic_wall_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_relic_wall_a_v01/prop_home_relic_wall_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_relic_wall_a_v01/prop_home_relic_wall_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_relic_wall_a_v01/prop_home_relic_wall_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_harbor_firstaid_cabinet_a_v01",
+      "id": "prop_home_richhills_art_wall_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/modular_prop/prop_harbor_firstaid_cabinet_a_v01.glb",
+      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_home_richhills_art_wall_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -1044,18 +983,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_harbor_firstaid_cabinet_a_v01/prop_harbor_firstaid_cabinet_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_harbor_firstaid_cabinet_a_v01/prop_harbor_firstaid_cabinet_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_harbor_firstaid_cabinet_a_v01/prop_harbor_firstaid_cabinet_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_harbor_firstaid_cabinet_a_v01/prop_harbor_firstaid_cabinet_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_home_richhills_art_wall_a_v01/prop_home_richhills_art_wall_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_richhills_art_wall_a_v01/prop_home_richhills_art_wall_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_richhills_art_wall_a_v01/prop_home_richhills_art_wall_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_richhills_art_wall_a_v01/prop_home_richhills_art_wall_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_harbor_holding_cell_a_v01",
+      "id": "prop_home_richhills_garage_display_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/modular_prop/prop_harbor_holding_cell_a_v01.glb",
+      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_home_richhills_garage_display_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -1105,18 +1044,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_harbor_holding_cell_a_v01/prop_harbor_holding_cell_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_harbor_holding_cell_a_v01/prop_harbor_holding_cell_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_harbor_holding_cell_a_v01/prop_harbor_holding_cell_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_harbor_holding_cell_a_v01/prop_harbor_holding_cell_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_home_richhills_garage_display_a_v01/prop_home_richhills_garage_display_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_richhills_garage_display_a_v01/prop_home_richhills_garage_display_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_richhills_garage_display_a_v01/prop_home_richhills_garage_display_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_richhills_garage_display_a_v01/prop_home_richhills_garage_display_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_harbor_home_boat_map_a_v01",
+      "id": "prop_home_richhills_gym_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/modular_prop/prop_harbor_home_boat_map_a_v01.glb",
+      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_home_richhills_gym_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -1166,18 +1105,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_harbor_home_boat_map_a_v01/prop_harbor_home_boat_map_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_harbor_home_boat_map_a_v01/prop_harbor_home_boat_map_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_harbor_home_boat_map_a_v01/prop_harbor_home_boat_map_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_harbor_home_boat_map_a_v01/prop_harbor_home_boat_map_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_home_richhills_gym_a_v01/prop_home_richhills_gym_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_richhills_gym_a_v01/prop_home_richhills_gym_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_richhills_gym_a_v01/prop_home_richhills_gym_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_richhills_gym_a_v01/prop_home_richhills_gym_a_v01_view_4.png"
       ]
     },
     {
-      "id": "prop_harbor_home_freezer_a_v01",
+      "id": "prop_home_richhills_pool_module_a_v01",
       "builder": "modular_prop",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/modular_prop/prop_harbor_home_freezer_a_v01.glb",
+      "outputPath": "public/assets/models/generated/rich-hills/modular_prop/prop_home_richhills_pool_module_a_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 12,
@@ -1227,10 +1166,71 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/prop_harbor_home_freezer_a_v01/prop_harbor_home_freezer_a_v01_view_1.png",
-        "asset-factory/work/previews/prop_harbor_home_freezer_a_v01/prop_harbor_home_freezer_a_v01_view_2.png",
-        "asset-factory/work/previews/prop_harbor_home_freezer_a_v01/prop_harbor_home_freezer_a_v01_view_3.png",
-        "asset-factory/work/previews/prop_harbor_home_freezer_a_v01/prop_harbor_home_freezer_a_v01_view_4.png"
+        "asset-factory/work/previews/prop_home_richhills_pool_module_a_v01/prop_home_richhills_pool_module_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_richhills_pool_module_a_v01/prop_home_richhills_pool_module_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_richhills_pool_module_a_v01/prop_home_richhills_pool_module_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_richhills_pool_module_a_v01/prop_home_richhills_pool_module_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "prop_home_trophy_shelf_a_v01",
+      "builder": "modular_prop",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/obby-canyon/modular_prop/prop_home_trophy_shelf_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 12,
+        "triangles": 2336,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "appropriate materials",
+          "fasteners and seams",
+          "functional opening or access",
+          "functional secondary components",
+          "handle, control, or closure",
+          "interaction or inventory socket",
+          "object-specific primary body",
+          "placement contact",
+          "recognizable primary structure",
+          "secondary functional assembly",
+          "support or contact structure"
+        ],
+        "bounds": {
+          "min": [
+            -0.6899999976158142,
+            -0.6825000047683716,
+            0
+          ],
+          "max": [
+            0.6899999976158142,
+            0.6825000047683716,
+            1.065000057220459
+          ],
+          "dimensions": [
+            1.3799999952316284,
+            1.3650000095367432,
+            1.065000057220459
+          ]
+        },
+        "requiredComponents": [
+          "recognizable primary structure",
+          "functional secondary components",
+          "appropriate materials"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/prop_home_trophy_shelf_a_v01/prop_home_trophy_shelf_a_v01_view_1.png",
+        "asset-factory/work/previews/prop_home_trophy_shelf_a_v01/prop_home_trophy_shelf_a_v01_view_2.png",
+        "asset-factory/work/previews/prop_home_trophy_shelf_a_v01/prop_home_trophy_shelf_a_v01_view_3.png",
+        "asset-factory/work/previews/prop_home_trophy_shelf_a_v01/prop_home_trophy_shelf_a_v01_view_4.png"
       ]
     }
   ]
