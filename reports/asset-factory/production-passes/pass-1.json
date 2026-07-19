@@ -1,18 +1,161 @@
 {
   "version": 2,
-  "batchId": "batch-00042",
-  "completedAt": "2026-07-19T01:50:27.926Z",
+  "batchId": "batch-00044",
+  "completedAt": "2026-07-19T01:59:49.445Z",
   "requested": 20,
   "passed": 20,
   "failed": 0,
   "queueCounts": {
-    "completed": 856,
+    "completed": 861,
     "reference-only": 16,
-    "queued": 1236,
+    "queued": 1231,
     "unsupported": 189,
     "quarantined": 1
   },
   "results": [
+    {
+      "id": "arch_aqualume_bubble_lift_a_v01",
+      "builder": "bubble_lift",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/aqualume/bubble_lift/arch_aqualume_bubble_lift_a_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 38,
+        "triangles": 13376,
+        "materials": [
+          "bubble_lift_emergency_seal",
+          "bubble_lift_lumen",
+          "bubble_lift_pearl_alloy",
+          "bubble_lift_pressure_glass",
+          "starter_black",
+          "starter_concrete",
+          "starter_dark_metal"
+        ],
+        "materialCount": 7,
+        "components": [
+          "bubble intake manifold",
+          "control pedestal",
+          "current-drive core",
+          "emergency pressure seals",
+          "illuminated seal tracks",
+          "pressure-glass lift shaft",
+          "reef-safe foundation ring",
+          "roof docking collar",
+          "service conduits",
+          "sliding dock doors",
+          "structural pressure ribs"
+        ],
+        "bounds": {
+          "min": [
+            -1.9328399896621704,
+            -2.083829879760742,
+            0
+          ],
+          "max": [
+            1.9328399896621704,
+            2.083829879760742,
+            7.946939945220947
+          ],
+          "dimensions": [
+            3.865679979324341,
+            4.167659759521484,
+            7.946939945220947
+          ]
+        },
+        "requiredComponents": [
+          "reef-safe foundation ring",
+          "pressure-glass lift shaft",
+          "structural pressure ribs",
+          "sliding dock doors",
+          "illuminated seal tracks",
+          "current-drive core",
+          "bubble intake manifold",
+          "control pedestal",
+          "service conduits",
+          "emergency pressure seals",
+          "roof docking collar"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/arch_aqualume_bubble_lift_a_v01/arch_aqualume_bubble_lift_a_v01_view_1.png",
+        "asset-factory/work/previews/arch_aqualume_bubble_lift_a_v01/arch_aqualume_bubble_lift_a_v01_view_2.png",
+        "asset-factory/work/previews/arch_aqualume_bubble_lift_a_v01/arch_aqualume_bubble_lift_a_v01_view_3.png",
+        "asset-factory/work/previews/arch_aqualume_bubble_lift_a_v01/arch_aqualume_bubble_lift_a_v01_view_4.png"
+      ]
+    },
+    {
+      "id": "gap-aqualume-airlock-conduit-straight-standard-105",
+      "builder": "airlock_conduit",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/aqualume/airlock_conduit/connector_aqualume-airlock-conduit-straight-standard-105.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 34,
+        "triangles": 12848,
+        "materials": [
+          "airlock_floor_guide",
+          "airlock_gasket",
+          "airlock_pearl_alloy",
+          "airlock_pressure_glass",
+          "airlock_valve_red",
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized"
+        ],
+        "materialCount": 8,
+        "components": [
+          "compression flanges",
+          "emergency isolation valve",
+          "end docking collar",
+          "gasket seals",
+          "illuminated floor guide",
+          "load-bearing pressure hoops",
+          "pressure gauge",
+          "pressure-glass conduit",
+          "service hatch",
+          "service spine",
+          "start docking collar"
+        ],
+        "bounds": {
+          "min": [
+            -1.5961599349975586,
+            -2.6793251037597656,
+            -1.2844079577689627e-8
+          ],
+          "max": [
+            1.5961599349975586,
+            2.6793251037597656,
+            3.192319869995117
+          ],
+          "dimensions": [
+            3.192319869995117,
+            5.358650207519531,
+            3.192319869995117
+          ]
+        },
+        "requiredComponents": [
+          "pressure-glass conduit",
+          "start docking collar",
+          "end docking collar",
+          "compression flanges",
+          "gasket seals",
+          "load-bearing pressure hoops",
+          "service spine",
+          "service hatch",
+          "pressure gauge",
+          "emergency isolation valve",
+          "illuminated floor guide"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/gap-aqualume-airlock-conduit-straight-standard-105/gap-aqualume-airlock-conduit-straight-standard-105_view_1.png",
+        "asset-factory/work/previews/gap-aqualume-airlock-conduit-straight-standard-105/gap-aqualume-airlock-conduit-straight-standard-105_view_2.png",
+        "asset-factory/work/previews/gap-aqualume-airlock-conduit-straight-standard-105/gap-aqualume-airlock-conduit-straight-standard-105_view_3.png",
+        "asset-factory/work/previews/gap-aqualume-airlock-conduit-straight-standard-105/gap-aqualume-airlock-conduit-straight-standard-105_view_4.png"
+      ]
+    },
     {
       "id": "gap-shared-world-accessibility-gate-locked-standard-310",
       "builder": "accessibility_gate",
@@ -408,11 +551,11 @@
       ]
     },
     {
-      "id": "building_dockside_diner_exterior_v01",
+      "id": "building_fameline_transit_station_exterior_v01",
       "builder": "modular_building",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/fishing-harbor/building_shell/building_dockside_diner_exterior_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/building_shell/building_fameline_transit_station_exterior_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 32,
@@ -464,10 +607,10 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/building_dockside_diner_exterior_v01/building_dockside_diner_exterior_v01_view_1.png",
-        "asset-factory/work/previews/building_dockside_diner_exterior_v01/building_dockside_diner_exterior_v01_view_2.png",
-        "asset-factory/work/previews/building_dockside_diner_exterior_v01/building_dockside_diner_exterior_v01_view_3.png",
-        "asset-factory/work/previews/building_dockside_diner_exterior_v01/building_dockside_diner_exterior_v01_view_4.png"
+        "asset-factory/work/previews/building_fameline_transit_station_exterior_v01/building_fameline_transit_station_exterior_v01_view_1.png",
+        "asset-factory/work/previews/building_fameline_transit_station_exterior_v01/building_fameline_transit_station_exterior_v01_view_2.png",
+        "asset-factory/work/previews/building_fameline_transit_station_exterior_v01/building_fameline_transit_station_exterior_v01_view_3.png",
+        "asset-factory/work/previews/building_fameline_transit_station_exterior_v01/building_fameline_transit_station_exterior_v01_view_4.png"
       ]
     },
     {
@@ -541,149 +684,6 @@
         "asset-factory/work/previews/elevated_road_support_a_v01/elevated_road_support_a_v01_view_2.png",
         "asset-factory/work/previews/elevated_road_support_a_v01/elevated_road_support_a_v01_view_3.png",
         "asset-factory/work/previews/elevated_road_support_a_v01/elevated_road_support_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "arch_aqualume_bubble_lift_a_v01",
-      "builder": "bubble_lift",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/bubble_lift/arch_aqualume_bubble_lift_a_v01.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 38,
-        "triangles": 13376,
-        "materials": [
-          "bubble_lift_emergency_seal",
-          "bubble_lift_lumen",
-          "bubble_lift_pearl_alloy",
-          "bubble_lift_pressure_glass",
-          "starter_black",
-          "starter_concrete",
-          "starter_dark_metal"
-        ],
-        "materialCount": 7,
-        "components": [
-          "bubble intake manifold",
-          "control pedestal",
-          "current-drive core",
-          "emergency pressure seals",
-          "illuminated seal tracks",
-          "pressure-glass lift shaft",
-          "reef-safe foundation ring",
-          "roof docking collar",
-          "service conduits",
-          "sliding dock doors",
-          "structural pressure ribs"
-        ],
-        "bounds": {
-          "min": [
-            -1.9328399896621704,
-            -2.083829879760742,
-            0
-          ],
-          "max": [
-            1.9328399896621704,
-            2.083829879760742,
-            7.946939945220947
-          ],
-          "dimensions": [
-            3.865679979324341,
-            4.167659759521484,
-            7.946939945220947
-          ]
-        },
-        "requiredComponents": [
-          "reef-safe foundation ring",
-          "pressure-glass lift shaft",
-          "structural pressure ribs",
-          "sliding dock doors",
-          "illuminated seal tracks",
-          "current-drive core",
-          "bubble intake manifold",
-          "control pedestal",
-          "service conduits",
-          "emergency pressure seals",
-          "roof docking collar"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/arch_aqualume_bubble_lift_a_v01/arch_aqualume_bubble_lift_a_v01_view_1.png",
-        "asset-factory/work/previews/arch_aqualume_bubble_lift_a_v01/arch_aqualume_bubble_lift_a_v01_view_2.png",
-        "asset-factory/work/previews/arch_aqualume_bubble_lift_a_v01/arch_aqualume_bubble_lift_a_v01_view_3.png",
-        "asset-factory/work/previews/arch_aqualume_bubble_lift_a_v01/arch_aqualume_bubble_lift_a_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-aqualume-airlock-conduit-straight-standard-105",
-      "builder": "airlock_conduit",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/airlock_conduit/connector_aqualume-airlock-conduit-straight-standard-105.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 34,
-        "triangles": 12848,
-        "materials": [
-          "airlock_floor_guide",
-          "airlock_gasket",
-          "airlock_pearl_alloy",
-          "airlock_pressure_glass",
-          "airlock_valve_red",
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized"
-        ],
-        "materialCount": 8,
-        "components": [
-          "compression flanges",
-          "emergency isolation valve",
-          "end docking collar",
-          "gasket seals",
-          "illuminated floor guide",
-          "load-bearing pressure hoops",
-          "pressure gauge",
-          "pressure-glass conduit",
-          "service hatch",
-          "service spine",
-          "start docking collar"
-        ],
-        "bounds": {
-          "min": [
-            -1.5961599349975586,
-            -2.6793251037597656,
-            -1.2844079577689627e-8
-          ],
-          "max": [
-            1.5961599349975586,
-            2.6793251037597656,
-            3.192319869995117
-          ],
-          "dimensions": [
-            3.192319869995117,
-            5.358650207519531,
-            3.192319869995117
-          ]
-        },
-        "requiredComponents": [
-          "pressure-glass conduit",
-          "start docking collar",
-          "end docking collar",
-          "compression flanges",
-          "gasket seals",
-          "load-bearing pressure hoops",
-          "service spine",
-          "service hatch",
-          "pressure gauge",
-          "emergency isolation valve",
-          "illuminated floor guide"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-aqualume-airlock-conduit-straight-standard-105/gap-aqualume-airlock-conduit-straight-standard-105_view_1.png",
-        "asset-factory/work/previews/gap-aqualume-airlock-conduit-straight-standard-105/gap-aqualume-airlock-conduit-straight-standard-105_view_2.png",
-        "asset-factory/work/previews/gap-aqualume-airlock-conduit-straight-standard-105/gap-aqualume-airlock-conduit-straight-standard-105_view_3.png",
-        "asset-factory/work/previews/gap-aqualume-airlock-conduit-straight-standard-105/gap-aqualume-airlock-conduit-straight-standard-105_view_4.png"
       ]
     },
     {
@@ -1003,11 +1003,11 @@
       ]
     },
     {
-      "id": "building_drone_district_exterior_v01",
+      "id": "building_gadget_forge_lab_exterior_v01",
       "builder": "modular_building",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/techtown/building_shell/building_drone_district_exterior_v01.glb",
+      "outputPath": "public/assets/models/generated/techtown/building_shell/building_gadget_forge_lab_exterior_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 32,
@@ -1059,10 +1059,10 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/building_drone_district_exterior_v01/building_drone_district_exterior_v01_view_1.png",
-        "asset-factory/work/previews/building_drone_district_exterior_v01/building_drone_district_exterior_v01_view_2.png",
-        "asset-factory/work/previews/building_drone_district_exterior_v01/building_drone_district_exterior_v01_view_3.png",
-        "asset-factory/work/previews/building_drone_district_exterior_v01/building_drone_district_exterior_v01_view_4.png"
+        "asset-factory/work/previews/building_gadget_forge_lab_exterior_v01/building_gadget_forge_lab_exterior_v01_view_1.png",
+        "asset-factory/work/previews/building_gadget_forge_lab_exterior_v01/building_gadget_forge_lab_exterior_v01_view_2.png",
+        "asset-factory/work/previews/building_gadget_forge_lab_exterior_v01/building_gadget_forge_lab_exterior_v01_view_3.png",
+        "asset-factory/work/previews/building_gadget_forge_lab_exterior_v01/building_gadget_forge_lab_exterior_v01_view_4.png"
       ]
     },
     {

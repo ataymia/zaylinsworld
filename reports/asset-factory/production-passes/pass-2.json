@@ -1,18 +1,144 @@
 {
   "version": 2,
-  "batchId": "batch-00043",
-  "completedAt": "2026-07-19T01:53:16.955Z",
+  "batchId": "batch-00045",
+  "completedAt": "2026-07-19T02:02:44.919Z",
   "requested": 20,
   "passed": 20,
   "failed": 0,
   "queueCounts": {
-    "completed": 876,
+    "completed": 881,
     "reference-only": 16,
-    "queued": 1216,
+    "queued": 1211,
     "unsupported": 189,
     "quarantined": 1
   },
   "results": [
+    {
+      "id": "gap-aqualume-airlock-transit-tube-lane-divider-standard-094",
+      "builder": "modular_connector",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/aqualume/modular_connector/connector_aqualume-airlock-transit-tube-lane-divider-standard-094.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 19,
+        "triangles": 3572,
+        "materials": [
+          "starter_black",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 5,
+        "components": [
+          "LOD-preserved silhouette",
+          "collision-safe boundary",
+          "end connection socket",
+          "load-bearing frame",
+          "primary structural span",
+          "seal or transition trim",
+          "service access",
+          "start connection socket"
+        ],
+        "bounds": {
+          "min": [
+            -1.0399999618530273,
+            -0.8425000309944153,
+            0
+          ],
+          "max": [
+            1.0399999618530273,
+            0.8425000309944153,
+            1.440000057220459
+          ],
+          "dimensions": [
+            2.0799999237060547,
+            1.6850000619888306,
+            1.440000057220459
+          ]
+        },
+        "requiredComponents": [
+          "primary structural span",
+          "start connection socket",
+          "end connection socket",
+          "load-bearing frame",
+          "service access",
+          "seal or transition trim",
+          "collision-safe boundary",
+          "LOD-preserved silhouette"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-lane-divider-standard-094/gap-aqualume-airlock-transit-tube-lane-divider-standard-094_view_1.png",
+        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-lane-divider-standard-094/gap-aqualume-airlock-transit-tube-lane-divider-standard-094_view_2.png",
+        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-lane-divider-standard-094/gap-aqualume-airlock-transit-tube-lane-divider-standard-094_view_3.png",
+        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-lane-divider-standard-094/gap-aqualume-airlock-transit-tube-lane-divider-standard-094_view_4.png"
+      ]
+    },
+    {
+      "id": "building_gallery_crown_exterior_v01",
+      "builder": "modular_building",
+      "builderRevision": "2026-07-18-r7",
+      "passed": true,
+      "outputPath": "public/assets/models/generated/rich-hills/building_shell/building_gallery_crown_exterior_v01.glb",
+      "failures": [],
+      "stats": {
+        "meshObjects": 32,
+        "triangles": 6016,
+        "materials": [
+          "starter_black",
+          "starter_concrete",
+          "starter_dark_metal",
+          "starter_galvanized",
+          "starter_glass",
+          "starter_warm_light",
+          "starter_white"
+        ],
+        "materialCount": 7,
+        "components": [
+          "entrance",
+          "facade material breaks",
+          "foundation",
+          "primary massing",
+          "roof line",
+          "service side",
+          "window system"
+        ],
+        "bounds": {
+          "min": [
+            -8.640000343322754,
+            -6.75499963760376,
+            0
+          ],
+          "max": [
+            8.640000343322754,
+            6.755000114440918,
+            8.729999542236328
+          ],
+          "dimensions": [
+            17.280000686645508,
+            13.510000228881836,
+            8.729999542236328
+          ]
+        },
+        "requiredComponents": [
+          "primary massing",
+          "roof line",
+          "entrance",
+          "window system",
+          "facade material breaks",
+          "service side",
+          "foundation"
+        ]
+      },
+      "previewPaths": [
+        "asset-factory/work/previews/building_gallery_crown_exterior_v01/building_gallery_crown_exterior_v01_view_1.png",
+        "asset-factory/work/previews/building_gallery_crown_exterior_v01/building_gallery_crown_exterior_v01_view_2.png",
+        "asset-factory/work/previews/building_gallery_crown_exterior_v01/building_gallery_crown_exterior_v01_view_3.png",
+        "asset-factory/work/previews/building_gallery_crown_exterior_v01/building_gallery_crown_exterior_v01_view_4.png"
+      ]
+    },
     {
       "id": "gap-shared-world-accessibility-traffic-signal-normal-standard-355",
       "builder": "state_variant",
@@ -267,11 +393,11 @@
       ]
     },
     {
-      "id": "gap-aqualume-airlock-transit-tube-lane-divider-standard-094",
+      "id": "gap-aqualume-airlock-transit-tube-short-straight-standard-072",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/modular_connector/connector_aqualume-airlock-transit-tube-lane-divider-standard-094.glb",
+      "outputPath": "public/assets/models/generated/aqualume/modular_connector/connector_aqualume-airlock-transit-tube-short-straight-standard-072.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
@@ -323,18 +449,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-lane-divider-standard-094/gap-aqualume-airlock-transit-tube-lane-divider-standard-094_view_1.png",
-        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-lane-divider-standard-094/gap-aqualume-airlock-transit-tube-lane-divider-standard-094_view_2.png",
-        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-lane-divider-standard-094/gap-aqualume-airlock-transit-tube-lane-divider-standard-094_view_3.png",
-        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-lane-divider-standard-094/gap-aqualume-airlock-transit-tube-lane-divider-standard-094_view_4.png"
+        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-short-straight-standard-072/gap-aqualume-airlock-transit-tube-short-straight-standard-072_view_1.png",
+        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-short-straight-standard-072/gap-aqualume-airlock-transit-tube-short-straight-standard-072_view_2.png",
+        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-short-straight-standard-072/gap-aqualume-airlock-transit-tube-short-straight-standard-072_view_3.png",
+        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-short-straight-standard-072/gap-aqualume-airlock-transit-tube-short-straight-standard-072_view_4.png"
       ]
     },
     {
-      "id": "building_dungeon_gate_exterior_v01",
+      "id": "building_glamlab_salon_exterior_v01",
       "builder": "modular_building",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/dungeon-outskirts/building_shell/building_dungeon_gate_exterior_v01.glb",
+      "outputPath": "public/assets/models/generated/starline-city/building_shell/building_glamlab_salon_exterior_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 32,
@@ -386,10 +512,10 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/building_dungeon_gate_exterior_v01/building_dungeon_gate_exterior_v01_view_1.png",
-        "asset-factory/work/previews/building_dungeon_gate_exterior_v01/building_dungeon_gate_exterior_v01_view_2.png",
-        "asset-factory/work/previews/building_dungeon_gate_exterior_v01/building_dungeon_gate_exterior_v01_view_3.png",
-        "asset-factory/work/previews/building_dungeon_gate_exterior_v01/building_dungeon_gate_exterior_v01_view_4.png"
+        "asset-factory/work/previews/building_glamlab_salon_exterior_v01/building_glamlab_salon_exterior_v01_view_1.png",
+        "asset-factory/work/previews/building_glamlab_salon_exterior_v01/building_glamlab_salon_exterior_v01_view_2.png",
+        "asset-factory/work/previews/building_glamlab_salon_exterior_v01/building_glamlab_salon_exterior_v01_view_3.png",
+        "asset-factory/work/previews/building_glamlab_salon_exterior_v01/building_glamlab_salon_exterior_v01_view_4.png"
       ]
     },
     {
@@ -646,11 +772,11 @@
       ]
     },
     {
-      "id": "gap-aqualume-airlock-transit-tube-short-straight-standard-072",
+      "id": "gap-aqualume-current-conduit-junction-standard-107",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/modular_connector/connector_aqualume-airlock-transit-tube-short-straight-standard-072.glb",
+      "outputPath": "public/assets/models/generated/aqualume/modular_connector/connector_aqualume-current-conduit-junction-standard-107.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
@@ -702,18 +828,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-short-straight-standard-072/gap-aqualume-airlock-transit-tube-short-straight-standard-072_view_1.png",
-        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-short-straight-standard-072/gap-aqualume-airlock-transit-tube-short-straight-standard-072_view_2.png",
-        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-short-straight-standard-072/gap-aqualume-airlock-transit-tube-short-straight-standard-072_view_3.png",
-        "asset-factory/work/previews/gap-aqualume-airlock-transit-tube-short-straight-standard-072/gap-aqualume-airlock-transit-tube-short-straight-standard-072_view_4.png"
+        "asset-factory/work/previews/gap-aqualume-current-conduit-junction-standard-107/gap-aqualume-current-conduit-junction-standard-107_view_1.png",
+        "asset-factory/work/previews/gap-aqualume-current-conduit-junction-standard-107/gap-aqualume-current-conduit-junction-standard-107_view_2.png",
+        "asset-factory/work/previews/gap-aqualume-current-conduit-junction-standard-107/gap-aqualume-current-conduit-junction-standard-107_view_3.png",
+        "asset-factory/work/previews/gap-aqualume-current-conduit-junction-standard-107/gap-aqualume-current-conduit-junction-standard-107_view_4.png"
       ]
     },
     {
-      "id": "building_dungeon_guild_hall_exterior_v01",
+      "id": "building_glassway_towers_exterior_v01",
       "builder": "modular_building",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/dungeon-outskirts/building_shell/building_dungeon_guild_hall_exterior_v01.glb",
+      "outputPath": "public/assets/models/generated/aqualume/building_shell/building_glassway_towers_exterior_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 32,
@@ -765,10 +891,10 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/building_dungeon_guild_hall_exterior_v01/building_dungeon_guild_hall_exterior_v01_view_1.png",
-        "asset-factory/work/previews/building_dungeon_guild_hall_exterior_v01/building_dungeon_guild_hall_exterior_v01_view_2.png",
-        "asset-factory/work/previews/building_dungeon_guild_hall_exterior_v01/building_dungeon_guild_hall_exterior_v01_view_3.png",
-        "asset-factory/work/previews/building_dungeon_guild_hall_exterior_v01/building_dungeon_guild_hall_exterior_v01_view_4.png"
+        "asset-factory/work/previews/building_glassway_towers_exterior_v01/building_glassway_towers_exterior_v01_view_1.png",
+        "asset-factory/work/previews/building_glassway_towers_exterior_v01/building_glassway_towers_exterior_v01_view_2.png",
+        "asset-factory/work/previews/building_glassway_towers_exterior_v01/building_glassway_towers_exterior_v01_view_3.png",
+        "asset-factory/work/previews/building_glassway_towers_exterior_v01/building_glassway_towers_exterior_v01_view_4.png"
       ]
     },
     {
@@ -1025,11 +1151,11 @@
       ]
     },
     {
-      "id": "gap-aqualume-current-conduit-junction-standard-107",
+      "id": "gap-aqualume-current-handrail-corner-standard-118",
       "builder": "modular_connector",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/aqualume/modular_connector/connector_aqualume-current-conduit-junction-standard-107.glb",
+      "outputPath": "public/assets/models/generated/aqualume/modular_connector/connector_aqualume-current-handrail-corner-standard-118.glb",
       "failures": [],
       "stats": {
         "meshObjects": 19,
@@ -1081,18 +1207,18 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/gap-aqualume-current-conduit-junction-standard-107/gap-aqualume-current-conduit-junction-standard-107_view_1.png",
-        "asset-factory/work/previews/gap-aqualume-current-conduit-junction-standard-107/gap-aqualume-current-conduit-junction-standard-107_view_2.png",
-        "asset-factory/work/previews/gap-aqualume-current-conduit-junction-standard-107/gap-aqualume-current-conduit-junction-standard-107_view_3.png",
-        "asset-factory/work/previews/gap-aqualume-current-conduit-junction-standard-107/gap-aqualume-current-conduit-junction-standard-107_view_4.png"
+        "asset-factory/work/previews/gap-aqualume-current-handrail-corner-standard-118/gap-aqualume-current-handrail-corner-standard-118_view_1.png",
+        "asset-factory/work/previews/gap-aqualume-current-handrail-corner-standard-118/gap-aqualume-current-handrail-corner-standard-118_view_2.png",
+        "asset-factory/work/previews/gap-aqualume-current-handrail-corner-standard-118/gap-aqualume-current-handrail-corner-standard-118_view_3.png",
+        "asset-factory/work/previews/gap-aqualume-current-handrail-corner-standard-118/gap-aqualume-current-handrail-corner-standard-118_view_4.png"
       ]
     },
     {
-      "id": "building_encore_music_hall_exterior_v01",
+      "id": "building_golden_key_realty_exterior_v01",
       "builder": "modular_building",
       "builderRevision": "2026-07-18-r7",
       "passed": true,
-      "outputPath": "public/assets/models/generated/starline-city/building_shell/building_encore_music_hall_exterior_v01.glb",
+      "outputPath": "public/assets/models/generated/rich-hills/building_shell/building_golden_key_realty_exterior_v01.glb",
       "failures": [],
       "stats": {
         "meshObjects": 32,
@@ -1144,136 +1270,10 @@
         ]
       },
       "previewPaths": [
-        "asset-factory/work/previews/building_encore_music_hall_exterior_v01/building_encore_music_hall_exterior_v01_view_1.png",
-        "asset-factory/work/previews/building_encore_music_hall_exterior_v01/building_encore_music_hall_exterior_v01_view_2.png",
-        "asset-factory/work/previews/building_encore_music_hall_exterior_v01/building_encore_music_hall_exterior_v01_view_3.png",
-        "asset-factory/work/previews/building_encore_music_hall_exterior_v01/building_encore_music_hall_exterior_v01_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-shared-world-audio-furniture-damaged-standard-338",
-      "builder": "state_variant",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/shared-world/state_variant/state_variant_shared-world-audio-furniture-damaged-standard-338.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 16,
-        "triangles": 3024,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "LOD and swap policy",
-          "animation transition socket",
-          "base object relationship",
-          "collision state",
-          "damage or repair metadata",
-          "interaction state",
-          "state-defining geometry",
-          "state-defining material layer"
-        ],
-        "bounds": {
-          "min": [
-            -0.4375,
-            -0.4399999976158142,
-            2.7939677238464355e-9
-          ],
-          "max": [
-            0.4375,
-            0.4399999976158142,
-            0.7325000762939453
-          ],
-          "dimensions": [
-            0.875,
-            0.8799999952316284,
-            0.7325000762939453
-          ]
-        },
-        "requiredComponents": [
-          "base object relationship",
-          "state-defining geometry",
-          "state-defining material layer",
-          "animation transition socket",
-          "collision state",
-          "interaction state",
-          "damage or repair metadata",
-          "LOD and swap policy"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-shared-world-audio-furniture-damaged-standard-338/gap-shared-world-audio-furniture-damaged-standard-338_view_1.png",
-        "asset-factory/work/previews/gap-shared-world-audio-furniture-damaged-standard-338/gap-shared-world-audio-furniture-damaged-standard-338_view_2.png",
-        "asset-factory/work/previews/gap-shared-world-audio-furniture-damaged-standard-338/gap-shared-world-audio-furniture-damaged-standard-338_view_3.png",
-        "asset-factory/work/previews/gap-shared-world-audio-furniture-damaged-standard-338/gap-shared-world-audio-furniture-damaged-standard-338_view_4.png"
-      ]
-    },
-    {
-      "id": "gap-casino-strip-casino-loose-paper-stack-standard-027",
-      "builder": "modular_prop",
-      "builderRevision": "2026-07-18-r7",
-      "passed": true,
-      "outputPath": "public/assets/models/generated/casino-strip/modular_prop/prop_casino-strip-casino-loose-paper-stack-standard-027.glb",
-      "failures": [],
-      "stats": {
-        "meshObjects": 17,
-        "triangles": 3212,
-        "materials": [
-          "starter_black",
-          "starter_dark_metal",
-          "starter_galvanized",
-          "starter_warm_light",
-          "starter_white"
-        ],
-        "materialCount": 5,
-        "components": [
-          "fasteners and seams",
-          "functional opening or access",
-          "handle, control, or closure",
-          "interaction or inventory socket",
-          "object-specific primary body",
-          "placement contact",
-          "secondary functional assembly",
-          "support or contact structure"
-        ],
-        "bounds": {
-          "min": [
-            -0.36800000071525574,
-            -0.27300000190734863,
-            0
-          ],
-          "max": [
-            0.36800000071525574,
-            0.27300000190734863,
-            0.5679999589920044
-          ],
-          "dimensions": [
-            0.7360000014305115,
-            0.5460000038146973,
-            0.5679999589920044
-          ]
-        },
-        "requiredComponents": [
-          "object-specific primary body",
-          "support or contact structure",
-          "functional opening or access",
-          "handle, control, or closure",
-          "secondary functional assembly",
-          "fasteners and seams",
-          "placement contact",
-          "interaction or inventory socket"
-        ]
-      },
-      "previewPaths": [
-        "asset-factory/work/previews/gap-casino-strip-casino-loose-paper-stack-standard-027/gap-casino-strip-casino-loose-paper-stack-standard-027_view_1.png",
-        "asset-factory/work/previews/gap-casino-strip-casino-loose-paper-stack-standard-027/gap-casino-strip-casino-loose-paper-stack-standard-027_view_2.png",
-        "asset-factory/work/previews/gap-casino-strip-casino-loose-paper-stack-standard-027/gap-casino-strip-casino-loose-paper-stack-standard-027_view_3.png",
-        "asset-factory/work/previews/gap-casino-strip-casino-loose-paper-stack-standard-027/gap-casino-strip-casino-loose-paper-stack-standard-027_view_4.png"
+        "asset-factory/work/previews/building_golden_key_realty_exterior_v01/building_golden_key_realty_exterior_v01_view_1.png",
+        "asset-factory/work/previews/building_golden_key_realty_exterior_v01/building_golden_key_realty_exterior_v01_view_2.png",
+        "asset-factory/work/previews/building_golden_key_realty_exterior_v01/building_golden_key_realty_exterior_v01_view_3.png",
+        "asset-factory/work/previews/building_golden_key_realty_exterior_v01/building_golden_key_realty_exterior_v01_view_4.png"
       ]
     }
   ]
