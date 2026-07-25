@@ -14,10 +14,55 @@ import * as THREE from 'three';
 import { collisionTypeForKind, behaviorForKind, impactDamage } from './config/vehicleCollisionRules.js';
 
 const _breakables = [];   // { group, x, z, r, kind, type, broken, mass }
+const SPATIAL_CELL_SIZE = 32;
+const _spatialCells = new Map();
 export const BREAKABLE_RESPAWN_MS = 30 * 60 * 1000;
 const nowMs = () => (typeof performance !== 'undefined' ? performance.now() : Date.now());
 
-export function clearWorldObjects() { _breakables.length = 0; }
+function indexRadius(object) {
+  if (!object.halfExtents) return Math.max(0.1, Number(object.r) || 0.6);
+  // A rotated rectangular footprint fits inside this conservative circle.
+  return Math.hypot(object.halfExtents.x, object.halfExtents.z);
+}
+
+function indexWorldObject(object) {
+  const radius = indexRadius(object);
+  const minCellX = Math.floor((object.x - radius) / SPATIAL_CELL_SIZE);
+  const maxCellX = Math.floor((object.x + radius) / SPATIAL_CELL_SIZE);
+  const minCellZ = Math.floor((object.z - radius) / SPATIAL_CELL_SIZE);
+  const maxCellZ = Math.floor((object.z + radius) / SPATIAL_CELL_SIZE);
+  object.spatialKeys = [];
+  for (let cellX = minCellX; cellX <= maxCellX; cellX++) {
+    for (let cellZ = minCellZ; cellZ <= maxCellZ; cellZ++) {
+      const key = `${cellX}:${cellZ}`;
+      const bucket = _spatialCells.get(key) || [];
+      bucket.push(object);
+      _spatialCells.set(key, bucket);
+      object.spatialKeys.push(key);
+    }
+  }
+}
+
+function nearbyWorldObjects(position, radius = 1.6) {
+  const x = Number(position?.x) || 0;
+  const z = Number(position?.z) || 0;
+  const minCellX = Math.floor((x - radius) / SPATIAL_CELL_SIZE);
+  const maxCellX = Math.floor((x + radius) / SPATIAL_CELL_SIZE);
+  const minCellZ = Math.floor((z - radius) / SPATIAL_CELL_SIZE);
+  const maxCellZ = Math.floor((z + radius) / SPATIAL_CELL_SIZE);
+  const found = new Set();
+  for (let cellX = minCellX; cellX <= maxCellX; cellX++) {
+    for (let cellZ = minCellZ; cellZ <= maxCellZ; cellZ++) {
+      for (const object of _spatialCells.get(`${cellX}:${cellZ}`) || []) found.add(object);
+    }
+  }
+  return [...found];
+}
+
+export function clearWorldObjects() {
+  _breakables.length = 0;
+  _spatialCells.clear();
+}
 
 // Register a world object. `group` is the THREE object to tip/hide on break.
 export function registerWorldObject(group, x, z, {
@@ -61,6 +106,7 @@ export function registerWorldObject(group, x, z, {
     } : null,
   };
   _breakables.push(o);
+  indexWorldObject(o);
   return o;
 }
 
@@ -140,7 +186,7 @@ export function collideVehicleImpact(pos, speed, onBreak, {
   const broken = [];
   const hits = [];
   const spd = Math.abs(speed || 0);
-  for (const o of _breakables) {
+  for (const o of nearbyWorldObjects(pos, vehicleRadius)) {
     if (o.broken) continue;
     if (!vehicleIntersects(o, pos, vehicleRadius)) continue;
     if (o.type === 'soft') continue;             // drive over litter, no effect
@@ -176,6 +222,18 @@ export function collideVehicle(pos, speed, onBreak) {
 }
 
 export function getWorldObjects() { return _breakables.slice(); }
+export function worldCollisionSpatialStats() {
+  const sizes = [..._spatialCells.values()].map((bucket) => bucket.length);
+  return Object.freeze({
+    cellSize: SPATIAL_CELL_SIZE,
+    cells: _spatialCells.size,
+    objects: _breakables.length,
+    maxBucket: sizes.length ? Math.max(...sizes) : 0,
+    averageBucket: sizes.length
+      ? sizes.reduce((sum, size) => sum + size, 0) / sizes.length
+      : 0,
+  });
+}
 
 export default {
   clearWorldObjects,
@@ -186,4 +244,5 @@ export default {
   breakableCount,
   worldObjectCount,
   getWorldObjects,
+  worldCollisionSpatialStats,
 };

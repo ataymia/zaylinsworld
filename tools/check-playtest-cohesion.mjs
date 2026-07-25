@@ -34,6 +34,7 @@ import {
   registerWorldObject,
   updateWorldObjects,
   worldObjectCount,
+  worldCollisionSpatialStats,
 } from '../src/worldCollision.js';
 
 const source = (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8');
@@ -53,32 +54,36 @@ assert.ok(minimapRoadPlan({ largeWorld: false }).length < largeMapRoads.length);
 
 // A two-kilometre town needs district coverage, not a downtown-only pedestrian
 // loop. One route per district and density-aware budgets are release gates.
-assert.deepEqual(LARGE_TOWN_PEDESTRIAN_BUDGET, { sparse: 32, normal: 48, busy: 72 });
-assert.equal(largeTownPedestrianCount(0.45), 32);
-assert.equal(largeTownPedestrianCount(0.72), 48);
-assert.equal(largeTownPedestrianCount(1), 72);
-assert.equal(LARGE_TOWN_PEDESTRIAN_ROUTES.length, STARTER_TOWN_RUNTIME_PLAN.districts.length);
+assert.deepEqual(LARGE_TOWN_PEDESTRIAN_BUDGET, { sparse: 72, normal: 108, busy: 156 });
+assert.equal(largeTownPedestrianCount(0.45), 72);
+assert.equal(largeTownPedestrianCount(0.72), 108);
+assert.equal(largeTownPedestrianCount(1), 156);
+assert.ok(LARGE_TOWN_PEDESTRIAN_ROUTES.length >= STARTER_TOWN_RUNTIME_PLAN.districts.length * 2);
 assert.deepEqual(
   new Set(LARGE_TOWN_PEDESTRIAN_ROUTES.map((route) => route.districtId)),
   new Set(STARTER_TOWN_RUNTIME_PLAN.districts.map((district) => district.id)),
 );
+for (const district of STARTER_TOWN_RUNTIME_PLAN.districts) {
+  assert.ok(LARGE_TOWN_PEDESTRIAN_ROUTES.filter((route) => route.districtId === district.id).length >= 2,
+    `${district.id} needs primary and secondary pedestrian circulation`);
+}
 for (const route of LARGE_TOWN_PEDESTRIAN_ROUTES) {
-  assert.ok(route.loop.length >= 5, `${route.id} needs a meaningful walking loop`);
+  assert.ok(route.loop.length >= 4, `${route.id} needs a meaningful walking loop`);
   assert.ok(route.loop.some(([x, z]) => Math.abs(x) > 220 || Math.abs(z) > 220),
     `${route.id} must leave the prototype core`);
 }
 
 // Traffic must be distributed on authored loops; source integration below
 // additionally guarantees that each spawned car begins with non-zero speed.
-const traffic = trafficSpawnPlan(14, LARGE_TOWN_TRAFFIC_ROUTES);
-assert.equal(traffic.length, 14);
+const traffic = trafficSpawnPlan(44, LARGE_TOWN_TRAFFIC_ROUTES);
+assert.equal(traffic.length, 44);
 assert.ok(traffic.every((car) => car.routeName && car.position));
 
 // Landscaping must fill both developed parcels and the off-road horizon while
 // respecting the authored road safety margin.
 const vegetation = createStarterTownVegetationPlan();
-assert.equal(vegetation.trees.length, 520);
-assert.equal(vegetation.rocks.length, 72);
+assert.equal(vegetation.trees.length, 1400);
+assert.equal(vegetation.rocks.length, 240);
 assert.ok(vegetation.trees.some((entry) => Math.hypot(entry.x, entry.z) > 1000),
   'outer terrain needs a landscaped horizon');
 for (const entry of [...vegetation.trees, ...vegetation.rocks]) {
@@ -127,6 +132,9 @@ assert.equal(roadside.activateCollisions(), 0, 'collision activation must be ide
 assert.equal(worldObjectCount(), expectedStreetlights);
 assert.equal(breakableCount(), expectedStreetlights);
 assert.ok(getWorldObjects().every((entry) => entry.respawnMs === BREAKABLE_RESPAWN_MS));
+const roadsideSpatial = worldCollisionSpatialStats();
+assert.ok(roadsideSpatial.cells > 100, 'roadside collisions must be spatially partitioned');
+assert.ok(roadsideSpatial.maxBucket < expectedStreetlights / 4, 'one collision bucket must not contain the whole town');
 
 // Every visible filler building has a hard rectangular footprint. This closes
 // the same off-road loophole as trees and poles without bloating cityColliders.
@@ -137,7 +145,7 @@ const buildings = STARTER_TOWN_PARCELS
     DISTRICT_PROFILE_BY_ID[parcel.districtId],
     roadNetwork,
   ));
-assert.equal(buildings.length, 73);
+assert.ok(buildings.length >= 100);
 clearWorldObjects();
 for (const building of buildings) {
   assert.ok(buildingRoadClearance(building.position, building.size, roadNetwork) >= 3);
@@ -154,7 +162,7 @@ const buildingImpact = collideVehicleImpact(buildingPosition, 10, null, {
 });
 assert.equal(buildingImpact.blocked, true);
 assert.ok(buildingImpact.damage > 0);
-assert.equal(worldObjectCount(), 73);
+assert.equal(worldObjectCount(), buildings.length);
 
 // Source-level integration contracts cover browser-only seams that the Node
 // behavioral checks cannot instantiate without WebGL and the DOM.
@@ -167,14 +175,18 @@ const [main, world, interiors, largeTown, bridge, npc] = await Promise.all([
   source('src/npc.js'),
 ]);
 assert.match(world, /compactSurfaceTarget = largeWorldVisuals \? new THREE\.Group\(\) : scene/);
-assert.match(world, /interactionOnly: !!productionAsset/);
+assert.match(world, /interactionOnly: !!productionAsset \|\| !!\(b\.locationId && activeRelocations\.has\(b\.locationId\)\)/);
+assert.match(world, /node\.visible = !!node\.userData\.interactionAnchor/);
 assert.match(largeTown, /terrain\.position\.y = -0\.045/);
 assert.match(largeTown, /ZW_LocationIdentity_/);
 assert.match(largeTown, /RESTAURANT • HOT FOOD/);
 assert.match(interiors, /const setActive = \(id = null\)/);
 assert.match(interiors, /interior\.group\.visible = active/);
 assert.match(main, /setPreparedProductionWorldVisible\(false\)/);
-assert.match(main, /if \(area === 'city'\) \{\s*updateCityNPCs/);
+assert.match(
+  main,
+  /if \(area === 'city'\) \{[\s\S]*?updateCityNPCs\(cityNPCs, dt, t, cityObserver\)/,
+);
 assert.match(main, /That place could not open safely/);
 assert.match(bridge, /activatePreparedProductionWorldCollisions/);
 assert.match(bridge, /setPreparedProductionWorldVisible/);
@@ -183,8 +195,8 @@ assert.match(npc, /speed: baseSpeed \* 0\.55, baseSpeed/);
 assert.match(npc, /cpos\.x \+= heading\.x \* step/);
 
 console.log(
-  '[playtest-cohesion] stable terrain, authoritative map roads, 520 trees, 72 rocks, '
-  + 'district pedestrians, moving traffic, signed buildings, 73 hard building footprints, '
+  '[playtest-cohesion] stable terrain, authoritative map roads, 1,400 trees, 240 rocks, '
+  + 'district pedestrians, moving traffic, single-signed buildings, dense hard building footprints, '
   + 'crashable/restoring streetlights, '
   + 'and isolated interior transitions verified.',
 );

@@ -28,8 +28,11 @@ const SURFACES = Object.freeze({
   civic: Object.freeze({ color: '#8a887d', roughness: 0.92 }),
   neighborhood: Object.freeze({ color: '#736f61', roughness: 0.98 }),
 });
-const TREE_TARGET = 520;
-const ROCK_TARGET = 72;
+// Vegetation is instanced, so a substantially denser plan costs only the source
+// model's handful of draw calls. The collision registry spatially indexes these
+// placements; density no longer implies a per-frame scan of every tree.
+export const STARTER_TOWN_TREE_TARGET = 1400;
+export const STARTER_TOWN_ROCK_TARGET = 240;
 const DEFAULT_ROAD_NETWORK = new RoadNetwork(STARTER_TOWN_RUNTIME_PLAN.routes);
 
 function surfaceFor(parcel) {
@@ -113,6 +116,32 @@ function clearOfFunctionalLocation(x, z, margin = 18) {
   });
 }
 
+function clearOfParcelCore(x, z, parcels, margin = 3) {
+  return parcels.every((parcel) => {
+    const bounds = parcel.bounds;
+    return Math.abs(x - bounds.x) > bounds.w / 2 + margin
+      || Math.abs(z - bounds.z) > bounds.d / 2 + margin;
+  });
+}
+
+function clearOfPlacements(entries, x, z, margin) {
+  const distanceSq = margin * margin;
+  return entries.every((entry) => {
+    const dx = x - entry.x;
+    const dz = z - entry.z;
+    return dx * dx + dz * dz >= distanceSq;
+  });
+}
+
+function polygonBounds(polygon = []) {
+  const xs = polygon.map((entry) => Number(entry.x) || 0);
+  const zs = polygon.map((entry) => Number(entry.z) || 0);
+  return {
+    minX: Math.min(...xs), maxX: Math.max(...xs),
+    minZ: Math.min(...zs), maxZ: Math.max(...zs),
+  };
+}
+
 function perimeterCandidate(parcel, index) {
   const { x, z, w, d } = parcel.bounds;
   const edge = index % 4;
@@ -171,9 +200,90 @@ export function createStarterTownVegetationPlan(
     }
   }
 
+  // Every district receives a minimum landscaped presence before the general
+  // infill pass. This prevents the dense retail and travel districts from being
+  // technically populated citywide while still reading as locally barren.
+  for (const district of STARTER_TOWN_RUNTIME_PLAN.districts) {
+    const bounds = polygonBounds(district.polygon);
+    let districtCount = trees.filter((entry) => (
+      entry.x >= bounds.minX && entry.x <= bounds.maxX
+      && entry.z >= bounds.minZ && entry.z <= bounds.maxZ
+    )).length;
+    for (let attempt = 0; districtCount < 48 && attempt < 1800; attempt++) {
+      const x = bounds.minX + 14
+        + stableUnit(`${district.id}:quota-x:${attempt}`) * Math.max(1, bounds.maxX - bounds.minX - 28);
+      const z = bounds.minZ + 14
+        + stableUnit(`${district.id}:quota-z:${attempt}`) * Math.max(1, bounds.maxZ - bounds.minZ - 28);
+      if (!clearOfRoadNetwork(x, z, roadNetwork, 5.5)) continue;
+      if (!clearOfFunctionalLocation(x, z, 22)) continue;
+      if (!clearOfParcelCore(x, z, parcels, 3)) continue;
+      if (!clearOfPlacements(trees, x, z, 11)) continue;
+      trees.push({
+        id: `${district.id}:quota-tree:${districtCount}`,
+        x,
+        z,
+        rotationY: stableUnit(`${district.id}:quota-yaw:${attempt}`) * Math.PI * 2,
+        scale: 0.74 + stableUnit(`${district.id}:quota-scale:${attempt}`) * 0.58,
+      });
+      districtCount += 1;
+    }
+  }
+
+  // Fill the actual city gaps before decorating its horizon. A jittered civic
+  // grid produces small groves and street-edge landscaping throughout all nine
+  // districts while preserving roads, buildings, parcels, and gameplay doors.
+  let infillIndex = 0;
+  for (let z = -975; z <= 975 && trees.length < STARTER_TOWN_TREE_TARGET; z += 28) {
+    for (let x = -975; x <= 975 && trees.length < STARTER_TOWN_TREE_TARGET; x += 28) {
+      const density = stableUnit(`city-tree-density:${infillIndex}`);
+      if (density < 0.34) { infillIndex += 1; continue; }
+      const candidateX = x + (stableUnit(`city-tree-x:${infillIndex}`) - 0.5) * 15;
+      const candidateZ = z + (stableUnit(`city-tree-z:${infillIndex}`) - 0.5) * 15;
+      infillIndex += 1;
+      if (!clearOfRoadNetwork(candidateX, candidateZ, roadNetwork, 5.5)) continue;
+      if (!clearOfFunctionalLocation(candidateX, candidateZ, 22)) continue;
+      if (!clearOfParcelCore(candidateX, candidateZ, parcels, 4)) continue;
+      if (!clearOfPlacements(trees, candidateX, candidateZ, 11)) continue;
+      trees.push({
+        id: `city-infill:tree:${infillIndex}`,
+        x: candidateX,
+        z: candidateZ,
+        rotationY: stableUnit(`city-tree-yaw:${infillIndex}`) * Math.PI * 2,
+        scale: 0.72 + stableUnit(`city-tree-scale:${infillIndex}`) * 0.62,
+      });
+    }
+  }
+
+  // Rocks are useful low visual beats in the broad green gaps, not only in the
+  // old outer ring. Keep enough distance from trees that both silhouettes read.
+  let rockInfillIndex = 0;
+  for (let z = -950; z <= 950 && rocks.length < STARTER_TOWN_ROCK_TARGET; z += 58) {
+    for (let x = -950; x <= 950 && rocks.length < STARTER_TOWN_ROCK_TARGET; x += 58) {
+      if (stableUnit(`city-rock-density:${rockInfillIndex}`) < 0.52) {
+        rockInfillIndex += 1;
+        continue;
+      }
+      const candidateX = x + (stableUnit(`city-rock-x:${rockInfillIndex}`) - 0.5) * 24;
+      const candidateZ = z + (stableUnit(`city-rock-z:${rockInfillIndex}`) - 0.5) * 24;
+      rockInfillIndex += 1;
+      if (!clearOfRoadNetwork(candidateX, candidateZ, roadNetwork, 3.5)) continue;
+      if (!clearOfFunctionalLocation(candidateX, candidateZ, 18)) continue;
+      if (!clearOfParcelCore(candidateX, candidateZ, parcels, 2)) continue;
+      if (!clearOfPlacements(trees, candidateX, candidateZ, 5.5)) continue;
+      if (!clearOfPlacements(rocks, candidateX, candidateZ, 8)) continue;
+      rocks.push({
+        id: `city-infill:rock:${rockInfillIndex}`,
+        x: candidateX,
+        z: candidateZ,
+        rotationY: stableUnit(`city-rock-yaw:${rockInfillIndex}`) * Math.PI * 2,
+        scale: 0.72 + stableUnit(`city-rock-scale:${rockInfillIndex}`) * 0.9,
+      });
+    }
+  }
+
   // A landscaped outer belt gives off-road exploration a real horizon instead
   // of a flat empty field. It remains inside terrain bounds and clear of roads.
-  for (let index = 0; trees.length < TREE_TARGET && index < 900; index++) {
+  for (let index = 0; trees.length < STARTER_TOWN_TREE_TARGET && index < 2600; index++) {
     const ring = index % 2 ? 1035 : 1110;
     const angle = index * 2.399963229728653;
     const wobble = (stableUnit(`outer-tree:${index}`) - 0.5) * 90;
@@ -189,7 +299,7 @@ export function createStarterTownVegetationPlan(
     });
   }
 
-  for (let index = 0; rocks.length < ROCK_TARGET && index < 240; index++) {
+  for (let index = 0; rocks.length < STARTER_TOWN_ROCK_TARGET && index < 900; index++) {
     const angle = index * 2.399963229728653;
     const radius = 960 + stableUnit(`outer-rock-radius:${index}`) * 190;
     const x = Math.cos(angle) * radius;
@@ -204,8 +314,8 @@ export function createStarterTownVegetationPlan(
     });
   }
   return Object.freeze({
-    trees: Object.freeze(trees.slice(0, TREE_TARGET)),
-    rocks: Object.freeze(rocks.slice(0, ROCK_TARGET)),
+    trees: Object.freeze(trees.slice(0, STARTER_TOWN_TREE_TARGET)),
+    rocks: Object.freeze(rocks.slice(0, STARTER_TOWN_ROCK_TARGET)),
   });
 }
 

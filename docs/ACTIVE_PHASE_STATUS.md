@@ -1,6 +1,6 @@
 # Zaylins Active Phase Status
 
-Updated: 2026-07-18  
+Updated: 2026-07-25
 Authoritative machine-readable source: `src/config/buildPhaseStatus.js`  
 Repository workflow: direct commits to `main`; no pull requests unless Mia explicitly requests one  
 Construction mirror: `agent/starter-town-construction`
@@ -26,7 +26,9 @@ Phase 3: IMPLEMENTED FOUNDATION; LIVE SOAK, ARRAY-TO-POOL MIGRATION, AND STRESS 
 Phase 4: IMPLEMENTED FOUNDATION; LIVE VEHICLE/TRAFFIC/POLICE BINDING AND TRAVERSAL QA REMAIN
 Phase 5: IMPLEMENTED GEOGRAPHIC SKELETON; LIVE DRIVE-TIME AND READABILITY QA REMAIN
 Phase 6: IMPLEMENTED VISUAL FOUNDATION; LIVE ART-DIRECTION AND FPS QA REMAIN
-Next construction phase after Phase 2–6 preview verification: PHASE 7
+Phase 7: IMPLEMENTED; LIVE FULL-TOWN ACCEPTANCE REMAINS
+Phase 8: ACTIVE; INTENTIONAL CITY-DENSITY AND ACCESS SLICE IMPLEMENTED
+Next construction work: PHASE 8 SHARED SIMULATION AND LIVE ACCEPTANCE
 ```
 
 ---
@@ -187,7 +189,8 @@ Status: **Implemented foundation**
 - [x] Instanced district massing.
 - [x] Instanced roads and roadside infrastructure.
 - [x] Instancing eligibility contract.
-- [ ] Bind current NPC and traffic update loops to LOD intervals.
+- [x] Bind current pedestrian and traffic update loops to distance-based LOD intervals.
+- [ ] Bind police simulation and remaining compact-map systems to streaming/LOD intervals.
 
 ## Phase 3E: Budgets and Auto graphics
 
@@ -395,15 +398,22 @@ working until the shipped runtime makes it visible, reachable, and stable.
 ### Phase 8A: World cohesion
 
 - [x] Remove the compact 260 m terrain/road surface when the 2,000 m town is active.
-- [x] Draw all 17 authoritative road routes on the city map.
-- [x] Add district-spanning pedestrian loops and 32/48/72 density budgets.
+- [x] Expand the town to 49 connected authored roads and draw the full network on the city map.
+- [x] Add 18 district-spanning pedestrian loops and 72/108/156 density budgets.
+- [x] Add 16 full-town traffic loops and 28/44/68 density budgets.
 - [x] Start traffic vehicles in motion on the large-town routes.
-- [x] Increase landscaping to 520 trees and 72 rocks with road clearance.
-- [x] Give every enterable functional exterior a readable name and use label.
+- [x] Keep at least one occupied traffic vehicle within recovery distance of an on-foot player.
+- [x] Increase landscaping to 1,400 trees and 240 rocks with road clearance and district minimums.
+- [x] Increase production filler-building massing from 73 to 103 road-safe placements.
+- [x] Give every enterable functional exterior exactly one readable identity sign.
+- [x] Connect all twelve enterable destinations to their declared frontage roads with paved vehicle access and concrete walks.
 - [x] Suppress duplicate legacy/production building shells while retaining interactions.
 - [x] Make generated streetlights block slow vehicles, fall under a real impact, and restore after 30 minutes.
 - [x] Register trees and rocks as hard off-road vehicle obstacles.
-- [x] Give all 73 production filler buildings hard rectangular vehicle footprints.
+- [x] Give all 103 production filler buildings hard rectangular vehicle footprints.
+- [x] Enforce the locked playable and terrain bounds, preserving only authored gateway exits.
+- [x] Preserve the existing Shift sprint and stamina behavior instead of adding a conflicting run system.
+- [x] Replace the prototype sanitation setup with Denise Hall on the sidewalk, a production dumpster with detailed fallback, and 28 citywide litter stops.
 - [x] Render only the active interior and suspend town simulation during transitions.
 - [x] Recover outside instead of crashing when an interior transition fails.
 - [ ] Pass visual playtest for terrain stability, labels, traffic motion, pedestrian coverage, and building placement.
@@ -414,5 +424,7 @@ working until the shipped runtime makes it visible, reachable, and stable.
 - [ ] Bind police patrol navigation to the authoritative road graph.
 - [ ] Bind missions, deliveries, service access, and route guidance to the same graph.
 - [ ] Add district schedules for pedestrian destinations, work shifts, school, shops, and nightlife.
-- [ ] Move traffic, police, and pedestrian updates onto streaming/LOD budgets.
+- [x] Add distance-based update budgets for traffic and pedestrians.
+- [x] Add a spatial collision index so increased scenery density does not require whole-city collision scans.
+- [ ] Move police and remaining legacy simulation onto streaming/LOD budgets and named pools.
 - [ ] Complete browser-driven 5-, 15-, and 60-minute stability runs.

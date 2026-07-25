@@ -19,6 +19,7 @@ import {
 import { buildStarterTownRoadsideLayer } from './StarterTownRoadside.js';
 import { buildStarterTownGroundCover } from './StarterTownGroundCover.js';
 import { buildStarterTownBuildingAssets } from './StarterTownBuildingAssets.js';
+import { buildStarterTownAccessLayer } from './StarterTownAccessLayer.js';
 import { buildSpecialRoadFormsLayer } from './SpecialRoadForms.js';
 import { auditVisualPerformance } from './VisualPerformanceAudit.js';
 
@@ -175,11 +176,15 @@ function addLocationIdentity(layer, location, exterior, heightAt) {
   exterior.updateWorldMatrix(true, true);
   const bounds = new THREE.Box3().setFromObject(exterior);
   const size = bounds.getSize(new THREE.Vector3());
+  const faceX = Number(location.frontageFace?.[0]);
+  const faceZ = Number(location.frontageFace?.[1]);
   const face = new THREE.Vector3(
-    Number(location.frontageFace?.[0]) || 0,
+    Number.isFinite(faceX) ? faceX : 0,
     0,
-    Number(location.frontageFace?.[1]) || 1,
-  ).normalize();
+    Number.isFinite(faceZ) ? faceZ : 1,
+  );
+  if (face.lengthSq() < 0.0001) face.set(0, 0, 1);
+  face.normalize();
   const accent = CATEGORY_COLORS[location.category] || '#ffffff';
   const frontExtent = Math.abs(face.x) * size.x / 2 + Math.abs(face.z) * size.z / 2;
   const ground = Number(heightAt(location.position.x, location.position.z)) || 0;
@@ -237,6 +242,7 @@ export async function buildLargeStarterTown({
   includeGeneratedRoadside = true,
   includeGroundCover = true,
   includeBuildingAssets = true,
+  includeLocationAccess = true,
   includeSpecialRoadForms = true,
   heightAt = starterTownHeightAt,
   compatibilityMode = false,
@@ -298,6 +304,11 @@ export async function buildLargeStarterTown({
     heightAt,
   });
   group.add(roads);
+
+  const locationAccess = includeLocationAccess
+    ? buildStarterTownAccessLayer({ roadNetwork, heightAt })
+    : null;
+  if (locationAccess) group.add(locationAccess.group);
 
   // Special road forms remain graded-only, while roadside infrastructure can
   // now follow either the authored grade or the flat gameplay compatibility map.
@@ -397,6 +408,7 @@ export async function buildLargeStarterTown({
     },
     districts: plan.districts.length,
     roads: roadNetwork.snapshot(),
+    locationAccess: locationAccess?.report || null,
     specialRoadForms: specialRoadForms?.group.userData.snapshot?.() || null,
     locations: plan.locations.length,
     locationIdentity: identityLayer.children.length,
@@ -414,6 +426,7 @@ export async function buildLargeStarterTown({
     terrain,
     roads,
     roadNetwork,
+    locationAccess,
     specialRoadForms,
     districtLayer,
     locationLayer,

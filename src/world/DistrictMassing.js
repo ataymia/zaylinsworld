@@ -55,11 +55,15 @@ function floorRange(parcel, profile) {
 
 function placementCount(parcel) {
   if (Number(parcel.lots) > 0) return parcel.lots;
-  if (parcel.type === 'residential-row') return 5;
-  if (parcel.type === 'commercial-row') return 4;
-  if (parcel.type === 'mixed-use') return 3;
-  if (parcel.type === 'residential-block') return 3;
-  if (parcel.type === 'industrial') return 2;
+  const area = Math.max(1, Number(parcel.bounds?.w) * Number(parcel.bounds?.d));
+  if (parcel.type === 'residential-row') return Math.max(5, Math.min(8, Math.round(area / 3000)));
+  if (parcel.type === 'commercial-row') return Math.max(5, Math.min(8, Math.round(area / 2200)));
+  if (parcel.type === 'mixed-use') return Math.max(4, Math.min(7, Math.round(area / 2800)));
+  if (parcel.type === 'residential-block') return Math.max(4, Math.min(7, Math.round(area / 3800)));
+  if (parcel.type === 'industrial') return Math.max(3, Math.min(5, Math.round(area / 9000)));
+  if (parcel.type === 'office') return Math.max(2, Math.min(4, Math.round(area / 5000)));
+  if (parcel.type === 'civic') return 2;
+  if (parcel.type === 'commercial') return Math.max(2, Math.min(4, Math.round(area / 4500)));
   return 1;
 }
 

@@ -1,10 +1,34 @@
 // Closed, lane-safe traffic loops for the authoritative 2.4 km Starter Town.
 // The legacy traffic loops in mapConfig.js only cover the old 60 m prototype.
+import { STARTER_TOWN_RUNTIME_PLAN } from './starterTownRuntimePlan.js';
 
 const freezeLoop = (name, points) => Object.freeze({
   name,
   loop: Object.freeze(points.map(([x, z]) => Object.freeze([x, z]))),
 });
+
+function twoWayRoadLoop(name, routeId, laneOffset = 2.2) {
+  const route = STARTER_TOWN_RUNTIME_PLAN.routes.find((entry) => entry.id === routeId);
+  if (!route || route.points.length < 2) {
+    throw new Error(`Traffic corridor ${name} references missing route ${routeId}`);
+  }
+  const points = route.points;
+  const side = (direction) => points.map((entry, index) => {
+    const before = points[Math.max(0, index - 1)];
+    const after = points[Math.min(points.length - 1, index + 1)];
+    const dx = after.x - before.x;
+    const dz = after.z - before.z;
+    const length = Math.hypot(dx, dz) || 1;
+    return [
+      entry.x - (dz / length) * laneOffset * direction,
+      entry.z + (dx / length) * laneOffset * direction,
+    ];
+  });
+  return freezeLoop(name, [
+    ...side(1),
+    ...side(-1).reverse(),
+  ]);
+}
 
 export const LARGE_TOWN_TRAFFIC_ROUTES = Object.freeze([
   // Out-and-back lanes on Centre Avenue. The first waypoint is beside the
@@ -30,10 +54,7 @@ export const LARGE_TOWN_TRAFFIC_ROUTES = Object.freeze([
     [-807.8, 0], [-722.2, 0], [-642.2, 0], [-622.2, 147.8], [-797.8, 147.8],
   ]),
   // Parkside and Willowbend neighborhood circulation.
-  freezeLoop('parkside-willowbend-local', [
-    [2.2, 497.8], [248, 497.8], [338, 427.8], [468, 407.8], [588, 467.8],
-    [647.8, 578], [607.8, 708], [498, 777.8], [182.2, 757.8], [2.2, 697.8],
-  ]),
+  twoWayRoadLoop('parkside-willowbend-local', 'parkside-crescent'),
   // Northworks keeps service and commuter vehicles visible near the dealership
   // and garage instead of concentrating all motion in the old town centre.
   freezeLoop('northworks-local', [
@@ -45,12 +66,26 @@ export const LARGE_TOWN_TRAFFIC_ROUTES = Object.freeze([
     [2.2, 37.8], [360, 37.8], [650, 17.8], [857.8, -2.2],
     [857.8, 2.2], [650, 22.2], [360, 42.2], [2.2, 42.2],
   ]),
+  twoWayRoadLoop('westside-neighborhood', 'westside-avenue'),
+  freezeLoop('market-mile-grid', [
+    [-297.8, 302.2], [197.8, 302.2], [197.8, 497.8], [-297.8, 497.8],
+  ]),
+  freezeLoop('civic-heights-grid', [
+    [362.2, -517.8], [877.8, -517.8], [877.8, 177.8], [362.2, 177.8],
+  ]),
+  twoWayRoadLoop('scholars-quarter-grid', 'scholar-west-street'),
+  twoWayRoadLoop('northworks-grid', 'northworks-west-street'),
+  freezeLoop('eastgate-frontage', [
+    [874.2, 182.2], [874.2, 397.8], [869.8, 397.8], [869.8, 182.2],
+  ]),
+  twoWayRoadLoop('parkside-grid', 'parkside-avenue'),
+  twoWayRoadLoop('willowbend-grid', 'willowbend-west-street'),
 ]);
 
 export const LARGE_TOWN_TRAFFIC_BUDGET = Object.freeze({
-  sparse: 8,
-  normal: 14,
-  busy: 22,
+  sparse: 28,
+  normal: 44,
+  busy: 68,
 });
 
 export function largeTownTrafficCount(density = 0.72) {

@@ -15,15 +15,16 @@ const {
 } = await importLocal('src/config/buildPhaseStatus.js');
 
 assert.ok(BUILD_PHASES.length >= 30, 'phase ledger must retain detailed subphases');
-assert.equal(NEXT_BUILD_PHASE, null, 'the active construction ledger must have no unfinished implementation phase');
+assert.equal(NEXT_BUILD_PHASE?.id, '8', 'the active construction ledger must keep Phase 8 as the current implementation phase');
 assert.equal(BUILD_PHASE_BY_ID['7'].status, 'implemented', 'functional-location relocation must be implemented');
+assert.equal(BUILD_PHASE_BY_ID['8'].status, 'partial', 'living-city cohesion must remain honest about live and shared-simulation work');
 for (const id of ['2A', '2B', '2C', '2D', '2E', '3A', '3B', '3C', '3D', '3E', '4A', '4B', '4C', '4D', '4E', '4F', '4G', '5A', '5B', '5C', '5D', '5E', '5F', '5G', '6A', '6B', '6C', '6D', '6E']) {
   assert.ok(BUILD_PHASE_BY_ID[id], `phase ledger is missing ${id}`);
   assert.notEqual(BUILD_PHASE_BY_ID[id].status, 'planned', `${id} must record its implemented foundation`);
 }
 assert.equal(BUILD_PHASE_BY_ID['3F'].status, 'planned', 'performance acceptance must remain an honest live-verification phase');
 assert.equal(BUILD_PHASE_BY_ID['5H'].status, 'planned', 'geographic drive-time acceptance must remain live verification');
-assert.equal(buildPhaseSummary().next, null);
+assert.equal(buildPhaseSummary().next, '8');
 
 const { createSpecialRoadForms } = await importLocal('src/world/SpecialRoadForms.js');
 const special = createSpecialRoadForms();
@@ -73,6 +74,7 @@ assert.match(largeTown, /compatibilityMode = false/, 'normal gameplay must be ab
 assert.match(diagnostics, /buildPhaseSummary/, 'runtime diagnostics must expose the canonical phase ledger');
 assert.match(diagnostics, /nextPhase:/, 'runtime report must print the next phase');
 assert.match(phaseDoc, /Phase 7: Functional-location relocation/, 'active status must name the next phase');
+assert.match(phaseDoc, /Phase 8: Living-city cohesion and live acceptance/, 'active status must name the current living-city phase');
 assert.match(phaseDoc, /Phase 3F: Live acceptance/, 'active status must preserve live performance verification');
 assert.match(directWorkflow, /Do not create new pull requests unless Mia explicitly requests one/, 'direct GitHub workflow must remain authoritative');
 assert.match(previewHtml, /src\/largeTownPreview\.js/, 'preview HTML must load its isolated runtime entry');
@@ -93,4 +95,4 @@ assert.match(settings, /installProductionWorldBridge\(\)/, 'settings dependency 
 assert.match(settings, /⚙ Graphics/, 'graphics controls must have a visible labeled button');
 assert.match(settings, /z-index:260/, 'graphics button must sit above Character Studio');
 
-console.log('[starter-town-phases] Phase 2–6 contracts, normal-game large-town preload, real entry loader, visible graphics controls, isolated preview, and direct workflow verified.');
+console.log('[starter-town-phases] Phase 2–8 contracts, normal-game large-town preload, real entry loader, visible graphics controls, isolated preview, and direct workflow verified.');

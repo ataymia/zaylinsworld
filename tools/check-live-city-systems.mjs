@@ -34,24 +34,25 @@ const roadNetwork = new RoadNetwork(STARTER_TOWN_RUNTIME_PLAN.routes);
 
 // Vehicles: use the full-town performance budgets and ensure the default tier
 // actually places traffic in view of the Dreamdrop arrival.
-assert.deepEqual(LARGE_TOWN_TRAFFIC_BUDGET, { sparse: 8, normal: 14, busy: 22 });
-assert.equal(largeTownTrafficCount(0.45), 8);
-assert.equal(largeTownTrafficCount(0.72), 14);
-assert.equal(largeTownTrafficCount(1), 22);
-assert.ok(LARGE_TOWN_TRAFFIC_ROUTES.length >= 8, 'traffic must circulate beyond the old four-loop shell');
+assert.deepEqual(LARGE_TOWN_TRAFFIC_BUDGET, { sparse: 28, normal: 44, busy: 68 });
+assert.equal(largeTownTrafficCount(0.45), 28);
+assert.equal(largeTownTrafficCount(0.72), 44);
+assert.equal(largeTownTrafficCount(1), 68);
+assert.ok(LARGE_TOWN_TRAFFIC_ROUTES.length >= 16, 'traffic must circulate throughout every district and the outskirts');
 const liveTraffic = trafficSpawnPlan(largeTownTrafficCount(0.72), LARGE_TOWN_TRAFFIC_ROUTES);
-assert.equal(liveTraffic.length, 14);
+assert.equal(liveTraffic.length, 44);
 assert.ok(liveTraffic.some((car) => Math.hypot(car.position.x, car.position.z) < 8),
   'at least one visible traffic car must spawn near Dreamdrop Core');
 
-// Traffic controls: all 25 authoritative at-grade junctions are covered. Test
+// Traffic controls: the completed street network's at-grade junctions are
+// covered. Test
 // both NPC-stop logic and the player violation detector without WebGL.
-assert.equal(STARTER_TOWN_TRAFFIC_CONTROL_PLAN.intersections, 25);
-assert.ok(STARTER_TOWN_TRAFFIC_CONTROL_PLAN.lights >= 15);
-assert.ok(STARTER_TOWN_TRAFFIC_CONTROL_PLAN.stops >= 5);
+assert.ok(STARTER_TOWN_TRAFFIC_CONTROL_PLAN.intersections >= 90);
+assert.ok(STARTER_TOWN_TRAFFIC_CONTROL_PLAN.lights >= 20);
+assert.ok(STARTER_TOWN_TRAFFIC_CONTROL_PLAN.stops >= 60);
 const controlScene = new THREE.Group();
 const controller = buildTrafficControl(controlScene, { largeWorld: true });
-assert.equal(controller.controlCount, 25);
+assert.equal(controller.controlCount, STARTER_TOWN_TRAFFIC_CONTROL_PLAN.intersections);
 assert.equal(controlScene.children.length, controller.poleCount + controller.signCount);
 
 const stop = controller.stops[0];
@@ -84,7 +85,7 @@ for (const name of POLICE_CHARACTER_CANDIDATES) {
   await access(new URL(`../public/assets/models/characters/psx/${name}.glb`, import.meta.url));
 }
 
-// Buildings: preserve all 73 placements while keeping every footprint outside
+// Buildings: substantially increase filler density while keeping every footprint outside
 // the road surface plus a three-metre safety margin.
 const placements = STARTER_TOWN_PARCELS
   .filter((parcel) => !parcel.locationId)
@@ -93,7 +94,7 @@ const placements = STARTER_TOWN_PARCELS
     DISTRICT_PROFILE_BY_ID[parcel.districtId],
     roadNetwork,
   ));
-assert.equal(placements.length, 73);
+assert.ok(placements.length >= 100);
 for (const placement of placements) {
   assert.ok(placement.roadSafe, `${placement.id} must be road-safe`);
   assert.ok(buildingRoadClearance(placement.position, placement.size, roadNetwork) >= 3,
@@ -153,4 +154,4 @@ assert.match(skins, /role === 'civilian' \|\| role === 'police'/);
 assert.match(vehicleKit, /Add and validate the replacement before hiding/);
 assert.match(vehicleKit, /vehicleVisualAudit/);
 
-console.log('[live-city] visible cars, skinned police, 73 road-safe buildings, 25 controlled junctions, streetlights, enforcement, and nine-town policy verified.');
+console.log(`[live-city] ${liveTraffic.length} visible cars, skinned police, ${placements.length} road-safe filler buildings, ${controller.controlCount} controlled junctions, streetlights, enforcement, and nine-town policy verified.`);

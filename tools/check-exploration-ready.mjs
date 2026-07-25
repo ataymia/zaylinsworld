@@ -42,8 +42,8 @@ assert.deepEqual(
   'intentional large-world saves must not be moved',
 );
 
-assert.ok(LARGE_TOWN_TRAFFIC_ROUTES.length >= 4, 'large Starter Town needs district-spanning traffic loops');
-assert.ok(LARGE_TOWN_TRAFFIC_ROUTES.every((route) => route.loop.length >= 5), 'traffic loops must remain closed and navigable');
+assert.ok(LARGE_TOWN_TRAFFIC_ROUTES.length >= 16, 'large Starter Town needs district-spanning traffic loops');
+assert.ok(LARGE_TOWN_TRAFFIC_ROUTES.every((route) => route.loop.length >= 4), 'traffic loops must remain closed and navigable');
 assert.ok(LARGE_TOWN_TRAFFIC_ROUTES.some((route) => route.loop.some(([x, z]) => Math.abs(x) > 500 || Math.abs(z) > 500)),
   'traffic must populate the wider town, not only the compact prototype');
 
@@ -74,6 +74,7 @@ assert.match(bridge, /includeStreetscape: true/, 'production bridge must enable 
 assert.match(bridge, /includeGeneratedRoadside: true/, 'production bridge must enable road dressing');
 assert.match(bridge, /includeGroundCover: true/, 'production bridge must enable parcel surfaces and landscaping');
 assert.match(bridge, /includeBuildingAssets: true/, 'production bridge must enable real filler buildings');
+assert.match(largeTown, /buildStarterTownAccessLayer/, 'functional destinations must install explicit curb access');
 assert.match(bridge, /placeReadyAssets: true/, 'production bridge must place registered building models');
 assert.match(largeTown, /vertexColors: true/, 'production terrain must include district and surface variation');
 assert.match(largeTown, /buildStarterTownGroundCover/, 'large town must install the ground-cover layer');

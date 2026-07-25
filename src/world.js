@@ -173,13 +173,13 @@ function makeBuilding(scene, opt) {
   if (kind) storefrontProps(g, kind, faceCenter, fd, rightV, signColor, color);
 
   // The authoritative large town already owns the production exterior model.
-  // Keep only its collider, readable sign, and entrance ring from this legacy
-  // shell so two buildings never occupy the same parcel or hide each other.
+  // Keep only its collider and entrance ring from this legacy shell. The large
+  // town owns exactly one authoritative identity sign per destination.
   if (interactionOnly) {
     g.userData.interactionOnly = true;
     g.traverse((node) => {
       if (!node.isMesh) return;
-      node.visible = !!(node.userData.identitySign || node.userData.interactionAnchor);
+      node.visible = !!node.userData.interactionAnchor;
     });
   }
 
@@ -475,7 +475,7 @@ export function buildCity(scene, { relocatedLocationIds = [] } = {}) {
       color: b.color,
       name: b.name, signColor: b.sign, faceDir: dirOf(b.face), door: true, kind: b.id,
       locationId: b.locationId,
-      interactionOnly: !!productionAsset,
+      interactionOnly: !!productionAsset || !!(b.locationId && activeRelocations.has(b.locationId)),
     });
     entrances.push({ id: b.id, locationId: b.locationId, name: b.name, interiorId: b.interiorId, doorPos: r.doorPos, faceDir: r.faceDir });
     if (b.locationId && activeRelocations.has(b.locationId)) {
@@ -577,7 +577,7 @@ function buildPolicePost(scene, walkM, stripeM, relocationContract = null) {
     color: P.color,
     name: P.name, signColor: P.sign, faceDir: fd, door: true, kind: 'police',
     locationId: relocationContract?.locationId || null,
-    interactionOnly: !!productionAsset,
+    interactionOnly: !!productionAsset || !!relocationContract,
   });
 
   // cruiser lot pavement + stall lines

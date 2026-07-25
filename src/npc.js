@@ -3,7 +3,6 @@
 // ───────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 import { buildAvatar, SKIN_TONES, HAIRSTYLES, OUTFIT_TOPS, OUTFIT_BOTTOMS, SHOES } from './avatar.js';
-import { applyNpcSkins } from './avatarSkin.js';
 import { buildCar, CAR_TYPES } from './vehicles.js';
 import { TRAFFIC_ROUTES, PEDESTRIAN_ROUTES } from './config/mapConfig.js';
 import { trafficSpawnPlan } from './config/starterTownTrafficRoutes.js';
@@ -54,22 +53,21 @@ export function createCityNPCs(scene, count = 8, routeDefinitions = PEDESTRIAN_R
     });
   }
 
-  // Explicit visible-skin wiring. The player and foot cops already call their
-  // role-specific adapters in main.js; civilians previously had no live call at
-  // all. Cap the GLB pass so density settings never turn character loading into a
-  // frame-time avalanche. Distant/excess pedestrians remain procedural.
-  if (globalThis.__ZW_FEATURES__?.USE_REAL_NPC_SKINS !== false && npcs.length) {
-    queueMicrotask(() => {
-      applyNpcSkins(npcs, null, Math.min(12, npcs.length))
-        .catch((error) => console.warn('[skin] civilian pass failed; procedural fallback kept', error));
-    });
-  }
   return npcs;
 }
 
-export function updateCityNPCs(npcs, dt, t, pausedFor) {
+export function updateCityNPCs(npcs, dt, t, observer = null) {
   for (const n of npcs) {
     const p = n.av.group.position;
+    let stepDt = dt;
+    if (observer && Math.hypot(p.x - observer.x, p.z - observer.z) > 220) {
+      n._lodDt = (n._lodDt || 0) + dt;
+      if (n._lodDt < 0.18) continue;
+      stepDt = Math.min(0.28, n._lodDt);
+      n._lodDt = 0;
+    } else {
+      n._lodDt = 0;
+    }
     if (n.talking) { // face the player but stop walking
       animateLegs(n, 0, t);
       continue;
@@ -83,9 +81,9 @@ export function updateCityNPCs(npcs, dt, t, pausedFor) {
       continue;
     }
     dir.normalize();
-    p.addScaledVector(dir, n.speed * dt);
+    p.addScaledVector(dir, n.speed * stepDt);
     const targetYaw = Math.atan2(dir.x, dir.z);
-    n.av.group.rotation.y = lerpAngle(n.av.group.rotation.y, targetYaw, Math.min(1, dt * 8));
+    n.av.group.rotation.y = lerpAngle(n.av.group.rotation.y, targetYaw, Math.min(1, stepDt * 8));
     animateLegs(n, 1, t);
   }
 }
@@ -176,6 +174,79 @@ function pointAtDistance(wps, s) {
   return { pos: wps[0].clone(), nextWp: 1 % wps.length, a: wps[0], b: wps[1 % wps.length] };
 }
 
+function nearestArcDistance(wps, position) {
+  let accumulated = 0;
+  let best = null;
+  for (let index = 0; index < wps.length; index++) {
+    const a = wps[index];
+    const b = wps[(index + 1) % wps.length];
+    const dx = b.x - a.x;
+    const dz = b.z - a.z;
+    const segmentLengthSq = dx * dx + dz * dz;
+    const segmentLength = Math.sqrt(segmentLengthSq) || 0.001;
+    const t = segmentLengthSq > 0
+      ? Math.max(0, Math.min(1, ((position.x - a.x) * dx + (position.z - a.z) * dz) / segmentLengthSq))
+      : 0;
+    const x = a.x + dx * t;
+    const z = a.z + dz * t;
+    const distance = Math.hypot(position.x - x, position.z - z);
+    if (!best || distance < best.distance) {
+      best = { distance, arcDistance: accumulated + segmentLength * t };
+    }
+    accumulated += segmentLength;
+  }
+  return best;
+}
+
+// A low-frequency encounter director guarantees that an on-foot player is never
+// stranded for minutes after totaling a car. It only relocates a distant,
+// occupied traffic car onto the closest authored loop, far enough ahead to
+// approach naturally instead of popping into interaction range.
+export function ensureTrafficCoverage(cars, observer, {
+  coverageRadius = 230,
+  approachDistance = 110,
+  maxRouteDistance = 280,
+} = {}) {
+  if (!observer || !Array.isArray(cars) || !cars.length) return Object.freeze({ action: 'none' });
+  const occupied = cars.filter((entry) => entry?.g && entry.hasDriver !== false && !entry.stolen);
+  if (!occupied.length) return Object.freeze({ action: 'none' });
+  const nearestCarDistance = Math.min(...occupied.map((entry) => (
+    Math.hypot(entry.g.position.x - observer.x, entry.g.position.z - observer.z)
+  )));
+  if (nearestCarDistance <= coverageRadius) {
+    return Object.freeze({ action: 'covered', distance: nearestCarDistance });
+  }
+
+  let candidate = null;
+  for (const car of occupied) {
+    const routeHit = nearestArcDistance(car.route, observer);
+    if (!routeHit || routeHit.distance > maxRouteDistance) continue;
+    const currentDistance = Math.hypot(car.g.position.x - observer.x, car.g.position.z - observer.z);
+    const score = routeHit.distance - Math.min(100, currentDistance * 0.02);
+    if (!candidate || score < candidate.score) candidate = { car, routeHit, score };
+  }
+  if (!candidate) return Object.freeze({ action: 'no-nearby-route' });
+
+  const at = pointAtDistance(
+    candidate.car.route,
+    candidate.routeHit.arcDistance + Math.max(70, approachDistance),
+  );
+  candidate.car.g.position.copy(at.pos);
+  candidate.car.wp = at.nextWp;
+  const target = candidate.car.route[candidate.car.wp];
+  candidate.car.g.rotation.y = Math.atan2(
+    target.x - candidate.car.g.position.x,
+    target.z - candidate.car.g.position.z,
+  );
+  candidate.car.speed = Math.max(3, candidate.car.baseSpeed * 0.45);
+  candidate.car._stuckT = 0;
+  return Object.freeze({
+    action: 'rebalanced',
+    routeName: candidate.car.routeName,
+    distance: Math.hypot(at.pos.x - observer.x, at.pos.z - observer.z),
+  });
+}
+
 export function createTraffic(scene, count = 6, routeDefinitions = TRAFFIC_ROUTES) {
   const colors = ['#c0392b', '#2980b9', '#27ae60', '#f1c40f', '#8e44ad', '#e67e22', '#ecf0f1', '#16a085'];
   const cars = [];
@@ -230,11 +301,20 @@ function findFreeSlot(route, cars, self) {
 // stop signs via the control layer, and recover/teleport cars that get stuck so
 // a jam can never become permanent. `obstacles` are world positions (other cars
 // + player); `control` is the traffic controller from traffic.js (optional).
-export function updateTraffic(cars, dt, obstacles = [], control = null) {
+export function updateTraffic(cars, dt, obstacles = [], control = null, observer = null) {
   const heading = new THREE.Vector3();
   for (const c of cars) {
     if (!c.route) continue;
     const cpos = c.g.position;
+    let stepDt = dt;
+    if (observer && Math.hypot(cpos.x - observer.x, cpos.z - observer.z) > 360) {
+      c._lodDt = (c._lodDt || 0) + dt;
+      if (c._lodDt < 0.14) continue;
+      stepDt = Math.min(0.24, c._lodDt);
+      c._lodDt = 0;
+    } else {
+      c._lodDt = 0;
+    }
     const target = c.route[c.wp];
     heading.set(target.x - cpos.x, 0, target.z - cpos.z);
     const dist = heading.length();
@@ -258,16 +338,16 @@ export function updateTraffic(cars, dt, obstacles = [], control = null) {
     // obey traffic lights / stop signs
     let controlStop = false;
     if (control) {
-      const r = control.mustStop(cpos, heading, c, dt);
+      const r = control.mustStop(cpos, heading, c, stepDt);
       controlStop = !!r.stop;
     }
 
     const tgtSpeed = (brake || controlStop) ? 0 : c.baseSpeed;
-    c.speed += (tgtSpeed - c.speed) * Math.min(1, dt * 3.5);
+    c.speed += (tgtSpeed - c.speed) * Math.min(1, stepDt * 3.5);
 
     // ── stuck recovery ──────────────────────────────────────────────────────
     if (c.speed < 0.4 && !controlStop) {
-      c._stuckT += dt;
+      c._stuckT += stepDt;
       if (c._stuckT > 5.5) {
         const slot = findFreeSlot(c.route, cars, c);
         if (slot) {
@@ -285,11 +365,11 @@ export function updateTraffic(cars, dt, obstacles = [], control = null) {
       c._stuckT = 0;
     }
 
-    const step = c.speed * dt;
+    const step = c.speed * stepDt;
     cpos.x += heading.x * step;
     cpos.z += heading.z * step;
     const yaw = Math.atan2(heading.x, heading.z);
-    c.g.rotation.y = lerpAngle(c.g.rotation.y, yaw, Math.min(1, dt * 4));
+    c.g.rotation.y = lerpAngle(c.g.rotation.y, yaw, Math.min(1, stepDt * 4));
     const spin = step / 0.36;
     (c.g.userData.wheels || []).forEach(w => { w.rotation.x += spin; });
   }

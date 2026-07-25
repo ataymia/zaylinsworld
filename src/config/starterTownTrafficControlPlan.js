@@ -27,7 +27,11 @@ export function createStarterTownTrafficControlPlan({
       return Number(segment?.width) || 9;
     });
     const schoolZone = routeIds.some((id) => SCHOOL_ROUTES.has(id));
-    const signalized = !schoolZone && routes.some((route) => SIGNAL_TIERS.has(route.tier));
+    // Signal major-to-major junctions. A local street meeting one arterial uses
+    // an all-way stop instead of covering every neighborhood corner in dozens
+    // of animated signal heads.
+    const majorRouteCount = routes.filter((route) => SIGNAL_TIERS.has(route.tier)).length;
+    const signalized = !schoolZone && majorRouteCount >= 2;
     const roadHalf = Math.max(4.5, ...widths.map((width) => width / 2));
 
     controls.push(freeze({

@@ -12,8 +12,8 @@
 const freeze = (value) => Object.freeze(value);
 const phase = (id, name, status, values = {}) => freeze({ id, name, status, ...values });
 
-export const BUILD_PHASE_STATUS_VERSION = 3;
-export const BUILD_PHASE_UPDATED_AT = '2026-07-18';
+export const BUILD_PHASE_STATUS_VERSION = 4;
+export const BUILD_PHASE_UPDATED_AT = '2026-07-25';
 
 export const BUILD_PHASES = freeze([
   phase('0', 'Repository, baseline, and build discipline', 'complete', {
@@ -66,8 +66,8 @@ export const BUILD_PHASES = freeze([
     verify: freeze(['migrate remaining legacy live arrays to acquire/release pools']),
   }),
   phase('3D', 'Instancing and LOD', 'implemented', {
-    completed: freeze(['distance/relevance policy', 'instancing eligibility', 'instanced massing', 'instanced roadside infrastructure', 'distant update intervals']),
-    verify: freeze(['live NPC/traffic update throttling integration']),
+    completed: freeze(['distance/relevance policy', 'instancing eligibility', 'instanced massing', 'instanced roadside infrastructure', 'distant update intervals', 'live pedestrian/traffic distance throttling']),
+    verify: freeze(['police and remaining compact-map streaming/LOD integration']),
   }),
   phase('3E', 'Performance budgets and adaptive graphics', 'implemented', {
     completed: freeze(['tier budgets', 'budget violations', 'conservative Auto preset', 'sustained-FPS downshift', 'visual audit']),
@@ -96,8 +96,8 @@ export const BUILD_PHASES = freeze([
     verify: freeze(['vehicle handling on every graded segment']),
   }),
   phase('4F', 'Shared navigation graph', 'implemented', {
-    completed: freeze(['geometric intersection splitting', 'one connected public graph', 'closures', 'service restrictions', 'school avoidance', 'routing to all functional locations']),
-    verify: freeze(['bind legacy traffic/police/minimap movement to the shared graph']),
+    completed: freeze(['geometric intersection splitting', 'one connected public graph', 'closures', 'service restrictions', 'school avoidance', 'routing to all functional locations', 'authoritative city-map road rendering', 'citywide traffic coverage routes']),
+    verify: freeze(['bind police, missions, deliveries, service routing, and turn-by-turn guidance to the shared graph']),
   }),
   phase('4G', 'Road validation', 'implemented', {
     completed: freeze(['connectivity', 'geometric crossings', 'functional access', 'route validation', 'grade validation']),
@@ -139,6 +139,33 @@ export const BUILD_PHASES = freeze([
     completed: freeze(['Phase 7A stable contracts', '15-field parity evidence gate', 'legacy-coordinate migration guard', 'production diagnostics report', 'Phase 7B Zaylins Home fallback-safe cutover', 'Phase 7C Zaylins Prep fallback-safe cutover', 'Phase 7D Chicken Spot fallback-safe cutover', 'Phase 7E–7G retail cutovers', 'Phase 7H–7I vehicle-service cutovers', 'Phase 7J–7L civic/work cutovers', 'Phase 7M–7N infrastructure/public-space cutovers']),
     verify: freeze(['live full-town preview, save/load, and performance acceptance pass']),
     dependsOn: freeze(['Phase 2–6 live feature-preview review']),
+  }),
+  phase('8', 'Living-city cohesion and live acceptance', 'partial', {
+    completed: freeze([
+      '49-road connected city network and map rendering',
+      'twelve paved functional-location frontage approaches',
+      'sixteen traffic loops with 28/44/68 density budgets',
+      'eighteen pedestrian loops with 72/108/156 density budgets',
+      'on-foot traffic coverage recovery',
+      '1,400 trees and 240 rocks with district distribution',
+      '103 road-safe filler buildings with hard footprints',
+      'one identity sign per functional exterior',
+      'live playable/terrain boundary enforcement',
+      'pedestrian and traffic distance LOD',
+      'spatially indexed scenery collisions',
+      'production sanitation worker and dumpster placement',
+      'citywide sanitation litter route',
+      'isolated recoverable interior transitions',
+    ]),
+    remaining: freeze([
+      'police patrol graph binding',
+      'mission/delivery/service and turn-by-turn graph binding',
+      'district schedules and destinations',
+      'police and remaining legacy streaming/pool integration',
+      'deployed visual acceptance',
+      '5-, 15-, and 60-minute browser stability runs',
+    ]),
+    next: true,
   }),
 ]);
 

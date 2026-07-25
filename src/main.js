@@ -15,6 +15,7 @@ import { buildCity, colliders as cityColliders } from './world.js';
 import { buildInteriors, DEALER_CARS, JEWELRY_STOCK, GEAR_STOCK } from './interiors.js';
 import {
   createCityNPCs, updateCityNPCs, createTraffic, updateTraffic, createDrivableCar,
+  ensureTrafficCoverage,
 } from './npc.js';
 import {
   initWeapons, updateWeapons, buyWeapon, equipWeapon, cycleWeapon,
@@ -34,7 +35,7 @@ import { InteractionManager } from './interaction.js';
 import { loadState, saveState, defaultState, clearSave, hasSave } from './state.js';
 import { GEMS, LANDMARKS, SPAWN } from './config/mapConfig.js';
 import { ROAD } from './config/mapConfig.js';
-import { loadHDRI, loadAsset } from './assets.js';
+import { loadHDRI, loadAsset, loadRegisteredAsset } from './assets.js';
 import {
   hdriUrl, loadSlotModel, updateMixers, enhanceAvatar, enhanceVehicle, assetUrl,
 } from './manifest.js';
@@ -57,10 +58,16 @@ import {
   largeTownPedestrianCount,
 } from './config/starterTownPedestrianRoutes.js';
 import { starterVehicleSpawnNear } from './config/starterVehicleSpawn.js';
+import {
+  STARTER_TOWN_SANITATION_STOP,
+  generateStarterTownLitterPositions,
+} from './config/starterTownSanitationPlan.js';
+import { starterTownBoundaryGuard } from './world/StarterTownBoundaryGuard.js';
 import { handlingFor, addVehicleDamage, applyDamageVisual, tickDamageSmoke } from './vehicleDamage.js';
 import {
   breakableCount,
   collideVehicleImpact,
+  registerWorldObject,
   updateWorldObjects,
   worldObjectCount,
 } from './worldCollision.js';
@@ -201,6 +208,7 @@ let started = false;
 let player = null;
 let cityNPCs = [], traffic = [], car = null, interiors = null;
 let trafficControl = null;       // traffic lights + stop signs controller (traffic.js)
+let trafficCoverageAccum = 0;    // low-frequency anti-stranding traffic director
 let cityEntrances = [];           // saved for live density re-registration
 let cityLandmarks = LANDMARKS;    // resolved compact/production positions for teleports and runtime lookups
 let entranceMap = {};            // interiorId -> { doorPos, faceDir }
@@ -1271,7 +1279,7 @@ let dumpster = null;                // { mesh, pos }
 let sanitationNpc = null;           // { av, pos }
 let trashJob = { active: false, need: 0, collected: 0, reward: 0, tier: '' };
 let trashCarried = 0;
-const TRASH_TARGET = 14;            // how many litter pieces exist at once
+const TRASH_TARGET = 28;            // district-spread litter pieces available at once
 let trashRespawnAccum = 0;         // real seconds since last respawn top-up
 
 // One litter piece. Uses the REAL Trash & Debris models when loaded (so the
@@ -1296,12 +1304,23 @@ function makeTrashPiece(i) {
 // prompt, so overlapping 'e' interactables would hide the trash one).
 function trashAvoidPoints() {
   const pts = [];
-  for (const lm of LANDMARKS) {
-    const f = lm.face || [0, 1];
-    pts.push({ x: lm.x + f[0] * (lm.d / 2 + 1), z: lm.z + f[1] * (lm.d / 2 + 1), r: 7 }); // door
-    pts.push({ x: lm.x, z: lm.z, r: Math.max(lm.w, lm.d) / 2 + 2 });                       // body
+  const largeWorldActive = !!state.world?.largeWorldEnabled || productionWorldRelocationIds().length > 0;
+  if (largeWorldActive) {
+    for (const location of worldRegistry.starterPlan.locations) {
+      pts.push({
+        x: location.position.x,
+        z: location.position.z,
+        r: location.category === 'school' || location.category === 'activity' ? 30 : 20,
+      });
+    }
+  } else {
+    for (const lm of LANDMARKS) {
+      const f = lm.face || [0, 1];
+      pts.push({ x: lm.x + f[0] * (lm.d / 2 + 1), z: lm.z + f[1] * (lm.d / 2 + 1), r: 7 }); // door
+      pts.push({ x: lm.x, z: lm.z, r: Math.max(lm.w, lm.d) / 2 + 2 });                       // body
+    }
+    pts.push({ x: SPAWN.x, z: SPAWN.z, r: 5 });
   }
-  pts.push({ x: SPAWN.x, z: SPAWN.z, r: 5 });
   if (dumpster) pts.push({ x: dumpster.pos.x, z: dumpster.pos.z, r: 5 });
   if (sanitationNpc) pts.push({ x: sanitationNpc.pos.x, z: sanitationNpc.pos.z, r: 5 });
   return pts;
@@ -1311,6 +1330,14 @@ function trashAvoidPoints() {
 // points and of each other (and of any already-placed `existing` pieces).
 function genTrashPositions(count, existing = []) {
   const avoid = trashAvoidPoints();
+  const largeWorldActive = !!state.world?.largeWorldEnabled || productionWorldRelocationIds().length > 0;
+  if (largeWorldActive) {
+    return generateStarterTownLitterPositions(count, {
+      random: Math.random,
+      avoid,
+      existing,
+    });
+  }
   const all = existing.map(p => ({ x: p.x, z: p.z }));
   const out = [];
   const sideOff = ROAD.width / 2 + ROAD.walk / 2;     // centre of a sidewalk
@@ -1334,36 +1361,163 @@ function genTrashPositions(count, existing = []) {
   return out;
 }
 
+function detailedDumpsterFallback() {
+  const group = new THREE.Group();
+  group.name = 'ZW_SanitationDumpsterFallback';
+  const bodyMaterial = new THREE.MeshStandardMaterial({
+    color: '#2f6f3a', roughness: 0.78, metalness: 0.34,
+  });
+  const darkMaterial = new THREE.MeshStandardMaterial({
+    color: '#1e3f25', roughness: 0.72, metalness: 0.28,
+  });
+  const metalMaterial = new THREE.MeshStandardMaterial({
+    color: '#6f7475', roughness: 0.58, metalness: 0.72,
+  });
+  const body = new THREE.Mesh(new THREE.BoxGeometry(2.5, 1.35, 1.45), bodyMaterial);
+  body.position.y = 0.82;
+  group.add(body);
+  for (const x of [-1.05, -0.52, 0, 0.52, 1.05]) {
+    const rib = new THREE.Mesh(new THREE.BoxGeometry(0.08, 1.18, 1.5), darkMaterial);
+    rib.position.set(x, 0.83, 0);
+    group.add(rib);
+  }
+  for (const side of [-1, 1]) {
+    const lid = new THREE.Mesh(new THREE.BoxGeometry(1.22, 0.14, 1.55), darkMaterial);
+    lid.position.set(side * 0.64, 1.56, 0);
+    lid.rotation.z = side * -0.06;
+    group.add(lid);
+    const liftPocket = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.28, 0.22), metalMaterial);
+    liftPocket.position.set(side * 1.31, 0.68, 0);
+    group.add(liftPocket);
+  }
+  for (const x of [-0.95, 0.95]) {
+    for (const z of [-0.52, 0.52]) {
+      const caster = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.13, 0.12, 10), darkMaterial);
+      caster.rotation.z = Math.PI / 2;
+      caster.position.set(x, 0.14, z);
+      group.add(caster);
+    }
+  }
+  group.traverse((node) => {
+    if (!node.isMesh) return;
+    node.castShadow = true;
+    node.receiveShadow = true;
+  });
+  return group;
+}
+
+async function upgradeSanitationDumpster(fallback, position, rotationY) {
+  const loaded = await loadRegisteredAsset(STARTER_TOWN_SANITATION_STOP.dumpster.assetId, renderer)
+    .catch(() => null);
+  if (!loaded?.scene || !trashGroup?.parent) return false;
+  const model = loaded.scene.clone(true);
+  model.updateWorldMatrix(true, true);
+  const bounds = new THREE.Box3().setFromObject(model);
+  const size = bounds.getSize(new THREE.Vector3());
+  if (![size.x, size.y, size.z].every((value) => Number.isFinite(value) && value > 0.001)) return false;
+  const center = bounds.getCenter(new THREE.Vector3());
+  const scale = 2.8 / Math.max(size.x, size.z);
+  model.position.set(-center.x, -bounds.min.y, -center.z);
+  const anchor = new THREE.Group();
+  anchor.name = 'ZW_SanitationDumpsterAsset';
+  anchor.position.copy(position);
+  anchor.rotation.y = rotationY;
+  anchor.scale.setScalar(scale);
+  anchor.userData.assetId = STARTER_TOWN_SANITATION_STOP.dumpster.assetId;
+  anchor.add(model);
+  trashGroup.add(anchor);
+  fallback.visible = false;
+  dumpster.mesh = anchor;
+  debug.set('sanitationDumpsterAsset', true);
+  return true;
+}
+
+function attachSanitationSafetyGear(worker) {
+  if (!worker?.group || worker.group.getObjectByName('ZW_SanitationSafetyGear')) return;
+  const gear = new THREE.Group();
+  gear.name = 'ZW_SanitationSafetyGear';
+  const vestMaterial = new THREE.MeshStandardMaterial({
+    color: '#f4a300', roughness: 0.62, emissive: '#7a4300', emissiveIntensity: 0.16,
+  });
+  const reflective = new THREE.MeshStandardMaterial({
+    color: '#e8efcf', roughness: 0.48, metalness: 0.18, emissive: '#d8e6ad', emissiveIntensity: 0.3,
+  });
+  const vest = new THREE.Mesh(new THREE.CylinderGeometry(0.34, 0.39, 0.62, 8), vestMaterial);
+  vest.position.y = 1.15;
+  gear.add(vest);
+  for (const y of [1.02, 1.27]) {
+    const stripe = new THREE.Mesh(new THREE.TorusGeometry(0.375, 0.025, 5, 16), reflective);
+    stripe.rotation.x = Math.PI / 2;
+    stripe.position.y = y;
+    gear.add(stripe);
+  }
+  const hardhat = new THREE.Mesh(
+    new THREE.SphereGeometry(0.23, 16, 10, 0, Math.PI * 2, 0, Math.PI / 2),
+    vestMaterial,
+  );
+  hardhat.position.y = 1.92;
+  gear.add(hardhat);
+  const brim = new THREE.Mesh(new THREE.CylinderGeometry(0.29, 0.29, 0.045, 16), vestMaterial);
+  brim.position.y = 1.9;
+  gear.add(brim);
+  const label = makeLabel('DENISE • SANITATION', '#ffd98a');
+  label.position.y = 2.35;
+  gear.add(label);
+  worker.group.add(gear);
+}
+
 function placeTrashJob() {
   cityTrash = [];
   trashGroup = new THREE.Group(); trashGroup.name = 'city-trash';
+  const largeWorldActive = !!state.world?.largeWorldEnabled || productionWorldRelocationIds().length > 0;
 
-  // dumpster near spawn so deposits are convenient (built BEFORE trash so litter
-  // generation can avoid it).
-  const dPos = new THREE.Vector3(SPAWN.x - 4, 0, SPAWN.z + 4);
-  const dGrp = new THREE.Group();
-  const body = new THREE.Mesh(new THREE.BoxGeometry(2.2, 1.3, 1.3),
-    new THREE.MeshStandardMaterial({ color: '#2f6f3a', roughness: 0.8, metalness: 0.2 }));
-  body.position.y = 0.65; dGrp.add(body);
-  const lid = new THREE.Mesh(new THREE.BoxGeometry(2.3, 0.18, 1.4),
-    new THREE.MeshStandardMaterial({ color: '#244f2b', roughness: 0.8 }));
-  lid.position.y = 1.35; lid.rotation.x = -0.18; dGrp.add(lid);
+  // The large-town stop sits on a deliberate service pad beside the sidewalk,
+  // not in the road/spawn seam inherited from the compact prototype.
+  const dDef = largeWorldActive
+    ? STARTER_TOWN_SANITATION_STOP.dumpster
+    : { x: SPAWN.x - 4, z: SPAWN.z + 4, facing: 0 };
+  const dPos = new THREE.Vector3(dDef.x, 0, dDef.z);
+  const dGrp = detailedDumpsterFallback();
   dGrp.position.copy(dPos);
-  { const l = makeLabel('DUMPSTER', '#bfe6c4'); l.position.y = 2.0; dGrp.add(l); }
+  dGrp.rotation.y = dDef.facing || 0;
   trashGroup.add(dGrp);
   dumpster = { mesh: dGrp, pos: dPos.clone().setY(0) };
+  registerWorldObject(dGrp, dPos.x, dPos.z, {
+    id: 'starter-town:sanitation-dumpster',
+    kind: 'dumpster',
+    halfExtents: { x: 1.45, z: 0.85 },
+    rotationY: dDef.facing || 0,
+  });
+  if (largeWorldActive) {
+    upgradeSanitationDumpster(dGrp, dPos, dDef.facing || 0)
+      .catch((error) => console.warn('[sanitation] dumpster asset failed; detailed fallback kept', error));
+  }
 
-  // sanitation worker near spawn offers the job
-  const sPos = new THREE.Vector3(SPAWN.x - 2, 0, SPAWN.z + 5);
-  const worker = buildAvatar({ ...defaultCustom(), top: 'hoodie-red' });
+  // Denise is a real skinned civilian with safety gear. The procedural avatar is
+  // retained only until/if the GLB validates, so the job can never disappear.
+  const sDef = largeWorldActive
+    ? STARTER_TOWN_SANITATION_STOP.worker
+    : { x: SPAWN.x - 2, z: SPAWN.z + 5, facing: Math.PI };
+  const sPos = new THREE.Vector3(sDef.x, 0, sDef.z);
+  const worker = buildAvatar({ ...defaultCustom(), top: 'tee-black', bottom: 'cargo-tan' });
   worker.group.position.copy(sPos);
-  worker.group.rotation.y = Math.PI;
-  const vest = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.6, 0.34),
-    new THREE.MeshStandardMaterial({ color: '#f4a300', roughness: 0.6, emissive: '#caa', emissiveIntensity: 0.1 }));
-  vest.position.y = 1.15; worker.group.add(vest);
-  { const l = makeLabel('SANITATION', '#ffd98a'); l.position.y = 2.2; worker.group.add(l); }
+  worker.group.rotation.y = sDef.facing || Math.PI;
   scene.add(worker.group);
-  sanitationNpc = { av: worker, pos: sPos.clone().setY(0) };
+  sanitationNpc = {
+    id: 'sanitation-denise-hall',
+    name: 'Denise Hall',
+    av: worker,
+    pos: sPos.clone().setY(0),
+  };
+  applyNpcSkins([sanitationNpc], renderer)
+    .then((count) => {
+      attachSanitationSafetyGear(worker);
+      debug.set('realSanitationWorker', count === 1);
+    })
+    .catch(() => {
+      attachSanitationSafetyGear(worker);
+      debug.set('realSanitationWorker', false);
+    });
 
   // scatter litter on sidewalks, clear of doors/NPCs so every piece is grabbable
   const positions = genTrashPositions(TRASH_TARGET);
@@ -1453,7 +1607,7 @@ function talkToSanitation() {
   missionEvent('talk-sanitation');
   if (trashJob.active) {
     openDialogue({
-      name: 'Sanitation Worker',
+      name: 'Denise Hall • City Sanitation',
       text: `Current job: ${trashJob.tier}. Collected ${trashJob.collected}/${trashJob.need}. Drop what you grab at the dumpster near the corner.`,
       choices: [
         { label: 'Cancel this job', onPick: () => { trashJob = { active: false, need: 0, collected: 0, reward: 0, tier: '' }; notify('Cleanup job cancelled.'); } },
@@ -1464,7 +1618,7 @@ function talkToSanitation() {
   }
   const avail = activeTrashCount();
   openDialogue({
-    name: 'Sanitation Worker',
+    name: 'Denise Hall • City Sanitation',
     text: `City's a mess — about ${avail} pieces of litter out there. Pick a cleanup contract; collect the quota and dump it at the dumpster to get paid.`,
     choices: [
       { label: 'Small cleanup — 5 pieces ($120)', onPick: () => startTrashJob('Small', 5, 120) },
@@ -2200,7 +2354,10 @@ function updateCar(dt) {
   const before = v.g.position.clone();
   v.g.position.addScaledVector(dir, v.speed * dt); v.g.position.y = 0;
   resolveCollision(v.g.position, 1.5, cityColliders);
-  const trafficOffense = trafficControl?.observeDriver(before, v.g.position, Math.abs(v.speed), v, dt);
+  const boundaryAction = enforceLiveStarterTownBoundary(v.g.position, { vehicle: v });
+  const trafficOffense = boundaryAction
+    ? null
+    : trafficControl?.observeDriver(before, v.g.position, Math.abs(v.speed), v, dt);
   if (trafficOffense) {
     const trafficLabel = trafficOffense.type === 'rolling-stop' ? 'Rolling stop'
       : trafficOffense.type === 'yellow-light' ? 'Unsafe yellow-light entry'
@@ -3125,6 +3282,30 @@ function resolveCollision(pos, radius, list) {
   }
 }
 
+let lastBoundaryNoticeMs = -Infinity;
+function enforceLiveStarterTownBoundary(position, { vehicle = null } = {}) {
+  if (area !== 'city' || !state.world?.largeWorldEnabled || !position) return null;
+  const decision = starterTownBoundaryGuard.evaluate(position, { allowGateway: true });
+  if (decision.action === 'allow' || decision.action === 'allow-gateway') return null;
+  position.x = decision.position.x;
+  position.y = decision.position.y || 0;
+  position.z = decision.position.z;
+  if (vehicle) {
+    vehicle.speed = 0;
+    if (decision.action === 'recover') vehicle.g.rotation.y = decision.facing || 0;
+  } else if (decision.action === 'recover' && player) {
+    player.group.rotation.y = decision.facing || 0;
+  }
+  const now = performance.now();
+  if (now - lastBoundaryNoticeMs > 5000) {
+    lastBoundaryNoticeMs = now;
+    notify(decision.action === 'recover'
+      ? '🧭 You reached unfinished terrain. Roadside recovery returned you to Starter Town.'
+      : '🚧 City limits ahead — use a marked highway gateway to leave town.');
+  }
+  return decision;
+}
+
 // ── on-foot movement ───────────────────────────────────────────────────────────
 function updatePlayer(dt, t) {
   const inp = controls.moveInput();
@@ -3168,6 +3349,7 @@ function updatePlayer(dt, t) {
   if (p.y <= 0) { p.y = 0; velY = 0; onGround = true; }
 
   resolveCollision(p, 0.5);
+  enforceLiveStarterTownBoundary(p);
 
   // solid pedestrians: the player can't phase through NPCs anymore. Push both
   // apart on overlap (player gets most of the correction, the NPC nudges aside).
@@ -3980,6 +4162,11 @@ function rebuildDensity() {
       targetN,
       largeWorldActive ? LARGE_TOWN_PEDESTRIAN_ROUTES : undefined,
     );
+    if (FEATURES.USE_REAL_NPC_SKINS) {
+      applyNpcSkins(cityNPCs, renderer)
+        .then((count) => { debug.set('realNpcs', count); debug.set('procNpcs', Math.max(0, cityNPCs.length - count)); })
+        .catch((error) => console.warn('[skins] rebuilt npc pass failed:', error));
+    }
     changed = true;
   }
   if (traffic.length !== targetT) {
@@ -4362,14 +4549,23 @@ function animate() {
   // transition from competing with a town-wide traffic/pedestrian update and
   // removes the largest source of entry-frame stalls on lower-end devices.
   if (area === 'city') {
-    updateCityNPCs(cityNPCs, dt, t);
+    const cityObserver = inCar
+      ? (drivingVehicle || car)?.g?.position
+      : player?.group?.position;
+    updateCityNPCs(cityNPCs, dt, t, cityObserver);
+    trafficCoverageAccum += dt;
+    if (!inCar && cityObserver && trafficCoverageAccum >= 4) {
+      trafficCoverageAccum = 0;
+      const coverage = ensureTrafficCoverage(traffic, cityObserver);
+      debug.set('trafficCoverage', coverage.action);
+    }
     // braking obstacles: other traffic + the player + the parked drivable car
     const trafficObstacles = [];
     for (const c of traffic) trafficObstacles.push(c.g.position);
     if (player && !inCar) trafficObstacles.push(player.group.position);
     if (car && !inCar) trafficObstacles.push(car.g.position);
     if (trafficControl) trafficControl.update(dt);
-    updateTraffic(traffic, dt, trafficObstacles, trafficControl);
+    updateTraffic(traffic, dt, trafficObstacles, trafficControl, cityObserver);
   }
   updateMixers(dt);                                  // skinned GLB animations
   for (const g of extraSpinners) g.rotation.y += dt * 0.8;   // idle-spin display models

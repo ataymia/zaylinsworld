@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // StarterTownBuildingAssets.js — production GLBs for non-functional parcels.
 //
-// DistrictMassing owns the stable 73-building layout. This layer keeps those
+// DistrictMassing owns the stable filler-building layout. This layer keeps those
 // placements but replaces the colored boxes with the real modular building
 // shells produced by the asset factory. A compact fallback shell is retained so
 // a failed model can never punch a hole into the town.
