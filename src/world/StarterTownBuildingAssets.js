@@ -9,6 +9,7 @@
 import * as THREE from 'three';
 import { assetRuntimeRegistry } from '../runtime/AssetRuntimeRegistry.js';
 import { loadRegisteredAsset } from '../assets.js';
+import { registerWorldObject } from '../worldCollision.js';
 
 const assetId = (name) => `library:buildings:zta-free-asset-factory:${name.replaceAll('_', '-')}`;
 
@@ -180,7 +181,24 @@ export async function buildStarterTownBuildingAssets({
   });
   group.userData.report = snapshot;
   group.userData.snapshot = () => snapshot;
-  return { group, report: snapshot, templates };
+  let collisionsActive = false;
+  const activateCollisions = () => {
+    if (collisionsActive) return 0;
+    collisionsActive = true;
+    for (const placement of placements) {
+      registerWorldObject(null, placement.position.x, placement.position.z, {
+        id: `building:${placement.id}`,
+        kind: 'building',
+        halfExtents: {
+          x: placement.size.x / 2,
+          z: placement.size.z / 2,
+        },
+      });
+    }
+    return placements.length;
+  };
+  group.userData.activateCollisions = activateCollisions;
+  return { group, report: snapshot, templates, activateCollisions };
 }
 
 export { ASSET_POOLS as STARTER_TOWN_BUILDING_ASSET_POOLS };

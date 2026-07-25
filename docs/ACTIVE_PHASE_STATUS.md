@@ -347,7 +347,7 @@ Status: **Implemented foundation**
 
 ---
 
-# Next construction phase
+# Completed construction phase
 
 ## Phase 7: Functional-location relocation
 
@@ -379,3 +379,40 @@ Recommended Phase 7 order:
 7M 6twelve — implemented
 7N Dreamdrop Park — implemented
 ```
+
+---
+
+# Current construction phase
+
+## Phase 8: Living-city cohesion and live acceptance
+
+Status: **In implementation on the active Starter Town draft**
+
+The player's deployed-build observations are authoritative acceptance evidence.
+Source code that merely declares a car, prop, route, or asset does not count as
+working until the shipped runtime makes it visible, reachable, and stable.
+
+### Phase 8A: World cohesion
+
+- [x] Remove the compact 260 m terrain/road surface when the 2,000 m town is active.
+- [x] Draw all 17 authoritative road routes on the city map.
+- [x] Add district-spanning pedestrian loops and 32/48/72 density budgets.
+- [x] Start traffic vehicles in motion on the large-town routes.
+- [x] Increase landscaping to 520 trees and 72 rocks with road clearance.
+- [x] Give every enterable functional exterior a readable name and use label.
+- [x] Suppress duplicate legacy/production building shells while retaining interactions.
+- [x] Make generated streetlights block slow vehicles, fall under a real impact, and restore after 30 minutes.
+- [x] Register trees and rocks as hard off-road vehicle obstacles.
+- [x] Give all 73 production filler buildings hard rectangular vehicle footprints.
+- [x] Render only the active interior and suspend town simulation during transitions.
+- [x] Recover outside instead of crashing when an interior transition fails.
+- [ ] Pass visual playtest for terrain stability, labels, traffic motion, pedestrian coverage, and building placement.
+- [ ] Pass repeated entry/exit testing for all twelve interiors on the deployed preview.
+
+### Phase 8B: Shared simulation
+
+- [ ] Bind police patrol navigation to the authoritative road graph.
+- [ ] Bind missions, deliveries, service access, and route guidance to the same graph.
+- [ ] Add district schedules for pedestrian destinations, work shifts, school, shops, and nightlife.
+- [ ] Move traffic, police, and pedestrian updates onto streaming/LOD budgets.
+- [ ] Complete browser-driven 5-, 15-, and 60-minute stability runs.

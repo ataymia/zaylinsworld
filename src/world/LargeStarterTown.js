@@ -39,6 +39,22 @@ const CATEGORY_COLORS = Object.freeze({
   law: '#536b91', job: '#766e9b', fuel: '#9b7d45', property: '#8d715f', activity: '#658d68',
 });
 
+const LOCATION_IDENTITY = Object.freeze({
+  frostbox: 'JEWELRY • CUSTOM CHAINS',
+  'chicken-spot': 'RESTAURANT • HOT FOOD',
+  'kicks-fits': 'SHOES • FASHION',
+  'block-supply': 'GEAR • SUPPLIES',
+  'auto-haus': 'VEHICLE SALES',
+  'city-garage': 'REPAIRS • SERVICE',
+  'zaylins-prep': 'SCHOOL • CAMPUS',
+  'police-station': 'PUBLIC SAFETY',
+  worktower: 'JOBS • OFFICES',
+  'iron-city-gym': 'FITNESS • TRAINING',
+  '6twelve': 'FUEL • MARKET',
+  'zaylins-home': 'YOUR STARTER HOME',
+  'dreamdrop-park': 'PARK • RECREATION',
+});
+
 function polygonBounds(polygon) {
   const xs = polygon.map((point) => point.x);
   const zs = polygon.map((point) => point.z);
@@ -125,6 +141,93 @@ function normalizeModel(scene, location, heightAt) {
   scene.updateWorldMatrix(true, true);
 }
 
+function identityTexture(location, accent) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 1024;
+  canvas.height = 256;
+  const context = canvas.getContext('2d');
+  context.fillStyle = 'rgba(10, 14, 21, 0.96)';
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.strokeStyle = accent;
+  context.lineWidth = 18;
+  context.strokeRect(12, 12, canvas.width - 24, canvas.height - 24);
+  context.fillStyle = '#ffffff';
+  context.font = '900 92px Arial, sans-serif';
+  context.textAlign = 'center';
+  context.textBaseline = 'middle';
+  context.fillText(location.name.toUpperCase(), canvas.width / 2, 104);
+  context.fillStyle = accent;
+  context.font = '700 38px Arial, sans-serif';
+  context.fillText(
+    LOCATION_IDENTITY[location.id] || String(location.category || 'DESTINATION').toUpperCase(),
+    canvas.width / 2,
+    190,
+  );
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.minFilter = THREE.LinearMipmapLinearFilter;
+  texture.anisotropy = 4;
+  return texture;
+}
+
+function addLocationIdentity(layer, location, exterior, heightAt) {
+  if (!exterior || location.enterable === false) return null;
+  exterior.updateWorldMatrix(true, true);
+  const bounds = new THREE.Box3().setFromObject(exterior);
+  const size = bounds.getSize(new THREE.Vector3());
+  const face = new THREE.Vector3(
+    Number(location.frontageFace?.[0]) || 0,
+    0,
+    Number(location.frontageFace?.[1]) || 1,
+  ).normalize();
+  const accent = CATEGORY_COLORS[location.category] || '#ffffff';
+  const frontExtent = Math.abs(face.x) * size.x / 2 + Math.abs(face.z) * size.z / 2;
+  const ground = Number(heightAt(location.position.x, location.position.z)) || 0;
+  const sign = new THREE.Mesh(
+    new THREE.PlaneGeometry(Math.max(6.5, Math.min(10, size.x * 0.52)), 2.05),
+    new THREE.MeshBasicMaterial({
+      map: identityTexture(location, accent),
+      transparent: true,
+      side: THREE.DoubleSide,
+      toneMapped: false,
+    }),
+  );
+  sign.name = `ZW_LocationIdentity_${location.id}`;
+  sign.position.set(
+    location.position.x + face.x * (frontExtent + 0.16),
+    ground + Math.max(4.2, Math.min(8.8, size.y * 0.72)),
+    location.position.z + face.z * (frontExtent + 0.16),
+  );
+  sign.lookAt(sign.position.clone().add(face));
+  sign.renderOrder = 2;
+  sign.userData.locationId = location.id;
+  layer.add(sign);
+
+  // A category-colored canopy makes the use readable before the words resolve:
+  // restaurant, retail, public safety, school, garage, and home no longer share
+  // one anonymous gray silhouette.
+  const canopy = new THREE.Mesh(
+    new THREE.BoxGeometry(Math.max(5, Math.min(9, size.x * 0.45)), 0.24, 1.35),
+    new THREE.MeshStandardMaterial({
+      color: accent,
+      emissive: new THREE.Color(accent).multiplyScalar(0.12),
+      emissiveIntensity: 0.45,
+      roughness: 0.58,
+      metalness: 0.08,
+    }),
+  );
+  canopy.name = `ZW_LocationCanopy_${location.id}`;
+  canopy.position.set(
+    location.position.x + face.x * (frontExtent + 0.65),
+    ground + 3.1,
+    location.position.z + face.z * (frontExtent + 0.65),
+  );
+  canopy.rotation.y = Math.atan2(face.x, face.z);
+  canopy.userData.locationId = location.id;
+  layer.add(canopy);
+  return { sign, canopy };
+}
+
 export async function buildLargeStarterTown({
   renderer = null,
   placeReadyAssets = true,
@@ -157,6 +260,9 @@ export async function buildLargeStarterTown({
   );
   terrain.name = 'ZW_StarterTerrain';
   terrain.rotation.x = -Math.PI / 2;
+  // Keep the base terrain decisively below roads, sidewalks, and parcel caps.
+  // The retired compact plane previously occupied the same depth and flickered.
+  terrain.position.y = -0.045;
   terrain.receiveShadow = true;
   terrain.frustumCulled = true;
   group.add(terrain);
@@ -258,6 +364,15 @@ export async function buildLargeStarterTown({
     }
   }
 
+  const identityLayer = new THREE.Group();
+  identityLayer.name = 'ZW_StarterLocationIdentity';
+  for (const location of plan.locations) {
+    const exterior = locationLayer.getObjectByName(`ZW_LocationAsset_${location.id}`)
+      || placeholders.get(location.id);
+    addLocationIdentity(identityLayer, location, exterior, heightAt);
+  }
+  group.add(identityLayer);
+
   const streetscape = includeStreetscape
     ? await buildStreetscapeLayer({ renderer, heightAt })
     : null;
@@ -284,6 +399,7 @@ export async function buildLargeStarterTown({
     roads: roadNetwork.snapshot(),
     specialRoadForms: specialRoadForms?.group.userData.snapshot?.() || null,
     locations: plan.locations.length,
+    locationIdentity: identityLayer.children.length,
     assets: placementReport,
     massing: massing?.group.userData.snapshot?.() || null,
     buildingAssets: buildingAssets?.group.userData.snapshot?.() || null,
@@ -301,6 +417,7 @@ export async function buildLargeStarterTown({
     specialRoadForms,
     districtLayer,
     locationLayer,
+    identityLayer,
     massing,
     buildingAssets,
     groundCover,

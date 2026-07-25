@@ -197,6 +197,14 @@ Starter Town is not complete until:
 - uncaught crime does not create an official record
 - crime tutorial is optional
 - police, traffic, missions, minimap, and save migration work across the large map
+- only one authoritative terrain surface is rendered; no green/brown depth flicker
+- city-map roadways use the same route source as the drivable world
+- every functional exterior visibly communicates its name and use
+- traffic and pedestrians visibly circulate beyond the arrival district
+- trees, rocks, curbs, signs, and streetlights have appropriate vehicle collision
+- production filler buildings block vehicles across their full footprints
+- breakable roadside infrastructure restores after the configured world-repair interval
+- only the active interior renders and a failed transition safely returns the player outside
 - streaming/LOD prevents the city from loading every asset at full detail
 ```
 

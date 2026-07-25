@@ -44,13 +44,26 @@ import {
   initLoadingScreen, hideLoadingScreen, setStatus, setProgress, loadingManager,
 } from './loader.js';
 import { initDebugBadge, debug } from './debug.js';
-import { productionWorldRelocationIds } from './runtime/ProductionWorldBridge.js';
+import {
+  activatePreparedProductionWorldCollisions,
+  productionWorldRelocationIds,
+  setPreparedProductionWorldVisible,
+} from './runtime/ProductionWorldBridge.js';
 import { functionalLocationRelocation } from './runtime/FunctionalLocationRelocation.js';
 import { worldRegistry } from './runtime/WorldRegistry.js';
 import { LARGE_TOWN_TRAFFIC_ROUTES, largeTownTrafficCount } from './config/starterTownTrafficRoutes.js';
+import {
+  LARGE_TOWN_PEDESTRIAN_ROUTES,
+  largeTownPedestrianCount,
+} from './config/starterTownPedestrianRoutes.js';
 import { starterVehicleSpawnNear } from './config/starterVehicleSpawn.js';
 import { handlingFor, addVehicleDamage, applyDamageVisual, tickDamageSmoke } from './vehicleDamage.js';
-import { collideVehicle, breakableCount, worldObjectCount } from './worldCollision.js';
+import {
+  breakableCount,
+  collideVehicleImpact,
+  updateWorldObjects,
+  worldObjectCount,
+} from './worldCollision.js';
 import { dressTown } from './townBuilder.js';
 import { buildTrafficControl } from './traffic.js';
 import {
@@ -193,6 +206,7 @@ let cityLandmarks = LANDMARKS;    // resolved compact/production positions for t
 let entranceMap = {};            // interiorId -> { doorPos, faceDir }
 let townMarkers = [];            // accumulated minimap markers (gas, buildings, police, garage)
 let area = 'city';
+let interiorTransitioning = false;
 let inCar = false;
 let drivingVehicle = null;     // the vehicle currently being driven (owned car or a stolen traffic car)
 let returnPos = new THREE.Vector3(0, 0, 12);
@@ -277,6 +291,7 @@ function enterWorld() {
     interiors = buildInteriors();
     scene.add(interiors.group);
     trafficControl = buildTrafficControl(scene, { largeWorld: largeWorldActive });
+    if (largeWorldActive) activatePreparedProductionWorldCollisions();
     debug.set('trafficLights', trafficControl.lightCount);
     debug.set('stopSigns', trafficControl.stopCount);
     setupPolicePost(cityInfo.police);              // visible HQ + parked cruisers (Phase 3J)
@@ -285,7 +300,13 @@ function enterWorld() {
     if (cityInfo.police && cityInfo.police.doorPos) {
       entranceMap.police = { doorPos: cityInfo.police.doorPos, faceDir: cityInfo.police.entryFaceDir };
     }
-    cityNPCs = createCityNPCs(scene, Math.max(8, Math.round(22 * graphics.npcDensity)));
+    cityNPCs = createCityNPCs(
+      scene,
+      largeWorldActive
+        ? largeTownPedestrianCount(graphics.npcDensity)
+        : Math.max(8, Math.round(22 * graphics.npcDensity)),
+      largeWorldActive ? LARGE_TOWN_PEDESTRIAN_ROUTES : undefined,
+    );
     traffic = createTraffic(
       scene,
       largeWorldActive ? largeTownTrafficCount(graphics.trafficDensity)
@@ -332,7 +353,8 @@ function enterWorld() {
   player.group.rotation.y = state.facing || 0;
   returnPos.set(state.pos.x, 0, state.pos.z);
   area = 'city';
-  interiors.group.visible = false;
+  interiors.deactivate?.();
+  setPreparedProductionWorldVisible(true);
   state.createdCharacter = true;
   applyVibe();
   showCreator(false);
@@ -1003,6 +1025,12 @@ function applyWorldAssets(cityInfo) {
   if (gasActive) {
     const placeholder = scene.getObjectByName('ZW_LocationPlaceholder_6twelve');
     if (placeholder) placeholder.visible = false;
+    // The authored forecourt above already supplies the pumps, canopy, store,
+    // collision, and interaction contract. Do not stack a second generic
+    // production shell in the same parcel; that overlap made 6twelve read like
+    // a gray building sitting in the road.
+    const duplicateExterior = scene.getObjectByName('ZW_LocationAsset_6twelve');
+    if (duplicateExterior) duplicateExterior.visible = false;
     entranceMap.gas = { doorPos: gasRelocation.doorPos, faceDir: gasRelocation.entrance.faceDir };
     cityInfo.landmarks.push({
       id: 'gas', name: '6TWELVE', interiorId: 'gas',
@@ -1748,6 +1776,7 @@ function registerInteractables(entrances) {
 
 // ── interiors enter/leave ───────────────────────────────────────────────────
 function enterInterior(id) {
+  if (interiorTransitioning || area !== 'city') return;
   const intr = interiors?.byId?.[id];
   // Safe fallback: never break the game if an interior is missing/malformed.
   if (!intr || !intr.spawn) {
@@ -1756,39 +1785,78 @@ function enterInterior(id) {
     showPrompt(null);
     return;
   }
-  returnPos.copy(entranceMap[id]?.doorPos || player.group.position);
-  area = id;
-  interiors.group.visible = true;
-  player.group.visible = true;
-  player.group.position.copy(intr.spawn); player.group.position.y = 0;
-  player.group.rotation.y = Math.PI;             // face into the room (toward back wall)
-  velY = 0; onGround = true;
+  interiorTransitioning = true;
+  const previousArea = area;
+  const previousPosition = player.group.position.clone();
+  const previousReturn = returnPos.clone();
+  try {
+    const activated = interiors.activate
+      ? interiors.activate(id)
+      : (interiors.group.visible = true);
+    if (!activated) throw new Error(`Interior room "${id}" was not attached`);
 
-  // Reset to a known-good interior camera pose and keep it inside the walls so the
-  // third-person camera can never slip outside and reveal the void.
-  controls.resetView(0, 0.22, 5);
-  const cb = new THREE.Box3();
-  (intr.colliders || []).forEach(b => cb.union(b));
-  controls.bounds = cb.isEmpty() ? null : { min: cb.min.clone(), max: cb.max.clone() };
-  controls.snapTo(player.group.position, player.eyeHeight);
+    returnPos.copy(entranceMap[id]?.doorPos || player.group.position);
+    area = id;
+    setPreparedProductionWorldVisible(false);
+    player.group.visible = true;
+    player.group.position.copy(intr.spawn); player.group.position.y = 0;
+    player.group.rotation.y = Math.PI;             // face into the room (toward back wall)
+    velY = 0; onGround = true;
 
-  notify('Entered ' + intr.name);
-  missionEvent('enter', id);
-  showPrompt(null);
-  updateInteriorDebug();
-  saveNow();
+    // Reset to a known-good interior camera pose and keep it inside the walls so the
+    // third-person camera can never slip outside and reveal the void.
+    controls.resetView(0, 0.22, 5);
+    const cb = new THREE.Box3();
+    (intr.colliders || []).forEach(b => cb.union(b));
+    controls.bounds = cb.isEmpty() ? null : { min: cb.min.clone(), max: cb.max.clone() };
+    controls.snapTo(player.group.position, player.eyeHeight);
+
+    notify('Entered ' + intr.name);
+    missionEvent('enter', id);
+    showPrompt(null);
+    updateInteriorDebug();
+    saveNow();
+  } catch (error) {
+    console.error(`[interior] "${id}" transition failed:`, error);
+    area = previousArea;
+    returnPos.copy(previousReturn);
+    interiors.deactivate?.();
+    setPreparedProductionWorldVisible(true);
+    player.group.position.copy(previousPosition);
+    controls.bounds = null;
+    controls.snapTo(player.group.position, player.eyeHeight);
+    notify('That place could not open safely. You stayed outside.');
+    showPrompt(null);
+  } finally {
+    setTimeout(() => { interiorTransitioning = false; }, 250);
+  }
 }
 function leaveInterior() {
-  area = 'city';
-  interiors.group.visible = false;
-  controls.bounds = null;
-  player.group.visible = true;
-  player.group.position.copy(returnPos); player.group.position.y = 0;
-  controls.resetView(Math.PI, 0.25, 6);
-  controls.snapTo(player.group.position, player.eyeHeight);
-  showPrompt(null);
-  updateInteriorDebug();
-  saveNow();
+  if (interiorTransitioning || area === 'city') return;
+  interiorTransitioning = true;
+  try {
+    area = 'city';
+    interiors.deactivate?.();
+    setPreparedProductionWorldVisible(true);
+    controls.bounds = null;
+    player.group.visible = true;
+    player.group.position.copy(returnPos); player.group.position.y = 0;
+    controls.resetView(Math.PI, 0.25, 6);
+    controls.snapTo(player.group.position, player.eyeHeight);
+    showPrompt(null);
+    updateInteriorDebug();
+    saveNow();
+  } catch (error) {
+    console.error('[interior] exit recovery:', error);
+    area = 'city';
+    interiors.deactivate?.();
+    setPreparedProductionWorldVisible(true);
+    controls.bounds = null;
+    player.group.position.copy(returnPos);
+    notify('Recovered outside after an interior transition problem.');
+  } finally {
+    setTimeout(() => { interiorTransitioning = false; }, 250);
+  }
 }
 function entranceMap_facing() { return null; }
 
@@ -2181,14 +2249,18 @@ function updateCar(dt) {
   }
   // Phase 2: smash through breakable street objects (cones, lamps, cans).
   // Soft litter is driven over; breakable props tip and add minor damage.
-  if (FEATURES.USE_BREAKABLE_STREET_OBJECTS && Math.abs(v.speed) > 3) {
-    const brk = collideVehicle(v.g.position, Math.abs(v.speed), (o) => {
+  if (FEATURES.USE_BREAKABLE_STREET_OBJECTS) {
+    const impact = collideVehicleImpact(v.g.position, Math.abs(v.speed), (o) => {
       notify('💥 Smashed a ' + (o.kind ? o.kind.replace(/_/g, ' ') : 'street object') + '!');
-    });
-    if (brk > 0) {
-      addVehicleDamage(v, brk);
+    }, { previousPos: before });
+    if (impact.damage > 0) {
+      addVehicleDamage(v, impact.damage);
       if (v === car) state.carDamage = Math.floor(v.damage);
       applyCarDamageVisual(v);
+    }
+    if (impact.blocked) {
+      v.speed *= -0.18;
+    } else if (impact.broken.length) {
       v.speed *= 0.9;
     }
   }
@@ -2404,7 +2476,8 @@ function downPlayer(reason) {
   clearWanted();                       // death = new life: wipe stars + end the chase
   if (inCar) exitCar();
   area = 'city';
-  interiors && (interiors.group.visible = false);
+  interiors?.deactivate?.();
+  setPreparedProductionWorldVisible(true);
   controls.bounds = null;
   player.group.visible = true;
   player.group.position.set(safeRespawn.x, 0, safeRespawn.z);
@@ -3892,14 +3965,21 @@ function updateProgression(dt) {
 // ── graphics settings application ──────────────────────────────────────────────
 function rebuildDensity() {
   if (!started || area !== 'city') return;
-  const targetN = Math.max(8, Math.round(22 * graphics.npcDensity));
+  const largeWorldActive = !!state.world?.largeWorldEnabled;
+  const targetN = largeWorldActive
+    ? largeTownPedestrianCount(graphics.npcDensity)
+    : Math.max(8, Math.round(22 * graphics.npcDensity));
   const targetT = state.world?.largeWorldEnabled
     ? largeTownTrafficCount(graphics.trafficDensity)
     : Math.max(3, Math.round(10 * graphics.trafficDensity));
   let changed = false;
   if (cityNPCs.length !== targetN) {
     cityNPCs.forEach(n => scene.remove(n.av.group));
-    cityNPCs = createCityNPCs(scene, targetN);
+    cityNPCs = createCityNPCs(
+      scene,
+      targetN,
+      largeWorldActive ? LARGE_TOWN_PEDESTRIAN_ROUTES : undefined,
+    );
     changed = true;
   }
   if (traffic.length !== targetT) {
@@ -4150,7 +4230,8 @@ function teleportTo(which) {
   if (inCar) exitCar();
   const goCity = (x, z) => {
     area = 'city';
-    if (interiors) interiors.group.visible = false;
+    interiors?.deactivate?.();
+    setPreparedProductionWorldVisible(true);
     controls.bounds = null;
     player.group.visible = true;
     player.group.position.set(x, 0, z);
@@ -4262,6 +4343,7 @@ function animate() {
   const dt = Math.min(0.05, clock.getDelta());
   const t = clock.elapsedTime;
   settingsTickFPS();
+  updateWorldObjects(performance.now());
 
   if (mode === 'creator') {
     renderPreview(creatorPV, creatorAvatar, document.getElementById('creator-canvas-wrap'));
@@ -4276,15 +4358,19 @@ function animate() {
     return;
   }
 
-  // play mode
-  updateCityNPCs(cityNPCs, dt, t);
-  // braking obstacles: other traffic + the player + the parked drivable car
-  const trafficObstacles = [];
-  for (const c of traffic) trafficObstacles.push(c.g.position);
-  if (player && !inCar && area === 'city') trafficObstacles.push(player.group.position);
-  if (car && !inCar) trafficObstacles.push(car.g.position);
-  if (trafficControl) trafficControl.update(dt);
-  updateTraffic(traffic, dt, trafficObstacles, trafficControl);
+  // Outdoor simulation is suspended inside buildings. This keeps one interior
+  // transition from competing with a town-wide traffic/pedestrian update and
+  // removes the largest source of entry-frame stalls on lower-end devices.
+  if (area === 'city') {
+    updateCityNPCs(cityNPCs, dt, t);
+    // braking obstacles: other traffic + the player + the parked drivable car
+    const trafficObstacles = [];
+    for (const c of traffic) trafficObstacles.push(c.g.position);
+    if (player && !inCar) trafficObstacles.push(player.group.position);
+    if (car && !inCar) trafficObstacles.push(car.g.position);
+    if (trafficControl) trafficControl.update(dt);
+    updateTraffic(traffic, dt, trafficObstacles, trafficControl);
+  }
   updateMixers(dt);                                  // skinned GLB animations
   for (const g of extraSpinners) g.rotation.y += dt * 0.8;   // idle-spin display models
   // spin any dealership car flagged for preview

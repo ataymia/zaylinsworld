@@ -1,6 +1,6 @@
 # Starter Town Live Regression Checklist
 
-Run this checklist on the deployed draft branch before PR #5 is eligible to merge.
+Run this checklist on every deployed Starter Town draft before it is eligible to merge.
 
 ## Character Studio
 
@@ -63,6 +63,16 @@ Run this checklist on the deployed draft branch before PR #5 is eligible to merg
 
 - [ ] Spawn, walking, sprinting, camera and collisions work.
 - [ ] Default car, traffic cars, fuel, damage, repair and refueling work.
+- [ ] Traffic cars are visibly moving near arrival and across multiple districts.
+- [ ] Pedestrians are visibly moving in every district, not only Dreamdrop Core.
+- [ ] Expanded map shows connected roadways, route names and correctly placed landmarks.
+- [ ] Terrain stays visually stable while driving; no green/brown surface flicker.
+- [ ] Buildings and their interaction anchors remain outside vehicle lanes.
+- [ ] Functional and filler buildings block vehicles instead of allowing drive-through.
+- [ ] Every functional exterior has a readable name and use sign.
+- [ ] Trees and rocks block off-road vehicles.
+- [ ] Streetlights block a slow vehicle, fall after a hard impact and later restore.
+- [ ] Only the entered interior is rendered; repeated entry/exit does not freeze or crash.
 - [ ] Trash pickup, sanitation jobs and dumpster deposit work.
 - [ ] Food purchase/eating and Chicken Spot work shift still function.
 - [ ] Shops deduct money, mark ownership and persist after refresh.

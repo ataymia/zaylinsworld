@@ -910,5 +910,43 @@ export function buildInteriors() {
     };
   }
 
-  return { group: root, byId };
+  // Keep only the room the player is currently using in the render graph.
+  // Previously the root toggle made all twelve fully furnished interiors visible
+  // at once. Besides wasting draw calls, one malformed room could take down every
+  // building transition. Each room now has an explicit lifecycle and the root is
+  // hidden whenever the player is outside.
+  const interiorOrder = [
+    'dealership', 'frostbox', 'blocksupply', 'chicken', 'home', 'kicks',
+    'gym', 'school', 'office', 'garage', 'gas', 'police',
+  ];
+  interiorOrder.forEach((id, index) => {
+    const room = root.children[index];
+    const interior = byId[id];
+    if (!room || !interior) return;
+    room.name = `ZW_Interior_${id}`;
+    room.visible = false;
+    interior.group = room;
+  });
+
+  const setActive = (id = null) => {
+    let found = false;
+    for (const [interiorId, interior] of Object.entries(byId)) {
+      const active = interiorId === id && !!interior.group;
+      if (interior.group) interior.group.visible = active;
+      found ||= active;
+    }
+    root.visible = found;
+    root.userData.activeInteriorId = found ? id : null;
+    return found;
+  };
+
+  root.userData.setActive = setActive;
+  setActive(null);
+  return {
+    group: root,
+    byId,
+    setActive,
+    activate: (id) => setActive(id),
+    deactivate: () => setActive(null),
+  };
 }

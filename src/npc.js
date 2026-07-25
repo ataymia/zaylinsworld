@@ -14,8 +14,11 @@ const NAMES = ['Marcus', 'Tre', 'Jaylen', 'Keisha', 'Dee', 'Andre', 'Nia', 'Mali
 // turn a [[x,z],…] config loop into THREE.Vector3 waypoints
 const toWaypoints = loop => loop.map(([x, z]) => new THREE.Vector3(x, 0, z));
 
-export function createCityNPCs(scene, count = 8) {
+export function createCityNPCs(scene, count = 8, routeDefinitions = PEDESTRIAN_ROUTES) {
   const npcs = [];
+  const routes = Array.isArray(routeDefinitions) && routeDefinitions.length
+    ? routeDefinitions
+    : PEDESTRIAN_ROUTES;
   for (let i = 0; i < count; i++) {
     const custom = {
       skin: pick(SKIN_TONES).id, face: 'oval',
@@ -29,8 +32,11 @@ export function createCityNPCs(scene, count = 8) {
     };
     const av = buildAvatar(custom);
     // assign each pedestrian to a sidewalk/park route and start at a waypoint
-    const route = toWaypoints(PEDESTRIAN_ROUTES[i % PEDESTRIAN_ROUTES.length].loop);
-    const wp = Math.floor(Math.random() * route.length);
+    const routeDef = routes[i % routes.length];
+    const route = toWaypoints(routeDef.loop);
+    // Deterministic staggering keeps every district populated immediately and
+    // avoids one random clump consuming the whole pedestrian budget.
+    const wp = Math.floor((i / routes.length) * route.length) % route.length;
     const start = route[wp];
     av.group.position.set(start.x, 0, start.z);
     scene.add(av.group);
@@ -40,6 +46,8 @@ export function createCityNPCs(scene, count = 8) {
       dialogue: 'random',
       mood: pick(['chill', 'hyped', 'busy', 'friendly']),
       route, wp: (wp + 1) % route.length,
+      routeId: routeDef.id || `pedestrian-route-${i % routes.length}`,
+      districtId: routeDef.districtId || null,
       target: route[(wp + 1) % route.length].clone(),
       speed: 1.1 + Math.random() * 0.8,
       phase: Math.random() * Math.PI * 2,
@@ -186,10 +194,14 @@ export function createTraffic(scene, count = 6, routeDefinitions = TRAFFIC_ROUTE
     g.rotation.y = Math.atan2(b.x - g.position.x, b.z - g.position.z);
     scene.add(g);
     const driver = makeDriver(); g.add(driver);
+    const baseSpeed = 7 + Math.random() * 4;
     cars.push({
       g, route, wp: nextWp,
-      speed: 0, baseSpeed: 7 + Math.random() * 4, damage: 0,
+      // Start in motion so traffic visibly reads as traffic on the first frame;
+      // controls and following-distance logic can still brake it immediately.
+      speed: baseSpeed * 0.55, baseSpeed, damage: 0,
       wheels: g.userData.wheels, driver, hasDriver: true,
+      routeName: routeDef.name || routeDef.id || `traffic-route-${r}`,
       _stuckT: 0, _stopAt: null, _stopTimer: 0,
     });
   }

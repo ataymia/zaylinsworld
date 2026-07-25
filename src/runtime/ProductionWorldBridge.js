@@ -47,6 +47,7 @@ const bridge = {
   startedAt: 0,
   preparedAt: 0,
   attachedAt: 0,
+  collisionsActivatedAt: 0,
   lastError: null,
 };
 
@@ -140,6 +141,23 @@ export function attachPreparedProductionWorld(scene = bridge.scene) {
 
 export function productionWorldRelocationIds() {
   return bridge.attached ? ACTIVE_FUNCTIONAL_RELOCATIONS : [];
+}
+
+export function activatePreparedProductionWorldCollisions() {
+  if (!bridge.attached || !bridge.prepared) {
+    return Object.freeze({ streetlights: 0, terrain: 0, buildings: 0 });
+  }
+  const streetlights = bridge.prepared.generatedRoadside?.activateCollisions?.() || 0;
+  const terrain = bridge.prepared.groundCover?.activateCollisions?.() || 0;
+  const buildings = bridge.prepared.buildingAssets?.activateCollisions?.() || 0;
+  bridge.collisionsActivatedAt = performance.now();
+  return Object.freeze({ streetlights, terrain, buildings });
+}
+
+export function setPreparedProductionWorldVisible(visible) {
+  if (!bridge.prepared?.group || !bridge.attached) return false;
+  bridge.prepared.group.visible = !!visible;
+  return true;
 }
 
 function isWardrobeReturn() {
@@ -255,6 +273,7 @@ export function productionWorldBridgeSnapshot() {
     attached: bridge.attached,
     entering: bridge.entering,
     preloadMs: bridge.preparedAt && bridge.startedAt ? Math.round(bridge.preparedAt - bridge.startedAt) : null,
+    collisionsActivated: bridge.collisionsActivatedAt > 0,
     lastError: bridge.lastError?.message || null,
     activeRelocations: productionWorldRelocationIds(),
     relocation: functionalLocationRelocation.snapshot(),

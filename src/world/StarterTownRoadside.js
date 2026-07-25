@@ -6,6 +6,7 @@ import * as THREE from 'three';
 import { STARTER_TOWN_RUNTIME_PLAN } from '../config/starterTownRuntimePlan.js';
 import { ROAD_TIERS } from '../config/worldMapPlan.js';
 import { worldRegistry } from '../runtime/WorldRegistry.js';
+import { registerWorldObject } from '../worldCollision.js';
 import { RoadNetwork } from './RoadNetwork.js';
 import { RoadGraph } from './RoadGraph.js';
 import { starterTownHeightAt } from './StarterTownTerrain.js';
@@ -304,6 +305,30 @@ function instanceTransform(placement, type, matrix) {
   matrix.compose(position, quaternion, scale);
 }
 
+function streetlightInstanceTransform(placement, type, matrix, fallen = false, direction = 1) {
+  const root = new THREE.Matrix4();
+  const local = new THREE.Matrix4();
+  const yaw = new THREE.Quaternion().setFromAxisAngle(
+    new THREE.Vector3(0, 1, 0),
+    placement.rotationY || 0,
+  );
+  if (fallen) {
+    const tip = new THREE.Quaternion().setFromAxisAngle(
+      new THREE.Vector3(0, 0, 1),
+      direction * (Math.PI / 2 - 0.16),
+    );
+    yaw.multiply(tip);
+  }
+  root.compose(
+    new THREE.Vector3(placement.x, placement.y || 0, placement.z),
+    yaw,
+    new THREE.Vector3(1, 1, 1),
+  );
+  if (type === 'streetlight-pole') local.makeTranslation(0, 3.25, 0);
+  else local.makeTranslation(0, 6.45, 0.42);
+  matrix.multiplyMatrices(root, local);
+}
+
 export function buildStarterTownRoadsideLayer({
   plan = createStarterTownRoadsidePlan(),
   heightAt = null,
@@ -334,6 +359,8 @@ export function buildStarterTownRoadsideLayer({
     byType.set(placement.type, list);
   }
   const matrix = new THREE.Matrix4();
+  const meshes = new Map();
+  const indexByTypeAndId = new Map();
   for (const [type, placements] of byType) {
     const mesh = new THREE.InstancedMesh(geometryFor(type), material(type), placements.length);
     mesh.name = `ZW_Roadside_${type}`;
@@ -343,20 +370,56 @@ export function buildStarterTownRoadsideLayer({
     mesh.userData.infrastructureType = type;
     mesh.userData.instanceIds = placements.map((placement) => placement.id);
     placements.forEach((placement, index) => {
-      instanceTransform(placement, type, matrix);
+      if (type === 'streetlight-pole' || type === 'streetlight-lamp') {
+        streetlightInstanceTransform(placement, type, matrix);
+      } else {
+        instanceTransform(placement, type, matrix);
+      }
       mesh.setMatrixAt(index, matrix);
+      indexByTypeAndId.set(`${type}:${placement.id}`, index);
     });
     mesh.instanceMatrix.needsUpdate = true;
     group.add(mesh);
+    meshes.set(type, mesh);
   }
+  let collisionsActive = false;
+  const streetlights = placements.filter((placement) => placement.type === 'streetlight');
+  const setStreetlightState = (placement, fallen, direction = 1) => {
+    for (const type of ['streetlight-pole', 'streetlight-lamp']) {
+      const mesh = meshes.get(type);
+      const index = indexByTypeAndId.get(`${type}:${placement.id}`);
+      if (!mesh || !Number.isInteger(index)) continue;
+      streetlightInstanceTransform(placement, type, matrix, fallen, direction);
+      mesh.setMatrixAt(index, matrix);
+      mesh.instanceMatrix.needsUpdate = true;
+      mesh.computeBoundingSphere?.();
+    }
+  };
+  const activateCollisions = () => {
+    if (collisionsActive) return 0;
+    collisionsActive = true;
+    streetlights.forEach((placement, index) => {
+      const direction = index % 2 ? -1 : 1;
+      registerWorldObject(null, placement.x, placement.z, {
+        id: placement.id,
+        r: 0.55,
+        kind: 'streetlight',
+        onBreak: () => setStreetlightState(placement, true, direction),
+        onRestore: () => setStreetlightState(placement, false, direction),
+      });
+    });
+    return streetlights.length;
+  };
   group.userData.plan = plan;
+  group.userData.activateCollisions = activateCollisions;
   group.userData.snapshot = () => Object.freeze({
     placements: plan.placements.length,
     renderedInstances: expanded.length,
     meshes: group.children.length,
+    collisionStreetlights: streetlights.length,
     byType: { ...plan.byType },
   });
-  return { group, plan };
+  return { group, plan, activateCollisions };
 }
 
 export const STARTER_TOWN_ROADSIDE_PLAN = createStarterTownRoadsidePlan();
