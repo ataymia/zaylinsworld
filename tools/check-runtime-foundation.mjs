@@ -187,7 +187,7 @@ assert.match(assets, /new GLTFLoader\(loadingManager\)/, 'critical GLBs must rep
 assert.match(assets, /assetRuntimeRegistry\.load\(\)/, 'asset indexes must warm into the runtime resolver');
 assert.match(assets, /manager === loadingManager \? backgroundLoadingManager : manager/, 'optional HDRI must be redirected away from the blocking gate');
 assert.match(assets, /new RGBELoader\(effectiveManager\)/, 'HDRI must use the nonblocking manager');
-assert.match(state, /SAVE_SCHEMA_VERSION = 6/, 'save schema must be versioned');
+assert.match(state, /SAVE_SCHEMA_VERSION = 7/, 'save schema must be versioned');
 assert.match(state, /checksum\(payloadText\)/, 'save payload must be checksummed');
 assert.match(state, /BACKUP_KEY/, 'save migration must preserve a backup');
 assert.match(modular, /tone\.textureLift/, 'skin renderer must use per-tone texture lift');

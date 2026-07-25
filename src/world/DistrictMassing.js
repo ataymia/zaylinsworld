@@ -8,10 +8,26 @@
 import * as THREE from 'three';
 import { STARTER_TOWN_PARCELS } from '../config/starterTownParcelPlan.js';
 import { DISTRICT_PROFILE_BY_ID } from '../config/starterTownDistrictProfiles.js';
+import { STARTER_TOWN_RUNTIME_PLAN } from '../config/starterTownRuntimePlan.js';
+import { RoadNetwork } from './RoadNetwork.js';
 
 const NON_BUILDING_TYPES = new Set([
   'parking', 'park', 'park-support', 'civic-plaza', 'recreation', 'purposeful-empty', 'future-update',
 ]);
+const ROAD_SETBACK = 3;
+const PARCEL_EDGE_SETBACK = 3;
+const DEFAULT_ROAD_NETWORK = new RoadNetwork(STARTER_TOWN_RUNTIME_PLAN.routes);
+const FOOTPRINT_LIMITS = Object.freeze({
+  'residential-row': Object.freeze({ w: 20, d: 17 }),
+  'residential-block': Object.freeze({ w: 34, d: 28 }),
+  'commercial-row': Object.freeze({ w: 32, d: 24 }),
+  commercial: Object.freeze({ w: 34, d: 28 }),
+  'mixed-use': Object.freeze({ w: 36, d: 30 }),
+  industrial: Object.freeze({ w: 50, d: 38 }),
+  office: Object.freeze({ w: 40, d: 34 }),
+  civic: Object.freeze({ w: 42, d: 36 }),
+  'parking-structure': Object.freeze({ w: 46, d: 38 }),
+});
 
 function hash(text) {
   let value = 2166136261;
@@ -47,7 +63,93 @@ function placementCount(parcel) {
   return 1;
 }
 
-function createPlacements(parcel, profile) {
+function closestPointToSegment(x, z, segment) {
+  const sx = segment.start.x;
+  const sz = segment.start.z;
+  const dx = segment.end.x - sx;
+  const dz = segment.end.z - sz;
+  const lengthSq = dx * dx + dz * dz;
+  const t = lengthSq > 0
+    ? Math.max(0, Math.min(1, ((x - sx) * dx + (z - sz) * dz) / lengthSq))
+    : 0;
+  return { x: sx + dx * t, z: sz + dz * t };
+}
+
+export function buildingRoadClearance(position, size, roadNetwork = DEFAULT_ROAD_NETWORK) {
+  let minimum = Infinity;
+  const halfW = size.x / 2;
+  const halfD = size.z / 2;
+  for (const segment of roadNetwork.segments) {
+    const nearest = closestPointToSegment(position.x, position.z, segment);
+    const dx = position.x - nearest.x;
+    const dz = position.z - nearest.z;
+    const distance = Math.hypot(dx, dz);
+    const support = distance > 0.0001
+      ? Math.abs(dx / distance) * halfW + Math.abs(dz / distance) * halfD
+      : Math.hypot(halfW, halfD);
+    minimum = Math.min(minimum, distance - segment.width / 2 - support);
+  }
+  return minimum;
+}
+
+function overlapsPlacement(position, size, placements, gap = 3) {
+  return placements.some((other) => {
+    const xGap = Math.abs(position.x - other.position.x) - (size.x + other.size.x) / 2;
+    const zGap = Math.abs(position.z - other.position.z) - (size.z + other.size.z) / 2;
+    return xGap < gap && zGap < gap;
+  });
+}
+
+function candidatePositions(bounds, size, preferred) {
+  const minX = bounds.x - bounds.w / 2 + size.x / 2 + PARCEL_EDGE_SETBACK;
+  const maxX = bounds.x + bounds.w / 2 - size.x / 2 - PARCEL_EDGE_SETBACK;
+  const minZ = bounds.z - bounds.d / 2 + size.z / 2 + PARCEL_EDGE_SETBACK;
+  const maxZ = bounds.z + bounds.d / 2 - size.z / 2 - PARCEL_EDGE_SETBACK;
+  if (minX > maxX || minZ > maxZ) return [];
+  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+  const candidates = [{
+    x: clamp(preferred.x, minX, maxX),
+    z: clamp(preferred.z, minZ, maxZ),
+  }];
+  const steps = 8;
+  for (let zi = 0; zi <= steps; zi++) {
+    for (let xi = 0; xi <= steps; xi++) {
+      candidates.push({
+        x: minX + (maxX - minX) * (xi / steps),
+        z: minZ + (maxZ - minZ) * (zi / steps),
+      });
+    }
+  }
+  return candidates;
+}
+
+function resolveRoadSafePlacement(bounds, preferred, initialSize, placements, roadNetwork) {
+  let size = { ...initialSize };
+  let bestFallback = null;
+  for (let attempt = 0; attempt < 8; attempt++) {
+    let bestSafe = null;
+    for (const position of candidatePositions(bounds, size, preferred)) {
+      if (overlapsPlacement(position, size, placements)) continue;
+      const roadClearance = buildingRoadClearance(position, size, roadNetwork);
+      const deviation = Math.hypot(position.x - preferred.x, position.z - preferred.z);
+      const score = roadClearance - deviation * 0.002;
+      const candidate = { position, size: { ...size }, roadClearance, score };
+      if (!bestFallback || score > bestFallback.score) bestFallback = candidate;
+      if (roadClearance >= ROAD_SETBACK && (!bestSafe || score > bestSafe.score)) {
+        bestSafe = { ...candidate, safe: true };
+      }
+    }
+    if (bestSafe) return bestSafe;
+    size = {
+      x: Math.max(5, size.x * 0.86),
+      y: size.y,
+      z: Math.max(5, size.z * 0.86),
+    };
+  }
+  return bestFallback;
+}
+
+function createPlacements(parcel, profile, roadNetwork = DEFAULT_ROAD_NETWORK) {
   if (NON_BUILDING_TYPES.has(parcel.type)) return [];
   const rand = randomFactory(parcel.id);
   const count = placementCount(parcel);
@@ -61,24 +163,39 @@ function createPlacements(parcel, profile) {
 
   for (let index = 0; index < count; index++) {
     const slot = (index + 0.5) / count;
-    const width = horizontal
+    const rawWidth = horizontal
       ? Math.max(5, usableW / count * (0.72 + rand() * 0.2))
       : Math.max(5, usableW * (0.62 + rand() * 0.22));
-    const depth = horizontal
+    const rawDepth = horizontal
       ? Math.max(5, usableD * (0.62 + rand() * 0.22))
       : Math.max(5, usableD / count * (0.72 + rand() * 0.2));
+    const limit = FOOTPRINT_LIMITS[parcel.type] || FOOTPRINT_LIMITS.commercial;
+    const width = Math.min(rawWidth, limit.w);
+    const depth = Math.min(rawDepth, limit.d);
     const floors = Math.max(1, Math.round(minFloors + rand() * Math.max(0, maxFloors - minFloors)));
     const floorHeight = parcel.type === 'industrial' || parcel.type === 'vehicle' ? 4.2 : 3.15;
     const height = floors * floorHeight;
-    const x = bounds.x + (horizontal ? (slot - 0.5) * usableW : (rand() - 0.5) * usableW * 0.35);
-    const z = bounds.z + (horizontal ? (rand() - 0.5) * usableD * 0.35 : (slot - 0.5) * usableD);
+    const preferred = {
+      x: bounds.x + (horizontal ? (slot - 0.5) * usableW : (rand() - 0.5) * usableW * 0.35),
+      z: bounds.z + (horizontal ? (rand() - 0.5) * usableD * 0.35 : (slot - 0.5) * usableD),
+    };
+    const resolved = resolveRoadSafePlacement(
+      bounds,
+      preferred,
+      { x: width, y: height, z: depth },
+      placements,
+      roadNetwork,
+    );
+    if (!resolved) continue;
     placements.push(Object.freeze({
       id: `${parcel.id}:massing:${index}`,
       parcelId: parcel.id,
       districtId: parcel.districtId,
       type: parcel.type,
-      position: Object.freeze({ x, y: height / 2, z }),
-      size: Object.freeze({ x: width, y: height, z: depth }),
+      position: Object.freeze({ x: resolved.position.x, y: height / 2, z: resolved.position.z }),
+      size: Object.freeze(resolved.size),
+      roadClearance: resolved.roadClearance,
+      roadSafe: resolved.roadClearance >= ROAD_SETBACK,
       floors,
       roofVariant: rand() > 0.78 ? 'step' : rand() > 0.58 ? 'parapet' : 'flat',
       seed: hash(`${parcel.id}:${index}`),
@@ -111,7 +228,7 @@ export function buildDistrictMassing({
   for (const parcel of parcels) {
     if (!includeFunctional && parcel.locationId) continue;
     const profile = DISTRICT_PROFILE_BY_ID[parcel.districtId];
-    for (const placement of createPlacements(parcel, profile)) {
+    for (const placement of createPlacements(parcel, profile, DEFAULT_ROAD_NETWORK)) {
       placements.push(placement);
       const list = byDistrict.get(parcel.districtId) || [];
       list.push(placement);
@@ -155,11 +272,13 @@ export function buildDistrictMassing({
   group.userData.districtCount = byDistrict.size;
   group.userData.instanceCount = placements.length;
   group.userData.terrainAware = typeof heightAt === 'function';
+  group.userData.roadSafe = placements.every((placement) => placement.roadSafe);
   group.userData.snapshot = () => Object.freeze({
     districts: byDistrict.size,
     instances: placements.length,
     meshes: group.children.length,
     terrainAware: typeof heightAt === 'function',
+    roadSafe: placements.every((placement) => placement.roadSafe),
     byDistrict: Object.fromEntries([...byDistrict].map(([id, list]) => [id, list.length])),
   });
 

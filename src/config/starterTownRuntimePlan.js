@@ -25,6 +25,7 @@ const location = (id, name, districtId, x, z, extra = {}) => freeze({
     fallback: extra.fallbackAsset || 'procedural-location-shell',
   }),
   ...extra,
+  frontageFace: extra.frontageFace ? freeze([...extra.frontageFace]) : null,
 });
 
 export const STARTER_TOWN_FEATURE_FLAGS = freeze({
@@ -141,50 +142,62 @@ export const STARTER_TOWN_ROUTES = freeze([
 export const STARTER_TOWN_LOCATIONS = freeze([
   location('frostbox', 'Frostbox', 'dreamdrop-district', -168, -88, {
     interiorId: 'frostbox', category: 'store',
+    frontageFace: [0, -1],
     preferredAsset: 'library:buildings:zta-free-asset-factory:building-starter-frostbox-exterior-v02',
   }),
   location('chicken-spot', 'Chicken Spot', 'dreamdrop-district', 192, -152, {
     interiorId: 'chicken', category: 'store',
+    frontageFace: [0, 1],
     preferredAsset: 'library:buildings:zta-free-asset-factory:building-starter-chicken-spot-exterior-v02',
   }),
   location('kicks-fits', 'Kicks & Fits', 'market-mile', -72, 352, {
     interiorId: 'kicks', category: 'store',
+    frontageFace: [1, 0],
     preferredAsset: 'library:buildings:zta-free-asset-factory:building-starter-kicks-fits-exterior-v02',
   }),
   location('block-supply', 'Block Supply', 'westside-blocks', -568, 280, {
     interiorId: 'blocksupply', category: 'store',
+    frontageFace: [0, 1],
     preferredAsset: 'library:buildings:zta-free-asset-factory:building-starter-block-supply-exterior-v02',
   }),
   location('auto-haus', 'Auto Haus', 'northworks-auto-row', -448, -660, {
     interiorId: 'dealership', category: 'vehicle',
+    frontageFace: [0, -1],
     preferredAsset: 'library:buildings:zta-free-asset-factory:building-starter-auto-haus-exterior-v02',
   }),
   location('city-garage', 'City Garage', 'northworks-auto-row', -112, -616, {
     interiorId: 'garage', category: 'service',
+    frontageFace: [0, -1],
     preferredAsset: 'library:buildings:zta-free-asset-factory:building-starter-city-garage-exterior-v02',
   }),
-  location('zaylins-prep', 'Zaylins Prep', 'scholars-quarter', -724, 72, {
+  location('zaylins-prep', 'Zaylins Prep', 'scholars-quarter', -780, 72, {
     interiorId: 'school', category: 'school',
+    frontageFace: [1, 0],
     preferredAsset: 'library:buildings:zta-free-asset-factory:building-starter-zaylins-prep-exterior-v02',
   }),
   location('police-station', 'Dreamdrop Public Safety', 'civic-heights', 632, -312, {
     interiorId: 'police', category: 'law',
+    frontageFace: [-1, 0],
     preferredAsset: 'library:buildings:zta-free-asset-factory:building-starter-police-station-exterior-v02',
   }),
   location('worktower', 'WorkTower', 'civic-heights', 664, -20, {
     interiorId: 'office', category: 'job',
+    frontageFace: [0, 1],
     preferredAsset: 'library:buildings:zta-free-asset-factory:building-starter-worktower-exterior-v02',
   }),
   location('iron-city-gym', 'Iron City Gym', 'parkside-commons', 448, 448, {
     interiorId: 'gym', category: 'service',
+    frontageFace: [0, -1],
     preferredAsset: 'library:buildings:zta-free-asset-factory:building-starter-iron-city-gym-exterior-v02',
   }),
   location('6twelve', '6twelve', 'eastgate-corridor', 832, 232, {
     interiorId: 'gas', category: 'fuel',
+    frontageFace: [1, 0],
     preferredAsset: 'library:buildings:zta-free-asset-factory:building-starter-6twelve-exterior-v02',
   }),
   location('zaylins-home', "Zaylins Home", 'willowbend-residential', 48, 828, {
     interiorId: 'home', category: 'property', spawnId: 'starter-home',
+    frontageFace: [1, 0],
     preferredAsset: 'library:buildings:zta-free-asset-factory:building-starter-zaylins-home-exterior-v02',
   }),
   location('dreamdrop-park', 'Dreamdrop Park', 'parkside-commons', 420, 568, { category: 'activity', enterable: false }),

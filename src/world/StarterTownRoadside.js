@@ -263,15 +263,17 @@ export function createStarterTownRoadsidePlan({
 }
 
 function material(type) {
+  const isLamp = type === 'streetlight-lamp';
   const color = type.includes('line') || type.includes('dash') ? COLORS.lane
     : type.includes('crosswalk') ? COLORS.crosswalk
+      : isLamp ? COLORS.lamp
       : COLORS[type] || COLORS.sign;
   return new THREE.MeshStandardMaterial({
     color,
-    roughness: type === 'lamp' ? 0.35 : 0.85,
+    roughness: isLamp ? 0.35 : 0.85,
     metalness: ['guardrail', 'streetlight', 'drain', 'bike-rack'].some((value) => type.includes(value)) ? 0.55 : 0.05,
-    emissive: type === 'lamp' ? new THREE.Color(COLORS.lamp) : new THREE.Color('#000000'),
-    emissiveIntensity: type === 'lamp' ? 1.2 : 0,
+    emissive: isLamp ? new THREE.Color(COLORS.lamp) : new THREE.Color('#000000'),
+    emissiveIntensity: isLamp ? 1.2 : 0,
   });
 }
 

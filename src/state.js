@@ -4,15 +4,15 @@
 import { defaultCustom } from './avatar.js';
 import { ensurePlayerCustom } from './config/playerAvatarCatalog.js';
 import { SPAWN } from './config/mapConfig.js';
-import { repairLegacyParkArrival } from './config/saveMigrations.js';
+import { repairLegacyParkArrival, repairSchoolRoadPlacement } from './config/saveMigrations.js';
 import { worldRegistry } from './runtime/WorldRegistry.js';
 
-export { repairLegacyParkArrival } from './config/saveMigrations.js';
+export { repairLegacyParkArrival, repairSchoolRoadPlacement } from './config/saveMigrations.js';
 
 const SAVE_KEY = 'zaylinsworld.save.v2';
 const BACKUP_KEY = 'zaylinsworld.save.backup';
 const CORRUPT_KEY = 'zaylinsworld.save.corrupt';
-export const SAVE_SCHEMA_VERSION = 6;
+export const SAVE_SCHEMA_VERSION = 7;
 let lastSerialized = '';
 let lastSavedAt = 0;
 
@@ -50,7 +50,16 @@ export function defaultState() {
     version: SAVE_SCHEMA_VERSION,
     custom: ensurePlayerCustom(defaultCustom()),
     money: 500,
-    stats: { health: 100, energy: 100, hunger: 80, fitness: 20, smarts: 15, hygiene: 90, fun: 50 },
+    stats: {
+      health: 100,
+      energy: 100,
+      hunger: 80,
+      fitness: 20,
+      smarts: 15,
+      hygiene: 90,
+      fun: 50,
+      trafficViolations: 0,
+    },
     job: 'Unemployed',
     wanted: 0,
     heat: 0,
@@ -108,7 +117,8 @@ function migrateAndNormalize(data = {}) {
     ...(data.custom || {}),
     faceMorphs: { ...base.custom.faceMorphs, ...(data.custom?.faceMorphs || {}) },
   });
-  const position = repairLegacyParkArrival(safePosition(data.pos, base.pos), data);
+  const parkRepairedPosition = repairLegacyParkArrival(safePosition(data.pos, base.pos), data);
+  const position = repairSchoolRoadPlacement(parkRepairedPosition, data);
   const district = worldRegistry.districtAt(position, 'starter-town');
   const world = {
     ...base.world,

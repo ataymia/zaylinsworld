@@ -17,7 +17,8 @@ const [bridge, world, main, interiors, minimap] = await Promise.all([
 
 const school = FUNCTIONAL_LOCATION_CONTRACT_BY_ID['zaylins-prep'];
 assert.deepEqual(school.legacy, { sourceId: 'school', x: -44, z: -24, interiorId: 'school' });
-assert.deepEqual(school.target, { x: -724, y: 0, z: 72 });
+assert.deepEqual(school.target, { x: -780, y: 0, z: 72 });
+assert.deepEqual(school.frontageFace, [1, 0]);
 assert.equal(school.parcelId, 'parcel-zaylins-prep');
 assert.equal(school.stableId, 'zaylins-prep');
 
@@ -36,7 +37,7 @@ const evidence = Object.fromEntries(RELOCATION_PARITY_FIELDS.map((field) => [fie
 harness.record('zaylins-prep', evidence);
 assert.deepEqual(
   harness.migrateLegacyPosition('zaylins-prep', { x: -42, z: -26 }),
-  { x: -722, z: 70 },
+  { x: -778, z: 70 },
   'school save migration must preserve the local offset',
 );
 

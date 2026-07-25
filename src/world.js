@@ -321,7 +321,13 @@ export function buildCity(scene, { relocatedLocationIds = [] } = {}) {
   const landmarkLayout = LANDMARKS.map((landmark) => {
     const contract = contractByLegacyId.get(landmark.id);
     return contract && activeRelocations.has(contract.locationId)
-      ? { ...landmark, x: contract.target.x, z: contract.target.z, locationId: contract.locationId }
+      ? {
+        ...landmark,
+        x: contract.target.x,
+        z: contract.target.z,
+        face: contract.frontageFace || landmark.face,
+        locationId: contract.locationId,
+      }
       : { ...landmark, locationId: contract?.locationId || null };
   });
   // Keep minimap/world markers separate from building blueprints. Public spaces
@@ -523,6 +529,7 @@ function buildPolicePost(scene, walkM, stripeM, relocationContract = null) {
     z: POLICE_POST.z + dz,
     lot: { ...POLICE_POST.lot, cx: POLICE_POST.lot.cx + dx, cz: POLICE_POST.lot.cz + dz },
     cruisers: POLICE_POST.cruisers.map(([x, z]) => [x + dx, z + dz]),
+    face: relocationContract?.frontageFace || POLICE_POST.face,
   };
   const fd = new THREE.Vector3(P.face[0], 0, P.face[1]).normalize();
   const r = makeBuilding(scene, {

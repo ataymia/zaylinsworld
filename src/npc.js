@@ -6,6 +6,7 @@ import { buildAvatar, SKIN_TONES, HAIRSTYLES, OUTFIT_TOPS, OUTFIT_BOTTOMS, SHOES
 import { applyNpcSkins } from './avatarSkin.js';
 import { buildCar, CAR_TYPES } from './vehicles.js';
 import { TRAFFIC_ROUTES, PEDESTRIAN_ROUTES } from './config/mapConfig.js';
+import { trafficSpawnPlan } from './config/starterTownTrafficRoutes.js';
 
 const pick = arr => arr[Math.floor(Math.random() * arr.length)];
 const NAMES = ['Marcus', 'Tre', 'Jaylen', 'Keisha', 'Dee', 'Andre', 'Nia', 'Malik', 'Zara', 'Cam', 'Imani', 'Quan'];
@@ -122,6 +123,7 @@ const DRIVER_SKINS = ['#6b4a2f', '#8a5a3a', '#a9744f', '#c68642', '#e0ac69', '#5
 const DRIVER_TOPS = ['#2c3e6b', '#7a1f2b', '#27543a', '#3a3f48', '#5a4a6b'];
 function makeDriver() {
   const g = new THREE.Group();
+  g.name = 'vehicle-driver';
   const skin = new THREE.MeshStandardMaterial({ color: pick(DRIVER_SKINS), roughness: 0.8 });
   const cloth = new THREE.MeshStandardMaterial({ color: pick(DRIVER_TOPS), roughness: 0.7 });
   const torso = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.42, 0.24), cloth);
@@ -169,37 +171,27 @@ function pointAtDistance(wps, s) {
 export function createTraffic(scene, count = 6, routeDefinitions = TRAFFIC_ROUTES) {
   const colors = ['#c0392b', '#2980b9', '#27ae60', '#f1c40f', '#8e44ad', '#e67e22', '#ecf0f1', '#16a085'];
   const cars = [];
-  const MIN_GAP = 9;                                   // metres between cars on the same loop
   const routes = Array.isArray(routeDefinitions) && routeDefinitions.length
     ? routeDefinitions
     : TRAFFIC_ROUTES;
-  // bucket cars per route so we can evenly space each route's share around it
-  const perRoute = routes.map(() => 0);
-  for (let i = 0; i < count; i++) perRoute[i % routes.length]++;
-
-  for (let r = 0; r < routes.length; r++) {
+  const spawnPlan = trafficSpawnPlan(count, routes);
+  for (const spawn of spawnPlan) {
+    const r = spawn.routeIndex;
     const routeDef = routes[r];
     const route = toWaypoints(routeDef.loop);
-    const n = perRoute[r];
-    if (!n) continue;
-    const total = loopLength(route);
-    const gap = Math.max(MIN_GAP, total / n);          // even spacing, but never tighter than MIN_GAP
-    for (let k = 0; k < n; k++) {
-      const g = carMesh(pick(colors));
-      const s = (k * gap) % total;
-      const at = pointAtDistance(route, s);
-      g.position.copy(at.pos);
-      const b = route[at.nextWp];
-      g.rotation.y = Math.atan2(b.x - at.pos.x, b.z - at.pos.z);
-      scene.add(g);
-      const driver = makeDriver(); g.add(driver);
-      cars.push({
-        g, route, wp: at.nextWp,
-        speed: 0, baseSpeed: 7 + Math.random() * 4, damage: 0,
-        wheels: g.userData.wheels, driver, hasDriver: true,
-        _stuckT: 0, _stopAt: null, _stopTimer: 0,
-      });
-    }
+    const g = carMesh(pick(colors));
+    g.position.set(spawn.position.x, 0, spawn.position.z);
+    const nextWp = spawn.position.nextWaypoint;
+    const b = route[nextWp];
+    g.rotation.y = Math.atan2(b.x - g.position.x, b.z - g.position.z);
+    scene.add(g);
+    const driver = makeDriver(); g.add(driver);
+    cars.push({
+      g, route, wp: nextWp,
+      speed: 0, baseSpeed: 7 + Math.random() * 4, damage: 0,
+      wheels: g.userData.wheels, driver, hasDriver: true,
+      _stuckT: 0, _stopAt: null, _stopTimer: 0,
+    });
   }
   return cars;
 }

@@ -47,7 +47,7 @@ import { initDebugBadge, debug } from './debug.js';
 import { productionWorldRelocationIds } from './runtime/ProductionWorldBridge.js';
 import { functionalLocationRelocation } from './runtime/FunctionalLocationRelocation.js';
 import { worldRegistry } from './runtime/WorldRegistry.js';
-import { LARGE_TOWN_TRAFFIC_ROUTES } from './config/starterTownTrafficRoutes.js';
+import { LARGE_TOWN_TRAFFIC_ROUTES, largeTownTrafficCount } from './config/starterTownTrafficRoutes.js';
 import { starterVehicleSpawnNear } from './config/starterVehicleSpawn.js';
 import { handlingFor, addVehicleDamage, applyDamageVisual, tickDamageSmoke } from './vehicleDamage.js';
 import { collideVehicle, breakableCount, worldObjectCount } from './worldCollision.js';
@@ -276,7 +276,7 @@ function enterWorld() {
     cityInfo.entrances.forEach(e => { entranceMap[e.interiorId] = { doorPos: e.doorPos, faceDir: e.faceDir }; });
     interiors = buildInteriors();
     scene.add(interiors.group);
-    trafficControl = buildTrafficControl(scene);   // lights + stop signs (Phase 3A/3B)
+    trafficControl = buildTrafficControl(scene, { largeWorld: largeWorldActive });
     debug.set('trafficLights', trafficControl.lightCount);
     debug.set('stopSigns', trafficControl.stopCount);
     setupPolicePost(cityInfo.police);              // visible HQ + parked cruisers (Phase 3J)
@@ -288,7 +288,8 @@ function enterWorld() {
     cityNPCs = createCityNPCs(scene, Math.max(8, Math.round(22 * graphics.npcDensity)));
     traffic = createTraffic(
       scene,
-      Math.max(3, Math.round(10 * graphics.trafficDensity)),
+      largeWorldActive ? largeTownTrafficCount(graphics.trafficDensity)
+        : Math.max(3, Math.round(10 * graphics.trafficDensity)),
       largeWorldActive ? LARGE_TOWN_TRAFFIC_ROUTES : undefined,
     );
     abandonedCars = [];                       // fresh city → no previously-stolen parked cars
@@ -1066,9 +1067,12 @@ async function applyVehicleModels() {
     await preloadVehicles(renderer);
   } catch (e) { console.warn('[vehicles] preload failed:', e); return; }
   // varied traffic
-  traffic.forEach((c, i) => swapVehicleVisual(c, TRAFFIC_FLEET[i % TRAFFIC_FLEET.length]));
+  let trafficGlb = 0;
+  traffic.forEach((c, i) => {
+    if (swapVehicleVisual(c, TRAFFIC_FLEET[i % TRAFFIC_FLEET.length])) trafficGlb++;
+  });
   // the player's drivable car
-  if (car) swapVehicleVisual(car, DRIVABLE_DEFAULT);
+  const starterGlb = car && swapVehicleVisual(car, DRIVABLE_DEFAULT) ? 1 : 0;
   // dealership showroom — each car gets its OWN unique model (price-tiered), so a
   // $3.5k hatch never shares a body with a $92k supercar.
   const dealer = interiors && interiors.byId['dealership'];
@@ -1082,9 +1086,11 @@ async function applyVehicleModels() {
   // they stop looking like white starter cars). Light bar livery is kept.
   let cruiserGlb = 0;
   (parkedCruisers || []).forEach((cr) => { if (swapVehicleVisual(cr, 'police')) cruiserGlb++; });
-  console.log('[vehicles] models applied — traffic:', traffic.length, 'dealer:', dealer?.displayCars?.length || 0, 'cruisers:', cruiserGlb);
-  debug.set('vehicleModels', traffic.length + (car ? 1 : 0) + (dealer?.displayCars?.length || 0));
-  debug.set('glbTraffic', traffic.length);
+  console.log('[vehicles] models applied — traffic:', trafficGlb, '/', traffic.length,
+    'starter:', starterGlb, 'dealer:', dealer?.displayCars?.length || 0, 'cruisers:', cruiserGlb);
+  debug.set('vehicleModels', trafficGlb + starterGlb + (dealer?.displayCars?.length || 0));
+  debug.set('glbTraffic', trafficGlb);
+  debug.set('glbStarterCar', starterGlb);
   debug.set('glbCruisers', cruiserGlb);
 }
 
@@ -1463,6 +1469,7 @@ function addTownMarkers(list) {
 }
 function addCruiserLivery(g) {
   const bar = new THREE.Group();
+  bar.name = 'vehicle-overlay:police-livery';
   const base = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.12, 0.32),
     new THREE.MeshStandardMaterial({ color: '#111418' }));
   const red = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.15, 0.34),
@@ -2125,6 +2132,30 @@ function updateCar(dt) {
   const before = v.g.position.clone();
   v.g.position.addScaledVector(dir, v.speed * dt); v.g.position.y = 0;
   resolveCollision(v.g.position, 1.5, cityColliders);
+  const trafficOffense = trafficControl?.observeDriver(before, v.g.position, Math.abs(v.speed), v, dt);
+  if (trafficOffense) {
+    const trafficLabel = trafficOffense.type === 'rolling-stop' ? 'Rolling stop'
+      : trafficOffense.type === 'yellow-light' ? 'Unsafe yellow-light entry'
+        : 'Red-light violation';
+    state.stats.trafficViolations = (state.stats.trafficViolations || 0) + 1;
+    state.heat = Math.min(100, (state.heat || 0) + (trafficOffense.schoolZone ? 12 : 8));
+    const noticed = (state.wanted || 0) > 0 || Math.random() < (trafficOffense.schoolZone ? 0.75 : 0.55);
+    if (noticed) {
+      state.wanted = Math.max(1, state.wanted || 0);
+      state.crimeRecord.official.push({
+        id: `traffic-${Date.now()}`,
+        type: trafficOffense.type,
+        townId: state.world?.townId || 'starter-town',
+        day: state.day,
+        timeMin: state.timeMin,
+        status: 'traffic-stop-pending',
+      });
+      notify(`🚨 ${trafficLabel} reported — patrol attempting a traffic stop.`);
+    } else {
+      notify(`⚠️ ${trafficLabel} — traffic cameras recorded the offense.`);
+    }
+    missionEvent('traffic-violation');
+  }
   // distance driven this session → feeds the "Get Around Town" mission
   drivenDist += Math.abs(v.speed) * dt;
   if (drivenDist > 120 && !drivenFlagged) { drivenFlagged = true; missionEvent('drive-checkpoint'); }
@@ -2713,6 +2744,14 @@ function updatePolice(dt) {
     if (d > 1.3) { const sp = copSpeed * dt; g.position.x += dx / d * sp; g.position.z += dz / d * sp; }
     g.rotation.y = Math.atan2(dx, dz);
     u.t = (u.t || 0) + dt; g.position.y = Math.abs(Math.sin(u.t * 8)) * 0.04;
+    const stride = Math.sin(u.t * 8) * (d > 1.3 ? 0.55 : 0);
+    const parts = u.av.parts;
+    if (parts?.leftLeg && parts?.rightLeg && parts?.leftArm && parts?.rightArm) {
+      parts.leftLeg.rotation.x = stride;
+      parts.rightLeg.rotation.x = -stride;
+      parts.leftArm.rotation.x = -stride * 0.8;
+      parts.rightArm.rotation.x = stride * 0.8;
+    }
     resolveCollision(g.position, 0.5, cityColliders); g.position.y = Math.abs(Math.sin(u.t * 8)) * 0.04;
     // Busting takes a sustained corner (≈5s) and only after the grace window. At
     // 1★ the player gets an explicit warning before the clock even starts.
@@ -3854,7 +3893,9 @@ function updateProgression(dt) {
 function rebuildDensity() {
   if (!started || area !== 'city') return;
   const targetN = Math.max(8, Math.round(22 * graphics.npcDensity));
-  const targetT = Math.max(3, Math.round(10 * graphics.trafficDensity));
+  const targetT = state.world?.largeWorldEnabled
+    ? largeTownTrafficCount(graphics.trafficDensity)
+    : Math.max(3, Math.round(10 * graphics.trafficDensity));
   let changed = false;
   if (cityNPCs.length !== targetN) {
     cityNPCs.forEach(n => scene.remove(n.av.group));

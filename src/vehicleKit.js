@@ -84,6 +84,22 @@ export function buildKitCar(id) {
   group.name = 'kitcar:' + id;
   group.add(scene);
   group.userData.wheels = wheels;
+  group.updateMatrixWorld(true);
+  const fitted = new THREE.Box3().setFromObject(group);
+  const size = fitted.getSize(new THREE.Vector3());
+  let visibleMeshes = 0;
+  group.traverse((node) => {
+    if (!node.isMesh || !node.visible) return;
+    const materials = Array.isArray(node.material) ? node.material : [node.material];
+    if (materials.some((material) => (material?.opacity ?? 1) > 0.01)) visibleMeshes += 1;
+  });
+  const valid = visibleMeshes > 0
+    && [size.x, size.y, size.z].every((value) => Number.isFinite(value) && value > 0.12 && value < 20);
+  if (!valid) return null;
+  group.userData.visualAudit = Object.freeze({
+    visibleMeshes,
+    bounds: Object.freeze({ x: size.x, y: size.y, z: size.z }),
+  });
   return { group, wheels };
 }
 
@@ -95,16 +111,27 @@ export function swapVehicleVisual(carObj, id) {
   if (!built) return false;
   const g = carObj.g || carObj.group || (carObj.isObject3D ? carObj : null);
   if (!g) return false;
-  // remove any prior kit clone, hide procedural body meshes
+  // Add and validate the replacement before hiding the proven procedural body.
+  // Named overlays (driver, police livery, mission props) remain visible.
+  built.group.visible = true;
+  g.add(built.group);
+  g.updateMatrixWorld(true);
+  const audit = new THREE.Box3().setFromObject(built.group).getSize(new THREE.Vector3());
+  if (![audit.x, audit.y, audit.z].every((value) => Number.isFinite(value) && value > 0.12)) {
+    g.remove(built.group);
+    return false;
+  }
   for (let i = g.children.length - 1; i >= 0; i--) {
     const c = g.children[i];
-    if (c.name && c.name.startsWith('kitcar:')) g.remove(c);
+    if (c === built.group) continue;
+    if (c.name?.startsWith('kitcar:')) g.remove(c);
+    else if (c.name === 'vehicle-driver' || c.name?.startsWith('vehicle-overlay:')) c.visible = true;
     else c.visible = false;
   }
-  g.add(built.group);
   g.userData.wheels = built.wheels;
   if (carObj && typeof carObj === 'object' && 'wheels' in carObj) carObj.wheels = built.wheels;
   g.userData.usingModel = true;
   g.userData.kitCar = id;
+  g.userData.vehicleVisualAudit = built.group.userData.visualAudit;
   return true;
 }

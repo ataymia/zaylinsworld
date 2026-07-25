@@ -111,7 +111,7 @@ Full Beltway: 8-12 minutes
 - [MISSING] Block Supply moved near `(-568, 280)`.
 - [MISSING] Auto Haus moved near `(-448, -660)`.
 - [MISSING] City Garage moved near `(-112, -616)`.
-- [MISSING] Zaylins Prep moved near `(-724, 72)`.
+- [DONE] Zaylins Prep moved to the road-safe campus frontage near `(-780, 72)`.
 - [MISSING] Police Station moved near `(632, -312)`.
 - [MISSING] WorkTower moved near `(664, -20)`.
 - [MISSING] Iron City Gym moved near `(448, 448)`.
