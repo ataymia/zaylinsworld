@@ -1,7 +1,7 @@
 {
   "format": "zta-asset-factory-health",
   "version": 2,
-  "generatedAt": "2026-08-07T11:05:31.403Z",
+  "generatedAt": "2026-08-07T11:32:10.349Z",
   "masterRecords": 2298,
   "queueRecords": 2298,
   "completed": 2092,
