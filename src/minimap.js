@@ -16,6 +16,7 @@ let markers = [];            // [{ x, z, color, icon }] extra points (gas/diner)
 let landmarkLayout = LANDMARKS;
 let routeLayout = [];
 let districtLayout = [];
+let guidance = null;          // { points:[{x,z}], destination:{x,z}, label }
 let largeWorldMode = false;
 let expandedView = 70;
 
@@ -85,10 +86,22 @@ export function initMinimap({
   if (!canvas) return null;
   ctx = canvas.getContext('2d');
   resize();
-  return { setMarkers, draw, toggleExpand, isExpanded: () => expanded };
+  return { setMarkers, setGuidanceRoute, draw, toggleExpand, isExpanded: () => expanded };
 }
 
 export function setMarkers(list) { markers = list || []; }
+
+export function setGuidanceRoute(value) {
+  const points = Array.isArray(value?.points)
+    ? value.points.filter((entry) => Number.isFinite(Number(entry?.x)) && Number.isFinite(Number(entry?.z)))
+      .map((entry) => ({ x: Number(entry.x), z: Number(entry.z) }))
+    : [];
+  guidance = points.length >= 2 ? {
+    points,
+    destination: value?.destination || points[points.length - 1],
+    label: String(value?.label || ''),
+  } : null;
+}
 
 function resize() {
   const dpr = Math.min(2, window.devicePixelRatio || 1);
@@ -198,6 +211,36 @@ export function draw(playerPos, headingRad, traffic = [], npcs = []) {
   }
   ctx.setLineDash([]);
 
+  // Active quest guidance uses the exact same RoadGraph route that emergency
+  // services and future delivery jobs follow. It sits above road markings and
+  // below landmark icons so the player gets an honest, readable route.
+  if (guidance?.points?.length > 1) {
+    ctx.save();
+    ctx.strokeStyle = '#4ee7ff';
+    ctx.shadowColor = '#087fbb';
+    ctx.shadowBlur = expanded ? 5 : 3;
+    ctx.lineWidth = expanded ? 4 : 3;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.beginPath();
+    ctx.moveTo(px(guidance.points[0].x), py(guidance.points[0].z));
+    for (let index = 1; index < guidance.points.length; index++) {
+      ctx.lineTo(px(guidance.points[index].x), py(guidance.points[index].z));
+    }
+    ctx.stroke();
+    ctx.restore();
+
+    const destination = guidance.destination || guidance.points[guidance.points.length - 1];
+    const gx = px(destination.x), gy = py(destination.z);
+    ctx.fillStyle = '#4ee7ff';
+    ctx.strokeStyle = '#06131e';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(gx, gy, expanded ? 7 : 5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+  }
+
   if (expanded && largeWorldMode) {
     ctx.font = '8px system-ui, sans-serif';
     ctx.textAlign = 'center';
@@ -270,6 +313,11 @@ export function draw(playerPos, headingRad, traffic = [], npcs = []) {
   ctx.fillStyle = '#9fb2d6'; ctx.font = '10px system-ui, sans-serif';
   ctx.textAlign = 'left'; ctx.textBaseline = 'top';
   ctx.fillText(expanded ? 'TOWN MAP — N to shrink' : 'N: map', 8, 7);
+  if (expanded && guidance?.label) {
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#9feeff';
+    ctx.fillText(`ROUTE: ${guidance.label}`, css - 8, 7);
+  }
 }
 
 function line(x1, y1, x2, y2) { ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); }

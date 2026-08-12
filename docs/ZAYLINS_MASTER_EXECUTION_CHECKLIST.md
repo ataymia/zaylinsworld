@@ -957,22 +957,22 @@ Every current gameplay loop works at its final Starter Town location and no miss
 - [ ] Foot patrols.
 - [ ] Cruiser patrols.
 - [ ] Highway response.
-- [ ] Dispatch routing.
+- [x] Road-node dispatch routing for active wanted response.
 - [ ] Witness reports.
 - [ ] Alarm calls.
-- [ ] Pursuit escalation.
-- [ ] Search/hiding behavior.
+- [x] Pursuit escalation.
+- [x] Search/hiding behavior.
 - [ ] District response differences.
-- [ ] Return-to-patrol cleanup.
+- [x] Wanted-resolution cleanup and despawn.
 
 ## Phase 8E: Dialogue framework
 
-- [ ] Multi-step controllable conversations.
-- [ ] Player response choices.
-- [ ] Conditional lines based on mission, job, school, crime, reputation, and time.
-- [ ] Conversation state persistence when necessary.
-- [ ] Clean exit and walk-away behavior.
-- [ ] No dead dialogue buttons.
+- [x] Multi-step controllable conversations.
+- [x] Player response choices.
+- [x] Conditional lines based on mission, stats, crime, reputation, flags, and relationship.
+- [x] Conversation relationship and repeat-visit persistence.
+- [x] Clean exit and working-service handoff behavior.
+- [x] No offers for planned quests until their gameplay is runtime-ready.
 - [ ] Reusable speaker and portrait rules.
 - [ ] Localization-ready text IDs.
 

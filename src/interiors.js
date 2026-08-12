@@ -248,7 +248,8 @@ export function buildInteriors() {
         // into the room (+z), filled in by main.js from the gem texture set.
         gemWall:     { x: o.x, y: 1.7, z: o.z - 5.7, faceZ: 1, spread: 9, rows: 2 },
       },
-      npcs: [{ name: 'Ice', role: 'jeweler', pos: new THREE.Vector3(o.x - 4, 0, o.z + 1.4), dialogue: 'jeweler' }],
+      npcs: [{ name: 'Malik Frost', storyId: 'malik-frost', role: 'jeweler',
+        pos: new THREE.Vector3(o.x - 4, 0, o.z + 1.4), dialogue: 'jeweler' }],
       stations: [
         { id: 'chain-builder', type: 'chain-builder', pos: new THREE.Vector3(o.x + 3, 0, o.z + 1.5),
           label: 'Open Custom Chain Builder' },
@@ -513,7 +514,8 @@ export function buildInteriors() {
       spawn: r.spawn, exit: r.exit, colliders: r.colliders,
       decor, decorColliders,
       avatars: [npc], npcSlot: 'npc_basic_02',
-      npcs: [{ name: 'Drip', role: 'stylist', pos: new THREE.Vector3(o.x + 5, 0, o.z - 1.6), dialogue: 'stylist' }],
+      npcs: [{ name: 'Maya Brooks', storyId: 'maya-brooks', role: 'stylist',
+        pos: new THREE.Vector3(o.x + 5, 0, o.z - 1.6), dialogue: 'stylist' }],
       stations: [
         { id: 'wardrobe-store', type: 'wardrobe', pos: new THREE.Vector3(o.x, 0, o.z + 2), label: 'Try On Fits (Wardrobe)' },
       ],
@@ -568,7 +570,8 @@ export function buildInteriors() {
       spawn: r.spawn, exit: r.exit, colliders: r.colliders,
       decor, decorColliders,
       avatars: [trainer], npcSlot: 'npc_basic_01',
-      npcs: [{ name: 'Coach Mray', role: 'trainer', pos: new THREE.Vector3(o.x + 5, 0, o.z + 2.2), dialogue: 'trainer' }],
+      npcs: [{ name: 'Coach Rell', storyId: 'coach-rell', role: 'trainer',
+        pos: new THREE.Vector3(o.x + 5, 0, o.z + 2.2), dialogue: 'trainer' }],
       stations: [
         // Each major equipment piece is its own station. `equip.kind` drives the
         // stat effects in main.js startWorkoutAt(); positions line up with the
@@ -899,7 +902,8 @@ export function buildInteriors() {
       avatars: [sergeant, officer], npcSlot: 'npc_basic_01',
       npcs: [
         { name: 'Sgt. Diaz', role: 'sergeant', pos: new THREE.Vector3(o.x - 5, 0, o.z + 2.2), dialogue: 'police-desk' },
-        { name: 'Officer Reed', role: 'officer', pos: new THREE.Vector3(o.x + 1.5, 0, o.z + 2.6), dialogue: 'police-desk' },
+        { name: 'Officer Dane', storyId: 'officer-dane', role: 'officer',
+          pos: new THREE.Vector3(o.x + 1.5, 0, o.z + 2.6), dialogue: 'police-desk' },
       ],
       stations: [
         { id: 'police-desk-int', type: 'police-desk', pos: new THREE.Vector3(o.x - 5, 0, o.z + 3.0), label: 'Front Desk (Check Wanted / Academy)' },

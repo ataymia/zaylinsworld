@@ -35,6 +35,17 @@ Run this checklist on every deployed Starter Town draft before it is eligible to
 - [ ] Police use police-character assets and retain procedural fallback.
 - [ ] NPCs, police and player never exchange role assets accidentally.
 - [ ] Wanted-level pursuit, collisions, robbery witnesses and despawn still work.
+- [ ] Foot officers and cruisers follow connected streets during a cross-district pursuit instead of cutting through buildings.
+- [ ] Police dispatches appear on valid road nodes and never inside scenery.
+
+## Recurring Characters
+
+- [ ] Malik Frost, Maya Brooks, Coach Rell, Officer Dane and Denise Hall appear under their canonical names.
+- [ ] Each recurring character supports at least three controllable dialogue branches.
+- [ ] Repeat visits change relationship memory without breaking the save.
+- [ ] Officer Dane reacts correctly to active heat and a local conviction.
+- [ ] Dialogue service choices still open jewelry, chain builder, wardrobe, workout, police and sanitation gameplay.
+- [ ] Planned quest choices do not appear as dead promises before their runtime gameplay exists.
 
 ## Interiors
 
@@ -66,6 +77,7 @@ Run this checklist on every deployed Starter Town draft before it is eligible to
 - [ ] Traffic cars are visibly moving near arrival and across multiple districts.
 - [ ] Pedestrians are visibly moving in every district, not only Dreamdrop Core.
 - [ ] Expanded map shows connected roadways, route names and correctly placed landmarks.
+- [ ] The current physical quest objective draws a cyan route over the real road network and clears when no route is applicable.
 - [ ] Terrain stays visually stable while driving; no green/brown surface flicker.
 - [ ] Buildings and their interaction anchors remain outside vehicle lanes.
 - [ ] Functional and filler buildings block vehicles instead of allowing drive-through.

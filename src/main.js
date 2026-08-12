@@ -27,7 +27,16 @@ import { CATEGORIES, weaponsForTab, ownedAmmoTypes, allWeapons } from './config/
 import { upgradeById } from './config/weaponUpgrades.js';
 import { resolveTransform } from './config/weaponTransforms.js';
 import { zoneSlot, SHOP_ZONES } from './config/blockSupplyLayout.js';
-import { initMissions, missionEvent, renderTracker } from './missions.js';
+import {
+  initMissions,
+  missionEvent,
+  renderTracker,
+  activeQuestGuidance,
+  offerQuest,
+  canOfferQuest,
+  getQuestSnapshot,
+  recordStoryChoice,
+} from './missions.js';
 import { spawnMonsters, updateMonsters, clearMonsters } from './monsters.js';
 import { applyNpcSkins, applyPlayerSkin, applyCopSkin } from './avatarSkin.js';
 import { Controls, CAM } from './controls.js';
@@ -52,6 +61,8 @@ import {
 } from './runtime/ProductionWorldBridge.js';
 import { functionalLocationRelocation } from './runtime/FunctionalLocationRelocation.js';
 import { worldRegistry } from './runtime/WorldRegistry.js';
+import { starterTownNavigation } from './runtime/StarterTownNavigation.js';
+import { DialogueRuntime } from './runtime/DialogueRuntime.js';
 import { LARGE_TOWN_TRAFFIC_ROUTES, largeTownTrafficCount } from './config/starterTownTrafficRoutes.js';
 import {
   LARGE_TOWN_PEDESTRIAN_ROUTES,
@@ -240,6 +251,9 @@ let gasStation = null;           // { doorPos } for the 6twelve store entrance (
 let homeMailbox = null;          // relocated Willowbend mailbox interaction anchor
 let safeRespawn = { x: 9, z: 9 };
 let minimap = null;              // corner radar API (initMinimap)
+let starterTownNavigationEnabled = false;
+let guidanceAccum = 0;
+let guidanceKey = '';
 let debugBadge = null;           // debug panel API (initDebugBadge → { toggle })
 let monsters = [];               // active Monster Mode creatures
 const extraSpinners = [];        // idle-spin display models (Frostbox jewelry, etc.)
@@ -247,6 +261,21 @@ const extraSpinners = [];        // idle-spin display models (Frostbox jewelry, 
 const controls = new Controls(camera, canvas);
 const manager = new InteractionManager();
 const clock = new THREE.Clock();
+const dialogueRuntime = new DialogueRuntime({
+  state: () => state,
+  quests: () => getQuestSnapshot(),
+  canOfferQuest,
+  save: () => saveNow(),
+  actions: {
+    openService: (serviceId) => openRecurringNpcService(serviceId),
+    offerQuest: (questId) => {
+      const offered = offerQuest(questId);
+      if (offered) notify('📌 Quest added to your journal.');
+      return offered;
+    },
+    storyChoice: (choiceId, optionId) => recordStoryChoice(choiceId, optionId),
+  },
+});
 
 // ── creator ───────────────────────────────────────────────────────────────────
 function avatarHairColorHex(custom) {
@@ -292,6 +321,7 @@ function enterWorld() {
     setStatus('Building the city…');
     const relocatedLocationIds = productionWorldRelocationIds();
     const largeWorldActive = relocatedLocationIds.length > 0;
+    starterTownNavigationEnabled = largeWorldActive;
     const cityInfo = buildCity(scene, { relocatedLocationIds });
     cityEntrances = cityInfo.entrances;
     cityLandmarks = cityInfo.landmarks;
@@ -1605,6 +1635,11 @@ function depositTrash() {
 
 function talkToSanitation() {
   missionEvent('talk-sanitation');
+  if (openRecurringDialogue('denise-hall')) return;
+  openSanitationJobs();
+}
+
+function openSanitationJobs() {
   if (trashJob.active) {
     openDialogue({
       name: 'Denise Hall • City Sanitation',
@@ -2799,6 +2834,14 @@ function updateNpcHealthBars(dt) {
 // offscreen from the player (never on top of them). Returns a world {x,z}.
 function copSpawnPoint() {
   const pp = player.group.position;
+  if (starterTownNavigationEnabled) {
+    return starterTownNavigation.dispatchPoint(pp, {
+      preferredLocationId: 'police-station',
+      preferChance: 0.55,
+      minDistance: 30,
+      maxDistance: 46,
+    });
+  }
   // Prefer the police HQ if it's a sensible distance away (so cops walk in from
   // the station like a real patrol dispatch) — but only ~55% of the time so the
   // rest arrive from offscreen roads as if a nearby patrol was redirected.
@@ -2830,7 +2873,15 @@ function spawnFootCop(at) {
   const sp = at || copSpawnPoint();        // `at` lets a bailed-out driver become a cop on the spot
   av.group.position.set(sp.x, 0, sp.z);
   scene.add(av.group);
-  const unit = { av, health: 65, t: 0, hitT: 0 };
+  const unit = {
+    av,
+    health: 65,
+    t: 0,
+    hitT: 0,
+    navigation: starterTownNavigationEnabled
+      ? starterTownNavigation.createFollower({ allowService: true })
+      : null,
+  };
   policeUnits.push(unit);
   // swap to a real PSX police-officer GLB skin (validated; procedural kept on fail)
   applyCopSkin(av, renderer)
@@ -2841,9 +2892,17 @@ function spawnFootCop(at) {
 // Build a heavier patrol cruiser that chases the player's car/feet.
 function spawnCopCar() {
   const pp = player.group.position;
-  const ang = Math.random() * Math.PI * 2, R = 28;
-  const c = createDrivableCar(scene, pp.x + Math.cos(ang) * R, pp.z + Math.sin(ang) * R, '#1b2a55');
+  const spawn = starterTownNavigationEnabled
+    ? copSpawnPoint()
+    : (() => {
+        const ang = Math.random() * Math.PI * 2, R = 28;
+        return { x: pp.x + Math.cos(ang) * R, z: pp.z + Math.sin(ang) * R };
+      })();
+  const c = createDrivableCar(scene, spawn.x, spawn.z, '#1b2a55');
   c.isCop = true; c.mass = 2.6; c.speed = 0; c.damage = 0;
+  c.navigation = starterTownNavigationEnabled
+    ? starterTownNavigation.createFollower({ allowService: true })
+    : null;
   // use the real police GLB if the kit is loaded, else keep the navy procedural body
   swapVehicleVisual(c, 'police');
   const bar = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.12, 0.22),
@@ -2968,11 +3027,28 @@ function updatePolice(dt) {
     if (u.health <= 0) { removeFootCop(i); continue; }
     if (u.hitT > 0) u.hitT -= dt;
     const g = u.av.group;
+    const pursuit = u.navigation
+      ? starterTownNavigation.follow(u.navigation, g.position, pp, {
+          now: clock.elapsedTime * 1000,
+          replanMs: 650,
+          targetTolerance: 8,
+          waypointRadius: 2.7,
+          finalApproachDistance: 9,
+          allowService: true,
+        })
+      : { waypoint: pp, routed: false };
     const dx = pp.x - g.position.x, dz = pp.z - g.position.z;
     const d = Math.hypot(dx, dz) || 1;
+    const moveDx = pursuit.waypoint.x - g.position.x;
+    const moveDz = pursuit.waypoint.z - g.position.z;
+    const moveDistance = Math.hypot(moveDx, moveDz) || 1;
     nearest = Math.min(nearest, d);
-    if (d > 1.3) { const sp = copSpeed * dt; g.position.x += dx / d * sp; g.position.z += dz / d * sp; }
-    g.rotation.y = Math.atan2(dx, dz);
+    if (d > 1.3) {
+      const sp = copSpeed * dt;
+      g.position.x += moveDx / moveDistance * sp;
+      g.position.z += moveDz / moveDistance * sp;
+    }
+    g.rotation.y = Math.atan2(moveDx, moveDz);
     u.t = (u.t || 0) + dt; g.position.y = Math.abs(Math.sin(u.t * 8)) * 0.04;
     const stride = Math.sin(u.t * 8) * (d > 1.3 ? 0.55 : 0);
     const parts = u.av.parts;
@@ -3000,8 +3076,20 @@ function updatePolice(dt) {
     const target = (inCar && drivingVehicle) ? drivingVehicle.g.position : pp;
     const dx = target.x - c.g.position.x, dz = target.z - c.g.position.z;
     const d = Math.hypot(dx, dz) || 1;
+    const pursuit = c.navigation
+      ? starterTownNavigation.follow(c.navigation, c.g.position, target, {
+          now: clock.elapsedTime * 1000,
+          replanMs: 700,
+          targetTolerance: 12,
+          waypointRadius: 5,
+          finalApproachDistance: 12,
+          allowService: true,
+        })
+      : { waypoint: target, routed: false };
+    const moveDx = pursuit.waypoint.x - c.g.position.x;
+    const moveDz = pursuit.waypoint.z - c.g.position.z;
     nearest = Math.min(nearest, d);
-    c.g.rotation.y = lerpAngle(c.g.rotation.y, Math.atan2(dx, dz), Math.min(1, dt * 2.4));
+    c.g.rotation.y = lerpAngle(c.g.rotation.y, Math.atan2(moveDx, moveDz), Math.min(1, dt * 2.4));
     const fwd = new THREE.Vector3(Math.sin(c.g.rotation.y), 0, Math.cos(c.g.rotation.y));
     c.speed = Math.min(18, (c.speed || 0) + 11 * dt);
     if (d < 6) c.speed *= 0.88;
@@ -3455,10 +3543,76 @@ function talkTo(n) {
 }
 function endTalk(n) { n.talking = false; return undefined; }
 
+function openRecurringDialogue(npcId) {
+  const dialogue = dialogueRuntime.begin(npcId);
+  if (!dialogue) return false;
+  missionEvent('talk-npc', npcId);
+  openDialogue(dialogue);
+  return true;
+}
+
+function openRecurringNpcService(serviceId) {
+  switch (serviceId) {
+    case 'gym-training':
+      startWorkout();
+      return false;
+    case 'kicks-and-fits-shop':
+      openWardrobe();
+      return 'keep';
+    case 'police-desk':
+      talkToPoliceDesk();
+      return 'keep';
+    case 'sanitation-jobs':
+      openSanitationJobs();
+      return 'keep';
+    case 'frostbox-shop':
+      openJewelryShop();
+      return 'keep';
+    case 'custom-chain-builder':
+      openChainBuilderUI();
+      return 'keep';
+    default:
+      notify('That service is not open in Starter Town yet.');
+      return 'keep';
+  }
+}
+
+function updateQuestGuidance(position, dt) {
+  if (!minimap || !starterTownNavigationEnabled || !position) return;
+  guidanceAccum += dt;
+  if (guidanceAccum < 0.65) return;
+  guidanceAccum = 0;
+  const hint = activeQuestGuidance();
+  if (!hint) {
+    if (guidanceKey) minimap.setGuidanceRoute(null);
+    guidanceKey = '';
+    debug.set('questRoute', 'none');
+    return;
+  }
+  const route = starterTownNavigation.routePointsToTarget(position, hint.targetId, {
+    allowService: true,
+    weight: 'travel-time',
+  });
+  if (!route) {
+    minimap.setGuidanceRoute(null);
+    guidanceKey = '';
+    debug.set('questRoute', `unreachable:${hint.targetId}`);
+    return;
+  }
+  guidanceKey = `${hint.questId}:${hint.objectiveId}:${hint.targetId}`;
+  minimap.setGuidanceRoute({
+    points: route.points,
+    destination: route.destination,
+    label: hint.objectiveText,
+  });
+  debug.set('questRoute', `${hint.targetId} · ${Math.round(route.distance)}m`);
+}
+
 function talkToInterior(npc) {
   const memKey = { id: 'int-' + npc.name };
   remember(memKey);
   missionEvent('talk-int', npc.dialogue);
+  if (npc.storyId && openRecurringDialogue(npc.storyId)) return;
   switch (npc.dialogue) {
     case 'dealer':
       openDialogue({ name: npc.name + ' · Auto Haus', text: 'Welcome to Auto Haus. We got whips from city hatchbacks to supercars. Walk the floor and tap a car to view it.',
@@ -4669,6 +4823,7 @@ function animate() {
         heading = Math.atan2(fwd.x, fwd.z);
       }
       const ppos = (inCar ? (drivingVehicle || car).g.position : player.group.position);
+      updateQuestGuidance(ppos, dt);
       minimap.draw(
         { x: ppos.x, z: ppos.z }, heading,
         traffic.map(c => ({ x: c.g.position.x, z: c.g.position.z })),

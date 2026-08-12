@@ -1,9 +1,9 @@
 # Zaylins Active Phase Status
 
-Updated: 2026-07-25
+Updated: 2026-08-12
 Authoritative machine-readable source: `src/config/buildPhaseStatus.js`  
 Repository workflow: direct commits to `main`; no pull requests unless Mia explicitly requests one  
-Construction mirror: `agent/starter-town-construction`
+Active integration: draft PR #35, `codex/starter-town-live-traffic`
 
 This file overrides older status labels in `ZAYLINS_MASTER_EXECUTION_CHECKLIST.md`. The master checklist remains the detailed work inventory. This document answers the narrower question: **what is implemented, what still needs live verification, and what comes next?**
 
@@ -23,12 +23,12 @@ Phase 0: COMPLETE
 Phase 1: CORE CHARACTER FOUNDATION WORKS; ANIMATION CLIPS AND SOME LIVE NPC/INTERACTION QA REMAIN
 Phase 2: IMPLEMENTED; SAVE/LIFECYCLE FEATURE-PREVIEW QA REMAINS
 Phase 3: IMPLEMENTED FOUNDATION; LIVE SOAK, ARRAY-TO-POOL MIGRATION, AND STRESS TESTS REMAIN
-Phase 4: IMPLEMENTED FOUNDATION; LIVE VEHICLE/TRAFFIC/POLICE BINDING AND TRAVERSAL QA REMAIN
+Phase 4: IMPLEMENTED FOUNDATION; POLICE AND QUEST ROUTING ARE LIVE, DELIVERY BINDING AND TRAVERSAL QA REMAIN
 Phase 5: IMPLEMENTED GEOGRAPHIC SKELETON; LIVE DRIVE-TIME AND READABILITY QA REMAIN
 Phase 6: IMPLEMENTED VISUAL FOUNDATION; LIVE ART-DIRECTION AND FPS QA REMAIN
 Phase 7: IMPLEMENTED; LIVE FULL-TOWN ACCEPTANCE REMAINS
-Phase 8: ACTIVE; INTENTIONAL CITY-DENSITY AND ACCESS SLICE IMPLEMENTED
-Next construction work: PHASE 8 SHARED SIMULATION AND LIVE ACCEPTANCE
+Phase 8: ACTIVE; CITY DENSITY, SHARED NAVIGATION, QUEST GUIDANCE, AND RECURRING NPC DIALOGUE IMPLEMENTED
+Next construction work: PHASE 8 SCHEDULES, DELIVERY/SERVICE SIMULATION, AND LIVE ACCEPTANCE
 ```
 
 ---
@@ -128,7 +128,7 @@ Status: **Implemented foundation**
 
 ## Phase 2C: Save schema and migration
 
-- [x] Explicit save schema version 4.
+- [x] Explicit save schema version 7.
 - [x] Checksum, backup, corruption fallback, and migration hooks.
 - [x] Safe named-spawn contracts for the expanded city.
 - [ ] Run the full fresh/current/legacy/driving/interior/mission/corruption test matrix.
@@ -267,7 +267,9 @@ Status: **Implemented foundation**
 - [x] One connected public graph.
 - [x] Closures, service restrictions, and school-zone routing options.
 - [x] Routes to every locked functional location.
-- [ ] Bind legacy traffic, police, missions, delivery, and minimap movement to the shared graph.
+- [x] Bind foot-police and cruiser pursuits to shared graph waypoints.
+- [x] Bind active physical quest objectives to route guidance on the minimap.
+- [ ] Bind delivery and scheduled service-vehicle movement to the shared graph.
 
 ## Phase 4G: Validation
 
@@ -421,10 +423,21 @@ working until the shipped runtime makes it visible, reachable, and stable.
 
 ### Phase 8B: Shared simulation
 
-- [ ] Bind police patrol navigation to the authoritative road graph.
-- [ ] Bind missions, deliveries, service access, and route guidance to the same graph.
+- [x] Bind active police dispatch and pursuit navigation to the authoritative road graph.
+- [x] Bind physical mission objectives and minimap route guidance to the same graph.
+- [ ] Bind deliveries and scheduled service vehicles to the same graph.
 - [ ] Add district schedules for pedestrian destinations, work shifts, school, shops, and nightlife.
 - [x] Add distance-based update budgets for traffic and pedestrians.
 - [x] Add a spatial collision index so increased scenery density does not require whole-city collision scans.
 - [ ] Move police and remaining legacy simulation onto streaming/LOD budgets and named pools.
 - [ ] Complete browser-driven 5-, 15-, and 60-minute stability runs.
+
+### Phase 8C: Recurring characters and dialogue
+
+- [x] Place Malik Frost, Maya Brooks, Coach Rell, Officer Dane, and Denise Hall in the live Starter Town loop.
+- [x] Resolve authored multi-step dialogue against relationship, stats, quests, flags, wanted level, reputation, and local convictions.
+- [x] Preserve access to the working shop, workout, police-desk, and sanitation services from authored conversations.
+- [x] Hide offers for planned quests until their gameplay implementation is runtime-ready.
+- [x] Persist relationship growth and repeat-visit memory in the existing save.
+- [ ] Move recurring characters through real district schedules instead of leaving every interior character stationary.
+- [ ] Complete deployed conversation/service regression for all five characters.

@@ -1,0 +1,122 @@
+# End-of-Week Gameplay Completion Plan
+
+Audit date: 2026-08-12
+
+Current integration: draft PR #35 (`codex/starter-town-live-traffic`)
+
+Release target: Starter Town regular-gameplay release candidate
+
+## The honest baseline
+
+The repository contains a strong playable Starter Town and an unusually complete
+design/data foundation for the wider world. It does **not** yet contain nine
+playable towns. Treating blueprint data, generated assets, or a passing source
+audit as playable town implementation would hide the most important schedule
+risk.
+
+| Area | Verified state |
+| --- | --- |
+| Town runtime | 1 of 9 towns playable; the other 8 are `playable: false` with no local runtime grid |
+| Starter Town world | 2,000 × 2,000 playable bounds, 49 connected roads, 13 functional locations, 103 filler buildings |
+| Population | 44 medium-density traffic cars, 108 medium-density pedestrians, recovery coverage director |
+| Ordinary life | Needs/time, home, food, shopping, school study, gym, jobs, sanitation, vehicle ownership/fuel/repair |
+| Crime/law | Optional combat/theft, wanted escalation, foot/cruiser response, hiding, busting, legal-fee clearing |
+| Quests | 22 runtime quests; 41 approved quests are still planned data |
+| Recurring characters | 5 Starter Town characters now use live state-aware authored dialogue |
+| Minigames | 25 catalog entries are deferred; current bespoke timing/activity implementations remain available |
+| Assets | 2,298 factory records; 2,092 complete, 189 unsupported, 16 reference-only, 1 quarantined |
+| Acceptance | Extensive structural checks; deployed browser soak and full manual regression still required |
+
+## What “regular gameplay complete” means this week
+
+The end-of-week candidate is complete when a new or returning player can build a
+character, enter Starter Town, understand where to go, live legally, choose
+optional trouble, recover from trouble, build relationships, earn and spend
+money, use all twelve interiors, save/reload, and keep playing without a broken
+objective or stability failure.
+
+This milestone deliberately excludes:
+
+- final implementations for the 25 cataloged minigames;
+- final art replacements where a safe procedural/validated fallback already works;
+- claiming Fishing Harbor, Rich Hills, TechTown, Casino Strip, Dungeon Outskirts,
+  Obby Canyon, Starline City, or Aqualume as playable before they have real runtime
+  geography, traversal, services, population, and acceptance evidence.
+
+Those exclusions do not lower the quality bar for Starter Town. They prevent a
+wide but fake “complete” build from replacing one coherent release candidate.
+
+## Wednesday: reconcile and connect the existing systems
+
+- [x] Reconcile the open Starter Town work with current `main` without discarding its three gameplay commits.
+- [x] Stop the empty asset queue from creating a new report commit every fifteen minutes.
+- [x] Make one shared road-navigation service the live contract.
+- [x] Spawn active police response on real road nodes.
+- [x] Route foot officers and cruisers over road waypoints.
+- [x] Route physical quest objectives on the full minimap.
+- [x] Put Malik Frost, Maya Brooks, Coach Rell, Officer Dane, and Denise Hall into the live dialogue loop.
+- [x] Preserve their working shop/job/training/police service actions.
+- [x] Add a regular-gameplay cohesion acceptance gate.
+
+## Thursday: close regular-life and progression blockers
+
+- [ ] Run a fresh-save, current-save, legacy-save, corruption-recovery, driving,
+  interior, active-quest, wanted, and recurring-NPC save matrix.
+- [ ] Play every one of the 22 runtime quests from its real prerequisite state;
+  repair any event that cannot be produced by gameplay.
+- [ ] Verify a fully legal first-day path never requires assault, robbery, or a
+  wanted level.
+- [ ] Verify all twelve interiors, their return points, service stations, and
+  canonical NPC conversations.
+- [ ] Close only the ordinary-life gaps required by the release candidate:
+  starter-home deed/primary residence, foundational school progress, job history,
+  and recovery/health affordances.
+
+## Friday: live city and police acceptance
+
+- [ ] Drive Home → School, Home → WorkTower, Home → Auto Haus, west → east, and
+  the Beltway; record actual times and route failures.
+- [ ] Test 1–5 star pursuit on foot and in a vehicle across at least three districts.
+- [ ] Verify hiding, escalation, busting, legal clearing, and cleanup after losing police.
+- [ ] Verify traffic recovery, traffic controls, pedestrians, collision footprints,
+  sanitation, and minimap guidance during a continuous cross-city session.
+- [ ] Bind or remove any prompt that advertises a result it cannot produce.
+
+## Saturday: stability and release-candidate freeze
+
+- [ ] Complete 5-minute stationary, 15-minute cross-city, and 60-minute mixed-play soaks.
+- [ ] Repeat every interior transition and Character Studio return while watching
+  frame time, memory, mixers, textures, and console errors.
+- [ ] Run low, medium, high, and Auto graphics acceptance.
+- [ ] Finish the deployed visual checklist against the Starter Town reference.
+- [ ] Freeze content, fix release blockers only, and create a versioned RC checkpoint.
+
+## Sunday: player acceptance and merge decision
+
+- [ ] Mia plays the RC from a clean browser profile and from her current save.
+- [ ] Fix only reproducible release blockers found in that pass.
+- [ ] Merge PR #35 when automated checks and named live acceptance both pass.
+- [ ] Record the final, town-by-town minigame implementation list separately.
+- [ ] Start the reusable-town extraction with Fishing Harbor as the first consumer.
+
+## After the Starter Town RC: the real full-game route
+
+1. Extract the proven navigation, locations, interiors, services, population,
+   dialogue, quest, save, and streaming contracts into a town package.
+2. Build Fishing Harbor as the first second-town proof; implement physical travel
+   from Starter Town before adding a map shortcut.
+3. Build Rich Hills and TechTown on the same package.
+4. Build Casino Strip, Dungeon Outskirts, Obby Canyon, and Starline City.
+5. Build Aqualume last because it adds underwater movement, vehicles, environment,
+   and biological-access rules.
+6. Implement and accept minigames town by town, using the catalog as the backlog
+   rather than blocking ordinary traversal and life simulation.
+
+## Non-negotiable release gates
+
+- A system counts as working only when the shipped runtime can reach and exercise it.
+- A planned quest or minigame never appears as a dead interaction.
+- A generated asset never replaces a safe fallback without bounds and visual validation.
+- Structural tests do not replace deployed browser playtesting.
+- No additional town is marked playable until it supports arrival, departure,
+  navigation, services, population, save/load, police/recovery, and a full regression pass.

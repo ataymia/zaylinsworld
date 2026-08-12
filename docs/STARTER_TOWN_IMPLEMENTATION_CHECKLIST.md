@@ -1,5 +1,10 @@
 # Starter Town Implementation Checklist
 
+> Historical gap inventory. Its original `[DONE]` / `[MISSING]` labels predate
+> the large-town cutover and are retained for design traceability. Use
+> `ACTIVE_PHASE_STATUS.md`, `buildPhaseStatus.js`, and
+> `END_OF_WEEK_GAMEPLAY_PLAN.md` for current implementation truth.
+
 Status: live audit and implementation tracker  
 Companion blueprint: [STARTER_TOWN_BLUEPRINT.md](STARTER_TOWN_BLUEPRINT.md)  
 Project: Zaylins Kid World, also called ZTA

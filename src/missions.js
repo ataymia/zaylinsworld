@@ -35,6 +35,35 @@ const JOURNAL_TABS = Object.freeze([
   ['completed', 'Completed'],
 ]);
 
+// Runtime objectives point at named world targets instead of carrying raw map
+// coordinates. The live minimap resolves these through StarterTownNavigation,
+// keeping quest directions, police routes, and the built roads in agreement.
+const OBJECTIVE_NAVIGATION_TARGETS = Object.freeze({
+  'enter:chicken': 'chicken-spot',
+  'enter:frostbox': 'frostbox',
+  'enter:home': 'zaylins-home',
+  'enter:gym': 'iron-city-gym',
+  'enter:school': 'zaylins-prep',
+  'enter:office': 'worktower',
+  'enter:dealership': 'auto-haus',
+  'talk-int:cashier': 'chicken-spot',
+  'talk-int:jeweler': 'frostbox',
+  'talk-int:dealer': 'auto-haus',
+  'buy-chicken': 'chicken-spot',
+  'eat-done': 'chicken-spot',
+  'haircut-done': 'zaylins-home',
+  'workout-done': 'iron-city-gym',
+  'study-done': 'zaylins-prep',
+  'job-done': 'worktower',
+  'talk-sanitation': 'dreamdrop-sanitation-stop',
+  'trash-done': 'dreamdrop-sanitation-stop',
+  'enter-car': 'auto-haus',
+  'buy-snack': '6twelve',
+  'buy-drink': '6twelve',
+  'talk-police-desk': 'police-station',
+  'police-cells': 'police-station',
+});
+
 let deps = null;
 let qs = null;
 let journalOpen = false;
@@ -256,6 +285,15 @@ export function offerQuest(id) {
   renderJournal();
   deps.saveNow();
   return true;
+}
+
+export function canOfferQuest(id) {
+  const quest = QUESTS_BY_ID[id];
+  return !!(quest
+    && quest.implementation === QUEST_IMPLEMENTATION.runtime
+    && !isComplete(id)
+    && !isActive(id)
+    && prerequisitesMet(quest));
 }
 
 export function trackQuest(id, makePrimary = true) {
@@ -508,3 +546,31 @@ export function initMissions(runtimeDeps) {
 
 export function activeMissionId() { return qs?.primaryId || null; }
 export function getQuestSnapshot() { return qs ? JSON.parse(JSON.stringify(qs)) : null; }
+
+export function questNavigationTargetFor(objective) {
+  if (!objective) return null;
+  const exactKey = `${objective.event}:${objective.arg ?? ''}`;
+  return OBJECTIVE_NAVIGATION_TARGETS[exactKey]
+    || OBJECTIVE_NAVIGATION_TARGETS[objective.event]
+    || null;
+}
+
+export function activeQuestGuidance() {
+  if (!qs) return null;
+  const questId = qs.primaryId && qs.active[qs.primaryId]
+    ? qs.primaryId
+    : qs.trackedIds.find((id) => qs.active[id]) || Object.keys(qs.active)[0] || null;
+  const quest = questId && QUESTS_BY_ID[questId];
+  const progress = questId && qs.active[questId];
+  if (!quest || !progress) return null;
+  const objective = eligibleObjectives(quest, progress)
+    .find((entry) => !!questNavigationTargetFor(entry));
+  if (!objective) return null;
+  return Object.freeze({
+    questId,
+    questTitle: quest.title,
+    objectiveId: objective.id,
+    objectiveText: objective.text,
+    targetId: questNavigationTargetFor(objective),
+  });
+}
