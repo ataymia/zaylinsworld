@@ -131,6 +131,11 @@ function rows() {
     ['stop signs', num(metrics.stopSigns, true)],
     ['trash targets', num(metrics.trashTargets)],
     ['police cruisers', num(metrics.policeCruisers, true)],
+    ['pooled officers ready', num(live.policePoolFootAvailable)],
+    ['officers reused', num(live.policePoolFootReused)],
+    ['pooled cruisers ready', num(live.policePoolVehiclesAvailable)],
+    ['cruisers reused', num(live.policePoolVehiclesReused)],
+    ['stolen cruisers detached', num(live.policePoolVehiclesDetached)],
     ['failed assets', metrics.failedAssets.length
       ? `<span style="color:#ff7676">${metrics.failedAssets.join(', ')}</span>` : '<span style="color:#4eff91">none</span>'],
 

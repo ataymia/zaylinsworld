@@ -180,6 +180,8 @@ Status: **Implemented foundation**
 - [x] Effects pool.
 - [x] Interaction-marker pool.
 - [x] Cell unload releases pooled objects.
+- [x] Acquire and release live wanted-response officers and pursuit cruisers through the named police pools.
+- [x] Transfer a stolen pursuit cruiser out of pool ownership without hiding or reclaiming it.
 - [ ] Migrate remaining compact-map arrays to acquire/release these pools.
 
 ## Phase 3D: Instancing and LOD
@@ -190,7 +192,8 @@ Status: **Implemented foundation**
 - [x] Instanced roads and roadside infrastructure.
 - [x] Instancing eligibility contract.
 - [x] Bind current pedestrian and traffic update loops to distance-based LOD intervals.
-- [ ] Bind police simulation and remaining compact-map systems to streaming/LOD intervals.
+- [x] Bind active police pursuit to distance-based LOD intervals and far-unit recycling.
+- [ ] Bind remaining compact-map systems to streaming/LOD intervals.
 
 ## Phase 3E: Budgets and Auto graphics
 
@@ -429,7 +432,10 @@ working until the shipped runtime makes it visible, reachable, and stable.
 - [x] Bind pedestrian and ambient-traffic activity to thirteen saved-clock schedules for school, work shifts, shops, neighborhoods, recreation, travel, and service windows.
 - [x] Add distance-based update budgets for traffic and pedestrians.
 - [x] Add a spatial collision index so increased scenery density does not require whole-city collision scans.
-- [ ] Move police and remaining legacy simulation onto streaming/LOD budgets and named pools.
+- [x] Move wanted-response officers and pursuit cruisers onto named pools and bounded distance-update budgets.
+- [x] Keep 1–5 star staffing within the six-unit low-spec police budget and release excess units after de-escalation.
+- [x] Transfer a stolen pursuit cruiser to persistent player/abandoned-vehicle ownership before pursuit cleanup.
+- [ ] Move remaining legacy simulation onto streaming/LOD budgets and named pools.
 - [ ] Complete browser-driven 5-, 15-, and 60-minute stability runs.
 
 ### Phase 8C: Recurring characters and dialogue

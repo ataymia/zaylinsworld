@@ -49,6 +49,7 @@ import {
   hdriUrl, loadSlotModel, updateMixers, enhanceAvatar, enhanceVehicle, assetUrl,
 } from './manifest.js';
 import { graphics } from './graphics.js';
+import { performanceBudget } from './config/performanceBudgets.js';
 import { initSettingsMenu, isSettingsOpen, settingsTickFPS } from './settings.js';
 import {
   initLoadingScreen, hideLoadingScreen, setStatus, setProgress, loadingManager,
@@ -67,6 +68,8 @@ import {
   starterTownServiceTrafficCount,
 } from './runtime/StarterTownServiceRoutes.js';
 import { DialogueRuntime } from './runtime/DialogueRuntime.js';
+import { poolRegistry } from './runtime/ObjectPool.js';
+import { policeSimulationBudget, policeStaffingFor } from './runtime/PoliceSimulationPolicy.js';
 import { LARGE_TOWN_TRAFFIC_ROUTES, largeTownTrafficCount } from './config/starterTownTrafficRoutes.js';
 import {
   LARGE_TOWN_PEDESTRIAN_ROUTES,
@@ -264,6 +267,7 @@ let velY = 0, onGround = true;
 // ── police / crime runtime state ──────────────────────────────────────────────
 let policeUnits = [];          // foot cops: { av, health, busted }
 let policeCars = [];           // patrol cruisers (heavier mass, can be stolen)
+let policePools = null;        // named live pools for reusable officers and pursuit cruisers
 let parkedCruisers = [];       // HQ cruisers parked at the police post (stealable)
 let abandonedCars = [];        // cars the player stole then stepped out of (re-enterable)
 let policePost = null;         // { deskPos, faceDir } from buildCity (Phase 3J)
@@ -382,6 +386,7 @@ function enterWorld() {
       entranceMap.police = { doorPos: cityInfo.police.doorPos, faceDir: cityInfo.police.entryFaceDir };
     }
     initializeRecurringCharacters();
+    initializePolicePools();
     cityNPCs = createCityNPCs(
       scene,
       largeWorldActive
@@ -2452,7 +2457,12 @@ function enterCar(vehicle = car, opts = {}) {
     const idx = traffic.indexOf(vehicle);
     if (idx >= 0) traffic.splice(idx, 1);
     const pidx = policeCars.indexOf(vehicle);
-    if (pidx >= 0) policeCars.splice(pidx, 1);
+    if (pidx >= 0) {
+      policeCars.splice(pidx, 1);
+      // A stolen pursuit cruiser becomes a persistent player/abandoned vehicle.
+      // Transfer it out of pool ownership without hiding the live object.
+      policePools?.vehicles?.detach(vehicle);
+    }
     const cidx = parkedCruisers.indexOf(vehicle);
     if (cidx >= 0) parkedCruisers.splice(cidx, 1);
     vehicle.parked = false;
@@ -3085,7 +3095,77 @@ function copSpawnPoint() {
   return { x: pp.x + Math.cos(ang) * R, z: pp.z + Math.sin(ang) * R };
 }
 
-function spawnFootCop(at) {
+const LIVE_POLICE_POOL_MARK = 'starter-town-live-police-v1';
+
+function registerLivePolicePool(id, options) {
+  let existing = poolRegistry.get(id);
+  if (existing?.runtimeFactory === LIVE_POLICE_POOL_MARK) return existing;
+  if (existing) {
+    if (existing.active.size || existing.available.length || existing.created) {
+      console.warn(`[police-pool] ${id} already belongs to another active runtime; using safe unpooled fallback`);
+      return null;
+    }
+    poolRegistry.destroy(id);
+  }
+  existing = poolRegistry.register(id, options);
+  existing.runtimeFactory = LIVE_POLICE_POOL_MARK;
+  return existing;
+}
+
+function applyPolicePoolBudget() {
+  if (!policePools) return;
+  const preset = graphics.effectivePreset() === 'custom' ? 'medium' : graphics.effectivePreset();
+  const limit = performanceBudget(preset).maxPoliceUnits;
+  if (policePools.foot) {
+    policePools.foot.maxSize = Math.max(6, Math.ceil(limit * 0.9));
+    policePools.foot.trim(policePools.foot.maxSize);
+  }
+  if (policePools.vehicles) {
+    policePools.vehicles.maxSize = Math.max(3, Math.ceil(limit * 0.45));
+    policePools.vehicles.trim(policePools.vehicles.maxSize);
+  }
+}
+
+function initializePolicePools() {
+  if (policePools) return policePools;
+  policePools = {
+    foot: registerLivePolicePool('police', {
+      create: createPooledFootCop,
+      reset: resetPooledFootCop,
+      activate: (unit) => { unit.active = true; unit.av.group.visible = true; scene.add(unit.av.group); },
+      deactivate: (unit) => {
+        unit.active = false;
+        unit.av.group.visible = false;
+        unit.navigation = null;
+        unit._lodDt = 0;
+        scene.remove(unit.av.group);
+      },
+      // GLB skins may share cached resources; inactive entries stay bounded and
+      // are allowed to be garbage-collected rather than disposing shared assets.
+      dispose: () => {},
+      maxSize: 8,
+    }),
+    vehicles: registerLivePolicePool('police-vehicles', {
+      create: createPooledPoliceCar,
+      reset: resetPooledPoliceCar,
+      activate: (vehicle) => { vehicle.active = true; vehicle.g.visible = true; scene.add(vehicle.g); },
+      deactivate: (vehicle) => {
+        vehicle.active = false;
+        vehicle.speed = 0;
+        vehicle.g.visible = false;
+        vehicle.navigation = null;
+        vehicle._lodDt = 0;
+        scene.remove(vehicle.g);
+      },
+      dispose: () => {},
+      maxSize: 4,
+    }),
+  };
+  applyPolicePoolBudget();
+  return policePools;
+}
+
+function createPooledFootCop() {
   // Procedural uniformed base (instant + always valid). A real PSX POLICE GLB is
   // swapped on top async via applyCopSkin so the officer reads clearly as police
   // — the procedural body stays as a guaranteed fallback if the GLB fails.
@@ -3098,26 +3178,103 @@ function spawnFootCop(at) {
   const badge = new THREE.Mesh(new THREE.CircleGeometry(0.05, 6),
     new THREE.MeshStandardMaterial({ color: '#ffd34d', emissive: '#5a4500', emissiveIntensity: 0.4 }));
   badge.position.set(0.16, 1.36, 0.19); av.group.add(badge);
-  const sp = at || copSpawnPoint();        // `at` lets a bailed-out driver become a cop on the spot
-  av.group.position.set(sp.x, 0, sp.z);
-  scene.add(av.group);
+  av.group.visible = false;
   const unit = {
     av,
     health: 65,
     t: 0,
     hitT: 0,
-    navigation: starterTownNavigationEnabled
-      ? starterTownNavigation.createFollower({ allowService: true })
-      : null,
+    navigation: null,
   };
-  policeUnits.push(unit);
-  // swap to a real PSX police-officer GLB skin (validated; procedural kept on fail)
   applyCopSkin(av, renderer)
     .then((name) => { if (name) { unit.realSkin = name; debug.set('copSkin', name); } })
     .catch(() => { /* keep procedural uniformed cop */ });
+  return unit;
 }
 
-// Build a heavier patrol cruiser that chases the player's car/feet.
+function resetPooledFootCop(unit, context = {}) {
+  const sp = context.position || { x: 0, z: 0 };
+  unit.active = true;
+  unit.health = 65;
+  unit.t = 0;
+  unit.hitT = 0;
+  unit._hitCD = 0;
+  unit._lodDt = 0;
+  unit.cellId = context.cellId || null;
+  unit.districtId = context.districtId || worldRegistry.districtAt(sp)?.id || null;
+  unit.av.group.position.set(sp.x, 0, sp.z);
+  unit.av.group.rotation.set(0, 0, 0);
+  unit.av.group.visible = true;
+  const parts = unit.av.parts;
+  for (const limb of [parts?.leftLeg, parts?.rightLeg, parts?.leftArm, parts?.rightArm]) {
+    if (limb) limb.rotation.x = 0;
+  }
+  unit.navigation = starterTownNavigationEnabled
+    ? starterTownNavigation.createFollower({ allowService: true })
+    : null;
+  return unit;
+}
+
+function spawnFootCop(at) {
+  const sp = at || copSpawnPoint();        // `at` lets a bailed-out driver become a cop on the spot
+  const pools = initializePolicePools();
+  const context = { position: sp, districtId: worldRegistry.districtAt(sp)?.id || null };
+  const unit = pools.foot
+    ? pools.foot.acquire(context)
+    : resetPooledFootCop(createPooledFootCop(), context);
+  if (!pools.foot) scene.add(unit.av.group);
+  policeUnits.push(unit);
+  return unit;
+}
+
+function createPooledPoliceCar() {
+  const c = createDrivableCar(scene, 0, 0, '#1b2a55');
+  scene.remove(c.g);
+  c.g.visible = false;
+  c.isCop = true;
+  c.mass = 2.6;
+  c.active = false;
+  if (c.g.userData.kitCar !== 'police') swapVehicleVisual(c, 'police');
+  const bar = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.12, 0.22),
+    new THREE.MeshStandardMaterial({ color: 0x3060ff, emissive: 0x1a2f8a, emissiveIntensity: 0.7 }));
+  bar.name = 'vehicle-overlay:police-pursuit-lightbar';
+  bar.position.set(0, 1.5, 0);
+  c.g.add(bar);
+  c.lightBar = bar;
+  return c;
+}
+
+function resetPooledPoliceCar(c, context = {}) {
+  const spawn = context.position || { x: 0, z: 0 };
+  if (c._smoke) { c.g.remove(c._smoke); c._smoke = null; }
+  c.active = true;
+  c.isCop = true;
+  c.mass = 2.6;
+  c.speed = 0;
+  c.damage = 0;
+  c.fuel = 100;
+  c.stolen = false;
+  c.parked = false;
+  c._crashCD = 0;
+  c._lodDt = 0;
+  c.cellId = context.cellId || null;
+  c.districtId = context.districtId || worldRegistry.districtAt(spawn)?.id || null;
+  c.g.position.set(spawn.x, 0, spawn.z);
+  c.g.rotation.set(0, Math.PI / 2, 0);
+  c.g.visible = true;
+  c.spawn.set(spawn.x, 0, spawn.z);
+  c.navigation = starterTownNavigationEnabled
+    ? starterTownNavigation.createFollower({ allowService: true })
+    : null;
+  // Re-try the validated police kit after preload; the named overlay survives
+  // visual swaps and remains available on every reuse.
+  if (c.g.userData.kitCar !== 'police') swapVehicleVisual(c, 'police');
+  if (c.lightBar) c.lightBar.visible = true;
+  applyCarDamageVisual(c);
+  return c;
+}
+
+// Build/acquire a heavier patrol cruiser that chases the player's car/feet.
 function spawnCopCar() {
   const pp = player.group.position;
   const spawn = starterTownNavigationEnabled
@@ -3126,29 +3283,49 @@ function spawnCopCar() {
         const ang = Math.random() * Math.PI * 2, R = 28;
         return { x: pp.x + Math.cos(ang) * R, z: pp.z + Math.sin(ang) * R };
       })();
-  const c = createDrivableCar(scene, spawn.x, spawn.z, '#1b2a55');
-  c.isCop = true; c.mass = 2.6; c.speed = 0; c.damage = 0;
-  c.navigation = starterTownNavigationEnabled
-    ? starterTownNavigation.createFollower({ allowService: true })
-    : null;
-  // use the real police GLB if the kit is loaded, else keep the navy procedural body
-  swapVehicleVisual(c, 'police');
-  const bar = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.12, 0.22),
-    new THREE.MeshStandardMaterial({ color: 0x3060ff, emissive: 0x1a2f8a, emissiveIntensity: 0.7 }));
-  bar.position.set(0, 1.5, 0); c.g.add(bar); c.lightBar = bar;
+  const pools = initializePolicePools();
+  const context = { position: spawn, districtId: worldRegistry.districtAt(spawn)?.id || null };
+  const c = pools.vehicles
+    ? pools.vehicles.acquire(context)
+    : resetPooledPoliceCar(createPooledPoliceCar(), context);
+  if (!pools.vehicles) scene.add(c.g);
   policeCars.push(c);
+  return c;
 }
 
 function removeFootCop(i) {
   const u = policeUnits[i];
-  if (u) scene.remove(u.av.group);
+  if (u && !(policePools?.foot?.release(u, { reason: 'pursuit-release' }))) scene.remove(u.av.group);
   policeUnits.splice(i, 1);
 }
+function removeCopCar(i) {
+  const c = policeCars[i];
+  if (c && !(policePools?.vehicles?.release(c, { reason: 'pursuit-release' }))) scene.remove(c.g);
+  policeCars.splice(i, 1);
+}
 function despawnAllPolice() {
-  for (const u of policeUnits) scene.remove(u.av.group);
-  policeUnits = [];
-  for (const c of policeCars) scene.remove(c.g);
-  policeCars = [];
+  for (let i = policeUnits.length - 1; i >= 0; i--) removeFootCop(i);
+  for (let i = policeCars.length - 1; i >= 0; i--) removeCopCar(i);
+}
+
+function policePoolSnapshot() {
+  return {
+    foot: policePools?.foot?.snapshot() || null,
+    vehicles: policePools?.vehicles?.snapshot() || null,
+  };
+}
+
+function farthestPoliceIndex(list, positionOf) {
+  if (!player || !list.length) return list.length - 1;
+  const pp = player.group.position;
+  let farthest = 0;
+  let farthestDistance = -1;
+  for (let i = 0; i < list.length; i++) {
+    const position = positionOf(list[i]);
+    const distance = Math.hypot(position.x - pp.x, position.z - pp.z);
+    if (distance > farthestDistance) { farthestDistance = distance; farthest = i; }
+  }
+  return farthest;
 }
 
 // Cops corner you on foot → you get busted: lose half your cash, chase fully
@@ -3236,8 +3413,18 @@ function updatePolice(dt) {
   // it to a lone officer so a tiny mistake isn't an instant dogpile. While the
   // player is hidden, hold reinforcements (the search has lost the trail).
   policeAccum += dt;
-  const wantFoot = wanted <= 1 ? 1 : Math.min(4, wanted + 1);
-  const wantCars = wanted >= 3 ? Math.min(2, wanted - 2) : 0;
+  const staffing = policeStaffingFor(wanted);
+  const wantFoot = staffing.foot;
+  const wantCars = staffing.vehicles;
+  // Wanted can fall while units are still active, and stealing a pursuit car
+  // makes its driver bail out. Release the farthest excess response objects so
+  // the live chase always returns to the intended 1–5 star staffing budget.
+  while (policeCars.length > wantCars) {
+    removeCopCar(farthestPoliceIndex(policeCars, (entry) => entry.g.position));
+  }
+  while (policeUnits.length > wantFoot) {
+    removeFootCop(farthestPoliceIndex(policeUnits, (entry) => entry.av.group.position));
+  }
   if (policeAccum > 1.6 && !hidden) {
     policeAccum = 0;
     if (policeUnits.length < wantFoot) spawnFootCop();
@@ -3257,6 +3444,20 @@ function updatePolice(dt) {
     if (u.health <= 0) { removeFootCop(i); continue; }
     if (u.hitT > 0) u.hitT -= dt;
     const g = u.av.group;
+    const dx = pp.x - g.position.x, dz = pp.z - g.position.z;
+    const d = Math.hypot(dx, dz) || 1;
+    nearest = Math.min(nearest, d);
+    const relevance = policeSimulationBudget(d, 'foot');
+    if (relevance.recycle) { removeFootCop(i); continue; }
+    let policeDt = dt;
+    if (relevance.interval > 0) {
+      u._lodDt = (u._lodDt || 0) + dt;
+      if (u._lodDt < relevance.interval) continue;
+      policeDt = Math.min(0.28, u._lodDt);
+      u._lodDt = 0;
+    } else {
+      u._lodDt = 0;
+    }
     const pursuit = u.navigation
       ? starterTownNavigation.follow(u.navigation, g.position, pp, {
           now: clock.elapsedTime * 1000,
@@ -3267,19 +3468,16 @@ function updatePolice(dt) {
           allowService: true,
         })
       : { waypoint: pp, routed: false };
-    const dx = pp.x - g.position.x, dz = pp.z - g.position.z;
-    const d = Math.hypot(dx, dz) || 1;
     const moveDx = pursuit.waypoint.x - g.position.x;
     const moveDz = pursuit.waypoint.z - g.position.z;
     const moveDistance = Math.hypot(moveDx, moveDz) || 1;
-    nearest = Math.min(nearest, d);
     if (d > 1.3) {
-      const sp = copSpeed * dt;
+      const sp = copSpeed * policeDt;
       g.position.x += moveDx / moveDistance * sp;
       g.position.z += moveDz / moveDistance * sp;
     }
     g.rotation.y = Math.atan2(moveDx, moveDz);
-    u.t = (u.t || 0) + dt; g.position.y = Math.abs(Math.sin(u.t * 8)) * 0.04;
+    u.t = (u.t || 0) + policeDt; g.position.y = Math.abs(Math.sin(u.t * 8)) * 0.04;
     const stride = Math.sin(u.t * 8) * (d > 1.3 ? 0.55 : 0);
     const parts = u.av.parts;
     if (parts?.leftLeg && parts?.rightLeg && parts?.leftArm && parts?.rightArm) {
@@ -3302,10 +3500,24 @@ function updatePolice(dt) {
   if (inCar) bustTimer = 0;
 
   // cruisers chase (heavier, faster, flashing lights)
-  for (const c of policeCars) {
+  for (let i = policeCars.length - 1; i >= 0; i--) {
+    const c = policeCars[i];
     const target = (inCar && drivingVehicle) ? drivingVehicle.g.position : pp;
     const dx = target.x - c.g.position.x, dz = target.z - c.g.position.z;
     const d = Math.hypot(dx, dz) || 1;
+    nearest = Math.min(nearest, d);
+    if (c.lightBar) c.lightBar.material.color.setHex((Math.floor(clock.elapsedTime * 6) % 2) ? 0xff3030 : 0x3060ff);
+    const relevance = policeSimulationBudget(d, 'vehicle');
+    if (relevance.recycle) { removeCopCar(i); continue; }
+    let policeDt = dt;
+    if (relevance.interval > 0) {
+      c._lodDt = (c._lodDt || 0) + dt;
+      if (c._lodDt < relevance.interval) continue;
+      policeDt = Math.min(0.24, c._lodDt);
+      c._lodDt = 0;
+    } else {
+      c._lodDt = 0;
+    }
     const pursuit = c.navigation
       ? starterTownNavigation.follow(c.navigation, c.g.position, target, {
           now: clock.elapsedTime * 1000,
@@ -3318,15 +3530,13 @@ function updatePolice(dt) {
       : { waypoint: target, routed: false };
     const moveDx = pursuit.waypoint.x - c.g.position.x;
     const moveDz = pursuit.waypoint.z - c.g.position.z;
-    nearest = Math.min(nearest, d);
-    c.g.rotation.y = lerpAngle(c.g.rotation.y, Math.atan2(moveDx, moveDz), Math.min(1, dt * 2.4));
+    c.g.rotation.y = lerpAngle(c.g.rotation.y, Math.atan2(moveDx, moveDz), Math.min(1, policeDt * 2.4));
     const fwd = new THREE.Vector3(Math.sin(c.g.rotation.y), 0, Math.cos(c.g.rotation.y));
-    c.speed = Math.min(18, (c.speed || 0) + 11 * dt);
+    c.speed = Math.min(18, (c.speed || 0) + 11 * policeDt);
     if (d < 6) c.speed *= 0.88;
-    c.g.position.addScaledVector(fwd, c.speed * dt); c.g.position.y = 0;
+    c.g.position.addScaledVector(fwd, c.speed * policeDt); c.g.position.y = 0;
     resolveCollision(c.g.position, 1.6, cityColliders);
-    (c.g.userData.wheels || []).forEach(w => { w.rotation.x += c.speed * dt; });
-    if (c.lightBar) c.lightBar.material.color.setHex((Math.floor(clock.elapsedTime * 6) % 2) ? 0xff3030 : 0x3060ff);
+    (c.g.userData.wheels || []).forEach(w => { w.rotation.x += c.speed * policeDt; });
   }
 
   // de-escalation: lose them by getting distance OR by breaking line-of-sight.
@@ -4768,6 +4978,7 @@ function rebuildDensity() {
 function applyGraphics() {
   graphics.applyToRenderer(renderer);
   graphics.applyToSun(sun);
+  applyPolicePoolBudget();
   camera.aspect = innerWidth / innerHeight;
   camera.updateProjectionMatrix();
   if (started) {
@@ -5324,6 +5535,7 @@ function animate() {
   // feed the debug panel live runtime values (cheap; the panel throttles redraw)
   if (debugBadge) {
     const mmEl = document.getElementById('minimap');
+    const policePoolReport = policePoolSnapshot();
     debug.update({
       mode, area, inCar,
       playerExists: !!player,
@@ -5340,6 +5552,11 @@ function animate() {
       scheduledServiceTraffic: traffic.filter(c => c.g.visible !== false && c.trafficKind === 'service').length,
       recurringNpcCount: recurringCharacters.size,
       recurringNpcsOutdoors: [...recurringCharacters.values()].filter((record) => record.activeArea === 'city').length,
+      policePoolFootAvailable: policePoolReport.foot?.available || 0,
+      policePoolFootReused: policePoolReport.foot?.reused || 0,
+      policePoolVehiclesAvailable: policePoolReport.vehicles?.available || 0,
+      policePoolVehiclesReused: policePoolReport.vehicles?.reused || 0,
+      policePoolVehiclesDetached: policePoolReport.vehicles?.detached || 0,
     });
   }
 }
@@ -5481,4 +5698,5 @@ window.ZW = Object.assign(window.ZW || {}, {
     recurringNpcs: recurringCharacterScheduleSnapshot(),
   }),
   recurringNpcSchedule: () => recurringCharacterScheduleSnapshot(),
+  policePools: () => policePoolSnapshot(),
 });

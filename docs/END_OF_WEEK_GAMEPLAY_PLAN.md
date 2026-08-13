@@ -91,6 +91,8 @@ graph, and real morning/afternoon/evening placements for all five named characte
 - [x] Bind pedestrian and ambient-traffic density to the saved world clock.
 - [x] Bind school shuttle, Northworks parts, retail supply, sanitation, and Eastgate courier vehicles to shared-graph routes.
 - [x] Bind Malik, Maya, Coach Rell, Officer Dane, and Denise to their canonical district schedules without duplicating their avatars.
+- [x] Pool wanted-response officers and pursuit cruisers, detach stolen cruisers safely, and throttle only distant units.
+- [x] Cap every 1–5 star response at the existing six-unit low-spec budget and release excess responders as wanted level falls.
 - [ ] Drive Home → School, Home → WorkTower, Home → Auto Haus, west → east, and
   the Beltway; record actual times and route failures.
 - [ ] Test 1–5 star pursuit on foot and in a vehicle across at least three districts.

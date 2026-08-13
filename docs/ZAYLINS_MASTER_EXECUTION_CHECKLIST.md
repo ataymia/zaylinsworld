@@ -964,6 +964,10 @@ Every current gameplay loop works at its final Starter Town location and no miss
 - [x] Search/hiding behavior.
 - [ ] District response differences.
 - [x] Wanted-resolution cleanup and despawn.
+- [x] Deterministic 1–5 star response staffing within the low-spec police budget.
+- [x] Named officer/cruiser pooling with reset and release contracts.
+- [x] Stolen-cruiser ownership transfer that survives pursuit cleanup.
+- [x] Distant pursuit update throttling and far-unit recycling.
 
 ## Phase 8E: Dialogue framework
 

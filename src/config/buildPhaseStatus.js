@@ -12,7 +12,7 @@
 const freeze = (value) => Object.freeze(value);
 const phase = (id, name, status, values = {}) => freeze({ id, name, status, ...values });
 
-export const BUILD_PHASE_STATUS_VERSION = 7;
+export const BUILD_PHASE_STATUS_VERSION = 8;
 export const BUILD_PHASE_UPDATED_AT = '2026-08-13';
 
 export const BUILD_PHASES = freeze([
@@ -62,12 +62,12 @@ export const BUILD_PHASES = freeze([
     completed: freeze(['active/warm/far/unload rings', 'hysteresis', 'predictive driving preload', 'gateway/interior preload hooks', 'collision-first priorities']),
   }),
   phase('3C', 'Named object pools', 'implemented', {
-    completed: freeze(['civilian', 'police', 'traffic', 'police vehicle', 'parked vehicle', 'litter', 'effect', 'interaction marker pools', 'cell unload release']),
+    completed: freeze(['civilian', 'police', 'traffic', 'police vehicle', 'parked vehicle', 'litter', 'effect', 'interaction marker pools', 'cell unload release', 'live officer and pursuit-cruiser acquire/release', 'stolen-cruiser ownership transfer']),
     verify: freeze(['migrate remaining legacy live arrays to acquire/release pools']),
   }),
   phase('3D', 'Instancing and LOD', 'implemented', {
-    completed: freeze(['distance/relevance policy', 'instancing eligibility', 'instanced massing', 'instanced roadside infrastructure', 'distant update intervals', 'live pedestrian/traffic distance throttling']),
-    verify: freeze(['police and remaining compact-map streaming/LOD integration']),
+    completed: freeze(['distance/relevance policy', 'instancing eligibility', 'instanced massing', 'instanced roadside infrastructure', 'distant update intervals', 'live pedestrian/traffic distance throttling', 'live police distance throttling and far-unit recycling']),
+    verify: freeze(['remaining compact-map streaming/LOD integration']),
   }),
   phase('3E', 'Performance budgets and adaptive graphics', 'implemented', {
     completed: freeze(['tier budgets', 'budget violations', 'conservative Auto preset', 'sustained-FPS downshift', 'visual audit']),
@@ -164,10 +164,13 @@ export const BUILD_PHASES = freeze([
       'five scheduled service vehicles generated from the shared RoadGraph',
       'five canonical recurring NPCs with state-aware service dialogue',
       'five recurring NPCs moving through canonical morning, afternoon, and evening district placements',
+      'wanted-response staffing kept within the low-spec six-unit budget',
+      'live officer and pursuit-cruiser pooling with stolen-cruiser ownership transfer',
+      'near-full-rate police pursuit with distant throttling and far-unit recycling',
       'empty asset-factory queue preflight and no recurring self-trigger',
     ]),
     remaining: freeze([
-      'police and remaining legacy streaming/pool integration',
+      'remaining legacy streaming/pool integration',
       'deployed visual acceptance',
       '5-, 15-, and 60-minute browser stability runs',
     ]),
