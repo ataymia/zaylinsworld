@@ -208,21 +208,15 @@ Road acceptance tests:
 - [DONE] teacher dialogue.
 - [DONE] study activity raises smarts.
 - [PARTIAL] school mission.
-- [MISSING] subject selection.
+- [DONE] subject selection across ten named subjects.
 - [MISSING] math minigame.
 - [MISSING] reading/memory minigame.
 - [MISSING] computer-basics minigame.
-- [MISSING] civics/law lesson.
-- [MISSING] health/needs lesson.
-- [MISSING] career lesson.
-- [MISSING] driver-education lesson.
-- [MISSING] physical-education lesson.
-- [MISSING] arts/rhythm foundation.
-- [MISSING] map/geography lesson.
-- [MISSING] Foundation Certificate.
+- [PARTIAL] named subject lessons currently share the stable timing-game fallback; bespoke math/reading/computer/civics/health/career/driver/PE/arts/map mechanics remain future depth.
+- [DONE] Foundation Certificate after Math, Civics, Health, Career, and Driver Education.
 - [MISSING] school jobs.
-- [MISSING] school reputation/attendance progression.
-- [MISSING] school nurse/basic recovery.
+- [PARTIAL] attendance, lesson count, last score, and best score persist; schedules and reputation remain.
+- [DONE] school nurse/basic recovery.
 
 ## WorkTower
 
@@ -230,12 +224,12 @@ Road acceptance tests:
 - [DONE] manager dialogue.
 - [DONE] office shift with performance/smarts pay scaling.
 - [DONE] first-job mission.
-- [MISSING] job board UI.
-- [MISSING] career titles/promotions.
-- [MISSING] property desk.
-- [MISSING] bank/paycheck kiosk.
-- [MISSING] community-health room.
-- [MISSING] city-services counter.
+- [DONE] job board UI.
+- [DONE] career titles/promotions for the four playable careers.
+- [DONE] property desk.
+- [DONE] bank/paycheck kiosk.
+- [DONE] community-health room.
+- [DONE] city-services counter.
 - [MISSING] courier job hub.
 - [MISSING] job bans/restrictions after serious crime.
 
@@ -370,13 +364,13 @@ selected as a primary residence, upgraded, and later purchased in other towns.
 
 - [DONE] smarts stat.
 - [DONE] study activity.
-- [MISSING] named skill/certificate data.
-- [MISSING] subject-specific lesson catalog.
-- [MISSING] lesson completion tracking.
-- [MISSING] Foundation Certificate.
-- [MISSING] skill prerequisites for jobs.
+- [DONE] named skill/certificate data.
+- [DONE] subject-specific lesson catalog.
+- [DONE] lesson completion tracking.
+- [DONE] Foundation Certificate.
+- [PARTIAL] Foundation education grants the WorkTower pay benefit; broader job prerequisites remain.
 - [MISSING] skill prerequisites for other towns.
-- [MISSING] school schedule/attendance.
+- [PARTIAL] attendance persists; the school-hours schedule remains.
 - [MISSING] school job board.
 - [MISSING] student/teacher routines.
 - [MISSING] school-zone traffic behavior.
@@ -395,11 +389,11 @@ selected as a primary residence, upgraded, and later purchased in other towns.
 
 ### Required
 
-- [MISSING] job catalog/config.
-- [MISSING] job board.
-- [MISSING] current employer/title state beyond a single text field.
-- [MISSING] shift history and best grade.
-- [MISSING] promotions.
+- [DONE] job catalog/config for Chicken Spot, WorkTower, Garage, and sanitation.
+- [DONE] WorkTower job board.
+- [DONE] persistent active career and title state.
+- [DONE] shift history, earnings, last grade, and best grade.
+- [DONE] promotions at stable shift thresholds.
 - [MISSING] skill requirements.
 - [MISSING] job reputation.
 - [MISSING] retail stocking at Kicks & Fits.
@@ -519,10 +513,10 @@ without each job feeling like the same meter with a renamed title.
 - [DONE] need decay over time.
 - [DONE] food/rest/workout/study effects.
 - [DONE] downed-player respawn and cash penalty.
-- [PARTIAL] recovery currently routes player home rather than through a city health service.
-- [MISSING] WorkTower community-health room.
-- [MISSING] school nurse recovery.
-- [MISSING] health-service fee/treatment interaction.
+- [DONE] recovery works at home, WorkTower Community Health, and the school nurse.
+- [DONE] WorkTower community-health room.
+- [DONE] school nurse recovery.
+- [DONE] health-service fee/treatment interaction.
 - [MISSING] clear tutorial explaining health versus other needs.
 
 ---
@@ -656,18 +650,18 @@ worldGateways: {},
 
 ### Sprint 4: Home and school
 
-- [ ] deed claim.
-- [ ] primary residence.
-- [ ] property desk.
-- [ ] school subjects.
-- [ ] Foundation Certificate.
+- [x] deed claim.
+- [x] primary residence.
+- [x] property desk.
+- [x] school subjects.
+- [x] Foundation Certificate.
 - [ ] job prerequisites.
 
 ### Sprint 5: Jobs
 
-- [ ] job board.
+- [x] job board.
 - [ ] retail/fuel/school/auto/gym/courier jobs.
-- [ ] promotions and shift history.
+- [x] promotions and shift history for the four currently playable careers.
 - [ ] district sanitation.
 
 ### Sprint 6: Tutorial

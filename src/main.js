@@ -70,10 +70,32 @@ import {
 } from './config/starterTownPedestrianRoutes.js';
 import { starterVehicleSpawnNear } from './config/starterVehicleSpawn.js';
 import {
+  FOUNDATION_CERTIFICATE,
+  STARTER_TOWN_CAREERS,
+  STARTER_TOWN_LIFE,
+  STARTER_TOWN_SUBJECTS,
+  STARTER_TOWN_SUBJECTS_BY_ID,
+} from './config/starterTownLifePlan.js';
+import {
   STARTER_TOWN_SANITATION_STOP,
   generateStarterTownLitterPositions,
 } from './config/starterTownSanitationPlan.js';
 import { starterTownBoundaryGuard } from './world/StarterTownBoundaryGuard.js';
+import {
+  careerSummary,
+  ensureStarterTownLifeState,
+  hasFoundationCertificate,
+  issueStarterHomeDeed,
+  recordBooking,
+  recordCareerShift,
+  recordLegalSettlement,
+  recordSchoolLesson,
+  registerOwnedVehicle,
+  registerStarterHome,
+  updateOwnedVehicleCondition,
+  useCommunityCare,
+  workPayMultiplier,
+} from './runtime/StarterTownLife.js';
 import { handlingFor, addVehicleDamage, applyDamageVisual, tickDamageSmoke } from './vehicleDamage.js';
 import {
   breakableCount,
@@ -213,7 +235,7 @@ function renderPreview(pv, avatar, wrapEl) {
 }
 
 // ── game state & systems ──────────────────────────────────────────────────────
-let state = loadState() || defaultState();
+let state = ensureStarterTownLifeState(loadState() || defaultState());
 let mode = 'creator';            // 'creator' | 'play'
 let started = false;
 let player = null;
@@ -298,8 +320,8 @@ function initCreator() {
     onChange: rebuildCreatorPreview,
     hasSave: hasSave(),
     onEnter: () => { wardrobeResume ? resumeFromWardrobe() : enterWorld(); },
-    onContinue: () => { state = loadState() || state; enterWorld(); },
-    onReset: () => { clearSave(); state = defaultState(); initCreator(); rebuildCreatorPreview(); notify('Save cleared'); },
+    onContinue: () => { state = ensureStarterTownLifeState(loadState() || state); enterWorld(); },
+    onReset: () => { clearSave(); state = ensureStarterTownLifeState(defaultState()); initCreator(); rebuildCreatorPreview(); notify('Save cleared'); },
   });
   showCreator(true);
   mode = 'creator';
@@ -403,12 +425,28 @@ function enterWorld() {
 
 function placeStarterCarAtArrival() {
   if (!car) return;
+  const savedStarter = state.vehicleState?.stored?.[STARTER_TOWN_LIFE.starterVehicleId];
+  registerOwnedVehicle(state, STARTER_TOWN_LIFE.starterVehicleId, {
+    name: 'Starter Kamaro',
+    fuel: savedStarter ? undefined : (state.fuel ?? 100),
+    damage: savedStarter ? undefined : (state.carDamage ?? 0),
+    source: 'starter-grant',
+    makeActive: !state.vehicleState.activeVehicleId,
+  });
   const placement = starterVehicleSpawnNear(state.pos, { facing: state.facing });
   car.g.position.set(placement.x, 0, placement.z);
   car.g.rotation.y = placement.rotationY;
   car.spawn.set(placement.x, 0, placement.z);
   car.g.userData.starterVehicle = true;
   car.g.userData.arrivalPlacement = placement.source;
+  const activeRecord = state.vehicleState.stored[state.vehicleState.activeVehicleId];
+  if (activeRecord) {
+    car.fuel = activeRecord.fuel;
+    car.damage = activeRecord.damage;
+    state.fuel = activeRecord.fuel;
+    state.carDamage = activeRecord.damage;
+    applyCarDamageVisual(car);
+  }
   debug.set('starterCarDistance', Number(placement.distanceFromPlayer.toFixed(2)));
 }
 
@@ -455,8 +493,7 @@ function finalizeFunctionalRelocations(cityInfo) {
       safeRespawn = relocation.contract.spawn
         ? { x: relocation.contract.spawn.x, z: relocation.contract.spawn.z }
         : { x: relocation.doorPos.x, z: relocation.doorPos.z };
-      state.properties.primaryResidenceId = 'zaylins-home';
-      state.properties.owned = Array.from(new Set([...(state.properties.owned || []), 'zaylins-home']));
+      registerStarterHome(state);
     }
   }
 }
@@ -1137,8 +1174,11 @@ async function applyVehicleModels() {
   traffic.forEach((c, i) => {
     if (swapVehicleVisual(c, TRAFFIC_FLEET[i % TRAFFIC_FLEET.length])) trafficGlb++;
   });
-  // the player's drivable car
-  const starterGlb = car && swapVehicleVisual(car, DRIVABLE_DEFAULT) ? 1 : 0;
+  // Restore the player's saved active vehicle body. A new or legacy starter
+  // save falls back to the guaranteed Kamaro model.
+  const activeVehicleId = state.vehicleState?.activeVehicleId || state.activeCar;
+  const activeVehicleDef = DEALER_CARS.find((entry) => entry.id === activeVehicleId);
+  const starterGlb = car && swapVehicleVisual(car, activeVehicleDef?.kitModel || DRIVABLE_DEFAULT) ? 1 : 0;
   // dealership showroom — each car gets its OWN unique model (price-tiered), so a
   // $3.5k hatch never shares a body with a $92k supercar.
   const dealer = interiors && interiors.byId['dealership'];
@@ -1622,9 +1662,15 @@ function depositTrash() {
   if (trashJob.active && trashJob.collected >= trashJob.need) {
     const reward = trashJob.reward;
     state.money += reward;
+    const careerResult = recordCareerShift(state, 'sanitation-worker', {
+      pay: reward,
+      grade: trashJob.need >= 15 ? 'EXCELLENT' : trashJob.need >= 10 ? 'GOOD' : 'OKAY',
+      hits: trashJob.need,
+      rounds: trashJob.need,
+    });
     state.stats.fitness = Math.min(100, state.stats.fitness + 4);
     state.stats.fun = Math.min(100, state.stats.fun + 4);
-    notify(`🧹 ${trashJob.tier} cleanup complete! +$${reward}. The block looks cleaner.`);
+    notify(`🧹 ${trashJob.tier} cleanup complete! +$${reward}. ${careerResult.promoted ? `Promoted to ${careerResult.record.title}!` : 'The block looks cleaner.'}`);
     trashJob = { active: false, need: 0, collected: 0, reward: 0, tier: '' };
     missionEvent('trash-done');
   } else {
@@ -1724,10 +1770,11 @@ function talkToPoliceDesk() {
   const heat = state.wanted || 0;
   const fee = 250 * heat;                  // escalating legal fee, one star at a time
   const lowerChoice = heat > 0
-    ? { label: `Pay legal fee ($${fee}) to clear 1 star`, onPick: () => {
+      ? { label: `Pay legal fee ($${fee}) to clear 1 star`, onPick: () => {
         if ((state.money || 0) < fee) { notify(`Need $${fee} to settle that — come back with the cash.`); return 'keep'; }
         state.money -= fee;
         state.wanted = Math.max(0, (state.wanted || 0) - 1);
+        recordLegalSettlement(state, { starsCleared: 1, fee });
         notify(`⚖️ Paid $${fee} — one star cleared (wanted ${state.wanted}).`);
         saveNow();
         return undefined;
@@ -1744,9 +1791,9 @@ function talkToPoliceDesk() {
       : `Welcome to the Police Station. Keep the streets clean and obey the lights and you'll never see us. Cause trouble and our patrols roll out. The cruisers out front are official police property — don't even think about it.`,
     choices: [
       lowerChoice,
-      { label: 'Tell me about the academy', onPick: () => openDialogue({
-        name: 'Front Desk',
-        text: `The Police Academy trains the next class of officers — obstacle drills, pursuit driving, the works. Training grounds are coming soon.`,
+      { label: 'Review precinct services', onPick: () => openDialogue({
+        name: 'Front Desk — Live Services',
+        text: 'This precinct currently handles wanted-level information, legal-fee settlement, holding-cell inspection, evidence information, and road patrol response. Officer hiring is not listed as an available job on this release board.',
         choices: [{ label: 'Cool', onPick: () => {} }],
       }) },
       { label: 'Leave', onPick: () => {} },
@@ -1767,7 +1814,7 @@ function inspectHoldingCells() {
     choices: [
       { label: 'Peer into a cell', onPick: () => openDialogue({
         name: 'Holding Cell',
-        text: `A steel cot, a barred door, a flickering light. Nothing to do in here but wait it out. (Jail/visitation flows are coming soon.)`,
+        text: 'A steel cot, a barred door, and a booking placard. A bust is entered into your local legal history before you are released back to your registered home.',
         choices: [{ label: 'Step back', onPick: () => {} }],
       }) },
       { label: 'Head back to the lobby', onPick: () => {} },
@@ -1790,7 +1837,7 @@ function openEvidenceLocker() {
     choices: [
       { label: 'Inspect the cage', onPick: () => openDialogue({
         name: 'Evidence Locker',
-        text: `Steel mesh, biometric lock, camera overhead. You'd need real clearance — or a lot more trouble — to get in here. (Confiscated-item recovery is coming soon.)`,
+        text: 'Steel mesh, biometric lock, and a camera overhead. Only duty officers can enter; the public-facing log confirms whether any property is registered to your name.',
         choices: [{ label: 'Back off', onPick: () => {} }],
       }) },
       heat > 0
@@ -2335,7 +2382,10 @@ function refuelVehicle(v) {
   if (state.money < cost) { notify("⛽ Not enough cash to refuel."); return; }
   state.money -= cost;
   v.fuel = 100;
-  if (v === car) state.fuel = 100;
+  if (v === car) {
+    state.fuel = 100;
+    updateOwnedVehicleCondition(state, state.vehicleState.activeVehicleId, { fuel: 100 });
+  }
   notify(`⛽ Tank filled — $${cost}`);
   saveNow();
 }
@@ -2926,8 +2976,10 @@ function despawnAllPolice() {
 // Cops corner you on foot → you get busted: lose half your cash, chase fully
 // clears, and you respawn safe (no lingering pursuit).
 function bustPlayer() {
+  const bookingStars = Math.max(1, state.wanted || 1);
   const lost = Math.floor((state.money || 0) * 0.5);
   state.money -= lost;
+  recordBooking(state, { wanted: bookingStars, cashLost: lost });
   clearWanted();                       // busted = chase resolved: stars + cops cleared
   if (inCar) exitCar();
   player.group.position.set(state.pos.x = safeRespawn.x, 0, state.pos.z = safeRespawn.z);
@@ -3659,16 +3711,18 @@ function talkToInterior(npc) {
         ] });
       break;
     case 'teacher':
-      openDialogue({ name: npc.name + ' · Zaylin Prep', text: 'Knowledge is power out here. Take a seat and study — it sharpens your smarts.',
+      openDialogue({ name: npc.name + ' · Zaylin Prep', text: 'Pick a real subject, build your transcript, and complete the five Foundation classes. The nurse can help if you got banged up on the way here.',
         choices: [
-          { label: 'Sit and study', onPick: () => { startStudy(); return undefined; } },
+          { label: 'Choose a class', onPick: () => { openSchoolCurriculum(); return 'keep'; } },
+          { label: 'Review my school record', onPick: () => { openEducationRecord(); return 'keep'; } },
           { label: 'Maybe later', onPick: () => {} },
         ] });
       break;
     case 'manager':
-      openDialogue({ name: npc.name + ' · WorkTower', text: "We always need hands. Clock in, run the shift, get paid. Easy money if your energy's up.",
+      openDialogue({ name: npc.name + ' · WorkTower', text: 'This lobby handles jobs, pay records, property, community health, and city information. Your shift history and promotions save now.',
         choices: [
-          { label: 'Clock in (work a shift)', onPick: () => { doJobShift(); return undefined; } },
+          { label: 'Open the job board', onPick: () => { openWorktowerJobBoard(); return 'keep'; } },
+          { label: 'Review my career record', onPick: () => { openCareerRecord(); return 'keep'; } },
           { label: 'Not right now', onPick: () => {} },
         ] });
       break;
@@ -3713,7 +3767,14 @@ function runStation(intr, st) {
     case 'mirror-cut': startLineupGame(); break;
     case 'workout': startWorkoutAt(st.equip); break;
     case 'study': startStudy(); break;
+    case 'school-curriculum': openSchoolCurriculum(); break;
+    case 'school-nurse': visitSchoolNurse(); break;
     case 'job-work': doJobShift(); break;
+    case 'worktower-jobs': openWorktowerJobBoard(); break;
+    case 'property-desk': openPropertyDesk(); break;
+    case 'bank-kiosk': openBankKiosk(); break;
+    case 'community-clinic': visitCommunityClinic(); break;
+    case 'city-services': openCityServices(); break;
     case 'garage-work': doGarageShift(); break;
     case 'repair': repairVehicle(); break;
     case 'weapon-shop': openWeaponShop(); break;
@@ -3746,12 +3807,16 @@ function stopSpin(mesh) { if (mesh) mesh.userData.spin = false; }
 function buyCar(carDef) {
   if (state.money < carDef.price) { notify('Not enough money'); return; }
   state.money -= carDef.price;
-  if (!state.ownedCars.includes(carDef.id)) state.ownedCars.push(carDef.id);
   setActiveCar(carDef);
   notify('🔑 Bought the ' + carDef.name + '! Parked outside.');
   saveNow();
 }
 function setActiveCar(carDef) {
+  const registration = registerOwnedVehicle(state, carDef.id, {
+    name: carDef.name,
+    legalOwner: true,
+    source: 'auto-haus',
+  });
   // give the drivable car the purchased model so the whip you own matches the
   // one you bought at the showroom (unique kit body per dealership car).
   if (carDef.kitModel) {
@@ -3760,8 +3825,10 @@ function setActiveCar(carDef) {
   } else if (car.g.children[0]?.material) {
     car.g.children[0].material.color.set(carDef.color);
   }
-  car.damage = 0; state.carDamage = 0;
-  state.activeCar = carDef.id;
+  car.damage = registration.vehicle.damage;
+  car.fuel = registration.vehicle.fuel;
+  state.carDamage = registration.vehicle.damage;
+  state.fuel = registration.vehicle.fuel;
   applyCarDamageVisual(car);
 }
 
@@ -3888,19 +3955,25 @@ function grade(hits, rounds) {
   if (f >= 0.35) return { label: 'OKAY', mult: 0.85 };
   return { label: 'POOR', mult: 0.5 };
 }
-function runWorkShift({ title, jobName, tasks, basePay, energyCost = 20, onPaid }) {
+function runWorkShift({ title, jobName, careerId, tasks, basePay, energyCost = 20, onPaid }) {
   if (state.stats.energy < 12) { notify('Too gassed to work — rest or eat first.'); return; }
   startTimingGame({
     title, rounds: tasks.length, speedBase: 2.2, labels: tasks,
     onFinish: (hits, rounds) => {
       const g = grade(hits, rounds);
-      const pay = Math.round(basePay * g.mult);
+      const educationMultiplier = careerId ? workPayMultiplier(state, careerId) : 1;
+      const pay = Math.round(basePay * g.mult * educationMultiplier);
       state.money += pay;
-      state.job = jobName;
       state.stats.energy = Math.max(0, state.stats.energy - energyCost);
       state.stats.hygiene = Math.max(0, state.stats.hygiene - 8);
-      notify(`✅ ${g.label} shift (${hits}/${rounds}) — earned $${pay}`);
       if (onPaid) onPaid(g, hits, rounds);
+      const careerResult = careerId
+        ? recordCareerShift(state, careerId, { pay, grade: g.label, hits, rounds })
+        : null;
+      if (!careerResult) state.job = jobName;
+      const promotion = careerResult?.promoted ? ` · Promoted to ${careerResult.record.title}!` : '';
+      const schoolBonus = educationMultiplier > 1 ? ' · Foundation pay bonus' : '';
+      notify(`✅ ${g.label} shift (${hits}/${rounds}) — earned $${pay}${schoolBonus}${promotion}`);
       state.timeMin += 150;
       missionEvent('job-done');
       saveNow();
@@ -3911,7 +3984,7 @@ function runWorkShift({ title, jobName, tasks, basePay, energyCost = 20, onPaid 
 // Chicken Spot crew shift.
 function workShift() {
   runWorkShift({
-    title: '🍗 Chicken Spot Shift', jobName: 'Chicken Spot Crew', basePay: 60,
+    title: '🍗 Chicken Spot Shift', jobName: 'Chicken Spot Crew', careerId: 'chicken-spot-crew', basePay: 60,
     tasks: ['Take order', 'Fry & serve', 'Wipe counter', 'Restock', 'Take out trash'],
     onPaid: (g) => {
       // good service builds a little business sense (smarts) + fun
@@ -3928,13 +4001,11 @@ function restAtHome() {
   saveNow();
 }
 function checkHomeMailbox() {
-  const firstVisit = !state.properties.homeDeedIssued;
-  state.properties.homeDeedIssued = true;
-  state.properties.mailboxLastDay = state.day;
+  const deed = issueStarterHomeDeed(state);
   missionEvent('mailbox-check', 'zaylins-home');
   openDialogue({
     name: '📬 Zaylins Home Mailbox',
-    text: firstVisit
+    text: deed.newlyIssued
       ? 'Your Willowbend property deed and neighborhood welcome packet are inside. This home is now registered as your primary residence.'
       : `Mail checked for day ${state.day}. No urgent deliveries are waiting.`,
     choices: [{ label: 'Close mailbox', onPick: () => {} }],
@@ -4212,20 +4283,199 @@ function startWorkoutAt(equip) {
 // No-arg entry kept for the trainer dialogue (defaults to a strength session).
 function startWorkout() { startWorkoutAt(null); }
 
-// School study — raises SMARTS, costs energy + time.
-function startStudy() {
+function educationProgressText() {
+  const required = FOUNDATION_CERTIFICATE.requiredSubjectIds;
+  const complete = required.filter((id) => (state.education.subjects[id]?.lessons || 0) > 0).length;
+  return `${complete}/${required.length} Foundation subjects complete`;
+}
+
+function openEducationRecord() {
+  const rows = FOUNDATION_CERTIFICATE.requiredSubjectIds.map((id) => {
+    const subject = STARTER_TOWN_SUBJECTS_BY_ID[id];
+    const record = state.education.subjects[id];
+    return `${record?.lessons ? '✓' : '○'} ${subject.title}${record?.lessons ? ` — ${record.lessons} lesson${record.lessons === 1 ? '' : 's'}, best ${Math.round(record.bestScore)}%` : ''}`;
+  });
+  const certificate = hasFoundationCertificate(state)
+    ? `AWARDED: ${FOUNDATION_CERTIFICATE.title}`
+    : 'Certificate pending: finish each required subject once.';
+  openDialogue({
+    name: 'Zaylin Prep — Student Record',
+    text: `Attendance: ${state.education.attendance} lesson${state.education.attendance === 1 ? '' : 's'}\n${rows.join('\n')}\n\n${certificate}`,
+    choices: [
+      { label: 'Choose another class', onPick: () => { openSchoolCurriculum(); return 'keep'; } },
+      { label: 'Close record', onPick: () => {} },
+    ],
+  });
+}
+
+function openSubjectPicker(title, subjects) {
+  openDialogue({
+    name: `Zaylin Prep — ${title}`,
+    text: 'Each lesson saves its score, attendance, and progress. Complete all five Foundation subjects to earn the certificate and WorkTower pay bonus.',
+    choices: [
+      ...subjects.map((subject) => ({
+        label: `${(state.education.subjects[subject.id]?.lessons || 0) > 0 ? '✓ ' : ''}${subject.title}`,
+        onPick: () => { startStudy(subject.id); },
+      })),
+      { label: 'Back to curriculum', onPick: () => { openSchoolCurriculum(); return 'keep'; } },
+    ],
+  });
+}
+
+function openSchoolCurriculum() {
+  const foundation = STARTER_TOWN_SUBJECTS.filter((subject) => subject.foundation);
+  const electives = STARTER_TOWN_SUBJECTS.filter((subject) => !subject.foundation);
+  openDialogue({
+    name: 'Zaylin Prep — Curriculum',
+    text: `${educationProgressText()}. Choose a group, or review the scores already saved to your student record.`,
+    choices: [
+      { label: 'Foundation classes', onPick: () => { openSubjectPicker('Foundation Classes', foundation); return 'keep'; } },
+      { label: 'Electives', onPick: () => { openSubjectPicker('Electives', electives); return 'keep'; } },
+      { label: 'Review student record', onPick: () => { openEducationRecord(); return 'keep'; } },
+      { label: 'Leave', onPick: () => {} },
+    ],
+  });
+}
+
+function visitSchoolNurse() {
+  const result = useCommunityCare(state, { schoolNurse: true });
+  if (!result.ok) {
+    notify('🩺 You are already well enough for class.');
+    return;
+  }
+  notify(`🩺 Nurse visit complete — health ${Math.round(result.health)}%, energy ${Math.round(result.energy)}%.`);
+  saveNow();
+}
+
+// School study records a real subject, score, attendance, and certificate state.
+function startStudy(subjectId = 'basic-math') {
   if (state.stats.energy < 10) { notify('Too tired to focus — get some rest.'); return; }
+  const subject = STARTER_TOWN_SUBJECTS_BY_ID[subjectId] || STARTER_TOWN_SUBJECTS_BY_ID['basic-math'];
   startTimingGame({
-    title: '📚 Study — lock in when it’s highlighted', rounds: 4, speedBase: 2.2,
+    title: `📚 ${subject.title} — lock in when it’s highlighted`, rounds: 4, speedBase: 2.2,
     onFinish: (hits, rounds) => {
       const gain = 4 + hits * 4;                    // up to +20 smarts
-      state.stats.smarts = Math.min(100, state.stats.smarts + gain);
+      if (subject.skill === 'fitness') state.stats.fitness = Math.min(100, state.stats.fitness + Math.ceil(gain / 2));
+      else if (subject.skill === 'fun') state.stats.fun = Math.min(100, state.stats.fun + Math.ceil(gain / 2));
+      else if (subject.skill === 'health') {
+        state.stats.health = Math.min(100, state.stats.health + Math.ceil(gain / 3));
+        state.stats.hygiene = Math.min(100, state.stats.hygiene + Math.ceil(gain / 3));
+      } else state.stats.smarts = Math.min(100, state.stats.smarts + gain);
       state.stats.energy = Math.max(0, state.stats.energy - 14);
       state.stats.fun = Math.max(0, state.stats.fun - 4);
       state.timeMin += 120;
-      notify(`🧠 Studied up (${hits}/${rounds})! Smarts +${gain}`);
+      const lesson = recordSchoolLesson(state, subject.id, { score: (hits / rounds) * 100 });
+      notify(lesson.certificateAwarded
+        ? `🎓 ${FOUNDATION_CERTIFICATE.title} earned! WorkTower pay bonus unlocked.`
+        : `🧠 ${subject.title} complete (${hits}/${rounds}) — ${educationProgressText()}.`);
       missionEvent('study-done');
+      saveNow();
     },
+  });
+}
+
+function openCareerRecord() {
+  const records = careerSummary(state);
+  const rows = STARTER_TOWN_CAREERS.map((career) => {
+    const record = records.find((entry) => entry.career.id === career.id);
+    return record
+      ? `${career.title}: ${record.title} · ${record.shifts} shift${record.shifts === 1 ? '' : 's'} · $${record.totalEarnings.toLocaleString()} earned · best ${record.bestGrade}`
+      : `${career.title}: no completed shifts`;
+  });
+  openDialogue({
+    name: 'WorkTower — Career Record',
+    text: `${rows.join('\n')}\n\n${hasFoundationCertificate(state) ? 'Foundation education bonus active for WorkTower shifts.' : 'Complete the Foundation Certificate for a 10% WorkTower pay bonus.'}`,
+    choices: [
+      { label: 'Back to job board', onPick: () => { openWorktowerJobBoard(); return 'keep'; } },
+      { label: 'Close record', onPick: () => {} },
+    ],
+  });
+}
+
+function openWorktowerJobBoard() {
+  const certified = hasFoundationCertificate(state);
+  openDialogue({
+    name: 'WorkTower — Job Board',
+    text: `${certified ? 'Full local board unlocked.' : 'Starter listing open. Finish the Foundation Certificate to unlock the local job directory and education pay bonus.'}\n\nEvery playable career keeps permanent shift, earnings, grade, and promotion history.`,
+    choices: [
+      { label: 'Clock in: WorkTower office shift', onPick: () => { doJobShift(); } },
+      { label: 'Review career record', onPick: () => { openCareerRecord(); return 'keep'; } },
+      certified
+        ? { label: 'Open local job directory', onPick: () => openDialogue({
+            name: 'WorkTower — Local Listings',
+            text: 'Chicken Spot hires at its counter. City Garage hires at the service bay. Denise Hall runs paid sanitation contracts at the Dreamdrop dumpster stop. All four careers share this saved record.',
+            choices: [{ label: 'Back', onPick: () => { openWorktowerJobBoard(); return 'keep'; } }],
+          }) }
+        : { label: '🔒 Local directory: Foundation required', onPick: () => {
+            notify('Complete Math, Civics, Health, Career, and Driver Education at Zaylin Prep.');
+            return 'keep';
+          } },
+      { label: 'Leave board', onPick: () => {} },
+    ],
+  });
+}
+
+function openPropertyDesk() {
+  registerStarterHome(state);
+  const deed = state.properties.homeDeedIssued
+    ? 'Deed issued and on file.'
+    : 'Ownership is registered. Check the Willowbend mailbox to collect the physical deed and welcome packet.';
+  openDialogue({
+    name: 'WorkTower — Property Desk',
+    text: `Primary residence: Zaylins Home, Willowbend Residential.\nOwned properties: ${state.properties.owned.length}.\n${deed}`,
+    choices: [
+      { label: 'Explain ownership', onPick: () => openDialogue({
+        name: 'Property Desk',
+        text: 'Your starter home is owned, not rented. Resting there restores your needs, the wardrobe changes your look, the safe shows your inventory, and the mailbox holds the deed.',
+        choices: [{ label: 'Understood', onPick: () => {} }],
+      }) },
+      { label: 'Leave desk', onPick: () => {} },
+    ],
+  });
+  saveNow();
+}
+
+function openBankKiosk() {
+  const totalEarnings = careerSummary(state).reduce((sum, entry) => sum + entry.totalEarnings, 0);
+  openDialogue({
+    name: 'WorkTower — Paycheck Kiosk',
+    text: `Available balance: $${Math.floor(state.money).toLocaleString()}\nRecorded career earnings: $${totalEarnings.toLocaleString()}\nActive title: ${state.job || 'Unemployed'}\n\nThis read-only kiosk verifies pay and balances; purchases and wages settle automatically.`,
+    choices: [{ label: 'Close kiosk', onPick: () => {} }],
+  });
+}
+
+function visitCommunityClinic() {
+  const cost = STARTER_TOWN_LIFE.clinicCost;
+  openDialogue({
+    name: 'WorkTower — Community Health',
+    text: `Walk-in care restores health, energy, and hygiene. The visit costs $${cost}. Zaylin Prep students can also use the school nurse for limited free care.`,
+    choices: [
+      { label: `Receive care ($${cost})`, onPick: () => {
+        const result = useCommunityCare(state);
+        if (!result.ok) {
+          notify(result.reason === 'money' ? `Need $${result.cost} for the visit.` : 'You are already fully recovered.');
+          return 'keep';
+        }
+        notify(`🏥 Care complete — health ${Math.round(result.health)}%, energy ${Math.round(result.energy)}%.`);
+        saveNow();
+      } },
+      { label: 'Leave clinic', onPick: () => {} },
+    ],
+  });
+}
+
+function openCityServices() {
+  openDialogue({
+    name: 'WorkTower — City Information',
+    text: 'Starter Town services are live across nine districts: home and mail in Willowbend; school and gym in Scholar’s Quarter/Parkside; jobs and property here; police and legal fees at Public Safety; fuel and food at Eastgate/Dreamdrop; vehicles at Auto Haus; repairs at City Garage. The 2,000 × 2,000 road network connects all of them.',
+    choices: [
+      { label: 'What lies beyond Starter Town?', onPick: () => openDialogue({
+        name: 'Connected World Desk',
+        text: 'Fishing Harbor is the first inter-town route scheduled to open. The other routes remain closed while their roads, services, and safety systems are built and inspected.',
+        choices: [{ label: 'Back', onPick: () => { openCityServices(); return 'keep'; } }],
+      }) },
+      { label: 'Close desk', onPick: () => {} },
+    ],
   });
 }
 
@@ -4234,7 +4484,7 @@ function doJobShift() {
   if (state.stats.energy < 20) { notify('No energy for a shift — rest first.'); return; }
   const smartBonus = Math.round((state.stats.smarts / 100) * 80);   // smarter → better base pay
   runWorkShift({
-    title: '💼 Office Shift', jobName: 'WorkTower Associate', basePay: 70 + smartBonus, energyCost: 28,
+    title: '💼 Office Shift', jobName: 'WorkTower Associate', careerId: 'worktower-associate', basePay: 70 + smartBonus, energyCost: 28,
     tasks: ['Boot computer', 'File paperwork', 'Answer email', 'Deliver folder', 'Update checklist'],
     onPaid: (g) => {
       state.stats.smarts = Math.min(100, state.stats.smarts + (g.mult >= 1.15 ? 3 : 1));
@@ -4245,7 +4495,7 @@ function doJobShift() {
 // Garage shift — task loop; builds a little fitness from the labor.
 function doGarageShift() {
   runWorkShift({
-    title: '🔧 Garage Shift', jobName: 'Garage Hand', basePay: 75, energyCost: 26,
+    title: '🔧 Garage Shift', jobName: 'Garage Hand', careerId: 'garage-hand', basePay: 75, energyCost: 26,
     tasks: ['Grab the tools', 'Clean the spill', 'Inspect car', 'Tighten the part', 'Park in bay'],
     onPaid: (g) => { state.stats.fitness = Math.min(100, state.stats.fitness + (g.mult >= 1.15 ? 2 : 1)); },
   });
@@ -4266,6 +4516,10 @@ function repairVehicle() {
             if (v) v.damage = 0;
             if (car) car.damage = 0;
             state.carDamage = 0;
+            updateOwnedVehicleCondition(state, state.vehicleState.activeVehicleId, {
+              damage: 0,
+              serviceDay: state.day,
+            });
             if (v) { v._totaledWarned = false; applyCarDamageVisual(v); }
             if (car && car !== v) applyCarDamageVisual(car);
             notify('🔧 Good as new — dents knocked out.');
@@ -4419,6 +4673,12 @@ function saveNow() {
     state.pos.x = returnPos.x; state.pos.z = returnPos.z;
   }
   state.facing = player.group.rotation.y;
+  if (car && state.vehicleState?.activeVehicleId) {
+    updateOwnedVehicleCondition(state, state.vehicleState.activeVehicleId, {
+      fuel: car.fuel ?? state.fuel ?? 100,
+      damage: car.damage ?? state.carDamage ?? 0,
+    });
+  }
   saveState(state);
 }
 

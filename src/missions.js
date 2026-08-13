@@ -440,6 +440,7 @@ function renderDetail(quest) {
 }
 
 function renderJournal() {
+  if (typeof document === 'undefined') return;
   if (!uiMounted || !qs) return;
   const tabs = document.querySelector('#quest-journal .qj-tabs');
   const list = document.querySelector('#quest-journal .qj-list');
@@ -512,6 +513,7 @@ function bindInput() {
 }
 
 export function renderTracker() {
+  if (typeof document === 'undefined') return;
   const element = document.getElementById('mission-tracker');
   if (!element || !qs) return;
   const primaryId = qs.primaryId && qs.active[qs.primaryId] ? qs.primaryId : qs.trackedIds.find((id) => qs.active[id]) || Object.keys(qs.active)[0] || null;
@@ -536,8 +538,11 @@ export function renderTracker() {
 export function initMissions(runtimeDeps) {
   deps = runtimeDeps;
   qs = normalizeQuestState(deps.state);
-  mountJournal();
-  bindInput();
+  const headless = !!runtimeDeps.headless || typeof document === 'undefined' || typeof window === 'undefined';
+  if (!headless) {
+    mountJournal();
+    bindInput();
+  }
   refreshAvailability({ silent: true });
   if (!Object.keys(qs.active).length && !Object.keys(qs.completed).length) startQuestInternal('welcome-to-dreamdrop', { track: true, silent: true });
   renderTracker();

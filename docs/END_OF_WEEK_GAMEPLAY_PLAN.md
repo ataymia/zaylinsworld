@@ -60,17 +60,26 @@ wide but fake “complete” build from replacing one coherent release candidate
 
 ## Thursday: close regular-life and progression blockers
 
-- [ ] Run a fresh-save, current-save, legacy-save, corruption-recovery, driving,
-  interior, active-quest, wanted, and recurring-NPC save matrix.
-- [ ] Play every one of the 22 runtime quests from its real prerequisite state;
-  repair any event that cannot be produced by gameplay.
-- [ ] Verify a fully legal first-day path never requires assault, robbery, or a
-  wanted level.
+- [x] Automate fresh-save, current-save, legacy-save, unreadable-primary,
+  checksum-tampering, and valid-backup recovery.
+- [ ] Finish the deployed browser save matrix while driving, inside an interior,
+  with an active quest, while wanted, and after recurring-NPC conversations.
+- [x] Complete all 22 runtime quests headlessly from their real prerequisite
+  states and verify every objective event has a shipped gameplay producer.
+- [ ] Repeat the 22-quest pass in the deployed browser build.
+- [x] Prove the fully legal first-day route never requires assault, robbery, or
+  a wanted level; crime quests remain opt-in.
 - [ ] Verify all twelve interiors, their return points, service stations, and
   canonical NPC conversations.
-- [ ] Close only the ordinary-life gaps required by the release candidate:
+- [x] Close the ordinary-life gaps required by the release candidate:
   starter-home deed/primary residence, foundational school progress, job history,
   and recovery/health affordances.
+
+Thursday implementation now includes save schema 8, ten persistent school
+subjects, the five-class Foundation Certificate, four career histories with
+grades/earnings/promotions, legal starter-vehicle registration and per-vehicle
+condition, WorkTower job/property/paycheck/health/information stations, the
+school nurse, and saved booking/legal-settlement history.
 
 ## Friday: live city and police acceptance
 

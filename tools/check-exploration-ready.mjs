@@ -65,7 +65,7 @@ const [main, npc, bridge, largeTown, groundCover, buildingAssets] = await Promis
   source('src/world/StarterTownBuildingAssets.js'),
 ]);
 const state = await source('src/state.js');
-assert.match(state, /SAVE_SCHEMA_VERSION = 7/, 'road-safe school migration must ship as save schema 7');
+assert.match(state, /SAVE_SCHEMA_VERSION = 8/, 'road-safe school migration and life progression must ship as save schema 8');
 assert.match(main, /placeStarterCarAtArrival\(\)/, 'world entry must place the starter car at the player arrival');
 assert.match(main, /largeWorldActive \? LARGE_TOWN_TRAFFIC_ROUTES : undefined/, 'production traffic must use full-town routes');
 assert.match(npc, /createTraffic\(scene, count = 6, routeDefinitions = TRAFFIC_ROUTES\)/,

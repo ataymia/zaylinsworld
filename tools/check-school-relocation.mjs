@@ -29,7 +29,8 @@ assert.match(world, /interiorId: b\.interiorId/, 'the school entrance must prese
 assert.match(main, /interiors\?\.byId\?\.\[relocation\.contract\.interiorId\]/, 'cutover must verify the live school interior');
 assert.match(main, /entranceMap\[relocation\.contract\.interiorId\]\?\.doorPos/, 'school exits must return to the relocated exterior');
 assert.match(interiors, /byId\.school = \{/);
-assert.match(interiors, /id: 'study-desk', type: 'study'/, 'school study gameplay must remain available');
+assert.match(interiors, /id: 'curriculum-desk', type: 'school-curriculum'/, 'school curriculum gameplay must remain available');
+assert.match(interiors, /id: 'school-nurse', type: 'school-nurse'/, 'school recovery must remain available');
 assert.match(minimap, /landmarkLayout/, 'the relocated school must use the resolved minimap layout');
 
 const harness = new RelocationParityHarness();

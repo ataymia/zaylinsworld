@@ -27,10 +27,10 @@ assert.match(world, /relocatedLocationIds = \[\]/, 'city builder must accept bou
 assert.match(world, /ZW_LocationPlaceholder_\$\{b\.locationId\}/, 'live exterior must hide its large-shell placeholder');
 assert.match(main, /finalizeFunctionalRelocations\(cityInfo\)/);
 assert.match(main, /home-mailbox/);
-assert.match(main, /primaryResidenceId = 'zaylins-home'/);
+assert.match(main, /registerStarterHome\(state\)/, 'home cutover must use the shared ownership contract');
 assert.match(main, /migrateLegacyPosition\(relocation\.locationId, state\.pos\)/);
 assert.match(minimap, /landmarkLayout = landmarks/);
-assert.match(state, /SAVE_SCHEMA_VERSION = 7/);
+assert.match(state, /SAVE_SCHEMA_VERSION = 8/);
 assert.match(state, /relocatedLocations:/);
 
 const harness = new RelocationParityHarness();

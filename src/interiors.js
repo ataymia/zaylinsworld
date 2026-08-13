@@ -633,7 +633,8 @@ export function buildInteriors() {
       avatars: [teacher], npcSlot: 'npc_basic_02',
       npcs: [{ name: 'Ms. Okafor', role: 'teacher', pos: new THREE.Vector3(o.x, 0, o.z - 2.8), dialogue: 'teacher' }],
       stations: [
-        { id: 'study-desk', type: 'study', pos: new THREE.Vector3(o.x, 0, o.z + 0.5), label: 'Take a Seat & Study' },
+        { id: 'curriculum-desk', type: 'school-curriculum', pos: new THREE.Vector3(o.x, 0, o.z + 0.5), label: 'Choose a Class' },
+        { id: 'school-nurse', type: 'school-nurse', pos: new THREE.Vector3(o.x - 6, 0, o.z + 3.6), label: 'Visit the School Nurse' },
       ],
     };
   }
@@ -677,7 +678,11 @@ export function buildInteriors() {
       avatars: [manager], npcSlot: 'npc_basic_01',
       npcs: [{ name: 'Mr. Banks', role: 'manager', pos: new THREE.Vector3(o.x, 0, o.z - 3.8), dialogue: 'manager' }],
       stations: [
-        { id: 'job-board', type: 'job-work', pos: new THREE.Vector3(o.x + 6, 0, o.z), label: 'Clock In (Work a Shift)' },
+        { id: 'job-board', type: 'worktower-jobs', pos: new THREE.Vector3(o.x + 7, 0, o.z), label: 'Use the Job Board' },
+        { id: 'property-desk', type: 'property-desk', pos: new THREE.Vector3(o.x + 7, 0, o.z - 3), label: 'Visit the Property Desk' },
+        { id: 'bank-kiosk', type: 'bank-kiosk', pos: new THREE.Vector3(o.x - 7, 0, o.z - 3), label: 'Use the Paycheck Kiosk' },
+        { id: 'community-clinic', type: 'community-clinic', pos: new THREE.Vector3(o.x - 7, 0, o.z + 3.6), label: 'Visit Community Health' },
+        { id: 'city-services', type: 'city-services', pos: new THREE.Vector3(o.x + 7, 0, o.z + 3.6), label: 'Use the City Information Desk' },
       ],
     };
   }

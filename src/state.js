@@ -5,6 +5,7 @@ import { defaultCustom } from './avatar.js';
 import { ensurePlayerCustom } from './config/playerAvatarCatalog.js';
 import { SPAWN } from './config/mapConfig.js';
 import { repairLegacyParkArrival, repairSchoolRoadPlacement } from './config/saveMigrations.js';
+import { ensureStarterTownLifeState } from './runtime/StarterTownLife.js';
 import { worldRegistry } from './runtime/WorldRegistry.js';
 
 export { repairLegacyParkArrival, repairSchoolRoadPlacement } from './config/saveMigrations.js';
@@ -12,7 +13,7 @@ export { repairLegacyParkArrival, repairSchoolRoadPlacement } from './config/sav
 const SAVE_KEY = 'zaylinsworld.save.v2';
 const BACKUP_KEY = 'zaylinsworld.save.backup';
 const CORRUPT_KEY = 'zaylinsworld.save.corrupt';
-export const SAVE_SCHEMA_VERSION = 7;
+export const SAVE_SCHEMA_VERSION = 8;
 let lastSerialized = '';
 let lastSavedAt = 0;
 
@@ -103,7 +104,7 @@ export function defaultState() {
     properties: { primaryResidenceId: null, owned: [], homeDeedIssued: false, mailboxLastDay: null },
     education: { schoolId: null, certificates: [], subjects: {}, attendance: 0 },
     careers: { activeId: null, records: {} },
-    crimeRecord: { official: [], hidden: [], convictionsByTown: {} },
+    crimeRecord: { official: [], hidden: [], settlements: [], convictionsByTown: {} },
     policeCareer: { status: 'not-applied', rank: null, discipline: 0 },
     vehicleState: { activeVehicleId: null, stored: {}, impounded: [] },
     settings: {},
@@ -111,6 +112,7 @@ export function defaultState() {
 }
 
 function migrateAndNormalize(data = {}) {
+  data = data && typeof data === 'object' ? data : {};
   const base = defaultState();
   const custom = ensurePlayerCustom({
     ...base.custom,
@@ -131,7 +133,7 @@ function migrateAndNormalize(data = {}) {
     largeWorldEnabled: !!data.world?.largeWorldEnabled,
     relocatedLocations: Array.from(new Set(data.world?.relocatedLocations || [])),
   };
-  return {
+  return ensureStarterTownLifeState({
     ...base,
     ...data,
     version: SAVE_SCHEMA_VERSION,
@@ -165,6 +167,7 @@ function migrateAndNormalize(data = {}) {
       ...(data.crimeRecord || {}),
       official: data.crimeRecord?.official || [],
       hidden: data.crimeRecord?.hidden || [],
+      settlements: data.crimeRecord?.settlements || [],
       convictionsByTown: { ...(data.crimeRecord?.convictionsByTown || {}) },
     },
     policeCareer: { ...base.policeCareer, ...(data.policeCareer || {}) },
@@ -175,7 +178,7 @@ function migrateAndNormalize(data = {}) {
       impounded: data.vehicleState?.impounded || [],
     },
     settings: { ...(data.settings || {}) },
-  };
+  });
 }
 
 function envelopeFor(state) {
@@ -201,22 +204,49 @@ export function loadState() {
   try {
     raw = localStorage.getItem(SAVE_KEY);
     if (!raw) return null;
-    const parsed = JSON.parse(raw);
-    if (parsed?.format === 'zta-save' && parsed.payload) {
-      const payloadText = JSON.stringify(parsed.payload);
-      const valid = parsed.checksum === checksum(payloadText);
-      if (!valid) {
-        rememberCorrupt(raw, 'checksum mismatch');
-        console.warn('[save] checksum mismatch; recovering validated fields from payload');
-      }
-      return migrateAndNormalize(parsed.payload);
+    const decoded = decodeStoredState(raw);
+    if (decoded.checksumValid) return decoded.state;
+    rememberCorrupt(raw, 'checksum mismatch');
+    const backup = loadBackupState();
+    if (backup) {
+      console.warn('[save] checksum mismatch; restored the last valid backup');
+      return backup;
     }
-    // Legacy v1-v3 saves were plain state objects. They migrate in memory and are
-    // converted to an envelope on the next save without deleting unknown fields.
-    return migrateAndNormalize(parsed);
+    console.warn('[save] checksum mismatch; no valid backup, recovering normalized payload fields');
+    return decoded.state;
   } catch (error) {
     if (raw) rememberCorrupt(raw, error?.message || String(error));
+    const backup = loadBackupState();
+    if (backup) {
+      console.warn('[save] primary save unreadable; restored the last valid backup');
+      return backup;
+    }
     console.warn('Failed to load save:', error);
+    return null;
+  }
+}
+
+function decodeStoredState(raw) {
+  const parsed = JSON.parse(raw);
+  if (parsed?.format === 'zta-save' && parsed.payload) {
+    const payloadText = JSON.stringify(parsed.payload);
+    return {
+      state: migrateAndNormalize(parsed.payload),
+      checksumValid: parsed.checksum === checksum(payloadText),
+    };
+  }
+  // Legacy v1-v7 saves were plain state objects. They migrate in memory and are
+  // converted to a current envelope on the next save without deleting unknown fields.
+  return { state: migrateAndNormalize(parsed), checksumValid: true };
+}
+
+function loadBackupState() {
+  try {
+    const raw = localStorage.getItem(BACKUP_KEY);
+    if (!raw) return null;
+    const decoded = decodeStoredState(raw);
+    return decoded.checksumValid ? decoded.state : null;
+  } catch {
     return null;
   }
 }
@@ -240,6 +270,8 @@ export function saveState(state) {
 
 export function clearSave() {
   localStorage.removeItem(SAVE_KEY);
+  localStorage.removeItem(BACKUP_KEY);
+  localStorage.removeItem(CORRUPT_KEY);
   lastSerialized = '';
 }
 export function hasSave() { return !!localStorage.getItem(SAVE_KEY); }
