@@ -154,4 +154,4 @@ assert.match(skins, /role === 'civilian' \|\| role === 'police'/);
 assert.match(vehicleKit, /Add and validate the replacement before hiding/);
 assert.match(vehicleKit, /vehicleVisualAudit/);
 
-console.log(`[live-city] ${liveTraffic.length} visible cars, skinned police, ${placements.length} road-safe filler buildings, ${controller.controlCount} controlled junctions, streetlights, enforcement, and nine-town policy verified.`);
+console.log(`[live-city] ${liveTraffic.length} allocated traffic slots, skinned police, ${placements.length} road-safe filler buildings, ${controller.controlCount} controlled junctions, streetlights, enforcement, and nine-town policy verified.`);

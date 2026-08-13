@@ -62,6 +62,10 @@ import {
 import { functionalLocationRelocation } from './runtime/FunctionalLocationRelocation.js';
 import { worldRegistry } from './runtime/WorldRegistry.js';
 import { starterTownNavigation } from './runtime/StarterTownNavigation.js';
+import {
+  STARTER_TOWN_SERVICE_TRAFFIC_ROUTES,
+  starterTownServiceTrafficCount,
+} from './runtime/StarterTownServiceRoutes.js';
 import { DialogueRuntime } from './runtime/DialogueRuntime.js';
 import { LARGE_TOWN_TRAFFIC_ROUTES, largeTownTrafficCount } from './config/starterTownTrafficRoutes.js';
 import {
@@ -283,6 +287,17 @@ const extraSpinners = [];        // idle-spin display models (Frostbox jewelry, 
 const controls = new Controls(camera, canvas);
 const manager = new InteractionManager();
 const clock = new THREE.Clock();
+
+function createLiveTownTraffic(count, largeWorldActive) {
+  if (!largeWorldActive) return createTraffic(scene, count);
+  const serviceCount = starterTownServiceTrafficCount(count);
+  const ambientCount = Math.max(0, count - serviceCount);
+  return [
+    ...createTraffic(scene, ambientCount, LARGE_TOWN_TRAFFIC_ROUTES),
+    ...createTraffic(scene, serviceCount, STARTER_TOWN_SERVICE_TRAFFIC_ROUTES),
+  ];
+}
+
 const dialogueRuntime = new DialogueRuntime({
   state: () => state,
   quests: () => getQuestSnapshot(),
@@ -367,11 +382,10 @@ function enterWorld() {
         : Math.max(8, Math.round(22 * graphics.npcDensity)),
       largeWorldActive ? LARGE_TOWN_PEDESTRIAN_ROUTES : undefined,
     );
-    traffic = createTraffic(
-      scene,
+    traffic = createLiveTownTraffic(
       largeWorldActive ? largeTownTrafficCount(graphics.trafficDensity)
         : Math.max(3, Math.round(10 * graphics.trafficDensity)),
-      largeWorldActive ? LARGE_TOWN_TRAFFIC_ROUTES : undefined,
+      largeWorldActive,
     );
     abandonedCars = [];                       // fresh city → no previously-stolen parked cars
     car = createDrivableCar(scene, 13, 3);
@@ -1172,7 +1186,7 @@ async function applyVehicleModels() {
   // varied traffic
   let trafficGlb = 0;
   traffic.forEach((c, i) => {
-    if (swapVehicleVisual(c, TRAFFIC_FLEET[i % TRAFFIC_FLEET.length])) trafficGlb++;
+    if (swapVehicleVisual(c, c.vehicleKit || TRAFFIC_FLEET[i % TRAFFIC_FLEET.length])) trafficGlb++;
   });
   // Restore the player's saved active vehicle body. A new or legacy starter
   // save falls back to the guaranteed Kamaro model.
@@ -1904,6 +1918,7 @@ function registerInteractables(entrances) {
     manager.register({
       id: 'talk-' + n.id, area: 'city', key: 'e', radius: 2.4,
       getPosition: () => n.av.group.position,
+      enabled: () => n.av.group.visible !== false && !n.downed,
       getPrompt: () => 'Talk to ' + n.name,
       onInteract: () => talkTo(n),
     });
@@ -2213,6 +2228,7 @@ function nearestStealable() {
   // (so a stolen ride can be re-entered after stepping out).
   const pool = [...traffic, ...policeCars, ...parkedCruisers, ...abandonedCars];
   for (const c of pool) {
+    if (c.g.visible === false) continue;
     const d = c.g.position.distanceTo(pp);
     if (d < bestD) { bestD = d; best = c; }
   }
@@ -2329,6 +2345,7 @@ function enterCar(vehicle = car, opts = {}) {
 function witnessesNear(pos, radius) {
   let n = 0;
   for (const npc of cityNPCs) {
+    if (npc.av.group.visible === false) continue;
     if (npc.av.group.position.distanceTo(pos) <= radius) n++;
   }
   return n;
@@ -2342,7 +2359,7 @@ function robNearestNpc() {
   const pp = player.group.position;
   let best = null, bestD = 2.8;
   for (const n of cityNPCs) {
-    if (n.downed || n.robbed) continue;
+    if (n.av.group.visible === false || n.downed || n.robbed) continue;
     const g = n.av.group.position;
     const d = Math.hypot(g.x - pp.x, g.z - pp.z);
     if (d < bestD) { bestD = d; best = n; }
@@ -2539,7 +2556,7 @@ function updateVehicleCollisions(dt) {
   injuredTimer = Math.max(0, injuredTimer - dt);
 
   const cars = [];
-  for (const c of traffic) cars.push(c);
+  for (const c of traffic) if (c.g.visible !== false) cars.push(c);
   for (const c of policeCars) cars.push(c);     // patrol cars collide & shove too
   if (car && !inCar) cars.push(car);           // parked drivable car is a solid obstacle
   if (inCar && drivingVehicle && !cars.includes(drivingVehicle)) cars.push(drivingVehicle);  // the car you drive collides too
@@ -2622,7 +2639,7 @@ function updateVehicleCollisions(dt) {
     if (spd < 3) continue;
     const playerDriven = inCar && drivingVehicle && c === drivingVehicle;
     for (const n of cityNPCs) {
-      if (n._hitCD > 0) continue;
+      if (n.av.group.visible === false || n._hitCD > 0) continue;
       const g = n.av.group;
       const dx = g.position.x - c.g.position.x, dz = g.position.z - c.g.position.z;
       const d = Math.hypot(dx, dz);
@@ -2745,7 +2762,7 @@ function getWeaponTargets() {
   const out = [];
   if (area !== 'city') return out;
   for (const n of cityNPCs) {
-    if (n.downed) continue;
+    if (n.av.group.visible === false || n.downed) continue;
     ensureNpcHp(n);
     out.push({
       pos: n.av.group.position.clone().setY(1.1), r: 0.95, kind: 'civ', ref: n,
@@ -2846,6 +2863,10 @@ function setHealthBar(grp, frac) {
 function updateNpcHealthBars(dt) {
   const pp = player ? player.group.position : null;
   for (const n of cityNPCs) {
+    if (n.av.group.visible === false) {
+      if (n.hpBar) n.hpBar.visible = false;
+      continue;
+    }
     if (n._hitCD > 0) n._hitCD -= dt;
     if (n.hitT > 0) { n.hitT -= dt; n.panic = 2.2; }   // any hit triggers a panic run
     if (n.downed) continue;
@@ -3496,7 +3517,7 @@ function updatePlayer(dt, t) {
   if (area === 'city' && !inCar) {
     const PR = 0.55;
     for (const n of cityNPCs) {
-      if (n.downed) continue;
+      if (n.av.group.visible === false || n.downed) continue;
       const g = n.av.group;
       const dx = p.x - g.position.x, dz = p.z - g.position.z;
       const d = Math.hypot(dx, dz);
@@ -3513,7 +3534,7 @@ function updatePlayer(dt, t) {
     // Monster form terrifies nearby civilians — they panic and flee as you pass.
     if (monsterForm) {
       for (const n of cityNPCs) {
-        if (n.downed) continue;
+        if (n.av.group.visible === false || n.downed) continue;
         const g = n.av.group;
         if (Math.hypot(p.x - g.position.x, p.z - g.position.z) < 5) n.panic = Math.max(n.panic || 0, 1.6);
       }
@@ -4579,13 +4600,9 @@ function rebuildDensity() {
   }
   if (traffic.length !== targetT) {
     traffic.forEach(c => scene.remove(c.g));
-    traffic = createTraffic(
-      scene,
-      targetT,
-      state.world?.largeWorldEnabled ? LARGE_TOWN_TRAFFIC_ROUTES : undefined,
-    );
+    traffic = createLiveTownTraffic(targetT, !!state.world?.largeWorldEnabled);
     // re-skin the rebuilt traffic with kit cars (preload is cached, so sync)
-    traffic.forEach((c, i) => swapVehicleVisual(c, TRAFFIC_FLEET[i % TRAFFIC_FLEET.length]));
+    traffic.forEach((c, i) => swapVehicleVisual(c, c.vehicleKit || TRAFFIC_FLEET[i % TRAFFIC_FLEET.length]));
     changed = true;
   }
   if (changed) registerInteractables(cityEntrances);
@@ -4966,7 +4983,7 @@ function animate() {
     const cityObserver = inCar
       ? (drivingVehicle || car)?.g?.position
       : player?.group?.position;
-    updateCityNPCs(cityNPCs, dt, t, cityObserver);
+    updateCityNPCs(cityNPCs, dt, t, cityObserver, state.timeMin);
     trafficCoverageAccum += dt;
     if (!inCar && cityObserver && trafficCoverageAccum >= 4) {
       trafficCoverageAccum = 0;
@@ -4975,11 +4992,11 @@ function animate() {
     }
     // braking obstacles: other traffic + the player + the parked drivable car
     const trafficObstacles = [];
-    for (const c of traffic) trafficObstacles.push(c.g.position);
+    for (const c of traffic) if (c.g.visible !== false) trafficObstacles.push(c.g.position);
     if (player && !inCar) trafficObstacles.push(player.group.position);
     if (car && !inCar) trafficObstacles.push(car.g.position);
     if (trafficControl) trafficControl.update(dt);
-    updateTraffic(traffic, dt, trafficObstacles, trafficControl, cityObserver);
+    updateTraffic(traffic, dt, trafficObstacles, trafficControl, cityObserver, state.timeMin);
   }
   updateMixers(dt);                                  // skinned GLB animations
   for (const g of extraSpinners) g.rotation.y += dt * 0.8;   // idle-spin display models
@@ -5026,7 +5043,7 @@ function animate() {
         nearestNpc: (pos, maxR) => {
           let best = null, bd = maxR;
           for (const n of cityNPCs) {
-            if (n.downed) continue;
+            if (n.av.group.visible === false || n.downed) continue;
             const gp = n.av.group.position;
             const d = Math.hypot(gp.x - pos.x, gp.z - pos.z);
             if (d < bd) { bd = d; best = { x: gp.x, z: gp.z }; }
@@ -5037,7 +5054,7 @@ function animate() {
         terrorize: (pos, radius) => {
           let any = false;
           for (const n of cityNPCs) {
-            if (n.downed) continue;
+            if (n.av.group.visible === false || n.downed) continue;
             const gp = n.av.group.position;
             if (Math.hypot(gp.x - pos.x, gp.z - pos.z) <= radius) {
               n.panic = Math.max(n.panic || 0, 2.4); any = true;
@@ -5086,8 +5103,9 @@ function animate() {
       updateQuestGuidance(ppos, dt);
       minimap.draw(
         { x: ppos.x, z: ppos.z }, heading,
-        traffic.map(c => ({ x: c.g.position.x, z: c.g.position.z })),
-        cityNPCs.filter(n => !n.downed).map(n => ({ x: n.av.group.position.x, z: n.av.group.position.z })),
+        traffic.filter(c => c.g.visible !== false).map(c => ({ x: c.g.position.x, z: c.g.position.z })),
+        cityNPCs.filter(n => n.av.group.visible !== false && !n.downed)
+          .map(n => ({ x: n.av.group.position.x, z: n.av.group.position.z })),
       );
     } else if (mm) {
       mm.style.display = 'none';
@@ -5158,6 +5176,9 @@ function animate() {
       monsterMode: !!state.monsterMode,
       monsterCount: monsters.filter(m => !m.dead).length,
       policeCount: policeUnits.length + policeCars.length,
+      scheduledPedestrians: cityNPCs.filter(n => n.av.group.visible !== false).length,
+      scheduledTraffic: traffic.filter(c => c.g.visible !== false).length,
+      scheduledServiceTraffic: traffic.filter(c => c.g.visible !== false && c.trafficKind === 'service').length,
     });
   }
 }
@@ -5270,6 +5291,23 @@ window.ZW = {
   stationList: () => (area === 'city' ? [] : interiors.byId[area].stations.map(s => ({ id: s.id, label: s.label, x: s.pos.x, z: s.pos.z }))),
   exitPos: () => (area === 'city' ? null : { x: interiors.byId[area].exit.x, z: interiors.byId[area].exit.z }),
   npcList: () => (area === 'city'
-    ? cityNPCs.map(n => ({ name: n.name, x: n.av.group.position.x, z: n.av.group.position.z }))
+    ? cityNPCs.filter(n => n.av.group.visible !== false)
+      .map(n => ({ name: n.name, role: n.role, x: n.av.group.position.x, z: n.av.group.position.z }))
     : interiors.byId[area].npcs.map(n => ({ name: n.name, x: n.pos.x, z: n.pos.z }))),
+  trafficList: () => traffic.map(c => ({
+    route: c.routeName,
+    kind: c.trafficKind,
+    service: c.serviceType,
+    schedule: c.scheduleId,
+    active: c.g.visible !== false,
+    source: c.routeSource,
+    x: +c.g.position.x.toFixed(2),
+    z: +c.g.position.z.toFixed(2),
+  })),
+  scheduleSnapshot: () => ({
+    timeMin: state.timeMin,
+    pedestrians: cityNPCs.filter(n => n.av.group.visible !== false).length,
+    traffic: traffic.filter(c => c.g.visible !== false).length,
+    serviceTraffic: traffic.filter(c => c.g.visible !== false && c.trafficKind === 'service').length,
+  }),
 };

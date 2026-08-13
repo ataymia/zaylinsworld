@@ -6,6 +6,10 @@ import { buildAvatar, SKIN_TONES, HAIRSTYLES, OUTFIT_TOPS, OUTFIT_BOTTOMS, SHOES
 import { buildCar, CAR_TYPES } from './vehicles.js';
 import { TRAFFIC_ROUTES, PEDESTRIAN_ROUTES } from './config/mapConfig.js';
 import { trafficSpawnPlan } from './config/starterTownTrafficRoutes.js';
+import {
+  pedestrianActivityProfile,
+  scheduledActivityIsActive,
+} from './config/starterTownActivitySchedule.js';
 
 const pick = arr => arr[Math.floor(Math.random() * arr.length)];
 const NAMES = ['Marcus', 'Tre', 'Jaylen', 'Keisha', 'Dee', 'Andre', 'Nia', 'Malik', 'Zara', 'Cam', 'Imani', 'Quan'];
@@ -18,6 +22,7 @@ export function createCityNPCs(scene, count = 8, routeDefinitions = PEDESTRIAN_R
   const routes = Array.isArray(routeDefinitions) && routeDefinitions.length
     ? routeDefinitions
     : PEDESTRIAN_ROUTES;
+  const routeSlots = Math.max(1, Math.ceil(count / routes.length));
   for (let i = 0; i < count; i++) {
     const custom = {
       skin: pick(SKIN_TONES).id, face: 'oval',
@@ -32,6 +37,7 @@ export function createCityNPCs(scene, count = 8, routeDefinitions = PEDESTRIAN_R
     const av = buildAvatar(custom);
     // assign each pedestrian to a sidewalk/park route and start at a waypoint
     const routeDef = routes[i % routes.length];
+    const activityProfile = pedestrianActivityProfile(routeDef.activity);
     const route = toWaypoints(routeDef.loop);
     // Deterministic staggering keeps every district populated immediately and
     // avoids one random clump consuming the whole pedestrian budget.
@@ -47,6 +53,11 @@ export function createCityNPCs(scene, count = 8, routeDefinitions = PEDESTRIAN_R
       route, wp: (wp + 1) % route.length,
       routeId: routeDef.id || `pedestrian-route-${i % routes.length}`,
       districtId: routeDef.districtId || null,
+      activity: routeDef.activity || 'mixed-use',
+      role: activityProfile.roles[i % activityProfile.roles.length],
+      scheduleId: routeDef.scheduleId || activityProfile.scheduleId,
+      scheduleSlot: (Math.floor(i / routes.length) + 0.5) / routeSlots,
+      scheduleActive: true,
       target: route[(wp + 1) % route.length].clone(),
       speed: 1.1 + Math.random() * 0.8,
       phase: Math.random() * Math.PI * 2,
@@ -56,8 +67,19 @@ export function createCityNPCs(scene, count = 8, routeDefinitions = PEDESTRIAN_R
   return npcs;
 }
 
-export function updateCityNPCs(npcs, dt, t, observer = null) {
+export function updateCityNPCs(npcs, dt, t, observer = null, timeMin = null) {
   for (const n of npcs) {
+    const scheduled = timeMin == null
+      || n.talking
+      || n.panic > 0
+      || n.downed
+      || scheduledActivityIsActive(n.scheduleId, timeMin, n.scheduleSlot);
+    n.scheduleActive = scheduled;
+    n.av.group.visible = scheduled;
+    if (!scheduled) {
+      if (n.hpBar) n.hpBar.visible = false;
+      continue;
+    }
     const p = n.av.group.position;
     let stepDt = dt;
     if (observer && Math.hypot(p.x - observer.x, p.z - observer.z) > 220) {
@@ -208,7 +230,9 @@ export function ensureTrafficCoverage(cars, observer, {
   maxRouteDistance = 280,
 } = {}) {
   if (!observer || !Array.isArray(cars) || !cars.length) return Object.freeze({ action: 'none' });
-  const occupied = cars.filter((entry) => entry?.g && entry.hasDriver !== false && !entry.stolen);
+  const occupied = cars.filter((entry) => (
+    entry?.g && entry.g.visible !== false && entry.hasDriver !== false && !entry.stolen
+  ));
   if (!occupied.length) return Object.freeze({ action: 'none' });
   const nearestCarDistance = Math.min(...occupied.map((entry) => (
     Math.hypot(entry.g.position.x - observer.x, entry.g.position.z - observer.z)
@@ -258,14 +282,14 @@ export function createTraffic(scene, count = 6, routeDefinitions = TRAFFIC_ROUTE
     const r = spawn.routeIndex;
     const routeDef = routes[r];
     const route = toWaypoints(routeDef.loop);
-    const g = carMesh(pick(colors));
+    const g = carMesh(routeDef.color || pick(colors), routeDef.proceduralType);
     g.position.set(spawn.position.x, 0, spawn.position.z);
     const nextWp = spawn.position.nextWaypoint;
     const b = route[nextWp];
     g.rotation.y = Math.atan2(b.x - g.position.x, b.z - g.position.z);
     scene.add(g);
     const driver = makeDriver(); g.add(driver);
-    const baseSpeed = 7 + Math.random() * 4;
+    const baseSpeed = Number(routeDef.baseSpeed) || (7 + Math.random() * 4);
     cars.push({
       g, route, wp: nextWp,
       // Start in motion so traffic visibly reads as traffic on the first frame;
@@ -273,6 +297,14 @@ export function createTraffic(scene, count = 6, routeDefinitions = TRAFFIC_ROUTE
       speed: baseSpeed * 0.55, baseSpeed, damage: 0,
       wheels: g.userData.wheels, driver, hasDriver: true,
       routeName: routeDef.name || routeDef.id || `traffic-route-${r}`,
+      trafficKind: routeDef.trafficKind || 'ambient',
+      serviceType: routeDef.serviceType || null,
+      scheduleId: routeDef.scheduleId || null,
+      scheduleSlot: spawn.routeSlot ?? 0.5,
+      scheduleActive: true,
+      routeSource: routeDef.source || 'authored-traffic-loop',
+      graphRouteIds: routeDef.graphRouteIds || [],
+      vehicleKit: routeDef.vehicleKit || null,
       _stuckT: 0, _stopAt: null, _stopTimer: 0,
     });
   }
@@ -301,10 +333,20 @@ function findFreeSlot(route, cars, self) {
 // stop signs via the control layer, and recover/teleport cars that get stuck so
 // a jam can never become permanent. `obstacles` are world positions (other cars
 // + player); `control` is the traffic controller from traffic.js (optional).
-export function updateTraffic(cars, dt, obstacles = [], control = null, observer = null) {
+export function updateTraffic(cars, dt, obstacles = [], control = null, observer = null, timeMin = null) {
   const heading = new THREE.Vector3();
   for (const c of cars) {
     if (!c.route) continue;
+    const scheduled = timeMin == null
+      || c.stolen
+      || !c.scheduleId
+      || scheduledActivityIsActive(c.scheduleId, timeMin, c.scheduleSlot);
+    c.scheduleActive = scheduled;
+    c.g.visible = scheduled;
+    if (!scheduled) {
+      c.speed = 0;
+      continue;
+    }
     const cpos = c.g.position;
     let stepDt = dt;
     if (observer && Math.hypot(cpos.x - observer.x, cpos.z - observer.z) > 360) {

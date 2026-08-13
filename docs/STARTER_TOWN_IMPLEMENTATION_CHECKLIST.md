@@ -48,19 +48,20 @@ The checklist is intentionally strict. A system is not marked DONE merely becaus
 ### Largest missing or incomplete areas
 
 ```txt
-[MISSING] large district-based city geography
-[MISSING] curved/polyline road engine
-[MISSING] home ownership and primary residence system
-[MISSING] real school curriculum and skill prerequisites
+[DONE] large district-based city geography
+[DONE] curved/polyline road engine
+[DONE] home ownership and primary residence system
+[DONE] ten-subject school curriculum and Foundation Certificate
 [PARTIAL] job variety and career progression
 [PARTIAL] crime consequence depth
 [MISSING] optional branching tutorial
-[MISSING] district NPC schedules and traffic identities
-[MISSING] district-aware minimap and city map
-[MISSING] basic city healthcare service
-[MISSING] property/job/city-services hub
-[MISSING] travel gateways integrated into the playable map
-[PARTIAL] filler neighborhoods and civic/industrial infrastructure
+[PARTIAL] district NPC schedules: ambient population is scheduled; recurring named characters remain stationary
+[DONE] district traffic identities and saved-clock schedules
+[DONE] district-aware minimap and city map
+[DONE] basic city healthcare service
+[DONE] property/job/city-services hub
+[PARTIAL] travel gateways are integrated; destination towns are not yet playable
+[DONE] filler neighborhoods and civic/industrial infrastructure
 ```
 
 ### Critical design correction
@@ -530,15 +531,15 @@ without each job feeling like the same meter with a renamed title.
 - [DONE] wandering NPCs.
 - [DONE] NPC dialogue and memory.
 - [DONE] NPC panic/flee reaction when attacked.
-- [PARTIAL] NPC density scaling.
-- [MISSING] district-specific pedestrian routes.
-- [MISSING] time-of-day schedules.
-- [MISSING] school buses/commute traffic.
-- [MISSING] service trucks in Northworks.
-- [MISSING] traveler traffic at Eastgate.
+- [DONE] NPC density scaling.
+- [DONE] district-specific pedestrian routes.
+- [DONE] time-of-day schedules for pedestrian and ambient-traffic activity.
+- [DONE] road-routed school commute shuttle.
+- [DONE] road-routed Northworks parts/service vehicle.
+- [DONE] scheduled traveler traffic and city courier at Eastgate.
 - [MISSING] parked cars by district.
-- [MISSING] residents commuting from Willowbend.
-- [MISSING] district-specific NPC profiles.
+- [PARTIAL] Willowbend residential rhythm and school commute; individual resident home/work ownership remains.
+- [PARTIAL] activity-specific NPC roles; authored appearance/dialogue profiles remain for ambient citizens.
 - [MISSING] event crowds at Parkside/Dreamdrop.
 
 ---
@@ -642,11 +643,11 @@ worldGateways: {},
 
 ### Sprint 3: City life
 
-- [ ] District traffic routes.
-- [ ] District pedestrian routes.
+- [x] District traffic routes.
+- [x] District pedestrian routes.
 - [ ] parked vehicles.
-- [ ] school/commute/service schedules.
-- [ ] district signage and minimap.
+- [x] school/commute/service schedules.
+- [x] district signage and minimap.
 
 ### Sprint 4: Home and school
 

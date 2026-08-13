@@ -12,8 +12,8 @@
 const freeze = (value) => Object.freeze(value);
 const phase = (id, name, status, values = {}) => freeze({ id, name, status, ...values });
 
-export const BUILD_PHASE_STATUS_VERSION = 5;
-export const BUILD_PHASE_UPDATED_AT = '2026-08-12';
+export const BUILD_PHASE_STATUS_VERSION = 6;
+export const BUILD_PHASE_UPDATED_AT = '2026-08-13';
 
 export const BUILD_PHASES = freeze([
   phase('0', 'Repository, baseline, and build discipline', 'complete', {
@@ -44,7 +44,7 @@ export const BUILD_PHASES = freeze([
     verify: freeze(['final asset metadata coverage as Asset Lab continues']),
   }),
   phase('2C', 'Save schema and migration', 'implemented', {
-    completed: freeze(['schema version 7', 'checksum', 'backup', 'corruption fallback', 'legacy position recovery contracts']),
+    completed: freeze(['schema version 8', 'checksum', 'validated backup recovery', 'corruption capture', 'life progression', 'legacy position recovery contracts']),
     verify: freeze(['production-save matrix', 'driving/interior/mission saves', 'deleted asset recovery']),
   }),
   phase('2D', 'Scene lifecycle and ownership', 'implemented', {
@@ -96,8 +96,8 @@ export const BUILD_PHASES = freeze([
     verify: freeze(['vehicle handling on every graded segment']),
   }),
   phase('4F', 'Shared navigation graph', 'implemented', {
-    completed: freeze(['geometric intersection splitting', 'one connected public graph', 'closures', 'service restrictions', 'school avoidance', 'routing to all functional locations', 'authoritative city-map road rendering', 'citywide traffic coverage routes', 'road-node police dispatch', 'foot and cruiser pursuit routing', 'active quest minimap guidance']),
-    verify: freeze(['bind delivery/service job movement to the shared graph', 'live pursuit and quest-route traversal acceptance']),
+    completed: freeze(['geometric intersection splitting', 'one connected public graph', 'closures', 'service restrictions', 'school avoidance', 'routing to all functional locations', 'authoritative city-map road rendering', 'citywide traffic coverage routes', 'road-node police dispatch', 'foot and cruiser pursuit routing', 'active quest minimap guidance', 'five graph-generated scheduled service routes']),
+    verify: freeze(['live pursuit, quest-route, and service-route traversal acceptance']),
   }),
   phase('4G', 'Road validation', 'implemented', {
     completed: freeze(['connectivity', 'geometric crossings', 'functional access', 'route validation', 'grade validation']),
@@ -128,8 +128,8 @@ export const BUILD_PHASES = freeze([
     verify: freeze(['visual spacing/scale review']),
   }),
   phase('6D', 'Environmental presentation', 'implemented', {
-    completed: freeze(['district lighting', 'day/night values', 'weather response', 'ambience contracts', 'traffic/pedestrian/police density contracts']),
-    verify: freeze(['bind values to live lighting/audio/population systems']),
+    completed: freeze(['district lighting', 'day/night values', 'weather response', 'ambience contracts', 'traffic/pedestrian/police density contracts', 'saved world clock bound to pedestrian and traffic schedules']),
+    verify: freeze(['bind remaining ambience values to live audio systems']),
   }),
   phase('6E', 'Visual-performance validation', 'implemented', {
     completed: freeze(['instancing audit', 'triangle/draw estimate', 'shadow/unculled/repeated-geometry warnings', 'performance budgets']),
@@ -158,12 +158,15 @@ export const BUILD_PHASES = freeze([
       'isolated recoverable interior transitions',
       'shared RoadGraph police dispatch and pursuit',
       'active physical quest objective minimap routing',
+      'thirteen daily activity schedules bound to the saved world clock',
+      'district/activity pedestrian roles and scheduled population',
+      'ambient traffic identities and time-of-day operation',
+      'five scheduled service vehicles generated from the shared RoadGraph',
       'five canonical recurring NPCs with state-aware service dialogue',
       'empty asset-factory queue preflight and no recurring self-trigger',
     ]),
     remaining: freeze([
-      'delivery and scheduled service-vehicle graph binding',
-      'district schedules and destinations',
+      'recurring-character district schedules',
       'police and remaining legacy streaming/pool integration',
       'deployed visual acceptance',
       '5-, 15-, and 60-minute browser stability runs',

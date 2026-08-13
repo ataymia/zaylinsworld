@@ -185,7 +185,7 @@ assert.match(interiors, /interior\.group\.visible = active/);
 assert.match(main, /setPreparedProductionWorldVisible\(false\)/);
 assert.match(
   main,
-  /if \(area === 'city'\) \{[\s\S]*?updateCityNPCs\(cityNPCs, dt, t, cityObserver\)/,
+  /if \(area === 'city'\) \{[\s\S]*?updateCityNPCs\(cityNPCs, dt, t, cityObserver, state\.timeMin\)/,
 );
 assert.match(main, /That place could not open safely/);
 assert.match(bridge, /activatePreparedProductionWorldCollisions/);
