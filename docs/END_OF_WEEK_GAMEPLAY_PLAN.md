@@ -103,6 +103,9 @@ graph, and real morning/afternoon/evening placements for all five named characte
 
 ## Saturday: stability and release-candidate freeze
 
+- [x] Add bounded deployed evidence for frame spikes, heap/render trend, saves, input, graphics, runtime errors, and per-interior coverage.
+- [x] Add a safe all-twelve-interior lifecycle runner that restores the original exterior position and reports missing doors or bad returns.
+- [x] Emit the version-stamped service worker from every production build path and prevent the Pages assembly step from overwriting it.
 - [ ] Complete 5-minute stationary, 15-minute cross-city, and 60-minute mixed-play soaks.
 - [ ] Repeat every interior transition and Character Studio return while watching
   frame time, memory, mixers, textures, and console errors.

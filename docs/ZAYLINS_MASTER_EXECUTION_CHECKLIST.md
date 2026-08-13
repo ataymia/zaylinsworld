@@ -438,6 +438,8 @@ Create measurable budgets for:
 
 ## Phase 3F: Performance acceptance
 
+- [x] Capture bounded, copyable deployed-session evidence for frames, heap/render samples, saves, input, graphics, errors, and interior transitions.
+- [x] Provide an all-twelve-interior lifecycle runner with exact catalog and exterior-return validation.
 - [ ] Five-minute stationary soak.
 - [ ] Fifteen-minute full-speed city drive.
 - [ ] Repeated interior entry/exit.

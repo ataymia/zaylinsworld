@@ -12,12 +12,12 @@
 const freeze = (value) => Object.freeze(value);
 const phase = (id, name, status, values = {}) => freeze({ id, name, status, ...values });
 
-export const BUILD_PHASE_STATUS_VERSION = 8;
+export const BUILD_PHASE_STATUS_VERSION = 9;
 export const BUILD_PHASE_UPDATED_AT = '2026-08-13';
 
 export const BUILD_PHASES = freeze([
   phase('0', 'Repository, baseline, and build discipline', 'complete', {
-    completed: freeze(['0A repository consolidation', '0B automated quality baseline', '0C direct GitHub workflow']),
+    completed: freeze(['0A repository consolidation', '0B automated quality baseline', '0C direct GitHub workflow', 'version-stamped service worker emitted by every production build path']),
     notes: 'Main is authoritative. Routine development uses direct commits without pull requests.',
   }),
   phase('1A', 'Modular player and Character Studio', 'complete'),
@@ -52,8 +52,8 @@ export const BUILD_PHASES = freeze([
     verify: freeze(['repeated live interior/town transition leak test']),
   }),
   phase('2E', 'Developer diagnostics', 'implemented', {
-    completed: freeze(['FPS/frame time', 'draw calls/triangles/textures', 'world/district/cell', 'assets', 'pools', 'lifecycle', 'copyable report']),
-    verify: freeze(['live diagnostic overlay presentation']),
+    completed: freeze(['FPS/frame time', 'draw calls/triangles/textures', 'world/district/cell', 'assets', 'pools', 'lifecycle', 'copyable report', 'bounded deployed acceptance evidence', 'all-twelve-interior transition runner']),
+    verify: freeze(['live diagnostic overlay presentation', 'copy evidence from named deployed sessions']),
   }),
   phase('3A', 'Streaming-cell content model', 'implemented', {
     completed: freeze(['100 deterministic cells', 'roads/parcels/locations/districts/spawns/buffers indexed', 'border dependencies']),
@@ -167,6 +167,8 @@ export const BUILD_PHASES = freeze([
       'wanted-response staffing kept within the low-spec six-unit budget',
       'live officer and pursuit-cruiser pooling with stolen-cruiser ownership transfer',
       'near-full-rate police pursuit with distant throttling and far-unit recycling',
+      'bounded session evidence for frames, heap/render samples, saves, input, graphics, errors, and interior transitions',
+      'safe all-twelve-interior lifecycle cycle with exterior-position restoration',
       'empty asset-factory queue preflight and no recurring self-trigger',
     ]),
     remaining: freeze([

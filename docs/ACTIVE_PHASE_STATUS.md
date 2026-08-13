@@ -23,12 +23,12 @@ Phase 0: COMPLETE
 Phase 1: CORE CHARACTER FOUNDATION WORKS; ANIMATION CLIPS AND SOME LIVE NPC/INTERACTION QA REMAIN
 Phase 2: IMPLEMENTED; SAVE/LIFECYCLE FEATURE-PREVIEW QA REMAINS
 Phase 3: IMPLEMENTED FOUNDATION; LIVE SOAK, ARRAY-TO-POOL MIGRATION, AND STRESS TESTS REMAIN
-Phase 4: IMPLEMENTED FOUNDATION; POLICE AND QUEST ROUTING ARE LIVE, DELIVERY BINDING AND TRAVERSAL QA REMAIN
+Phase 4: IMPLEMENTED FOUNDATION; POLICE, QUEST, AND FIVE SCHEDULED SERVICE ROUTES ARE LIVE; TRAVERSAL QA REMAINS
 Phase 5: IMPLEMENTED GEOGRAPHIC SKELETON; LIVE DRIVE-TIME AND READABILITY QA REMAIN
 Phase 6: IMPLEMENTED VISUAL FOUNDATION; LIVE ART-DIRECTION AND FPS QA REMAIN
 Phase 7: IMPLEMENTED; LIVE FULL-TOWN ACCEPTANCE REMAINS
-Phase 8: ACTIVE; CITY DENSITY, SHARED NAVIGATION, QUEST GUIDANCE, AND RECURRING NPC DIALOGUE IMPLEMENTED
-Next construction work: PHASE 8 SCHEDULES, DELIVERY/SERVICE SIMULATION, AND LIVE ACCEPTANCE
+Phase 8: ACTIVE; SCHEDULED CITY LIFE, RECURRING NPCS, POLICE LIFECYCLE, AND ACCEPTANCE EVIDENCE IMPLEMENTED
+Next work: DEPLOYED DRIVING, SAVE, INTERIOR, PURSUIT, GRAPHICS, AND 5/15/60-MINUTE ACCEPTANCE
 ```
 
 ---
@@ -45,6 +45,7 @@ Status: **Complete**
 - [x] Existing automated quality gate.
 - [x] Runtime-foundation test included in `npm run check`.
 - [x] Machine-readable phase ledger.
+- [x] Every production build path emits the same version-stamped service worker; the Pages assembly step cannot overwrite it.
 
 ---
 
@@ -209,6 +210,8 @@ Status: **Implemented foundation**
 
 Status: **Planned verification**
 
+- [x] Capture the exact build, frame spikes, heap/render samples, saves, graphics changes, input delivery, runtime errors, and interior coverage in one bounded report.
+- [x] Provide a safe deployed runner that cycles all twelve real interior lifecycles and restores the player's exterior position.
 - [ ] Five-minute stationary soak.
 - [ ] Fifteen-minute full-speed large-city drive.
 - [ ] Repeated interiors.
@@ -421,6 +424,8 @@ working until the shipped runtime makes it visible, reachable, and stable.
 - [x] Replace the prototype sanitation setup with Denise Hall on the sidewalk, a production dumpster with detailed fallback, and 28 citywide litter stops.
 - [x] Render only the active interior and suspend town simulation during transitions.
 - [x] Recover outside instead of crashing when an interior transition fails.
+- [x] Record every real entry, exit, recovered transition, return distance, and save outcome in copyable deployed acceptance evidence.
+- [x] Add an all-twelve-interior lifecycle runner that cannot silently pass a partial interior catalog.
 - [ ] Pass visual playtest for terrain stability, labels, traffic motion, pedestrian coverage, and building placement.
 - [ ] Pass repeated entry/exit testing for all twelve interiors on the deployed preview.
 

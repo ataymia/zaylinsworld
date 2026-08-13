@@ -18,9 +18,13 @@
 //   • window.__ZW_DEBUG__ exposes everything to the console.
 // ───────────────────────────────────────────────────────────────────────────
 
+import { acceptanceTelemetry } from './runtime/AcceptanceTelemetry.js';
+
 const COMMIT = (typeof __BUILD_COMMIT__ !== 'undefined') ? __BUILD_COMMIT__ : 'dev';
 const BUILD_TIME = (typeof __BUILD_TIME__ !== 'undefined') ? __BUILD_TIME__ : new Date().toISOString();
 const APP_VERSION = (typeof __APP_VERSION__ !== 'undefined') ? __APP_VERSION__ : '0.0.0+dev';
+
+acceptanceTelemetry.setBuild({ commit: COMMIT, buildTime: BUILD_TIME, version: APP_VERSION });
 
 // Static metrics, written once as systems load (debug.set / debug.incr).
 const metrics = {
@@ -69,6 +73,7 @@ export const debug = {
   logKey(k) { lastKey = k; if (logKeys) console.info('[key]', k); },
   toggle(force) { _toggleApi && _toggleApi(force); },
   showError,
+  snapshot,
   report() { const r = snapshot(); console.table(r); return r; },
 };
 
@@ -157,6 +162,17 @@ function rows() {
     ['monsterMode', yn(live.monsterMode)],
     ['monsters', num(live.monsterCount)],
     ['police', num(live.policeCount)],
+
+    ['SECTION', 'ACCEPTANCE EVIDENCE'],
+    ['session', live.acceptanceLabel || 'boot'],
+    ['elapsed', live.acceptanceElapsedMin == null ? '—' : `${live.acceptanceElapsedMin} min`],
+    ['frame spikes >33ms', num(live.acceptanceLongFrames)],
+    ['max frame', live.acceptanceMaxFrameMs == null ? '—' : `${live.acceptanceMaxFrameMs} ms`],
+    ['runtime errors', num(live.acceptanceErrors)],
+    ['successful saves', num(live.acceptanceSaves)],
+    ['save failures', num(live.acceptanceSaveFailures)],
+    ['interiors completed', `${live.acceptanceInteriorsCompleted ?? 0}/12`],
+    ['evidence samples', num(live.acceptanceSamples)],
   ];
 }
 
@@ -201,8 +217,9 @@ function refresh() {
 // ── runtime error overlay ─────────────────────────────────────────────────────
 const seenErrors = new Set();
 export function showError(msg) {
-  if (typeof document === 'undefined') return;
   const text = String(msg);
+  acceptanceTelemetry.recordError(text, 'runtime');
+  if (typeof document === 'undefined') return;
   if (seenErrors.has(text)) return;
   seenErrors.add(text);
   if (!errBox) {
@@ -310,6 +327,9 @@ export function initDebugBadge(actions = {}) {
 
   const sys = grid([
     mkBtn('Copy report', () => { try { navigator.clipboard.writeText(JSON.stringify(snapshot(), null, 2)); } catch { /* ignore */ } }),
+    mkBtn('Copy acceptance', () => acceptanceTelemetry.copy()),
+    mkBtn('Test interiors', actions.onRunInteriors),
+    mkBtn('Reset evidence', () => acceptanceTelemetry.start('manual-acceptance')),
     mkBtn('Force update', actions.onForceUpdate, true),
   ]);
 
@@ -356,6 +376,7 @@ export function initDebugBadge(actions = {}) {
     metrics, get live() { return live; },
     commit: COMMIT, version: APP_VERSION, build: BUILD_TIME,
     toggle, showError,
+    acceptance: acceptanceTelemetry,
     setKeyLogging: (on) => debug.setKeyLogging(on),
   };
 

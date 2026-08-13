@@ -55,6 +55,7 @@ import {
   initLoadingScreen, hideLoadingScreen, setStatus, setProgress, loadingManager,
 } from './loader.js';
 import { initDebugBadge, debug } from './debug.js';
+import { acceptanceTelemetry } from './runtime/AcceptanceTelemetry.js';
 import {
   activatePreparedProductionWorldCollisions,
   productionWorldRelocationIds,
@@ -297,6 +298,9 @@ const extraSpinners = [];        // idle-spin display models (Frostbox jewelry, 
 const controls = new Controls(camera, canvas);
 const manager = new InteractionManager();
 const clock = new THREE.Clock();
+let acceptanceFrameAt = performance.now();
+let acceptanceGameplayStarted = false;
+let interiorAcceptanceRunning = false;
 
 function createLiveTownTraffic(count, largeWorldActive) {
   if (!largeWorldActive) return createTraffic(scene, count);
@@ -363,11 +367,11 @@ function resumeFromWardrobe() {
 // ── world bootstrap ────────────────────────────────────────────────────────────
 function enterWorld() {
   console.debug('[creator] enterWorld: state.custom exists =', !!(state && state.custom), '| started =', started);
+  const freshLargeWorldArrival = !started && !state.createdCharacter && !hasSave();
+  const relocatedLocationIds = productionWorldRelocationIds();
+  const largeWorldActive = relocatedLocationIds.length > 0;
   if (!started) {
-    const freshLargeWorldArrival = !state.createdCharacter && !hasSave();
     setStatus('Building the city…');
-    const relocatedLocationIds = productionWorldRelocationIds();
-    const largeWorldActive = relocatedLocationIds.length > 0;
     starterTownNavigationEnabled = largeWorldActive;
     const cityInfo = buildCity(scene, { relocatedLocationIds });
     cityEntrances = cityInfo.entrances;
@@ -445,6 +449,16 @@ function enterWorld() {
   applyVibe();
   showCreator(false);
   mode = 'play';
+  if (!acceptanceGameplayStarted) {
+    acceptanceTelemetry.start('starter-town-gameplay', { preserveErrors: true });
+    acceptanceGameplayStarted = true;
+  }
+  acceptanceTelemetry.mark('gameplay-enter', {
+    map: 'starter-town',
+    playableBounds: '2000x2000',
+    freshArrival: freshLargeWorldArrival,
+    largeWorldActive,
+  });
   notify("Welcome to Zaylin's World — your starter car is beside you. Press F to drive.");
   saveNow();
 }
@@ -2228,9 +2242,15 @@ function enterInterior(id) {
     missionEvent('enter', id);
     showPrompt(null);
     updateInteriorDebug();
+    acceptanceTelemetry.recordInteriorEntry(id, {
+      stations: intr.stations?.length || 0,
+      npcs: intr.npcs?.length || 0,
+      activeInteriorId: interiors.group.userData.activeInteriorId || null,
+    });
     saveNow();
   } catch (error) {
     console.error(`[interior] "${id}" transition failed:`, error);
+    acceptanceTelemetry.recordInteriorFailure(id, 'enter', error);
     area = previousArea;
     returnPos.copy(previousReturn);
     interiors.deactivate?.();
@@ -2246,6 +2266,8 @@ function enterInterior(id) {
 }
 function leaveInterior() {
   if (interiorTransitioning || area === 'city') return;
+  const interiorId = area;
+  const expectedReturn = entranceMap[interiorId]?.doorPos || returnPos;
   interiorTransitioning = true;
   try {
     area = 'city';
@@ -2258,18 +2280,135 @@ function leaveInterior() {
     controls.snapTo(player.group.position, player.eyeHeight);
     showPrompt(null);
     updateInteriorDebug();
+    acceptanceTelemetry.recordInteriorExit(interiorId, {
+      returnDistance: player.group.position.distanceTo(expectedReturn),
+      recovered: false,
+    });
     saveNow();
   } catch (error) {
     console.error('[interior] exit recovery:', error);
+    acceptanceTelemetry.recordInteriorFailure(interiorId, 'exit', error);
     area = 'city';
     interiors.deactivate?.();
     setPreparedProductionWorldVisible(true);
     controls.bounds = null;
     player.group.position.copy(returnPos);
+    acceptanceTelemetry.recordInteriorExit(interiorId, {
+      returnDistance: player.group.position.distanceTo(expectedReturn),
+      recovered: true,
+    });
     notify('Recovered outside after an interior transition problem.');
   } finally {
     setTimeout(() => { interiorTransitioning = false; }, 250);
   }
+}
+
+const acceptanceDelay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// Exercise the real deployed room lifecycle without walking the player around or
+// inventing a second transition path. Each iteration calls the same enter/leave
+// functions as the door prompts, verifies exactly one room is attached, checks
+// the exterior return, and restores the original city position when complete.
+async function runInteriorAcceptance({ cycles = 1, holdMs = 320 } = {}) {
+  const repeat = Math.max(1, Math.min(10, Math.floor(Number(cycles) || 1)));
+  const delay = Math.max(300, Math.min(3000, Math.floor(Number(holdMs) || 320)));
+  if (interiorAcceptanceRunning) return Object.freeze({ passed: false, reason: 'already-running', results: [] });
+  if (!started || mode !== 'play' || !player) return Object.freeze({ passed: false, reason: 'game-not-ready', results: [] });
+  if (area !== 'city') return Object.freeze({ passed: false, reason: 'start-outside-required', results: [] });
+  if (inCar) return Object.freeze({ passed: false, reason: 'exit-vehicle-first', results: [] });
+  if (state.wanted > 0) return Object.freeze({ passed: false, reason: 'clear-wanted-level-first', results: [] });
+  if (interiorTransitioning || isUIOpen() || isSettingsOpen() || builderOpen || eating || hairGame || lineupGame) {
+    return Object.freeze({ passed: false, reason: 'close-active-ui-or-transition-first', results: [] });
+  }
+
+  const ids = Object.keys(interiors?.byId || {});
+  const missingEntrances = ids.filter((id) => !entranceMap[id]?.doorPos);
+  if (ids.length !== 12) {
+    acceptanceTelemetry.recordError(`Expected 12 interiors; found ${ids.length}`, 'interior:catalog');
+  }
+  for (const id of missingEntrances) {
+    acceptanceTelemetry.recordInteriorFailure(id, 'exterior-door', new Error('missing exterior entrance mapping'));
+  }
+  const originalPosition = player.group.position.clone();
+  const originalReturn = returnPos.clone();
+  const results = [];
+  interiorAcceptanceRunning = true;
+  acceptanceTelemetry.mark('interior-cycle-start', { cycles: repeat, holdMs: delay, interiors: ids });
+  notify(`🧪 Testing ${ids.length} interiors — controls return when the cycle finishes.`);
+
+  try {
+    for (let cycle = 1; cycle <= repeat; cycle++) {
+      for (const id of ids) {
+        const exteriorPosition = player.group.position.clone();
+        enterInterior(id);
+        await acceptanceDelay(delay);
+
+        const visibleRooms = Object.entries(interiors.byId)
+          .filter(([, interior]) => interior.group?.visible)
+          .map(([interiorId]) => interiorId);
+        const entered = area === id
+          && interiors.group.visible
+          && interiors.group.userData.activeInteriorId === id
+          && visibleRooms.length === 1
+          && visibleRooms[0] === id;
+        if (!entered) {
+          acceptanceTelemetry.recordInteriorFailure(id, 'cycle-enter-verification',
+            new Error(`active=${area}; visible=${visibleRooms.join(',') || 'none'}`));
+        }
+
+        if (area !== 'city') leaveInterior();
+        await acceptanceDelay(delay);
+        const returnDistance = player.group.position.distanceTo(exteriorPosition);
+        const returned = area === 'city'
+          && !interiors.group.visible
+          && interiors.group.userData.activeInteriorId == null
+          && returnDistance <= 3.5;
+        if (!returned) {
+          acceptanceTelemetry.recordInteriorFailure(id, 'cycle-exit-verification',
+            new Error(`area=${area}; returnDistance=${returnDistance.toFixed(2)}`));
+        }
+
+        results.push(Object.freeze({
+          cycle,
+          id,
+          entered,
+          returned,
+          returnDistance: Number(returnDistance.toFixed(2)),
+          stations: interiors.byId[id].stations?.length || 0,
+          npcs: interiors.byId[id].npcs?.length || 0,
+          entranceMapped: !!entranceMap[id]?.doorPos,
+          visibleRooms,
+        }));
+      }
+    }
+  } finally {
+    if (area !== 'city') {
+      leaveInterior();
+      await acceptanceDelay(delay);
+    }
+    area = 'city';
+    interiors.deactivate?.();
+    setPreparedProductionWorldVisible(true);
+    controls.bounds = null;
+    player.group.visible = true;
+    player.group.position.copy(originalPosition);
+    returnPos.copy(originalReturn);
+    controls.snapTo(player.group.position, player.eyeHeight);
+    saveNow();
+    interiorAcceptanceRunning = false;
+  }
+
+  const passed = ids.length === 12
+    && missingEntrances.length === 0
+    && results.length === ids.length * repeat
+    && results.every((entry) => entry.entered && entry.returned);
+  acceptanceTelemetry.mark('interior-cycle-complete', {
+    passed,
+    checks: results.length,
+    failures: results.filter((entry) => !entry.entered || !entry.returned).length,
+  });
+  notify(passed ? `✅ All ${results.length} interior cycles passed.` : '⚠️ Interior cycle found a failure — copy acceptance evidence.');
+  return Object.freeze({ passed, cycles: repeat, interiorCount: ids.length, missingEntrances, results });
 }
 function entranceMap_facing() { return null; }
 
@@ -4986,6 +5125,13 @@ function applyGraphics() {
     rebuildDensity();
   }
   applyVibe();   // refresh fog range / camera far / environment
+  acceptanceTelemetry.recordGraphics(graphics.effectivePreset(), {
+    renderScale: graphics.values.renderScale,
+    viewDistance: graphics.viewDistance,
+    npcDensity: graphics.npcDensity,
+    trafficDensity: graphics.trafficDensity,
+    shadows: graphics.values.shadows,
+  });
 }
 graphics.onChange(applyGraphics);
 
@@ -5050,7 +5196,7 @@ function applyVibe() {
 }
 
 function saveNow() {
-  if (!player) return;
+  if (!player) return false;
   if (area === 'city') {
     state.pos.x = player.group.position.x;
     state.pos.z = player.group.position.z;
@@ -5064,7 +5210,14 @@ function saveNow() {
       damage: car.damage ?? state.carDamage ?? 0,
     });
   }
-  saveState(state);
+  const saved = saveState(state);
+  acceptanceTelemetry.recordSave(saved, {
+    area,
+    inCar,
+    wanted: state.wanted || 0,
+    activeQuest: getQuestSnapshot()?.primaryId || null,
+  });
+  return saved;
 }
 
 function lerpAngle(a, b, f) {
@@ -5246,15 +5399,20 @@ function teleportTo(which) {
 window.addEventListener('keydown', e => {
   const kc = e.key.toLowerCase();
   // debug panel toggle works at all times (even with a menu open)
-  if (e.key === 'F2' || kc === 'f2') { debugBadge && debugBadge.toggle(); e.preventDefault(); return; }
+  if (e.key === 'F2' || kc === 'f2') {
+    acceptanceTelemetry.recordInput('f2');
+    debugBadge && debugBadge.toggle(); e.preventDefault(); return;
+  }
   // record EVERY key + whether the guard will block it (and why) so the debug
   // panel can prove if a stuck UI state is swallowing N/C/I/M.
   const blockReason = (mode !== 'play') ? 'mode=' + mode
+    : interiorAcceptanceRunning ? 'interiorAcceptance'
     : isUIOpen() ? 'uiOpen'
     : isSettingsOpen() ? 'settings'
     : eating ? 'eating'
     : hairGame ? 'hairGame' : '';
   debug.logKey(blockReason ? `${kc} ✕(${blockReason})` : kc);
+  acceptanceTelemetry.recordInput(kc, blockReason || null);
   if (blockReason) return;
   const k = kc;
   // dev grip tuning (highest priority so its nudge keys aren't eaten by other
@@ -5323,9 +5481,60 @@ addEventListener('resize', () => {
   renderer.setSize(innerWidth, innerHeight);
 });
 
+document.addEventListener('visibilitychange', () => {
+  acceptanceTelemetry.mark('visibility-change', { hidden: document.hidden });
+  acceptanceFrameAt = performance.now();
+});
+
+function acceptanceRuntimeSample() {
+  const observer = inCar
+    ? (drivingVehicle || car)?.g?.position
+    : player?.group?.position;
+  const memory = performance.memory;
+  return {
+    mode,
+    area,
+    inCar,
+    wanted: state.wanted || 0,
+    heat: Number((state.heat || 0).toFixed(1)),
+    timeMin: state.timeMin,
+    preset: graphics.effectivePreset(),
+    position: observer ? { x: Number(observer.x.toFixed(2)), z: Number(observer.z.toFixed(2)) } : null,
+    activeInteriorId: interiors?.group?.userData?.activeInteriorId || null,
+    interiorTransitioning,
+    population: {
+      pedestrians: cityNPCs.filter((entry) => entry.av.group.visible !== false).length,
+      traffic: traffic.filter((entry) => entry.g.visible !== false).length,
+      police: policeUnits.length + policeCars.length,
+      recurringNpcs: recurringCharacters.size,
+    },
+    render: {
+      calls: renderer.info.render.calls,
+      triangles: renderer.info.render.triangles,
+      geometries: renderer.info.memory.geometries,
+      textures: renderer.info.memory.textures,
+      pixelRatio: Number(renderer.getPixelRatio().toFixed(2)),
+    },
+    heapMb: memory?.usedJSHeapSize ? Number((memory.usedJSHeapSize / 1024 / 1024).toFixed(1)) : null,
+    visibility: document.hidden ? 'hidden' : 'visible',
+    input: {
+      touchPoints: navigator.maxTouchPoints || 0,
+      gamepadApi: typeof navigator.getGamepads === 'function',
+      pointerLock: 'pointerLockElement' in document,
+    },
+  };
+}
+
 // ── main loop ──────────────────────────────────────────────────────────────────
 function animate() {
   requestAnimationFrame(animate);
+  const acceptanceNow = performance.now();
+  const rawFrameMs = acceptanceNow - acceptanceFrameAt;
+  acceptanceFrameAt = acceptanceNow;
+  if (mode === 'play' && !document.hidden) {
+    acceptanceTelemetry.frame(rawFrameMs);
+    if (acceptanceTelemetry.sampleDue()) acceptanceTelemetry.sample(acceptanceRuntimeSample());
+  }
   const dt = Math.min(0.05, clock.getDelta());
   const t = clock.elapsedTime;
   settingsTickFPS();
@@ -5373,7 +5582,7 @@ function animate() {
   // spin any dealership car flagged for preview
   if (interiors) Object.values(interiors.byId).forEach(intr => intr.stations.forEach(st => { if (st.mesh && st.mesh.userData.spin) st.mesh.rotation.y += 0.02; }));
 
-  const busy = isUIOpen() || isSettingsOpen() || eating || hairGame || lineupGame;
+  const busy = interiorAcceptanceRunning || isUIOpen() || isSettingsOpen() || eating || hairGame || lineupGame;
   // collectible gems: always bob/twinkle; only collectible while on foot in the city
   if (cityGems.length) {
     const pp = (!busy && !inCar && area === 'city' && player) ? player.group.position : null;
@@ -5536,6 +5745,7 @@ function animate() {
   if (debugBadge) {
     const mmEl = document.getElementById('minimap');
     const policePoolReport = policePoolSnapshot();
+    const acceptanceReport = acceptanceTelemetry.summary();
     debug.update({
       mode, area, inCar,
       playerExists: !!player,
@@ -5557,6 +5767,15 @@ function animate() {
       policePoolVehiclesAvailable: policePoolReport.vehicles?.available || 0,
       policePoolVehiclesReused: policePoolReport.vehicles?.reused || 0,
       policePoolVehiclesDetached: policePoolReport.vehicles?.detached || 0,
+      acceptanceLabel: acceptanceReport.label,
+      acceptanceElapsedMin: Number((acceptanceReport.elapsedMs / 60000).toFixed(1)),
+      acceptanceLongFrames: acceptanceReport.over33Ms,
+      acceptanceMaxFrameMs: acceptanceReport.maxFrameMs,
+      acceptanceErrors: acceptanceReport.errors,
+      acceptanceSaves: acceptanceReport.saves,
+      acceptanceSaveFailures: acceptanceReport.saveFailures,
+      acceptanceInteriorsCompleted: acceptanceReport.interiorsCompleted,
+      acceptanceSamples: acceptanceReport.runtimeSamples,
     });
   }
 }
@@ -5605,6 +5824,7 @@ debugBadge = initDebugBadge({
   onTpDiner: () => teleportTo('diner'),
   onTpHome: () => teleportTo('home'),
   onTpChicken: () => teleportTo('chicken'),
+  onRunInteriors: () => runInteriorAcceptance(),
 });
 window.ZW = window.ZW || {};
 window.ZW.report = () => debug.report();
@@ -5699,4 +5919,16 @@ window.ZW = Object.assign(window.ZW || {}, {
   }),
   recurringNpcSchedule: () => recurringCharacterScheduleSnapshot(),
   policePools: () => policePoolSnapshot(),
+  acceptance: Object.freeze({
+    start: (label = 'manual-acceptance') => acceptanceTelemetry.start(label),
+    stop: (note = '') => acceptanceTelemetry.stop(note),
+    mark: (label, detail = {}) => acceptanceTelemetry.mark(label, detail),
+    snapshot: () => acceptanceTelemetry.snapshot(),
+    report: () => acceptanceTelemetry.report(),
+    copy: () => acceptanceTelemetry.copy(),
+    runInteriors: (options = {}) => runInteriorAcceptance(options),
+    interiorIds: () => Object.keys(interiors?.byId || {}),
+    graphics: () => ({ mode: graphics.mode, preset: graphics.effectivePreset(), values: { ...graphics.values } }),
+    setGraphics: (preset) => graphics.setPreset(preset),
+  }),
 });
