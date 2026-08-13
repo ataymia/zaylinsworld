@@ -52,6 +52,7 @@ const OBJECTIVE_NAVIGATION_TARGETS = Object.freeze({
   'buy-chicken': 'chicken-spot',
   'eat-done': 'chicken-spot',
   'haircut-done': 'zaylins-home',
+  'mailbox-check:zaylins-home': 'zaylins-home',
   'workout-done': 'iron-city-gym',
   'study-done': 'zaylins-prep',
   'job-done': 'worktower',

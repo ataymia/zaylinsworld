@@ -3975,7 +3975,7 @@ function runWorkShift({ title, jobName, careerId, tasks, basePay, energyCost = 2
       const schoolBonus = educationMultiplier > 1 ? ' · Foundation pay bonus' : '';
       notify(`✅ ${g.label} shift (${hits}/${rounds}) — earned $${pay}${schoolBonus}${promotion}`);
       state.timeMin += 150;
-      missionEvent('job-done');
+      missionEvent('job-done', careerId);
       saveNow();
     },
   });

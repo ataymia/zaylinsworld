@@ -37,14 +37,21 @@ emit('enter', 'chicken'); emit('talk-int', 'cashier'); emit('buy-chicken'); emit
 accept('frostbox-first-look');
 emit('enter', 'frostbox'); emit('talk-int', 'jeweler'); emit('gem');
 
-accept('home-base'); emit('enter', 'home');
+accept('home-base'); emit('enter', 'home'); emit('mailbox-check', 'zaylins-home');
 accept('home-haircut'); emit('haircut-done');
 
 accept('gym-intro'); emit('enter', 'gym'); emit('workout-done');
 accept('school-intro'); emit('enter', 'school'); emit('study-done');
 
-accept('first-job'); emit('enter', 'office'); emit('job-done');
-accept('worktower-three-shift-test'); emit('job-done', undefined, 3);
+accept('first-job'); emit('enter', 'office');
+emit('job-done', 'garage-hand');
+assert.ok(!getQuestSnapshot().completed['first-job'], 'a Garage shift must not complete the WorkTower quest');
+emit('job-done', 'worktower-associate');
+accept('worktower-three-shift-test');
+emit('job-done', 'chicken-spot-crew');
+assert.equal(getQuestSnapshot().active['worktower-three-shift-test'].objectives['three-shifts'], 0,
+  'non-WorkTower shifts must not count toward WorkTower consistency');
+emit('job-done', 'worktower-associate', 3);
 
 accept('cleanup-crew'); emit('talk-sanitation'); emit('trash-done');
 accept('dealership-tour'); emit('enter', 'dealership'); emit('talk-int', 'dealer'); emit('enter-car');
@@ -80,4 +87,3 @@ console.log('Runtime quest playthrough passed:');
 console.log(`- ${runtimeQuests.length}/${runtimeQuests.length} quests completed from real prerequisites`);
 console.log(`- ${runtimeEvents.size} objective event types have shipped gameplay producers`);
 console.log('- the first-day route stays legal; crime quests remain explicitly opt-in');
-

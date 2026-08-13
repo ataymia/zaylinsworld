@@ -35,6 +35,7 @@ const objectiveTargets = [
   [{ event: 'enter', arg: 'chicken' }, 'chicken-spot'],
   [{ event: 'talk-int', arg: 'jeweler' }, 'frostbox'],
   [{ event: 'haircut-done' }, 'zaylins-home'],
+  [{ event: 'mailbox-check', arg: 'zaylins-home' }, 'zaylins-home'],
   [{ event: 'workout-done' }, 'iron-city-gym'],
   [{ event: 'study-done' }, 'zaylins-prep'],
   [{ event: 'job-done' }, 'worktower'],
