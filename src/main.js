@@ -84,6 +84,11 @@ import {
   STARTER_TOWN_SANITATION_STOP,
   generateStarterTownLitterPositions,
 } from './config/starterTownSanitationPlan.js';
+import {
+  STARTER_TOWN_RECURRING_SCHEDULES,
+  resolveStarterTownRecurringPosition,
+  starterTownRecurringScheduleAt,
+} from './config/starterTownRecurringSchedules.js';
 import { starterTownBoundaryGuard } from './world/StarterTownBoundaryGuard.js';
 import {
   careerSummary,
@@ -269,6 +274,7 @@ let policeWarned = false;      // showed the "you've been warned" message yet
 let wantedPrev = 0;            // detect the 0→wanted transition to start the grace
 let copHiddenTimer = 0;        // seconds the player has been out of police line-of-sight
 let ejectedPeople = [];        // drivers thrown out of stolen cars, fleeing on foot
+const recurringCharacters = new Map(); // five named NPCs moving through saved-clock placements
 let drivenDist = 0, drivenFlagged = false;   // "Get Around Town" mission tracker
 let builderOpen = false;
 let wardrobeResume = false;      // creator opened from inside the game
@@ -375,6 +381,7 @@ function enterWorld() {
     if (cityInfo.police && cityInfo.police.doorPos) {
       entranceMap.police = { doorPos: cityInfo.police.doorPos, faceDir: cityInfo.police.entryFaceDir };
     }
+    initializeRecurringCharacters();
     cityNPCs = createCityNPCs(
       scene,
       largeWorldActive
@@ -1352,6 +1359,141 @@ function collectGem(value) {
   saveNow();
 }
 
+// ── RECURRING CHARACTER SCHEDULES ────────────────────────────────────────────
+// Reuse each character's one authored avatar instead of spawning a duplicate.
+// When a schedule moves outdoors, the avatar is re-parented from its interior to
+// the city scene; when the shift returns indoors, its exact local transform is
+// restored. Service stations remain functional even while the named character is
+// out in the district.
+function initializeRecurringCharacters() {
+  recurringCharacters.clear();
+  if (!interiors?.byId) return;
+  for (const definition of STARTER_TOWN_RECURRING_SCHEDULES) {
+    if (definition.npcId === 'denise-hall') continue; // her avatar is built with the sanitation job
+    let found = null;
+    for (const intr of Object.values(interiors.byId)) {
+      const npcIndex = intr.npcs.findIndex((entry) => entry.storyId === definition.npcId);
+      if (npcIndex < 0) continue;
+      const av = intr.avatars?.[npcIndex];
+      if (av?.group) found = { intr, npc: intr.npcs[npcIndex], av };
+      break;
+    }
+    if (!found) {
+      console.warn(`[schedule] recurring character ${definition.npcId} has no live avatar`);
+      continue;
+    }
+    recurringCharacters.set(definition.npcId, {
+      id: definition.npcId,
+      name: definition.name,
+      npc: found.npc,
+      av: found.av,
+      homeArea: found.intr.id,
+      homeParent: found.av.group.parent,
+      homePosition: found.av.group.position.clone(),
+      homeRotation: found.av.group.rotation.clone(),
+      homeInteractionPosition: found.npc.pos.clone(),
+      activeArea: null,
+      activePeriod: null,
+      label: '',
+    });
+  }
+  updateRecurringCharacterSchedules(true);
+}
+
+function registerSanitationRecurringCharacter() {
+  if (!sanitationNpc?.av?.group) return;
+  recurringCharacters.set('denise-hall', {
+    id: 'denise-hall',
+    name: sanitationNpc.name,
+    npc: null,
+    av: sanitationNpc.av,
+    homeArea: 'city',
+    homeParent: scene,
+    homePosition: sanitationNpc.av.group.position.clone(),
+    homeRotation: sanitationNpc.av.group.rotation.clone(),
+    homeInteractionPosition: sanitationNpc.pos,
+    activeArea: null,
+    activePeriod: null,
+    label: '',
+  });
+  updateRecurringCharacterSchedules(true);
+}
+
+function updateRecurringCharacterSchedules(force = false) {
+  if (!recurringCharacters.size) return;
+  for (const record of recurringCharacters.values()) {
+    const slot = starterTownRecurringScheduleAt(record.id, state.timeMin);
+    if (!slot) continue;
+    const placementChanged = force
+      || record.activePeriod !== slot.period
+      || record.activeArea !== slot.area;
+
+    if (placementChanged && slot.kind === 'interior' && record.homeParent) {
+      if (record.av.group.parent !== record.homeParent) record.homeParent.add(record.av.group);
+      record.av.group.position.copy(record.homePosition);
+      record.av.group.rotation.copy(record.homeRotation);
+      if (slot.offset) {
+        record.av.group.position.x += Number(slot.offset.x) || 0;
+        record.av.group.position.z += Number(slot.offset.z) || 0;
+      }
+      if (record.npc?.pos && record.homeInteractionPosition) {
+        record.npc.pos.copy(record.homeInteractionPosition);
+        if (slot.offset) {
+          record.npc.pos.x += Number(slot.offset.x) || 0;
+          record.npc.pos.z += Number(slot.offset.z) || 0;
+        }
+      }
+    } else if (placementChanged && slot.area === 'city') {
+      const resolved = resolveStarterTownRecurringPosition(slot, {
+        entranceByInteriorId: entranceMap,
+        locationById: (id) => worldRegistry.location(id),
+      });
+      if (!resolved) {
+        console.warn(`[schedule] could not resolve ${record.id} at ${slot.label}`);
+        continue;
+      }
+      if (record.av.group.parent !== scene) scene.add(record.av.group);
+      record.av.group.position.set(resolved.x, 0, resolved.z);
+      record.av.group.rotation.set(0, resolved.facing || 0, 0);
+      if (!record.npc && record.homeInteractionPosition) {
+        record.homeInteractionPosition.set(resolved.x, 0, resolved.z);
+      }
+    }
+
+    record.activeArea = slot.area;
+    record.activePeriod = slot.period;
+    record.label = slot.label;
+    record.placementKind = slot.kind;
+    // Outdoor avatars should disappear with the city while the player is inside;
+    // interior room lifecycle already controls indoor avatar visibility.
+    record.av.group.visible = slot.area === 'city' ? area === 'city' : true;
+  }
+}
+
+function recurringCharacterAvailable(npcId, targetArea) {
+  const record = recurringCharacters.get(npcId);
+  return !record || record.activeArea === targetArea;
+}
+
+function recurringCharacterScheduleSnapshot() {
+  return STARTER_TOWN_RECURRING_SCHEDULES.map((definition) => {
+    const record = recurringCharacters.get(definition.npcId);
+    const slot = starterTownRecurringScheduleAt(definition.npcId, state.timeMin);
+    const position = record?.av?.group?.position;
+    return {
+      id: definition.npcId,
+      name: definition.name,
+      loaded: !!record,
+      period: slot?.period || null,
+      label: slot?.label || null,
+      area: record?.activeArea || slot?.area || null,
+      placement: slot?.kind || null,
+      x: position ? +position.x.toFixed(2) : null,
+      z: position ? +position.z.toFixed(2) : null,
+    };
+  });
+}
+
 // ── TRASH CLEANUP SIDE JOB ──────────────────────────────────────────────────────
 // Intentional litter placed on sidewalks beside storefronts (never in driving
 // lanes). Talk to the sanitation worker to accept a tiered cleanup task, pick up
@@ -1593,6 +1735,7 @@ function placeTrashJob() {
     av: worker,
     pos: sPos.clone().setY(0),
   };
+  registerSanitationRecurringCharacter();
   applyNpcSkins([sanitationNpc], renderer)
     .then((count) => {
       attachSanitationSafetyGear(worker);
@@ -1923,6 +2066,18 @@ function registerInteractables(entrances) {
       onInteract: () => talkTo(n),
     });
   });
+  // Named characters whose current schedule slot is outdoors use their same
+  // authored avatar and dialogue tree; no duplicate clone is spawned.
+  for (const record of recurringCharacters.values()) {
+    if (record.id === 'denise-hall' || !record.npc) continue;
+    manager.register({
+      id: 'scheduled-' + record.id, area: 'city', key: 'e', radius: 2.6,
+      getPosition: () => record.av.group.position,
+      enabled: () => !inCar && record.activeArea === 'city' && record.av.group.visible !== false,
+      getPrompt: () => 'Talk to ' + record.name,
+      onInteract: () => talkToInterior(record.npc),
+    });
+  }
 
   // trash cleanup side job: pickups, dumpster deposit, sanitation worker
   cityTrash.forEach((item, i) => {
@@ -1947,7 +2102,8 @@ function registerInteractables(entrances) {
     manager.register({
       id: 'sanitation', area: 'city', key: 'e', radius: 2.6,
       getPosition: () => sanitationNpc.pos,
-      enabled: () => !inCar,
+      enabled: () => !inCar && recurringCharacterAvailable('denise-hall', 'city')
+        && sanitationNpc.av.group.visible !== false,
       getPrompt: () => 'Talk to Sanitation',
       onInteract: () => talkToSanitation(),
     });
@@ -1994,6 +2150,7 @@ function registerInteractables(entrances) {
       manager.register({
         id: `intnpc-${intr.id}-${i}`, area: intr.id, key: 'e', radius: 2.6,
         getPosition: () => npc.pos,
+        enabled: () => recurringCharacterAvailable(npc.storyId, intr.id),
         getPrompt: () => 'Talk to ' + npc.name,
         onInteract: () => talkToInterior(npc),
       });
@@ -4976,6 +5133,8 @@ function animate() {
     return;
   }
 
+  updateRecurringCharacterSchedules();
+
   // Outdoor simulation is suspended inside buildings. This keeps one interior
   // transition from competing with a town-wide traffic/pedestrian update and
   // removes the largest source of entry-frame stalls on lower-end devices.
@@ -5179,6 +5338,8 @@ function animate() {
       scheduledPedestrians: cityNPCs.filter(n => n.av.group.visible !== false).length,
       scheduledTraffic: traffic.filter(c => c.g.visible !== false).length,
       scheduledServiceTraffic: traffic.filter(c => c.g.visible !== false && c.trafficKind === 'service').length,
+      recurringNpcCount: recurringCharacters.size,
+      recurringNpcsOutdoors: [...recurringCharacters.values()].filter((record) => record.activeArea === 'city').length,
     });
   }
 }
@@ -5268,7 +5429,7 @@ if (import.meta.env.PROD && 'serviceWorker' in navigator) {
 }
 
 // ── lightweight debug / automation bridge (safe, read-mostly) ─────────────────
-window.ZW = {
+window.ZW = Object.assign(window.ZW || {}, {
   state: () => state,
   area: () => area,
   inCar: () => inCar,
@@ -5293,7 +5454,15 @@ window.ZW = {
   npcList: () => (area === 'city'
     ? cityNPCs.filter(n => n.av.group.visible !== false)
       .map(n => ({ name: n.name, role: n.role, x: n.av.group.position.x, z: n.av.group.position.z }))
-    : interiors.byId[area].npcs.map(n => ({ name: n.name, x: n.pos.x, z: n.pos.z }))),
+      .concat([...recurringCharacters.values()]
+        .filter((record) => record.activeArea === 'city' && record.av.group.visible !== false)
+        .map((record) => ({
+          name: record.name, role: 'recurring', schedule: record.label,
+          x: record.av.group.position.x, z: record.av.group.position.z,
+        })))
+    : interiors.byId[area].npcs
+      .filter((npc) => recurringCharacterAvailable(npc.storyId, area))
+      .map(n => ({ name: n.name, x: n.pos.x, z: n.pos.z }))),
   trafficList: () => traffic.map(c => ({
     route: c.routeName,
     kind: c.trafficKind,
@@ -5309,5 +5478,7 @@ window.ZW = {
     pedestrians: cityNPCs.filter(n => n.av.group.visible !== false).length,
     traffic: traffic.filter(c => c.g.visible !== false).length,
     serviceTraffic: traffic.filter(c => c.g.visible !== false && c.trafficKind === 'service').length,
+    recurringNpcs: recurringCharacterScheduleSnapshot(),
   }),
-};
+  recurringNpcSchedule: () => recurringCharacterScheduleSnapshot(),
+});

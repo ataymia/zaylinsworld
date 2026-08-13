@@ -55,7 +55,7 @@ The checklist is intentionally strict. A system is not marked DONE merely becaus
 [PARTIAL] job variety and career progression
 [PARTIAL] crime consequence depth
 [MISSING] optional branching tutorial
-[PARTIAL] district NPC schedules: ambient population is scheduled; recurring named characters remain stationary
+[DONE] district NPC schedules: ambient population and all five named recurring characters consume the saved clock
 [DONE] district traffic identities and saved-clock schedules
 [DONE] district-aware minimap and city map
 [DONE] basic city healthcare service

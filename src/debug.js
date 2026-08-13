@@ -119,6 +119,8 @@ function rows() {
     ['pedestrians scheduled', num(live.scheduledPedestrians)],
     ['traffic scheduled', num(live.scheduledTraffic)],
     ['service vehicles live', num(live.scheduledServiceTraffic)],
+    ['recurring NPCs loaded', num(live.recurringNpcCount)],
+    ['recurring NPCs outdoors', num(live.recurringNpcsOutdoors)],
     ['prefab props', num(metrics.prefabProps)],
     ['prefab real assets', num(metrics.prefabAssets, true)],
     ['prefab fallbacks', num(metrics.prefabFallbacks)],

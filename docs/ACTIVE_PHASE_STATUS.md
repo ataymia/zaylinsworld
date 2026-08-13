@@ -439,5 +439,5 @@ working until the shipped runtime makes it visible, reachable, and stable.
 - [x] Preserve access to the working shop, workout, police-desk, and sanitation services from authored conversations.
 - [x] Hide offers for planned quests until their gameplay implementation is runtime-ready.
 - [x] Persist relationship growth and repeat-visit memory in the existing save.
-- [ ] Move recurring characters through real district schedules instead of leaving every interior character stationary.
+- [x] Move all five recurring characters through canonical morning, afternoon, and evening placements tied to live interiors, relocated doors, and district landmarks.
 - [ ] Complete deployed conversation/service regression for all five characters.

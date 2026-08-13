@@ -12,7 +12,7 @@
 const freeze = (value) => Object.freeze(value);
 const phase = (id, name, status, values = {}) => freeze({ id, name, status, ...values });
 
-export const BUILD_PHASE_STATUS_VERSION = 6;
+export const BUILD_PHASE_STATUS_VERSION = 7;
 export const BUILD_PHASE_UPDATED_AT = '2026-08-13';
 
 export const BUILD_PHASES = freeze([
@@ -163,10 +163,10 @@ export const BUILD_PHASES = freeze([
       'ambient traffic identities and time-of-day operation',
       'five scheduled service vehicles generated from the shared RoadGraph',
       'five canonical recurring NPCs with state-aware service dialogue',
+      'five recurring NPCs moving through canonical morning, afternoon, and evening district placements',
       'empty asset-factory queue preflight and no recurring self-trigger',
     ]),
     remaining: freeze([
-      'recurring-character district schedules',
       'police and remaining legacy streaming/pool integration',
       'deployed visual acceptance',
       '5-, 15-, and 60-minute browser stability runs',
