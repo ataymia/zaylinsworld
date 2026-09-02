@@ -23,16 +23,16 @@ export const STARTER_TOWN_NO_BUILD_BUFFERS = freeze([
 export const STARTER_TOWN_FUNCTIONAL_PARCELS = freeze([
   parcel('parcel-frostbox', 'dreamdrop-district', 'commercial', -168, -88, 42, 34, { locationId: 'frostbox', frontageRoute: 'dreamdrop-boulevard', parking: 4, serviceAccess: 'dreamdrop-alley' }),
   parcel('parcel-chicken-spot', 'dreamdrop-district', 'commercial', 192, -152, 46, 38, { locationId: 'chicken-spot', frontageRoute: 'dreamdrop-boulevard', parking: 5, serviceAccess: 'dreamdrop-alley' }),
-  parcel('parcel-kicks-fits', 'market-mile', 'commercial', -72, 352, 50, 40, { locationId: 'kicks-fits', frontageRoute: 'centre-avenue', parking: 8, serviceAccess: 'market-service-road' }),
-  parcel('parcel-block-supply', 'westside-blocks', 'commercial', -568, 280, 72, 56, { locationId: 'block-supply', frontageRoute: 'westside-alley', parking: 10, loadingBays: 2 }),
+  parcel('parcel-kicks-fits', 'market-mile', 'commercial', -72, 352, 50, 40, { locationId: 'kicks-fits', frontageRoute: 'kicks-frontage-street', parking: 8, serviceAccess: 'market-service-road' }),
+  parcel('parcel-block-supply', 'westside-blocks', 'commercial', -568, 280, 72, 56, { locationId: 'block-supply', frontageRoute: 'block-supply-frontage', parking: 10, loadingBays: 2 }),
   parcel('parcel-auto-haus', 'northworks-auto-row', 'vehicle', -448, -660, 150, 110, { locationId: 'auto-haus', frontageRoute: 'northworks-expressway', parking: 30, loadingBays: 2, testDriveAccess: true }),
-  parcel('parcel-city-garage', 'northworks-auto-row', 'service', -112, -616, 110, 86, { locationId: 'city-garage', frontageRoute: 'northworks-expressway', parking: 12, loadingBays: 4, towAccess: true }),
-  parcel('parcel-zaylins-prep', 'scholars-quarter', 'school-campus', -724, 72, 250, 190, { locationId: 'zaylins-prep', frontageRoute: 'school-loop', parking: 36, dropOffBays: 10, fields: 2 }),
-  parcel('parcel-police-station', 'civic-heights', 'civic', 632, -312, 150, 120, { locationId: 'police-station', frontageRoute: 'civic-rise', parking: 24, secureParking: 12, serviceAccess: 'civic-service-road' }),
+  parcel('parcel-city-garage', 'northworks-auto-row', 'service', -112, -616, 110, 86, { locationId: 'city-garage', frontageRoute: 'auto-row-frontage', parking: 12, loadingBays: 4, towAccess: true }),
+  parcel('parcel-zaylins-prep', 'scholars-quarter', 'school-campus', -724, 72, 250, 190, { locationId: 'zaylins-prep', frontageRoute: 'scholar-road', parking: 36, dropOffBays: 10, fields: 2 }),
+  parcel('parcel-police-station', 'civic-heights', 'civic', 632, -312, 150, 120, { locationId: 'police-station', frontageRoute: 'public-safety-drive', parking: 24, secureParking: 12, serviceAccess: 'civic-service-road' }),
   parcel('parcel-worktower', 'civic-heights', 'office', 664, -20, 120, 100, { locationId: 'worktower', frontageRoute: 'eastgate-parkway', parking: 24, serviceAccess: 'civic-service-road' }),
   parcel('parcel-iron-city-gym', 'parkside-commons', 'recreation', 448, 448, 110, 86, { locationId: 'iron-city-gym', frontageRoute: 'parkside-crescent', parking: 20, trailAccess: true }),
-  parcel('parcel-6twelve', 'eastgate-corridor', 'fuel', 832, 232, 150, 110, { locationId: '6twelve', frontageRoute: 'eastgate-parkway', parking: 12, fuelPumps: 8, chargingPads: 4, loadingBays: 1 }),
-  parcel('parcel-zaylins-home', 'willowbend-residential', 'residential', 48, 828, 42, 48, { locationId: 'zaylins-home', frontageRoute: 'willowbend-main', parking: 2, mailbox: true, upgradeable: true }),
+  parcel('parcel-6twelve', 'eastgate-corridor', 'fuel', 832, 232, 150, 110, { locationId: '6twelve', frontageRoute: 'eastgate-frontage-road', parking: 12, fuelPumps: 8, chargingPads: 4, loadingBays: 1 }),
+  parcel('parcel-zaylins-home', 'willowbend-residential', 'residential', 48, 828, 42, 48, { locationId: 'zaylins-home', frontageRoute: 'willowbend-home-street', parking: 2, mailbox: true, upgradeable: true }),
   parcel('parcel-dreamdrop-park', 'parkside-commons', 'park', 420, 568, 250, 210, { locationId: 'dreamdrop-park', frontageRoute: 'parkside-crescent', parking: 18, pedestrianPriority: true }),
 ]);
 

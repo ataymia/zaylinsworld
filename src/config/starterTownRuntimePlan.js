@@ -25,6 +25,7 @@ const location = (id, name, districtId, x, z, extra = {}) => freeze({
     fallback: extra.fallbackAsset || 'procedural-location-shell',
   }),
   ...extra,
+  frontageFace: extra.frontageFace ? freeze([...extra.frontageFace]) : null,
 });
 
 export const STARTER_TOWN_FEATURE_FLAGS = freeze({
@@ -136,55 +137,167 @@ export const STARTER_TOWN_ROUTES = freeze([
   route('dreamdrop-alley', 'Dreamdrop Back Lane', 'alley', [
     [-300, 80], [0, 80], [300, 80],
   ]),
+  // District streets complete the block structure between the original long
+  // arterials. They deliberately meet at-grade so the shared road graph,
+  // traffic controls, minimap, pedestrians, police, and service access all see
+  // the same connected city instead of separate decorative lines.
+  route('dreamdrop-west-street', 'Foundry Street', 'local', [
+    [-330, -360], [-330, -120], [-330, 80], [-330, 220],
+  ]),
+  route('dreamdrop-east-street', 'Juniper Street', 'local', [
+    [330, -360], [330, -120], [330, 80], [330, 220],
+  ]),
+  route('dreamdrop-market-street', 'Market Street', 'main', [
+    [-900, 200], [-720, 200], [-330, 200], [0, 200], [330, 200], [720, 200], [900, 200],
+  ]),
+  route('westside-avenue', 'Westside Avenue', 'main', [
+    [-620, -120], [-620, 200], [-620, 560], [-620, 860],
+  ]),
+  route('westside-neighborhood-road', 'Marigold Street', 'local', [
+    [-900, 240], [-620, 240], [-360, 240],
+  ]),
+  route('westside-community-road', 'Community Street', 'local', [
+    [-900, 560], [-620, 560], [-360, 560],
+  ]),
+  route('westside-south-road', 'South Block Street', 'local', [
+    [-860, 820], [-620, 820], [-360, 820],
+  ]),
+  route('market-west-street', 'Boutique Street', 'local', [
+    [-300, 200], [-300, 300], [-300, 500], [-300, 620],
+  ]),
+  route('market-east-street', 'Mercantile Street', 'local', [
+    [200, 200], [200, 300], [200, 500], [200, 620],
+  ]),
+  route('market-mile-road', 'Market Mile', 'main', [
+    [-360, 300], [-300, 300], [0, 300], [200, 300], [360, 300],
+  ]),
+  route('kicks-frontage-street', 'Kicks Frontage Street', 'local', [
+    [-40, 200], [-40, 300], [-40, 500],
+  ]),
+  route('block-supply-frontage', 'Block Supply Street', 'local', [
+    [-620, 320], [-568, 320], [-360, 320],
+  ]),
+  route('scholar-boundary-road', 'Scholar Way', 'local', [
+    [-980, -340], [-720, -340], [-360, -340], [-330, -340],
+  ], { schoolZone: true }),
+  route('scholar-west-street', 'Library Street', 'local', [
+    [-940, -340], [-940, 0], [-940, 200],
+  ], { schoolZone: true }),
+  route('northworks-west-street', 'Assembly Street', 'local', [
+    [-900, -860], [-900, -700], [-900, -390], [-900, -360],
+  ]),
+  route('northworks-mid-street', 'Mechanic Street', 'local', [
+    [-360, -860], [-360, -700], [-360, -390], [-360, -360],
+  ]),
+  route('northworks-south-road', 'Service Works Road', 'local', [
+    [-980, -390], [-900, -390], [-620, -390], [-360, -390], [0, -390], [220, -390],
+  ]),
+  route('auto-row-frontage', 'Auto Row Frontage', 'local', [
+    [-220, -650], [-112, -650], [0, -650],
+  ]),
+  route('civic-west-street', 'Civic Avenue', 'main', [
+    [360, -860], [360, -520], [360, -120], [360, 180], [360, 200],
+  ]),
+  route('civic-east-street', 'Heights Street', 'local', [
+    [880, -860], [880, -520], [880, -120], [880, 180], [880, 200],
+  ]),
+  route('civic-middle-road', 'Council Street', 'local', [
+    [220, -520], [360, -520], [620, -520], [880, -520], [900, -520],
+  ]),
+  route('public-safety-drive', 'Public Safety Drive', 'local', [
+    [600, -520], [600, -312], [600, -120],
+  ]),
+  route('civic-south-road', 'Civic Commons Road', 'local', [
+    [360, 180], [620, 180], [880, 180], [900, 180],
+  ]),
+  route('eastgate-frontage-road', 'Eastgate Frontage Road', 'local', [
+    [872, 40], [872, 180], [872, 300], [872, 400],
+  ]),
+  route('eastgate-service-street', 'Travel Services Street', 'local', [
+    [360, 400], [620, 400], [740, 400], [872, 400], [960, 400],
+  ]),
+  route('parkside-east-street', 'Recreation Street', 'local', [
+    [920, 400], [920, 640], [920, 860],
+  ]),
+  route('parkside-avenue', 'Parkside Avenue', 'main', [
+    [740, 400], [740, 640], [740, 820], [740, 860],
+  ]),
+  route('parkside-commons-road', 'Commons Road', 'local', [
+    [220, 640], [420, 640], [740, 640], [920, 640],
+  ]),
+  route('parkside-south-road', 'Garden Street', 'local', [
+    [220, 820], [420, 820], [740, 820], [860, 820],
+  ]),
+  route('willowbend-home-street', 'Homeplace Street', 'local', [
+    [76, 700], [76, 820], [76, 960],
+  ]),
+  route('willowbend-west-street', 'Willowbend West', 'local', [
+    [-330, 620], [-330, 700], [-330, 820], [-330, 960],
+  ]),
+  route('willowbend-south-road', 'Willowbend South', 'local', [
+    [-330, 960], [76, 960], [220, 960],
+  ]),
 ]);
 
 export const STARTER_TOWN_LOCATIONS = freeze([
   location('frostbox', 'Frostbox', 'dreamdrop-district', -168, -88, {
     interiorId: 'frostbox', category: 'store',
+    frontageFace: [0, -1],
     preferredAsset: 'library:buildings:zta-free-asset-factory:building-starter-frostbox-exterior-v02',
   }),
   location('chicken-spot', 'Chicken Spot', 'dreamdrop-district', 192, -152, {
     interiorId: 'chicken', category: 'store',
+    frontageFace: [0, 1],
     preferredAsset: 'library:buildings:zta-free-asset-factory:building-starter-chicken-spot-exterior-v02',
   }),
   location('kicks-fits', 'Kicks & Fits', 'market-mile', -72, 352, {
     interiorId: 'kicks', category: 'store',
+    frontageFace: [1, 0],
     preferredAsset: 'library:buildings:zta-free-asset-factory:building-starter-kicks-fits-exterior-v02',
   }),
   location('block-supply', 'Block Supply', 'westside-blocks', -568, 280, {
     interiorId: 'blocksupply', category: 'store',
+    frontageFace: [0, 1],
     preferredAsset: 'library:buildings:zta-free-asset-factory:building-starter-block-supply-exterior-v02',
   }),
   location('auto-haus', 'Auto Haus', 'northworks-auto-row', -448, -660, {
     interiorId: 'dealership', category: 'vehicle',
+    frontageFace: [0, -1],
     preferredAsset: 'library:buildings:zta-free-asset-factory:building-starter-auto-haus-exterior-v02',
   }),
   location('city-garage', 'City Garage', 'northworks-auto-row', -112, -616, {
     interiorId: 'garage', category: 'service',
+    frontageFace: [0, -1],
     preferredAsset: 'library:buildings:zta-free-asset-factory:building-starter-city-garage-exterior-v02',
   }),
-  location('zaylins-prep', 'Zaylins Prep', 'scholars-quarter', -724, 72, {
+  location('zaylins-prep', 'Zaylins Prep', 'scholars-quarter', -780, 72, {
     interiorId: 'school', category: 'school',
+    frontageFace: [1, 0],
     preferredAsset: 'library:buildings:zta-free-asset-factory:building-starter-zaylins-prep-exterior-v02',
   }),
   location('police-station', 'Dreamdrop Public Safety', 'civic-heights', 632, -312, {
     interiorId: 'police', category: 'law',
+    frontageFace: [-1, 0],
     preferredAsset: 'library:buildings:zta-free-asset-factory:building-starter-police-station-exterior-v02',
   }),
   location('worktower', 'WorkTower', 'civic-heights', 664, -20, {
     interiorId: 'office', category: 'job',
+    frontageFace: [0, 1],
     preferredAsset: 'library:buildings:zta-free-asset-factory:building-starter-worktower-exterior-v02',
   }),
   location('iron-city-gym', 'Iron City Gym', 'parkside-commons', 448, 448, {
     interiorId: 'gym', category: 'service',
+    frontageFace: [0, -1],
     preferredAsset: 'library:buildings:zta-free-asset-factory:building-starter-iron-city-gym-exterior-v02',
   }),
   location('6twelve', '6twelve', 'eastgate-corridor', 832, 232, {
     interiorId: 'gas', category: 'fuel',
+    frontageFace: [1, 0],
     preferredAsset: 'library:buildings:zta-free-asset-factory:building-starter-6twelve-exterior-v02',
   }),
   location('zaylins-home', "Zaylins Home", 'willowbend-residential', 48, 828, {
     interiorId: 'home', category: 'property', spawnId: 'starter-home',
+    frontageFace: [1, 0],
     preferredAsset: 'library:buildings:zta-free-asset-factory:building-starter-zaylins-home-exterior-v02',
   }),
   location('dreamdrop-park', 'Dreamdrop Park', 'parkside-commons', 420, 568, { category: 'activity', enterable: false }),

@@ -1,9 +1,9 @@
 # Zaylins Active Phase Status
 
-Updated: 2026-07-18  
+Updated: 2026-08-13
 Authoritative machine-readable source: `src/config/buildPhaseStatus.js`  
 Repository workflow: direct commits to `main`; no pull requests unless Mia explicitly requests one  
-Construction mirror: `agent/starter-town-construction`
+Active integration: draft PR #35, `codex/starter-town-live-traffic`
 
 This file overrides older status labels in `ZAYLINS_MASTER_EXECUTION_CHECKLIST.md`. The master checklist remains the detailed work inventory. This document answers the narrower question: **what is implemented, what still needs live verification, and what comes next?**
 
@@ -23,10 +23,12 @@ Phase 0: COMPLETE
 Phase 1: CORE CHARACTER FOUNDATION WORKS; ANIMATION CLIPS AND SOME LIVE NPC/INTERACTION QA REMAIN
 Phase 2: IMPLEMENTED; SAVE/LIFECYCLE FEATURE-PREVIEW QA REMAINS
 Phase 3: IMPLEMENTED FOUNDATION; LIVE SOAK, ARRAY-TO-POOL MIGRATION, AND STRESS TESTS REMAIN
-Phase 4: IMPLEMENTED FOUNDATION; LIVE VEHICLE/TRAFFIC/POLICE BINDING AND TRAVERSAL QA REMAIN
+Phase 4: IMPLEMENTED FOUNDATION; POLICE, QUEST, AND FIVE SCHEDULED SERVICE ROUTES ARE LIVE; TRAVERSAL QA REMAINS
 Phase 5: IMPLEMENTED GEOGRAPHIC SKELETON; LIVE DRIVE-TIME AND READABILITY QA REMAIN
 Phase 6: IMPLEMENTED VISUAL FOUNDATION; LIVE ART-DIRECTION AND FPS QA REMAIN
-Next construction phase after Phase 2–6 preview verification: PHASE 7
+Phase 7: IMPLEMENTED; LIVE FULL-TOWN ACCEPTANCE REMAINS
+Phase 8: ACTIVE; SCHEDULED CITY LIFE, RECURRING NPCS, POLICE LIFECYCLE, AND ACCEPTANCE EVIDENCE IMPLEMENTED
+Next work: DEPLOYED DRIVING, SAVE, INTERIOR, PURSUIT, GRAPHICS, AND 5/15/60-MINUTE ACCEPTANCE
 ```
 
 ---
@@ -43,6 +45,7 @@ Status: **Complete**
 - [x] Existing automated quality gate.
 - [x] Runtime-foundation test included in `npm run check`.
 - [x] Machine-readable phase ledger.
+- [x] Every production build path emits the same version-stamped service worker; the Pages assembly step cannot overwrite it.
 
 ---
 
@@ -126,8 +129,8 @@ Status: **Implemented foundation**
 
 ## Phase 2C: Save schema and migration
 
-- [x] Explicit save schema version 4.
-- [x] Checksum, backup, corruption fallback, and migration hooks.
+- [x] Explicit save schema version 8.
+- [x] Checksum, validated backup recovery, corruption capture, and migration hooks.
 - [x] Safe named-spawn contracts for the expanded city.
 - [ ] Run the full fresh/current/legacy/driving/interior/mission/corruption test matrix.
 
@@ -178,6 +181,8 @@ Status: **Implemented foundation**
 - [x] Effects pool.
 - [x] Interaction-marker pool.
 - [x] Cell unload releases pooled objects.
+- [x] Acquire and release live wanted-response officers and pursuit cruisers through the named police pools.
+- [x] Transfer a stolen pursuit cruiser out of pool ownership without hiding or reclaiming it.
 - [ ] Migrate remaining compact-map arrays to acquire/release these pools.
 
 ## Phase 3D: Instancing and LOD
@@ -187,7 +192,9 @@ Status: **Implemented foundation**
 - [x] Instanced district massing.
 - [x] Instanced roads and roadside infrastructure.
 - [x] Instancing eligibility contract.
-- [ ] Bind current NPC and traffic update loops to LOD intervals.
+- [x] Bind current pedestrian and traffic update loops to distance-based LOD intervals.
+- [x] Bind active police pursuit to distance-based LOD intervals and far-unit recycling.
+- [ ] Bind remaining compact-map systems to streaming/LOD intervals.
 
 ## Phase 3E: Budgets and Auto graphics
 
@@ -203,6 +210,8 @@ Status: **Implemented foundation**
 
 Status: **Planned verification**
 
+- [x] Capture the exact build, frame spikes, heap/render samples, saves, graphics changes, input delivery, runtime errors, and interior coverage in one bounded report.
+- [x] Provide a safe deployed runner that cycles all twelve real interior lifecycles and restores the player's exterior position.
 - [ ] Five-minute stationary soak.
 - [ ] Fifteen-minute full-speed large-city drive.
 - [ ] Repeated interiors.
@@ -264,7 +273,9 @@ Status: **Implemented foundation**
 - [x] One connected public graph.
 - [x] Closures, service restrictions, and school-zone routing options.
 - [x] Routes to every locked functional location.
-- [ ] Bind legacy traffic, police, missions, delivery, and minimap movement to the shared graph.
+- [x] Bind foot-police and cruiser pursuits to shared graph waypoints.
+- [x] Bind active physical quest objectives to route guidance on the minimap.
+- [x] Bind five delivery and scheduled service-vehicle routes to the shared graph.
 
 ## Phase 4G: Validation
 
@@ -347,7 +358,7 @@ Status: **Implemented foundation**
 
 ---
 
-# Next construction phase
+# Completed construction phase
 
 ## Phase 7: Functional-location relocation
 
@@ -379,3 +390,65 @@ Recommended Phase 7 order:
 7M 6twelve — implemented
 7N Dreamdrop Park — implemented
 ```
+
+---
+
+# Current construction phase
+
+## Phase 8: Living-city cohesion and live acceptance
+
+Status: **In implementation on the active Starter Town draft**
+
+The player's deployed-build observations are authoritative acceptance evidence.
+Source code that merely declares a car, prop, route, or asset does not count as
+working until the shipped runtime makes it visible, reachable, and stable.
+
+### Phase 8A: World cohesion
+
+- [x] Remove the compact 260 m terrain/road surface when the 2,000 m town is active.
+- [x] Expand the town to 49 connected authored roads and draw the full network on the city map.
+- [x] Add 18 district-spanning pedestrian loops and 72/108/156 density budgets.
+- [x] Add 16 full-town traffic loops and 28/44/68 density budgets.
+- [x] Start traffic vehicles in motion on the large-town routes.
+- [x] Keep at least one occupied traffic vehicle within recovery distance of an on-foot player.
+- [x] Increase landscaping to 1,400 trees and 240 rocks with road clearance and district minimums.
+- [x] Increase production filler-building massing from 73 to 103 road-safe placements.
+- [x] Give every enterable functional exterior exactly one readable identity sign.
+- [x] Connect all twelve enterable destinations to their declared frontage roads with paved vehicle access and concrete walks.
+- [x] Suppress duplicate legacy/production building shells while retaining interactions.
+- [x] Make generated streetlights block slow vehicles, fall under a real impact, and restore after 30 minutes.
+- [x] Register trees and rocks as hard off-road vehicle obstacles.
+- [x] Give all 103 production filler buildings hard rectangular vehicle footprints.
+- [x] Enforce the locked playable and terrain bounds, preserving only authored gateway exits.
+- [x] Preserve the existing Shift sprint and stamina behavior instead of adding a conflicting run system.
+- [x] Replace the prototype sanitation setup with Denise Hall on the sidewalk, a production dumpster with detailed fallback, and 28 citywide litter stops.
+- [x] Render only the active interior and suspend town simulation during transitions.
+- [x] Recover outside instead of crashing when an interior transition fails.
+- [x] Record every real entry, exit, recovered transition, return distance, and save outcome in copyable deployed acceptance evidence.
+- [x] Add an all-twelve-interior lifecycle runner that cannot silently pass a partial interior catalog.
+- [ ] Pass visual playtest for terrain stability, labels, traffic motion, pedestrian coverage, and building placement.
+- [ ] Pass repeated entry/exit testing for all twelve interiors on the deployed preview.
+
+### Phase 8B: Shared simulation
+
+- [x] Bind active police dispatch and pursuit navigation to the authoritative road graph.
+- [x] Bind physical mission objectives and minimap route guidance to the same graph.
+- [x] Bind five delivery/municipal/service vehicles to routes generated by the same graph.
+- [x] Bind pedestrian and ambient-traffic activity to thirteen saved-clock schedules for school, work shifts, shops, neighborhoods, recreation, travel, and service windows.
+- [x] Add distance-based update budgets for traffic and pedestrians.
+- [x] Add a spatial collision index so increased scenery density does not require whole-city collision scans.
+- [x] Move wanted-response officers and pursuit cruisers onto named pools and bounded distance-update budgets.
+- [x] Keep 1–5 star staffing within the six-unit low-spec police budget and release excess units after de-escalation.
+- [x] Transfer a stolen pursuit cruiser to persistent player/abandoned-vehicle ownership before pursuit cleanup.
+- [ ] Move remaining legacy simulation onto streaming/LOD budgets and named pools.
+- [ ] Complete browser-driven 5-, 15-, and 60-minute stability runs.
+
+### Phase 8C: Recurring characters and dialogue
+
+- [x] Place Malik Frost, Maya Brooks, Coach Rell, Officer Dane, and Denise Hall in the live Starter Town loop.
+- [x] Resolve authored multi-step dialogue against relationship, stats, quests, flags, wanted level, reputation, and local convictions.
+- [x] Preserve access to the working shop, workout, police-desk, and sanitation services from authored conversations.
+- [x] Hide offers for planned quests until their gameplay implementation is runtime-ready.
+- [x] Persist relationship growth and repeat-visit memory in the existing save.
+- [x] Move all five recurring characters through canonical morning, afternoon, and evening placements tied to live interiors, relocated doors, and district landmarks.
+- [ ] Complete deployed conversation/service regression for all five characters.

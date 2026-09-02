@@ -12,12 +12,25 @@
 // ───────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 import { ROAD, INTERSECTIONS, TRAFFIC_TIMING } from './config/mapConfig.js';
+import { STARTER_TOWN_TRAFFIC_CONTROL_PLAN } from './config/starterTownTrafficControlPlan.js';
 import { registerWorldObject } from './worldCollision.js';
 
-const STOP_LINE = ROAD.width / 2 + 1.0;     // hold this far back from the centre
-const APPROACH = 7.0;                        // start reacting within this distance
-const LANE_HALF = ROAD.width / 2 + 0.5;      // car counts as "on this approach" within
 const STOP_WAIT = 1.1;                       // seconds a car waits at a stop sign
+const DRIVER_STOP_WAIT = 0.8;
+
+function compactControlPlan() {
+  const roadHalf = ROAD.width / 2;
+  return INTERSECTIONS.map((entry, index) => ({
+    ...entry,
+    id: `compact-control-${index}`,
+    roadHalf,
+    stopLine: roadHalf + 1,
+    approach: roadHalf + 7,
+    laneHalf: roadHalf + 0.5,
+    hardwareOffset: roadHalf + 1.3,
+    routeIds: [],
+  }));
+}
 
 // Phase machine for one light intersection. Greens alternate NS↔EW with a
 // yellow + brief all-red between. Returns 'green' | 'yellow' | 'red' per axis.
@@ -97,12 +110,15 @@ function setLamp(pole, state) {
 }
 
 // Build the whole control layer (logic + visible props). Off-road, corner-placed.
-export function buildTrafficControl(scene) {
+export function buildTrafficControl(scene, { largeWorld = false } = {}) {
   const lights = [];   // { x, z, phase, poles:[{group,lamps,axis}] }
   const stops = [];    // { x, z, signs:[...] }
-  const off = ROAD.width / 2 + 1.3;
+  const definitions = largeWorld
+    ? STARTER_TOWN_TRAFFIC_CONTROL_PLAN.controls
+    : compactControlPlan();
 
-  for (const def of INTERSECTIONS) {
+  for (const def of definitions) {
+    const off = def.hardwareOffset;
     if (def.type === 'light') {
       const phase = makePhase(def);
       const poles = [];
@@ -115,11 +131,11 @@ export function buildTrafficControl(scene) {
         const p = buildLightPole(c.axis);
         p.group.position.set(def.x + c.dx, 0, def.z + c.dz);
         p.group.lookAt(def.x, 0, def.z);
-        scene.add(p.group);
+        scene?.add(p.group);
         registerWorldObject(p.group, def.x + c.dx, def.z + c.dz, { r: 0.5, kind: 'traffic_light' });
         poles.push({ ...p, axis: c.axis });
       }
-      lights.push({ x: def.x, z: def.z, phase, poles });
+      lights.push({ ...def, phase, poles });
     } else {
       const signs = [];
       // one stop sign per approach corner, on the sidewalk
@@ -128,14 +144,15 @@ export function buildTrafficControl(scene) {
         const s = buildStopSign();
         s.group.position.set(def.x + dx, 0, def.z + dz);
         s.group.lookAt(def.x, 0, def.z);
-        scene.add(s.group);
+        scene?.add(s.group);
         registerWorldObject(s.group, def.x + dx, def.z + dz, { r: 0.4, kind: 'stop_sign' });
         signs.push(s);
       }
-      stops.push({ x: def.x, z: def.z, signs });
+      stops.push({ ...def, signs });
     }
   }
 
+  const driverState = new WeakMap();
   const controller = {
     t: 0,
     lights,
@@ -169,12 +186,15 @@ export function buildTrafficControl(scene) {
       const axis = Math.abs(heading.x) > Math.abs(heading.z) ? 'EW' : 'NS';
       // nearest control point ahead on this approach
       for (const node of [...lights, ...stops]) {
+        const stopLine = node.stopLine;
+        const approach = node.approach;
+        const laneHalf = node.laneHalf;
         const dx = node.x - pos.x, dz = node.z - pos.z;
         const ahead = dx * heading.x + dz * heading.z;          // forward distance to centre
-        if (ahead <= STOP_LINE - 0.2 || ahead > APPROACH + STOP_LINE) continue;  // already in box, or too far
+        if (ahead <= stopLine - 0.2 || ahead > approach) continue;  // already in box, or too far
         const lateral = Math.abs(dx * heading.z - dz * heading.x);
-        if (lateral > LANE_HALF) continue;                       // not actually heading into it
-        const holdDist = ahead - STOP_LINE;                      // distance to the stop line
+        if (lateral > laneHalf) continue;                        // not actually heading into it
+        const holdDist = ahead - stopLine;                       // distance to the stop line
 
         if (node.phase) {                                        // traffic light
           const st = node.phase.stateAt(this.t)[axis];
@@ -201,10 +221,72 @@ export function buildTrafficControl(scene) {
       if (car._stopAt) { car._stopAt = null; car._stopTimer = 0; }
       return { stop: false };
     },
+
+    // Player-driving law check. NPC traffic uses mustStop(); this watches the
+    // player's actual stop-line crossing and reports one offense per junction.
+    observeDriver(before, after, speed, car, dt) {
+      if (!car || !before || !after) return null;
+      const mx = after.x - before.x;
+      const mz = after.z - before.z;
+      const distance = Math.hypot(mx, mz);
+      const record = driverState.get(car) || {
+        dwell: new Map(),
+        lastViolationId: null,
+        cooldown: 0,
+      };
+      record.cooldown = Math.max(0, record.cooldown - dt);
+
+      for (const node of [...lights, ...stops]) {
+        const near = Math.hypot(node.x - after.x, node.z - after.z);
+        if (near <= node.approach && Math.abs(speed) < 0.35) {
+          record.dwell.set(node.id, (record.dwell.get(node.id) || 0) + dt);
+        } else if (near > node.approach * 1.5) {
+          record.dwell.delete(node.id);
+        }
+      }
+
+      if (distance < 0.001 || record.cooldown > 0) {
+        driverState.set(car, record);
+        return null;
+      }
+      const heading = { x: mx / distance, z: mz / distance };
+      const axis = Math.abs(heading.x) > Math.abs(heading.z) ? 'EW' : 'NS';
+      for (const node of [...lights, ...stops]) {
+        const bx = node.x - before.x, bz = node.z - before.z;
+        const ax = node.x - after.x, az = node.z - after.z;
+        const beforeAhead = bx * heading.x + bz * heading.z;
+        const afterAhead = ax * heading.x + az * heading.z;
+        const lateral = Math.abs(bx * heading.z - bz * heading.x);
+        if (lateral > node.laneHalf) continue;
+        if (!(beforeAhead > node.stopLine && afterAhead <= node.stopLine)) continue;
+
+        let violation = null;
+        if (node.phase) {
+          const state = node.phase.stateAt(this.t)[axis];
+          if (state !== 'green') violation = state === 'yellow' ? 'yellow-light' : 'red-light';
+        } else if ((record.dwell.get(node.id) || 0) < DRIVER_STOP_WAIT) {
+          violation = 'rolling-stop';
+        }
+        if (!violation) continue;
+        record.lastViolationId = node.id;
+        record.cooldown = 6;
+        driverState.set(car, record);
+        return Object.freeze({
+          type: violation,
+          controlId: node.id,
+          routeIds: Object.freeze([...(node.routeIds || [])]),
+          schoolZone: !!node.schoolZone,
+        });
+      }
+      driverState.set(car, record);
+      return null;
+    },
   };
 
   // prime the lamps so they're correct on frame 0
   controller.update(0);
+  controller.largeWorld = largeWorld;
+  controller.controlCount = definitions.length;
   return controller;
 }
 

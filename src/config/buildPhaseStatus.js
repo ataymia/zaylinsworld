@@ -12,12 +12,12 @@
 const freeze = (value) => Object.freeze(value);
 const phase = (id, name, status, values = {}) => freeze({ id, name, status, ...values });
 
-export const BUILD_PHASE_STATUS_VERSION = 3;
-export const BUILD_PHASE_UPDATED_AT = '2026-07-18';
+export const BUILD_PHASE_STATUS_VERSION = 9;
+export const BUILD_PHASE_UPDATED_AT = '2026-08-13';
 
 export const BUILD_PHASES = freeze([
   phase('0', 'Repository, baseline, and build discipline', 'complete', {
-    completed: freeze(['0A repository consolidation', '0B automated quality baseline', '0C direct GitHub workflow']),
+    completed: freeze(['0A repository consolidation', '0B automated quality baseline', '0C direct GitHub workflow', 'version-stamped service worker emitted by every production build path']),
     notes: 'Main is authoritative. Routine development uses direct commits without pull requests.',
   }),
   phase('1A', 'Modular player and Character Studio', 'complete'),
@@ -44,7 +44,7 @@ export const BUILD_PHASES = freeze([
     verify: freeze(['final asset metadata coverage as Asset Lab continues']),
   }),
   phase('2C', 'Save schema and migration', 'implemented', {
-    completed: freeze(['schema version 4', 'checksum', 'backup', 'corruption fallback', 'legacy position recovery contracts']),
+    completed: freeze(['schema version 8', 'checksum', 'validated backup recovery', 'corruption capture', 'life progression', 'legacy position recovery contracts']),
     verify: freeze(['production-save matrix', 'driving/interior/mission saves', 'deleted asset recovery']),
   }),
   phase('2D', 'Scene lifecycle and ownership', 'implemented', {
@@ -52,8 +52,8 @@ export const BUILD_PHASES = freeze([
     verify: freeze(['repeated live interior/town transition leak test']),
   }),
   phase('2E', 'Developer diagnostics', 'implemented', {
-    completed: freeze(['FPS/frame time', 'draw calls/triangles/textures', 'world/district/cell', 'assets', 'pools', 'lifecycle', 'copyable report']),
-    verify: freeze(['live diagnostic overlay presentation']),
+    completed: freeze(['FPS/frame time', 'draw calls/triangles/textures', 'world/district/cell', 'assets', 'pools', 'lifecycle', 'copyable report', 'bounded deployed acceptance evidence', 'all-twelve-interior transition runner']),
+    verify: freeze(['live diagnostic overlay presentation', 'copy evidence from named deployed sessions']),
   }),
   phase('3A', 'Streaming-cell content model', 'implemented', {
     completed: freeze(['100 deterministic cells', 'roads/parcels/locations/districts/spawns/buffers indexed', 'border dependencies']),
@@ -62,12 +62,12 @@ export const BUILD_PHASES = freeze([
     completed: freeze(['active/warm/far/unload rings', 'hysteresis', 'predictive driving preload', 'gateway/interior preload hooks', 'collision-first priorities']),
   }),
   phase('3C', 'Named object pools', 'implemented', {
-    completed: freeze(['civilian', 'police', 'traffic', 'police vehicle', 'parked vehicle', 'litter', 'effect', 'interaction marker pools', 'cell unload release']),
+    completed: freeze(['civilian', 'police', 'traffic', 'police vehicle', 'parked vehicle', 'litter', 'effect', 'interaction marker pools', 'cell unload release', 'live officer and pursuit-cruiser acquire/release', 'stolen-cruiser ownership transfer']),
     verify: freeze(['migrate remaining legacy live arrays to acquire/release pools']),
   }),
   phase('3D', 'Instancing and LOD', 'implemented', {
-    completed: freeze(['distance/relevance policy', 'instancing eligibility', 'instanced massing', 'instanced roadside infrastructure', 'distant update intervals']),
-    verify: freeze(['live NPC/traffic update throttling integration']),
+    completed: freeze(['distance/relevance policy', 'instancing eligibility', 'instanced massing', 'instanced roadside infrastructure', 'distant update intervals', 'live pedestrian/traffic distance throttling', 'live police distance throttling and far-unit recycling']),
+    verify: freeze(['remaining compact-map streaming/LOD integration']),
   }),
   phase('3E', 'Performance budgets and adaptive graphics', 'implemented', {
     completed: freeze(['tier budgets', 'budget violations', 'conservative Auto preset', 'sustained-FPS downshift', 'visual audit']),
@@ -96,8 +96,8 @@ export const BUILD_PHASES = freeze([
     verify: freeze(['vehicle handling on every graded segment']),
   }),
   phase('4F', 'Shared navigation graph', 'implemented', {
-    completed: freeze(['geometric intersection splitting', 'one connected public graph', 'closures', 'service restrictions', 'school avoidance', 'routing to all functional locations']),
-    verify: freeze(['bind legacy traffic/police/minimap movement to the shared graph']),
+    completed: freeze(['geometric intersection splitting', 'one connected public graph', 'closures', 'service restrictions', 'school avoidance', 'routing to all functional locations', 'authoritative city-map road rendering', 'citywide traffic coverage routes', 'road-node police dispatch', 'foot and cruiser pursuit routing', 'active quest minimap guidance', 'five graph-generated scheduled service routes']),
+    verify: freeze(['live pursuit, quest-route, and service-route traversal acceptance']),
   }),
   phase('4G', 'Road validation', 'implemented', {
     completed: freeze(['connectivity', 'geometric crossings', 'functional access', 'route validation', 'grade validation']),
@@ -128,8 +128,8 @@ export const BUILD_PHASES = freeze([
     verify: freeze(['visual spacing/scale review']),
   }),
   phase('6D', 'Environmental presentation', 'implemented', {
-    completed: freeze(['district lighting', 'day/night values', 'weather response', 'ambience contracts', 'traffic/pedestrian/police density contracts']),
-    verify: freeze(['bind values to live lighting/audio/population systems']),
+    completed: freeze(['district lighting', 'day/night values', 'weather response', 'ambience contracts', 'traffic/pedestrian/police density contracts', 'saved world clock bound to pedestrian and traffic schedules']),
+    verify: freeze(['bind remaining ambience values to live audio systems']),
   }),
   phase('6E', 'Visual-performance validation', 'implemented', {
     completed: freeze(['instancing audit', 'triangle/draw estimate', 'shadow/unculled/repeated-geometry warnings', 'performance budgets']),
@@ -139,6 +139,44 @@ export const BUILD_PHASES = freeze([
     completed: freeze(['Phase 7A stable contracts', '15-field parity evidence gate', 'legacy-coordinate migration guard', 'production diagnostics report', 'Phase 7B Zaylins Home fallback-safe cutover', 'Phase 7C Zaylins Prep fallback-safe cutover', 'Phase 7D Chicken Spot fallback-safe cutover', 'Phase 7E–7G retail cutovers', 'Phase 7H–7I vehicle-service cutovers', 'Phase 7J–7L civic/work cutovers', 'Phase 7M–7N infrastructure/public-space cutovers']),
     verify: freeze(['live full-town preview, save/load, and performance acceptance pass']),
     dependsOn: freeze(['Phase 2–6 live feature-preview review']),
+  }),
+  phase('8', 'Living-city cohesion and live acceptance', 'partial', {
+    completed: freeze([
+      '49-road connected city network and map rendering',
+      'twelve paved functional-location frontage approaches',
+      'sixteen traffic loops with 28/44/68 density budgets',
+      'eighteen pedestrian loops with 72/108/156 density budgets',
+      'on-foot traffic coverage recovery',
+      '1,400 trees and 240 rocks with district distribution',
+      '103 road-safe filler buildings with hard footprints',
+      'one identity sign per functional exterior',
+      'live playable/terrain boundary enforcement',
+      'pedestrian and traffic distance LOD',
+      'spatially indexed scenery collisions',
+      'production sanitation worker and dumpster placement',
+      'citywide sanitation litter route',
+      'isolated recoverable interior transitions',
+      'shared RoadGraph police dispatch and pursuit',
+      'active physical quest objective minimap routing',
+      'thirteen daily activity schedules bound to the saved world clock',
+      'district/activity pedestrian roles and scheduled population',
+      'ambient traffic identities and time-of-day operation',
+      'five scheduled service vehicles generated from the shared RoadGraph',
+      'five canonical recurring NPCs with state-aware service dialogue',
+      'five recurring NPCs moving through canonical morning, afternoon, and evening district placements',
+      'wanted-response staffing kept within the low-spec six-unit budget',
+      'live officer and pursuit-cruiser pooling with stolen-cruiser ownership transfer',
+      'near-full-rate police pursuit with distant throttling and far-unit recycling',
+      'bounded session evidence for frames, heap/render samples, saves, input, graphics, errors, and interior transitions',
+      'safe all-twelve-interior lifecycle cycle with exterior-position restoration',
+      'empty asset-factory queue preflight and no recurring self-trigger',
+    ]),
+    remaining: freeze([
+      'remaining legacy streaming/pool integration',
+      'deployed visual acceptance',
+      '5-, 15-, and 60-minute browser stability runs',
+    ]),
+    next: true,
   }),
 ]);
 

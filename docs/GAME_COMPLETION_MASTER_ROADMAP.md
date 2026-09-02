@@ -255,7 +255,8 @@ Checklist:
 - [ ] Build route lanes for traffic and separate pedestrian paths.
 - [ ] Add road-safe prop placement and parked-car rules.
 - [ ] Add route validation that detects disconnected roads, impossible turns, lane obstructions, and overlapping parcels.
-- [ ] Add navigation graph hooks for missions, police, deliveries, and minimap routing.
+- [x] Add navigation graph hooks for police pursuit, physical mission objectives, and minimap routing.
+- [ ] Bind delivery and scheduled service-vehicle movement to the navigation graph.
 
 Exit gate:
 
@@ -402,14 +403,15 @@ Checklist:
 - [ ] District-specific civilian vehicle routes and density.
 - [ ] Morning, school, work, afternoon, evening, and night population profiles.
 - [ ] School buses, delivery vehicles, work traffic, travelers, and parked cars.
-- [ ] Police patrol zones, response times, dispatch routes, and highway response.
+- [x] Police road-node dispatch and pursuit routes.
+- [ ] Police ambient patrol zones, district response times, and highway response.
 - [ ] Witness and alarm logic by district.
 - [ ] Traffic lights, stops, yielding, school zones, and merging.
 - [ ] District-aware minimap with road hierarchy and labels.
-- [ ] Full Starter Town map with route planning and active mission route.
+- [x] Full Starter Town map with shared-graph active mission routes.
 - [ ] Map markers for home, school, jobs, police, fuel, garage, stores, park, services, and gateways.
 - [ ] Clear hovered/interactable labels without permanent world-text clutter.
-- [ ] NPC dialogue framework capable of controlled multi-step conversations later.
+- [x] State-aware NPC dialogue framework with controlled multi-step conversations and live service actions.
 
 Exit gate:
 
