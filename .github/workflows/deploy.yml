@@ -31,7 +31,6 @@ jobs:
       - name: Assemble Starter Town runtime assets
         run: |
           mkdir -p dist/assets/models/generated
-          cp public/sw.js dist/
           cp -R public/assets/decals dist/assets/
           cp -R public/assets/hdr dist/assets/
           cp -R public/assets/runtime dist/assets/

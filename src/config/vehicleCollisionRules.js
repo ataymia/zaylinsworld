@@ -28,8 +28,12 @@ export const COLLISION_BEHAVIOR = {
 // sensible default; unknown → 'hard' (safer to stop a car than to phase through).
 const KIND_RULES = [
   { re: /building|wall|store|shop|tower|house|apartment|station|garage/i, type: 'hard' },
+  // Keep natural obstacles exact: the substring "tree" also appears inside
+  // "streetlight", which previously classified every lamp post as an
+  // indestructible tree before the breakable rule could run.
+  { re: /^(?:tree|rock|boulder)$/i, type: 'hard' },
   { re: /pump|dumpster|sign_large|billboard|barrier|hydrant/i, type: 'hard' },
-  { re: /streetlight|lamp|light_post|pole|sign|cone|trash_?can|mailbox|bench|fence|parking_meter/i, type: 'breakable' },
+  { re: /streetlight|traffic_?light|lamp|light_post|pole|sign|cone|trash_?can|mailbox|bench|fence|parking_meter/i, type: 'breakable' },
   { re: /trash_?bag|litter|debris|grass|leaf|paper|gem|puddle/i, type: 'soft' },
 ];
 

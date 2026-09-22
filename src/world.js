@@ -10,6 +10,7 @@ import {
 import { clearOfRoads } from './config/placementRules.js';
 import { registerWorldObject, clearWorldObjects } from './worldCollision.js';
 import { FUNCTIONAL_LOCATION_CONTRACTS } from './runtime/FunctionalLocationRelocation.js';
+import { STARTER_TOWN_LOCATIONS } from './config/starterTownRuntimePlan.js';
 
 function mat(color, opts = {}) {
   return new THREE.MeshStandardMaterial({
@@ -64,12 +65,17 @@ function textSign(text, color) {
   ctx.fillText(text, 256, 66);
   const tex = new THREE.CanvasTexture(canvas);
   const m = new THREE.MeshBasicMaterial({ map: tex });
-  return new THREE.Mesh(new THREE.PlaneGeometry(5, 1.25), m);
+  const sign = new THREE.Mesh(new THREE.PlaneGeometry(5, 1.25), m);
+  sign.userData.identitySign = true;
+  return sign;
 }
 
 // Build a detailed building. faceDir = unit vector the storefront/door faces.
 function makeBuilding(scene, opt) {
-  const { x, z, w, d, h, color, name, signColor, faceDir, door = true, kind = null, locationId = null } = opt;
+  const {
+    x, z, w, d, h, color, name, signColor, faceDir,
+    door = true, kind = null, locationId = null, interactionOnly = false,
+  } = opt;
   const g = new THREE.Group();
   g.name = locationId ? `ZW_FunctionalLocation_${locationId}` : `ZW_Building_${kind || 'generic'}`;
   g.userData.locationId = locationId;
@@ -118,6 +124,7 @@ function makeBuilding(scene, opt) {
       new THREE.MeshBasicMaterial({ color: signColor || '#4eff91', transparent: true, opacity: 0.5, side: THREE.DoubleSide }));
     ring.rotation.x = -Math.PI / 2;
     ring.position.copy(faceCenter).addScaledVector(fd, 1.4); ring.position.y = 0.05;
+    ring.userData.interactionAnchor = true;
     g.add(ring);
     doorPos = faceCenter.clone().addScaledVector(fd, 1.7); doorPos.y = 0;
   }
@@ -164,6 +171,17 @@ function makeBuilding(scene, opt) {
   }
   // type-specific exterior props
   if (kind) storefrontProps(g, kind, faceCenter, fd, rightV, signColor, color);
+
+  // The authoritative large town already owns the production exterior model.
+  // Keep only its collider and entrance ring from this legacy shell. The large
+  // town owns exactly one authoritative identity sign per destination.
+  if (interactionOnly) {
+    g.userData.interactionOnly = true;
+    g.traverse((node) => {
+      if (!node.isMesh) return;
+      node.visible = !!node.userData.interactionAnchor;
+    });
+  }
 
   scene.add(g);
   addCollider(body);
@@ -316,12 +334,23 @@ export function buildCity(scene, { relocatedLocationIds = [] } = {}) {
   colliders.length = 0;
   clearWorldObjects();
   const activeRelocations = new Set(relocatedLocationIds);
+  const largeWorldVisuals = activeRelocations.size > 0;
+  // The old 60 m surface is intentionally kept off-scene when the large town is
+  // active. Rendering both planes at y≈0 caused the green/brown terrain flicker.
+  const compactSurfaceTarget = largeWorldVisuals ? new THREE.Group() : scene;
   const relocations = [];
+  const locationById = new Map(STARTER_TOWN_LOCATIONS.map((entry) => [entry.id, entry]));
   const contractByLegacyId = new Map(FUNCTIONAL_LOCATION_CONTRACTS.map((contract) => [contract.legacy.sourceId, contract]));
   const landmarkLayout = LANDMARKS.map((landmark) => {
     const contract = contractByLegacyId.get(landmark.id);
     return contract && activeRelocations.has(contract.locationId)
-      ? { ...landmark, x: contract.target.x, z: contract.target.z, locationId: contract.locationId }
+      ? {
+        ...landmark,
+        x: contract.target.x,
+        z: contract.target.z,
+        face: contract.frontageFace || landmark.face,
+        locationId: contract.locationId,
+      }
       : { ...landmark, locationId: contract?.locationId || null };
   });
   // Keep minimap/world markers separate from building blueprints. Public spaces
@@ -344,7 +373,7 @@ export function buildCity(scene, { relocatedLocationIds = [] } = {}) {
   const grassTex = noiseTexture('#3f7140', ['#356030', '#4c8048', '#2e5a2c', '#5a8a52'], 2600, 60);
   const ground = new THREE.Mesh(new THREE.PlaneGeometry(260, 260),
     new THREE.MeshStandardMaterial({ map: grassTex, roughness: 1, metalness: 0 }));
-  ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
+  ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; compactSurfaceTarget.add(ground);
 
   const asphaltTex = noiseTexture('#2a2a2e', ['#222226', '#333339', '#1c1c20'], 1600, 14);
   const roadM = new THREE.MeshStandardMaterial({ map: asphaltTex, roughness: 0.95, metalness: 0 });
@@ -361,21 +390,21 @@ export function buildCity(scene, { relocatedLocationIds = [] } = {}) {
     const road = new THREE.Mesh(geo, roadM);
     road.rotation.x = -Math.PI / 2;
     road.position.set(horizontal ? 0 : offset, 0.015, horizontal ? offset : 0);
-    road.receiveShadow = true; scene.add(road);
+    road.receiveShadow = true; compactSurfaceTarget.add(road);
     [-1, 1].forEach(side => {
       const wg = horizontal ? new THREE.PlaneGeometry(LEN, WALK_W) : new THREE.PlaneGeometry(WALK_W, LEN);
       const w = new THREE.Mesh(wg, walkM);
       w.rotation.x = -Math.PI / 2;
       const dd = (ROAD_W / 2 + WALK_W / 2) * side;
       w.position.set(horizontal ? 0 : offset + dd, 0.012, horizontal ? offset + dd : 0);
-      w.receiveShadow = true; scene.add(w);
+      w.receiveShadow = true; compactSurfaceTarget.add(w);
     });
     for (let i = -LEN / 2 + 5; i <= LEN / 2 - 5; i += 5) {
       const dg = horizontal ? new THREE.PlaneGeometry(2.2, 0.2) : new THREE.PlaneGeometry(0.2, 2.2);
       const dash = new THREE.Mesh(dg, lineM);
       dash.rotation.x = -Math.PI / 2;
       dash.position.set(horizontal ? i : offset, 0.03, horizontal ? offset : i);
-      scene.add(dash);
+      compactSurfaceTarget.add(dash);
     }
   };
   ROAD.hz.forEach(o => addRoad(true, o));
@@ -390,7 +419,7 @@ export function buildCity(scene, { relocatedLocationIds = [] } = {}) {
         const m = new THREE.Mesh(g, stripeM);
         m.rotation.x = -Math.PI / 2;
         m.position.set(cx + ox + (horiz ? s * 0.95 : 0), 0.028, cz + oz + (horiz ? 0 : s * 0.95));
-        scene.add(m);
+        compactSurfaceTarget.add(m);
       }
     }
   });
@@ -399,11 +428,11 @@ export function buildCity(scene, { relocatedLocationIds = [] } = {}) {
   const lot = new THREE.Mesh(new THREE.PlaneGeometry(PARKING.w, PARKING.d),
     new THREE.MeshStandardMaterial({ color: '#33333a', roughness: 0.95 }));
   lot.rotation.x = -Math.PI / 2; lot.position.set(PARKING.cx, 0.018, PARKING.cz);
-  lot.receiveShadow = true; scene.add(lot);
+  lot.receiveShadow = true; compactSurfaceTarget.add(lot);
   for (let s = 1; s < PARKING.stalls; s++) {
     const lx = PARKING.cx - PARKING.w / 2 + (PARKING.w / PARKING.stalls) * s;
     const line = new THREE.Mesh(new THREE.PlaneGeometry(0.12, PARKING.d - 0.8), stripeM);
-    line.rotation.x = -Math.PI / 2; line.position.set(lx, 0.03, PARKING.cz); scene.add(line);
+    line.rotation.x = -Math.PI / 2; line.position.set(lx, 0.03, PARKING.cz); compactSurfaceTarget.add(line);
   }
 
   // ── park / plaza block ────────────────────────────────────────────────────
@@ -411,7 +440,7 @@ export function buildCity(scene, { relocatedLocationIds = [] } = {}) {
   const plaza = new THREE.Mesh(new THREE.CircleGeometry(parkLayout.r, 40),
     new THREE.MeshStandardMaterial({ map: paveTex, roughness: 0.92, metalness: 0 }));
   plaza.name = parkRelocated ? 'ZW_FunctionalLocation_dreamdrop-park' : 'ZW_DreamdropPark';
-  plaza.rotation.x = -Math.PI / 2; plaza.position.set(parkLayout.cx, 0.02, parkLayout.cz);
+  plaza.rotation.x = -Math.PI / 2; plaza.position.set(parkLayout.cx, largeWorldVisuals ? 0.09 : 0.02, parkLayout.cz);
   plaza.receiveShadow = true; scene.add(plaza);
   parkLayout.trees.forEach(([x, z]) => tree(scene, x, z));
   parkLayout.benches.forEach(([x, z, ry]) => bench(scene, x, z, ry));
@@ -434,15 +463,24 @@ export function buildCity(scene, { relocatedLocationIds = [] } = {}) {
   const dirOf = ([dx, dz]) => new THREE.Vector3(dx, 0, dz).normalize();
   const entrances = [];
   landmarkLayout.forEach(b => {
+    const productionAsset = b.locationId
+      ? scene.getObjectByName(`ZW_LocationAsset_${b.locationId}`)
+      : null;
+    const location = locationById.get(b.locationId);
+    const targetWidth = location?.category === 'school' ? 34 : 20;
+    const footprintScale = productionAsset ? targetWidth / Math.max(b.w, b.d) : 1;
     const r = makeBuilding(scene, {
-      x: b.x, z: b.z, w: b.w, d: b.d, h: b.h, color: b.color,
+      x: b.x, z: b.z,
+      w: b.w * footprintScale, d: b.d * footprintScale, h: b.h * footprintScale,
+      color: b.color,
       name: b.name, signColor: b.sign, faceDir: dirOf(b.face), door: true, kind: b.id,
       locationId: b.locationId,
+      interactionOnly: !!productionAsset || !!(b.locationId && activeRelocations.has(b.locationId)),
     });
     entrances.push({ id: b.id, locationId: b.locationId, name: b.name, interiorId: b.interiorId, doorPos: r.doorPos, faceDir: r.faceDir });
     if (b.locationId && activeRelocations.has(b.locationId)) {
       const placeholder = scene.getObjectByName(`ZW_LocationPlaceholder_${b.locationId}`);
-      if (placeholder) placeholder.visible = false;
+      if (placeholder && !productionAsset) placeholder.visible = false;
       relocations.push({
         locationId: b.locationId,
         contract: FUNCTIONAL_LOCATION_CONTRACTS.find((entry) => entry.locationId === b.locationId),
@@ -466,12 +504,14 @@ export function buildCity(scene, { relocatedLocationIds = [] } = {}) {
   // Guardrail: skip any configured light that would land in a driving lane
   // (placement-rule check) so a lamp can never sit in the middle of a road.
   let skippedLights = 0;
-  STREET_LIGHTS.forEach(([x, z]) => {
-    if (!clearOfRoads(x, z, 0.4)) { skippedLights++; return; }
-    streetLight(scene, x, z);
-  });
-  if (skippedLights) console.warn('[world] skipped', skippedLights, 'streetlight(s) that fell in a road lane');
-  STREET_TREES.forEach(([x, z]) => { if (clearOfRoads(x, z, 0.3)) tree(scene, x, z); });
+  if (!largeWorldVisuals) {
+    STREET_LIGHTS.forEach(([x, z]) => {
+      if (!clearOfRoads(x, z, 0.4)) { skippedLights++; return; }
+      streetLight(scene, x, z);
+    });
+    if (skippedLights) console.warn('[world] skipped', skippedLights, 'streetlight(s) that fell in a road lane');
+    STREET_TREES.forEach(([x, z]) => { if (clearOfRoads(x, z, 0.3)) tree(scene, x, z); });
+  }
 
   // ── police post (Phase 3J) ────────────────────────────────────────────────
   const policeContract = FUNCTIONAL_LOCATION_CONTRACTS.find((entry) => entry.locationId === 'police-station');
@@ -479,7 +519,8 @@ export function buildCity(scene, { relocatedLocationIds = [] } = {}) {
   const police = buildPolicePost(scene, walkM, stripeM, policeRelocated ? policeContract : null);
   if (policeRelocated) {
     const placeholder = scene.getObjectByName('ZW_LocationPlaceholder_police-station');
-    if (placeholder) placeholder.visible = false;
+    const productionAsset = scene.getObjectByName('ZW_LocationAsset_police-station');
+    if (placeholder && !productionAsset) placeholder.visible = false;
     landmarkMarkers.push({
       id: 'police',
       name: 'DREAMDROP PUBLIC SAFETY',
@@ -523,12 +564,20 @@ function buildPolicePost(scene, walkM, stripeM, relocationContract = null) {
     z: POLICE_POST.z + dz,
     lot: { ...POLICE_POST.lot, cx: POLICE_POST.lot.cx + dx, cz: POLICE_POST.lot.cz + dz },
     cruisers: POLICE_POST.cruisers.map(([x, z]) => [x + dx, z + dz]),
+    face: relocationContract?.frontageFace || POLICE_POST.face,
   };
   const fd = new THREE.Vector3(P.face[0], 0, P.face[1]).normalize();
+  const productionAsset = relocationContract
+    ? scene.getObjectByName('ZW_LocationAsset_police-station')
+    : null;
+  const footprintScale = productionAsset ? 20 / Math.max(P.w, P.d) : 1;
   const r = makeBuilding(scene, {
-    x: P.x, z: P.z, w: P.w, d: P.d, h: P.h, color: P.color,
+    x: P.x, z: P.z,
+    w: P.w * footprintScale, d: P.d * footprintScale, h: P.h * footprintScale,
+    color: P.color,
     name: P.name, signColor: P.sign, faceDir: fd, door: true, kind: 'police',
     locationId: relocationContract?.locationId || null,
+    interactionOnly: !!productionAsset || !!relocationContract,
   });
 
   // cruiser lot pavement + stall lines

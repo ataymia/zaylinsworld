@@ -16,10 +16,11 @@ export const CHARACTER_ROLE_POLICY = Object.freeze({
     reason: 'Complete imported PSX civilians use direct lightweight bone drivers; procedural bubble meshes retire after a validated swap.',
   }),
   police: Object.freeze({
-    mode: 'procedural-functional',
+    mode: 'glb-functional-direct',
+    maxLiveSkins: 4,
     height: 1.82,
     playEmbeddedClip: false,
-    reason: 'Procedural police remain functional until imported police animation passes live validation.',
+    reason: 'Validated police GLBs use the same direct lightweight bone drivers as civilians; the procedural uniform remains a load-failure fallback only.',
   }),
 });
 

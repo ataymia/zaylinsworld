@@ -33,7 +33,11 @@ assert.match(main, /\|\| relocation\.entrance/, 'special civic entrances must pa
 assert.match(interiors, /byId\.police = \{/);
 assert.match(interiors, /id: 'police-desk-int', type: 'police-desk'/);
 assert.match(interiors, /byId\.office = \{/);
-assert.match(interiors, /id: 'job-board', type: 'job-work'/);
+assert.match(interiors, /id: 'job-board', type: 'worktower-jobs'/);
+assert.match(interiors, /id: 'property-desk', type: 'property-desk'/);
+assert.match(interiors, /id: 'bank-kiosk', type: 'bank-kiosk'/);
+assert.match(interiors, /id: 'community-clinic', type: 'community-clinic'/);
+assert.match(interiors, /id: 'city-services', type: 'city-services'/);
 assert.match(interiors, /byId\.gym = \{/);
 assert.match(interiors, /id: 'workout-bench', type: 'workout'/);
 

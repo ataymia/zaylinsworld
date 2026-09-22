@@ -27,4 +27,17 @@ export function repairLegacyParkArrival(position, data = {}) {
   return { x: core.x, z: core.z };
 }
 
+// Schema v6 placed Zaylins Prep directly over Scholar Road at x=-724. Move a
+// player who saved on that affected campus footprint with the building when the
+// road-safe x=-780 frontage ships. Unrelated saves are never touched.
+export function repairSchoolRoadPlacement(position, data = {}) {
+  const safe = { x: finite(position?.x), z: finite(position?.z) };
+  if (Number(data.version) > 6
+    || data.world?.largeWorldEnabled !== true
+    || !data.world?.relocatedLocations?.includes('zaylins-prep')) return safe;
+  const legacyTarget = { x: -724, z: 72 };
+  if (Math.abs(safe.x - legacyTarget.x) > 30 || Math.abs(safe.z - legacyTarget.z) > 28) return safe;
+  return { x: safe.x - 56, z: safe.z };
+}
+
 export default repairLegacyParkArrival;

@@ -16,6 +16,7 @@ export class ObjectPool {
     this.active = new Set();
     this.created = 0;
     this.reused = 0;
+    this.detached = 0;
     this.disposed = 0;
   }
 
@@ -48,6 +49,16 @@ export class ObjectPool {
     for (const item of [...this.active]) this.release(item, context);
   }
 
+  // Transfer an active item out of pool ownership without hiding or disposing
+  // it. This is used when the player steals a pooled police cruiser: the same
+  // live object becomes a persistent player-controlled/abandoned vehicle and
+  // must never be silently reclaimed by pursuit cleanup.
+  detach(item) {
+    if (!item || !this.active.delete(item)) return false;
+    this.detached += 1;
+    return true;
+  }
+
   trim(targetSize = 0) {
     const target = Math.max(0, Math.min(this.maxSize, targetSize));
     while (this.available.length > target) {
@@ -72,6 +83,7 @@ export class ObjectPool {
       available: this.available.length,
       created: this.created,
       reused: this.reused,
+      detached: this.detached,
       disposed: this.disposed,
       maxSize: this.maxSize,
     });
