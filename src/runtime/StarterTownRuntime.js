@@ -20,8 +20,7 @@ import {
   releaseCellObjects,
   resizeGameObjectPools,
 } from './GameObjectPools.js';
-import { RoadNetwork } from '../world/RoadNetwork.js';
-import { RoadGraph } from '../world/RoadGraph.js';
+import { createStarterTownNavigation } from './StarterTownNavigation.js';
 import { RoadValidator } from '../world/RoadValidator.js';
 import { starterTownBoundaryGuard } from '../world/StarterTownBoundaryGuard.js';
 import { starterTownEnvironmentAt } from '../world/StarterTownEnvironment.js';
@@ -41,8 +40,9 @@ export class StarterTownRuntime {
     this.plan = plan;
     this.worldRegistry = worldRegistry;
     this.cellIndex = starterTownCellIndex;
-    this.roadNetwork = new RoadNetwork(plan.routes);
-    this.roadGraph = new RoadGraph(this.roadNetwork);
+    this.navigation = createStarterTownNavigation({ plan });
+    this.roadNetwork = this.navigation.roadNetwork;
+    this.roadGraph = this.navigation.roadGraph;
     this.roadValidation = new RoadValidator({
       roadNetwork: this.roadNetwork,
       roadGraph: this.roadGraph,
@@ -221,12 +221,11 @@ export class StarterTownRuntime {
   }
 
   route(from, to, options = {}) {
-    return this.roadGraph.route(from, to, options);
+    return this.navigation.route(from, to, options);
   }
 
   locationRoute(from, locationId, options = {}) {
-    const location = this.worldRegistry.location(locationId);
-    return location ? this.route(from, location.position, options) : null;
+    return this.navigation.routeToLocation(from, locationId, options);
   }
 
   setGraphicsPreset(preset) {

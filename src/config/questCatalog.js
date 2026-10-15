@@ -124,12 +124,15 @@ export const QUEST_CATALOG = freeze([
   quest({
     id: 'home-base',
     title: 'Home Base',
-    summary: 'Visit Zaylins Home and learn where rest, storage, grooming, and wardrobe live.',
+    summary: 'Visit Zaylins Home, claim the mailbox deed, and learn where rest, storage, grooming, and wardrobe live.',
     category: 'story',
     implementation: 'runtime',
     ordered: true,
     prerequisites: ['first-day-your-way'],
-    objectives: [objective('enter-home', 'Head home', 'enter', { arg: 'home' })],
+    objectives: [
+      objective('enter-home', 'Head home', 'enter', { arg: 'home' }),
+      objective('claim-home-deed', 'Check the Willowbend mailbox and claim your deed', 'mailbox-check', { arg: 'zaylins-home' }),
+    ],
     rewards: { money: 60, flags: ['home-tutorial-complete'] },
     unlocks: ['home-haircut', 'willowbend-neighbor'],
   }),
@@ -183,7 +186,7 @@ export const QUEST_CATALOG = freeze([
     prerequisites: ['first-day-your-way'],
     objectives: [
       objective('enter-office', 'Enter WorkTower', 'enter', { arg: 'office' }),
-      objective('finish-shift', 'Work a full shift', 'job-done'),
+      objective('finish-shift', 'Work a full WorkTower shift', 'job-done', { arg: 'worktower-associate' }),
     ],
     rewards: { money: 250, stats: { fun: 5 }, flags: ['earned-first-paycheck'] },
     unlocks: ['worktower-three-shift-test', 'property-desk-introduction'],
@@ -295,7 +298,7 @@ export const QUEST_CATALOG = freeze([
     category: 'career',
     implementation: 'runtime',
     prerequisites: ['first-job'],
-    objectives: [objective('three-shifts', 'Complete 3 paid shifts', 'job-done', { count: 3 })],
+    objectives: [objective('three-shifts', 'Complete 3 WorkTower shifts', 'job-done', { arg: 'worktower-associate', count: 3 })],
     rewards: { money: 500, stats: { smarts: 4 }, flags: ['reliable-worker'] },
   }),
   quest({

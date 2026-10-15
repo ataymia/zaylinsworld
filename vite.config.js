@@ -19,16 +19,28 @@ const BUILD_COMMIT = process.env.CF_PAGES_COMMIT_SHA?.slice(0, 7) || gitCommit()
 const BUILD_TIME = new Date().toISOString();
 const APP_VERSION = `${pkg.version}+${BUILD_COMMIT}`;
 
-// Stamp the same version into the (verbatim-copied) service worker so each deploy
-// gets a fresh cache namespace and old caches are evicted on activate.
+// Emit and stamp the service worker from its tracked source so every build path
+// gets the same cache identity. GitHub Pages deliberately disables Vite's broad
+// publicDir copy and assembles a bounded asset pack afterward; relying on a later
+// workflow `cp` used to overwrite/miss the stamped worker. The git fallback also
+// keeps sparse engineering checkouts honest when public/sw.js is not materialized.
+function readServiceWorkerSource() {
+  const sourcePath = resolve(__dirname, 'public', 'sw.js');
+  if (existsSync(sourcePath)) return readFileSync(sourcePath, 'utf8');
+  try { return execSync('git show HEAD:public/sw.js', { cwd: __dirname }).toString(); }
+  catch { return null; }
+}
+
 function stampServiceWorker() {
   return {
     name: 'zw-stamp-sw',
     apply: 'build',
     closeBundle() {
       const swPath = resolve(__dirname, 'dist', 'sw.js');
-      if (!existsSync(swPath)) return;
-      let src = readFileSync(swPath, 'utf8');
+      let src = readServiceWorkerSource();
+      if (!src && existsSync(swPath)) src = readFileSync(swPath, 'utf8');
+      if (!src) throw new Error('Unable to emit service worker: public/sw.js is unavailable');
+      if (!src.includes('__SW_VERSION__')) throw new Error('Service worker source is missing its version token');
       src = src.replace(/__SW_VERSION__/g, APP_VERSION);
       writeFileSync(swPath, src);
     },

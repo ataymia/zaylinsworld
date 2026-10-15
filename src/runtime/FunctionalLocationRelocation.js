@@ -55,6 +55,7 @@ export const FUNCTIONAL_LOCATION_CONTRACTS = freeze(STARTER_TOWN_LOCATIONS.map((
     districtId: location.districtId,
     legacy: freeze({ ...legacy, interiorId: location.interiorId || null }),
     target: freeze({ ...location.position }),
+    frontageFace: location.frontageFace ? freeze([...location.frontageFace]) : null,
     spawn: spawn ? freeze({ ...spawn }) : null,
     assetRef: location.assetRef,
     parityFields: RELOCATION_PARITY_FIELDS,

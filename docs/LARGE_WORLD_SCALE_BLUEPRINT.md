@@ -129,7 +129,7 @@ These replace the earlier 500x480 planning anchors.
 | Block Supply | `(-568, 280)` | Westside / Market transition |
 | Auto Haus | `(-448, -660)` | Northworks / Auto Row |
 | City Garage | `(-112, -616)` | Northworks |
-| Zaylins Prep | `(-724, 72)` | Scholar's Quarter |
+| Zaylins Prep | `(-780, 72)` | Scholar's Quarter |
 | Police Station | `(632, -312)` | Civic Heights |
 | WorkTower | `(664, -20)` | Civic Heights |
 | Iron City Gym | `(448, 448)` | Parkside Commons |

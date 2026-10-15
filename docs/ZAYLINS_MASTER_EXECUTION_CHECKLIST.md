@@ -438,6 +438,8 @@ Create measurable budgets for:
 
 ## Phase 3F: Performance acceptance
 
+- [x] Capture bounded, copyable deployed-session evidence for frames, heap/render samples, saves, input, graphics, errors, and interior transitions.
+- [x] Provide an all-twelve-interior lifecycle runner with exact catalog and exterior-return validation.
 - [ ] Five-minute stationary soak.
 - [ ] Fifteen-minute full-speed city drive.
 - [ ] Repeated interior entry/exit.
@@ -957,22 +959,26 @@ Every current gameplay loop works at its final Starter Town location and no miss
 - [ ] Foot patrols.
 - [ ] Cruiser patrols.
 - [ ] Highway response.
-- [ ] Dispatch routing.
+- [x] Road-node dispatch routing for active wanted response.
 - [ ] Witness reports.
 - [ ] Alarm calls.
-- [ ] Pursuit escalation.
-- [ ] Search/hiding behavior.
+- [x] Pursuit escalation.
+- [x] Search/hiding behavior.
 - [ ] District response differences.
-- [ ] Return-to-patrol cleanup.
+- [x] Wanted-resolution cleanup and despawn.
+- [x] Deterministic 1–5 star response staffing within the low-spec police budget.
+- [x] Named officer/cruiser pooling with reset and release contracts.
+- [x] Stolen-cruiser ownership transfer that survives pursuit cleanup.
+- [x] Distant pursuit update throttling and far-unit recycling.
 
 ## Phase 8E: Dialogue framework
 
-- [ ] Multi-step controllable conversations.
-- [ ] Player response choices.
-- [ ] Conditional lines based on mission, job, school, crime, reputation, and time.
-- [ ] Conversation state persistence when necessary.
-- [ ] Clean exit and walk-away behavior.
-- [ ] No dead dialogue buttons.
+- [x] Multi-step controllable conversations.
+- [x] Player response choices.
+- [x] Conditional lines based on mission, stats, crime, reputation, flags, and relationship.
+- [x] Conversation relationship and repeat-visit persistence.
+- [x] Clean exit and working-service handoff behavior.
+- [x] No offers for planned quests until their gameplay is runtime-ready.
 - [ ] Reusable speaker and portrait rules.
 - [ ] Localization-ready text IDs.
 
