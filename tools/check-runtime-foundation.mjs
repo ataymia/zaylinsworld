@@ -77,6 +77,13 @@ const streaming = new StreamingController({
 const streamingUpdate = streaming.update({ x: 0, z: 0 }, { x: 80, z: 0 });
 assert.ok(streamingUpdate.predicted.x > 0, 'fast movement must predictively warm cells ahead of the player');
 assert.equal(streaming.nextJobs().length, 4, 'streaming controller must cap work per frame');
+streaming.nextJobs(1000); // Empty the remaining first-pass jobs before measuring repeat work.
+const queuedAfterFirstPass = streaming.stats.queued;
+const repeated = streaming.update({ x: 0, z: 0 }, { x: 80, z: 0 });
+assert.equal(repeated.queued, 0, 'unchanged predictive cell must not requeue completed work');
+assert.equal(streaming.stats.queued, queuedAfterFirstPass, 'streaming should not churn jobs each frame');
+streaming.update({ x: 0, z: 0 }, { x: 400, z: 0 });
+assert.ok(streaming.stats.queued > queuedAfterFirstPass, 'a new predicted cell must preload ahead again');
 
 const { ObjectPool } = await importLocal('src/runtime/ObjectPool.js');
 let created = 0;
