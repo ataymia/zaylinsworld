@@ -70,8 +70,15 @@ function addUnique(target, seen, placement) {
 }
 
 function safeRoadsidePoint(x, z, roadNetwork, extra = 1.5) {
-  const hit = roadNetwork.nearest({ x, z });
-  return !hit || hit.distance >= hit.segment.width / 2 + extra;
+  // A narrow alley centerline can be closer than a wider crossing avenue.
+  // Never judge safety by nearest centerline alone: test the footprint of
+  // EVERY road that could touch this point.
+  return roadNetwork.segments.every((segment) => {
+    const ax = segment.start.x, az = segment.start.z;
+    const dx = segment.end.x - ax, dz = segment.end.z - az;
+    const t = clamp(((x - ax) * dx + (z - az) * dz) / (dx * dx + dz * dz || 1), 0, 1);
+    return Math.hypot(x - ax - dx * t, z - az - dz * t) >= segment.width / 2 + extra;
+  });
 }
 
 function routeLabelPlacement(route, segment, roadNetwork) {
