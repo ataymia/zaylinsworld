@@ -26,14 +26,26 @@ export const HARBOR_ROUTES=Object.freeze([
 ]);
 export const ALL_FISHING_ROUTES=Object.freeze([FISHING_HIGHWAY,...HARBOR_ROUTES]);
 export const HARBOR_LOCATIONS=Object.freeze([
-  {id:'bait-tackle',name:'Bluefin Bait & Tackle',kind:'bait',x:-240,z:-5070,color:'#df9b4d'},
-  {id:'seafood-market',name:'Harbor Catch Market',kind:'sell',x:-570,z:-5100,color:'#378caf'},
-  {id:'harbor-master',name:'Harbor Master',kind:'master',x:-35,z:-5075,color:'#e6cd79'},
+  {id:'bait-tackle',name:'Castaway Bait & Tackle',kind:'bait',x:-240,z:-5070,color:'#df9b4d'},
+  {id:'seafood-market',name:'TideTable Seafood Market',kind:'sell',x:-570,z:-5100,color:'#378caf'},
+  {id:'harbor-master',name:'Harbor Master Hall',kind:'master',x:-95,z:-5075,color:'#e6cd79'},
   {id:'dockside-diner',name:'Dockside Diner',kind:'diner',x:435,z:-5070,color:'#db7463'},
-  {id:'boat-rental',name:'Bay Boat Rentals',kind:'boats',x:610,z:-5280,color:'#67b3c2'},
+  {id:'boat-rental',name:'BlueCurrent Boat Rental',kind:'boats',x:610,z:-5280,color:'#67b3c2'},
   {id:'harbor-patrol',name:'Harbor Patrol',kind:'patrol',x:-820,z:-4820,color:'#51779d'},
   {id:'harbor-academy',name:'Maritime Academy',kind:'academy',x:680,z:-4590,color:'#cebc8d'},
   {id:'tidefuel',name:'Tidefuel',kind:'fuel',x:120,z:-4590,color:'#68b5a6'},
+  {id:'harbor-clinic',name:'Harbor Clinic',kind:'clinic',x:-485,z:-4610,color:'#decdc2'},
+  {id:'harbor-cannery',name:'Harbor Cannery & Fish Packing',kind:'cannery',x:-955,z:-5085,color:'#8496a0'},
+  {id:'boatworks',name:'Anchor & Axle Boatworks',kind:'boatworks',x:-925,z:-4500,color:'#a9a18b'},
+  {id:'pearl-gallery',name:'Pearl & Chain Jewelry',kind:'jewelry',x:655,z:-4790,color:'#b5d3cd'},
+
+]);
+export const HARBOR_LIGHTHOUSE = Object.freeze({id:'harbor-lighthouse',name:'Breakwater Lighthouse',
+  x:870,z:-5490,w:35,d:35});
+export const HARBOR_WATERWAYS = Object.freeze([
+  {id:'harbor-main-channel',name:'Main Harbor Channel',points:[{x:0,z:-5510},{x:40,z:-6000},{x:120,z:-6410}]},
+  {id:'western-marina-lane',name:'West Marina Lane',points:[{x:-330,z:-5500},{x:-600,z:-5800},{x:-500,z:-6300}]},
+  {id:'east-navigation-lane',name:'East Beacon Lane',points:[{x:490,z:-5500},{x:760,z:-5900},{x:680,z:-6350}]},
 ]);
 export const FISHING_SPOTS=Object.freeze([
   {id:'western-pier',name:'West Fishing Pier',kind:'fish',x:-330,z:-5620,water:'inshore'},
