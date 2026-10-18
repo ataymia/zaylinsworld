@@ -2827,8 +2827,8 @@ function makeFishingBobber(spot) {
 function startPierFishing(spot) {
  if(fishingSession)return;
  const session=startFishing(state,{spotId:spot.id});
- if(session.error==='no-bait'){notify('🎣 No bait! Visit Bluefin Bait & Tackle.');return;}
- if(session.error==='full-bag'){notify('🎣 Bag full. Sell your fish at Harbor Catch Market.');return;}
+ if(session.error==='no-bait'){notify('🎣 No bait! Visit Castaway Bait & Tackle.');return;}
+ if(session.error==='full-bag'){notify('🎣 Bag full. Sell your fish at TideTable Seafood Market.');return;}
  fishingSession=session;
  makeFishingBobber(spot);
  showFishingPanel(session,state.fishing);
@@ -2877,7 +2877,44 @@ function handleHarborAction(action) {
    controls.snapTo(player.group.position,player.eyeHeight);
    notify('⛵ Free harbor shuttle to Central Fishing Pier!');
    break;
- case 'patrol':notify('🛟 Harbor Patrol: stay on the piers near deep water.');break;
+ case 'patrol':
+   if(!fishing.harborPermit){
+     if(state.money<10)notify('🛟 A local Harbor fishing permit costs 10 DreamBucks.');
+     else {state.money-=10;fishing.harborPermit=true;
+       notify('🛟 Harbor Patrol issued your permanent recreational fishing permit.');}
+   }else notify('🛟 Harbor Patrol: permit valid. Rescue and boat patrol shifts are being developed.');
+   break;
+ case 'clinic':
+   if(state.money<20)notify('🏥 Harbor Clinic treatment costs 20 DreamBucks.');
+   else {state.money-=20;state.stats.health=Math.min(100,(state.stats.health||0)+50);
+     notify('🏥 Harbor Clinic restored your health.');}
+   break;
+ case 'cannery':
+   if(!fishing.catches?.length){
+     notify('🐟 Harbor Cannery: bring at least one fresh fish to process.');break;
+   }
+   { const catchItem=fishing.catches.shift();
+     const wage=Math.max(20,Math.round(catchItem.value*1.15));
+     state.money+=wage;fishing.canneryJobs=(fishing.canneryJobs||0)+1;
+     notify('📦 Fish packed and processed at the Cannery! +'+wage+
+       ' DreamBucks. Cannery shifts: '+fishing.canneryJobs+'.');}
+   break;
+ case 'boatworks':
+   if(fishing.lastBoatworkDay===state.day)notify('🔧 Boatworks shift complete today. Return after the next game day.');
+   else {fishing.lastBoatworkDay=state.day;fishing.boatworksJobs=(fishing.boatworksJobs||0)+1;
+     state.money+=45;notify('🔧 Completed Anchor & Axle engine inspection! +45 DreamBucks.');}
+   break;
+ case 'jewelry':
+   if(fishing.pearlCharm)notify('💎 Your Pearl & Chain necklace is already owned.');
+   else if(state.money<75)notify('💎 Pearl & Chain necklace costs 75 DreamBucks.');
+   else {state.money-=75;fishing.pearlCharm=true;
+     notify('💎 Pearl & Chain necklace purchased and saved to your Harbor collection.');}
+   break;
+ case 'lighthouse':
+   if(!fishing.lighthouseVisited){fishing.lighthouseVisited=true;
+     state.money+=35;notify('🌊 Breakwater Lighthouse discovered! +35 DreamBucks exploration reward.');}
+   else notify('🌊 Breakwater Lighthouse: watch the channel buoys and patrol boats below.');
+   break;
  case 'fuel':
    if(Math.hypot(car.g.position.x-action.x,car.g.position.z-action.z)>45)
      notify('⛽ Bring your car near Tidefuel to refuel.');
