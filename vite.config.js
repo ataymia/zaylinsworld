@@ -19,18 +19,20 @@ const BUILD_COMMIT = process.env.CF_PAGES_COMMIT_SHA?.slice(0, 7) || gitCommit()
 const BUILD_TIME = new Date().toISOString();
 const APP_VERSION = `${pkg.version}+${BUILD_COMMIT}`;
 
-// Stamp the same version into the (verbatim-copied) service worker so each deploy
-// gets a fresh cache namespace and old caches are evicted on activate.
+// Always emit a stamped service worker, including bounded GitHub Pages builds
+// where publicDir=false. Asset caches are stable across builds; only the app
+// shell cache needs the new commit-scoped version.
 function stampServiceWorker() {
   return {
     name: 'zw-stamp-sw',
     apply: 'build',
     closeBundle() {
       const swPath = resolve(__dirname, 'dist', 'sw.js');
-      if (!existsSync(swPath)) return;
-      let src = readFileSync(swPath, 'utf8');
-      src = src.replace(/__SW_VERSION__/g, APP_VERSION);
-      writeFileSync(swPath, src);
+      const template = existsSync(swPath) ? swPath : resolve(__dirname, 'public', 'sw.js');
+      if (!existsSync(template)) throw new Error('Service worker template is missing');
+      const source = readFileSync(template, 'utf8');
+      if (!source.includes('__SW_VERSION__')) throw new Error('Service worker version token is missing');
+      writeFileSync(swPath, source.replace(/__SW_VERSION__/g, APP_VERSION));
     },
   };
 }
