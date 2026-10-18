@@ -171,11 +171,17 @@ function makeInfill() {
 }
 export const STARTER_TOWN_INFILL_PARCELS = makeInfill();
 
+// Keep the 54 authored construction parcels immutable for saves, registry,
+// phase audits and planned future-use IDs. New decorative infill stays in a
+// separate render-only list and cannot change canonical parcel ownership.
 export const STARTER_TOWN_PARCELS = freeze([
   ...STARTER_TOWN_FUNCTIONAL_PARCELS,
   ...STARTER_TOWN_FILLER_PARCELS,
-  ...STARTER_TOWN_INFILL_PARCELS,
   ...STARTER_TOWN_RESERVE_PARCELS,
+]);
+export const STARTER_TOWN_RENDER_PARCELS = freeze([
+  ...STARTER_TOWN_PARCELS,
+  ...STARTER_TOWN_INFILL_PARCELS,
 ]);
 
 export const PARCEL_BY_ID = freeze(Object.fromEntries(STARTER_TOWN_PARCELS.map((entry) => [entry.id, entry])));
