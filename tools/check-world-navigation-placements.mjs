@@ -50,6 +50,8 @@ for (const p of placements) {
 }
 console.log('World navigation and physical placement verification passed:');
 console.log(`- ${towns.length} authentic world towns (1 currently playable) and ${network.routes.size} Starter Town road routes`);
-console.log(`- ${signs.length} pavement-clear route and intersection signs`);
+const trueSigns = signs.filter(entry => entry.type !== 'streetlight');
+const streetlightPoles = signs.filter(entry => entry.type === 'streetlight');
+console.log(`- ${trueSigns.length} pavement-clear route and intersection signs, separately from ${streetlightPoles.length} road-safe streetlight poles`);
 console.log(`- ${placements.length} road-clear filler buildings`);
 console.log('- map zoom, world status, waypoint routing, fuel and vehicle summon contracts present');
