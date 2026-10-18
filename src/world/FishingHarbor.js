@@ -1,12 +1,13 @@
-// Procedural, playable first pass for Fishing Harbor. No remote assets,
-// per-frame geometry creation or effect-heavy water shaders.
+// Fishing Harbor structural collision and water. Authored models hydrate from
+// the production asset placement layer, not generic town prototypes.
 import * as THREE from 'three';
+import {buildFishingHarborStreetscape} from './FishingHarborStreetscape.js';
 import {HARBOR_BOUNDS,HARBOR_SHORE_Z,HARBOR_ROUTES,FISHING_HIGHWAY,HARBOR_ACTIONS,FISHING_SPOTS} from '../config/fishingHarborPlan.js';
 
 const mat=(color,roughness=0.85,metalness=0)=>new THREE.MeshStandardMaterial({color,roughness,metalness});
-const earth=mat('#648467'),asphalt=mat('#303c4c'),lane=mat('#e4d5a0');
+const earth=mat('#786e59'),asphalt=mat('#484c50'),lane=mat('#e4d5a0');
 const deck=mat('#947251'),wood=mat('#705139'),concrete=mat('#a9b4b0');
-const waterMat=new THREE.MeshStandardMaterial({color:'#236f9c',roughness:0.32,metalness:0.2,
+const waterMat=new THREE.MeshStandardMaterial({color:'#285f72',roughness:0.32,metalness:0.2,
  transparent:true,opacity:0.94,side:THREE.DoubleSide});
 const grass=mat('#598b63'),sand=mat('#bbac79'),glass=mat('#8cc9df',0.27,0.16);
 function block(parent,id,x,y,z,w,h,d,material){
@@ -105,7 +106,7 @@ function decorate(group,colliders){
  // Three waterfront promenades; piers are continuous walkable geometry.
  for(const [i,x,length] of [[0,-330,335],[1,120,320],[2,490,330]])pier(group,x,String(i),length);
  block(group,'FH_wooden_boardwalk',10,0.11,-5345,1500,0.23,27,deck);
- block(group,'FH_beach',0,-0.025,-5402,2400,0.12,45,sand);
+ block(group,'FH_beach',0,0.27,-5402,2400,0.12,45,sand);
  fishBoat(group,-375,-5745,Math.PI/4);fishBoat(group,178,-5720,-0.3);fishBoat(group,550,-5780,-0.5);
  // Waterfront bollards, cargo crates, picnic tables, safety lights.
  for(let i=0;i<28;i++){
@@ -180,23 +181,28 @@ export function buildFishingHarbor(scene){
  block(group,'FH_approach_verge',0,-0.11,-2650,76,0.14,3100,earth);
  block(group,'FH_land',0,-0.15,-4740,2400,0.25,1320,earth);
  block(group,'FH_shore_grass',0,-0.015,-5300,2400,0.08,155,mat('#879a6e'));
- block(group,'FH_ocean',0,-0.27,-6000,2850,0.12,1450,waterMat);
- block(group,'FH_harbor_water_edge',0,-0.24,-5410,2850,0.06,150,waterMat);
+ block(group,'FH_ocean',0,0.11,-6000,2850,0.12,1450,waterMat);
+ block(group,'FH_harbor_water_edge',0,0.11,-5410,2850,0.06,150,waterMat);
+ block(group,'FH_east_inlet',1120,0.12,-4910,185,0.05,710,waterMat);
+ block(group,'FH_west_inlet',-1150,0.12,-4900,120,0.05,670,waterMat);
  const roadCount=[FISHING_HIGHWAY,...HARBOR_ROUTES].reduce((n,road)=>n+roadSurface(group,road),0);
  const colliders=[];
  for(const action of HARBOR_ACTIONS.filter(a=>a.kind!=='fish'))shop(group,action,colliders);
  const decoration=decorate(group,colliders);
+ const streetscape=buildFishingHarborStreetscape(group);
  const people=harborPeople(group);
  let elapsed=0;
  const update=(dt)=>{
    elapsed+=Math.min(0.05,Math.max(0,dt));
+   streetscape.update(elapsed);
    for(const p of people){
      p.group.position.z=p.originZ+Math.sin(elapsed*0.52+p.phase)*5;
      p.group.rotation.y=Math.sin(elapsed*0.52+p.phase)>0?Math.PI:0;
    }
  };
  group.userData.report={playable:true,id:'fishing-harbor',roadSegments:roadCount,
-   businesses:8,fishingSpots:FISHING_SPOTS.length,pedestrians:people.length,...decoration};
+   businesses:HARBOR_ACTIONS.filter(a=>a.kind!=='fish').length,
+   fishingSpots:FISHING_SPOTS.length,pedestrians:people.length,...streetscape.report,...decoration};
  scene.add(group);
  const actionByProximity=(position,radius=7)=> {
    let selected=null,distance=radius;
