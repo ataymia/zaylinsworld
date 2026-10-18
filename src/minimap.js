@@ -10,7 +10,7 @@
 import { ROAD, LANDMARKS } from './config/mapConfig.js';
 import { STARTER_TOWN_RUNTIME_PLAN } from './config/starterTownRuntimePlan.js';
 import { ROAD_TIERS, DISTRICTS as WORLD_TOWNS, CONNECTIONS as WORLD_CONNECTIONS } from './config/worldMapPlan.js';
-import { ALL_FISHING_ROUTES } from './config/fishingHarborPlan.js';
+import { ALL_FISHING_ROUTES,HARBOR_LIGHTHOUSE } from './config/fishingHarborPlan.js';
 
 let canvas = null, ctx = null, expanded = false;
 let markers = [];            // [{ x, z, color, icon }] extra points (gas/diner)
@@ -286,6 +286,45 @@ export function draw(playerPos, headingRad, traffic = [], npcs = []) {
       ctx.closePath();
       ctx.fillStyle = `${DISTRICT_COLORS[district.id] || '#55665a'}99`;
       ctx.fill();
+    }
+  }
+
+  // Harbor-specific map geography is drawn from the SAME world coordinates as
+  // the playable meshes. The expanded map is not another generic green grid.
+  if (activeTownId === 'fishing-harbor') {
+    ctx.fillStyle = '#2d6678';
+    ctx.fillRect(px(-1430),py(-6740),px(1430)-px(-1430),py(-5280)-py(-6740));
+    ctx.fillStyle = '#418c9c';
+    ctx.fillRect(px(-1220),py(-5310),px(1220)-px(-1220),py(-5270)-py(-5310));
+    // Working harbor has two tidal inlets along the east and west districts.
+    for(const [x1,z1,x2,z2]of [[-1210,-5240,-1080,-4550],
+      [1010,-5270,1220,-4550]]){
+      ctx.fillStyle='#377d90';
+      ctx.fillRect(px(x1),py(z1),px(x2)-px(x1),py(z2)-py(z1));
+    }
+    // Sand edge, long wharf and three visibly separate fishing decks.
+    ctx.fillStyle='#bea77b';
+    ctx.fillRect(px(-1200),py(-5380),px(1200)-px(-1200),
+      Math.max(2,20*scale));
+    ctx.strokeStyle='#b5a17e';
+    ctx.lineWidth=Math.max(2,27*scale);
+    ctx.beginPath();ctx.moveTo(px(-760),py(-5345));
+    ctx.lineTo(px(760),py(-5345));ctx.stroke();
+    ctx.lineWidth=Math.max(2,19*scale);
+    for(const [x,length]of [[-330,335],[120,320],[490,330]]){
+      ctx.beginPath();ctx.moveTo(px(x),py(-5330));
+      ctx.lineTo(px(x),py(-5330-length));ctx.stroke();
+    }
+    ctx.fillStyle='#a3a79b';
+    ctx.fillRect(px(823),py(-5532),px(917)-px(823),py(-5448)-py(-5532));
+    ctx.strokeStyle='#c9ad79';ctx.lineWidth=Math.max(2,14*scale);
+    ctx.beginPath();ctx.moveTo(px(870),py(-5275));
+    ctx.lineTo(px(870),py(-5490));ctx.stroke();
+    if(expanded){
+      ctx.fillStyle='#fbebac';ctx.font='bold 12px system-ui';
+      ctx.textAlign='center';ctx.textBaseline='bottom';
+      ctx.fillText('⚓ Lighthouse',px(HARBOR_LIGHTHOUSE.x),py(HARBOR_LIGHTHOUSE.z)-9);
+      ctx.fillText('FISHING HARBOR',px(0),py(-5440)-8);
     }
   }
 
