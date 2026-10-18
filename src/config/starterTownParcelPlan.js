@@ -5,6 +5,8 @@
 // lots, and future-update reserves. Asset swaps never change these IDs.
 // ─────────────────────────────────────────────────────────────────────────────
 
+import { STARTER_TOWN_RUNTIME_PLAN } from './starterTownRuntimePlan.js';
+
 const freeze = (value) => Object.freeze(value);
 const rect = (x, z, w, d) => freeze({ x, z, w, d });
 const parcel = (id, districtId, type, x, z, w, d, extra = {}) => freeze({
@@ -100,9 +102,79 @@ export const STARTER_TOWN_RESERVE_PARCELS = freeze([
   parcel('reserve-westside-lot', 'westside-blocks', 'purposeful-empty', -470, 840, 120, 90, { purpose: 'vacant lot and future community build' }),
 ]);
 
+// Additional small-footprint neighborhoods occupy true gaps between the
+// authored destinations. Stable, seeded placement avoids throwing structures
+// onto a road, a park, a future-use parcel or the player's mailbox.
+// Only a bounded number of lots are added so the current WebGL budget holds.
+function infillHash(value) {
+  let h = 2166136261;
+  for (const c of value) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); }
+  return (h >>> 0) / 0xffffffff;
+}
+function withinPolygon(x, z, polygon) {
+  let inside = false;
+  for (let i=0,j=polygon.length-1;i<polygon.length;j=i++) {
+    const a=polygon[i], b=polygon[j];
+    if ((a.z>z)!==(b.z>z)
+      && x<(b.x-a.x)*(z-a.z)/((b.z-a.z)||Number.EPSILON)+a.x) inside=!inside;
+  }
+  return inside;
+}
+function roadDistance(x,z) {
+  let best=Infinity;
+  for (const route of STARTER_TOWN_RUNTIME_PLAN.routes) {
+    for (let i=0;i<route.points.length-1;i++) {
+      const a=route.points[i], b=route.points[i+1];
+      const dx=b.x-a.x, dz=b.z-a.z;
+      const t=Math.max(0,Math.min(1,((x-a.x)*dx+(z-a.z)*dz)/(dx*dx+dz*dz||1)));
+      best=Math.min(best,Math.hypot(x-a.x-dx*t,z-a.z-dz*t));
+    }
+  }
+  return best;
+}
+function overlapsReserved(x,z,w,d,other,buffer=12) {
+  const r=other.bounds;
+  return Math.abs(x-r.x) < (w+r.w)/2+buffer && Math.abs(z-r.z) < (d+r.d)/2+buffer;
+}
+function createInfillLots() {
+  const existing=[...STARTER_TOWN_FUNCTIONAL_PARCELS,...STARTER_TOWN_FILLER_PARCELS,...STARTER_TOWN_RESERVE_PARCELS];
+  const reserved=STARTER_TOWN_NO_BUILD_BUFFERS.filter(b=>b.bounds);
+  const densities={
+    'dreamdrop-district': 0.88, 'market-mile': 0.83, 'northworks-auto-row': 0.64,
+    'scholars-quarter': 0.46, 'civic-heights': 0.70, 'eastgate-corridor': 0.60,
+    'parkside-commons': 0.24, 'willowbend-residential': 0.62, 'westside-blocks': 0.82,
+  };
+  const types={
+    'dreamdrop-district':'mixed-use','market-mile':'commercial-row',
+    'northworks-auto-row':'industrial','scholars-quarter':'residential-block',
+    'civic-heights':'office','eastgate-corridor':'commercial',
+    'parkside-commons':'residential-row','willowbend-residential':'residential-row',
+    'westside-blocks':'residential-block',
+  };
+  const lots=[];
+  for(let z=-875;z<=875 && lots.length<36;z+=125) {
+    for(let x=-875;x<=875 && lots.length<36;x+=125) {
+      const district=STARTER_TOWN_RUNTIME_PLAN.districts.find(d=>withinPolygon(x,z,d.polygon));
+      if(!district)continue;
+      const id='city-infill-'+x+'-'+z;
+      if(infillHash(id)>densities[district.id])continue;
+      const distance=roadDistance(x,z);
+      if(distance>85 || distance<16)continue;
+      const w=66,d=66;
+      if(existing.some(p=>overlapsReserved(x,z,w,d,p,15)))continue;
+      if(reserved.some(p=>overlapsReserved(x,z,w,d,p,15)))continue;
+      if(lots.some(p=>overlapsReserved(x,z,w,d,p,12)))continue;
+      lots.push(parcel(id,district.id,types[district.id],x,z,w,d,{urbanInfill:true}));
+    }
+  }
+  return freeze(lots);
+}
+export const STARTER_TOWN_INFILL_PARCELS = createInfillLots();
+
 export const STARTER_TOWN_PARCELS = freeze([
   ...STARTER_TOWN_FUNCTIONAL_PARCELS,
   ...STARTER_TOWN_FILLER_PARCELS,
+  ...STARTER_TOWN_INFILL_PARCELS,
   ...STARTER_TOWN_RESERVE_PARCELS,
 ]);
 
