@@ -257,6 +257,18 @@ export function productionWorldBridgeSnapshot() {
     preloadMs: bridge.preparedAt && bridge.startedAt ? Math.round(bridge.preparedAt - bridge.startedAt) : null,
     lastError: bridge.lastError?.message || null,
     activeRelocations: productionWorldRelocationIds(),
+    // Runtime placement counts, not factory production counts. Inspect these
+    // after entering the actual world to find missing/placeholder assets.
+    productionAssetPlacements: bridge.prepared ? Object.freeze({
+      functionalModels: bridge.prepared.placementReport?.placedAssets?.length || 0,
+      functionalPlaceholders: bridge.prepared.placementReport?.placeholders?.length || 0,
+      functionalLoadFailures: bridge.prepared.placementReport?.skipped?.length || 0,
+      buildingModels: bridge.prepared.buildingAssets?.report?.productionInstances || 0,
+      buildingFallbacks: bridge.prepared.buildingAssets?.report?.fallbackInstances || 0,
+      uniqueBuildingModels: bridge.prepared.buildingAssets?.report?.uniqueAssets?.length || 0,
+      groundCoverModels: bridge.prepared.groundCover?.report?.realAssetInstances || 0,
+      groundCoverFallbacks: bridge.prepared.groundCover?.report?.fallbackInstances || 0,
+    }) : null,
     relocation: functionalLocationRelocation.snapshot(),
   });
 }
