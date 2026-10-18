@@ -36,7 +36,7 @@
     "check:story": "node tools/check-story-system.mjs",
     "story:check-full": "node tools/check-full-story-content.mjs",
     "story:compile": "node tools/compile-story-content.mjs",
-    "check": "npm run check:syntax && npm run check:smoke && npm run check:characters && npm run check:player-runtime && npm run check:runtime-foundation && npm run check:starter-town-phases && npm run check:functional-relocation && npm run check:home-relocation && npm run check:school-relocation && npm run check:chicken-relocation && npm run check:retail-relocations && npm run check:vehicle-relocations && npm run check:civic-relocations && npm run check:infrastructure-relocations && npm run check:exploration-ready && npm run check:live-city && npm run check:playtest-cohesion && npm run check:city-intent && npm run check:regular-gameplay && npm run check:world-navigation && npm run check:starter-town-schedules && npm run check:starter-town-recurring && npm run check:starter-town-police && npm run check:starter-town-acceptance && npm run check:starter-town-life && npm run check:runtime-quests && npm run check:story && npm run story:check-full && npm run build",
+    "check": "npm run check:syntax && npm run check:smoke && npm run check:characters && npm run check:player-runtime && npm run check:runtime-foundation && npm run check:starter-town-phases && npm run check:functional-relocation && npm run check:home-relocation && npm run check:school-relocation && npm run check:chicken-relocation && npm run check:retail-relocations && npm run check:vehicle-relocations && npm run check:civic-relocations && npm run check:infrastructure-relocations && npm run check:exploration-ready && npm run check:live-city && npm run check:playtest-cohesion && npm run check:city-intent && npm run check:regular-gameplay && npm run check:world-navigation && npm run check:fishing-harbor && npm run check:starter-town-schedules && npm run check:starter-town-recurring && npm run check:starter-town-police && npm run check:starter-town-acceptance && npm run check:starter-town-life && npm run check:runtime-quests && npm run check:story && npm run story:check-full && npm run build",
     "audit:characters": "node tools/audit-characters.mjs",
     "audit:assets": "node tools/audit-assets.mjs",
     "build:player-avatar": "node tools/build-player-avatar.mjs",
@@ -72,7 +72,8 @@
     "asset:materialize": "npm run asset:compile-expanded && npm run asset:runtime && npm run asset:deep-only && npm run asset:health",
     "asset:batch": "node tools/asset-factory/run-batch.mjs --batch-size 20",
     "asset:dry-run": "node tools/asset-factory/run-batch.mjs --batch-size 20 --dry-run",
-    "check:world-navigation": "node tools/check-world-navigation-placements.mjs"
+    "check:world-navigation": "node tools/check-world-navigation-placements.mjs",
+    "check:fishing-harbor": "node tools/check-fishing-harbor.mjs"
   },
   "dependencies": {
     "three": "0.160.1"

@@ -12,15 +12,16 @@ const source = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8
 const minimap = fs.readFileSync(new URL('../src/minimap.js', import.meta.url), 'utf8');
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 assert.equal(towns.length, 9, 'world overview must cover all nine canonical towns');
-assert.equal(towns.filter(t => t.playable).length, 1, 'planned unbuilt towns must never be labeled playable');
+assert.equal(towns.filter(t => t.playable).length, 2, 'only Starter Town and the built Fishing Harbor are currently playable');
 assert.equal(towns.find(t => t.playable)?.id, 'starter-town');
+assert.equal(towns.find(t => t.id === 'fishing-harbor')?.playable,true,'new fishing harbor needs a playable world registry contract');
 assert.equal(minimapRoadPlan({largeWorld:true}).length, STARTER_TOWN_RUNTIME_PLAN.routes.length);
 assert.match(minimap, /onSelectDestination/, 'canvas must accept clicked destinations');
 assert.match(minimap, /WORLD_TOWNS/, 'world overview must reuse canonical world blueprint');
 assert.match(minimap, /worldView = clamp/, 'world map wheel zoom must be bounded');
 assert.match(minimap, /center\.x -= dx/, 'city map must support panning');
 assert.match(source, /customMapDestination/, 'chosen waypoint must override quest navigation');
-assert.match(source, /starterTownNavigation\.routePoints\(position, customMapDestination/, 'waypoints must use actual drivable RoadGraph');
+assert.match(source, /crossTownNavigation\.routePoints\(position, customMapDestination/, 'waypoints must use the connected two-town RoadGraph');
 assert.match(source, /if \(k === 'b'\) summonOwnedCar\(\)/, 'owned-car recovery needs a hotkey');
 assert.match(source, /\* 0\.012\);/, 'fuel consumption must be much slower');
 assert.match(html, /<b>B<\/b> summon owned car/);
@@ -49,7 +50,7 @@ for (const p of placements) {
     `building ${p.id} clearance must hold against the real road network`);
 }
 console.log('World navigation and physical placement verification passed:');
-console.log(`- ${towns.length} authentic world towns (1 currently playable) and ${network.routes.size} Starter Town road routes`);
+console.log(`- ${towns.length} authentic world towns (2 currently playable) and ${network.routes.size} Starter Town road routes`);
 const trueSigns = signs.filter(entry => entry.type !== 'streetlight');
 const streetlightPoles = signs.filter(entry => entry.type === 'streetlight');
 console.log(`- ${trueSigns.length} pavement-clear route and intersection signs, separately from ${streetlightPoles.length} road-safe streetlight poles`);
