@@ -91,7 +91,9 @@ export function detectAutoPreset() {
     const gl = typeof document !== 'undefined' ? document.createElement('canvas').getContext('webgl') : null;
     const dbg = gl && gl.getExtension('WEBGL_debug_renderer_info');
     const renderer = dbg ? (gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) || '') : '';
-    weakGPU = /Intel|Mali|Adreno 5|Adreno 6|PowerVR|Apple GPU|SwiftShader|llvmpipe/i.test(renderer);
+    // Apple Silicon desktop GPUs report "Apple GPU" too; treating all of them as
+    // weak incorrectly locks capable Macs to the Low visual preset.
+    weakGPU = /Intel|Mali|Adreno 5|Adreno 6|PowerVR|SwiftShader|llvmpipe/i.test(renderer);
   } catch { /* best effort only */ }
 
   if (mobile || mem <= 3 || cores <= 3 || weakGPU) return 'low';
