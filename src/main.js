@@ -2897,6 +2897,31 @@ function cancelFishing() {
  fishingSession=null;hideFishingPanel();releaseFishingBobber();
  notify('🎣 Fishing cancelled. One bait was used.');saveNow();
 }
+// Eastbound Rich Hills gateway shortcuts supplement the drivable parkway.
+function richGatewayNear(position){
+ if(!position)return null;
+ if(Math.hypot(position.x-1170,position.z)<24)return 'to-rich';
+ if(Math.hypot(position.x-4060,position.z)<24)return 'to-starter-east';
+ return null;
+}
+function useRichGateway(direction){
+ if(!player||!car||area!=='city'||fishingSession||richHillsController?.busy())return;
+ const pos=direction==='to-rich'?{x:4200,z:0}:{x:1130,z:0};
+ if(inCar){(drivingVehicle||car).g.position.set(pos.x,0,pos.z);
+  (drivingVehicle||car).speed=0;
+ }else{
+  player.group.position.set(pos.x,0,pos.z);
+  controls.snapTo(player.group.position,player.eyeHeight);
+ }
+ syncCurrentWorldTown(pos);
+ notify(direction==='to-rich'?'🚘 Grand Entry reached! Welcome to Rich Hills.'
+  :'🏙️ Returned to Starter Town’s east parkway.');
+ saveNow();
+}
+function richInteractionAt(position) {
+ return richHillsWorld&&inRichHills(position)
+   ?richHillsWorld.nearestAction(position,29):null;
+}
 // ── vehicle recovery and fuel ──────────────────────────────────────────────────
 // B summons the player's legally owned active vehicle, without creating a stolen
 // duplicate. The familiar starter-spawn planner places it beside the avatar or
@@ -2911,7 +2936,9 @@ function summonOwnedCar() {
     return false;
   }
   const position = player.group.position;
-  const placed = starterVehicleSpawnNear(position, { facing: player.group.rotation.y });
+  const placed = inRichHills(position)
+    ?{x:position.x+3,z:position.z+3,rotationY:player.group.rotation.y}
+    :starterVehicleSpawnNear(position, { facing: player.group.rotation.y });
   car.g.position.set(placed.x, 0, placed.z);
   car.g.rotation.y = placed.rotationY;
   car.speed = 0;
@@ -2924,7 +2951,8 @@ function summonOwnedCar() {
     state.fuel = 20;
     updateOwnedVehicleCondition(state, state.vehicleState.activeVehicleId, { fuel: 20 });
   }
-  resolveCollision(car.g.position, 1.5, inFishingHarbor(car.g.position) ? harborWorld?.colliders : cityColliders);
+  resolveCollision(car.g.position, 1.5, inRichHills(car.g.position)?richHillsWorld?.colliders
+    :inFishingHarbor(car.g.position)?harborWorld?.colliders:cityColliders);
   notify('🚗 Your car is beside you! Press F to get in.');
   saveNow();
   return true;
@@ -3004,8 +3032,10 @@ function updateCar(dt) {
   const dir = new THREE.Vector3(Math.sin(v.g.rotation.y), 0, Math.cos(v.g.rotation.y));
   const before = v.g.position.clone();
   v.g.position.addScaledVector(dir, v.speed * dt); v.g.position.y = 0;
-  resolveCollision(v.g.position, 1.5, inFishingHarbor(v.g.position) ? harborWorld?.colliders : cityColliders);
+  resolveCollision(v.g.position, 1.5, inRichHills(v.g.position)?richHillsWorld?.colliders
+    :inFishingHarbor(v.g.position)?harborWorld?.colliders:cityColliders);
   const boundaryAction = enforceLiveStarterTownBoundary(v.g.position, { vehicle: v });
+  if(inRichHills(v.g.position))richHillsController?.checkValetParking(v);
   const trafficOffense = boundaryAction
     ? null
     : trafficControl?.observeDriver(before, v.g.position, Math.abs(v.speed), v, dt);
@@ -4195,6 +4225,20 @@ function resolveCollision(pos, radius, list) {
 let lastBoundaryNoticeMs = -Infinity;
 function enforceLiveStarterTownBoundary(position, { vehicle = null } = {}) {
  if(area!=='city'||!position)return null;
+ if(inRichHills(position)){
+  const safe=richHillsSafePoint(position);
+  position.x=safe.x;position.z=safe.z;
+  syncCurrentWorldTown(position);return null;
+ }
+ if(onRichParkway(position)){
+  syncCurrentWorldTown(position);return null;
+ }
+ if(state.world?.townId==='rich-hills'&&position.x>=3850&&position.x<=6540
+   &&Math.abs(position.z)<=1350){
+  const safe=richHillsSafePoint(position);
+  position.x=safe.x;position.z=safe.z;
+  return {action:'clamp',reason:'rich-hills-edge'};
+ }
  if(inFishingHarbor(position)){
    const safe=harborSafePoint(position);
    position.x=safe.x;position.z=safe.z;
@@ -4279,7 +4323,8 @@ function updatePlayer(dt, t) {
   velY -= 14 * dt; p.y += velY * dt;
   if (p.y <= 0) { p.y = 0; velY = 0; onGround = true; }
 
-  resolveCollision(p, 0.5, inFishingHarbor(p) ? harborWorld?.colliders : null);
+  resolveCollision(p, 0.5, inRichHills(p)?richHillsWorld?.colliders
+    :inFishingHarbor(p)?harborWorld?.colliders:null);
   enforceLiveStarterTownBoundary(p);
 
   // solid pedestrians: the player can't phase through NPCs anymore. Push both
@@ -5486,7 +5531,8 @@ function saveNow() {
   if (area === 'city') {
     const savedPosition=inCar?(drivingVehicle||car).g.position:player.group.position;
     state.pos.x=savedPosition.x;state.pos.z=savedPosition.z;
-    state.world.townId=inFishingHarbor(savedPosition)?'fishing-harbor':'starter-town';
+    state.world.townId=inRichHills(savedPosition)?'rich-hills'
+      :inFishingHarbor(savedPosition)?'fishing-harbor':'starter-town';
   } else {
     state.pos.x = returnPos.x; state.pos.z = returnPos.z;
   }
@@ -5544,8 +5590,10 @@ function aimRayOnTarget() {
   return false;
 }
 function locationLabel() {
-  if (inCar) return state.world?.townId==='fishing-harbor'?'🚗 Fishing Harbor':'🚗 Driving';
+  if (inCar) return state.world?.townId==='rich-hills'?'🚗 Rich Hills'
+    :state.world?.townId==='fishing-harbor'?'🚗 Fishing Harbor':'🚗 Driving';
   if (area !== 'city') return interiors.byId[area].name;
+  if(state.world?.townId==='rich-hills')return '🏡 Rich Hills';
   if(state.world?.townId==='fishing-harbor')return '🎣 Fishing Harbor';
   return (SERVERS.find(s => s.id === state.server)?.name || 'City') + ' — City';
 }
@@ -5553,6 +5601,14 @@ function locationLabel() {
 // ── interaction dispatch each frame ────────────────────────────────────────────
 function handleInteraction(clicked = false) {
   const currentPos=inCar?(drivingVehicle||car)?.g.position:player?.group.position;
+  const richGateway=richGatewayNear(currentPos);
+  if(richGateway&&(!inCar||Math.abs((drivingVehicle||car)?.speed||0)<1.5)){
+   showPrompt(richGateway==='to-rich'?'Rich Hills shortcut (E) · Exit vehicle (F)'
+     :'Starter Town shortcut (E) · Exit vehicle (F)','e');
+   if(controls.consumePress('e'))useRichGateway(richGateway);
+   if(inCar&&controls.consumePress('f'))exitCar();
+   return;
+  }
   const gateway=harborGatewayNear(currentPos);
   if(gateway && (!inCar || Math.abs((drivingVehicle||car)?.speed||0)<1.5)){
     showPrompt(gateway==='to-harbor'?'Harbor shortcut (E) · Exit vehicle (F)'
@@ -5575,6 +5631,12 @@ function handleInteraction(clicked = false) {
     showPrompt('Exit vehicle', 'f');
     if (controls.consumePress('f')) exitCar();
     return;
+  }
+  const richAction=richInteractionAt(player.group.position);
+  if(richAction){
+   showPrompt(richAction.name,'e');
+   if(controls.consumePress('e')||clicked)richHillsController?.handleAction(richAction);
+   return;
   }
   const harborAction=harborInteractionAt(player.group.position);
   if(harborAction){
@@ -5702,6 +5764,10 @@ function teleportTo(which) {
 // ── global hotkeys ─────────────────────────────────────────────────────────────
 window.addEventListener('keydown', e => {
   const kc = e.key.toLowerCase();
+  if(richHillsController?.busy()){
+   if(richHillsController.onKey(kc))e.preventDefault();
+   return;
+  }
   if(fishingSession){
     if(kc===' '){e.preventDefault();fishingPress();return;}
     if(kc==='escape'){e.preventDefault();cancelFishing();return;}
@@ -5888,13 +5954,15 @@ function animate() {
     updateTraffic(traffic, dt, trafficObstacles, trafficControl, cityObserver, state.timeMin);
   }
   if(state.world?.townId==='fishing-harbor')harborWorld?.update?.(dt);
+  if(state.world?.townId==='rich-hills')richHillsWorld?.update?.(dt);
   updateMixers(dt);                                  // skinned GLB animations
   for (const g of extraSpinners) g.rotation.y += dt * 0.8;   // idle-spin display models
   // spin any dealership car flagged for preview
   if (interiors) Object.values(interiors.byId).forEach(intr => intr.stations.forEach(st => { if (st.mesh && st.mesh.userData.spin) st.mesh.rotation.y += 0.02; }));
 
   updateHarborFishing(dt);
-  const busy = interiorAcceptanceRunning || isUIOpen() || isSettingsOpen() || eating || hairGame || lineupGame || !!fishingSession || !!minimap?.isExpanded();
+  richHillsController?.update(dt,state.world?.townId==='rich-hills');
+  const busy = interiorAcceptanceRunning || isUIOpen() || isSettingsOpen() || eating || hairGame || lineupGame || !!fishingSession || !!richHillsController?.busy() || !!minimap?.isExpanded();
   // collectible gems: always bob/twinkle; only collectible while on foot in the city
   if (cityGems.length) {
     const pp = (!busy && !inCar && area === 'city' && player) ? player.group.position : null;
@@ -6226,6 +6294,8 @@ window.ZW = Object.assign(window.ZW || {}, {
     z: +c.g.position.z.toFixed(2),
   })),
   fishingHarbor: () => ({scene:harborWorld?.report||null,fishing:ensureFishingState(state),townId:state.world?.townId}),
+  richHills: () => ({scene:richHillsWorld?.report||null,
+    activities:richHillsController?.snapshot()||null,townId:state.world?.townId}),
   scheduleSnapshot: () => ({
     timeMin: state.timeMin,
     pedestrians: cityNPCs.filter(n => n.av.group.visible !== false).length,
