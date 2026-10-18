@@ -2,6 +2,7 @@
 // per-frame geometry creation or effect-heavy water shaders.
 import * as THREE from 'three';
 import { populateHarborAssets,HARBOR_PRODUCTION_SPECS } from './FishingHarborAssets.js';
+import { buildHarborSignals } from './FishingHarborSignals.js';
 import {HARBOR_BOUNDS,HARBOR_SHORE_Z,HARBOR_ROUTES,FISHING_HIGHWAY,HARBOR_ACTIONS,FISHING_SPOTS,HARBOR_SHIFT_Z} from '../config/fishingHarborPlan.js';
 
 const mat=(color,roughness=0.85,metalness=0)=>new THREE.MeshStandardMaterial({color,roughness,metalness});
@@ -192,8 +193,10 @@ export function buildFishingHarbor(scene){
  for(const action of HARBOR_ACTIONS.filter(a=>a.kind!=='fish'))shop(group,{...action,z:action.z-HARBOR_SHIFT_Z},colliders);
  const decoration=decorate(group,colliders);
  const people=harborPeople(group);
+ const signals=buildHarborSignals(group);
  let elapsed=0;
  const update=(dt)=>{
+   signals.update(dt);
    elapsed+=Math.min(0.05,Math.max(0,dt));
    for(const p of people){
      p.group.position.z=p.originZ+Math.sin(elapsed*0.52+p.phase)*5;
@@ -202,7 +205,8 @@ export function buildFishingHarbor(scene){
  };
  group.userData.report={playable:true,id:'fishing-harbor',roadSegments:roadCount,
    productionAssetsPlanned:HARBOR_PRODUCTION_SPECS.length,productionAssetsLoaded:0,
-   businesses:8,fishingSpots:FISHING_SPOTS.length,pedestrians:people.length,...decoration};
+   businesses:8,fishingSpots:FISHING_SPOTS.length,pedestrians:people.length,
+   trafficSignals:signals.nodes.length,...decoration};
  // Clear regional visual identity: the ocean is broad and distinctly lower
  // than the land. Players approach into visible sea with a lighthouse landmark.
  // The shoreline remains north of the waterfront, not through a drivable lane.
@@ -256,5 +260,5 @@ export function buildFishingHarbor(scene){
    }
    return selected;
  };
- return {group,colliders,nearestAction:actionByProximity,update,hydrate,report:group.userData.report};
+ return {group,colliders,nearestAction:actionByProximity,update,hydrate,signals,report:group.userData.report};
 }
