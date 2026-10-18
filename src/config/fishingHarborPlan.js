@@ -56,8 +56,13 @@ export const HARBOR_ACTIONS=Object.freeze([...HARBOR_LOCATIONS,...FISHING_SPOTS,
 export function inFishingHarbor(point){return !!point && point.x>=-1200 && point.x<=1200 && point.z>=-6300 && point.z<=-4100;}
 export function onFishingHighway(point) {return !!point && Math.abs(point.x)<=65 && point.z<=-980 && point.z>=-4100;}
 export function onHarborPier(point) {
- return !!point && point.z<=-5350 && point.z>=-5710
+ if(!point)return false;
+ const publicFishingDeck=point.z<=-5350 && point.z>=-5710
    && [-330,120,490].some(x=>Math.abs(point.x-x)<=11);
+ // Lighthouse footbridge and breakwater island are legal shoreline walkways.
+ const lighthouseBridge=Math.abs(point.x-870)<=9 && point.z<=-5260 && point.z>=-5535;
+ const lighthouseIsland=Math.abs(point.x-870)<=45 && Math.abs(point.z+5490)<=44;
+ return publicFishingDeck || lighthouseBridge || lighthouseIsland;
 }
 // Non-pier ocean is visible but not walkable/drivable: stay on solid land/deck.
 export function harborSafePoint(point) {
