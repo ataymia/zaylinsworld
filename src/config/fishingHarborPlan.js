@@ -30,7 +30,7 @@ export const HARBOR_LOCATIONS=Object.freeze([
   {id:'seafood-market',name:'Harbor Catch Market',kind:'sell',x:-570,z:-5100,color:'#378caf'},
   {id:'harbor-master',name:'Harbor Master',kind:'master',x:-35,z:-5075,color:'#e6cd79'},
   {id:'dockside-diner',name:'Dockside Diner',kind:'diner',x:435,z:-5070,color:'#db7463'},
-  {id:'boat-rental',name:'Bay Boat Rentals',kind:'boats',x:550,z:-5270,color:'#67b3c2'},
+  {id:'boat-rental',name:'Bay Boat Rentals',kind:'boats',x:610,z:-5280,color:'#67b3c2'},
   {id:'harbor-patrol',name:'Harbor Patrol',kind:'patrol',x:-820,z:-4820,color:'#51779d'},
   {id:'harbor-academy',name:'Maritime Academy',kind:'academy',x:680,z:-4590,color:'#cebc8d'},
   {id:'tidefuel',name:'Tidefuel',kind:'fuel',x:120,z:-4590,color:'#68b5a6'},

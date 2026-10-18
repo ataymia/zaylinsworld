@@ -12,8 +12,9 @@ const source = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8
 const minimap = fs.readFileSync(new URL('../src/minimap.js', import.meta.url), 'utf8');
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 assert.equal(towns.length, 9, 'world overview must cover all nine canonical towns');
-assert.equal(towns.filter(t => t.playable).length, 1, 'planned unbuilt towns must never be labeled playable');
+assert.equal(towns.filter(t => t.playable).length, 2, 'only Starter Town and the built Fishing Harbor are currently playable');
 assert.equal(towns.find(t => t.playable)?.id, 'starter-town');
+assert.equal(towns.find(t => t.id === 'fishing-harbor')?.playable,true,'new fishing harbor needs a playable world registry contract');
 assert.equal(minimapRoadPlan({largeWorld:true}).length, STARTER_TOWN_RUNTIME_PLAN.routes.length);
 assert.match(minimap, /onSelectDestination/, 'canvas must accept clicked destinations');
 assert.match(minimap, /WORLD_TOWNS/, 'world overview must reuse canonical world blueprint');

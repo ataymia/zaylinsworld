@@ -2720,7 +2720,11 @@ function syncCurrentWorldTown(position) {
  if(!position||!state.world)return;
  const townId=inFishingHarbor(position)?'fishing-harbor':'starter-town';
  minimap?.setActiveTown(townId);
- if(state.world.townId===townId)return;
+ if(state.world.townId===townId){
+   if(townId==='fishing-harbor')setMarkers(HARBOR_ACTIONS.map(a=>({x:a.x,z:a.z,
+     icon:a.kind==='fish'?'🎣':'🏠',color:'#73deed'})));
+   return;
+ }
  state.world.townId=townId;
  if(!Array.isArray(state.world.discoveredTowns))state.world.discoveredTowns=['starter-town'];
  if(!state.world.discoveredTowns.includes(townId))state.world.discoveredTowns.push(townId);

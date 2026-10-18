@@ -153,7 +153,8 @@ export function buildFishingHarbor(scene){
    let selected=null,distance=radius;
    for(const action of HARBOR_ACTIONS){
      const d=Math.hypot(action.x-position.x,action.z-position.z);
-     if(d<distance){distance=d;selected=action;}
+     const reach=action.kind==='fish'?radius:Math.max(radius,27);
+     if(d<reach && (!selected || d<distance)){distance=d;selected=action;}
    }
    return selected;
  };

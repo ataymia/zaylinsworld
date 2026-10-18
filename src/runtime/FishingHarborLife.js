@@ -11,13 +11,13 @@ const bounded=(n,lo,hi)=>Math.max(lo,Math.min(hi,n));
 export function ensureFishingState(state) {
  const old=state.fishing||{};
  state.fishing={
-   rod:'starter-rod',bait:Math.max(0,Math.floor(Number(old.bait??8)||0)),
+   rod:old.rod==='composite-rod'?'composite-rod':'starter-rod',bait:Math.max(0,Math.floor(Number(old.bait??8)||0)),
    xp:Math.max(0,Math.floor(Number(old.xp)||0)),
    totalCaught:Math.max(0,Math.floor(Number(old.totalCaught)||0)),
    catches:Array.isArray(old.catches)?old.catches.slice(0,120).filter(f=>FISH_SPECIES.some(s=>s.id===f.id)):[],
    ...old,
  };
- state.fishing.rod='starter-rod';
+ state.fishing.rod=state.fishing.rod==='composite-rod'?'composite-rod':'starter-rod';
  state.fishing.bait=bounded(Math.floor(Number(state.fishing.bait)||0),0,999);
  state.fishing.catches=state.fishing.catches.slice(0,120);
  return state.fishing;
@@ -32,7 +32,7 @@ export function startFishing(state,{random=Math.random,spotId='western-pier'}={}
  let roll=bounded(Number(random())||0,0,0.999999)*pool;
  const species=FISH_SPECIES.find(f=>((roll-=f.weight)<0))||FISH_SPECIES[0];
  return {phase:'waiting',spotId,species,elapsed:0,wait:1.4+bounded(Number(random())||0,0,1)*2.5,
-   hooked:0,hookWindow:2.1,reelRemaining:11,reelTaps:0,needed:species.difficulty,
+   hooked:0,hookWindow:fishing.rod==='composite-rod'?3:2.1,reelRemaining:11,reelTaps:0,needed:species.difficulty,
    lastTap:0};
 }
 export function tickFishing(session,dt){
@@ -63,7 +63,7 @@ export function pressFishing(session,state,{random=Math.random}={}){
  if(session.reelTaps<session.needed)return {type:'reeling',remaining:session.needed-session.reelTaps};
  const species=session.species;
  const sizeKg=Math.round((0.4+bounded(Number(random())||0,0,1)*3.1)*10)/10;
- const value=Math.round(species.value*(0.7+sizeKg/3.5));
+ const value=Math.round(species.value*(0.7+sizeKg/3.5)*(ensureFishingState(state).rod==='composite-rod'?1.2:1));
  const fish={id:species.id,name:species.name,value,sizeKg,spotId:session.spotId};
  const fishing=ensureFishingState(state);
  fishing.catches.push(fish);fishing.totalCaught+=1;fishing.xp+=species.xp;
