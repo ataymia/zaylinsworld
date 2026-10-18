@@ -100,7 +100,7 @@ function routeLabelPlacement(route, segment, roadNetwork) {
   return null;
 }
 
-function infrastructureForSegment(route, segment, placements, seen) {
+function infrastructureForSegment(route, segment, placements, seen, roadNetwork) {
   const rules = TIER_RULES[route.tier] || TIER_RULES.local;
   const frame = segmentFrame(segment);
   const roadHalf = segment.width / 2;
@@ -160,6 +160,9 @@ function infrastructureForSegment(route, segment, placements, seen) {
       const sides = route.tier === 'local' ? [index % 2 ? -1 : 1] : [-1, 1];
       for (const side of sides) {
         const position = sampleSegment(segment, distance, lightOffset * side);
+        // Poles stay beyond ALL pavement, including crossing roads at junctions.
+        // Lamps may project over the road but the poles must not block vehicles.
+        if (!safeRoadsidePoint(position.x, position.z, roadNetwork, 1.0)) continue;
         addUnique(placements, seen, {
           id: `streetlight:${segment.id}:${index}:${side}`,
           type: 'streetlight', routeId: route.id, segmentId: segment.id,
@@ -271,7 +274,7 @@ export function createStarterTownRoadsidePlan({
       const sign = routeLabelPlacement(route, segments[0], roadNetwork);
       if (sign) addUnique(placements, seen, sign);
     }
-    for (const segment of segments) infrastructureForSegment(route, segment, placements, seen);
+    for (const segment of segments) infrastructureForSegment(route, segment, placements, seen, roadNetwork);
   }
   intersectionInfrastructure(roadGraph, placements, seen, roadNetwork);
   districtFurniture(placements, seen);
