@@ -12,6 +12,7 @@ import { furnishInteriors } from './furnish.js';
 import { initMinimap, setMarkers } from './minimap.js';
 import { buildFishingHarbor } from './world/FishingHarbor.js';
 import {hydrateFishingHarborProductionAssets} from './world/FishingHarborProductionAssets.js';
+import {buildHarborTownLife} from './runtime/FishingHarborTownLife.js';
 import { HARBOR_ACTIONS, HARBOR_ROUTES, FISHING_HIGHWAY, inFishingHarbor, onFishingHighway, harborSafePoint } from './config/fishingHarborPlan.js';
 import { ensureFishingState, fishingLevel, startFishing, tickFishing, pressFishing, sellFishingCatch, buyFishingBait } from './runtime/FishingHarborLife.js';
 import { showFishingPanel, hideFishingPanel } from './ui/FishingHarborPanel.js';
@@ -304,6 +305,7 @@ const crossTownNavigation = new StarterTownNavigation({plan: {
 }});
 let harborWorld = null;
 let harborProductionHydration = null;
+let harborTownLife = null;
 let fishingSession = null;
 let fishingBobber = null;
 let debugBadge = null;           // debug panel API (initDebugBadge → { toggle })
@@ -421,9 +423,16 @@ function enterWorld() {
     abandonedCars = [];                       // fresh city → no previously-stolen parked cars
     car = createDrivableCar(scene, 13, 3);
     harborWorld = buildFishingHarbor(scene);
+    harborTownLife = buildHarborTownLife(scene);
+    // The prior cylindrical figures are not the character system. Real rigged
+    // Harbor NPCs now populate the waterfront instead.
+    harborWorld.group.traverse(node=>{
+      if(node.name?.startsWith('FH_boardwalk_pedestrian_'))node.visible=false;
+    });
     ensureFishingState(state);
     debug.set('fishingHarbor', harborWorld.report);
     debug.set('harborProductionAssets','not loaded yet (lazy regional prefetch)');
+    debug.set('harborTownLife',harborTownLife.report);
     registerInteractables(cityInfo.entrances);
     graphics.applyToScene(scene, renderer);   // reflections + texture filtering
     started = true;
@@ -5881,6 +5890,8 @@ function animate() {
       ? (drivingVehicle || car)?.g?.position
       : player?.group?.position;
     warmHarborProductionAssets(cityObserver);
+    harborTownLife?.setActive(inFishingHarbor(cityObserver));
+    harborTownLife?.update(dt,t,cityObserver,state.timeMin);
     updateCityNPCs(cityNPCs, dt, t, cityObserver, state.timeMin);
     trafficCoverageAccum += dt;
     if (!inCar && cityObserver && trafficCoverageAccum >= 4) {
@@ -5896,6 +5907,7 @@ function animate() {
     if (trafficControl) trafficControl.update(dt);
     updateTraffic(traffic, dt, trafficObstacles, trafficControl, cityObserver, state.timeMin);
   }
+  if(area!=='city')harborTownLife?.setActive(false);
   if(state.world?.townId==='fishing-harbor')harborWorld?.update?.(dt);
   updateMixers(dt);                                  // skinned GLB animations
   for (const g of extraSpinners) g.rotation.y += dt * 0.8;   // idle-spin display models
@@ -6236,6 +6248,7 @@ window.ZW = Object.assign(window.ZW || {}, {
   })),
   fishingHarbor: () => ({scene:harborWorld?.report||null,
     production:harborWorld?.group?.userData?.productionReport||null,
+    streetLife:harborTownLife?.report||null,
     fishing:ensureFishingState(state),townId:state.world?.townId}),
   scheduleSnapshot: () => ({
     timeMin: state.timeMin,
