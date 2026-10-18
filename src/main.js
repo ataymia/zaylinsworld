@@ -15,6 +15,7 @@ import { buildCity, colliders as cityColliders } from './world.js';
 import { buildInteriors, DEALER_CARS, JEWELRY_STOCK, GEAR_STOCK } from './interiors.js';
 import {
   createCityNPCs, updateCityNPCs, createTraffic, updateTraffic, createDrivableCar,
+  ensureTrafficCoverage,
 } from './npc.js';
 import {
   initWeapons, updateWeapons, buyWeapon, equipWeapon, cycleWeapon,
@@ -26,7 +27,16 @@ import { CATEGORIES, weaponsForTab, ownedAmmoTypes, allWeapons } from './config/
 import { upgradeById } from './config/weaponUpgrades.js';
 import { resolveTransform } from './config/weaponTransforms.js';
 import { zoneSlot, SHOP_ZONES } from './config/blockSupplyLayout.js';
-import { initMissions, missionEvent, renderTracker } from './missions.js';
+import {
+  initMissions,
+  missionEvent,
+  renderTracker,
+  activeQuestGuidance,
+  offerQuest,
+  canOfferQuest,
+  getQuestSnapshot,
+  recordStoryChoice,
+} from './missions.js';
 import { spawnMonsters, updateMonsters, clearMonsters } from './monsters.js';
 import { applyNpcSkins, applyPlayerSkin, applyCopSkin } from './avatarSkin.js';
 import { Controls, CAM } from './controls.js';
@@ -34,23 +44,79 @@ import { InteractionManager } from './interaction.js';
 import { loadState, saveState, defaultState, clearSave, hasSave } from './state.js';
 import { GEMS, LANDMARKS, SPAWN } from './config/mapConfig.js';
 import { ROAD } from './config/mapConfig.js';
-import { loadHDRI, loadAsset } from './assets.js';
+import { loadHDRI, loadAsset, loadRegisteredAsset } from './assets.js';
 import {
   hdriUrl, loadSlotModel, updateMixers, enhanceAvatar, enhanceVehicle, assetUrl,
 } from './manifest.js';
 import { graphics } from './graphics.js';
+import { performanceBudget } from './config/performanceBudgets.js';
 import { initSettingsMenu, isSettingsOpen, settingsTickFPS } from './settings.js';
 import {
   initLoadingScreen, hideLoadingScreen, setStatus, setProgress, loadingManager,
 } from './loader.js';
 import { initDebugBadge, debug } from './debug.js';
-import { productionWorldRelocationIds } from './runtime/ProductionWorldBridge.js';
+import { acceptanceTelemetry } from './runtime/AcceptanceTelemetry.js';
+import {
+  activatePreparedProductionWorldCollisions,
+  productionWorldRelocationIds,
+  setPreparedProductionWorldVisible,
+} from './runtime/ProductionWorldBridge.js';
 import { functionalLocationRelocation } from './runtime/FunctionalLocationRelocation.js';
 import { worldRegistry } from './runtime/WorldRegistry.js';
-import { LARGE_TOWN_TRAFFIC_ROUTES } from './config/starterTownTrafficRoutes.js';
+import { starterTownNavigation } from './runtime/StarterTownNavigation.js';
+import {
+  STARTER_TOWN_SERVICE_TRAFFIC_ROUTES,
+  starterTownServiceTrafficCount,
+} from './runtime/StarterTownServiceRoutes.js';
+import { DialogueRuntime } from './runtime/DialogueRuntime.js';
+import { poolRegistry } from './runtime/ObjectPool.js';
+import { policeSimulationBudget, policeStaffingFor } from './runtime/PoliceSimulationPolicy.js';
+import { LARGE_TOWN_TRAFFIC_ROUTES, largeTownTrafficCount } from './config/starterTownTrafficRoutes.js';
+import {
+  LARGE_TOWN_PEDESTRIAN_ROUTES,
+  largeTownPedestrianCount,
+} from './config/starterTownPedestrianRoutes.js';
 import { starterVehicleSpawnNear } from './config/starterVehicleSpawn.js';
+import {
+  FOUNDATION_CERTIFICATE,
+  STARTER_TOWN_CAREERS,
+  STARTER_TOWN_LIFE,
+  STARTER_TOWN_SUBJECTS,
+  STARTER_TOWN_SUBJECTS_BY_ID,
+} from './config/starterTownLifePlan.js';
+import {
+  STARTER_TOWN_SANITATION_STOP,
+  generateStarterTownLitterPositions,
+} from './config/starterTownSanitationPlan.js';
+import {
+  STARTER_TOWN_RECURRING_SCHEDULES,
+  resolveStarterTownRecurringPosition,
+  starterTownRecurringScheduleAt,
+} from './config/starterTownRecurringSchedules.js';
+import { starterTownBoundaryGuard } from './world/StarterTownBoundaryGuard.js';
+import {
+  careerSummary,
+  ensureStarterTownLifeState,
+  hasFoundationCertificate,
+  issueStarterHomeDeed,
+  recordBooking,
+  recordCareerShift,
+  recordLegalSettlement,
+  recordSchoolLesson,
+  registerOwnedVehicle,
+  registerStarterHome,
+  updateOwnedVehicleCondition,
+  useCommunityCare,
+  workPayMultiplier,
+} from './runtime/StarterTownLife.js';
 import { handlingFor, addVehicleDamage, applyDamageVisual, tickDamageSmoke } from './vehicleDamage.js';
-import { collideVehicle, breakableCount, worldObjectCount } from './worldCollision.js';
+import {
+  breakableCount,
+  collideVehicleImpact,
+  registerWorldObject,
+  updateWorldObjects,
+  worldObjectCount,
+} from './worldCollision.js';
 import { dressTown } from './townBuilder.js';
 import { buildTrafficControl } from './traffic.js';
 import {
@@ -182,17 +248,19 @@ function renderPreview(pv, avatar, wrapEl) {
 }
 
 // ── game state & systems ──────────────────────────────────────────────────────
-let state = loadState() || defaultState();
+let state = ensureStarterTownLifeState(loadState() || defaultState());
 let mode = 'creator';            // 'creator' | 'play'
 let started = false;
 let player = null;
 let cityNPCs = [], traffic = [], car = null, interiors = null;
 let trafficControl = null;       // traffic lights + stop signs controller (traffic.js)
+let trafficCoverageAccum = 0;    // low-frequency anti-stranding traffic director
 let cityEntrances = [];           // saved for live density re-registration
 let cityLandmarks = LANDMARKS;    // resolved compact/production positions for teleports and runtime lookups
 let entranceMap = {};            // interiorId -> { doorPos, faceDir }
 let townMarkers = [];            // accumulated minimap markers (gas, buildings, police, garage)
 let area = 'city';
+let interiorTransitioning = false;
 let inCar = false;
 let drivingVehicle = null;     // the vehicle currently being driven (owned car or a stolen traffic car)
 let returnPos = new THREE.Vector3(0, 0, 12);
@@ -200,6 +268,7 @@ let velY = 0, onGround = true;
 // ── police / crime runtime state ──────────────────────────────────────────────
 let policeUnits = [];          // foot cops: { av, health, busted }
 let policeCars = [];           // patrol cruisers (heavier mass, can be stolen)
+let policePools = null;        // named live pools for reusable officers and pursuit cruisers
 let parkedCruisers = [];       // HQ cruisers parked at the police post (stealable)
 let abandonedCars = [];        // cars the player stole then stepped out of (re-enterable)
 let policePost = null;         // { deskPos, faceDir } from buildCity (Phase 3J)
@@ -210,6 +279,7 @@ let policeWarned = false;      // showed the "you've been warned" message yet
 let wantedPrev = 0;            // detect the 0→wanted transition to start the grace
 let copHiddenTimer = 0;        // seconds the player has been out of police line-of-sight
 let ejectedPeople = [];        // drivers thrown out of stolen cars, fleeing on foot
+const recurringCharacters = new Map(); // five named NPCs moving through saved-clock placements
 let drivenDist = 0, drivenFlagged = false;   // "Get Around Town" mission tracker
 let builderOpen = false;
 let wardrobeResume = false;      // creator opened from inside the game
@@ -218,6 +288,9 @@ let gasStation = null;           // { doorPos } for the 6twelve store entrance (
 let homeMailbox = null;          // relocated Willowbend mailbox interaction anchor
 let safeRespawn = { x: 9, z: 9 };
 let minimap = null;              // corner radar API (initMinimap)
+let starterTownNavigationEnabled = false;
+let guidanceAccum = 0;
+let guidanceKey = '';
 let debugBadge = null;           // debug panel API (initDebugBadge → { toggle })
 let monsters = [];               // active Monster Mode creatures
 const extraSpinners = [];        // idle-spin display models (Frostbox jewelry, etc.)
@@ -225,6 +298,35 @@ const extraSpinners = [];        // idle-spin display models (Frostbox jewelry, 
 const controls = new Controls(camera, canvas);
 const manager = new InteractionManager();
 const clock = new THREE.Clock();
+let acceptanceFrameAt = performance.now();
+let acceptanceGameplayStarted = false;
+let interiorAcceptanceRunning = false;
+
+function createLiveTownTraffic(count, largeWorldActive) {
+  if (!largeWorldActive) return createTraffic(scene, count);
+  const serviceCount = starterTownServiceTrafficCount(count);
+  const ambientCount = Math.max(0, count - serviceCount);
+  return [
+    ...createTraffic(scene, ambientCount, LARGE_TOWN_TRAFFIC_ROUTES),
+    ...createTraffic(scene, serviceCount, STARTER_TOWN_SERVICE_TRAFFIC_ROUTES),
+  ];
+}
+
+const dialogueRuntime = new DialogueRuntime({
+  state: () => state,
+  quests: () => getQuestSnapshot(),
+  canOfferQuest,
+  save: () => saveNow(),
+  actions: {
+    openService: (serviceId) => openRecurringNpcService(serviceId),
+    offerQuest: (questId) => {
+      const offered = offerQuest(questId);
+      if (offered) notify('📌 Quest added to your journal.');
+      return offered;
+    },
+    storyChoice: (choiceId, optionId) => recordStoryChoice(choiceId, optionId),
+  },
+});
 
 // ── creator ───────────────────────────────────────────────────────────────────
 function avatarHairColorHex(custom) {
@@ -247,8 +349,8 @@ function initCreator() {
     onChange: rebuildCreatorPreview,
     hasSave: hasSave(),
     onEnter: () => { wardrobeResume ? resumeFromWardrobe() : enterWorld(); },
-    onContinue: () => { state = loadState() || state; enterWorld(); },
-    onReset: () => { clearSave(); state = defaultState(); initCreator(); rebuildCreatorPreview(); notify('Save cleared'); },
+    onContinue: () => { state = ensureStarterTownLifeState(loadState() || state); enterWorld(); },
+    onReset: () => { clearSave(); state = ensureStarterTownLifeState(defaultState()); initCreator(); rebuildCreatorPreview(); notify('Save cleared'); },
   });
   showCreator(true);
   mode = 'creator';
@@ -265,18 +367,20 @@ function resumeFromWardrobe() {
 // ── world bootstrap ────────────────────────────────────────────────────────────
 function enterWorld() {
   console.debug('[creator] enterWorld: state.custom exists =', !!(state && state.custom), '| started =', started);
+  const freshLargeWorldArrival = !started && !state.createdCharacter && !hasSave();
+  const relocatedLocationIds = productionWorldRelocationIds();
+  const largeWorldActive = relocatedLocationIds.length > 0;
   if (!started) {
-    const freshLargeWorldArrival = !state.createdCharacter && !hasSave();
     setStatus('Building the city…');
-    const relocatedLocationIds = productionWorldRelocationIds();
-    const largeWorldActive = relocatedLocationIds.length > 0;
+    starterTownNavigationEnabled = largeWorldActive;
     const cityInfo = buildCity(scene, { relocatedLocationIds });
     cityEntrances = cityInfo.entrances;
     cityLandmarks = cityInfo.landmarks;
     cityInfo.entrances.forEach(e => { entranceMap[e.interiorId] = { doorPos: e.doorPos, faceDir: e.faceDir }; });
     interiors = buildInteriors();
     scene.add(interiors.group);
-    trafficControl = buildTrafficControl(scene);   // lights + stop signs (Phase 3A/3B)
+    trafficControl = buildTrafficControl(scene, { largeWorld: largeWorldActive });
+    if (largeWorldActive) activatePreparedProductionWorldCollisions();
     debug.set('trafficLights', trafficControl.lightCount);
     debug.set('stopSigns', trafficControl.stopCount);
     setupPolicePost(cityInfo.police);              // visible HQ + parked cruisers (Phase 3J)
@@ -285,11 +389,19 @@ function enterWorld() {
     if (cityInfo.police && cityInfo.police.doorPos) {
       entranceMap.police = { doorPos: cityInfo.police.doorPos, faceDir: cityInfo.police.entryFaceDir };
     }
-    cityNPCs = createCityNPCs(scene, Math.max(8, Math.round(22 * graphics.npcDensity)));
-    traffic = createTraffic(
+    initializeRecurringCharacters();
+    initializePolicePools();
+    cityNPCs = createCityNPCs(
       scene,
-      Math.max(3, Math.round(10 * graphics.trafficDensity)),
-      largeWorldActive ? LARGE_TOWN_TRAFFIC_ROUTES : undefined,
+      largeWorldActive
+        ? largeTownPedestrianCount(graphics.npcDensity)
+        : Math.max(8, Math.round(22 * graphics.npcDensity)),
+      largeWorldActive ? LARGE_TOWN_PEDESTRIAN_ROUTES : undefined,
+    );
+    traffic = createLiveTownTraffic(
+      largeWorldActive ? largeTownTrafficCount(graphics.trafficDensity)
+        : Math.max(3, Math.round(10 * graphics.trafficDensity)),
+      largeWorldActive,
     );
     abandonedCars = [];                       // fresh city → no previously-stolen parked cars
     car = createDrivableCar(scene, 13, 3);
@@ -331,23 +443,50 @@ function enterWorld() {
   player.group.rotation.y = state.facing || 0;
   returnPos.set(state.pos.x, 0, state.pos.z);
   area = 'city';
-  interiors.group.visible = false;
+  interiors.deactivate?.();
+  setPreparedProductionWorldVisible(true);
   state.createdCharacter = true;
   applyVibe();
   showCreator(false);
   mode = 'play';
+  if (!acceptanceGameplayStarted) {
+    acceptanceTelemetry.start('starter-town-gameplay', { preserveErrors: true });
+    acceptanceGameplayStarted = true;
+  }
+  acceptanceTelemetry.mark('gameplay-enter', {
+    map: 'starter-town',
+    playableBounds: '2000x2000',
+    freshArrival: freshLargeWorldArrival,
+    largeWorldActive,
+  });
   notify("Welcome to Zaylin's World — your starter car is beside you. Press F to drive.");
   saveNow();
 }
 
 function placeStarterCarAtArrival() {
   if (!car) return;
+  const savedStarter = state.vehicleState?.stored?.[STARTER_TOWN_LIFE.starterVehicleId];
+  registerOwnedVehicle(state, STARTER_TOWN_LIFE.starterVehicleId, {
+    name: 'Starter Kamaro',
+    fuel: savedStarter ? undefined : (state.fuel ?? 100),
+    damage: savedStarter ? undefined : (state.carDamage ?? 0),
+    source: 'starter-grant',
+    makeActive: !state.vehicleState.activeVehicleId,
+  });
   const placement = starterVehicleSpawnNear(state.pos, { facing: state.facing });
   car.g.position.set(placement.x, 0, placement.z);
   car.g.rotation.y = placement.rotationY;
   car.spawn.set(placement.x, 0, placement.z);
   car.g.userData.starterVehicle = true;
   car.g.userData.arrivalPlacement = placement.source;
+  const activeRecord = state.vehicleState.stored[state.vehicleState.activeVehicleId];
+  if (activeRecord) {
+    car.fuel = activeRecord.fuel;
+    car.damage = activeRecord.damage;
+    state.fuel = activeRecord.fuel;
+    state.carDamage = activeRecord.damage;
+    applyCarDamageVisual(car);
+  }
   debug.set('starterCarDistance', Number(placement.distanceFromPlayer.toFixed(2)));
 }
 
@@ -394,8 +533,7 @@ function finalizeFunctionalRelocations(cityInfo) {
       safeRespawn = relocation.contract.spawn
         ? { x: relocation.contract.spawn.x, z: relocation.contract.spawn.z }
         : { x: relocation.doorPos.x, z: relocation.doorPos.z };
-      state.properties.primaryResidenceId = 'zaylins-home';
-      state.properties.owned = Array.from(new Set([...(state.properties.owned || []), 'zaylins-home']));
+      registerStarterHome(state);
     }
   }
 }
@@ -1002,6 +1140,12 @@ function applyWorldAssets(cityInfo) {
   if (gasActive) {
     const placeholder = scene.getObjectByName('ZW_LocationPlaceholder_6twelve');
     if (placeholder) placeholder.visible = false;
+    // The authored forecourt above already supplies the pumps, canopy, store,
+    // collision, and interaction contract. Do not stack a second generic
+    // production shell in the same parcel; that overlap made 6twelve read like
+    // a gray building sitting in the road.
+    const duplicateExterior = scene.getObjectByName('ZW_LocationAsset_6twelve');
+    if (duplicateExterior) duplicateExterior.visible = false;
     entranceMap.gas = { doorPos: gasRelocation.doorPos, faceDir: gasRelocation.entrance.faceDir };
     cityInfo.landmarks.push({
       id: 'gas', name: '6TWELVE', interiorId: 'gas',
@@ -1066,9 +1210,15 @@ async function applyVehicleModels() {
     await preloadVehicles(renderer);
   } catch (e) { console.warn('[vehicles] preload failed:', e); return; }
   // varied traffic
-  traffic.forEach((c, i) => swapVehicleVisual(c, TRAFFIC_FLEET[i % TRAFFIC_FLEET.length]));
-  // the player's drivable car
-  if (car) swapVehicleVisual(car, DRIVABLE_DEFAULT);
+  let trafficGlb = 0;
+  traffic.forEach((c, i) => {
+    if (swapVehicleVisual(c, c.vehicleKit || TRAFFIC_FLEET[i % TRAFFIC_FLEET.length])) trafficGlb++;
+  });
+  // Restore the player's saved active vehicle body. A new or legacy starter
+  // save falls back to the guaranteed Kamaro model.
+  const activeVehicleId = state.vehicleState?.activeVehicleId || state.activeCar;
+  const activeVehicleDef = DEALER_CARS.find((entry) => entry.id === activeVehicleId);
+  const starterGlb = car && swapVehicleVisual(car, activeVehicleDef?.kitModel || DRIVABLE_DEFAULT) ? 1 : 0;
   // dealership showroom — each car gets its OWN unique model (price-tiered), so a
   // $3.5k hatch never shares a body with a $92k supercar.
   const dealer = interiors && interiors.byId['dealership'];
@@ -1082,9 +1232,11 @@ async function applyVehicleModels() {
   // they stop looking like white starter cars). Light bar livery is kept.
   let cruiserGlb = 0;
   (parkedCruisers || []).forEach((cr) => { if (swapVehicleVisual(cr, 'police')) cruiserGlb++; });
-  console.log('[vehicles] models applied — traffic:', traffic.length, 'dealer:', dealer?.displayCars?.length || 0, 'cruisers:', cruiserGlb);
-  debug.set('vehicleModels', traffic.length + (car ? 1 : 0) + (dealer?.displayCars?.length || 0));
-  debug.set('glbTraffic', traffic.length);
+  console.log('[vehicles] models applied — traffic:', trafficGlb, '/', traffic.length,
+    'starter:', starterGlb, 'dealer:', dealer?.displayCars?.length || 0, 'cruisers:', cruiserGlb);
+  debug.set('vehicleModels', trafficGlb + starterGlb + (dealer?.displayCars?.length || 0));
+  debug.set('glbTraffic', trafficGlb);
+  debug.set('glbStarterCar', starterGlb);
   debug.set('glbCruisers', cruiserGlb);
 }
 
@@ -1226,6 +1378,141 @@ function collectGem(value) {
   saveNow();
 }
 
+// ── RECURRING CHARACTER SCHEDULES ────────────────────────────────────────────
+// Reuse each character's one authored avatar instead of spawning a duplicate.
+// When a schedule moves outdoors, the avatar is re-parented from its interior to
+// the city scene; when the shift returns indoors, its exact local transform is
+// restored. Service stations remain functional even while the named character is
+// out in the district.
+function initializeRecurringCharacters() {
+  recurringCharacters.clear();
+  if (!interiors?.byId) return;
+  for (const definition of STARTER_TOWN_RECURRING_SCHEDULES) {
+    if (definition.npcId === 'denise-hall') continue; // her avatar is built with the sanitation job
+    let found = null;
+    for (const intr of Object.values(interiors.byId)) {
+      const npcIndex = intr.npcs.findIndex((entry) => entry.storyId === definition.npcId);
+      if (npcIndex < 0) continue;
+      const av = intr.avatars?.[npcIndex];
+      if (av?.group) found = { intr, npc: intr.npcs[npcIndex], av };
+      break;
+    }
+    if (!found) {
+      console.warn(`[schedule] recurring character ${definition.npcId} has no live avatar`);
+      continue;
+    }
+    recurringCharacters.set(definition.npcId, {
+      id: definition.npcId,
+      name: definition.name,
+      npc: found.npc,
+      av: found.av,
+      homeArea: found.intr.id,
+      homeParent: found.av.group.parent,
+      homePosition: found.av.group.position.clone(),
+      homeRotation: found.av.group.rotation.clone(),
+      homeInteractionPosition: found.npc.pos.clone(),
+      activeArea: null,
+      activePeriod: null,
+      label: '',
+    });
+  }
+  updateRecurringCharacterSchedules(true);
+}
+
+function registerSanitationRecurringCharacter() {
+  if (!sanitationNpc?.av?.group) return;
+  recurringCharacters.set('denise-hall', {
+    id: 'denise-hall',
+    name: sanitationNpc.name,
+    npc: null,
+    av: sanitationNpc.av,
+    homeArea: 'city',
+    homeParent: scene,
+    homePosition: sanitationNpc.av.group.position.clone(),
+    homeRotation: sanitationNpc.av.group.rotation.clone(),
+    homeInteractionPosition: sanitationNpc.pos,
+    activeArea: null,
+    activePeriod: null,
+    label: '',
+  });
+  updateRecurringCharacterSchedules(true);
+}
+
+function updateRecurringCharacterSchedules(force = false) {
+  if (!recurringCharacters.size) return;
+  for (const record of recurringCharacters.values()) {
+    const slot = starterTownRecurringScheduleAt(record.id, state.timeMin);
+    if (!slot) continue;
+    const placementChanged = force
+      || record.activePeriod !== slot.period
+      || record.activeArea !== slot.area;
+
+    if (placementChanged && slot.kind === 'interior' && record.homeParent) {
+      if (record.av.group.parent !== record.homeParent) record.homeParent.add(record.av.group);
+      record.av.group.position.copy(record.homePosition);
+      record.av.group.rotation.copy(record.homeRotation);
+      if (slot.offset) {
+        record.av.group.position.x += Number(slot.offset.x) || 0;
+        record.av.group.position.z += Number(slot.offset.z) || 0;
+      }
+      if (record.npc?.pos && record.homeInteractionPosition) {
+        record.npc.pos.copy(record.homeInteractionPosition);
+        if (slot.offset) {
+          record.npc.pos.x += Number(slot.offset.x) || 0;
+          record.npc.pos.z += Number(slot.offset.z) || 0;
+        }
+      }
+    } else if (placementChanged && slot.area === 'city') {
+      const resolved = resolveStarterTownRecurringPosition(slot, {
+        entranceByInteriorId: entranceMap,
+        locationById: (id) => worldRegistry.location(id),
+      });
+      if (!resolved) {
+        console.warn(`[schedule] could not resolve ${record.id} at ${slot.label}`);
+        continue;
+      }
+      if (record.av.group.parent !== scene) scene.add(record.av.group);
+      record.av.group.position.set(resolved.x, 0, resolved.z);
+      record.av.group.rotation.set(0, resolved.facing || 0, 0);
+      if (!record.npc && record.homeInteractionPosition) {
+        record.homeInteractionPosition.set(resolved.x, 0, resolved.z);
+      }
+    }
+
+    record.activeArea = slot.area;
+    record.activePeriod = slot.period;
+    record.label = slot.label;
+    record.placementKind = slot.kind;
+    // Outdoor avatars should disappear with the city while the player is inside;
+    // interior room lifecycle already controls indoor avatar visibility.
+    record.av.group.visible = slot.area === 'city' ? area === 'city' : true;
+  }
+}
+
+function recurringCharacterAvailable(npcId, targetArea) {
+  const record = recurringCharacters.get(npcId);
+  return !record || record.activeArea === targetArea;
+}
+
+function recurringCharacterScheduleSnapshot() {
+  return STARTER_TOWN_RECURRING_SCHEDULES.map((definition) => {
+    const record = recurringCharacters.get(definition.npcId);
+    const slot = starterTownRecurringScheduleAt(definition.npcId, state.timeMin);
+    const position = record?.av?.group?.position;
+    return {
+      id: definition.npcId,
+      name: definition.name,
+      loaded: !!record,
+      period: slot?.period || null,
+      label: slot?.label || null,
+      area: record?.activeArea || slot?.area || null,
+      placement: slot?.kind || null,
+      x: position ? +position.x.toFixed(2) : null,
+      z: position ? +position.z.toFixed(2) : null,
+    };
+  });
+}
+
 // ── TRASH CLEANUP SIDE JOB ──────────────────────────────────────────────────────
 // Intentional litter placed on sidewalks beside storefronts (never in driving
 // lanes). Talk to the sanitation worker to accept a tiered cleanup task, pick up
@@ -1237,7 +1524,7 @@ let dumpster = null;                // { mesh, pos }
 let sanitationNpc = null;           // { av, pos }
 let trashJob = { active: false, need: 0, collected: 0, reward: 0, tier: '' };
 let trashCarried = 0;
-const TRASH_TARGET = 14;            // how many litter pieces exist at once
+const TRASH_TARGET = 28;            // district-spread litter pieces available at once
 let trashRespawnAccum = 0;         // real seconds since last respawn top-up
 
 // One litter piece. Uses the REAL Trash & Debris models when loaded (so the
@@ -1262,12 +1549,23 @@ function makeTrashPiece(i) {
 // prompt, so overlapping 'e' interactables would hide the trash one).
 function trashAvoidPoints() {
   const pts = [];
-  for (const lm of LANDMARKS) {
-    const f = lm.face || [0, 1];
-    pts.push({ x: lm.x + f[0] * (lm.d / 2 + 1), z: lm.z + f[1] * (lm.d / 2 + 1), r: 7 }); // door
-    pts.push({ x: lm.x, z: lm.z, r: Math.max(lm.w, lm.d) / 2 + 2 });                       // body
+  const largeWorldActive = !!state.world?.largeWorldEnabled || productionWorldRelocationIds().length > 0;
+  if (largeWorldActive) {
+    for (const location of worldRegistry.starterPlan.locations) {
+      pts.push({
+        x: location.position.x,
+        z: location.position.z,
+        r: location.category === 'school' || location.category === 'activity' ? 30 : 20,
+      });
+    }
+  } else {
+    for (const lm of LANDMARKS) {
+      const f = lm.face || [0, 1];
+      pts.push({ x: lm.x + f[0] * (lm.d / 2 + 1), z: lm.z + f[1] * (lm.d / 2 + 1), r: 7 }); // door
+      pts.push({ x: lm.x, z: lm.z, r: Math.max(lm.w, lm.d) / 2 + 2 });                       // body
+    }
+    pts.push({ x: SPAWN.x, z: SPAWN.z, r: 5 });
   }
-  pts.push({ x: SPAWN.x, z: SPAWN.z, r: 5 });
   if (dumpster) pts.push({ x: dumpster.pos.x, z: dumpster.pos.z, r: 5 });
   if (sanitationNpc) pts.push({ x: sanitationNpc.pos.x, z: sanitationNpc.pos.z, r: 5 });
   return pts;
@@ -1277,6 +1575,14 @@ function trashAvoidPoints() {
 // points and of each other (and of any already-placed `existing` pieces).
 function genTrashPositions(count, existing = []) {
   const avoid = trashAvoidPoints();
+  const largeWorldActive = !!state.world?.largeWorldEnabled || productionWorldRelocationIds().length > 0;
+  if (largeWorldActive) {
+    return generateStarterTownLitterPositions(count, {
+      random: Math.random,
+      avoid,
+      existing,
+    });
+  }
   const all = existing.map(p => ({ x: p.x, z: p.z }));
   const out = [];
   const sideOff = ROAD.width / 2 + ROAD.walk / 2;     // centre of a sidewalk
@@ -1300,36 +1606,164 @@ function genTrashPositions(count, existing = []) {
   return out;
 }
 
+function detailedDumpsterFallback() {
+  const group = new THREE.Group();
+  group.name = 'ZW_SanitationDumpsterFallback';
+  const bodyMaterial = new THREE.MeshStandardMaterial({
+    color: '#2f6f3a', roughness: 0.78, metalness: 0.34,
+  });
+  const darkMaterial = new THREE.MeshStandardMaterial({
+    color: '#1e3f25', roughness: 0.72, metalness: 0.28,
+  });
+  const metalMaterial = new THREE.MeshStandardMaterial({
+    color: '#6f7475', roughness: 0.58, metalness: 0.72,
+  });
+  const body = new THREE.Mesh(new THREE.BoxGeometry(2.5, 1.35, 1.45), bodyMaterial);
+  body.position.y = 0.82;
+  group.add(body);
+  for (const x of [-1.05, -0.52, 0, 0.52, 1.05]) {
+    const rib = new THREE.Mesh(new THREE.BoxGeometry(0.08, 1.18, 1.5), darkMaterial);
+    rib.position.set(x, 0.83, 0);
+    group.add(rib);
+  }
+  for (const side of [-1, 1]) {
+    const lid = new THREE.Mesh(new THREE.BoxGeometry(1.22, 0.14, 1.55), darkMaterial);
+    lid.position.set(side * 0.64, 1.56, 0);
+    lid.rotation.z = side * -0.06;
+    group.add(lid);
+    const liftPocket = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.28, 0.22), metalMaterial);
+    liftPocket.position.set(side * 1.31, 0.68, 0);
+    group.add(liftPocket);
+  }
+  for (const x of [-0.95, 0.95]) {
+    for (const z of [-0.52, 0.52]) {
+      const caster = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.13, 0.12, 10), darkMaterial);
+      caster.rotation.z = Math.PI / 2;
+      caster.position.set(x, 0.14, z);
+      group.add(caster);
+    }
+  }
+  group.traverse((node) => {
+    if (!node.isMesh) return;
+    node.castShadow = true;
+    node.receiveShadow = true;
+  });
+  return group;
+}
+
+async function upgradeSanitationDumpster(fallback, position, rotationY) {
+  const loaded = await loadRegisteredAsset(STARTER_TOWN_SANITATION_STOP.dumpster.assetId, renderer)
+    .catch(() => null);
+  if (!loaded?.scene || !trashGroup?.parent) return false;
+  const model = loaded.scene.clone(true);
+  model.updateWorldMatrix(true, true);
+  const bounds = new THREE.Box3().setFromObject(model);
+  const size = bounds.getSize(new THREE.Vector3());
+  if (![size.x, size.y, size.z].every((value) => Number.isFinite(value) && value > 0.001)) return false;
+  const center = bounds.getCenter(new THREE.Vector3());
+  const scale = 2.8 / Math.max(size.x, size.z);
+  model.position.set(-center.x, -bounds.min.y, -center.z);
+  const anchor = new THREE.Group();
+  anchor.name = 'ZW_SanitationDumpsterAsset';
+  anchor.position.copy(position);
+  anchor.rotation.y = rotationY;
+  anchor.scale.setScalar(scale);
+  anchor.userData.assetId = STARTER_TOWN_SANITATION_STOP.dumpster.assetId;
+  anchor.add(model);
+  trashGroup.add(anchor);
+  fallback.visible = false;
+  dumpster.mesh = anchor;
+  debug.set('sanitationDumpsterAsset', true);
+  return true;
+}
+
+function attachSanitationSafetyGear(worker) {
+  if (!worker?.group || worker.group.getObjectByName('ZW_SanitationSafetyGear')) return;
+  const gear = new THREE.Group();
+  gear.name = 'ZW_SanitationSafetyGear';
+  const vestMaterial = new THREE.MeshStandardMaterial({
+    color: '#f4a300', roughness: 0.62, emissive: '#7a4300', emissiveIntensity: 0.16,
+  });
+  const reflective = new THREE.MeshStandardMaterial({
+    color: '#e8efcf', roughness: 0.48, metalness: 0.18, emissive: '#d8e6ad', emissiveIntensity: 0.3,
+  });
+  const vest = new THREE.Mesh(new THREE.CylinderGeometry(0.34, 0.39, 0.62, 8), vestMaterial);
+  vest.position.y = 1.15;
+  gear.add(vest);
+  for (const y of [1.02, 1.27]) {
+    const stripe = new THREE.Mesh(new THREE.TorusGeometry(0.375, 0.025, 5, 16), reflective);
+    stripe.rotation.x = Math.PI / 2;
+    stripe.position.y = y;
+    gear.add(stripe);
+  }
+  const hardhat = new THREE.Mesh(
+    new THREE.SphereGeometry(0.23, 16, 10, 0, Math.PI * 2, 0, Math.PI / 2),
+    vestMaterial,
+  );
+  hardhat.position.y = 1.92;
+  gear.add(hardhat);
+  const brim = new THREE.Mesh(new THREE.CylinderGeometry(0.29, 0.29, 0.045, 16), vestMaterial);
+  brim.position.y = 1.9;
+  gear.add(brim);
+  const label = makeLabel('DENISE • SANITATION', '#ffd98a');
+  label.position.y = 2.35;
+  gear.add(label);
+  worker.group.add(gear);
+}
+
 function placeTrashJob() {
   cityTrash = [];
   trashGroup = new THREE.Group(); trashGroup.name = 'city-trash';
+  const largeWorldActive = !!state.world?.largeWorldEnabled || productionWorldRelocationIds().length > 0;
 
-  // dumpster near spawn so deposits are convenient (built BEFORE trash so litter
-  // generation can avoid it).
-  const dPos = new THREE.Vector3(SPAWN.x - 4, 0, SPAWN.z + 4);
-  const dGrp = new THREE.Group();
-  const body = new THREE.Mesh(new THREE.BoxGeometry(2.2, 1.3, 1.3),
-    new THREE.MeshStandardMaterial({ color: '#2f6f3a', roughness: 0.8, metalness: 0.2 }));
-  body.position.y = 0.65; dGrp.add(body);
-  const lid = new THREE.Mesh(new THREE.BoxGeometry(2.3, 0.18, 1.4),
-    new THREE.MeshStandardMaterial({ color: '#244f2b', roughness: 0.8 }));
-  lid.position.y = 1.35; lid.rotation.x = -0.18; dGrp.add(lid);
+  // The large-town stop sits on a deliberate service pad beside the sidewalk,
+  // not in the road/spawn seam inherited from the compact prototype.
+  const dDef = largeWorldActive
+    ? STARTER_TOWN_SANITATION_STOP.dumpster
+    : { x: SPAWN.x - 4, z: SPAWN.z + 4, facing: 0 };
+  const dPos = new THREE.Vector3(dDef.x, 0, dDef.z);
+  const dGrp = detailedDumpsterFallback();
   dGrp.position.copy(dPos);
-  { const l = makeLabel('DUMPSTER', '#bfe6c4'); l.position.y = 2.0; dGrp.add(l); }
+  dGrp.rotation.y = dDef.facing || 0;
   trashGroup.add(dGrp);
   dumpster = { mesh: dGrp, pos: dPos.clone().setY(0) };
+  registerWorldObject(dGrp, dPos.x, dPos.z, {
+    id: 'starter-town:sanitation-dumpster',
+    kind: 'dumpster',
+    halfExtents: { x: 1.45, z: 0.85 },
+    rotationY: dDef.facing || 0,
+  });
+  if (largeWorldActive) {
+    upgradeSanitationDumpster(dGrp, dPos, dDef.facing || 0)
+      .catch((error) => console.warn('[sanitation] dumpster asset failed; detailed fallback kept', error));
+  }
 
-  // sanitation worker near spawn offers the job
-  const sPos = new THREE.Vector3(SPAWN.x - 2, 0, SPAWN.z + 5);
-  const worker = buildAvatar({ ...defaultCustom(), top: 'hoodie-red' });
+  // Denise is a real skinned civilian with safety gear. The procedural avatar is
+  // retained only until/if the GLB validates, so the job can never disappear.
+  const sDef = largeWorldActive
+    ? STARTER_TOWN_SANITATION_STOP.worker
+    : { x: SPAWN.x - 2, z: SPAWN.z + 5, facing: Math.PI };
+  const sPos = new THREE.Vector3(sDef.x, 0, sDef.z);
+  const worker = buildAvatar({ ...defaultCustom(), top: 'tee-black', bottom: 'cargo-tan' });
   worker.group.position.copy(sPos);
-  worker.group.rotation.y = Math.PI;
-  const vest = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.6, 0.34),
-    new THREE.MeshStandardMaterial({ color: '#f4a300', roughness: 0.6, emissive: '#caa', emissiveIntensity: 0.1 }));
-  vest.position.y = 1.15; worker.group.add(vest);
-  { const l = makeLabel('SANITATION', '#ffd98a'); l.position.y = 2.2; worker.group.add(l); }
+  worker.group.rotation.y = sDef.facing || Math.PI;
   scene.add(worker.group);
-  sanitationNpc = { av: worker, pos: sPos.clone().setY(0) };
+  sanitationNpc = {
+    id: 'sanitation-denise-hall',
+    name: 'Denise Hall',
+    av: worker,
+    pos: sPos.clone().setY(0),
+  };
+  registerSanitationRecurringCharacter();
+  applyNpcSkins([sanitationNpc], renderer)
+    .then((count) => {
+      attachSanitationSafetyGear(worker);
+      debug.set('realSanitationWorker', count === 1);
+    })
+    .catch(() => {
+      attachSanitationSafetyGear(worker);
+      debug.set('realSanitationWorker', false);
+    });
 
   // scatter litter on sidewalks, clear of doors/NPCs so every piece is grabbable
   const positions = genTrashPositions(TRASH_TARGET);
@@ -1404,9 +1838,15 @@ function depositTrash() {
   if (trashJob.active && trashJob.collected >= trashJob.need) {
     const reward = trashJob.reward;
     state.money += reward;
+    const careerResult = recordCareerShift(state, 'sanitation-worker', {
+      pay: reward,
+      grade: trashJob.need >= 15 ? 'EXCELLENT' : trashJob.need >= 10 ? 'GOOD' : 'OKAY',
+      hits: trashJob.need,
+      rounds: trashJob.need,
+    });
     state.stats.fitness = Math.min(100, state.stats.fitness + 4);
     state.stats.fun = Math.min(100, state.stats.fun + 4);
-    notify(`🧹 ${trashJob.tier} cleanup complete! +$${reward}. The block looks cleaner.`);
+    notify(`🧹 ${trashJob.tier} cleanup complete! +$${reward}. ${careerResult.promoted ? `Promoted to ${careerResult.record.title}!` : 'The block looks cleaner.'}`);
     trashJob = { active: false, need: 0, collected: 0, reward: 0, tier: '' };
     missionEvent('trash-done');
   } else {
@@ -1417,9 +1857,14 @@ function depositTrash() {
 
 function talkToSanitation() {
   missionEvent('talk-sanitation');
+  if (openRecurringDialogue('denise-hall')) return;
+  openSanitationJobs();
+}
+
+function openSanitationJobs() {
   if (trashJob.active) {
     openDialogue({
-      name: 'Sanitation Worker',
+      name: 'Denise Hall • City Sanitation',
       text: `Current job: ${trashJob.tier}. Collected ${trashJob.collected}/${trashJob.need}. Drop what you grab at the dumpster near the corner.`,
       choices: [
         { label: 'Cancel this job', onPick: () => { trashJob = { active: false, need: 0, collected: 0, reward: 0, tier: '' }; notify('Cleanup job cancelled.'); } },
@@ -1430,7 +1875,7 @@ function talkToSanitation() {
   }
   const avail = activeTrashCount();
   openDialogue({
-    name: 'Sanitation Worker',
+    name: 'Denise Hall • City Sanitation',
     text: `City's a mess — about ${avail} pieces of litter out there. Pick a cleanup contract; collect the quota and dump it at the dumpster to get paid.`,
     choices: [
       { label: 'Small cleanup — 5 pieces ($120)', onPick: () => startTrashJob('Small', 5, 120) },
@@ -1463,6 +1908,7 @@ function addTownMarkers(list) {
 }
 function addCruiserLivery(g) {
   const bar = new THREE.Group();
+  bar.name = 'vehicle-overlay:police-livery';
   const base = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.12, 0.32),
     new THREE.MeshStandardMaterial({ color: '#111418' }));
   const red = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.15, 0.34),
@@ -1500,10 +1946,11 @@ function talkToPoliceDesk() {
   const heat = state.wanted || 0;
   const fee = 250 * heat;                  // escalating legal fee, one star at a time
   const lowerChoice = heat > 0
-    ? { label: `Pay legal fee ($${fee}) to clear 1 star`, onPick: () => {
+      ? { label: `Pay legal fee ($${fee}) to clear 1 star`, onPick: () => {
         if ((state.money || 0) < fee) { notify(`Need $${fee} to settle that — come back with the cash.`); return 'keep'; }
         state.money -= fee;
         state.wanted = Math.max(0, (state.wanted || 0) - 1);
+        recordLegalSettlement(state, { starsCleared: 1, fee });
         notify(`⚖️ Paid $${fee} — one star cleared (wanted ${state.wanted}).`);
         saveNow();
         return undefined;
@@ -1520,9 +1967,9 @@ function talkToPoliceDesk() {
       : `Welcome to the Police Station. Keep the streets clean and obey the lights and you'll never see us. Cause trouble and our patrols roll out. The cruisers out front are official police property — don't even think about it.`,
     choices: [
       lowerChoice,
-      { label: 'Tell me about the academy', onPick: () => openDialogue({
-        name: 'Front Desk',
-        text: `The Police Academy trains the next class of officers — obstacle drills, pursuit driving, the works. Training grounds are coming soon.`,
+      { label: 'Review precinct services', onPick: () => openDialogue({
+        name: 'Front Desk — Live Services',
+        text: 'This precinct currently handles wanted-level information, legal-fee settlement, holding-cell inspection, evidence information, and road patrol response. Officer hiring is not listed as an available job on this release board.',
         choices: [{ label: 'Cool', onPick: () => {} }],
       }) },
       { label: 'Leave', onPick: () => {} },
@@ -1543,7 +1990,7 @@ function inspectHoldingCells() {
     choices: [
       { label: 'Peer into a cell', onPick: () => openDialogue({
         name: 'Holding Cell',
-        text: `A steel cot, a barred door, a flickering light. Nothing to do in here but wait it out. (Jail/visitation flows are coming soon.)`,
+        text: 'A steel cot, a barred door, and a booking placard. A bust is entered into your local legal history before you are released back to your registered home.',
         choices: [{ label: 'Step back', onPick: () => {} }],
       }) },
       { label: 'Head back to the lobby', onPick: () => {} },
@@ -1566,7 +2013,7 @@ function openEvidenceLocker() {
     choices: [
       { label: 'Inspect the cage', onPick: () => openDialogue({
         name: 'Evidence Locker',
-        text: `Steel mesh, biometric lock, camera overhead. You'd need real clearance — or a lot more trouble — to get in here. (Confiscated-item recovery is coming soon.)`,
+        text: 'Steel mesh, biometric lock, and a camera overhead. Only duty officers can enter; the public-facing log confirms whether any property is registered to your name.',
         choices: [{ label: 'Back off', onPick: () => {} }],
       }) },
       heat > 0
@@ -1633,10 +2080,23 @@ function registerInteractables(entrances) {
     manager.register({
       id: 'talk-' + n.id, area: 'city', key: 'e', radius: 2.4,
       getPosition: () => n.av.group.position,
+      enabled: () => n.av.group.visible !== false && !n.downed,
       getPrompt: () => 'Talk to ' + n.name,
       onInteract: () => talkTo(n),
     });
   });
+  // Named characters whose current schedule slot is outdoors use their same
+  // authored avatar and dialogue tree; no duplicate clone is spawned.
+  for (const record of recurringCharacters.values()) {
+    if (record.id === 'denise-hall' || !record.npc) continue;
+    manager.register({
+      id: 'scheduled-' + record.id, area: 'city', key: 'e', radius: 2.6,
+      getPosition: () => record.av.group.position,
+      enabled: () => !inCar && record.activeArea === 'city' && record.av.group.visible !== false,
+      getPrompt: () => 'Talk to ' + record.name,
+      onInteract: () => talkToInterior(record.npc),
+    });
+  }
 
   // trash cleanup side job: pickups, dumpster deposit, sanitation worker
   cityTrash.forEach((item, i) => {
@@ -1661,7 +2121,8 @@ function registerInteractables(entrances) {
     manager.register({
       id: 'sanitation', area: 'city', key: 'e', radius: 2.6,
       getPosition: () => sanitationNpc.pos,
-      enabled: () => !inCar,
+      enabled: () => !inCar && recurringCharacterAvailable('denise-hall', 'city')
+        && sanitationNpc.av.group.visible !== false,
       getPrompt: () => 'Talk to Sanitation',
       onInteract: () => talkToSanitation(),
     });
@@ -1708,6 +2169,7 @@ function registerInteractables(entrances) {
       manager.register({
         id: `intnpc-${intr.id}-${i}`, area: intr.id, key: 'e', radius: 2.6,
         getPosition: () => npc.pos,
+        enabled: () => recurringCharacterAvailable(npc.storyId, intr.id),
         getPrompt: () => 'Talk to ' + npc.name,
         onInteract: () => talkToInterior(npc),
       });
@@ -1741,6 +2203,7 @@ function registerInteractables(entrances) {
 
 // ── interiors enter/leave ───────────────────────────────────────────────────
 function enterInterior(id) {
+  if (interiorTransitioning || area !== 'city') return;
   const intr = interiors?.byId?.[id];
   // Safe fallback: never break the game if an interior is missing/malformed.
   if (!intr || !intr.spawn) {
@@ -1749,39 +2212,203 @@ function enterInterior(id) {
     showPrompt(null);
     return;
   }
-  returnPos.copy(entranceMap[id]?.doorPos || player.group.position);
-  area = id;
-  interiors.group.visible = true;
-  player.group.visible = true;
-  player.group.position.copy(intr.spawn); player.group.position.y = 0;
-  player.group.rotation.y = Math.PI;             // face into the room (toward back wall)
-  velY = 0; onGround = true;
+  interiorTransitioning = true;
+  const previousArea = area;
+  const previousPosition = player.group.position.clone();
+  const previousReturn = returnPos.clone();
+  try {
+    const activated = interiors.activate
+      ? interiors.activate(id)
+      : (interiors.group.visible = true);
+    if (!activated) throw new Error(`Interior room "${id}" was not attached`);
 
-  // Reset to a known-good interior camera pose and keep it inside the walls so the
-  // third-person camera can never slip outside and reveal the void.
-  controls.resetView(0, 0.22, 5);
-  const cb = new THREE.Box3();
-  (intr.colliders || []).forEach(b => cb.union(b));
-  controls.bounds = cb.isEmpty() ? null : { min: cb.min.clone(), max: cb.max.clone() };
-  controls.snapTo(player.group.position, player.eyeHeight);
+    returnPos.copy(entranceMap[id]?.doorPos || player.group.position);
+    area = id;
+    setPreparedProductionWorldVisible(false);
+    player.group.visible = true;
+    player.group.position.copy(intr.spawn); player.group.position.y = 0;
+    player.group.rotation.y = Math.PI;             // face into the room (toward back wall)
+    velY = 0; onGround = true;
 
-  notify('Entered ' + intr.name);
-  missionEvent('enter', id);
-  showPrompt(null);
-  updateInteriorDebug();
-  saveNow();
+    // Reset to a known-good interior camera pose and keep it inside the walls so the
+    // third-person camera can never slip outside and reveal the void.
+    controls.resetView(0, 0.22, 5);
+    const cb = new THREE.Box3();
+    (intr.colliders || []).forEach(b => cb.union(b));
+    controls.bounds = cb.isEmpty() ? null : { min: cb.min.clone(), max: cb.max.clone() };
+    controls.snapTo(player.group.position, player.eyeHeight);
+
+    notify('Entered ' + intr.name);
+    missionEvent('enter', id);
+    showPrompt(null);
+    updateInteriorDebug();
+    acceptanceTelemetry.recordInteriorEntry(id, {
+      stations: intr.stations?.length || 0,
+      npcs: intr.npcs?.length || 0,
+      activeInteriorId: interiors.group.userData.activeInteriorId || null,
+    });
+    saveNow();
+  } catch (error) {
+    console.error(`[interior] "${id}" transition failed:`, error);
+    acceptanceTelemetry.recordInteriorFailure(id, 'enter', error);
+    area = previousArea;
+    returnPos.copy(previousReturn);
+    interiors.deactivate?.();
+    setPreparedProductionWorldVisible(true);
+    player.group.position.copy(previousPosition);
+    controls.bounds = null;
+    controls.snapTo(player.group.position, player.eyeHeight);
+    notify('That place could not open safely. You stayed outside.');
+    showPrompt(null);
+  } finally {
+    setTimeout(() => { interiorTransitioning = false; }, 250);
+  }
 }
 function leaveInterior() {
-  area = 'city';
-  interiors.group.visible = false;
-  controls.bounds = null;
-  player.group.visible = true;
-  player.group.position.copy(returnPos); player.group.position.y = 0;
-  controls.resetView(Math.PI, 0.25, 6);
-  controls.snapTo(player.group.position, player.eyeHeight);
-  showPrompt(null);
-  updateInteriorDebug();
-  saveNow();
+  if (interiorTransitioning || area === 'city') return;
+  const interiorId = area;
+  const expectedReturn = entranceMap[interiorId]?.doorPos || returnPos;
+  interiorTransitioning = true;
+  try {
+    area = 'city';
+    interiors.deactivate?.();
+    setPreparedProductionWorldVisible(true);
+    controls.bounds = null;
+    player.group.visible = true;
+    player.group.position.copy(returnPos); player.group.position.y = 0;
+    controls.resetView(Math.PI, 0.25, 6);
+    controls.snapTo(player.group.position, player.eyeHeight);
+    showPrompt(null);
+    updateInteriorDebug();
+    acceptanceTelemetry.recordInteriorExit(interiorId, {
+      returnDistance: player.group.position.distanceTo(expectedReturn),
+      recovered: false,
+    });
+    saveNow();
+  } catch (error) {
+    console.error('[interior] exit recovery:', error);
+    acceptanceTelemetry.recordInteriorFailure(interiorId, 'exit', error);
+    area = 'city';
+    interiors.deactivate?.();
+    setPreparedProductionWorldVisible(true);
+    controls.bounds = null;
+    player.group.position.copy(returnPos);
+    acceptanceTelemetry.recordInteriorExit(interiorId, {
+      returnDistance: player.group.position.distanceTo(expectedReturn),
+      recovered: true,
+    });
+    notify('Recovered outside after an interior transition problem.');
+  } finally {
+    setTimeout(() => { interiorTransitioning = false; }, 250);
+  }
+}
+
+const acceptanceDelay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// Exercise the real deployed room lifecycle without walking the player around or
+// inventing a second transition path. Each iteration calls the same enter/leave
+// functions as the door prompts, verifies exactly one room is attached, checks
+// the exterior return, and restores the original city position when complete.
+async function runInteriorAcceptance({ cycles = 1, holdMs = 320 } = {}) {
+  const repeat = Math.max(1, Math.min(10, Math.floor(Number(cycles) || 1)));
+  const delay = Math.max(300, Math.min(3000, Math.floor(Number(holdMs) || 320)));
+  if (interiorAcceptanceRunning) return Object.freeze({ passed: false, reason: 'already-running', results: [] });
+  if (!started || mode !== 'play' || !player) return Object.freeze({ passed: false, reason: 'game-not-ready', results: [] });
+  if (area !== 'city') return Object.freeze({ passed: false, reason: 'start-outside-required', results: [] });
+  if (inCar) return Object.freeze({ passed: false, reason: 'exit-vehicle-first', results: [] });
+  if (state.wanted > 0) return Object.freeze({ passed: false, reason: 'clear-wanted-level-first', results: [] });
+  if (interiorTransitioning || isUIOpen() || isSettingsOpen() || builderOpen || eating || hairGame || lineupGame) {
+    return Object.freeze({ passed: false, reason: 'close-active-ui-or-transition-first', results: [] });
+  }
+
+  const ids = Object.keys(interiors?.byId || {});
+  const missingEntrances = ids.filter((id) => !entranceMap[id]?.doorPos);
+  if (ids.length !== 12) {
+    acceptanceTelemetry.recordError(`Expected 12 interiors; found ${ids.length}`, 'interior:catalog');
+  }
+  for (const id of missingEntrances) {
+    acceptanceTelemetry.recordInteriorFailure(id, 'exterior-door', new Error('missing exterior entrance mapping'));
+  }
+  const originalPosition = player.group.position.clone();
+  const originalReturn = returnPos.clone();
+  const results = [];
+  interiorAcceptanceRunning = true;
+  acceptanceTelemetry.mark('interior-cycle-start', { cycles: repeat, holdMs: delay, interiors: ids });
+  notify(`🧪 Testing ${ids.length} interiors — controls return when the cycle finishes.`);
+
+  try {
+    for (let cycle = 1; cycle <= repeat; cycle++) {
+      for (const id of ids) {
+        const exteriorPosition = player.group.position.clone();
+        enterInterior(id);
+        await acceptanceDelay(delay);
+
+        const visibleRooms = Object.entries(interiors.byId)
+          .filter(([, interior]) => interior.group?.visible)
+          .map(([interiorId]) => interiorId);
+        const entered = area === id
+          && interiors.group.visible
+          && interiors.group.userData.activeInteriorId === id
+          && visibleRooms.length === 1
+          && visibleRooms[0] === id;
+        if (!entered) {
+          acceptanceTelemetry.recordInteriorFailure(id, 'cycle-enter-verification',
+            new Error(`active=${area}; visible=${visibleRooms.join(',') || 'none'}`));
+        }
+
+        if (area !== 'city') leaveInterior();
+        await acceptanceDelay(delay);
+        const returnDistance = player.group.position.distanceTo(exteriorPosition);
+        const returned = area === 'city'
+          && !interiors.group.visible
+          && interiors.group.userData.activeInteriorId == null
+          && returnDistance <= 3.5;
+        if (!returned) {
+          acceptanceTelemetry.recordInteriorFailure(id, 'cycle-exit-verification',
+            new Error(`area=${area}; returnDistance=${returnDistance.toFixed(2)}`));
+        }
+
+        results.push(Object.freeze({
+          cycle,
+          id,
+          entered,
+          returned,
+          returnDistance: Number(returnDistance.toFixed(2)),
+          stations: interiors.byId[id].stations?.length || 0,
+          npcs: interiors.byId[id].npcs?.length || 0,
+          entranceMapped: !!entranceMap[id]?.doorPos,
+          visibleRooms,
+        }));
+      }
+    }
+  } finally {
+    if (area !== 'city') {
+      leaveInterior();
+      await acceptanceDelay(delay);
+    }
+    area = 'city';
+    interiors.deactivate?.();
+    setPreparedProductionWorldVisible(true);
+    controls.bounds = null;
+    player.group.visible = true;
+    player.group.position.copy(originalPosition);
+    returnPos.copy(originalReturn);
+    controls.snapTo(player.group.position, player.eyeHeight);
+    saveNow();
+    interiorAcceptanceRunning = false;
+  }
+
+  const passed = ids.length === 12
+    && missingEntrances.length === 0
+    && results.length === ids.length * repeat
+    && results.every((entry) => entry.entered && entry.returned);
+  acceptanceTelemetry.mark('interior-cycle-complete', {
+    passed,
+    checks: results.length,
+    failures: results.filter((entry) => !entry.entered || !entry.returned).length,
+  });
+  notify(passed ? `✅ All ${results.length} interior cycles passed.` : '⚠️ Interior cycle found a failure — copy acceptance evidence.');
+  return Object.freeze({ passed, cycles: repeat, interiorCount: ids.length, missingEntrances, results });
 }
 function entranceMap_facing() { return null; }
 
@@ -1902,6 +2529,7 @@ function nearestStealable() {
   // (so a stolen ride can be re-entered after stepping out).
   const pool = [...traffic, ...policeCars, ...parkedCruisers, ...abandonedCars];
   for (const c of pool) {
+    if (c.g.visible === false) continue;
     const d = c.g.position.distanceTo(pp);
     if (d < bestD) { bestD = d; best = c; }
   }
@@ -1968,7 +2596,12 @@ function enterCar(vehicle = car, opts = {}) {
     const idx = traffic.indexOf(vehicle);
     if (idx >= 0) traffic.splice(idx, 1);
     const pidx = policeCars.indexOf(vehicle);
-    if (pidx >= 0) policeCars.splice(pidx, 1);
+    if (pidx >= 0) {
+      policeCars.splice(pidx, 1);
+      // A stolen pursuit cruiser becomes a persistent player/abandoned vehicle.
+      // Transfer it out of pool ownership without hiding the live object.
+      policePools?.vehicles?.detach(vehicle);
+    }
     const cidx = parkedCruisers.indexOf(vehicle);
     if (cidx >= 0) parkedCruisers.splice(cidx, 1);
     vehicle.parked = false;
@@ -2018,6 +2651,7 @@ function enterCar(vehicle = car, opts = {}) {
 function witnessesNear(pos, radius) {
   let n = 0;
   for (const npc of cityNPCs) {
+    if (npc.av.group.visible === false) continue;
     if (npc.av.group.position.distanceTo(pos) <= radius) n++;
   }
   return n;
@@ -2031,7 +2665,7 @@ function robNearestNpc() {
   const pp = player.group.position;
   let best = null, bestD = 2.8;
   for (const n of cityNPCs) {
-    if (n.downed || n.robbed) continue;
+    if (n.av.group.visible === false || n.downed || n.robbed) continue;
     const g = n.av.group.position;
     const d = Math.hypot(g.x - pp.x, g.z - pp.z);
     if (d < bestD) { bestD = d; best = n; }
@@ -2071,7 +2705,10 @@ function refuelVehicle(v) {
   if (state.money < cost) { notify("⛽ Not enough cash to refuel."); return; }
   state.money -= cost;
   v.fuel = 100;
-  if (v === car) state.fuel = 100;
+  if (v === car) {
+    state.fuel = 100;
+    updateOwnedVehicleCondition(state, state.vehicleState.activeVehicleId, { fuel: 100 });
+  }
   notify(`⛽ Tank filled — $${cost}`);
   saveNow();
 }
@@ -2125,6 +2762,33 @@ function updateCar(dt) {
   const before = v.g.position.clone();
   v.g.position.addScaledVector(dir, v.speed * dt); v.g.position.y = 0;
   resolveCollision(v.g.position, 1.5, cityColliders);
+  const boundaryAction = enforceLiveStarterTownBoundary(v.g.position, { vehicle: v });
+  const trafficOffense = boundaryAction
+    ? null
+    : trafficControl?.observeDriver(before, v.g.position, Math.abs(v.speed), v, dt);
+  if (trafficOffense) {
+    const trafficLabel = trafficOffense.type === 'rolling-stop' ? 'Rolling stop'
+      : trafficOffense.type === 'yellow-light' ? 'Unsafe yellow-light entry'
+        : 'Red-light violation';
+    state.stats.trafficViolations = (state.stats.trafficViolations || 0) + 1;
+    state.heat = Math.min(100, (state.heat || 0) + (trafficOffense.schoolZone ? 12 : 8));
+    const noticed = (state.wanted || 0) > 0 || Math.random() < (trafficOffense.schoolZone ? 0.75 : 0.55);
+    if (noticed) {
+      state.wanted = Math.max(1, state.wanted || 0);
+      state.crimeRecord.official.push({
+        id: `traffic-${Date.now()}`,
+        type: trafficOffense.type,
+        townId: state.world?.townId || 'starter-town',
+        day: state.day,
+        timeMin: state.timeMin,
+        status: 'traffic-stop-pending',
+      });
+      notify(`🚨 ${trafficLabel} reported — patrol attempting a traffic stop.`);
+    } else {
+      notify(`⚠️ ${trafficLabel} — traffic cameras recorded the offense.`);
+    }
+    missionEvent('traffic-violation');
+  }
   // distance driven this session → feeds the "Get Around Town" mission
   drivenDist += Math.abs(v.speed) * dt;
   if (drivenDist > 120 && !drivenFlagged) { drivenFlagged = true; missionEvent('drive-checkpoint'); }
@@ -2150,14 +2814,18 @@ function updateCar(dt) {
   }
   // Phase 2: smash through breakable street objects (cones, lamps, cans).
   // Soft litter is driven over; breakable props tip and add minor damage.
-  if (FEATURES.USE_BREAKABLE_STREET_OBJECTS && Math.abs(v.speed) > 3) {
-    const brk = collideVehicle(v.g.position, Math.abs(v.speed), (o) => {
+  if (FEATURES.USE_BREAKABLE_STREET_OBJECTS) {
+    const impact = collideVehicleImpact(v.g.position, Math.abs(v.speed), (o) => {
       notify('💥 Smashed a ' + (o.kind ? o.kind.replace(/_/g, ' ') : 'street object') + '!');
-    });
-    if (brk > 0) {
-      addVehicleDamage(v, brk);
+    }, { previousPos: before });
+    if (impact.damage > 0) {
+      addVehicleDamage(v, impact.damage);
       if (v === car) state.carDamage = Math.floor(v.damage);
       applyCarDamageVisual(v);
+    }
+    if (impact.blocked) {
+      v.speed *= -0.18;
+    } else if (impact.broken.length) {
       v.speed *= 0.9;
     }
   }
@@ -2194,7 +2862,7 @@ function updateVehicleCollisions(dt) {
   injuredTimer = Math.max(0, injuredTimer - dt);
 
   const cars = [];
-  for (const c of traffic) cars.push(c);
+  for (const c of traffic) if (c.g.visible !== false) cars.push(c);
   for (const c of policeCars) cars.push(c);     // patrol cars collide & shove too
   if (car && !inCar) cars.push(car);           // parked drivable car is a solid obstacle
   if (inCar && drivingVehicle && !cars.includes(drivingVehicle)) cars.push(drivingVehicle);  // the car you drive collides too
@@ -2277,7 +2945,7 @@ function updateVehicleCollisions(dt) {
     if (spd < 3) continue;
     const playerDriven = inCar && drivingVehicle && c === drivingVehicle;
     for (const n of cityNPCs) {
-      if (n._hitCD > 0) continue;
+      if (n.av.group.visible === false || n._hitCD > 0) continue;
       const g = n.av.group;
       const dx = g.position.x - c.g.position.x, dz = g.position.z - c.g.position.z;
       const d = Math.hypot(dx, dz);
@@ -2373,7 +3041,8 @@ function downPlayer(reason) {
   clearWanted();                       // death = new life: wipe stars + end the chase
   if (inCar) exitCar();
   area = 'city';
-  interiors && (interiors.group.visible = false);
+  interiors?.deactivate?.();
+  setPreparedProductionWorldVisible(true);
   controls.bounds = null;
   player.group.visible = true;
   player.group.position.set(safeRespawn.x, 0, safeRespawn.z);
@@ -2399,7 +3068,7 @@ function getWeaponTargets() {
   const out = [];
   if (area !== 'city') return out;
   for (const n of cityNPCs) {
-    if (n.downed) continue;
+    if (n.av.group.visible === false || n.downed) continue;
     ensureNpcHp(n);
     out.push({
       pos: n.av.group.position.clone().setY(1.1), r: 0.95, kind: 'civ', ref: n,
@@ -2500,6 +3169,10 @@ function setHealthBar(grp, frac) {
 function updateNpcHealthBars(dt) {
   const pp = player ? player.group.position : null;
   for (const n of cityNPCs) {
+    if (n.av.group.visible === false) {
+      if (n.hpBar) n.hpBar.visible = false;
+      continue;
+    }
     if (n._hitCD > 0) n._hitCD -= dt;
     if (n.hitT > 0) { n.hitT -= dt; n.panic = 2.2; }   // any hit triggers a panic run
     if (n.downed) continue;
@@ -2538,6 +3211,14 @@ function updateNpcHealthBars(dt) {
 // offscreen from the player (never on top of them). Returns a world {x,z}.
 function copSpawnPoint() {
   const pp = player.group.position;
+  if (starterTownNavigationEnabled) {
+    return starterTownNavigation.dispatchPoint(pp, {
+      preferredLocationId: 'police-station',
+      preferChance: 0.55,
+      minDistance: 30,
+      maxDistance: 46,
+    });
+  }
   // Prefer the police HQ if it's a sensible distance away (so cops walk in from
   // the station like a real patrol dispatch) — but only ~55% of the time so the
   // rest arrive from offscreen roads as if a nearby patrol was redirected.
@@ -2553,7 +3234,77 @@ function copSpawnPoint() {
   return { x: pp.x + Math.cos(ang) * R, z: pp.z + Math.sin(ang) * R };
 }
 
-function spawnFootCop(at) {
+const LIVE_POLICE_POOL_MARK = 'starter-town-live-police-v1';
+
+function registerLivePolicePool(id, options) {
+  let existing = poolRegistry.get(id);
+  if (existing?.runtimeFactory === LIVE_POLICE_POOL_MARK) return existing;
+  if (existing) {
+    if (existing.active.size || existing.available.length || existing.created) {
+      console.warn(`[police-pool] ${id} already belongs to another active runtime; using safe unpooled fallback`);
+      return null;
+    }
+    poolRegistry.destroy(id);
+  }
+  existing = poolRegistry.register(id, options);
+  existing.runtimeFactory = LIVE_POLICE_POOL_MARK;
+  return existing;
+}
+
+function applyPolicePoolBudget() {
+  if (!policePools) return;
+  const preset = graphics.effectivePreset() === 'custom' ? 'medium' : graphics.effectivePreset();
+  const limit = performanceBudget(preset).maxPoliceUnits;
+  if (policePools.foot) {
+    policePools.foot.maxSize = Math.max(6, Math.ceil(limit * 0.9));
+    policePools.foot.trim(policePools.foot.maxSize);
+  }
+  if (policePools.vehicles) {
+    policePools.vehicles.maxSize = Math.max(3, Math.ceil(limit * 0.45));
+    policePools.vehicles.trim(policePools.vehicles.maxSize);
+  }
+}
+
+function initializePolicePools() {
+  if (policePools) return policePools;
+  policePools = {
+    foot: registerLivePolicePool('police', {
+      create: createPooledFootCop,
+      reset: resetPooledFootCop,
+      activate: (unit) => { unit.active = true; unit.av.group.visible = true; scene.add(unit.av.group); },
+      deactivate: (unit) => {
+        unit.active = false;
+        unit.av.group.visible = false;
+        unit.navigation = null;
+        unit._lodDt = 0;
+        scene.remove(unit.av.group);
+      },
+      // GLB skins may share cached resources; inactive entries stay bounded and
+      // are allowed to be garbage-collected rather than disposing shared assets.
+      dispose: () => {},
+      maxSize: 8,
+    }),
+    vehicles: registerLivePolicePool('police-vehicles', {
+      create: createPooledPoliceCar,
+      reset: resetPooledPoliceCar,
+      activate: (vehicle) => { vehicle.active = true; vehicle.g.visible = true; scene.add(vehicle.g); },
+      deactivate: (vehicle) => {
+        vehicle.active = false;
+        vehicle.speed = 0;
+        vehicle.g.visible = false;
+        vehicle.navigation = null;
+        vehicle._lodDt = 0;
+        scene.remove(vehicle.g);
+      },
+      dispose: () => {},
+      maxSize: 4,
+    }),
+  };
+  applyPolicePoolBudget();
+  return policePools;
+}
+
+function createPooledFootCop() {
   // Procedural uniformed base (instant + always valid). A real PSX POLICE GLB is
   // swapped on top async via applyCopSkin so the officer reads clearly as police
   // — the procedural body stays as a guaranteed fallback if the GLB fails.
@@ -2566,48 +3317,163 @@ function spawnFootCop(at) {
   const badge = new THREE.Mesh(new THREE.CircleGeometry(0.05, 6),
     new THREE.MeshStandardMaterial({ color: '#ffd34d', emissive: '#5a4500', emissiveIntensity: 0.4 }));
   badge.position.set(0.16, 1.36, 0.19); av.group.add(badge);
-  const sp = at || copSpawnPoint();        // `at` lets a bailed-out driver become a cop on the spot
-  av.group.position.set(sp.x, 0, sp.z);
-  scene.add(av.group);
-  const unit = { av, health: 65, t: 0, hitT: 0 };
-  policeUnits.push(unit);
-  // swap to a real PSX police-officer GLB skin (validated; procedural kept on fail)
+  av.group.visible = false;
+  const unit = {
+    av,
+    health: 65,
+    t: 0,
+    hitT: 0,
+    navigation: null,
+  };
   applyCopSkin(av, renderer)
     .then((name) => { if (name) { unit.realSkin = name; debug.set('copSkin', name); } })
     .catch(() => { /* keep procedural uniformed cop */ });
+  return unit;
 }
 
-// Build a heavier patrol cruiser that chases the player's car/feet.
-function spawnCopCar() {
-  const pp = player.group.position;
-  const ang = Math.random() * Math.PI * 2, R = 28;
-  const c = createDrivableCar(scene, pp.x + Math.cos(ang) * R, pp.z + Math.sin(ang) * R, '#1b2a55');
-  c.isCop = true; c.mass = 2.6; c.speed = 0; c.damage = 0;
-  // use the real police GLB if the kit is loaded, else keep the navy procedural body
-  swapVehicleVisual(c, 'police');
+function resetPooledFootCop(unit, context = {}) {
+  const sp = context.position || { x: 0, z: 0 };
+  unit.active = true;
+  unit.health = 65;
+  unit.t = 0;
+  unit.hitT = 0;
+  unit._hitCD = 0;
+  unit._lodDt = 0;
+  unit.cellId = context.cellId || null;
+  unit.districtId = context.districtId || worldRegistry.districtAt(sp)?.id || null;
+  unit.av.group.position.set(sp.x, 0, sp.z);
+  unit.av.group.rotation.set(0, 0, 0);
+  unit.av.group.visible = true;
+  const parts = unit.av.parts;
+  for (const limb of [parts?.leftLeg, parts?.rightLeg, parts?.leftArm, parts?.rightArm]) {
+    if (limb) limb.rotation.x = 0;
+  }
+  unit.navigation = starterTownNavigationEnabled
+    ? starterTownNavigation.createFollower({ allowService: true })
+    : null;
+  return unit;
+}
+
+function spawnFootCop(at) {
+  const sp = at || copSpawnPoint();        // `at` lets a bailed-out driver become a cop on the spot
+  const pools = initializePolicePools();
+  const context = { position: sp, districtId: worldRegistry.districtAt(sp)?.id || null };
+  const unit = pools.foot
+    ? pools.foot.acquire(context)
+    : resetPooledFootCop(createPooledFootCop(), context);
+  if (!pools.foot) scene.add(unit.av.group);
+  policeUnits.push(unit);
+  return unit;
+}
+
+function createPooledPoliceCar() {
+  const c = createDrivableCar(scene, 0, 0, '#1b2a55');
+  scene.remove(c.g);
+  c.g.visible = false;
+  c.isCop = true;
+  c.mass = 2.6;
+  c.active = false;
+  if (c.g.userData.kitCar !== 'police') swapVehicleVisual(c, 'police');
   const bar = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.12, 0.22),
     new THREE.MeshStandardMaterial({ color: 0x3060ff, emissive: 0x1a2f8a, emissiveIntensity: 0.7 }));
-  bar.position.set(0, 1.5, 0); c.g.add(bar); c.lightBar = bar;
+  bar.name = 'vehicle-overlay:police-pursuit-lightbar';
+  bar.position.set(0, 1.5, 0);
+  c.g.add(bar);
+  c.lightBar = bar;
+  return c;
+}
+
+function resetPooledPoliceCar(c, context = {}) {
+  const spawn = context.position || { x: 0, z: 0 };
+  if (c._smoke) { c.g.remove(c._smoke); c._smoke = null; }
+  c.active = true;
+  c.isCop = true;
+  c.mass = 2.6;
+  c.speed = 0;
+  c.damage = 0;
+  c.fuel = 100;
+  c.stolen = false;
+  c.parked = false;
+  c._crashCD = 0;
+  c._lodDt = 0;
+  c.cellId = context.cellId || null;
+  c.districtId = context.districtId || worldRegistry.districtAt(spawn)?.id || null;
+  c.g.position.set(spawn.x, 0, spawn.z);
+  c.g.rotation.set(0, Math.PI / 2, 0);
+  c.g.visible = true;
+  c.spawn.set(spawn.x, 0, spawn.z);
+  c.navigation = starterTownNavigationEnabled
+    ? starterTownNavigation.createFollower({ allowService: true })
+    : null;
+  // Re-try the validated police kit after preload; the named overlay survives
+  // visual swaps and remains available on every reuse.
+  if (c.g.userData.kitCar !== 'police') swapVehicleVisual(c, 'police');
+  if (c.lightBar) c.lightBar.visible = true;
+  applyCarDamageVisual(c);
+  return c;
+}
+
+// Build/acquire a heavier patrol cruiser that chases the player's car/feet.
+function spawnCopCar() {
+  const pp = player.group.position;
+  const spawn = starterTownNavigationEnabled
+    ? copSpawnPoint()
+    : (() => {
+        const ang = Math.random() * Math.PI * 2, R = 28;
+        return { x: pp.x + Math.cos(ang) * R, z: pp.z + Math.sin(ang) * R };
+      })();
+  const pools = initializePolicePools();
+  const context = { position: spawn, districtId: worldRegistry.districtAt(spawn)?.id || null };
+  const c = pools.vehicles
+    ? pools.vehicles.acquire(context)
+    : resetPooledPoliceCar(createPooledPoliceCar(), context);
+  if (!pools.vehicles) scene.add(c.g);
   policeCars.push(c);
+  return c;
 }
 
 function removeFootCop(i) {
   const u = policeUnits[i];
-  if (u) scene.remove(u.av.group);
+  if (u && !(policePools?.foot?.release(u, { reason: 'pursuit-release' }))) scene.remove(u.av.group);
   policeUnits.splice(i, 1);
 }
+function removeCopCar(i) {
+  const c = policeCars[i];
+  if (c && !(policePools?.vehicles?.release(c, { reason: 'pursuit-release' }))) scene.remove(c.g);
+  policeCars.splice(i, 1);
+}
 function despawnAllPolice() {
-  for (const u of policeUnits) scene.remove(u.av.group);
-  policeUnits = [];
-  for (const c of policeCars) scene.remove(c.g);
-  policeCars = [];
+  for (let i = policeUnits.length - 1; i >= 0; i--) removeFootCop(i);
+  for (let i = policeCars.length - 1; i >= 0; i--) removeCopCar(i);
+}
+
+function policePoolSnapshot() {
+  return {
+    foot: policePools?.foot?.snapshot() || null,
+    vehicles: policePools?.vehicles?.snapshot() || null,
+  };
+}
+
+function farthestPoliceIndex(list, positionOf) {
+  if (!player || !list.length) return list.length - 1;
+  const pp = player.group.position;
+  let farthest = 0;
+  let farthestDistance = -1;
+  for (let i = 0; i < list.length; i++) {
+    const position = positionOf(list[i]);
+    const distance = Math.hypot(position.x - pp.x, position.z - pp.z);
+    if (distance > farthestDistance) { farthestDistance = distance; farthest = i; }
+  }
+  return farthest;
 }
 
 // Cops corner you on foot → you get busted: lose half your cash, chase fully
 // clears, and you respawn safe (no lingering pursuit).
 function bustPlayer() {
+  const bookingStars = Math.max(1, state.wanted || 1);
   const lost = Math.floor((state.money || 0) * 0.5);
   state.money -= lost;
+  recordBooking(state, { wanted: bookingStars, cashLost: lost });
   clearWanted();                       // busted = chase resolved: stars + cops cleared
   if (inCar) exitCar();
   player.group.position.set(state.pos.x = safeRespawn.x, 0, state.pos.z = safeRespawn.z);
@@ -2686,8 +3552,18 @@ function updatePolice(dt) {
   // it to a lone officer so a tiny mistake isn't an instant dogpile. While the
   // player is hidden, hold reinforcements (the search has lost the trail).
   policeAccum += dt;
-  const wantFoot = wanted <= 1 ? 1 : Math.min(4, wanted + 1);
-  const wantCars = wanted >= 3 ? Math.min(2, wanted - 2) : 0;
+  const staffing = policeStaffingFor(wanted);
+  const wantFoot = staffing.foot;
+  const wantCars = staffing.vehicles;
+  // Wanted can fall while units are still active, and stealing a pursuit car
+  // makes its driver bail out. Release the farthest excess response objects so
+  // the live chase always returns to the intended 1–5 star staffing budget.
+  while (policeCars.length > wantCars) {
+    removeCopCar(farthestPoliceIndex(policeCars, (entry) => entry.g.position));
+  }
+  while (policeUnits.length > wantFoot) {
+    removeFootCop(farthestPoliceIndex(policeUnits, (entry) => entry.av.group.position));
+  }
   if (policeAccum > 1.6 && !hidden) {
     policeAccum = 0;
     if (policeUnits.length < wantFoot) spawnFootCop();
@@ -2710,9 +3586,45 @@ function updatePolice(dt) {
     const dx = pp.x - g.position.x, dz = pp.z - g.position.z;
     const d = Math.hypot(dx, dz) || 1;
     nearest = Math.min(nearest, d);
-    if (d > 1.3) { const sp = copSpeed * dt; g.position.x += dx / d * sp; g.position.z += dz / d * sp; }
-    g.rotation.y = Math.atan2(dx, dz);
-    u.t = (u.t || 0) + dt; g.position.y = Math.abs(Math.sin(u.t * 8)) * 0.04;
+    const relevance = policeSimulationBudget(d, 'foot');
+    if (relevance.recycle) { removeFootCop(i); continue; }
+    let policeDt = dt;
+    if (relevance.interval > 0) {
+      u._lodDt = (u._lodDt || 0) + dt;
+      if (u._lodDt < relevance.interval) continue;
+      policeDt = Math.min(0.28, u._lodDt);
+      u._lodDt = 0;
+    } else {
+      u._lodDt = 0;
+    }
+    const pursuit = u.navigation
+      ? starterTownNavigation.follow(u.navigation, g.position, pp, {
+          now: clock.elapsedTime * 1000,
+          replanMs: 650,
+          targetTolerance: 8,
+          waypointRadius: 2.7,
+          finalApproachDistance: 9,
+          allowService: true,
+        })
+      : { waypoint: pp, routed: false };
+    const moveDx = pursuit.waypoint.x - g.position.x;
+    const moveDz = pursuit.waypoint.z - g.position.z;
+    const moveDistance = Math.hypot(moveDx, moveDz) || 1;
+    if (d > 1.3) {
+      const sp = copSpeed * policeDt;
+      g.position.x += moveDx / moveDistance * sp;
+      g.position.z += moveDz / moveDistance * sp;
+    }
+    g.rotation.y = Math.atan2(moveDx, moveDz);
+    u.t = (u.t || 0) + policeDt; g.position.y = Math.abs(Math.sin(u.t * 8)) * 0.04;
+    const stride = Math.sin(u.t * 8) * (d > 1.3 ? 0.55 : 0);
+    const parts = u.av.parts;
+    if (parts?.leftLeg && parts?.rightLeg && parts?.leftArm && parts?.rightArm) {
+      parts.leftLeg.rotation.x = stride;
+      parts.rightLeg.rotation.x = -stride;
+      parts.leftArm.rotation.x = -stride * 0.8;
+      parts.rightArm.rotation.x = stride * 0.8;
+    }
     resolveCollision(g.position, 0.5, cityColliders); g.position.y = Math.abs(Math.sin(u.t * 8)) * 0.04;
     // Busting takes a sustained corner (≈5s) and only after the grace window. At
     // 1★ the player gets an explicit warning before the clock even starts.
@@ -2727,19 +3639,43 @@ function updatePolice(dt) {
   if (inCar) bustTimer = 0;
 
   // cruisers chase (heavier, faster, flashing lights)
-  for (const c of policeCars) {
+  for (let i = policeCars.length - 1; i >= 0; i--) {
+    const c = policeCars[i];
     const target = (inCar && drivingVehicle) ? drivingVehicle.g.position : pp;
     const dx = target.x - c.g.position.x, dz = target.z - c.g.position.z;
     const d = Math.hypot(dx, dz) || 1;
     nearest = Math.min(nearest, d);
-    c.g.rotation.y = lerpAngle(c.g.rotation.y, Math.atan2(dx, dz), Math.min(1, dt * 2.4));
-    const fwd = new THREE.Vector3(Math.sin(c.g.rotation.y), 0, Math.cos(c.g.rotation.y));
-    c.speed = Math.min(18, (c.speed || 0) + 11 * dt);
-    if (d < 6) c.speed *= 0.88;
-    c.g.position.addScaledVector(fwd, c.speed * dt); c.g.position.y = 0;
-    resolveCollision(c.g.position, 1.6, cityColliders);
-    (c.g.userData.wheels || []).forEach(w => { w.rotation.x += c.speed * dt; });
     if (c.lightBar) c.lightBar.material.color.setHex((Math.floor(clock.elapsedTime * 6) % 2) ? 0xff3030 : 0x3060ff);
+    const relevance = policeSimulationBudget(d, 'vehicle');
+    if (relevance.recycle) { removeCopCar(i); continue; }
+    let policeDt = dt;
+    if (relevance.interval > 0) {
+      c._lodDt = (c._lodDt || 0) + dt;
+      if (c._lodDt < relevance.interval) continue;
+      policeDt = Math.min(0.24, c._lodDt);
+      c._lodDt = 0;
+    } else {
+      c._lodDt = 0;
+    }
+    const pursuit = c.navigation
+      ? starterTownNavigation.follow(c.navigation, c.g.position, target, {
+          now: clock.elapsedTime * 1000,
+          replanMs: 700,
+          targetTolerance: 12,
+          waypointRadius: 5,
+          finalApproachDistance: 12,
+          allowService: true,
+        })
+      : { waypoint: target, routed: false };
+    const moveDx = pursuit.waypoint.x - c.g.position.x;
+    const moveDz = pursuit.waypoint.z - c.g.position.z;
+    c.g.rotation.y = lerpAngle(c.g.rotation.y, Math.atan2(moveDx, moveDz), Math.min(1, policeDt * 2.4));
+    const fwd = new THREE.Vector3(Math.sin(c.g.rotation.y), 0, Math.cos(c.g.rotation.y));
+    c.speed = Math.min(18, (c.speed || 0) + 11 * policeDt);
+    if (d < 6) c.speed *= 0.88;
+    c.g.position.addScaledVector(fwd, c.speed * policeDt); c.g.position.y = 0;
+    resolveCollision(c.g.position, 1.6, cityColliders);
+    (c.g.userData.wheels || []).forEach(w => { w.rotation.x += c.speed * policeDt; });
   }
 
   // de-escalation: lose them by getting distance OR by breaking line-of-sight.
@@ -3013,6 +3949,30 @@ function resolveCollision(pos, radius, list) {
   }
 }
 
+let lastBoundaryNoticeMs = -Infinity;
+function enforceLiveStarterTownBoundary(position, { vehicle = null } = {}) {
+  if (area !== 'city' || !state.world?.largeWorldEnabled || !position) return null;
+  const decision = starterTownBoundaryGuard.evaluate(position, { allowGateway: true });
+  if (decision.action === 'allow' || decision.action === 'allow-gateway') return null;
+  position.x = decision.position.x;
+  position.y = decision.position.y || 0;
+  position.z = decision.position.z;
+  if (vehicle) {
+    vehicle.speed = 0;
+    if (decision.action === 'recover') vehicle.g.rotation.y = decision.facing || 0;
+  } else if (decision.action === 'recover' && player) {
+    player.group.rotation.y = decision.facing || 0;
+  }
+  const now = performance.now();
+  if (now - lastBoundaryNoticeMs > 5000) {
+    lastBoundaryNoticeMs = now;
+    notify(decision.action === 'recover'
+      ? '🧭 You reached unfinished terrain. Roadside recovery returned you to Starter Town.'
+      : '🚧 City limits ahead — use a marked highway gateway to leave town.');
+  }
+  return decision;
+}
+
 // ── on-foot movement ───────────────────────────────────────────────────────────
 function updatePlayer(dt, t) {
   const inp = controls.moveInput();
@@ -3056,13 +4016,14 @@ function updatePlayer(dt, t) {
   if (p.y <= 0) { p.y = 0; velY = 0; onGround = true; }
 
   resolveCollision(p, 0.5);
+  enforceLiveStarterTownBoundary(p);
 
   // solid pedestrians: the player can't phase through NPCs anymore. Push both
   // apart on overlap (player gets most of the correction, the NPC nudges aside).
   if (area === 'city' && !inCar) {
     const PR = 0.55;
     for (const n of cityNPCs) {
-      if (n.downed) continue;
+      if (n.av.group.visible === false || n.downed) continue;
       const g = n.av.group;
       const dx = p.x - g.position.x, dz = p.z - g.position.z;
       const d = Math.hypot(dx, dz);
@@ -3079,7 +4040,7 @@ function updatePlayer(dt, t) {
     // Monster form terrifies nearby civilians — they panic and flee as you pass.
     if (monsterForm) {
       for (const n of cityNPCs) {
-        if (n.downed) continue;
+        if (n.av.group.visible === false || n.downed) continue;
         const g = n.av.group;
         if (Math.hypot(p.x - g.position.x, p.z - g.position.z) < 5) n.panic = Math.max(n.panic || 0, 1.6);
       }
@@ -3161,10 +4122,76 @@ function talkTo(n) {
 }
 function endTalk(n) { n.talking = false; return undefined; }
 
+function openRecurringDialogue(npcId) {
+  const dialogue = dialogueRuntime.begin(npcId);
+  if (!dialogue) return false;
+  missionEvent('talk-npc', npcId);
+  openDialogue(dialogue);
+  return true;
+}
+
+function openRecurringNpcService(serviceId) {
+  switch (serviceId) {
+    case 'gym-training':
+      startWorkout();
+      return false;
+    case 'kicks-and-fits-shop':
+      openWardrobe();
+      return 'keep';
+    case 'police-desk':
+      talkToPoliceDesk();
+      return 'keep';
+    case 'sanitation-jobs':
+      openSanitationJobs();
+      return 'keep';
+    case 'frostbox-shop':
+      openJewelryShop();
+      return 'keep';
+    case 'custom-chain-builder':
+      openChainBuilderUI();
+      return 'keep';
+    default:
+      notify('That service is not open in Starter Town yet.');
+      return 'keep';
+  }
+}
+
+function updateQuestGuidance(position, dt) {
+  if (!minimap || !starterTownNavigationEnabled || !position) return;
+  guidanceAccum += dt;
+  if (guidanceAccum < 0.65) return;
+  guidanceAccum = 0;
+  const hint = activeQuestGuidance();
+  if (!hint) {
+    if (guidanceKey) minimap.setGuidanceRoute(null);
+    guidanceKey = '';
+    debug.set('questRoute', 'none');
+    return;
+  }
+  const route = starterTownNavigation.routePointsToTarget(position, hint.targetId, {
+    allowService: true,
+    weight: 'travel-time',
+  });
+  if (!route) {
+    minimap.setGuidanceRoute(null);
+    guidanceKey = '';
+    debug.set('questRoute', `unreachable:${hint.targetId}`);
+    return;
+  }
+  guidanceKey = `${hint.questId}:${hint.objectiveId}:${hint.targetId}`;
+  minimap.setGuidanceRoute({
+    points: route.points,
+    destination: route.destination,
+    label: hint.objectiveText,
+  });
+  debug.set('questRoute', `${hint.targetId} · ${Math.round(route.distance)}m`);
+}
+
 function talkToInterior(npc) {
   const memKey = { id: 'int-' + npc.name };
   remember(memKey);
   missionEvent('talk-int', npc.dialogue);
+  if (npc.storyId && openRecurringDialogue(npc.storyId)) return;
   switch (npc.dialogue) {
     case 'dealer':
       openDialogue({ name: npc.name + ' · Auto Haus', text: 'Welcome to Auto Haus. We got whips from city hatchbacks to supercars. Walk the floor and tap a car to view it.',
@@ -3211,16 +4238,18 @@ function talkToInterior(npc) {
         ] });
       break;
     case 'teacher':
-      openDialogue({ name: npc.name + ' · Zaylin Prep', text: 'Knowledge is power out here. Take a seat and study — it sharpens your smarts.',
+      openDialogue({ name: npc.name + ' · Zaylin Prep', text: 'Pick a real subject, build your transcript, and complete the five Foundation classes. The nurse can help if you got banged up on the way here.',
         choices: [
-          { label: 'Sit and study', onPick: () => { startStudy(); return undefined; } },
+          { label: 'Choose a class', onPick: () => { openSchoolCurriculum(); return 'keep'; } },
+          { label: 'Review my school record', onPick: () => { openEducationRecord(); return 'keep'; } },
           { label: 'Maybe later', onPick: () => {} },
         ] });
       break;
     case 'manager':
-      openDialogue({ name: npc.name + ' · WorkTower', text: "We always need hands. Clock in, run the shift, get paid. Easy money if your energy's up.",
+      openDialogue({ name: npc.name + ' · WorkTower', text: 'This lobby handles jobs, pay records, property, community health, and city information. Your shift history and promotions save now.',
         choices: [
-          { label: 'Clock in (work a shift)', onPick: () => { doJobShift(); return undefined; } },
+          { label: 'Open the job board', onPick: () => { openWorktowerJobBoard(); return 'keep'; } },
+          { label: 'Review my career record', onPick: () => { openCareerRecord(); return 'keep'; } },
           { label: 'Not right now', onPick: () => {} },
         ] });
       break;
@@ -3265,7 +4294,14 @@ function runStation(intr, st) {
     case 'mirror-cut': startLineupGame(); break;
     case 'workout': startWorkoutAt(st.equip); break;
     case 'study': startStudy(); break;
+    case 'school-curriculum': openSchoolCurriculum(); break;
+    case 'school-nurse': visitSchoolNurse(); break;
     case 'job-work': doJobShift(); break;
+    case 'worktower-jobs': openWorktowerJobBoard(); break;
+    case 'property-desk': openPropertyDesk(); break;
+    case 'bank-kiosk': openBankKiosk(); break;
+    case 'community-clinic': visitCommunityClinic(); break;
+    case 'city-services': openCityServices(); break;
     case 'garage-work': doGarageShift(); break;
     case 'repair': repairVehicle(); break;
     case 'weapon-shop': openWeaponShop(); break;
@@ -3298,12 +4334,16 @@ function stopSpin(mesh) { if (mesh) mesh.userData.spin = false; }
 function buyCar(carDef) {
   if (state.money < carDef.price) { notify('Not enough money'); return; }
   state.money -= carDef.price;
-  if (!state.ownedCars.includes(carDef.id)) state.ownedCars.push(carDef.id);
   setActiveCar(carDef);
   notify('🔑 Bought the ' + carDef.name + '! Parked outside.');
   saveNow();
 }
 function setActiveCar(carDef) {
+  const registration = registerOwnedVehicle(state, carDef.id, {
+    name: carDef.name,
+    legalOwner: true,
+    source: 'auto-haus',
+  });
   // give the drivable car the purchased model so the whip you own matches the
   // one you bought at the showroom (unique kit body per dealership car).
   if (carDef.kitModel) {
@@ -3312,8 +4352,10 @@ function setActiveCar(carDef) {
   } else if (car.g.children[0]?.material) {
     car.g.children[0].material.color.set(carDef.color);
   }
-  car.damage = 0; state.carDamage = 0;
-  state.activeCar = carDef.id;
+  car.damage = registration.vehicle.damage;
+  car.fuel = registration.vehicle.fuel;
+  state.carDamage = registration.vehicle.damage;
+  state.fuel = registration.vehicle.fuel;
   applyCarDamageVisual(car);
 }
 
@@ -3440,21 +4482,27 @@ function grade(hits, rounds) {
   if (f >= 0.35) return { label: 'OKAY', mult: 0.85 };
   return { label: 'POOR', mult: 0.5 };
 }
-function runWorkShift({ title, jobName, tasks, basePay, energyCost = 20, onPaid }) {
+function runWorkShift({ title, jobName, careerId, tasks, basePay, energyCost = 20, onPaid }) {
   if (state.stats.energy < 12) { notify('Too gassed to work — rest or eat first.'); return; }
   startTimingGame({
     title, rounds: tasks.length, speedBase: 2.2, labels: tasks,
     onFinish: (hits, rounds) => {
       const g = grade(hits, rounds);
-      const pay = Math.round(basePay * g.mult);
+      const educationMultiplier = careerId ? workPayMultiplier(state, careerId) : 1;
+      const pay = Math.round(basePay * g.mult * educationMultiplier);
       state.money += pay;
-      state.job = jobName;
       state.stats.energy = Math.max(0, state.stats.energy - energyCost);
       state.stats.hygiene = Math.max(0, state.stats.hygiene - 8);
-      notify(`✅ ${g.label} shift (${hits}/${rounds}) — earned $${pay}`);
       if (onPaid) onPaid(g, hits, rounds);
+      const careerResult = careerId
+        ? recordCareerShift(state, careerId, { pay, grade: g.label, hits, rounds })
+        : null;
+      if (!careerResult) state.job = jobName;
+      const promotion = careerResult?.promoted ? ` · Promoted to ${careerResult.record.title}!` : '';
+      const schoolBonus = educationMultiplier > 1 ? ' · Foundation pay bonus' : '';
+      notify(`✅ ${g.label} shift (${hits}/${rounds}) — earned $${pay}${schoolBonus}${promotion}`);
       state.timeMin += 150;
-      missionEvent('job-done');
+      missionEvent('job-done', careerId);
       saveNow();
     },
   });
@@ -3463,7 +4511,7 @@ function runWorkShift({ title, jobName, tasks, basePay, energyCost = 20, onPaid 
 // Chicken Spot crew shift.
 function workShift() {
   runWorkShift({
-    title: '🍗 Chicken Spot Shift', jobName: 'Chicken Spot Crew', basePay: 60,
+    title: '🍗 Chicken Spot Shift', jobName: 'Chicken Spot Crew', careerId: 'chicken-spot-crew', basePay: 60,
     tasks: ['Take order', 'Fry & serve', 'Wipe counter', 'Restock', 'Take out trash'],
     onPaid: (g) => {
       // good service builds a little business sense (smarts) + fun
@@ -3480,13 +4528,11 @@ function restAtHome() {
   saveNow();
 }
 function checkHomeMailbox() {
-  const firstVisit = !state.properties.homeDeedIssued;
-  state.properties.homeDeedIssued = true;
-  state.properties.mailboxLastDay = state.day;
+  const deed = issueStarterHomeDeed(state);
   missionEvent('mailbox-check', 'zaylins-home');
   openDialogue({
     name: '📬 Zaylins Home Mailbox',
-    text: firstVisit
+    text: deed.newlyIssued
       ? 'Your Willowbend property deed and neighborhood welcome packet are inside. This home is now registered as your primary residence.'
       : `Mail checked for day ${state.day}. No urgent deliveries are waiting.`,
     choices: [{ label: 'Close mailbox', onPick: () => {} }],
@@ -3764,20 +4810,199 @@ function startWorkoutAt(equip) {
 // No-arg entry kept for the trainer dialogue (defaults to a strength session).
 function startWorkout() { startWorkoutAt(null); }
 
-// School study — raises SMARTS, costs energy + time.
-function startStudy() {
+function educationProgressText() {
+  const required = FOUNDATION_CERTIFICATE.requiredSubjectIds;
+  const complete = required.filter((id) => (state.education.subjects[id]?.lessons || 0) > 0).length;
+  return `${complete}/${required.length} Foundation subjects complete`;
+}
+
+function openEducationRecord() {
+  const rows = FOUNDATION_CERTIFICATE.requiredSubjectIds.map((id) => {
+    const subject = STARTER_TOWN_SUBJECTS_BY_ID[id];
+    const record = state.education.subjects[id];
+    return `${record?.lessons ? '✓' : '○'} ${subject.title}${record?.lessons ? ` — ${record.lessons} lesson${record.lessons === 1 ? '' : 's'}, best ${Math.round(record.bestScore)}%` : ''}`;
+  });
+  const certificate = hasFoundationCertificate(state)
+    ? `AWARDED: ${FOUNDATION_CERTIFICATE.title}`
+    : 'Certificate pending: finish each required subject once.';
+  openDialogue({
+    name: 'Zaylin Prep — Student Record',
+    text: `Attendance: ${state.education.attendance} lesson${state.education.attendance === 1 ? '' : 's'}\n${rows.join('\n')}\n\n${certificate}`,
+    choices: [
+      { label: 'Choose another class', onPick: () => { openSchoolCurriculum(); return 'keep'; } },
+      { label: 'Close record', onPick: () => {} },
+    ],
+  });
+}
+
+function openSubjectPicker(title, subjects) {
+  openDialogue({
+    name: `Zaylin Prep — ${title}`,
+    text: 'Each lesson saves its score, attendance, and progress. Complete all five Foundation subjects to earn the certificate and WorkTower pay bonus.',
+    choices: [
+      ...subjects.map((subject) => ({
+        label: `${(state.education.subjects[subject.id]?.lessons || 0) > 0 ? '✓ ' : ''}${subject.title}`,
+        onPick: () => { startStudy(subject.id); },
+      })),
+      { label: 'Back to curriculum', onPick: () => { openSchoolCurriculum(); return 'keep'; } },
+    ],
+  });
+}
+
+function openSchoolCurriculum() {
+  const foundation = STARTER_TOWN_SUBJECTS.filter((subject) => subject.foundation);
+  const electives = STARTER_TOWN_SUBJECTS.filter((subject) => !subject.foundation);
+  openDialogue({
+    name: 'Zaylin Prep — Curriculum',
+    text: `${educationProgressText()}. Choose a group, or review the scores already saved to your student record.`,
+    choices: [
+      { label: 'Foundation classes', onPick: () => { openSubjectPicker('Foundation Classes', foundation); return 'keep'; } },
+      { label: 'Electives', onPick: () => { openSubjectPicker('Electives', electives); return 'keep'; } },
+      { label: 'Review student record', onPick: () => { openEducationRecord(); return 'keep'; } },
+      { label: 'Leave', onPick: () => {} },
+    ],
+  });
+}
+
+function visitSchoolNurse() {
+  const result = useCommunityCare(state, { schoolNurse: true });
+  if (!result.ok) {
+    notify('🩺 You are already well enough for class.');
+    return;
+  }
+  notify(`🩺 Nurse visit complete — health ${Math.round(result.health)}%, energy ${Math.round(result.energy)}%.`);
+  saveNow();
+}
+
+// School study records a real subject, score, attendance, and certificate state.
+function startStudy(subjectId = 'basic-math') {
   if (state.stats.energy < 10) { notify('Too tired to focus — get some rest.'); return; }
+  const subject = STARTER_TOWN_SUBJECTS_BY_ID[subjectId] || STARTER_TOWN_SUBJECTS_BY_ID['basic-math'];
   startTimingGame({
-    title: '📚 Study — lock in when it’s highlighted', rounds: 4, speedBase: 2.2,
+    title: `📚 ${subject.title} — lock in when it’s highlighted`, rounds: 4, speedBase: 2.2,
     onFinish: (hits, rounds) => {
       const gain = 4 + hits * 4;                    // up to +20 smarts
-      state.stats.smarts = Math.min(100, state.stats.smarts + gain);
+      if (subject.skill === 'fitness') state.stats.fitness = Math.min(100, state.stats.fitness + Math.ceil(gain / 2));
+      else if (subject.skill === 'fun') state.stats.fun = Math.min(100, state.stats.fun + Math.ceil(gain / 2));
+      else if (subject.skill === 'health') {
+        state.stats.health = Math.min(100, state.stats.health + Math.ceil(gain / 3));
+        state.stats.hygiene = Math.min(100, state.stats.hygiene + Math.ceil(gain / 3));
+      } else state.stats.smarts = Math.min(100, state.stats.smarts + gain);
       state.stats.energy = Math.max(0, state.stats.energy - 14);
       state.stats.fun = Math.max(0, state.stats.fun - 4);
       state.timeMin += 120;
-      notify(`🧠 Studied up (${hits}/${rounds})! Smarts +${gain}`);
+      const lesson = recordSchoolLesson(state, subject.id, { score: (hits / rounds) * 100 });
+      notify(lesson.certificateAwarded
+        ? `🎓 ${FOUNDATION_CERTIFICATE.title} earned! WorkTower pay bonus unlocked.`
+        : `🧠 ${subject.title} complete (${hits}/${rounds}) — ${educationProgressText()}.`);
       missionEvent('study-done');
+      saveNow();
     },
+  });
+}
+
+function openCareerRecord() {
+  const records = careerSummary(state);
+  const rows = STARTER_TOWN_CAREERS.map((career) => {
+    const record = records.find((entry) => entry.career.id === career.id);
+    return record
+      ? `${career.title}: ${record.title} · ${record.shifts} shift${record.shifts === 1 ? '' : 's'} · $${record.totalEarnings.toLocaleString()} earned · best ${record.bestGrade}`
+      : `${career.title}: no completed shifts`;
+  });
+  openDialogue({
+    name: 'WorkTower — Career Record',
+    text: `${rows.join('\n')}\n\n${hasFoundationCertificate(state) ? 'Foundation education bonus active for WorkTower shifts.' : 'Complete the Foundation Certificate for a 10% WorkTower pay bonus.'}`,
+    choices: [
+      { label: 'Back to job board', onPick: () => { openWorktowerJobBoard(); return 'keep'; } },
+      { label: 'Close record', onPick: () => {} },
+    ],
+  });
+}
+
+function openWorktowerJobBoard() {
+  const certified = hasFoundationCertificate(state);
+  openDialogue({
+    name: 'WorkTower — Job Board',
+    text: `${certified ? 'Full local board unlocked.' : 'Starter listing open. Finish the Foundation Certificate to unlock the local job directory and education pay bonus.'}\n\nEvery playable career keeps permanent shift, earnings, grade, and promotion history.`,
+    choices: [
+      { label: 'Clock in: WorkTower office shift', onPick: () => { doJobShift(); } },
+      { label: 'Review career record', onPick: () => { openCareerRecord(); return 'keep'; } },
+      certified
+        ? { label: 'Open local job directory', onPick: () => openDialogue({
+            name: 'WorkTower — Local Listings',
+            text: 'Chicken Spot hires at its counter. City Garage hires at the service bay. Denise Hall runs paid sanitation contracts at the Dreamdrop dumpster stop. All four careers share this saved record.',
+            choices: [{ label: 'Back', onPick: () => { openWorktowerJobBoard(); return 'keep'; } }],
+          }) }
+        : { label: '🔒 Local directory: Foundation required', onPick: () => {
+            notify('Complete Math, Civics, Health, Career, and Driver Education at Zaylin Prep.');
+            return 'keep';
+          } },
+      { label: 'Leave board', onPick: () => {} },
+    ],
+  });
+}
+
+function openPropertyDesk() {
+  registerStarterHome(state);
+  const deed = state.properties.homeDeedIssued
+    ? 'Deed issued and on file.'
+    : 'Ownership is registered. Check the Willowbend mailbox to collect the physical deed and welcome packet.';
+  openDialogue({
+    name: 'WorkTower — Property Desk',
+    text: `Primary residence: Zaylins Home, Willowbend Residential.\nOwned properties: ${state.properties.owned.length}.\n${deed}`,
+    choices: [
+      { label: 'Explain ownership', onPick: () => openDialogue({
+        name: 'Property Desk',
+        text: 'Your starter home is owned, not rented. Resting there restores your needs, the wardrobe changes your look, the safe shows your inventory, and the mailbox holds the deed.',
+        choices: [{ label: 'Understood', onPick: () => {} }],
+      }) },
+      { label: 'Leave desk', onPick: () => {} },
+    ],
+  });
+  saveNow();
+}
+
+function openBankKiosk() {
+  const totalEarnings = careerSummary(state).reduce((sum, entry) => sum + entry.totalEarnings, 0);
+  openDialogue({
+    name: 'WorkTower — Paycheck Kiosk',
+    text: `Available balance: $${Math.floor(state.money).toLocaleString()}\nRecorded career earnings: $${totalEarnings.toLocaleString()}\nActive title: ${state.job || 'Unemployed'}\n\nThis read-only kiosk verifies pay and balances; purchases and wages settle automatically.`,
+    choices: [{ label: 'Close kiosk', onPick: () => {} }],
+  });
+}
+
+function visitCommunityClinic() {
+  const cost = STARTER_TOWN_LIFE.clinicCost;
+  openDialogue({
+    name: 'WorkTower — Community Health',
+    text: `Walk-in care restores health, energy, and hygiene. The visit costs $${cost}. Zaylin Prep students can also use the school nurse for limited free care.`,
+    choices: [
+      { label: `Receive care ($${cost})`, onPick: () => {
+        const result = useCommunityCare(state);
+        if (!result.ok) {
+          notify(result.reason === 'money' ? `Need $${result.cost} for the visit.` : 'You are already fully recovered.');
+          return 'keep';
+        }
+        notify(`🏥 Care complete — health ${Math.round(result.health)}%, energy ${Math.round(result.energy)}%.`);
+        saveNow();
+      } },
+      { label: 'Leave clinic', onPick: () => {} },
+    ],
+  });
+}
+
+function openCityServices() {
+  openDialogue({
+    name: 'WorkTower — City Information',
+    text: 'Starter Town services are live across nine districts: home and mail in Willowbend; school and gym in Scholar’s Quarter/Parkside; jobs and property here; police and legal fees at Public Safety; fuel and food at Eastgate/Dreamdrop; vehicles at Auto Haus; repairs at City Garage. The 2,000 × 2,000 road network connects all of them.',
+    choices: [
+      { label: 'What lies beyond Starter Town?', onPick: () => openDialogue({
+        name: 'Connected World Desk',
+        text: 'Fishing Harbor is the first inter-town route scheduled to open. The other routes remain closed while their roads, services, and safety systems are built and inspected.',
+        choices: [{ label: 'Back', onPick: () => { openCityServices(); return 'keep'; } }],
+      }) },
+      { label: 'Close desk', onPick: () => {} },
+    ],
   });
 }
 
@@ -3786,7 +5011,7 @@ function doJobShift() {
   if (state.stats.energy < 20) { notify('No energy for a shift — rest first.'); return; }
   const smartBonus = Math.round((state.stats.smarts / 100) * 80);   // smarter → better base pay
   runWorkShift({
-    title: '💼 Office Shift', jobName: 'WorkTower Associate', basePay: 70 + smartBonus, energyCost: 28,
+    title: '💼 Office Shift', jobName: 'WorkTower Associate', careerId: 'worktower-associate', basePay: 70 + smartBonus, energyCost: 28,
     tasks: ['Boot computer', 'File paperwork', 'Answer email', 'Deliver folder', 'Update checklist'],
     onPaid: (g) => {
       state.stats.smarts = Math.min(100, state.stats.smarts + (g.mult >= 1.15 ? 3 : 1));
@@ -3797,7 +5022,7 @@ function doJobShift() {
 // Garage shift — task loop; builds a little fitness from the labor.
 function doGarageShift() {
   runWorkShift({
-    title: '🔧 Garage Shift', jobName: 'Garage Hand', basePay: 75, energyCost: 26,
+    title: '🔧 Garage Shift', jobName: 'Garage Hand', careerId: 'garage-hand', basePay: 75, energyCost: 26,
     tasks: ['Grab the tools', 'Clean the spill', 'Inspect car', 'Tighten the part', 'Park in bay'],
     onPaid: (g) => { state.stats.fitness = Math.min(100, state.stats.fitness + (g.mult >= 1.15 ? 2 : 1)); },
   });
@@ -3818,6 +5043,10 @@ function repairVehicle() {
             if (v) v.damage = 0;
             if (car) car.damage = 0;
             state.carDamage = 0;
+            updateOwnedVehicleCondition(state, state.vehicleState.activeVehicleId, {
+              damage: 0,
+              serviceDay: state.day,
+            });
             if (v) { v._totaledWarned = false; applyCarDamageVisual(v); }
             if (car && car !== v) applyCarDamageVisual(car);
             notify('🔧 Good as new — dents knocked out.');
@@ -3853,23 +5082,33 @@ function updateProgression(dt) {
 // ── graphics settings application ──────────────────────────────────────────────
 function rebuildDensity() {
   if (!started || area !== 'city') return;
-  const targetN = Math.max(8, Math.round(22 * graphics.npcDensity));
-  const targetT = Math.max(3, Math.round(10 * graphics.trafficDensity));
+  const largeWorldActive = !!state.world?.largeWorldEnabled;
+  const targetN = largeWorldActive
+    ? largeTownPedestrianCount(graphics.npcDensity)
+    : Math.max(8, Math.round(22 * graphics.npcDensity));
+  const targetT = state.world?.largeWorldEnabled
+    ? largeTownTrafficCount(graphics.trafficDensity)
+    : Math.max(3, Math.round(10 * graphics.trafficDensity));
   let changed = false;
   if (cityNPCs.length !== targetN) {
     cityNPCs.forEach(n => scene.remove(n.av.group));
-    cityNPCs = createCityNPCs(scene, targetN);
+    cityNPCs = createCityNPCs(
+      scene,
+      targetN,
+      largeWorldActive ? LARGE_TOWN_PEDESTRIAN_ROUTES : undefined,
+    );
+    if (FEATURES.USE_REAL_NPC_SKINS) {
+      applyNpcSkins(cityNPCs, renderer)
+        .then((count) => { debug.set('realNpcs', count); debug.set('procNpcs', Math.max(0, cityNPCs.length - count)); })
+        .catch((error) => console.warn('[skins] rebuilt npc pass failed:', error));
+    }
     changed = true;
   }
   if (traffic.length !== targetT) {
     traffic.forEach(c => scene.remove(c.g));
-    traffic = createTraffic(
-      scene,
-      targetT,
-      state.world?.largeWorldEnabled ? LARGE_TOWN_TRAFFIC_ROUTES : undefined,
-    );
+    traffic = createLiveTownTraffic(targetT, !!state.world?.largeWorldEnabled);
     // re-skin the rebuilt traffic with kit cars (preload is cached, so sync)
-    traffic.forEach((c, i) => swapVehicleVisual(c, TRAFFIC_FLEET[i % TRAFFIC_FLEET.length]));
+    traffic.forEach((c, i) => swapVehicleVisual(c, c.vehicleKit || TRAFFIC_FLEET[i % TRAFFIC_FLEET.length]));
     changed = true;
   }
   if (changed) registerInteractables(cityEntrances);
@@ -3878,6 +5117,7 @@ function rebuildDensity() {
 function applyGraphics() {
   graphics.applyToRenderer(renderer);
   graphics.applyToSun(sun);
+  applyPolicePoolBudget();
   camera.aspect = innerWidth / innerHeight;
   camera.updateProjectionMatrix();
   if (started) {
@@ -3885,6 +5125,13 @@ function applyGraphics() {
     rebuildDensity();
   }
   applyVibe();   // refresh fog range / camera far / environment
+  acceptanceTelemetry.recordGraphics(graphics.effectivePreset(), {
+    renderScale: graphics.values.renderScale,
+    viewDistance: graphics.viewDistance,
+    npcDensity: graphics.npcDensity,
+    trafficDensity: graphics.trafficDensity,
+    shadows: graphics.values.shadows,
+  });
 }
 graphics.onChange(applyGraphics);
 
@@ -3949,7 +5196,7 @@ function applyVibe() {
 }
 
 function saveNow() {
-  if (!player) return;
+  if (!player) return false;
   if (area === 'city') {
     state.pos.x = player.group.position.x;
     state.pos.z = player.group.position.z;
@@ -3957,7 +5204,20 @@ function saveNow() {
     state.pos.x = returnPos.x; state.pos.z = returnPos.z;
   }
   state.facing = player.group.rotation.y;
-  saveState(state);
+  if (car && state.vehicleState?.activeVehicleId) {
+    updateOwnedVehicleCondition(state, state.vehicleState.activeVehicleId, {
+      fuel: car.fuel ?? state.fuel ?? 100,
+      damage: car.damage ?? state.carDamage ?? 0,
+    });
+  }
+  const saved = saveState(state);
+  acceptanceTelemetry.recordSave(saved, {
+    area,
+    inCar,
+    wanted: state.wanted || 0,
+    activeQuest: getQuestSnapshot()?.primaryId || null,
+  });
+  return saved;
 }
 
 function lerpAngle(a, b, f) {
@@ -4109,7 +5369,8 @@ function teleportTo(which) {
   if (inCar) exitCar();
   const goCity = (x, z) => {
     area = 'city';
-    if (interiors) interiors.group.visible = false;
+    interiors?.deactivate?.();
+    setPreparedProductionWorldVisible(true);
     controls.bounds = null;
     player.group.visible = true;
     player.group.position.set(x, 0, z);
@@ -4138,15 +5399,20 @@ function teleportTo(which) {
 window.addEventListener('keydown', e => {
   const kc = e.key.toLowerCase();
   // debug panel toggle works at all times (even with a menu open)
-  if (e.key === 'F2' || kc === 'f2') { debugBadge && debugBadge.toggle(); e.preventDefault(); return; }
+  if (e.key === 'F2' || kc === 'f2') {
+    acceptanceTelemetry.recordInput('f2');
+    debugBadge && debugBadge.toggle(); e.preventDefault(); return;
+  }
   // record EVERY key + whether the guard will block it (and why) so the debug
   // panel can prove if a stuck UI state is swallowing N/C/I/M.
   const blockReason = (mode !== 'play') ? 'mode=' + mode
+    : interiorAcceptanceRunning ? 'interiorAcceptance'
     : isUIOpen() ? 'uiOpen'
     : isSettingsOpen() ? 'settings'
     : eating ? 'eating'
     : hairGame ? 'hairGame' : '';
   debug.logKey(blockReason ? `${kc} ✕(${blockReason})` : kc);
+  acceptanceTelemetry.recordInput(kc, blockReason || null);
   if (blockReason) return;
   const k = kc;
   // dev grip tuning (highest priority so its nudge keys aren't eaten by other
@@ -4215,12 +5481,64 @@ addEventListener('resize', () => {
   renderer.setSize(innerWidth, innerHeight);
 });
 
+document.addEventListener('visibilitychange', () => {
+  acceptanceTelemetry.mark('visibility-change', { hidden: document.hidden });
+  acceptanceFrameAt = performance.now();
+});
+
+function acceptanceRuntimeSample() {
+  const observer = inCar
+    ? (drivingVehicle || car)?.g?.position
+    : player?.group?.position;
+  const memory = performance.memory;
+  return {
+    mode,
+    area,
+    inCar,
+    wanted: state.wanted || 0,
+    heat: Number((state.heat || 0).toFixed(1)),
+    timeMin: state.timeMin,
+    preset: graphics.effectivePreset(),
+    position: observer ? { x: Number(observer.x.toFixed(2)), z: Number(observer.z.toFixed(2)) } : null,
+    activeInteriorId: interiors?.group?.userData?.activeInteriorId || null,
+    interiorTransitioning,
+    population: {
+      pedestrians: cityNPCs.filter((entry) => entry.av.group.visible !== false).length,
+      traffic: traffic.filter((entry) => entry.g.visible !== false).length,
+      police: policeUnits.length + policeCars.length,
+      recurringNpcs: recurringCharacters.size,
+    },
+    render: {
+      calls: renderer.info.render.calls,
+      triangles: renderer.info.render.triangles,
+      geometries: renderer.info.memory.geometries,
+      textures: renderer.info.memory.textures,
+      pixelRatio: Number(renderer.getPixelRatio().toFixed(2)),
+    },
+    heapMb: memory?.usedJSHeapSize ? Number((memory.usedJSHeapSize / 1024 / 1024).toFixed(1)) : null,
+    visibility: document.hidden ? 'hidden' : 'visible',
+    input: {
+      touchPoints: navigator.maxTouchPoints || 0,
+      gamepadApi: typeof navigator.getGamepads === 'function',
+      pointerLock: 'pointerLockElement' in document,
+    },
+  };
+}
+
 // ── main loop ──────────────────────────────────────────────────────────────────
 function animate() {
   requestAnimationFrame(animate);
+  const acceptanceNow = performance.now();
+  const rawFrameMs = acceptanceNow - acceptanceFrameAt;
+  acceptanceFrameAt = acceptanceNow;
+  if (mode === 'play' && !document.hidden) {
+    acceptanceTelemetry.frame(rawFrameMs);
+    if (acceptanceTelemetry.sampleDue()) acceptanceTelemetry.sample(acceptanceRuntimeSample());
+  }
   const dt = Math.min(0.05, clock.getDelta());
   const t = clock.elapsedTime;
   settingsTickFPS();
+  updateWorldObjects(performance.now());
 
   if (mode === 'creator') {
     renderPreview(creatorPV, creatorAvatar, document.getElementById('creator-canvas-wrap'));
@@ -4235,21 +5553,36 @@ function animate() {
     return;
   }
 
-  // play mode
-  updateCityNPCs(cityNPCs, dt, t);
-  // braking obstacles: other traffic + the player + the parked drivable car
-  const trafficObstacles = [];
-  for (const c of traffic) trafficObstacles.push(c.g.position);
-  if (player && !inCar && area === 'city') trafficObstacles.push(player.group.position);
-  if (car && !inCar) trafficObstacles.push(car.g.position);
-  if (trafficControl) trafficControl.update(dt);
-  updateTraffic(traffic, dt, trafficObstacles, trafficControl);
+  updateRecurringCharacterSchedules();
+
+  // Outdoor simulation is suspended inside buildings. This keeps one interior
+  // transition from competing with a town-wide traffic/pedestrian update and
+  // removes the largest source of entry-frame stalls on lower-end devices.
+  if (area === 'city') {
+    const cityObserver = inCar
+      ? (drivingVehicle || car)?.g?.position
+      : player?.group?.position;
+    updateCityNPCs(cityNPCs, dt, t, cityObserver, state.timeMin);
+    trafficCoverageAccum += dt;
+    if (!inCar && cityObserver && trafficCoverageAccum >= 4) {
+      trafficCoverageAccum = 0;
+      const coverage = ensureTrafficCoverage(traffic, cityObserver);
+      debug.set('trafficCoverage', coverage.action);
+    }
+    // braking obstacles: other traffic + the player + the parked drivable car
+    const trafficObstacles = [];
+    for (const c of traffic) if (c.g.visible !== false) trafficObstacles.push(c.g.position);
+    if (player && !inCar) trafficObstacles.push(player.group.position);
+    if (car && !inCar) trafficObstacles.push(car.g.position);
+    if (trafficControl) trafficControl.update(dt);
+    updateTraffic(traffic, dt, trafficObstacles, trafficControl, cityObserver, state.timeMin);
+  }
   updateMixers(dt);                                  // skinned GLB animations
   for (const g of extraSpinners) g.rotation.y += dt * 0.8;   // idle-spin display models
   // spin any dealership car flagged for preview
   if (interiors) Object.values(interiors.byId).forEach(intr => intr.stations.forEach(st => { if (st.mesh && st.mesh.userData.spin) st.mesh.rotation.y += 0.02; }));
 
-  const busy = isUIOpen() || isSettingsOpen() || eating || hairGame || lineupGame;
+  const busy = interiorAcceptanceRunning || isUIOpen() || isSettingsOpen() || eating || hairGame || lineupGame;
   // collectible gems: always bob/twinkle; only collectible while on foot in the city
   if (cityGems.length) {
     const pp = (!busy && !inCar && area === 'city' && player) ? player.group.position : null;
@@ -4289,7 +5622,7 @@ function animate() {
         nearestNpc: (pos, maxR) => {
           let best = null, bd = maxR;
           for (const n of cityNPCs) {
-            if (n.downed) continue;
+            if (n.av.group.visible === false || n.downed) continue;
             const gp = n.av.group.position;
             const d = Math.hypot(gp.x - pos.x, gp.z - pos.z);
             if (d < bd) { bd = d; best = { x: gp.x, z: gp.z }; }
@@ -4300,7 +5633,7 @@ function animate() {
         terrorize: (pos, radius) => {
           let any = false;
           for (const n of cityNPCs) {
-            if (n.downed) continue;
+            if (n.av.group.visible === false || n.downed) continue;
             const gp = n.av.group.position;
             if (Math.hypot(gp.x - pos.x, gp.z - pos.z) <= radius) {
               n.panic = Math.max(n.panic || 0, 2.4); any = true;
@@ -4346,10 +5679,12 @@ function animate() {
         heading = Math.atan2(fwd.x, fwd.z);
       }
       const ppos = (inCar ? (drivingVehicle || car).g.position : player.group.position);
+      updateQuestGuidance(ppos, dt);
       minimap.draw(
         { x: ppos.x, z: ppos.z }, heading,
-        traffic.map(c => ({ x: c.g.position.x, z: c.g.position.z })),
-        cityNPCs.filter(n => !n.downed).map(n => ({ x: n.av.group.position.x, z: n.av.group.position.z })),
+        traffic.filter(c => c.g.visible !== false).map(c => ({ x: c.g.position.x, z: c.g.position.z })),
+        cityNPCs.filter(n => n.av.group.visible !== false && !n.downed)
+          .map(n => ({ x: n.av.group.position.x, z: n.av.group.position.z })),
       );
     } else if (mm) {
       mm.style.display = 'none';
@@ -4409,6 +5744,8 @@ function animate() {
   // feed the debug panel live runtime values (cheap; the panel throttles redraw)
   if (debugBadge) {
     const mmEl = document.getElementById('minimap');
+    const policePoolReport = policePoolSnapshot();
+    const acceptanceReport = acceptanceTelemetry.summary();
     debug.update({
       mode, area, inCar,
       playerExists: !!player,
@@ -4420,6 +5757,25 @@ function animate() {
       monsterMode: !!state.monsterMode,
       monsterCount: monsters.filter(m => !m.dead).length,
       policeCount: policeUnits.length + policeCars.length,
+      scheduledPedestrians: cityNPCs.filter(n => n.av.group.visible !== false).length,
+      scheduledTraffic: traffic.filter(c => c.g.visible !== false).length,
+      scheduledServiceTraffic: traffic.filter(c => c.g.visible !== false && c.trafficKind === 'service').length,
+      recurringNpcCount: recurringCharacters.size,
+      recurringNpcsOutdoors: [...recurringCharacters.values()].filter((record) => record.activeArea === 'city').length,
+      policePoolFootAvailable: policePoolReport.foot?.available || 0,
+      policePoolFootReused: policePoolReport.foot?.reused || 0,
+      policePoolVehiclesAvailable: policePoolReport.vehicles?.available || 0,
+      policePoolVehiclesReused: policePoolReport.vehicles?.reused || 0,
+      policePoolVehiclesDetached: policePoolReport.vehicles?.detached || 0,
+      acceptanceLabel: acceptanceReport.label,
+      acceptanceElapsedMin: Number((acceptanceReport.elapsedMs / 60000).toFixed(1)),
+      acceptanceLongFrames: acceptanceReport.over33Ms,
+      acceptanceMaxFrameMs: acceptanceReport.maxFrameMs,
+      acceptanceErrors: acceptanceReport.errors,
+      acceptanceSaves: acceptanceReport.saves,
+      acceptanceSaveFailures: acceptanceReport.saveFailures,
+      acceptanceInteriorsCompleted: acceptanceReport.interiorsCompleted,
+      acceptanceSamples: acceptanceReport.runtimeSamples,
     });
   }
 }
@@ -4468,6 +5824,7 @@ debugBadge = initDebugBadge({
   onTpDiner: () => teleportTo('diner'),
   onTpHome: () => teleportTo('home'),
   onTpChicken: () => teleportTo('chicken'),
+  onRunInteriors: () => runInteriorAcceptance(),
 });
 window.ZW = window.ZW || {};
 window.ZW.report = () => debug.report();
@@ -4509,7 +5866,7 @@ if (import.meta.env.PROD && 'serviceWorker' in navigator) {
 }
 
 // ── lightweight debug / automation bridge (safe, read-mostly) ─────────────────
-window.ZW = {
+window.ZW = Object.assign(window.ZW || {}, {
   state: () => state,
   area: () => area,
   inCar: () => inCar,
@@ -4532,6 +5889,46 @@ window.ZW = {
   stationList: () => (area === 'city' ? [] : interiors.byId[area].stations.map(s => ({ id: s.id, label: s.label, x: s.pos.x, z: s.pos.z }))),
   exitPos: () => (area === 'city' ? null : { x: interiors.byId[area].exit.x, z: interiors.byId[area].exit.z }),
   npcList: () => (area === 'city'
-    ? cityNPCs.map(n => ({ name: n.name, x: n.av.group.position.x, z: n.av.group.position.z }))
-    : interiors.byId[area].npcs.map(n => ({ name: n.name, x: n.pos.x, z: n.pos.z }))),
-};
+    ? cityNPCs.filter(n => n.av.group.visible !== false)
+      .map(n => ({ name: n.name, role: n.role, x: n.av.group.position.x, z: n.av.group.position.z }))
+      .concat([...recurringCharacters.values()]
+        .filter((record) => record.activeArea === 'city' && record.av.group.visible !== false)
+        .map((record) => ({
+          name: record.name, role: 'recurring', schedule: record.label,
+          x: record.av.group.position.x, z: record.av.group.position.z,
+        })))
+    : interiors.byId[area].npcs
+      .filter((npc) => recurringCharacterAvailable(npc.storyId, area))
+      .map(n => ({ name: n.name, x: n.pos.x, z: n.pos.z }))),
+  trafficList: () => traffic.map(c => ({
+    route: c.routeName,
+    kind: c.trafficKind,
+    service: c.serviceType,
+    schedule: c.scheduleId,
+    active: c.g.visible !== false,
+    source: c.routeSource,
+    x: +c.g.position.x.toFixed(2),
+    z: +c.g.position.z.toFixed(2),
+  })),
+  scheduleSnapshot: () => ({
+    timeMin: state.timeMin,
+    pedestrians: cityNPCs.filter(n => n.av.group.visible !== false).length,
+    traffic: traffic.filter(c => c.g.visible !== false).length,
+    serviceTraffic: traffic.filter(c => c.g.visible !== false && c.trafficKind === 'service').length,
+    recurringNpcs: recurringCharacterScheduleSnapshot(),
+  }),
+  recurringNpcSchedule: () => recurringCharacterScheduleSnapshot(),
+  policePools: () => policePoolSnapshot(),
+  acceptance: Object.freeze({
+    start: (label = 'manual-acceptance') => acceptanceTelemetry.start(label),
+    stop: (note = '') => acceptanceTelemetry.stop(note),
+    mark: (label, detail = {}) => acceptanceTelemetry.mark(label, detail),
+    snapshot: () => acceptanceTelemetry.snapshot(),
+    report: () => acceptanceTelemetry.report(),
+    copy: () => acceptanceTelemetry.copy(),
+    runInteriors: (options = {}) => runInteriorAcceptance(options),
+    interiorIds: () => Object.keys(interiors?.byId || {}),
+    graphics: () => ({ mode: graphics.mode, preset: graphics.effectivePreset(), values: { ...graphics.values } }),
+    setGraphics: (preset) => graphics.setPreset(preset),
+  }),
+});
