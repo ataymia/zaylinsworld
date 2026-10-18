@@ -2878,7 +2878,7 @@ function summonOwnedCar() {
     state.fuel = 20;
     updateOwnedVehicleCondition(state, state.vehicleState.activeVehicleId, { fuel: 20 });
   }
-  resolveCollision(car.g.position, 1.5, cityColliders);
+  resolveCollision(car.g.position, 1.5, inFishingHarbor(car.g.position) ? harborWorld?.colliders : cityColliders);
   notify('🚗 Your car is beside you! Press F to get in.');
   saveNow();
   return true;
@@ -2958,7 +2958,7 @@ function updateCar(dt) {
   const dir = new THREE.Vector3(Math.sin(v.g.rotation.y), 0, Math.cos(v.g.rotation.y));
   const before = v.g.position.clone();
   v.g.position.addScaledVector(dir, v.speed * dt); v.g.position.y = 0;
-  resolveCollision(v.g.position, 1.5, cityColliders);
+  resolveCollision(v.g.position, 1.5, inFishingHarbor(v.g.position) ? harborWorld?.colliders : cityColliders);
   const boundaryAction = enforceLiveStarterTownBoundary(v.g.position, { vehicle: v });
   const trafficOffense = boundaryAction
     ? null
@@ -4148,8 +4148,29 @@ function resolveCollision(pos, radius, list) {
 
 let lastBoundaryNoticeMs = -Infinity;
 function enforceLiveStarterTownBoundary(position, { vehicle = null } = {}) {
-  if (area !== 'city' || !state.world?.largeWorldEnabled || !position) return null;
-  const decision = starterTownBoundaryGuard.evaluate(position, { allowGateway: true });
+ if(area!=='city'||!position)return null;
+ if(inFishingHarbor(position)){
+   const safe=harborSafePoint(position);
+   position.x=safe.x;position.z=safe.z;
+   syncCurrentWorldTown(position);
+   return null;
+ }
+ if(onFishingHighway(position)){
+   // Drive the full corridor, no teleport required.
+   syncCurrentWorldTown(position);return null;
+ }
+ // Prevent stepping into unfinished terrain along the harbor's outer bounds.
+ if(state.world?.townId==='fishing-harbor' && position.z<-3900
+   && position.z>-6500 && Math.abs(position.x)<1400){
+   position.x=Math.max(-1180,Math.min(1180,position.x));
+   position.z=Math.max(-6250,Math.min(-4130,position.z));
+   const safe=harborSafePoint(position);
+   position.x=safe.x;position.z=safe.z;
+   return {action:'clamp',reason:'harbor-coast'};
+ }
+ if(!state.world?.largeWorldEnabled)return null;
+ syncCurrentWorldTown(position);
+ const decision = starterTownBoundaryGuard.evaluate(position, { allowGateway: true });
   if (decision.action === 'allow' || decision.action === 'allow-gateway') return null;
   position.x = decision.position.x;
   position.y = decision.position.y || 0;
@@ -4212,7 +4233,7 @@ function updatePlayer(dt, t) {
   velY -= 14 * dt; p.y += velY * dt;
   if (p.y <= 0) { p.y = 0; velY = 0; onGround = true; }
 
-  resolveCollision(p, 0.5);
+  resolveCollision(p, 0.5, inFishingHarbor(p) ? harborWorld?.colliders : null);
   enforceLiveStarterTownBoundary(p);
 
   // solid pedestrians: the player can't phase through NPCs anymore. Push both
@@ -4364,7 +4385,7 @@ function updateQuestGuidance(position, dt) {
       customMapDestination = null;
       notify('📍 Destination reached. Quest navigation restored.');
     } else {
-      const route = starterTownNavigation.routePoints(position, customMapDestination, {
+      const route = crossTownNavigation.routePoints(position, customMapDestination, {
         allowService: true, weight: 'travel-time',
       });
       if (route?.points?.length > 1) {
@@ -4387,10 +4408,10 @@ function updateQuestGuidance(position, dt) {
     debug.set('questRoute', 'none');
     return;
   }
-  const route = starterTownNavigation.routePointsToTarget(position, hint.targetId, {
-    allowService: true,
-    weight: 'travel-time',
-  });
+  const target = starterTownNavigation.target(hint.targetId);
+  const route = target ? crossTownNavigation.routePoints(position, target.position, {
+    allowService: true, weight: 'travel-time',
+  }) : null;
   if (!route) {
     minimap.setGuidanceRoute(null);
     guidanceKey = '';
@@ -5417,8 +5438,9 @@ function applyVibe() {
 function saveNow() {
   if (!player) return false;
   if (area === 'city') {
-    state.pos.x = player.group.position.x;
-    state.pos.z = player.group.position.z;
+    const savedPosition=inCar?(drivingVehicle||car).g.position:player.group.position;
+    state.pos.x=savedPosition.x;state.pos.z=savedPosition.z;
+    state.world.townId=inFishingHarbor(savedPosition)?'fishing-harbor':'starter-town';
   } else {
     state.pos.x = returnPos.x; state.pos.z = returnPos.z;
   }
@@ -5476,13 +5498,22 @@ function aimRayOnTarget() {
   return false;
 }
 function locationLabel() {
-  if (inCar) return '🚗 Driving';
+  if (inCar) return state.world?.townId==='fishing-harbor'?'🚗 Fishing Harbor':'🚗 Driving';
   if (area !== 'city') return interiors.byId[area].name;
+  if(state.world?.townId==='fishing-harbor')return '🎣 Fishing Harbor';
   return (SERVERS.find(s => s.id === state.server)?.name || 'City') + ' — City';
 }
 
 // ── interaction dispatch each frame ────────────────────────────────────────────
 function handleInteraction(clicked = false) {
+  const currentPos=inCar?(drivingVehicle||car)?.g.position:player?.group.position;
+  const gateway=harborGatewayNear(currentPos);
+  if(gateway && (!inCar || Math.abs((drivingVehicle||car)?.speed||0)<1.5)){
+    showPrompt(gateway==='to-harbor'?'Take Fishing Harbor highway shortcut'
+      :'Return to Starter Town highway','e');
+    if(controls.consumePress('e'))useHarborGateway(gateway);
+    if(!inCar)return;
+  }
   if (inCar) {
     // refuel at a gas-station forecourt when stopped (E), else show exit prompt (F)
     const v = drivingVehicle || car;
@@ -5496,6 +5527,12 @@ function handleInteraction(clicked = false) {
     }
     showPrompt('Exit vehicle', 'f');
     if (controls.consumePress('f')) exitCar();
+    return;
+  }
+  const harborAction=harborInteractionAt(player.group.position);
+  if(harborAction){
+    showPrompt(harborAction.kind==='fish'?'Cast at '+harborAction.name:harborAction.name,'e');
+    if(controls.consumePress('e')||clicked)handleHarborAction(harborAction);
     return;
   }
   const near = manager.findNearest(player.group.position, area);
@@ -5618,6 +5655,11 @@ function teleportTo(which) {
 // ── global hotkeys ─────────────────────────────────────────────────────────────
 window.addEventListener('keydown', e => {
   const kc = e.key.toLowerCase();
+  if(fishingSession){
+    if(kc===' '){e.preventDefault();fishingPress();return;}
+    if(kc==='escape'){e.preventDefault();cancelFishing();return;}
+    return;
+  }
   // debug panel toggle works at all times (even with a menu open)
   if (e.key === 'F2' || kc === 'f2') {
     acceptanceTelemetry.recordInput('f2');
@@ -5803,7 +5845,8 @@ function animate() {
   // spin any dealership car flagged for preview
   if (interiors) Object.values(interiors.byId).forEach(intr => intr.stations.forEach(st => { if (st.mesh && st.mesh.userData.spin) st.mesh.rotation.y += 0.02; }));
 
-  const busy = interiorAcceptanceRunning || isUIOpen() || isSettingsOpen() || eating || hairGame || lineupGame || !!minimap?.isExpanded();
+  updateHarborFishing(dt);
+  const busy = interiorAcceptanceRunning || isUIOpen() || isSettingsOpen() || eating || hairGame || lineupGame || !!fishingSession || !!minimap?.isExpanded();
   // collectible gems: always bob/twinkle; only collectible while on foot in the city
   if (cityGems.length) {
     const pp = (!busy && !inCar && area === 'city' && player) ? player.group.position : null;
@@ -6134,6 +6177,7 @@ window.ZW = Object.assign(window.ZW || {}, {
     x: +c.g.position.x.toFixed(2),
     z: +c.g.position.z.toFixed(2),
   })),
+  fishingHarbor: () => ({scene:harborWorld?.report||null,fishing:ensureFishingState(state),townId:state.world?.townId}),
   scheduleSnapshot: () => ({
     timeMin: state.timeMin,
     pedestrians: cityNPCs.filter(n => n.av.group.visible !== false).length,
