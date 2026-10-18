@@ -11,6 +11,9 @@ import { placeWorldBuildings } from './worldBuildings.js';
 import { furnishInteriors } from './furnish.js';
 import { initMinimap, setMarkers } from './minimap.js';
 import { buildFishingHarbor } from './world/FishingHarbor.js';
+import {buildRichHills} from './world/RichHills.js';
+import {RICH_HILLS_SITES,RICH_HILLS_ROUTES,RICH_HILLS_PARKWAY,inRichHills,onRichParkway,richHillsSafePoint} from './config/richHillsPlan.js';
+import {createRichHillsController} from './runtime/RichHillsController.js';
 import { HARBOR_ACTIONS, HARBOR_ROUTES, FISHING_HIGHWAY, inFishingHarbor, onFishingHighway, harborSafePoint } from './config/fishingHarborPlan.js';
 import { ensureFishingState, fishingLevel, startFishing, tickFishing, pressFishing, sellFishingCatch, buyFishingBait } from './runtime/FishingHarborLife.js';
 import { showFishingPanel, hideFishingPanel } from './ui/FishingHarborPanel.js';
@@ -298,10 +301,13 @@ let guidanceAccum = 0;
 let guidanceKey = '';
 let customMapDestination = null;  // player-chosen waypoint, independent of quest tracking
 const crossTownNavigation = new StarterTownNavigation({plan: {
-  routes: [...STARTER_TOWN_RUNTIME_PLAN.routes,FISHING_HIGHWAY,...HARBOR_ROUTES],
+  routes: [...STARTER_TOWN_RUNTIME_PLAN.routes,FISHING_HIGHWAY,...HARBOR_ROUTES,RICH_HILLS_PARKWAY,...RICH_HILLS_ROUTES],
   locations:[],
 }});
 let harborWorld = null;
+let richHillsWorld = null;
+let richHillsController = null;
+let activeTownMarkers = null;
 let fishingSession = null;
 let fishingBobber = null;
 let debugBadge = null;           // debug panel API (initDebugBadge → { toggle })
@@ -419,8 +425,16 @@ function enterWorld() {
     abandonedCars = [];                       // fresh city → no previously-stolen parked cars
     car = createDrivableCar(scene, 13, 3);
     harborWorld = buildFishingHarbor(scene);
+    richHillsWorld = buildRichHills(scene);
+    richHillsController = createRichHillsController({
+      getState:()=>state,getPlayer:()=>player,getCar:()=>car,isDriving:()=>inCar,
+      notify,save:()=>saveNow(),
+      setDestination:point=>{customMapDestination=point;guidanceAccum=1;},
+      refuel:()=>refuelVehicle(car),
+    });
     ensureFishingState(state);
     debug.set('fishingHarbor', harborWorld.report);
+    debug.set('richHills',richHillsWorld.report);
     registerInteractables(cityInfo.entrances);
     graphics.applyToScene(scene, renderer);   // reflections + texture filtering
     started = true;
@@ -434,7 +448,7 @@ function enterWorld() {
       },
       onSelectTown: (town) => {
         notify(town.playable
-          ? '🗺️ ' + town.name + ' is playable. Reach Fishing Harbor by the north highway, or select streets in City Map.'
+          ? '🗺️ ' + town.name + ' is playable. Fishing Harbor is north; Rich Hills is east.'
           : '🗺️ ' + town.name + ' is mapped for future expansion, but is not yet drivable.');
       },
     });                                        // corner radar / town map (before asset wiring)
@@ -488,7 +502,9 @@ function enterWorld() {
   });
   notify(state.world.townId==='fishing-harbor'
     ? '🎣 Welcome back to Fishing Harbor. Walk to a pier and press E to cast!'
-    : "Welcome to Zaylin's World — your starter car is beside you. Press F to drive. The north highway leads to Fishing Harbor.");
+    :state.world.townId==='rich-hills'
+      ? '⛳ Welcome back to Rich Hills! Play golf or take a valet shift.'
+      : "Welcome to Zaylin's World! Fishing Harbor is north; Rich Hills is east.");
   saveNow();
 }
 
@@ -2719,25 +2735,26 @@ function robNearestNpc() {
 // ── Playable Fishing Harbor and two-town activities ─────────────────────────
 function syncCurrentWorldTown(position) {
  if(!position||!state.world)return;
- const townId=inFishingHarbor(position)?'fishing-harbor':'starter-town';
+ const townId=inRichHills(position)?'rich-hills'
+   :inFishingHarbor(position)?'fishing-harbor':'starter-town';
  minimap?.setActiveTown(townId);
- if(state.world.townId===townId){
-   if(townId==='fishing-harbor')setMarkers(HARBOR_ACTIONS.map(a=>({x:a.x,z:a.z,
-     icon:a.kind==='fish'?'🎣':'🏠',color:'#73deed'})));
-   return;
+ if(activeTownMarkers!==townId){
+  activeTownMarkers=townId;
+  const actions=townId==='rich-hills'?RICH_HILLS_SITES
+    :townId==='fishing-harbor'?HARBOR_ACTIONS:null;
+  setMarkers(actions?actions.map(a=>({x:a.x,z:a.z,
+    icon:a.kind==='golf'?'⛳':a.kind==='fish'?'🎣':
+      a.kind==='realty'?'🏡':a.kind==='delivery'?'📦':'🏠',
+    color:a.kind==='golf'?'#a5f7ab':'#e4d5a4'})):townMarkers);
  }
+ if(state.world.townId===townId)return;
  state.world.townId=townId;
  if(!Array.isArray(state.world.discoveredTowns))state.world.discoveredTowns=['starter-town'];
  if(!state.world.discoveredTowns.includes(townId))state.world.discoveredTowns.push(townId);
- setMarkers(townId==='fishing-harbor'
-   ? HARBOR_ACTIONS.map(a=>({x:a.x,z:a.z,
-       icon:a.kind==='fish'?'🎣':a.kind==='sell'?'🐟':'🏠',
-       color:a.kind==='fish'?'#4ee8ff':'#ffd996'}))
-   : townMarkers);
  customMapDestination=null;guidanceAccum=1;
- notify(townId==='fishing-harbor'
-   ? '🎣 Fishing Harbor unlocked! Walk to a pier and press E to cast.'
-   : '🏙️ Welcome back to Starter Town.');
+ notify(townId==='rich-hills'?'🏡 Welcome to Rich Hills: golf, estates and service work!'
+   :townId==='fishing-harbor'?'🎣 Fishing Harbor! The waterfront is ready.'
+   :'🏙️ Welcome back to Starter Town.');
 }
 function harborGatewayNear(position) {
  if(!position)return null;
