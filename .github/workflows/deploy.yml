@@ -31,7 +31,6 @@ jobs:
       - name: Assemble Starter Town runtime assets
         run: |
           mkdir -p dist/assets/models/generated
-          cp public/sw.js dist/
           cp -R public/assets/decals dist/assets/
           cp -R public/assets/hdr dist/assets/
           cp -R public/assets/runtime dist/assets/
@@ -47,6 +46,10 @@ jobs:
           cp -R public/assets/models/generated/starter-town dist/assets/models/generated/
           cp public/assets/models/asset-index-v2.json dist/assets/models/
           cp public/assets/models/kits-index.json dist/assets/models/
+      - name: Verify Pages service-worker version
+        run: |
+          test -s dist/sw.js
+          ! grep -q '__SW_VERSION__' dist/sw.js
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
