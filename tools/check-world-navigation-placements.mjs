@@ -21,7 +21,7 @@ assert.match(minimap, /WORLD_TOWNS/, 'world overview must reuse canonical world 
 assert.match(minimap, /worldView = clamp/, 'world map wheel zoom must be bounded');
 assert.match(minimap, /center\.x -= dx/, 'city map must support panning');
 assert.match(source, /customMapDestination/, 'chosen waypoint must override quest navigation');
-assert.match(source, /starterTownNavigation\.routePoints\(position, customMapDestination/, 'waypoints must use actual drivable RoadGraph');
+assert.match(source, /crossTownNavigation\.routePoints\(position, customMapDestination/, 'waypoints must use the connected two-town RoadGraph');
 assert.match(source, /if \(k === 'b'\) summonOwnedCar\(\)/, 'owned-car recovery needs a hotkey');
 assert.match(source, /\* 0\.012\);/, 'fuel consumption must be much slower');
 assert.match(html, /<b>B<\/b> summon owned car/);
@@ -50,7 +50,7 @@ for (const p of placements) {
     `building ${p.id} clearance must hold against the real road network`);
 }
 console.log('World navigation and physical placement verification passed:');
-console.log(`- ${towns.length} authentic world towns (1 currently playable) and ${network.routes.size} Starter Town road routes`);
+console.log(`- ${towns.length} authentic world towns (2 currently playable) and ${network.routes.size} Starter Town road routes`);
 const trueSigns = signs.filter(entry => entry.type !== 'streetlight');
 const streetlightPoles = signs.filter(entry => entry.type === 'streetlight');
 console.log(`- ${trueSigns.length} pavement-clear route and intersection signs, separately from ${streetlightPoles.length} road-safe streetlight poles`);
