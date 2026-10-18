@@ -1,7 +1,7 @@
 // Procedural, playable first pass for Fishing Harbor. No remote assets,
 // per-frame geometry creation or effect-heavy water shaders.
 import * as THREE from 'three';
-import {HARBOR_BOUNDS,HARBOR_SHORE_Z,HARBOR_ROUTES,FISHING_HIGHWAY,HARBOR_ACTIONS,FISHING_SPOTS} from '../config/fishingHarborPlan.js';
+import {HARBOR_BOUNDS,HARBOR_SHORE_Z,HARBOR_ROUTES,FISHING_HIGHWAY,HARBOR_ACTIONS,FISHING_SPOTS,HARBOR_SHIFT_Z} from '../config/fishingHarborPlan.js';
 
 const mat=(color,roughness=0.85,metalness=0)=>new THREE.MeshStandardMaterial({color,roughness,metalness});
 const earth=mat('#648467'),asphalt=mat('#303c4c'),lane=mat('#e4d5a0');
@@ -177,14 +177,15 @@ function harborPeople(group){
 export function buildFishingHarbor(scene){
  const group=new THREE.Group();group.name='ZW_FishingHarbor_Playable_v1';
  // Real separate landscape 4km north; the original Starter Town is untouched.
- block(group,'FH_approach_verge',0,-0.11,-2650,76,0.14,3100,earth);
+ block(group,'FH_approach_verge',0,-0.11,-3950,76,0.14,425,earth);
  block(group,'FH_land',0,-0.15,-4740,2400,0.25,1320,earth);
  block(group,'FH_shore_grass',0,-0.015,-5300,2400,0.08,155,mat('#879a6e'));
  block(group,'FH_ocean',0,-0.27,-6000,2850,0.12,1450,waterMat);
  block(group,'FH_harbor_water_edge',0,-0.24,-5410,2850,0.06,150,waterMat);
- const roadCount=[FISHING_HIGHWAY,...HARBOR_ROUTES].reduce((n,road)=>n+roadSurface(group,road),0);
+ const roadCount=[FISHING_HIGHWAY,...HARBOR_ROUTES].reduce((n,road)=>n+roadSurface(group,{...road,
+   points:road.points.map(pt=>({...pt,z:pt.z-HARBOR_SHIFT_Z}))}),0);
  const colliders=[];
- for(const action of HARBOR_ACTIONS.filter(a=>a.kind!=='fish'))shop(group,action,colliders);
+ for(const action of HARBOR_ACTIONS.filter(a=>a.kind!=='fish'))shop(group,{...action,z:action.z-HARBOR_SHIFT_Z},colliders);
  const decoration=decorate(group,colliders);
  const people=harborPeople(group);
  let elapsed=0;
@@ -197,6 +198,9 @@ export function buildFishingHarbor(scene){
  };
  group.userData.report={playable:true,id:'fishing-harbor',roadSegments:roadCount,
    businesses:8,fishingSpots:FISHING_SPOTS.length,pedestrians:people.length,...decoration};
+ group.position.z=HARBOR_SHIFT_Z;
+ // World-space collision bounds are separate from child-local render meshes.
+ for(const collider of colliders)collider.translate(new THREE.Vector3(0,0,HARBOR_SHIFT_Z));
  scene.add(group);
  const actionByProximity=(position,radius=7)=> {
    let selected=null,distance=radius;

@@ -40,7 +40,7 @@ function safePosition(position, fallback, townId = 'starter-town') {
   const bounds = town?.worldBounds;
   // The highway is a legitimate route between saved town bounds. Preserve
   // mid-drive progress instead of resetting a traveler to Dreamdrop.
-  if(Math.abs(next.x) <= 70 && next.z <= -1000 && next.z >= -4100) return next;
+  if(Math.abs(next.x) <= 70 && next.z <= -1000 && next.z >= -1500) return next;
   if (bounds && (next.x < bounds.minX - 400 || next.x > bounds.maxX + 400
     || next.z < bounds.minZ - 400 || next.z > bounds.maxZ + 400)) {
     const recovery = worldRegistry.spawn('safe-recovery');
@@ -124,7 +124,19 @@ function migrateAndNormalize(data = {}) {
     faceMorphs: { ...base.custom.faceMorphs, ...(data.custom?.faceMorphs || {}) },
   });
   const townId = data.world?.townId === 'fishing-harbor' ? 'fishing-harbor' : 'starter-town';
-  const preliminaryPosition = safePosition(data.pos, base.pos, townId);
+  let inputPosition=data.pos;
+  // Compat: players saved in the old harbor or empty 3km highway keep their
+  // progress when the harbor moves nearer to Starter Town.
+  const savedZ=Number(data.pos?.z),savedX=Number(data.pos?.x);
+  if(Number.isFinite(savedZ) && Math.abs(savedX||0)<1350){
+    if(townId==='fishing-harbor' && savedZ<-3900){
+      inputPosition={...data.pos,z:savedZ+2600};
+    }else if(townId==='starter-town' && Math.abs(savedX||0)<75
+      && savedZ<-1600 && savedZ>=-4100){
+      inputPosition={...data.pos,z:-1200-(Math.min(2900,-1200-savedZ)/2900)*300};
+    }
+  }
+  const preliminaryPosition = safePosition(inputPosition, base.pos, townId);
   // Legacy Starter Town relocation rules must not rewrite the new harbor's coordinates.
   const parkRepairedPosition = townId==='fishing-harbor' ? preliminaryPosition : repairLegacyParkArrival(preliminaryPosition, data);
   const position = townId==='fishing-harbor' ? parkRepairedPosition : repairSchoolRoadPlacement(parkRepairedPosition, data);

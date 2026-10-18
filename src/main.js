@@ -2742,12 +2742,12 @@ function syncCurrentWorldTown(position) {
 function harborGatewayNear(position) {
  if(!position)return null;
  if(Math.hypot(position.x,position.z+1160)<24)return 'to-harbor';
- if(Math.hypot(position.x,position.z+4160)<24)return 'to-starter';
+ if(Math.hypot(position.x,position.z+1560)<24)return 'to-starter';
  return null;
 }
 function useHarborGateway(direction) {
  if(!player||!car||area!=='city'||fishingSession)return;
- const target=direction==='to-harbor'?{x:0,z:-4260}:{x:0,z:-1110};
+ const target=direction==='to-harbor'?{x:0,z:-1660}:{x:0,z:-1110};
  if(inCar){
    (drivingVehicle||car).g.position.set(target.x,0,target.z);
    (drivingVehicle||car).speed=0;
@@ -2962,8 +2962,8 @@ function updateCar(dt) {
   const inp = controls.moveInput();
   // Phase 2: damage worsens handling. A totaled car (100%) can't drive at all.
   const h = handlingFor(v.damage || 0);
-  const accel = 16, maxR = 9, fric = 7;
-  const maxF = 24 * h.speedMult;
+  const accel = 35, maxR = 13, fric = 12;
+  const maxF = 54 * h.speedMult;
   // Fuel remains part of the vehicle economy, but a tank now lasts many hours of driving.
   if (v.fuel === undefined) v.fuel = (v === car) ? (state.fuel ?? 100) : 100;
   const dry = v.fuel <= 0 || h.totaled;
@@ -4189,10 +4189,10 @@ function enforceLiveStarterTownBoundary(position, { vehicle = null } = {}) {
    syncCurrentWorldTown(position);return null;
  }
  // Prevent stepping into unfinished terrain along the harbor's outer bounds.
- if(state.world?.townId==='fishing-harbor' && position.z<-3900
-   && position.z>-6500 && Math.abs(position.x)<1400){
+ if(state.world?.townId==='fishing-harbor' && position.z<-1300
+   && position.z>-3900 && Math.abs(position.x)<1400){
    position.x=Math.max(-1180,Math.min(1180,position.x));
-   position.z=Math.max(-6250,Math.min(-4130,position.z));
+   position.z=Math.max(-3650,Math.min(-1530,position.z));
    const safe=harborSafePoint(position);
    position.x=safe.x;position.z=safe.z;
    return {action:'clamp',reason:'harbor-coast'};
