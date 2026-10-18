@@ -28,13 +28,13 @@ export const HARBOR_ROUTES=Object.freeze([
   route('marina-loop','Marina Loop','main',
     [[-650,-4710],[-820,-4735],[-970,-4820],[-1070,-5000],[-1020,-5220]]),
   route('seaside-crescent','Seaside Crescent','local',
-    [[320,-4710],[500,-4610],[680,-4610],[820,-4710]]),
+    [[320,-4710],[450,-4420],[700,-4410],[820,-4710]]),
   route('lighthouse-shore-road','Lighthouse Shore Road','local',
-    [[820,-5220],[955,-5270],[1010,-5320],[870,-5355]]),
+    [[820,-5220],[955,-5240],[1010,-5255],[1010,-5270]]),
   route('village-court','Village Court','local',
     [[320,-4950],[505,-5020],[640,-5110],[820,-5220]]),
   route('cannery-lane','Cannery Service Lane','service',
-    [[-650,-4950],[-820,-4990],[-955,-5085]]),
+    [[-650,-4950],[-820,-4990],[-860,-5020]]),
 ]);
 export const ALL_FISHING_ROUTES=Object.freeze([FISHING_HIGHWAY,...HARBOR_ROUTES]);
 export const HARBOR_LOCATIONS=Object.freeze([
