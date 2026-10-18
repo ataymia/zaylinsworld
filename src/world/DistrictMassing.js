@@ -6,7 +6,7 @@
 // gameplay locations or rewriting the district layout.
 // ─────────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
-import { STARTER_TOWN_PARCELS } from '../config/starterTownParcelPlan.js';
+import { STARTER_TOWN_RENDER_PARCELS } from '../config/starterTownParcelPlan.js';
 import { DISTRICT_PROFILE_BY_ID } from '../config/starterTownDistrictProfiles.js';
 import { STARTER_TOWN_RUNTIME_PLAN } from '../config/starterTownRuntimePlan.js';
 import { RoadNetwork } from './RoadNetwork.js';
@@ -220,7 +220,7 @@ function materialFor(profile, index = 0) {
 }
 
 export function buildDistrictMassing({
-  parcels = STARTER_TOWN_PARCELS,
+  parcels = STARTER_TOWN_RENDER_PARCELS,
   includeFunctional = false,
   castShadows = false,
   receiveShadows = true,
