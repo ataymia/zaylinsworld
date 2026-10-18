@@ -10,7 +10,7 @@ import {ensureFishingState,startFishing,tickFishing,pressFishing,
  fishingLevel,buyFishingBait,sellFishingCatch} from '../src/runtime/FishingHarborLife.js';
 import {readFileSync} from 'node:fs';
 
-assert.equal(DISTRICTS.filter(t=>t.playable).length,2,'only Starter Town and Harbor ship now');
+assert.equal(DISTRICTS.filter(t=>t.playable).length,3,'Starter Town, Harbor and Rich Hills now ship');
 const harbor=DISTRICTS.find(t=>t.id==='fishing-harbor');
 assert(harbor.playable);
 assert.equal(harbor.origin.z,-5200);

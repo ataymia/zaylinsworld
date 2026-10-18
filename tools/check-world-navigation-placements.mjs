@@ -12,9 +12,10 @@ const source = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8
 const minimap = fs.readFileSync(new URL('../src/minimap.js', import.meta.url), 'utf8');
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 assert.equal(towns.length, 9, 'world overview must cover all nine canonical towns');
-assert.equal(towns.filter(t => t.playable).length, 2, 'only Starter Town and the built Fishing Harbor are currently playable');
+assert.equal(towns.filter(t => t.playable).length, 3, 'Starter Town, Fishing Harbor and Rich Hills are the playable towns');
 assert.equal(towns.find(t => t.playable)?.id, 'starter-town');
-assert.equal(towns.find(t => t.id === 'fishing-harbor')?.playable,true,'new fishing harbor needs a playable world registry contract');
+assert.equal(towns.find(t => t.id === 'fishing-harbor')?.playable,true,'Fishing Harbor must stay playable');
+assert.equal(towns.find(t => t.id === 'rich-hills')?.playable,true,'Rich Hills must be playable');
 assert.equal(minimapRoadPlan({largeWorld:true}).length, STARTER_TOWN_RUNTIME_PLAN.routes.length);
 assert.match(minimap, /onSelectDestination/, 'canvas must accept clicked destinations');
 assert.match(minimap, /WORLD_TOWNS/, 'world overview must reuse canonical world blueprint');
@@ -50,7 +51,7 @@ for (const p of placements) {
     `building ${p.id} clearance must hold against the real road network`);
 }
 console.log('World navigation and physical placement verification passed:');
-console.log(`- ${towns.length} authentic world towns (2 currently playable) and ${network.routes.size} Starter Town road routes`);
+console.log(`- ${towns.length} authentic world towns (3 currently playable) and ${network.routes.size} Starter Town road routes`);
 const trueSigns = signs.filter(entry => entry.type !== 'streetlight');
 const streetlightPoles = signs.filter(entry => entry.type === 'streetlight');
 console.log(`- ${trueSigns.length} pavement-clear route and intersection signs, separately from ${streetlightPoles.length} road-safe streetlight poles`);

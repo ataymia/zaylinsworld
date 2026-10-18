@@ -11,6 +11,7 @@ import { ROAD, LANDMARKS } from './config/mapConfig.js';
 import { STARTER_TOWN_RUNTIME_PLAN } from './config/starterTownRuntimePlan.js';
 import { ROAD_TIERS, DISTRICTS as WORLD_TOWNS, CONNECTIONS as WORLD_CONNECTIONS } from './config/worldMapPlan.js';
 import { ALL_FISHING_ROUTES } from './config/fishingHarborPlan.js';
+import {ALL_RICH_HILLS_ROUTES} from './config/richHillsPlan.js';
 
 let canvas = null, ctx = null, expanded = false;
 let markers = [];            // [{ x, z, color, icon }] extra points (gas/diner)
@@ -168,7 +169,8 @@ export function initMinimap({
       return;
     }
     if (largeWorldMode && ((Math.abs(position.x) <= 1000 && Math.abs(position.z) <= 1000)
-      || (Math.abs(position.x) <= 1200 && position.z <= -4100 && position.z >= -6300))) {
+      || (Math.abs(position.x) <= 1200 && position.z <= -4100 && position.z >= -6300)
+      || (position.x >= 4000 && position.x <= 6400 && Math.abs(position.z) <= 1200))) {
       selectDestination?.({ x: position.x, z: position.z });
     }
   });
@@ -179,14 +181,16 @@ export function initMinimap({
 }
 
 export function setActiveTown(townId) {
-  if(townId!== 'fishing-harbor' && townId!=='starter-town') return;
+  if(!['starter-town','fishing-harbor','rich-hills'].includes(townId))return;
   if(activeTownId===townId)return;
   activeTownId=townId;
-  // All canonical road layers remain available for through-town waypoints.
-  routeLayout=activeTownId==='fishing-harbor'
-    ? [...starterRoutes,...ALL_FISHING_ROUTES] : starterRoutes;
-  cityCenter=activeTownId==='fishing-harbor' ? {x:0,z:-5200}:{x:0,z:0};
-  expandedView=activeTownId==='fishing-harbor'?1350:1220;
+  routeLayout=activeTownId==='starter-town'?starterRoutes
+    : activeTownId==='fishing-harbor'
+      ? [...starterRoutes,...ALL_FISHING_ROUTES]
+      : [...starterRoutes,...ALL_RICH_HILLS_ROUTES];
+  cityCenter=townId==='fishing-harbor'?{x:0,z:-5200}
+    :townId==='rich-hills'?{x:5200,z:0}:{x:0,z:0};
+  expandedView=activeTownId==='starter-town'?1220:1350;
 }
 export function setMarkers(list) { markers = list || []; }
 
@@ -230,7 +234,8 @@ function resize() {
 
 export function toggleExpand() {
   expanded = !expanded;
-  if (expanded) { mapMode = 'city'; cityCenter = activeTownId==='fishing-harbor' ? {x:0,z:-5200}:{x:0,z:0}; }
+  if (expanded) { mapMode='city'; cityCenter=activeTownId==='fishing-harbor'?{x:0,z:-5200}
+    :activeTownId==='rich-hills'?{x:5200,z:0}:{x:0,z:0}; }
   resize();
 }
 export function toggleMapLevel() {
@@ -453,7 +458,7 @@ function drawWorldOverview(playerPos, css, px, py) {
   for (const link of WORLD_CONNECTIONS) {
     const from = gateways.get(link.from), to = gateways.get(link.to);
     if (!from || !to) continue;
-    const open=from.town.playable && to.town.playable && link.id==='st-fh';
+    const open=from.town.playable && to.town.playable && ['st-fh','st-rh'].includes(link.id);
     ctx.setLineDash(open ? [] : [6,5]);
     ctx.strokeStyle = open ? '#71db99' : link.tier === 'underwater' ? '#3d91b6' : '#7e9ba3';
     ctx.beginPath();

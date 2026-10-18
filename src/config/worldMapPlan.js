@@ -83,7 +83,7 @@ export const DISTRICTS = Object.freeze([
   town({
     id: 'rich-hills', name: 'Rich Hills', themeId: 'rich',
     origin: { x: 5200, z: 0 }, bounds: { w: 2400, h: 2400 }, terrain: { w: 3000, h: 3000 },
-    localGridRef: null, playable: false, streamingCell: 250,
+    localGridRef: 'richHillsPlan.js', playable: true, streamingCell: 250,
     gateways: [
       { id: 'rh-west-parkway', node: { x: 4000, z: 0 }, tier: 'parkway' },
       { id: 'rh-north-tunnel', node: { x: 5200, z: -1200 }, tier: 'tunnel' },
