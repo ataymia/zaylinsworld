@@ -5896,7 +5896,7 @@ function animate() {
     // Harbor cars obey Harbor signals; Starter traffic keeps its established
     // city controller and law system. Never route one town's AI through another.
     const currentTrafficControl={
-      mustStop(position,heading,vehicle,step)=>{
+      mustStop:(position,heading,vehicle,step)=>{
         if(inFishingHarbor(position))return harborWorld?.signals?.mustStop(position,heading,vehicle,step) || {stop:false};
         return trafficControl?.mustStop(position,heading,vehicle,step) || {stop:false};
       },
