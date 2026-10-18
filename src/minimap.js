@@ -9,7 +9,7 @@
 // ───────────────────────────────────────────────────────────────────────────
 import { ROAD, LANDMARKS } from './config/mapConfig.js';
 import { STARTER_TOWN_RUNTIME_PLAN } from './config/starterTownRuntimePlan.js';
-import { ROAD_TIERS } from './config/worldMapPlan.js';
+import { ROAD_TIERS, DISTRICTS as WORLD_TOWNS, CONNECTIONS as WORLD_CONNECTIONS } from './config/worldMapPlan.js';
 
 let canvas = null, ctx = null, expanded = false;
 let markers = [];            // [{ x, z, color, icon }] extra points (gas/diner)
@@ -19,11 +19,40 @@ let districtLayout = [];
 let guidance = null;          // { points:[{x,z}], destination:{x,z}, label }
 let largeWorldMode = false;
 let expandedView = 70;
+let worldView = 12800;
+let mapMode = 'city';  // city street navigation or honest all-nine-town blueprint
+let cityCenter = { x: 0, z: 0 };
+let worldCenter = { x: 4100, z: -7900 };
+let selectDestination = null;
+let selectTown = null;
+let pointerDrag = null;
 
-const COMPACT = 168;         // px size of the corner radar (small so it never covers HUD)
-const EXPANDED = 460;        // px size of the expanded map
-const VIEW_COMPACT = 46;     // world-units radius shown when compact (player-centred)
-const VIEW_EXPANDED = 70;    // world-units radius shown when expanded (origin-centred)
+const COMPACT = 168;
+const EXPANDED = 560;
+const VIEW_COMPACT = 46;
+const CITY_MIN_ZOOM = 110;
+const CITY_MAX_ZOOM = 1950;
+const WORLD_MIN_ZOOM = 2600;
+const WORLD_MAX_ZOOM = 22000;
+const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
+const mapSize = () => expanded ? Math.round(Math.min(EXPANDED, window.innerWidth - 28, window.innerHeight - 28)) : COMPACT;
+function mapProjection(playerPos = { x: 0, z: 0 }) {
+  const css = mapSize();
+  const world = expanded && mapMode === 'world';
+  const radius = !expanded ? VIEW_COMPACT : world ? worldView : expandedView;
+  const center = !expanded ? playerPos : world ? worldCenter : cityCenter;
+  return { css, center, radius, scale: (css / 2) / radius };
+}
+function mapPositionAt(clientX, clientY, playerPos) {
+  const rect = canvas.getBoundingClientRect();
+  const { css, center, scale } = mapProjection(playerPos);
+  // CSS and backing size are kept equal in CSS pixels; use rect ratios for DPI.
+  const px = (clientX - rect.left) * css / rect.width;
+  const py = (clientY - rect.top) * css / rect.height;
+  return { x: center.x + (px - css / 2) / scale,
+    z: center.z + (py - css / 2) / scale, px, py };
+}
+let lastPlayerPosition = { x: 0, z: 0 };
 
 const DISTRICT_COLORS = Object.freeze({
   'northworks-auto-row': '#645c53',
@@ -76,17 +105,72 @@ export function initMinimap({
   largeWorld = false,
   routes = STARTER_TOWN_RUNTIME_PLAN.routes,
   districts = STARTER_TOWN_RUNTIME_PLAN.districts,
+  onSelectDestination = null,
+  onSelectTown = null,
 } = {}) {
   landmarkLayout = landmarks;
   largeWorldMode = largeWorld;
   routeLayout = minimapRoadPlan({ largeWorld, routes });
   districtLayout = largeWorld ? districts : [];
   expandedView = largeWorld ? 1220 : 70;
+  selectDestination = onSelectDestination;
+  selectTown = onSelectTown;
+  mapMode = 'city';
   canvas = document.getElementById('minimap');
   if (!canvas) return null;
   ctx = canvas.getContext('2d');
+  // Wheel zooms around the map center; drag pans; click selects a destination.
+  // Pointer input is enabled ONLY for the expanded map, keeping gameplay intact.
+  canvas.addEventListener('wheel', (event) => {
+    if (!expanded) return;
+    event.preventDefault();
+    const factor = event.deltaY > 0 ? 1.22 : 1 / 1.22;
+    if (mapMode === 'world') worldView = clamp(worldView * factor, WORLD_MIN_ZOOM, WORLD_MAX_ZOOM);
+    else expandedView = clamp(expandedView * factor, CITY_MIN_ZOOM, CITY_MAX_ZOOM);
+  }, { passive: false });
+  canvas.addEventListener('pointerdown', (event) => {
+    if (!expanded) return;
+    event.preventDefault();
+    pointerDrag = { id: event.pointerId, x: event.clientX, y: event.clientY, moved: false };
+    canvas.setPointerCapture?.(event.pointerId);
+  });
+  canvas.addEventListener('pointermove', (event) => {
+    if (!expanded || !pointerDrag || event.pointerId !== pointerDrag.id) return;
+    const dx = event.clientX - pointerDrag.x, dy = event.clientY - pointerDrag.y;
+    if (Math.abs(dx) + Math.abs(dy) > 3) pointerDrag.moved = true;
+    const { scale } = mapProjection(lastPlayerPosition);
+    const center = mapMode === 'world' ? worldCenter : cityCenter;
+    center.x -= dx / scale;
+    center.z -= dy / scale;
+    pointerDrag.x = event.clientX; pointerDrag.y = event.clientY;
+  });
+  canvas.addEventListener('pointerup', (event) => {
+    if (!expanded || !pointerDrag || event.pointerId !== pointerDrag.id) return;
+    const moved = pointerDrag.moved;
+    pointerDrag = null;
+    if (moved) return;
+    const position = mapPositionAt(event.clientX, event.clientY, lastPlayerPosition);
+    const { css } = mapProjection(lastPlayerPosition);
+    // Top-right badge switches between street navigation and the nine-town view.
+    if (position.py < 40 && position.px > css - 128) {
+      toggleMapLevel();
+      return;
+    }
+    if (mapMode === 'world') {
+      const hit = WORLD_TOWNS.map(town => ({
+        town, distance: Math.hypot(town.origin.x - position.x, town.origin.z - position.z),
+      })).sort((a,b) => a.distance - b.distance)[0];
+      if (hit && hit.distance < worldView * 0.075) selectTown?.(hit.town);
+      return;
+    }
+    if (largeWorldMode && Math.abs(position.x) <= 1000 && Math.abs(position.z) <= 1000) {
+      selectDestination?.({ x: position.x, z: position.z });
+    }
+  });
+  canvas.addEventListener('pointercancel', () => { pointerDrag = null; });
   resize();
-  return { setMarkers, setGuidanceRoute, draw, toggleExpand, isExpanded: () => expanded };
+  return { setMarkers, setGuidanceRoute, draw, toggleExpand, toggleMapLevel,
+    isExpanded: () => expanded, mapLevel: () => mapMode };
 }
 
 export function setMarkers(list) { markers = list || []; }
@@ -105,15 +189,15 @@ export function setGuidanceRoute(value) {
 
 function resize() {
   const dpr = Math.min(2, window.devicePixelRatio || 1);
-  const css = expanded ? EXPANDED : COMPACT;
+  const css = mapSize();
   canvas.style.width = css + 'px';
   canvas.style.height = css + 'px';
   canvas.width = css * dpr;
   canvas.height = css * dpr;
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  // The compact radar lives bottom-left (clear of the stats/wanted HUD on the
-  // right). The expanded town map centres on screen so it never sits on top of
-  // gameplay HUD while open, and fully clears the corner when shrunk again.
+  // Compact radar sits halfway down the RIGHT side so bottom-left command
+  // hints, left mission tracker and bottom-right weapon HUD remain legible.
+  canvas.style.pointerEvents = expanded ? 'auto' : 'none';
   if (expanded) {
     canvas.style.left = '50%';
     canvas.style.top = '50%';
@@ -121,28 +205,37 @@ function resize() {
     canvas.style.bottom = 'auto';
     canvas.style.transform = 'translate(-50%, -50%)';
   } else {
-    canvas.style.left = '14px';
-    canvas.style.bottom = '46px';
-    canvas.style.top = 'auto';
-    canvas.style.right = 'auto';
-    canvas.style.transform = 'none';
+    canvas.style.left = 'auto';
+    canvas.style.bottom = 'auto';
+    canvas.style.top = '50%';
+    canvas.style.right = '14px';
+    canvas.style.transform = 'translateY(-50%)';
   }
 }
 
 export function toggleExpand() {
   expanded = !expanded;
+  if (expanded) { mapMode = 'city'; cityCenter = { x: 0, z: 0 }; }
   resize();
+}
+export function toggleMapLevel() {
+  if (!expanded) return mapMode;
+  mapMode = mapMode === 'city' ? 'world' : 'city';
+  resize();
+  return mapMode;
+}
+if (typeof window !== 'undefined') {
+  window.addEventListener('resize', () => { if (canvas) resize(); });
 }
 
 // Draw one frame. playerPos = {x,z}; headingRad = world heading (0 = +z/north);
 // traffic = array of {x,z}; npcs = optional array of {x,z}.
 export function draw(playerPos, headingRad, traffic = [], npcs = []) {
   if (!ctx) return;
-  const css = expanded ? EXPANDED : COMPACT;
-  const view = expanded ? expandedView : VIEW_COMPACT;
-  const cx = expanded ? 0 : playerPos.x;   // map centre in world coords
-  const cz = expanded ? 0 : playerPos.z;
-  const scale = (css / 2) / view;          // px per world-unit
+  lastPlayerPosition = { x: playerPos.x, z: playerPos.z };
+  const { css, center, scale } = mapProjection(playerPos);
+  const cx = center.x;
+  const cz = center.z;
 
   // world (x,z) → canvas (px,py).  +x = east → right, +z = south → down.
   const px = (x) => css / 2 + (x - cx) * scale;
@@ -161,6 +254,11 @@ export function draw(playerPos, headingRad, traffic = [], npcs = []) {
   // floating in empty space.
   ctx.fillStyle = 'rgba(34,52,40,0.5)';
   ctx.fillRect(0, 0, css, css);
+  if (expanded && mapMode === 'world') {
+    drawWorldOverview(playerPos, css, px, py);
+    ctx.restore();
+    return;
+  }
   if (largeWorldMode) {
     for (const district of districtLayout) {
       const points = district.polygon || [];
@@ -312,12 +410,78 @@ export function draw(playerPos, headingRad, traffic = [], npcs = []) {
   roundRect(ctx, 1, 1, css - 2, css - 2, 12); ctx.stroke();
   ctx.fillStyle = '#9fb2d6'; ctx.font = '10px system-ui, sans-serif';
   ctx.textAlign = 'left'; ctx.textBaseline = 'top';
-  ctx.fillText(expanded ? 'TOWN MAP — N to shrink' : 'N: map', 8, 7);
+  ctx.fillText(expanded ? 'CITY MAP · wheel: zoom · drag: pan · click: route · N: close' : 'N: map', 8, 7);
+  if (expanded) {
+    ctx.fillStyle = 'rgba(36,88,110,.93)';
+    roundRect(ctx, css - 124, 6, 116, 27, 7); ctx.fill();
+    ctx.fillStyle = '#ecf8ff'; ctx.font = 'bold 11px system-ui';
+    ctx.textAlign = 'center'; ctx.fillText('WORLD MAP →', css - 66, 15);
+  }
   if (expanded && guidance?.label) {
     ctx.textAlign = 'right';
     ctx.fillStyle = '#9feeff';
     ctx.fillText(`ROUTE: ${guidance.label}`, css - 8, 7);
   }
+}
+
+
+function drawWorldOverview(playerPos, css, px, py) {
+  ctx.fillStyle = '#112337';
+  ctx.fillRect(0, 0, css, css);
+  const gateways = new Map();
+  for (const town of WORLD_TOWNS) for (const gateway of town.gateways || []) {
+    gateways.set(gateway.id, { town, node: gateway.node });
+  }
+  // Draw planned travel corridors as dashed lines, never as drivable roads.
+  ctx.save();
+  ctx.setLineDash([6, 5]);
+  ctx.lineWidth = 2;
+  for (const link of WORLD_CONNECTIONS) {
+    const from = gateways.get(link.from), to = gateways.get(link.to);
+    if (!from || !to) continue;
+    ctx.strokeStyle = link.tier === 'underwater' ? '#3d91b6' : '#7e9ba3';
+    ctx.beginPath();
+    ctx.moveTo(px(from.node.x), py(from.node.z));
+    ctx.lineTo(px(to.node.x), py(to.node.z));
+    ctx.stroke();
+  }
+  ctx.restore();
+  for (const town of WORLD_TOWNS) {
+    const x = px(town.origin.x), y = py(town.origin.z);
+    const w = Math.max(14, town.bounds.w * css / (worldView * 2));
+    const h = Math.max(14, town.bounds.h * css / (worldView * 2));
+    ctx.fillStyle = town.playable ? 'rgba(52,139,113,.7)'
+      : town.id === 'aqualume' ? 'rgba(49,105,160,.35)'
+        : 'rgba(82,97,122,.42)';
+    ctx.strokeStyle = town.playable ? '#63efbd' : '#8a9db4';
+    ctx.lineWidth = town.playable ? 2.5 : 1;
+    ctx.fillRect(x - w / 2, y - h / 2, w, h);
+    ctx.strokeRect(x - w / 2, y - h / 2, w, h);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+    ctx.font = 'bold 12px system-ui';
+    ctx.fillStyle = town.playable ? '#bbffe2' : '#e1e7f2';
+    ctx.fillText(town.name, x, y - h / 2 - 5);
+    ctx.font = '10px system-ui';
+    ctx.fillStyle = town.playable ? '#73f2bb' : '#f0c58c';
+    ctx.textBaseline = 'top';
+    ctx.fillText(town.playable ? 'PLAYABLE' : 'PLANNED · NOT BUILT', x, y + h / 2 + 4);
+  }
+  const x = px(playerPos.x), y = py(playerPos.z);
+  ctx.beginPath(); ctx.arc(x, y, 5, 0, Math.PI * 2);
+  ctx.fillStyle = '#ffffff'; ctx.fill();
+  ctx.strokeStyle = '#2ca5ff'; ctx.lineWidth = 2; ctx.stroke();
+  ctx.fillStyle = 'rgba(4,12,23,.89)';
+  ctx.fillRect(0, 0, css, 37);
+  ctx.font = '11px system-ui'; ctx.fillStyle = '#edf3ff';
+  ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+  ctx.fillText('WORLD MAP · wheel: zoom · drag: pan · click town: status', 9, 12);
+  ctx.fillStyle = 'rgba(36,88,110,.96)';
+  roundRect(ctx, css - 124, 6, 116, 27, 7); ctx.fill();
+  ctx.fillStyle = '#f4fdff'; ctx.font = 'bold 11px system-ui';
+  ctx.textAlign = 'center'; ctx.fillText('← CITY MAP', css - 66, 15);
+  ctx.fillStyle = '#b1c2dd'; ctx.font = '10px system-ui';
+  ctx.textAlign = 'left'; ctx.textBaseline = 'bottom';
+  ctx.fillText('Dashed connections are planned routes, not playable highways.', 9, css - 12);
 }
 
 function line(x1, y1, x2, y2) { ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); }
