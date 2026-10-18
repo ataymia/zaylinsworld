@@ -27,7 +27,7 @@ export const HARBOR_PRODUCTION_SPECS=Object.freeze([
  asset('harbor-warehouse','arch_harbor_warehouse_wall_a_v01','building_shell',-970,-5150,40,21,13),
  asset('village-market','building_harbor_village_market_exterior_v01','building_shell',860,-4890,42,37,14),
  asset('village-apartments','building_harbor_village_apartments_exterior_v01','building_shell',960,-4635,63,52,24),
- asset('marina-condos','building_harbor_marina_condo_exterior_v01','building_shell',860,-5090,56,46,21),
+ asset('marina-condos','building_harbor_marina_condo_exterior_v01','building_shell',1080,-5160,56,46,21),
  asset('lighthouse','building_breakwater_lighthouse_exterior_v01','building_shell',-1060,-5430,34,34,64),
  asset('dock-room','building_harbor_dock_room_exterior_v01','building_shell',-750,-5300,30,27,12),
  asset('seaside-home-west','building_harbor_waterfront_house_a_v01','building_shell',1025,-5160,33,30,15),
