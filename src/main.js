@@ -302,6 +302,7 @@ const crossTownNavigation = new StarterTownNavigation({plan: {
   locations:[],
 }});
 let harborWorld = null;
+let harborProductionRequested = false;
 let fishingSession = null;
 let fishingBobber = null;
 let debugBadge = null;           // debug panel API (initDebugBadge → { toggle })
@@ -433,9 +434,20 @@ function enterWorld() {
         notify('📍 Destination set. Follow the cyan navigation line. Click again to change it.');
       },
       onSelectTown: (town) => {
-        notify(town.playable
-          ? '🗺️ ' + town.name + ' is playable. Reach Fishing Harbor by the north highway, or select streets in City Map.'
-          : '🗺️ ' + town.name + ' is mapped for future expansion, but is not yet drivable.');
+        if(!town.playable){
+          notify('🗺️ '+town.name+' is planned, not yet drivable.');return;
+        }
+        const visited=town.id==='starter-town'
+          || state.world?.discoveredTowns?.includes(town.id);
+        // You can route toward a not-yet-visited playable town. Its individual
+        // streets unlock on arrival, without making the world icon unusable.
+        customMapDestination=town.id==='fishing-harbor'
+          ? {x:0,z:-1750} : {x:0,z:-950};
+        guidanceAccum=1;
+        if(visited)minimap?.focusTown(town.id);
+        notify(visited
+          ? '📍 '+town.name+' street map unlocked. Click a street to route.'
+          : '📍 Road directions to '+town.name+' set. Visit to unlock its street map.');
       },
     });                                        // corner radar / town map (before asset wiring)
     debug.set('minimapInit', !!minimap);
@@ -5869,6 +5881,15 @@ function animate() {
     if (car && !inCar) trafficObstacles.push(car.g.position);
     if (trafficControl) trafficControl.update(dt);
     updateTraffic(traffic, dt, trafficObstacles, trafficControl, cityObserver, state.timeMin);
+  }
+  const worldObserver = inCar ? (drivingVehicle||car)?.g?.position : player?.group?.position;
+  // Load the already-authored Harbor models when travel approaches the coast.
+  if(!harborProductionRequested && worldObserver && worldObserver.z < -700
+     && Math.abs(worldObserver.x)<1400 && harborWorld){
+    harborProductionRequested=true;
+    void harborWorld.hydrate({renderer}).then(result=>debug.set('harborProductionAssets',{
+      loaded:result.loaded,planned:result.planned,failed:result.failed.length,
+    })).catch(error=>debug.set('harborProductionAssets',{error:String(error)}));
   }
   if(state.world?.townId==='fishing-harbor')harborWorld?.update?.(dt);
   updateMixers(dt);                                  // skinned GLB animations
