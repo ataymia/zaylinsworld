@@ -303,6 +303,7 @@ const crossTownNavigation = new StarterTownNavigation({plan: {
 }});
 let harborWorld = null;
 let fishingSession = null;
+let fishingBobber = null;
 let debugBadge = null;           // debug panel API (initDebugBadge → { toggle })
 let monsters = [];               // active Monster Mode creatures
 const extraSpinners = [];        // idle-spin display models (Frostbox jewelry, etc.)
@@ -2763,12 +2764,39 @@ function harborInteractionAt(position) {
  return harborWorld && inFishingHarbor(position)
    ? harborWorld.nearestAction(position,9) : null;
 }
+function releaseFishingBobber() {
+ if(!fishingBobber)return;
+ scene.remove(fishingBobber);
+ fishingBobber.traverse(object=>{
+   if(object.geometry)object.geometry.dispose();
+   if(object.material)object.material.dispose();
+ });
+ fishingBobber=null;
+}
+function makeFishingBobber(spot) {
+ releaseFishingBobber();
+ const group=new THREE.Group();
+ group.name='FH_ActiveFishingBobber';
+ group.position.set(spot.x+6,-0.10,spot.z-12);
+ const red=new THREE.Mesh(new THREE.SphereGeometry(0.48,12,10),
+   new THREE.MeshStandardMaterial({color:'#ff614a',roughness:0.32}));
+ red.position.y=0.18;group.add(red);
+ const white=new THREE.Mesh(new THREE.CylinderGeometry(0.08,0.08,1.1,8),
+   new THREE.MeshStandardMaterial({color:'#f2f8e5'}));
+ white.position.y=0.76;group.add(white);
+ const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints([
+   new THREE.Vector3(-6,2.6,12),new THREE.Vector3(0,0.22,0)]),
+   new THREE.LineBasicMaterial({color:'#dceff8'}));
+ group.add(line);
+ scene.add(group);fishingBobber=group;
+}
 function startPierFishing(spot) {
  if(fishingSession)return;
  const session=startFishing(state,{spotId:spot.id});
  if(session.error==='no-bait'){notify('🎣 No bait! Visit Bluefin Bait & Tackle.');return;}
  if(session.error==='full-bag'){notify('🎣 Bag full. Sell your fish at Harbor Catch Market.');return;}
  fishingSession=session;
+ makeFishingBobber(spot);
  showFishingPanel(session,state.fishing);
  notify('🎣 Casting at '+spot.name+'. Press SPACE when you get a bite.');
  saveNow();
@@ -2832,23 +2860,24 @@ function fishingPress() {
  else if(result.type==='caught'){
    notify('🐟 '+result.fish.name+' ('+result.fish.sizeKg+' kg) caught! Worth '+
      result.fish.value+' DreamBucks. Fishing level '+result.level+'.');
-   fishingSession=null;hideFishingPanel();saveNow();return;
+   fishingSession=null;hideFishingPanel();releaseFishingBobber();saveNow();return;
  }else if(result.type==='early')notify('🎣 Too early! Wait for the bite.');
  showFishingPanel(fishingSession,state.fishing);
 }
 function updateHarborFishing(dt) {
  if(!fishingSession)return;
+ if(fishingBobber)fishingBobber.position.y=-0.10+Math.sin(performance.now()*0.004)*0.12;
  const result=tickFishing(fishingSession,dt);
  if(result?.type==='bite')notify('🐟 A fish is biting! Press SPACE!');
  if(result?.type==='escaped'){
-   fishingSession=null;hideFishingPanel();
+   fishingSession=null;hideFishingPanel();releaseFishingBobber();
    notify('🐟 The fish escaped. Try casting again.');saveNow();return;
  }
  showFishingPanel(fishingSession,state.fishing);
 }
 function cancelFishing() {
  if(!fishingSession)return;
- fishingSession=null;hideFishingPanel();
+ fishingSession=null;hideFishingPanel();releaseFishingBobber();
  notify('🎣 Fishing cancelled. One bait was used.');saveNow();
 }
 // ── vehicle recovery and fuel ──────────────────────────────────────────────────
@@ -5509,10 +5538,11 @@ function handleInteraction(clicked = false) {
   const currentPos=inCar?(drivingVehicle||car)?.g.position:player?.group.position;
   const gateway=harborGatewayNear(currentPos);
   if(gateway && (!inCar || Math.abs((drivingVehicle||car)?.speed||0)<1.5)){
-    showPrompt(gateway==='to-harbor'?'Take Fishing Harbor highway shortcut'
-      :'Return to Starter Town highway','e');
+    showPrompt(gateway==='to-harbor'?'Harbor shortcut (E) · Exit vehicle (F)'
+      :'Starter Town shortcut (E) · Exit vehicle (F)','e');
     if(controls.consumePress('e'))useHarborGateway(gateway);
-    if(!inCar)return;
+    if(inCar && controls.consumePress('f'))exitCar();
+    return;
   }
   if (inCar) {
     // refuel at a gas-station forecourt when stopped (E), else show exit prompt (F)
@@ -5840,6 +5870,7 @@ function animate() {
     if (trafficControl) trafficControl.update(dt);
     updateTraffic(traffic, dt, trafficObstacles, trafficControl, cityObserver, state.timeMin);
   }
+  if(state.world?.townId==='fishing-harbor')harborWorld?.update?.(dt);
   updateMixers(dt);                                  // skinned GLB animations
   for (const g of extraSpinners) g.rotation.y += dt * 0.8;   // idle-spin display models
   // spin any dealership car flagged for preview
