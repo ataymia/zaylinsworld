@@ -5336,8 +5336,9 @@ function handleInteraction(clicked = false) {
     const pump = nearestRefuel(v.g.position);
     if (pump && Math.abs(v.speed || 0) < 1.5 && (v.fuel ?? 100) < 99.5) {
       const cost = refuelCost(v);
-      showPrompt(`Refuel  ($${cost})`, 'e');
-      if (controls.consumePress('e')) refuelVehicle(v);
+      showPrompt(`Refuel (${cost}) · F to exit vehicle`, 'e');
+      if (controls.consumePress('f')) exitCar();
+      else if (controls.consumePress('e')) refuelVehicle(v);
       return;
     }
     showPrompt('Exit vehicle', 'f');
