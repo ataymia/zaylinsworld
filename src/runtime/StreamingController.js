@@ -56,6 +56,7 @@ export class StreamingController {
     this.lastPosition = null;
     this.lastVelocity = { x: 0, z: 0 };
     this.lastPredicted = null;
+    this.lastPredictionCell = null;
     this.stats = {
       updates: 0,
       queued: 0,
@@ -117,7 +118,16 @@ export class StreamingController {
     );
 
     const actualChanges = this.grid.update(this.lastPosition);
-    const predictedChanges = this.grid.desiredStates(this.grid.coordinates(this.lastPredicted));
+    const predictedCell = this.grid.coordinates(this.lastPredicted);
+    const predictionCellId = `${predictedCell.x}:${predictedCell.z}`;
+    // Prediction rings depend on cells, not sub-cell movement. Without this
+    // guard, already-dispatched predictive jobs are requeued every frame while
+    // driving straight through the same cell, causing redundant work and lag.
+    const refreshPrediction = predictionCellId !== this.lastPredictionCell || actualChanges.length > 0;
+    const predictedChanges = refreshPrediction
+      ? this.grid.desiredStates(predictedCell)
+      : null;
+    this.lastPredictionCell = predictionCellId;
     const currentTime = now();
 
     for (const change of actualChanges) {
@@ -130,16 +140,18 @@ export class StreamingController {
       this.expandCellChange(change);
     }
 
-    for (const [cellId, state] of predictedChanges) {
-      if (state !== 'active' && state !== 'warm') continue;
-      const current = this.grid.states.get(cellId) || 'unloaded';
-      if (current === 'active' || (current === 'warm' && state === 'warm')) continue;
-      this.expandCellChange({
-        id: cellId,
-        previous: current,
-        next: state === 'active' ? 'warm' : 'far',
-        center: this.grid.centerOf(cellId),
-      });
+    if (predictedChanges) {
+      for (const [cellId, state] of predictedChanges) {
+        if (state !== 'active' && state !== 'warm') continue;
+        const current = this.grid.states.get(cellId) || 'unloaded';
+        if (current === 'active' || (current === 'warm' && state === 'warm')) continue;
+        this.expandCellChange({
+          id: cellId,
+          previous: current,
+          next: state === 'active' ? 'warm' : 'far',
+          center: this.grid.centerOf(cellId),
+        });
+      }
     }
 
     for (const [cellId, expiresAt] of this.recentlyExited) {
@@ -205,6 +217,7 @@ export class StreamingController {
       position: this.lastPosition && { ...this.lastPosition },
       velocity: { ...this.lastVelocity },
       predicted: this.lastPredicted && { ...this.lastPredicted },
+      predictedCell: this.lastPredictionCell,
       pending: this.pending.size,
       pendingByKind,
       deferredUnloads: this.recentlyExited.size,
