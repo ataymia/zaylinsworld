@@ -11,6 +11,7 @@ import { placeWorldBuildings } from './worldBuildings.js';
 import { furnishInteriors } from './furnish.js';
 import { initMinimap, setMarkers } from './minimap.js';
 import { buildFishingHarbor } from './world/FishingHarbor.js';
+import {hydrateFishingHarborProductionAssets} from './world/FishingHarborProductionAssets.js';
 import { HARBOR_ACTIONS, HARBOR_ROUTES, FISHING_HIGHWAY, inFishingHarbor, onFishingHighway, harborSafePoint } from './config/fishingHarborPlan.js';
 import { ensureFishingState, fishingLevel, startFishing, tickFishing, pressFishing, sellFishingCatch, buyFishingBait } from './runtime/FishingHarborLife.js';
 import { showFishingPanel, hideFishingPanel } from './ui/FishingHarborPanel.js';
@@ -302,6 +303,7 @@ const crossTownNavigation = new StarterTownNavigation({plan: {
   locations:[],
 }});
 let harborWorld = null;
+let harborProductionHydration = null;
 let fishingSession = null;
 let fishingBobber = null;
 let debugBadge = null;           // debug panel API (initDebugBadge → { toggle })
@@ -421,6 +423,7 @@ function enterWorld() {
     harborWorld = buildFishingHarbor(scene);
     ensureFishingState(state);
     debug.set('fishingHarbor', harborWorld.report);
+    debug.set('harborProductionAssets','not loaded yet (lazy regional prefetch)');
     registerInteractables(cityInfo.entrances);
     graphics.applyToScene(scene, renderer);   // reflections + texture filtering
     started = true;
@@ -472,6 +475,7 @@ function enterWorld() {
   interiors.deactivate?.();
   setPreparedProductionWorldVisible(true);
   syncCurrentWorldTown(state.pos);
+  warmHarborProductionAssets(state.pos);
   state.createdCharacter = true;
   applyVibe();
   showCreator(false);
@@ -2716,6 +2720,27 @@ function robNearestNpc() {
   saveNow();
 }
 
+// ── Real Fishing Harbor asset readiness ──────────────────────────────────
+function warmHarborProductionAssets(position) {
+ if(!position||!harborWorld||harborProductionHydration)return;
+ const approaching=onFishingHighway(position)&&position.z<-2950;
+ if(!inFishingHarbor(position)&&!approaching)return;
+ // Built landmark assets use the same registered GLTF/cache loader as Starter
+ // Town. Successful model loads replace procedural shells in-place. The proof
+ // report distinguishes real models, fallback shells and broken paths.
+ harborProductionHydration=hydrateFishingHarborProductionAssets({
+  sceneRoot:harborWorld.group,renderer,
+  onProgress:report=>debug.set('harborAssetsLoading',report.uniqueAssetsLoaded?.length||0),
+ }).then(report=>{
+   debug.set('harborProductionAssets',report);
+   console.info('[fishing-harbor] real models loaded:',report.loaded,'/',report.expected);
+   if(state.world?.townId==='fishing-harbor'&&report.failed)
+     notify('⚠️ '+report.failed+' Harbor assets did not load. Open the F2 asset report.');
+ }).catch(error=>{
+   debug.set('harborProductionAssets',{error:String(error)});
+   console.error('[fishing-harbor] production asset placement failed',error);
+ });
+}
 // ── Playable Fishing Harbor and two-town activities ─────────────────────────
 function syncCurrentWorldTown(position) {
  if(!position||!state.world)return;
@@ -5855,6 +5880,7 @@ function animate() {
     const cityObserver = inCar
       ? (drivingVehicle || car)?.g?.position
       : player?.group?.position;
+    warmHarborProductionAssets(cityObserver);
     updateCityNPCs(cityNPCs, dt, t, cityObserver, state.timeMin);
     trafficCoverageAccum += dt;
     if (!inCar && cityObserver && trafficCoverageAccum >= 4) {
@@ -6208,7 +6234,9 @@ window.ZW = Object.assign(window.ZW || {}, {
     x: +c.g.position.x.toFixed(2),
     z: +c.g.position.z.toFixed(2),
   })),
-  fishingHarbor: () => ({scene:harborWorld?.report||null,fishing:ensureFishingState(state),townId:state.world?.townId}),
+  fishingHarbor: () => ({scene:harborWorld?.report||null,
+    production:harborWorld?.group?.userData?.productionReport||null,
+    fishing:ensureFishingState(state),townId:state.world?.townId}),
   scheduleSnapshot: () => ({
     timeMin: state.timeMin,
     pedestrians: cityNPCs.filter(n => n.av.group.visible !== false).length,
