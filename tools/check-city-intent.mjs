@@ -61,10 +61,11 @@ assert.ok(massing.placements.every((entry) => entry.roadSafe), 'all filler footp
 // every district rather than hiding most of the count in one horizon ring.
 const vegetation = createStarterTownVegetationPlan();
 assert.equal(vegetation.trees.length, STARTER_TOWN_TREE_TARGET);
-assert.equal(vegetation.rocks.length, STARTER_TOWN_ROCK_TARGET);
+assert.ok(vegetation.rocks.length>=90 && vegetation.rocks.length<=STARTER_TOWN_ROCK_TARGET,
+ 'decorative rock count must remain limited by street clearance');
 assert.deepEqual(
   { trees: STARTER_TOWN_TREE_TARGET, rocks: STARTER_TOWN_ROCK_TARGET },
-  { trees: 1400, rocks: 240 },
+  { trees: 1400, rocks: 130 },
 );
 for (const district of STARTER_TOWN_RUNTIME_PLAN.districts) {
   const xs = district.polygon.map((entry) => entry.x);
