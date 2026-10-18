@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {existsSync,readFileSync,statSync} from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {HARBOR_ACTIONS,HARBOR_LOCATIONS,HARBOR_LIGHTHOUSE,HARBOR_WATERWAYS} from '../src/config/fishingHarborPlan.js';
+import {HARBOR_ACTIONS,HARBOR_LOCATIONS,HARBOR_LIGHTHOUSE,HARBOR_WATERWAYS,HARBOR_ROUTES,FISHING_HIGHWAY,onHarborPier,harborSafePoint} from '../src/config/fishingHarborPlan.js';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const read=relative=>readFileSync(path.join(root,relative),'utf8');
 const assets=read('src/world/FishingHarborProductionAssets.js');
@@ -44,6 +44,24 @@ assert(townLife.includes('createTraffic('));
 assert(townLife.includes('updateTraffic('));
 assert(townLife.includes('Harbor Patrol'));
 assert(HARBOR_LOCATIONS.length>=12,'Police, clinic, jewelry, boatworks and market belong in the town');
+function routeClearance(site,road){
+ let clearance=Infinity;
+ for(let i=1;i<road.points.length;i++){
+  const a=road.points[i-1],b=road.points[i],dx=b.x-a.x,dz=b.z-a.z;
+  const lengthSq=dx*dx+dz*dz;
+  const t=lengthSq?Math.max(0,Math.min(1,((site.x-a.x)*dx+(site.z-a.z)*dz)/lengthSq)):0;
+  clearance=Math.min(clearance,Math.hypot(site.x-a.x-t*dx,site.z-a.z-t*dz));
+ }
+ return clearance-(road.width||12)/2;
+}
+for(const site of HARBOR_LOCATIONS){
+ const safest=Math.min(...[FISHING_HIGHWAY,...HARBOR_ROUTES].map(r=>routeClearance(site,r)));
+ assert(safest>=32,'Harbor site '+site.id+' must remain off the drivable street and sidewalks ('+
+  safest.toFixed(1)+' clearance)');
+}
+assert(onHarborPier(HARBOR_LIGHTHOUSE),'Lighthouse island must be a walkable destination');
+assert(harborSafePoint({x:870,z:-5490}).z===-5490,'Island must not be ocean-clamped');
+
 assert(HARBOR_ACTIONS.some(a=>a.kind==='lighthouse'),'Lighthouse needs an interaction');
 assert.equal(HARBOR_WATERWAYS.length,3,'Three authored boat corridors needed');
 assert(terrain.includes("FH_ocean',0,0.11"),'Ocean surface must be above buried terrain');
