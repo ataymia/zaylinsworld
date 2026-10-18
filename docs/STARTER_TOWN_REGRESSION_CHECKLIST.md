@@ -1,6 +1,6 @@
 # Starter Town Live Regression Checklist
 
-Run this checklist on the deployed draft branch before PR #5 is eligible to merge.
+Run this checklist on every deployed Starter Town draft before it is eligible to merge.
 
 ## Character Studio
 
@@ -35,6 +35,17 @@ Run this checklist on the deployed draft branch before PR #5 is eligible to merg
 - [ ] Police use police-character assets and retain procedural fallback.
 - [ ] NPCs, police and player never exchange role assets accidentally.
 - [ ] Wanted-level pursuit, collisions, robbery witnesses and despawn still work.
+- [ ] Foot officers and cruisers follow connected streets during a cross-district pursuit instead of cutting through buildings.
+- [ ] Police dispatches appear on valid road nodes and never inside scenery.
+
+## Recurring Characters
+
+- [ ] Malik Frost, Maya Brooks, Coach Rell, Officer Dane and Denise Hall appear under their canonical names.
+- [ ] Each recurring character supports at least three controllable dialogue branches.
+- [ ] Repeat visits change relationship memory without breaking the save.
+- [ ] Officer Dane reacts correctly to active heat and a local conviction.
+- [ ] Dialogue service choices still open jewelry, chain builder, wardrobe, workout, police and sanitation gameplay.
+- [ ] Planned quest choices do not appear as dead promises before their runtime gameplay exists.
 
 ## Interiors
 
@@ -63,6 +74,17 @@ Run this checklist on the deployed draft branch before PR #5 is eligible to merg
 
 - [ ] Spawn, walking, sprinting, camera and collisions work.
 - [ ] Default car, traffic cars, fuel, damage, repair and refueling work.
+- [ ] Traffic cars are visibly moving near arrival and across multiple districts.
+- [ ] Pedestrians are visibly moving in every district, not only Dreamdrop Core.
+- [ ] Expanded map shows connected roadways, route names and correctly placed landmarks.
+- [ ] The current physical quest objective draws a cyan route over the real road network and clears when no route is applicable.
+- [ ] Terrain stays visually stable while driving; no green/brown surface flicker.
+- [ ] Buildings and their interaction anchors remain outside vehicle lanes.
+- [ ] Functional and filler buildings block vehicles instead of allowing drive-through.
+- [ ] Every functional exterior has a readable name and use sign.
+- [ ] Trees and rocks block off-road vehicles.
+- [ ] Streetlights block a slow vehicle, fall after a hard impact and later restore.
+- [ ] Only the entered interior is rendered; repeated entry/exit does not freeze or crash.
 - [ ] Trash pickup, sanitation jobs and dumpster deposit work.
 - [ ] Food purchase/eating and Chicken Spot work shift still function.
 - [ ] Shops deduct money, mark ownership and persist after refresh.

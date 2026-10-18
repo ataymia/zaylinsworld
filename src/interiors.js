@@ -248,7 +248,8 @@ export function buildInteriors() {
         // into the room (+z), filled in by main.js from the gem texture set.
         gemWall:     { x: o.x, y: 1.7, z: o.z - 5.7, faceZ: 1, spread: 9, rows: 2 },
       },
-      npcs: [{ name: 'Ice', role: 'jeweler', pos: new THREE.Vector3(o.x - 4, 0, o.z + 1.4), dialogue: 'jeweler' }],
+      npcs: [{ name: 'Malik Frost', storyId: 'malik-frost', role: 'jeweler',
+        pos: new THREE.Vector3(o.x - 4, 0, o.z + 1.4), dialogue: 'jeweler' }],
       stations: [
         { id: 'chain-builder', type: 'chain-builder', pos: new THREE.Vector3(o.x + 3, 0, o.z + 1.5),
           label: 'Open Custom Chain Builder' },
@@ -513,7 +514,8 @@ export function buildInteriors() {
       spawn: r.spawn, exit: r.exit, colliders: r.colliders,
       decor, decorColliders,
       avatars: [npc], npcSlot: 'npc_basic_02',
-      npcs: [{ name: 'Drip', role: 'stylist', pos: new THREE.Vector3(o.x + 5, 0, o.z - 1.6), dialogue: 'stylist' }],
+      npcs: [{ name: 'Maya Brooks', storyId: 'maya-brooks', role: 'stylist',
+        pos: new THREE.Vector3(o.x + 5, 0, o.z - 1.6), dialogue: 'stylist' }],
       stations: [
         { id: 'wardrobe-store', type: 'wardrobe', pos: new THREE.Vector3(o.x, 0, o.z + 2), label: 'Try On Fits (Wardrobe)' },
       ],
@@ -568,7 +570,8 @@ export function buildInteriors() {
       spawn: r.spawn, exit: r.exit, colliders: r.colliders,
       decor, decorColliders,
       avatars: [trainer], npcSlot: 'npc_basic_01',
-      npcs: [{ name: 'Coach Mray', role: 'trainer', pos: new THREE.Vector3(o.x + 5, 0, o.z + 2.2), dialogue: 'trainer' }],
+      npcs: [{ name: 'Coach Rell', storyId: 'coach-rell', role: 'trainer',
+        pos: new THREE.Vector3(o.x + 5, 0, o.z + 2.2), dialogue: 'trainer' }],
       stations: [
         // Each major equipment piece is its own station. `equip.kind` drives the
         // stat effects in main.js startWorkoutAt(); positions line up with the
@@ -630,7 +633,8 @@ export function buildInteriors() {
       avatars: [teacher], npcSlot: 'npc_basic_02',
       npcs: [{ name: 'Ms. Okafor', role: 'teacher', pos: new THREE.Vector3(o.x, 0, o.z - 2.8), dialogue: 'teacher' }],
       stations: [
-        { id: 'study-desk', type: 'study', pos: new THREE.Vector3(o.x, 0, o.z + 0.5), label: 'Take a Seat & Study' },
+        { id: 'curriculum-desk', type: 'school-curriculum', pos: new THREE.Vector3(o.x, 0, o.z + 0.5), label: 'Choose a Class' },
+        { id: 'school-nurse', type: 'school-nurse', pos: new THREE.Vector3(o.x - 6, 0, o.z + 3.6), label: 'Visit the School Nurse' },
       ],
     };
   }
@@ -674,7 +678,11 @@ export function buildInteriors() {
       avatars: [manager], npcSlot: 'npc_basic_01',
       npcs: [{ name: 'Mr. Banks', role: 'manager', pos: new THREE.Vector3(o.x, 0, o.z - 3.8), dialogue: 'manager' }],
       stations: [
-        { id: 'job-board', type: 'job-work', pos: new THREE.Vector3(o.x + 6, 0, o.z), label: 'Clock In (Work a Shift)' },
+        { id: 'job-board', type: 'worktower-jobs', pos: new THREE.Vector3(o.x + 7, 0, o.z), label: 'Use the Job Board' },
+        { id: 'property-desk', type: 'property-desk', pos: new THREE.Vector3(o.x + 7, 0, o.z - 3), label: 'Visit the Property Desk' },
+        { id: 'bank-kiosk', type: 'bank-kiosk', pos: new THREE.Vector3(o.x - 7, 0, o.z - 3), label: 'Use the Paycheck Kiosk' },
+        { id: 'community-clinic', type: 'community-clinic', pos: new THREE.Vector3(o.x - 7, 0, o.z + 3.6), label: 'Visit Community Health' },
+        { id: 'city-services', type: 'city-services', pos: new THREE.Vector3(o.x + 7, 0, o.z + 3.6), label: 'Use the City Information Desk' },
       ],
     };
   }
@@ -899,7 +907,8 @@ export function buildInteriors() {
       avatars: [sergeant, officer], npcSlot: 'npc_basic_01',
       npcs: [
         { name: 'Sgt. Diaz', role: 'sergeant', pos: new THREE.Vector3(o.x - 5, 0, o.z + 2.2), dialogue: 'police-desk' },
-        { name: 'Officer Reed', role: 'officer', pos: new THREE.Vector3(o.x + 1.5, 0, o.z + 2.6), dialogue: 'police-desk' },
+        { name: 'Officer Dane', storyId: 'officer-dane', role: 'officer',
+          pos: new THREE.Vector3(o.x + 1.5, 0, o.z + 2.6), dialogue: 'police-desk' },
       ],
       stations: [
         { id: 'police-desk-int', type: 'police-desk', pos: new THREE.Vector3(o.x - 5, 0, o.z + 3.0), label: 'Front Desk (Check Wanted / Academy)' },
@@ -910,5 +919,43 @@ export function buildInteriors() {
     };
   }
 
-  return { group: root, byId };
+  // Keep only the room the player is currently using in the render graph.
+  // Previously the root toggle made all twelve fully furnished interiors visible
+  // at once. Besides wasting draw calls, one malformed room could take down every
+  // building transition. Each room now has an explicit lifecycle and the root is
+  // hidden whenever the player is outside.
+  const interiorOrder = [
+    'dealership', 'frostbox', 'blocksupply', 'chicken', 'home', 'kicks',
+    'gym', 'school', 'office', 'garage', 'gas', 'police',
+  ];
+  interiorOrder.forEach((id, index) => {
+    const room = root.children[index];
+    const interior = byId[id];
+    if (!room || !interior) return;
+    room.name = `ZW_Interior_${id}`;
+    room.visible = false;
+    interior.group = room;
+  });
+
+  const setActive = (id = null) => {
+    let found = false;
+    for (const [interiorId, interior] of Object.entries(byId)) {
+      const active = interiorId === id && !!interior.group;
+      if (interior.group) interior.group.visible = active;
+      found ||= active;
+    }
+    root.visible = found;
+    root.userData.activeInteriorId = found ? id : null;
+    return found;
+  };
+
+  root.userData.setActive = setActive;
+  setActive(null);
+  return {
+    group: root,
+    byId,
+    setActive,
+    activate: (id) => setActive(id),
+    deactivate: () => setActive(null),
+  };
 }

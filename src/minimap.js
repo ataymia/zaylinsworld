@@ -8,10 +8,16 @@
 //  toggle between the compact corner radar and an expanded town map.
 // ───────────────────────────────────────────────────────────────────────────
 import { ROAD, LANDMARKS } from './config/mapConfig.js';
+import { STARTER_TOWN_RUNTIME_PLAN } from './config/starterTownRuntimePlan.js';
+import { ROAD_TIERS } from './config/worldMapPlan.js';
 
 let canvas = null, ctx = null, expanded = false;
 let markers = [];            // [{ x, z, color, icon }] extra points (gas/diner)
 let landmarkLayout = LANDMARKS;
+let routeLayout = [];
+let districtLayout = [];
+let guidance = null;          // { points:[{x,z}], destination:{x,z}, label }
+let largeWorldMode = false;
 let expandedView = 70;
 
 const COMPACT = 168;         // px size of the corner radar (small so it never covers HUD)
@@ -19,17 +25,83 @@ const EXPANDED = 460;        // px size of the expanded map
 const VIEW_COMPACT = 46;     // world-units radius shown when compact (player-centred)
 const VIEW_EXPANDED = 70;    // world-units radius shown when expanded (origin-centred)
 
-export function initMinimap({ landmarks = LANDMARKS, largeWorld = false } = {}) {
+const DISTRICT_COLORS = Object.freeze({
+  'northworks-auto-row': '#645c53',
+  'civic-heights': '#596985',
+  'scholars-quarter': '#557762',
+  'dreamdrop-district': '#79624f',
+  'westside-blocks': '#684f68',
+  'market-mile': '#87594d',
+  'eastgate-corridor': '#756d47',
+  'parkside-commons': '#477451',
+  'willowbend-residential': '#657452',
+});
+
+export function minimapRoadPlan({
+  largeWorld = false,
+  routes = STARTER_TOWN_RUNTIME_PLAN.routes,
+} = {}) {
+  if (!largeWorld) {
+    return Object.freeze([
+      ...ROAD.hz.map((z, index) => Object.freeze({
+        id: `compact-h-${index}`,
+        name: '',
+        tier: 'main',
+        width: ROAD.width,
+        points: Object.freeze([{ x: -ROAD.extent, z }, { x: ROAD.extent, z }]),
+      })),
+      ...ROAD.vx.map((x, index) => Object.freeze({
+        id: `compact-v-${index}`,
+        name: '',
+        tier: 'main',
+        width: ROAD.width,
+        points: Object.freeze([{ x, z: -ROAD.extent }, { x, z: ROAD.extent }]),
+      })),
+    ]);
+  }
+  return Object.freeze(routes.map((route) => Object.freeze({
+    id: route.id,
+    name: route.name,
+    tier: route.tier,
+    width: Number(route.width) || Number(ROAD_TIERS[route.tier]?.width) || 9,
+    points: Object.freeze(route.points.map((point) => Object.freeze({
+      x: Number(point.x) || 0,
+      z: Number(point.z) || 0,
+    }))),
+  })));
+}
+
+export function initMinimap({
+  landmarks = LANDMARKS,
+  largeWorld = false,
+  routes = STARTER_TOWN_RUNTIME_PLAN.routes,
+  districts = STARTER_TOWN_RUNTIME_PLAN.districts,
+} = {}) {
   landmarkLayout = landmarks;
-  expandedView = largeWorld ? 1100 : 70;
+  largeWorldMode = largeWorld;
+  routeLayout = minimapRoadPlan({ largeWorld, routes });
+  districtLayout = largeWorld ? districts : [];
+  expandedView = largeWorld ? 1220 : 70;
   canvas = document.getElementById('minimap');
   if (!canvas) return null;
   ctx = canvas.getContext('2d');
   resize();
-  return { setMarkers, draw, toggleExpand, isExpanded: () => expanded };
+  return { setMarkers, setGuidanceRoute, draw, toggleExpand, isExpanded: () => expanded };
 }
 
 export function setMarkers(list) { markers = list || []; }
+
+export function setGuidanceRoute(value) {
+  const points = Array.isArray(value?.points)
+    ? value.points.filter((entry) => Number.isFinite(Number(entry?.x)) && Number.isFinite(Number(entry?.z)))
+      .map((entry) => ({ x: Number(entry.x), z: Number(entry.z) }))
+    : [];
+  guidance = points.length >= 2 ? {
+    points,
+    destination: value?.destination || points[points.length - 1],
+    label: String(value?.label || ''),
+  } : null;
+}
 
 function resize() {
   const dpr = Math.min(2, window.devicePixelRatio || 1);
@@ -85,22 +157,102 @@ export function draw(playerPos, headingRad, traffic = [], npcs = []) {
   ctx.save();
   roundRect(ctx, 0, 0, css, css, 12); ctx.clip();
 
-  // grass blocks tint
+  // District shapes make the expanded map read as one town instead of icons
+  // floating in empty space.
   ctx.fillStyle = 'rgba(34,52,40,0.5)';
   ctx.fillRect(0, 0, css, css);
+  if (largeWorldMode) {
+    for (const district of districtLayout) {
+      const points = district.polygon || [];
+      if (!points.length) continue;
+      ctx.beginPath();
+      ctx.moveTo(px(points[0].x), py(points[0].z));
+      for (let index = 1; index < points.length; index++) {
+        ctx.lineTo(px(points[index].x), py(points[index].z));
+      }
+      ctx.closePath();
+      ctx.fillStyle = `${DISTRICT_COLORS[district.id] || '#55665a'}99`;
+      ctx.fill();
+    }
+  }
 
-  // roads — draw each grid line as a thick gray band spanning ±extent
-  ctx.strokeStyle = '#4a5160';
-  ctx.lineWidth = Math.max(3, ROAD.width * scale);
+  // Authoritative road polylines. Width and tier come from the same plan that
+  // builds the drivable world and routes traffic.
   ctx.lineCap = 'round';
-  const e = ROAD.extent;
-  for (const z of ROAD.hz) { line(px(-e), py(z), px(e), py(z)); }
-  for (const x of ROAD.vx) { line(px(x), py(-e), px(x), py(e)); }
-  // centre dashes
-  ctx.strokeStyle = '#c9cf3a'; ctx.lineWidth = 1; ctx.setLineDash([4, 5]);
-  for (const z of ROAD.hz) { line(px(-e), py(z), px(e), py(z)); }
-  for (const x of ROAD.vx) { line(px(x), py(-e), px(x), py(e)); }
+  ctx.lineJoin = 'round';
+  for (const route of routeLayout) {
+    if (route.points.length < 2) continue;
+    ctx.strokeStyle = route.tier === 'dirt' ? '#8b6746'
+      : route.tier === 'alley' ? '#55545a'
+        : route.tier === 'expressway' || route.tier === 'highway' ? '#303744'
+          : '#4a5160';
+    ctx.lineWidth = Math.max(expanded ? 1.8 : 2.4, route.width * scale);
+    ctx.setLineDash(route.tier === 'dirt' ? [5, 4] : route.tier === 'alley' ? [3, 3] : []);
+    ctx.beginPath();
+    ctx.moveTo(px(route.points[0].x), py(route.points[0].z));
+    for (let index = 1; index < route.points.length; index++) {
+      ctx.lineTo(px(route.points[index].x), py(route.points[index].z));
+    }
+    ctx.stroke();
+  }
   ctx.setLineDash([]);
+
+  // Main-route center markings keep intersections and turns legible.
+  for (const route of routeLayout.filter((entry) => !['alley', 'dirt'].includes(entry.tier))) {
+    ctx.strokeStyle = route.tier === 'expressway' || route.tier === 'highway' ? '#e8e4d0' : '#d2bd43';
+    ctx.lineWidth = expanded ? 0.8 : 1;
+    ctx.setLineDash(expanded ? [3, 3] : [4, 5]);
+    ctx.beginPath();
+    ctx.moveTo(px(route.points[0].x), py(route.points[0].z));
+    for (let index = 1; index < route.points.length; index++) {
+      ctx.lineTo(px(route.points[index].x), py(route.points[index].z));
+    }
+    ctx.stroke();
+  }
+  ctx.setLineDash([]);
+
+  // Active quest guidance uses the exact same RoadGraph route that emergency
+  // services and future delivery jobs follow. It sits above road markings and
+  // below landmark icons so the player gets an honest, readable route.
+  if (guidance?.points?.length > 1) {
+    ctx.save();
+    ctx.strokeStyle = '#4ee7ff';
+    ctx.shadowColor = '#087fbb';
+    ctx.shadowBlur = expanded ? 5 : 3;
+    ctx.lineWidth = expanded ? 4 : 3;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.beginPath();
+    ctx.moveTo(px(guidance.points[0].x), py(guidance.points[0].z));
+    for (let index = 1; index < guidance.points.length; index++) {
+      ctx.lineTo(px(guidance.points[index].x), py(guidance.points[index].z));
+    }
+    ctx.stroke();
+    ctx.restore();
+
+    const destination = guidance.destination || guidance.points[guidance.points.length - 1];
+    const gx = px(destination.x), gy = py(destination.z);
+    ctx.fillStyle = '#4ee7ff';
+    ctx.strokeStyle = '#06131e';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(gx, gy, expanded ? 7 : 5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+  }
+
+  if (expanded && largeWorldMode) {
+    ctx.font = '8px system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    for (const route of routeLayout.filter((entry) => ['expressway', 'highway', 'parkway', 'main'].includes(entry.tier))) {
+      const point = route.points[Math.floor(route.points.length / 2)];
+      ctx.fillStyle = 'rgba(7,10,16,.78)';
+      ctx.fillRect(px(point.x) - 30, py(point.z) - 6, 60, 12);
+      ctx.fillStyle = '#e8edf8';
+      ctx.fillText(route.name, px(point.x), py(point.z));
+    }
+  }
 
   // landmarks — coloured squares with first letter
   for (const lm of landmarkLayout) {
@@ -161,6 +313,11 @@ export function draw(playerPos, headingRad, traffic = [], npcs = []) {
   ctx.fillStyle = '#9fb2d6'; ctx.font = '10px system-ui, sans-serif';
   ctx.textAlign = 'left'; ctx.textBaseline = 'top';
   ctx.fillText(expanded ? 'TOWN MAP — N to shrink' : 'N: map', 8, 7);
+  if (expanded && guidance?.label) {
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#9feeff';
+    ctx.fillText(`ROUTE: ${guidance.label}`, css - 8, 7);
+  }
 }
 
 function line(x1, y1, x2, y2) { ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); }

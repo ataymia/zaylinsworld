@@ -462,8 +462,9 @@ function skinAvatar(avatar, glb, opts = {}) {
   styleImportedSkin(skin, role);
   avatar.group.add(skin);
   hideProceduralMeshes(avatar.group, skin);
-  const directRig = role === 'civilian' ? remapImportedRig(avatar, skin) : false;
-  const retiredMeshes = role === 'civilian' ? retireProceduralMeshes(avatar.group, skin) : 0;
+  const directRole = role === 'civilian' || role === 'police';
+  const directRig = directRole ? remapImportedRig(avatar, skin) : false;
+  const retiredMeshes = directRole ? retireProceduralMeshes(avatar.group, skin) : 0;
   avatar.group.userData.zwVisualOwner = 'imported-complete';
   avatar.skin = skin;
   avatar.realSkin = true;
@@ -573,7 +574,7 @@ export async function applyCopSkin(avatar, renderer) {
     });
     if (result.ok) {
       SKIN_STATUS.cop.glb++;
-      SKIN_STATUS.cop.last = `${name}: glb`;
+      SKIN_STATUS.cop.last = `${name}: ${result.directRig ? 'glb-direct-rig' : 'glb-root-motion'}`;
       return name;
     }
     SKIN_STATUS.cop.fallback++;
