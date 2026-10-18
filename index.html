@@ -178,8 +178,8 @@
     font-variant-numeric:tabular-nums;}
 
   /* ── minimap / radar (bottom-left corner — clear of the stats/wanted HUD) ── */
-  #minimap{position:fixed;left:14px;bottom:46px;z-index:90;display:none;
-    border-radius:12px;box-shadow:0 6px 22px rgba(0,0,0,.5);pointer-events:none;}
+  #minimap{position:fixed;right:14px;top:50%;z-index:90;display:none;
+    border-radius:12px;box-shadow:0 6px 22px rgba(0,0,0,.5);pointer-events:none;touch-action:none;}
 
   /* ── car HUD (speed / fuel / damage while driving) ── */
   #car-hud{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:108;
@@ -256,7 +256,7 @@
   <div id="mission-tracker" style="display:none;"></div>
   <div id="hint">
     <b>WASD</b> move · <b>A/D</b> turn · <b>Shift</b> run · <b>Space</b> jump · <b>V</b> camera ·
-    <b>E</b> / <b>click</b> interact · <b>F</b> enter/steal car · <b>N</b> map · <b>I</b> inventory ·
+    <b>E</b> / <b>click</b> interact · <b>F</b> enter/steal car · <b>B</b> summon owned car · <b>N</b> map (wheel zoom) · <b>I</b> inventory ·
     <b>Click</b> shoot · <b>R-click</b> aim · <b>R</b> reload · <b>C</b> wardrobe · <b>M</b> Monster Mode · <b>T</b> transform
   </div>
 

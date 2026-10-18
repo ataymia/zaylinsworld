@@ -190,7 +190,9 @@ function createPlacements(parcel, profile, roadNetwork = DEFAULT_ROAD_NETWORK) {
       placements,
       roadNetwork,
     );
-    if (!resolved) continue;
+    // An overcrowded parcel is better left open than putting a building or its
+    // vehicle collider inside a road/sidewalk. Never accept the unsafe fallback.
+    if (!resolved || resolved.roadClearance < ROAD_SETBACK) continue;
     placements.push(Object.freeze({
       id: `${parcel.id}:massing:${index}`,
       parcelId: parcel.id,

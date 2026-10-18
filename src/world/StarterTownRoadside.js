@@ -69,20 +69,28 @@ function addUnique(target, seen, placement) {
   return true;
 }
 
-function routeLabelPlacement(route, segment) {
+function safeRoadsidePoint(x, z, roadNetwork, extra = 1.5) {
+  const hit = roadNetwork.nearest({ x, z });
+  return !hit || hit.distance >= hit.segment.width / 2 + extra;
+}
+
+function routeLabelPlacement(route, segment, roadNetwork) {
   const frame = segmentFrame(segment);
-  const side = segment.width / 2 + 4.8;
-  return {
-    id: `route-sign:${route.id}`,
-    type: 'route-sign',
-    routeId: route.id,
-    districtId: worldRegistry.districtAt(segment.start)?.id || null,
-    x: segment.start.x + frame.direction.x * 18 + frame.normal.x * side,
-    y: starterTownHeightAt(segment.start.x, segment.start.z),
-    z: segment.start.z + frame.direction.z * 18 + frame.normal.z * side,
-    rotationY: frame.yaw,
-    label: route.name,
-  };
+  // Check all authored roads, not only the sign's parent route: a route can
+  // begin immediately before a junction and otherwise place signs in traffic.
+  for (const distance of [18, 36, 55, 9]) {
+    for (const side of [1, -1]) {
+      const point = sampleSegment(segment, Math.min(distance, frame.length * 0.8), (segment.width / 2 + 6.2) * side);
+      if (!safeRoadsidePoint(point.x, point.z, roadNetwork, 2.1)) continue;
+      return {
+        id: `route-sign:${route.id}`, type: 'route-sign', routeId: route.id,
+        districtId: worldRegistry.districtAt(point)?.id || null,
+        x: point.x, y: point.y, z: point.z,
+        rotationY: frame.yaw, label: route.name,
+      };
+    }
+  }
+  return null;
 }
 
 function infrastructureForSegment(route, segment, placements, seen) {
@@ -185,7 +193,7 @@ function infrastructureForSegment(route, segment, placements, seen) {
   }
 }
 
-function intersectionInfrastructure(graph, placements, seen) {
+function intersectionInfrastructure(graph, placements, seen, roadNetwork) {
   for (const node of graph.nodes.values()) {
     if (node.routes.size < 2) continue;
     const routes = [...node.routes];
@@ -207,15 +215,20 @@ function intersectionInfrastructure(graph, placements, seen) {
         raised: school,
       });
     }
-    addUnique(placements, seen, {
+    // Junction signs belong beyond the pavement and curb of EVERY connecting
+    // road. The old fixed (+7.5,+7.5) position often landed in crossing lanes.
+    const candidates = [
+      [1, 1], [1, -1], [-1, 1], [-1, -1],
+    ];
+    const spot = candidates.flatMap(([dx, dz]) => [12, 16, 21].map(d => ({
+      x: node.x + dx * d, z: node.z + dz * d,
+    }))).find(p => safeRoadsidePoint(p.x, p.z, roadNetwork, 2.2));
+    if (spot) addUnique(placements, seen, {
       id: `intersection-sign:${node.id}`,
       type: school ? 'school-sign' : 'intersection-sign',
-      intersectionId: node.id,
-      districtId,
-      x: node.x + 7.5,
-      y: starterTownHeightAt(node.x + 7.5, node.z + 7.5),
-      z: node.z + 7.5,
-      rotationY: Math.PI,
+      intersectionId: node.id, districtId,
+      x: spot.x, y: starterTownHeightAt(spot.x, spot.z),
+      z: spot.z, rotationY: Math.PI,
     });
   }
 }
@@ -247,11 +260,19 @@ export function createStarterTownRoadsidePlan({
   const seen = new Set();
   for (const route of roadNetwork.routes.values()) {
     const segments = roadNetwork.segments.filter((segment) => segment.routeId === route.id);
-    if (segments[0]) addUnique(placements, seen, routeLabelPlacement(route, segments[0]));
+    if (segments[0]) {
+      const sign = routeLabelPlacement(route, segments[0], roadNetwork);
+      if (sign) addUnique(placements, seen, sign);
+    }
     for (const segment of segments) infrastructureForSegment(route, segment, placements, seen);
   }
-  intersectionInfrastructure(roadGraph, placements, seen);
+  intersectionInfrastructure(roadGraph, placements, seen, roadNetwork);
   districtFurniture(placements, seen);
+  // Fixed furniture samples were previously unchecked and sometimes sat on lanes.
+  const filtered = placements.filter((p) => !['bench','bin','bike-rack','wayfinding'].includes(p.type)
+    || safeRoadsidePoint(p.x, p.z, roadNetwork, 1.2));
+  placements.length = 0;
+  placements.push(...filtered);
   const byType = {};
   for (const placement of placements) byType[placement.type] = (byType[placement.type] || 0) + 1;
   return Object.freeze({
