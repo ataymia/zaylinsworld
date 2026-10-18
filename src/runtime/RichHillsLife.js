@@ -11,9 +11,10 @@ export function ensureRichHills(state){
   deliveries:Math.max(0,Math.floor(Number(old.deliveries)||0)),
   financeLessons:Math.max(0,Math.floor(Number(old.financeLessons)||0)),
   tourVisits:Math.max(0,Math.floor(Number(old.tourVisits)||0)),
+  lastAcademyDay:Number.isFinite(Number(old.lastAcademyDay))?Number(old.lastAcademyDay):null,
   activeJob:old.activeJob&&['valet','delivery'].includes(old.activeJob.kind)?{
    kind:old.activeJob.kind,startedAt:Number(old.activeJob.startedAt)||0,
-   elapsed:Math.max(0,Number(old.activeJob.elapsed)||0,
+   elapsed:Math.max(0,Number(old.activeJob.elapsed)||0),
   }:null,
  };
  return state.richHills;
