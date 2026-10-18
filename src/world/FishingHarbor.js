@@ -86,6 +86,21 @@ function shop(group,action,colliders){
   new THREE.Vector3(action.x+w/2,h+1,action.z+d/2)));
  return station;
 }
+// Geometric road clearance includes complete segments. Checking only waypoint
+// vertices misses long uninterrupted lanes and puts scenery in traffic.
+function roadClearAt(x,z,halfWidth=2,halfDepth=2,margin=4) {
+ const footprintRadius=Math.hypot(halfWidth,halfDepth);
+ for(const route of [FISHING_HIGHWAY,...HARBOR_ROUTES]) {
+   for(let i=1;i<route.points.length;i++) {
+     const a=route.points[i-1],b=route.points[i],dx=b.x-a.x,dz=b.z-a.z;
+     const lengthSq=dx*dx+dz*dz;
+     const t=lengthSq?Math.max(0,Math.min(1,((x-a.x)*dx+(z-a.z)*dz)/lengthSq)):0;
+     const distance=Math.hypot(x-a.x-dx*t,z-a.z-dz*t);
+     if(distance<route.width/2+footprintRadius+margin)return false;
+   }
+ }
+ return true;
+}
 function decorate(group,colliders){
  // Three waterfront promenades; piers are continuous walkable geometry.
  for(const [i,x,length] of [[0,-330,335],[1,120,320],[2,490,330]])pier(group,x,String(i),length);
@@ -109,7 +124,7 @@ function decorate(group,colliders){
  for(let row=0;row<10 && placed<count;row++)for(let col=0;col<22 && placed<count;col++){
    const x=-1120+col*105,z=-4245-row*110;
    if(z<-5300||Math.abs(x)<40||Math.abs(x+310)<50||Math.abs(x-320)<50||Math.abs(x-820)<50)continue;
-   if(HARBOR_ROUTES.some(route=>route.points.some(p=>Math.hypot(p.x-x,p.z-z)<25)))continue;
+   if(!roadClearAt(x,z,3.5,3.5,5))continue;
    dummy.position.set(x,2.5,z);dummy.updateMatrix();trunk.setMatrixAt(placed,dummy.matrix);
    dummy.position.y=8.2;dummy.updateMatrix();crown.setMatrixAt(placed,dummy.matrix);
    placed++;
@@ -123,7 +138,7 @@ function decorate(group,colliders){
    if(houses>=80)break;
    const x=-1000+col*146,z=-4270-row*142;
    if(z<-5130||Math.abs(x)<75||Math.abs(x+310)<75||Math.abs(x-320)<75||Math.abs(x-820)<75)continue;
-   if(HARBOR_ROUTES.some(route=>route.points.some(p=>Math.hypot(p.x-x,p.z-z)<37)))continue;
+   if(!roadClearAt(x,z,11,10,6))continue;
    if(HARBOR_ACTIONS.some(a=>Math.hypot(a.x-x,a.z-z)<75))continue;
    const w=22,d=20,h=5.2+row%3*1.3;
    block(group,'FH_cottage_'+houses,x,h/2,z,w,h,d,mat(homeColors[(row+col)%homeColors.length]));
