@@ -46,6 +46,28 @@ const sceneCode=readFileSync(new URL('../src/world/FishingHarbor.js',import.meta
 assert.match(sceneCode,/populateHarborAssets/,'scene must instantiate real Harbor models');
 assert.match(sceneCode,/buildHarborSignals/,'town needs traffic signals rather than empty road crossings');
 assert.match(sceneCode,/FH_Crownwater_OpenSea/,'Harbor needs a visible ocean');
+
+const productionFootprints=[...production.matchAll(
+ /asset\('([^']+)','([^']+)','([^']+)',(-?[\d.]+),(-?[\d.]+),([\d.]+),([\d.]+)/g,
+)].map(m=>({id:m[1],kind:m[3],x:Number(m[4]),z:Number(m[5]),
+ w:Number(m[6]),d:Number(m[7])}));
+let checkedRoadFootprints=0;
+for(const model of productionFootprints){
+ if(model.id.startsWith('pier-ramp'))continue; // walking ramps meet service-road heads
+ const radius=Math.hypot(model.w,model.d)/2;
+ for(const road of HARBOR_ROUTES){
+  const roadWidth=road.width||12;
+  for(let i=1;i<road.points.length;i++){
+   const a=road.points[i-1],b=road.points[i],dx=b.x-a.x,dz=b.z-a.z,ll=dx*dx+dz*dz;
+   const t=ll?Math.max(0,Math.min(1,((model.x-a.x)*dx+(model.z+2600-a.z)*dz)/ll)):0;
+   const distance=Math.hypot(model.x-a.x-dx*t,model.z+2600-a.z-dz*t);
+   assert(distance>=roadWidth/2+radius+3.5,
+    'Harbor asset '+model.id+' crosses '+road.id+' drivable road/sidewalk');
+   checkedRoadFootprints++;
+  }
+ }
+}
+assert(checkedRoadFootprints>500,'test all asset footprints across full roadway segments');
 const state=defaultState();
 assert.equal(ensureFishingState(state).bait,8);
 const first=startFishing(state,{random:()=>0.01,spotId:FISHING_SPOTS[0].id});
@@ -89,5 +111,5 @@ assert.match(scene,/FH_pier_deck_/);
 assert.match(scene,/FH_ocean/);
 assert.match(scene,/FH_approach_verge/);
 console.log('[fishing-harbor] connected shortened highway, 11 harbor roads, 3 fishing piers and 8 services verified');
-console.log('[fishing-harbor] '+sourceAssets.length+' real harbor GLB placements, live signal/patrol/traffic hooks, and visible coast source checks passed');
+console.log('[fishing-harbor] '+sourceAssets.length+' existing harbor GLB paths, '+checkedRoadFootprints+' roadway-footprint clearance checks and runtime wiring passed');
 console.log('[fishing-harbor] cast, bite timing, reel, catch, market sale, bait, progression and save continuity verified');

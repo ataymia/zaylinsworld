@@ -7,6 +7,7 @@ import { STARTER_TOWN_RUNTIME_PLAN } from '../src/config/starterTownRuntimePlan.
 import { RoadNetwork } from '../src/world/RoadNetwork.js';
 import { createStarterTownRoadsidePlan } from '../src/world/StarterTownRoadside.js';
 import { buildDistrictMassing, buildingRoadClearance } from '../src/world/DistrictMassing.js';
+import { STARTER_TOWN_STREETSCAPE_PLACEMENTS, placeStreetscapeSafely, streetscapeRoadClear } from '../src/world/StreetscapeLayer.js';
 
 const source = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
 const minimap = fs.readFileSync(new URL('../src/minimap.js', import.meta.url), 'utf8');
@@ -40,6 +41,12 @@ for (const sign of signs) {
     assert(horizontal >= segment.width/2 + (sign.type === 'streetlight' ? 0.99 : 1.19),
       `sign ${sign.id} intrudes into road ${segment.id} (${horizontal.toFixed(2)}m)`);
   }
+}
+for(const authored of STARTER_TOWN_STREETSCAPE_PLACEMENTS.filter(p=>p.type==='districtSign')){
+ const actual=placeStreetscapeSafely(authored);
+ assert(actual,'all 9 district welcome signs must have a real safe roadside location');
+ assert(streetscapeRoadClear(actual.x,actual.z,5),
+   'district welcome sign must be outside every route: '+authored.id);
 }
 const { placements } = buildDistrictMassing();
 assert(placements.length >= 70, 'road-safe infill must retain a meaningful visible city');
