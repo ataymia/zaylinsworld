@@ -15,7 +15,7 @@ const harbor=DISTRICTS.find(t=>t.id==='fishing-harbor');
 assert(harbor.playable);
 assert.equal(harbor.origin.z,-5200);
 assert.equal(FISHING_SPOTS.length,3);
-assert.equal(HARBOR_ACTIONS.filter(a=>a.kind!=='fish').length,8);
+assert(HARBOR_ACTIONS.filter(a=>a.kind!=='fish').length>=12,'Harbor must provide civic and waterfront services');
 assert(HARBOR_ROUTES.length>=10);
 assert(onFishingHighway({x:0,z:-2500}),'highway must span gap to Harbor');
 assert(inFishingHarbor({x:0,z:-5200}),'waterfront must be accessible');
