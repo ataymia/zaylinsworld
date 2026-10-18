@@ -26,8 +26,8 @@ assert.match(source, /\* 0\.012\);/, 'fuel consumption must be much slower');
 assert.match(html, /<b>B<\/b> summon owned car/);
 const network = new RoadNetwork(STARTER_TOWN_RUNTIME_PLAN.routes);
 const roadPlan = createStarterTownRoadsidePlan({roadNetwork:network});
-const signs = roadPlan.placements.filter(p => ['route-sign','intersection-sign','school-sign'].includes(p.type));
-assert(signs.length >= 30, 'map must retain useful authored road signs');
+const signs = roadPlan.placements.filter(p => ['route-sign','intersection-sign','school-sign','streetlight'].includes(p.type));
+assert(signs.filter(s => s.type !== 'streetlight').length >= 30, 'map must retain useful authored road signs');
 for (const sign of signs) {
   // Test every road footprint, not the nearest centerline. A broad avenue can
   // overlap a sign even when a narrower alley has a closer centerline.
@@ -36,7 +36,7 @@ for (const sign of signs) {
     const t=Math.max(0,Math.min(1,
       ((sign.x-segment.start.x)*dx+(sign.z-segment.start.z)*dz)/(dx*dx+dz*dz||1)));
     const horizontal=Math.hypot(sign.x-segment.start.x-dx*t,sign.z-segment.start.z-dz*t);
-    assert(horizontal >= segment.width/2 + 1.19,
+    assert(horizontal >= segment.width/2 + (sign.type === 'streetlight' ? 0.99 : 1.19),
       `sign ${sign.id} intrudes into road ${segment.id} (${horizontal.toFixed(2)}m)`);
   }
 }
