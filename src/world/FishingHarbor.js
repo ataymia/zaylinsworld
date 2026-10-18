@@ -1,6 +1,7 @@
 // Procedural, playable first pass for Fishing Harbor. No remote assets,
 // per-frame geometry creation or effect-heavy water shaders.
 import * as THREE from 'three';
+import { populateHarborAssets,HARBOR_PRODUCTION_SPECS } from './FishingHarborAssets.js';
 import {HARBOR_BOUNDS,HARBOR_SHORE_Z,HARBOR_ROUTES,FISHING_HIGHWAY,HARBOR_ACTIONS,FISHING_SPOTS,HARBOR_SHIFT_Z} from '../config/fishingHarborPlan.js';
 
 const mat=(color,roughness=0.85,metalness=0)=>new THREE.MeshStandardMaterial({color,roughness,metalness});
@@ -89,6 +90,9 @@ function shop(group,action,colliders){
 // Geometric road clearance includes complete segments. Checking only waypoint
 // vertices misses long uninterrupted lanes and puts scenery in traffic.
 function roadClearAt(x,z,halfWidth=2,halfDepth=2,margin=4) {
+ // The authored placement samples are local to the Harbor. Road contracts are
+ // world coordinates after the travel-distance shortening.
+ z+=HARBOR_SHIFT_Z;
  const footprintRadius=Math.hypot(halfWidth,halfDepth);
  for(const route of [FISHING_HIGHWAY,...HARBOR_ROUTES]) {
    for(let i=1;i<route.points.length;i++) {
@@ -197,11 +201,52 @@ export function buildFishingHarbor(scene){
    }
  };
  group.userData.report={playable:true,id:'fishing-harbor',roadSegments:roadCount,
+   productionAssetsPlanned:HARBOR_PRODUCTION_SPECS.length,productionAssetsLoaded:0,
    businesses:8,fishingSpots:FISHING_SPOTS.length,pedestrians:people.length,...decoration};
+ // Clear regional visual identity: the ocean is broad and distinctly lower
+ // than the land. Players approach into visible sea with a lighthouse landmark.
+ // The shoreline remains north of the waterfront, not through a drivable lane.
+ const deepWater=new THREE.Mesh(new THREE.PlaneGeometry(3500,3400),
+   new THREE.MeshStandardMaterial({color:'#1b6383',roughness:.25,metalness:.12,
+     transparent:true,opacity:.98,side:THREE.DoubleSide}));
+ deepWater.name='FH_Crownwater_OpenSea';
+ deepWater.rotation.x=-Math.PI/2;
+ deepWater.position.set(0,-.12,-6725);
+ group.add(deepWater);
+ const shallows=new THREE.Mesh(new THREE.PlaneGeometry(2390,390),
+   new THREE.MeshStandardMaterial({color:'#48a9b3',roughness:.26,metalness:.06,
+     transparent:true,opacity:.84,side:THREE.DoubleSide}));
+ shallows.rotation.x=-Math.PI/2;shallows.position.set(0,-.09,-5585);
+ shallows.name='FH_VisibleShallowWater';group.add(shallows);
+ // Coastwork and promenade distinguish the working waterfront from an empty
+ // roadside grid. Real authored pier/railing and seawall assets load later.
+ for(let i=0;i<14;i++){
+   const x=-990+i*148;
+   block(group,'FH_promenade_rail_post_'+i,x,.9,-5358,1.5,1.8,1.5,concrete);
+ }
  group.position.z=HARBOR_SHIFT_Z;
  // World-space collision bounds are separate from child-local render meshes.
  for(const collider of colliders)collider.translate(new THREE.Vector3(0,0,HARBOR_SHIFT_Z));
  scene.add(group);
+ let hydration=null;
+ const hydrate=({renderer}={})=>{
+   if(hydration)return hydration;
+   hydration=populateHarborAssets({group,renderer,onModel:(spec)=>{
+     // Keep interaction signage, but hide crude building boxes whenever a
+     // verified production exterior replaces that exact action's placeholder.
+     const fallback=group.getObjectByName('FH_'+spec.id);
+     if(fallback)fallback.children.forEach(child=>{
+       if(child.name?.startsWith('FH_building_')||child.name?.startsWith('FH_roof_')||
+          child.name?.startsWith('FH_door_')||child.name?.startsWith('FH_window_'))child.visible=false;
+     });
+   }}).then(report=>{
+     group.userData.report.productionAssetsLoaded=report.loaded;
+     group.userData.report.productionAssetsFailed=report.failed;
+     group.userData.report.assetHydrationComplete=true;
+     return report;
+   });
+   return hydration;
+ };
  const actionByProximity=(position,radius=7)=> {
    let selected=null,distance=radius;
    for(const action of HARBOR_ACTIONS){
@@ -211,5 +256,5 @@ export function buildFishingHarbor(scene){
    }
    return selected;
  };
- return {group,colliders,nearestAction:actionByProximity,update,report:group.userData.report};
+ return {group,colliders,nearestAction:actionByProximity,update,hydrate,report:group.userData.report};
 }
