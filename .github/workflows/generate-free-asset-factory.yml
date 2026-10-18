@@ -11,21 +11,10 @@ on:
         description: Sequential production passes in one runner
         required: false
         default: '2'
-  schedule:
-    - cron: '2,17,32,47 * * * *'
   pull_request:
     paths:
       - 'asset-factory/**'
       - 'tools/asset-factory/**'
-      - 'docs/**/*.md'
-      - 'package.json'
-      - '.github/workflows/generate-free-asset-factory.yml'
-  push:
-    branches: [main, agent/gameplay-gap-asset-expansion]
-    paths:
-      - 'asset-factory/**'
-      - 'tools/asset-factory/**'
-      - 'docs/**/*.md'
       - 'package.json'
       - '.github/workflows/generate-free-asset-factory.yml'
 
@@ -37,8 +26,32 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    outputs:
+      has_work: ${{ steps.queue.outputs.has_work }}
+      queued: ${{ steps.queue.outputs.queued }}
+    steps:
+      - name: Checkout queue state
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Check for supported queued assets
+        id: queue
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const state = JSON.parse(fs.readFileSync('asset-factory/state/queue.json', 'utf8'));
+          const queued = Number(state?.counts?.queued || 0) + Number(state?.counts?.queuedRuntime || 0);
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, `queued=${queued}\nhas_work=${queued > 0}\n`);
+          console.log(`[asset-factory] supported queued work: ${queued}`);
+          NODE
+
   generate:
-    if: github.actor != 'github-actions[bot]' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    needs: preflight
+    if: needs.preflight.outputs.has_work == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 180
     env:
@@ -58,26 +71,7 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Skip idle scheduled batches
-        id: pending
-        shell: bash
-        run: |
-          if [[ "$GITHUB_EVENT_NAME" != "schedule" ]]; then
-            echo "run=true" >> "$GITHUB_OUTPUT"
-          else
-            node --input-type=module -e '
-              import { readFileSync } from "node:fs";
-              let shouldRun = true;
-              try {
-                const { queueCounts = {} } = JSON.parse(readFileSync("reports/asset-factory/latest.json", "utf8"));
-                shouldRun = Number(queueCounts.queued || 0) + Number(queueCounts.queuedRuntime || 0) > 0;
-              } catch { /* A missing report must not prevent production. */ }
-              console.log("run=" + shouldRun);
-            ' >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Install free Blender engine and headless graphics runtime
-        if: steps.pending.outputs.run == 'true'
         shell: bash
         run: |
           sudo apt-get update
@@ -97,7 +91,6 @@ jobs:
           PYTHONPATH=/usr/lib/python3/dist-packages blender --background --python-expr "import numpy; print('Blender NumPy', numpy.__version__)"
 
       - name: Validate factory source
-        if: steps.pending.outputs.run == 'true'
         shell: bash
         run: |
           node --check tools/asset-factory/compile-expanded-specs.mjs
@@ -123,7 +116,6 @@ jobs:
             tools/asset-factory/blender/generate_batch.py
 
       - name: Generate and quality-check fair diversified production passes
-        if: steps.pending.outputs.run == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -139,7 +131,7 @@ jobs:
           done
 
       - name: Commit passing assets, queue state, and compact reports
-        if: steps.pending.outputs.run == 'true' && github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request'
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
@@ -163,7 +155,7 @@ jobs:
           git push origin "HEAD:$GITHUB_REF_NAME"
 
       - name: Upload temporary QA previews and health proof
-        if: always() && steps.pending.outputs.run == 'true'
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: zta-asset-factory-qa-${{ github.run_number }}
