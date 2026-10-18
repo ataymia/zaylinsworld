@@ -28,6 +28,40 @@ export const HARBOR_ROUTES=Object.freeze([
   route('east-pier-access','East Pier Access','service',[[320,-5220],[490,-5300],[490,-5355]]),
 ]);
 export const ALL_FISHING_ROUTES=Object.freeze([FISHING_HIGHWAY,...HARBOR_ROUTES]);
+
+const localLoop=(id,activity,coords)=>Object.freeze({
+ id,activity,scheduleId:'retail-daytime',
+ loop:Object.freeze(coords.map(([x,z])=>Object.freeze([x,z+HARBOR_SHIFT_Z]))),
+});
+export const HARBOR_PEDESTRIAN_LOOPS=Object.freeze([
+ localLoop('harbor-market-workers','retail',[
+   [-620,-5140],[-400,-5140],[-400,-5035],[-620,-5035]]),
+ localLoop('harbor-boardwalk-residents','park',[
+   [-560,-5335],[-150,-5335],[-150,-5260],[-560,-5260]]),
+ localLoop('harbor-academy-students','school',[
+   [625,-4635],[735,-4635],[735,-4530],[625,-4530]]),
+ localLoop('harbor-patrol-beat','civic',[
+   [-875,-4870],[-770,-4870],[-770,-4770],[-875,-4770]]),
+ localLoop('harbor-village-neighbors','residential',[
+   [650,-5050],[960,-5050],[960,-4800],[650,-4800]]),
+ localLoop('harbor-boatworks-shift','industrial',[
+   [-1050,-4970],[-750,-4970],[-750,-4800],[-1050,-4800]]),
+]);
+const trafficLoop=(id,name,coords,trafficKind='ambient')=>Object.freeze({
+ id,name,trafficKind,baseSpeed:9.5,
+ loop:Object.freeze(coords.map(([x,z])=>Object.freeze([x,z+HARBOR_SHIFT_Z]))),
+});
+export const HARBOR_TRAFFIC_LOOPS=Object.freeze([
+ trafficLoop('harbor-central-traffic','Harbor Center Traffic',[
+   [-650,-4710],[0,-4710],[0,-5220],[-650,-5220]]),
+ trafficLoop('harbor-marina-traffic','Marina District Traffic',[
+   [0,-4710],[820,-4710],[820,-5220],[0,-5220]]),
+ trafficLoop('harbor-village-traffic','Village Delivery Loop',[
+   [-310,-4710],[320,-4710],[320,-4950],[-310,-4950]],'service'),
+ trafficLoop('harbor-market-delivery','Market Wharf Delivery',[
+   [-650,-4710],[-310,-4710],[-310,-4950],[-650,-4950]],'service'),
+]);
+
 const ORIGINAL_HARBOR_LOCATIONS=Object.freeze([
   {id:'bait-tackle',name:'Bluefin Bait & Tackle',kind:'bait',x:-240,z:-5070,color:'#df9b4d'},
   {id:'seafood-market',name:'Harbor Catch Market',kind:'sell',x:-570,z:-5100,color:'#378caf'},
