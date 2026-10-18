@@ -32,7 +32,7 @@ const SURFACES = Object.freeze({
 // model's handful of draw calls. The collision registry spatially indexes these
 // placements; density no longer implies a per-frame scan of every tree.
 export const STARTER_TOWN_TREE_TARGET = 1400;
-export const STARTER_TOWN_ROCK_TARGET = 240;
+export const STARTER_TOWN_ROCK_TARGET = 130;
 const DEFAULT_ROAD_NETWORK = new RoadNetwork(STARTER_TOWN_RUNTIME_PLAN.routes);
 
 function surfaceFor(parcel) {
@@ -189,7 +189,7 @@ export function createStarterTownVegetationPlan(
       for (let index = 0; index < 4; index++) {
         const rx = x + (stableUnit(`${parcel.id}:rock-x:${index}`) - 0.5) * w * 0.65;
         const rz = z + (stableUnit(`${parcel.id}:rock-z:${index}`) - 0.5) * d * 0.65;
-        if (!clearOfRoadNetwork(rx, rz, roadNetwork, 2.5)) continue;
+        if (!clearOfRoadNetwork(rx, rz, roadNetwork, 11)) continue;
         rocks.push({
           id: `${parcel.id}:rock:${index}`,
           x: rx,
@@ -266,7 +266,7 @@ export function createStarterTownVegetationPlan(
       const candidateX = x + (stableUnit(`city-rock-x:${rockInfillIndex}`) - 0.5) * 24;
       const candidateZ = z + (stableUnit(`city-rock-z:${rockInfillIndex}`) - 0.5) * 24;
       rockInfillIndex += 1;
-      if (!clearOfRoadNetwork(candidateX, candidateZ, roadNetwork, 3.5)) continue;
+      if (!clearOfRoadNetwork(candidateX, candidateZ, roadNetwork, 12)) continue;
       if (!clearOfFunctionalLocation(candidateX, candidateZ, 18)) continue;
       if (!clearOfParcelCore(candidateX, candidateZ, parcels, 2)) continue;
       if (!clearOfPlacements(trees, candidateX, candidateZ, 5.5)) continue;
@@ -304,7 +304,7 @@ export function createStarterTownVegetationPlan(
     const radius = 960 + stableUnit(`outer-rock-radius:${index}`) * 190;
     const x = Math.cos(angle) * radius;
     const z = Math.sin(angle) * radius;
-    if (!clearOfRoadNetwork(x, z, roadNetwork, 2.5)) continue;
+    if (!clearOfRoadNetwork(x, z, roadNetwork, 12)) continue;
     rocks.push({
       id: `outer-belt:rock:${index}`,
       x,
@@ -315,7 +315,7 @@ export function createStarterTownVegetationPlan(
   }
   return Object.freeze({
     trees: Object.freeze(trees.slice(0, STARTER_TOWN_TREE_TARGET)),
-    rocks: Object.freeze(rocks.slice(0, STARTER_TOWN_ROCK_TARGET)),
+    rocks: Object.freeze(rocks.filter(rock => clearOfRoadNetwork(rock.x,rock.z,roadNetwork,Math.max(12,(rock.scale||1)*3))).slice(0,STARTER_TOWN_ROCK_TARGET)),
   });
 }
 
