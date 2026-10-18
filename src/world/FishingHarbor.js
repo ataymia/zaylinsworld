@@ -149,6 +149,31 @@ function decorate(group,colliders){
  }
  return {houses,trees:placed};
 }
+function harborPeople(group){
+ // Pedestrians stay on the 27-meter-wide waterfront boardwalk. No collisions,
+ // weapons, or looping city AI dependencies are added to the new town.
+ const people=[],palette=['#bb7c68','#407e94','#c0a35e','#8d8ab4','#62a2a4'];
+ const skin=['#7a4d39','#c78c61','#f0c6a4','#51322b','#a26849'];
+ for(let i=0;i<18;i++){
+   const x=-850+i*97;
+   if(Math.abs(x+330)<32||Math.abs(x-120)<32||Math.abs(x-490)<32)continue;
+   const person=new THREE.Group();person.name='FH_boardwalk_pedestrian_'+i;
+   const torso=new THREE.Mesh(new THREE.CylinderGeometry(0.46,0.38,1.2,7),
+     mat(palette[i%palette.length]));
+   torso.position.y=1.2;
+   const head=new THREE.Mesh(new THREE.SphereGeometry(0.33,9,7),
+     mat(skin[i%skin.length]));
+   head.position.y=2.12;
+   const legs=new THREE.Mesh(new THREE.CylinderGeometry(0.28,0.25,0.9,6),
+     mat('#344556'));
+   legs.position.y=0.46;
+   person.add(torso,head,legs);
+   person.position.set(x,0.17,-5345);
+   group.add(person);
+   people.push({group:person,originZ:-5345,phase:i*1.6});
+ }
+ return people;
+}
 export function buildFishingHarbor(scene){
  const group=new THREE.Group();group.name='ZW_FishingHarbor_Playable_v1';
  // Real separate landscape 4km north; the original Starter Town is untouched.
@@ -161,8 +186,17 @@ export function buildFishingHarbor(scene){
  const colliders=[];
  for(const action of HARBOR_ACTIONS.filter(a=>a.kind!=='fish'))shop(group,action,colliders);
  const decoration=decorate(group,colliders);
+ const people=harborPeople(group);
+ let elapsed=0;
+ const update=(dt)=>{
+   elapsed+=Math.min(0.05,Math.max(0,dt));
+   for(const p of people){
+     p.group.position.z=p.originZ+Math.sin(elapsed*0.52+p.phase)*5;
+     p.group.rotation.y=Math.sin(elapsed*0.52+p.phase)>0?Math.PI:0;
+   }
+ };
  group.userData.report={playable:true,id:'fishing-harbor',roadSegments:roadCount,
-   businesses:8,fishingSpots:FISHING_SPOTS.length, ...decoration};
+   businesses:8,fishingSpots:FISHING_SPOTS.length,pedestrians:people.length,...decoration};
  scene.add(group);
  const actionByProximity=(position,radius=7)=> {
    let selected=null,distance=radius;
@@ -173,5 +207,5 @@ export function buildFishingHarbor(scene){
    }
    return selected;
  };
- return {group,colliders,nearestAction:actionByProximity,report:group.userData.report};
+ return {group,colliders,nearestAction:actionByProximity,update,report:group.userData.report};
 }
