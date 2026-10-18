@@ -29,9 +29,16 @@ const roadPlan = createStarterTownRoadsidePlan({roadNetwork:network});
 const signs = roadPlan.placements.filter(p => ['route-sign','intersection-sign','school-sign'].includes(p.type));
 assert(signs.length >= 30, 'map must retain useful authored road signs');
 for (const sign of signs) {
-  const nearest = network.nearest(sign);
-  assert(nearest.distance >= nearest.segment.width/2 + 1.19,
-    `sign ${sign.id} intrudes into a vehicle lane or sidewalk (${nearest.distance})`);
+  // Test every road footprint, not the nearest centerline. A broad avenue can
+  // overlap a sign even when a narrower alley has a closer centerline.
+  for (const segment of network.segments) {
+    const dx=segment.end.x-segment.start.x, dz=segment.end.z-segment.start.z;
+    const t=Math.max(0,Math.min(1,
+      ((sign.x-segment.start.x)*dx+(sign.z-segment.start.z)*dz)/(dx*dx+dz*dz||1)));
+    const horizontal=Math.hypot(sign.x-segment.start.x-dx*t,sign.z-segment.start.z-dz*t);
+    assert(horizontal >= segment.width/2 + 1.19,
+      `sign ${sign.id} intrudes into road ${segment.id} (${horizontal.toFixed(2)}m)`);
+  }
 }
 const { placements } = buildDistrictMassing();
 assert(placements.length >= 70, 'road-safe infill must retain a meaningful visible city');
