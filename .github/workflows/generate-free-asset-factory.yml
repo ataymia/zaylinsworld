@@ -58,7 +58,26 @@ jobs:
         with:
           node-version: '24'
 
+      - name: Skip idle scheduled batches
+        id: pending
+        shell: bash
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" != "schedule" ]]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            node --input-type=module -e '
+              import { readFileSync } from "node:fs";
+              let shouldRun = true;
+              try {
+                const { queueCounts = {} } = JSON.parse(readFileSync("reports/asset-factory/latest.json", "utf8"));
+                shouldRun = Number(queueCounts.queued || 0) + Number(queueCounts.queuedRuntime || 0) > 0;
+              } catch { /* A missing report must not prevent production. */ }
+              console.log("run=" + shouldRun);
+            ' >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Install free Blender engine and headless graphics runtime
+        if: steps.pending.outputs.run == 'true'
         shell: bash
         run: |
           sudo apt-get update
@@ -78,6 +97,7 @@ jobs:
           PYTHONPATH=/usr/lib/python3/dist-packages blender --background --python-expr "import numpy; print('Blender NumPy', numpy.__version__)"
 
       - name: Validate factory source
+        if: steps.pending.outputs.run == 'true'
         shell: bash
         run: |
           node --check tools/asset-factory/compile-expanded-specs.mjs
@@ -103,6 +123,7 @@ jobs:
             tools/asset-factory/blender/generate_batch.py
 
       - name: Generate and quality-check fair diversified production passes
+        if: steps.pending.outputs.run == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -118,7 +139,7 @@ jobs:
           done
 
       - name: Commit passing assets, queue state, and compact reports
-        if: github.event_name != 'pull_request'
+        if: steps.pending.outputs.run == 'true' && github.event_name != 'pull_request'
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
@@ -142,7 +163,7 @@ jobs:
           git push origin "HEAD:$GITHUB_REF_NAME"
 
       - name: Upload temporary QA previews and health proof
-        if: always()
+        if: always() && steps.pending.outputs.run == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: zta-asset-factory-qa-${{ github.run_number }}
