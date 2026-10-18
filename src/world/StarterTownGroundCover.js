@@ -7,7 +7,7 @@
 // fallbacks so a failed asset can never make the world empty again).
 // ─────────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
-import { STARTER_TOWN_PARCELS } from '../config/starterTownParcelPlan.js';
+import { STARTER_TOWN_RENDER_PARCELS } from '../config/starterTownParcelPlan.js';
 import { STARTER_TOWN_RUNTIME_PLAN } from '../config/starterTownRuntimePlan.js';
 import { loadAsset } from '../assets.js';
 import { registerWorldObject } from '../worldCollision.js';
@@ -153,7 +153,7 @@ function perimeterCandidate(parcel, index) {
 }
 
 export function createStarterTownVegetationPlan(
-  parcels = STARTER_TOWN_PARCELS,
+  parcels = STARTER_TOWN_RENDER_PARCELS,
   roadNetwork = DEFAULT_ROAD_NETWORK,
 ) {
   const trees = [];
@@ -422,7 +422,7 @@ function buildParkingStripes(parcels, heightAt) {
 
 export async function buildStarterTownGroundCover({
   renderer = null,
-  parcels = STARTER_TOWN_PARCELS,
+  parcels = STARTER_TOWN_RENDER_PARCELS,
   heightAt = () => 0,
 } = {}) {
   const group = new THREE.Group();
