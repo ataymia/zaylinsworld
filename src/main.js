@@ -291,6 +291,7 @@ let minimap = null;              // corner radar API (initMinimap)
 let starterTownNavigationEnabled = false;
 let guidanceAccum = 0;
 let guidanceKey = '';
+let customMapDestination = null;  // player-chosen waypoint, independent of quest tracking
 let debugBadge = null;           // debug panel API (initDebugBadge → { toggle })
 let monsters = [];               // active Monster Mode creatures
 const extraSpinners = [];        // idle-spin display models (Frostbox jewelry, etc.)
@@ -411,6 +412,16 @@ function enterWorld() {
     minimap = initMinimap({
       landmarks: cityInfo.landmarks,
       largeWorld: relocatedLocationIds.length > 0,
+      onSelectDestination: (point) => {
+        customMapDestination = { x: point.x, z: point.z };
+        guidanceAccum = 1;
+        notify('📍 Destination set. Follow the cyan navigation line. Click again to change it.');
+      },
+      onSelectTown: (town) => {
+        notify(town.playable
+          ? '🗺️ Starter Town is playable. Switch to City to choose a street destination.'
+          : '🗺️ ' + town.name + ' is mapped for world expansion, but it is not yet drivable.');
+      },
     });                                        // corner radar / town map (before asset wiring)
     debug.set('minimapInit', !!minimap);
     if (!minimap) console.warn('[minimap] init FAILED — #minimap canvas missing');
@@ -2687,6 +2698,39 @@ function robNearestNpc() {
   saveNow();
 }
 
+// ── vehicle recovery and fuel ──────────────────────────────────────────────────
+// B summons the player's legally owned active vehicle, without creating a stolen
+// duplicate. The familiar starter-spawn planner places it beside the avatar or
+// in the closest usable road lane. No fee or mission prerequisite.
+function summonOwnedCar() {
+  if (!player || !car || area !== 'city' || inCar) {
+    notify('🚗 Summon your car while on foot outdoors.');
+    return false;
+  }
+  if (!state.vehicleState?.activeVehicleId) {
+    notify('🚗 You need an owned vehicle before you can summon one.');
+    return false;
+  }
+  const position = player.group.position;
+  const placed = starterVehicleSpawnNear(position, { facing: player.group.rotation.y });
+  car.g.position.set(placed.x, 0, placed.z);
+  car.g.rotation.y = placed.rotationY;
+  car.speed = 0;
+  car.parked = true;
+  car.g.visible = true;
+  // Older saves can have an empty tank. Roadside recovery gives enough fuel to
+  // drive rather than trapping the player in a sprawling city.
+  if (!Number.isFinite(car.fuel) || car.fuel < 20) {
+    car.fuel = 20;
+    state.fuel = 20;
+    updateOwnedVehicleCondition(state, state.vehicleState.activeVehicleId, { fuel: 20 });
+  }
+  resolveCollision(car.g.position, 1.5, cityColliders);
+  notify('🚗 Your car is beside you! Press F to get in.');
+  saveNow();
+  return true;
+}
+
 // ── fuel + gas-station refuel ───────────────────────────────────────────────────
 // Find the nearest gas-station forecourt within its radius of a position.
 function nearestRefuel(pos) {
@@ -2738,7 +2782,7 @@ function updateCar(dt) {
   const h = handlingFor(v.damage || 0);
   const accel = 16, maxR = 9, fric = 7;
   const maxF = 24 * h.speedMult;
-  // fuel: an empty tank sputters out (no throttle), so you must reach a gas station
+  // Fuel remains part of the vehicle economy, but a tank now lasts many hours of driving.
   if (v.fuel === undefined) v.fuel = (v === car) ? (state.fuel ?? 100) : 100;
   const dry = v.fuel <= 0 || h.totaled;
   if (h.totaled && inp.f !== 0 && !v._totaledWarned) {
@@ -2794,7 +2838,7 @@ function updateCar(dt) {
   if (drivenDist > 120 && !drivenFlagged) { drivenFlagged = true; missionEvent('drive-checkpoint'); }
   // burn fuel proportional to throttle/speed; warn once when it gets low/empty
   const prevFuel = v.fuel;
-  v.fuel = Math.max(0, v.fuel - (Math.abs(v.speed) / maxF) * dt * 0.55 - (inp.f !== 0 ? dt * 0.05 : 0));
+  v.fuel = Math.max(0, v.fuel - ((Math.abs(v.speed) / maxF) * dt * 0.55 + (inp.f !== 0 ? dt * 0.05 : 0)) * 0.012);
   if (v === car) state.fuel = v.fuel;
   if (prevFuel > 20 && v.fuel <= 20) notify('⛽ Low fuel — find a Gas-N-Go to refuel.');
   if (prevFuel > 0 && v.fuel <= 0) notify('⛽ Out of fuel! Coast to a gas station to refuel.');
@@ -4000,7 +4044,7 @@ function updatePlayer(dt, t) {
   const pfit = pstats.fitness || 0;
   const canSprint = inp.run && moving && (pstats.energy || 0) > 2;
   const monsterForm = !!state.playerMonster;     // monster form moves faster & fiercer
-  const speed = (canSprint ? (6.2 + (pfit / 100) * 2.4) : 3.4) * (monsterForm ? 1.3 : 1);
+  const speed = (canSprint ? (9.2 + (pfit / 100) * 2.4) : 5.2) * (monsterForm ? 1.3 : 1);
   // Sprint stamina drain is gentle now so you can actually outrun cops; fitness
   // lowers it further (gym training pays off). ~3/s at 0 fitness, ~2.2/s at 100.
   if (canSprint) pstats.energy = Math.max(0, pstats.energy - (3.0 * (1 - pfit / 250)) * dt);
@@ -4161,6 +4205,28 @@ function updateQuestGuidance(position, dt) {
   guidanceAccum += dt;
   if (guidanceAccum < 0.65) return;
   guidanceAccum = 0;
+  // Manual map directions take priority without changing or discarding quests.
+  if (customMapDestination) {
+    if (Math.hypot(customMapDestination.x - position.x, customMapDestination.z - position.z) < 9) {
+      customMapDestination = null;
+      notify('📍 Destination reached. Quest navigation restored.');
+    } else {
+      const route = starterTownNavigation.routePoints(position, customMapDestination, {
+        allowService: true, weight: 'travel-time',
+      });
+      if (route?.points?.length > 1) {
+        minimap.setGuidanceRoute({
+          points: route.points, destination: customMapDestination, label: 'Your waypoint',
+        });
+        guidanceKey = 'manual-waypoint';
+        debug.set('questRoute', 'manual waypoint · ' + Math.round(route.distance) + 'm');
+      } else {
+        minimap.setGuidanceRoute(null);
+        debug.set('questRoute', 'manual waypoint unreachable');
+      }
+      return;
+    }
+  }
   const hint = activeQuestGuidance();
   if (!hint) {
     if (guidanceKey) minimap.setGuidanceRoute(null);
@@ -5270,8 +5336,9 @@ function handleInteraction(clicked = false) {
     const pump = nearestRefuel(v.g.position);
     if (pump && Math.abs(v.speed || 0) < 1.5 && (v.fuel ?? 100) < 99.5) {
       const cost = refuelCost(v);
-      showPrompt(`Refuel  ($${cost})`, 'e');
-      if (controls.consumePress('e')) refuelVehicle(v);
+      showPrompt(`Refuel (${cost}) · F to exit vehicle`, 'e');
+      if (controls.consumePress('f')) exitCar();
+      else if (controls.consumePress('e')) refuelVehicle(v);
       return;
     }
     showPrompt('Exit vehicle', 'f');
@@ -5452,6 +5519,7 @@ window.addEventListener('keydown', e => {
   }
   if (k === 'm') { debug.markHandler('m'); toggleMonsterMode(); }
   if (k === 't' && !inCar && area === 'city') transformPlayer();   // 😈 monster-form toggle
+  if (k === 'b') summonOwnedCar();
   if (k === 'n') {
     debug.markHandler('n');
     if (minimap) {
@@ -5582,7 +5650,7 @@ function animate() {
   // spin any dealership car flagged for preview
   if (interiors) Object.values(interiors.byId).forEach(intr => intr.stations.forEach(st => { if (st.mesh && st.mesh.userData.spin) st.mesh.rotation.y += 0.02; }));
 
-  const busy = interiorAcceptanceRunning || isUIOpen() || isSettingsOpen() || eating || hairGame || lineupGame;
+  const busy = interiorAcceptanceRunning || isUIOpen() || isSettingsOpen() || eating || hairGame || lineupGame || !!minimap?.isExpanded();
   // collectible gems: always bob/twinkle; only collectible while on foot in the city
   if (cityGems.length) {
     const pp = (!busy && !inCar && area === 'city' && player) ? player.group.position : null;
@@ -5885,6 +5953,9 @@ window.ZW = Object.assign(window.ZW || {}, {
   ppos: () => (player ? { x: +player.group.position.x.toFixed(2), z: +player.group.position.z.toFixed(2) } : null),
   press: (k) => { controls.justPressed.add(String(k).toLowerCase()); },
   carPos: () => ({ x: car.g.position.x, z: car.g.position.z }),
+  summonCar: () => summonOwnedCar(),
+  mapDestination: () => customMapDestination && { ...customMapDestination },
+  clearMapDestination: () => { customMapDestination = null; guidanceAccum = 1; },
   entranceList: () => Object.entries(entranceMap).map(([id, e]) => ({ id, x: e.doorPos.x, z: e.doorPos.z })),
   stationList: () => (area === 'city' ? [] : interiors.byId[area].stations.map(s => ({ id: s.id, label: s.label, x: s.pos.x, z: s.pos.z }))),
   exitPos: () => (area === 'city' ? null : { x: interiors.byId[area].exit.x, z: interiors.byId[area].exit.z }),

@@ -5,6 +5,8 @@
 // lots, and future-update reserves. Asset swaps never change these IDs.
 // ─────────────────────────────────────────────────────────────────────────────
 
+import { STARTER_TOWN_DISTRICTS, STARTER_TOWN_ROUTES } from './starterTownRuntimePlan.js';
+
 const freeze = (value) => Object.freeze(value);
 const rect = (x, z, w, d) => freeze({ x, z, w, d });
 const parcel = (id, districtId, type, x, z, w, d, extra = {}) => freeze({
@@ -100,10 +102,86 @@ export const STARTER_TOWN_RESERVE_PARCELS = freeze([
   parcel('reserve-westside-lot', 'westside-blocks', 'purposeful-empty', -470, 840, 120, 90, { purpose: 'vacant lot and future community build' }),
 ]);
 
+// Deterministic infill occupies unused plots, not existing functional buildings,
+// reserved lots, active streets, or the park/school access buffers.
+const INFILL_TYPES = Object.freeze({
+  'dreamdrop-district':      ['mixed-use', 54, 44, 83, 11],
+  'market-mile':             ['commercial', 46, 42, 90, 7],
+  'northworks-auto-row':     ['industrial', 62, 52, 111, 8],
+  'scholars-quarter':        ['residential-block', 46, 40, 92, 8],
+  'civic-heights':           ['office', 52, 46, 96, 9],
+  'eastgate-corridor':       ['commercial', 46, 38, 98, 5],
+  'parkside-commons':        ['residential-row', 42, 35, 116, 5],
+  'willowbend-residential':  ['residential-row', 40, 34, 82, 9],
+  'westside-blocks':         ['residential-block', 48, 42, 92, 11],
+});
+const existingPlots = [
+  ...STARTER_TOWN_FUNCTIONAL_PARCELS,
+  ...STARTER_TOWN_FILLER_PARCELS,
+  ...STARTER_TOWN_RESERVE_PARCELS,
+  ...STARTER_TOWN_NO_BUILD_BUFFERS.filter(p => p.bounds),
+];
+const overlaps = (a, b, margin = 13) =>
+  Math.abs(a.x - b.x) < (a.w + b.w) / 2 + margin &&
+  Math.abs(a.z - b.z) < (a.d + b.d) / 2 + margin;
+function segmentDistance(x, z, p, q) {
+  const dx = q.x - p.x, dz = q.z - p.z, d = dx * dx + dz * dz;
+  const t = d ? Math.max(0, Math.min(1, ((x - p.x) * dx + (z - p.z) * dz) / d)) : 0;
+  return Math.hypot(x - (p.x + t * dx), z - (p.z + t * dz));
+}
+function hasStreetClearance(box) {
+  const cornerRadius = Math.hypot(box.w, box.d) * 0.5;
+  for (const route of STARTER_TOWN_ROUTES) {
+    const width = Number(route.width) || (['highway', 'expressway'].includes(route.tier) ? 22 : 12);
+    for (let i = 1; i < route.points.length; i++) {
+      if (segmentDistance(box.x, box.z, route.points[i-1], route.points[i]) <
+        cornerRadius + width/2 + 6) return false;
+    }
+  }
+  return true;
+}
+function makeInfill() {
+  const result = [];
+  for (const district of STARTER_TOWN_DISTRICTS) {
+    const spec = INFILL_TYPES[district.id];
+    if (!spec) continue;
+    const [type, w, d, pitch, target] = spec;
+    const xs = district.polygon.map(p => p.x), zs = district.polygon.map(p => p.z);
+    const xMin = Math.max(-990, Math.min(...xs) + w / 2 + 18);
+    const xMax = Math.min(990, Math.max(...xs) - w / 2 - 18);
+    const zMin = Math.max(-990, Math.min(...zs) + d / 2 + 18);
+    const zMax = Math.min(990, Math.max(...zs) - d / 2 - 18);
+    let placed = 0;
+    for (let row = 0, z = zMin; z <= zMax && placed < target; row++, z += pitch) {
+      for (let x = xMin + (row % 2 ? pitch * 0.35 : 0); x <= xMax && placed < target; x += pitch) {
+        const box = rect(Math.round(x), Math.round(z), w, d);
+        if (existingPlots.some(p => overlaps(box, p.bounds))) continue;
+        if (result.some(p => overlaps(box, p.bounds))) continue;
+        if (!hasStreetClearance(box)) continue;
+        result.push(parcel('infill-' + district.id + '-' + String(placed).padStart(2, '0'),
+          district.id, type, box.x, box.z, w, d, {
+            lots: 1, infill: true, floors: type === 'industrial' ? [1, 3]
+              : type === 'residential-row' ? [1, 2] : [2, 5],
+          }));
+        placed++;
+      }
+    }
+  }
+  return freeze(result);
+}
+export const STARTER_TOWN_INFILL_PARCELS = makeInfill();
+
+// Keep the 54 authored construction parcels immutable for saves, registry,
+// phase audits and planned future-use IDs. New decorative infill stays in a
+// separate render-only list and cannot change canonical parcel ownership.
 export const STARTER_TOWN_PARCELS = freeze([
   ...STARTER_TOWN_FUNCTIONAL_PARCELS,
   ...STARTER_TOWN_FILLER_PARCELS,
   ...STARTER_TOWN_RESERVE_PARCELS,
+]);
+export const STARTER_TOWN_RENDER_PARCELS = freeze([
+  ...STARTER_TOWN_PARCELS,
+  ...STARTER_TOWN_INFILL_PARCELS,
 ]);
 
 export const PARCEL_BY_ID = freeze(Object.fromEntries(STARTER_TOWN_PARCELS.map((entry) => [entry.id, entry])));

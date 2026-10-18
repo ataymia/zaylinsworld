@@ -34,8 +34,14 @@ const {
   STARTER_TOWN_PARCELS,
   STARTER_TOWN_FUNCTIONAL_PARCELS,
   STARTER_TOWN_RESERVE_PARCELS,
+  STARTER_TOWN_FILLER_PARCELS,
+  STARTER_TOWN_INFILL_PARCELS,
+  STARTER_TOWN_RENDER_PARCELS,
 } = await importLocal('src/config/starterTownParcelPlan.js');
-assert.equal(STARTER_TOWN_PARCELS.length, 54, 'Starter Town must expose the locked 54-parcel construction plan');
+assert.equal(STARTER_TOWN_FUNCTIONAL_PARCELS.length + STARTER_TOWN_FILLER_PARCELS.length + STARTER_TOWN_RESERVE_PARCELS.length, 54, 'original 54 authored parcels must remain intact');
+assert.equal(STARTER_TOWN_PARCELS.length, 54, 'canonical 54 saved-world parcels must not change');
+assert.equal(STARTER_TOWN_RENDER_PARCELS.length, 54 + STARTER_TOWN_INFILL_PARCELS.length, 'decorative infill must be additive but render-only');
+assert.ok(STARTER_TOWN_INFILL_PARCELS.every(p => p.infill && p.townId === 'starter-town'), 'infill parcels need stable, labeled Starter Town identities');
 assert.equal(STARTER_TOWN_FUNCTIONAL_PARCELS.length, 13, 'every locked location needs one functional parcel');
 assert.equal(STARTER_TOWN_RESERVE_PARCELS.length, 6, 'future expansion and purposeful empty lots must remain reserved');
 
@@ -45,7 +51,7 @@ const world = registry.snapshot();
 assert.equal(world.districts, 9);
 assert.equal(world.districtProfiles, 9);
 assert.equal(world.locations, 13);
-assert.equal(world.parcels, 54);
+assert.equal(world.parcels, STARTER_TOWN_PARCELS.length);
 assert.ok(world.towns >= 9, 'connected world town records must remain available');
 assert.equal(registry.location('zaylins-home').position.z, 828);
 assert.equal(registry.parcelForLocation('zaylins-home')?.id, 'parcel-zaylins-home');
