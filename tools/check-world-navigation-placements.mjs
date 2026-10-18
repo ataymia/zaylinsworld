@@ -18,7 +18,7 @@ assert.equal(minimapRoadPlan({largeWorld:true}).length, STARTER_TOWN_RUNTIME_PLA
 assert.match(minimap, /onSelectDestination/, 'canvas must accept clicked destinations');
 assert.match(minimap, /WORLD_TOWNS/, 'world overview must reuse canonical world blueprint');
 assert.match(minimap, /worldView = clamp/, 'world map wheel zoom must be bounded');
-assert.match(minimap, /cityCenter\.x -= dx/, 'city map must support panning');
+assert.match(minimap, /center\.x -= dx/, 'city map must support panning');
 assert.match(source, /customMapDestination/, 'chosen waypoint must override quest navigation');
 assert.match(source, /starterTownNavigation\.routePoints\(position, customMapDestination/, 'waypoints must use actual drivable RoadGraph');
 assert.match(source, /if \(k === 'b'\) summonOwnedCar\(\)/, 'owned-car recovery needs a hotkey');
