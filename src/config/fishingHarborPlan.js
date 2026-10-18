@@ -26,10 +26,10 @@ export const HARBOR_ROUTES=Object.freeze([
 ]);
 export const ALL_FISHING_ROUTES=Object.freeze([FISHING_HIGHWAY,...HARBOR_ROUTES]);
 export const HARBOR_LOCATIONS=Object.freeze([
-  {id:'bait-tackle',name:'Bluefin Bait & Tackle',kind:'bait',x:-310,z:-5030,color:'#df9b4d'},
+  {id:'bait-tackle',name:'Bluefin Bait & Tackle',kind:'bait',x:-240,z:-5070,color:'#df9b4d'},
   {id:'seafood-market',name:'Harbor Catch Market',kind:'sell',x:-570,z:-5100,color:'#378caf'},
   {id:'harbor-master',name:'Harbor Master',kind:'master',x:-35,z:-5075,color:'#e6cd79'},
-  {id:'dockside-diner',name:'Dockside Diner',kind:'diner',x:350,z:-5070,color:'#db7463'},
+  {id:'dockside-diner',name:'Dockside Diner',kind:'diner',x:435,z:-5070,color:'#db7463'},
   {id:'boat-rental',name:'Bay Boat Rentals',kind:'boats',x:550,z:-5270,color:'#67b3c2'},
   {id:'harbor-patrol',name:'Harbor Patrol',kind:'patrol',x:-820,z:-4820,color:'#51779d'},
   {id:'harbor-academy',name:'Maritime Academy',kind:'academy',x:680,z:-4590,color:'#cebc8d'},
@@ -51,5 +51,5 @@ export function onHarborPier(point) {
 export function harborSafePoint(point) {
  if(!inFishingHarbor(point))return {x:0,z:-4150};
  return {x:Math.max(-1170,Math.min(1170,point.x)),
-   z:point.z<HARBOR_SHORE_Z-8 && !onHarborPier(point)?HARBOR_SHORE_Z-4:Math.max(-6250,Math.min(-4120,point.z))};
+   z:point.z<HARBOR_SHORE_Z-8 && !onHarborPier(point)?HARBOR_SHORE_Z+4:Math.max(-6250,Math.min(-4120,point.z))};
 }

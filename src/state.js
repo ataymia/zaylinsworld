@@ -31,13 +31,16 @@ function finite(value, fallback = 0) {
   return Number.isFinite(number) ? number : fallback;
 }
 
-function safePosition(position, fallback) {
+function safePosition(position, fallback, townId = 'starter-town') {
   const next = {
     x: finite(position?.x, fallback.x),
     z: finite(position?.z, fallback.z),
   };
-  const town = worldRegistry.town('starter-town');
+  const town = worldRegistry.town(townId);
   const bounds = town?.worldBounds;
+  // The highway is a legitimate route between saved town bounds. Preserve
+  // mid-drive progress instead of resetting a traveler to Dreamdrop.
+  if(Math.abs(next.x) <= 70 && next.z <= -1000 && next.z >= -4100) return next;
   if (bounds && (next.x < bounds.minX - 400 || next.x > bounds.maxX + 400
     || next.z < bounds.minZ - 400 || next.z > bounds.maxZ + 400)) {
     const recovery = worldRegistry.spawn('safe-recovery');
@@ -107,6 +110,7 @@ export function defaultState() {
     crimeRecord: { official: [], hidden: [], settlements: [], convictionsByTown: {} },
     policeCareer: { status: 'not-applied', rank: null, discipline: 0 },
     vehicleState: { activeVehicleId: null, stored: {}, impounded: [] },
+    fishing: {rod:'starter-rod',bait:8,xp:0,totalCaught:0,catches:[]},
     settings: {},
   };
 }
@@ -119,8 +123,11 @@ function migrateAndNormalize(data = {}) {
     ...(data.custom || {}),
     faceMorphs: { ...base.custom.faceMorphs, ...(data.custom?.faceMorphs || {}) },
   });
-  const parkRepairedPosition = repairLegacyParkArrival(safePosition(data.pos, base.pos), data);
-  const position = repairSchoolRoadPlacement(parkRepairedPosition, data);
+  const townId = data.world?.townId === 'fishing-harbor' ? 'fishing-harbor' : 'starter-town';
+  const preliminaryPosition = safePosition(data.pos, base.pos, townId);
+  // Legacy Starter Town relocation rules must not rewrite the new harbor's coordinates.
+  const parkRepairedPosition = townId==='fishing-harbor' ? preliminaryPosition : repairLegacyParkArrival(preliminaryPosition, data);
+  const position = townId==='fishing-harbor' ? parkRepairedPosition : repairSchoolRoadPlacement(parkRepairedPosition, data);
   const district = worldRegistry.districtAt(position, 'starter-town');
   const world = {
     ...base.world,
@@ -176,6 +183,10 @@ function migrateAndNormalize(data = {}) {
       ...(data.vehicleState || {}),
       stored: { ...(data.vehicleState?.stored || {}) },
       impounded: data.vehicleState?.impounded || [],
+    },
+    fishing: {
+      ...base.fishing,...(data.fishing || {}),
+      catches: Array.isArray(data.fishing?.catches) ? data.fishing.catches.slice(0,120) : [],
     },
     settings: { ...(data.settings || {}) },
   });

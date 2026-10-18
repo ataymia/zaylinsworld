@@ -10,6 +10,7 @@
 import { ROAD, LANDMARKS } from './config/mapConfig.js';
 import { STARTER_TOWN_RUNTIME_PLAN } from './config/starterTownRuntimePlan.js';
 import { ROAD_TIERS, DISTRICTS as WORLD_TOWNS, CONNECTIONS as WORLD_CONNECTIONS } from './config/worldMapPlan.js';
+import { ALL_FISHING_ROUTES } from './config/fishingHarborPlan.js';
 
 let canvas = null, ctx = null, expanded = false;
 let markers = [];            // [{ x, z, color, icon }] extra points (gas/diner)
@@ -18,6 +19,8 @@ let routeLayout = [];
 let districtLayout = [];
 let guidance = null;          // { points:[{x,z}], destination:{x,z}, label }
 let largeWorldMode = false;
+let activeTownId='starter-town';
+let starterRoutes = [];
 let expandedView = 70;
 let worldView = 12800;
 let mapMode = 'city';  // city street navigation or honest all-nine-town blueprint
@@ -111,6 +114,7 @@ export function initMinimap({
   landmarkLayout = landmarks;
   largeWorldMode = largeWorld;
   routeLayout = minimapRoadPlan({ largeWorld, routes });
+  starterRoutes = routeLayout;
   districtLayout = largeWorld ? districts : [];
   expandedView = largeWorld ? 1220 : 70;
   selectDestination = onSelectDestination;
@@ -163,16 +167,27 @@ export function initMinimap({
       if (hit && hit.distance < worldView * 0.075) selectTown?.(hit.town);
       return;
     }
-    if (largeWorldMode && Math.abs(position.x) <= 1000 && Math.abs(position.z) <= 1000) {
+    if (largeWorldMode && ((Math.abs(position.x) <= 1000 && Math.abs(position.z) <= 1000)
+      || (Math.abs(position.x) <= 1200 && position.z <= -4100 && position.z >= -6300))) {
       selectDestination?.({ x: position.x, z: position.z });
     }
   });
   canvas.addEventListener('pointercancel', () => { pointerDrag = null; });
   resize();
-  return { setMarkers, setGuidanceRoute, draw, toggleExpand, toggleMapLevel,
+  return { setMarkers, setGuidanceRoute, setActiveTown, draw, toggleExpand, toggleMapLevel,
     isExpanded: () => expanded, mapLevel: () => mapMode };
 }
 
+export function setActiveTown(townId) {
+  if(townId!== 'fishing-harbor' && townId!=='starter-town') return;
+  if(activeTownId===townId)return;
+  activeTownId=townId;
+  // All canonical road layers remain available for through-town waypoints.
+  routeLayout=activeTownId==='fishing-harbor'
+    ? [...starterRoutes,...ALL_FISHING_ROUTES] : starterRoutes;
+  cityCenter=activeTownId==='fishing-harbor' ? {x:0,z:-5200}:{x:0,z:0};
+  expandedView=activeTownId==='fishing-harbor'?1350:1220;
+}
 export function setMarkers(list) { markers = list || []; }
 
 export function setGuidanceRoute(value) {
@@ -215,7 +230,7 @@ function resize() {
 
 export function toggleExpand() {
   expanded = !expanded;
-  if (expanded) { mapMode = 'city'; cityCenter = { x: 0, z: 0 }; }
+  if (expanded) { mapMode = 'city'; cityCenter = activeTownId==='fishing-harbor' ? {x:0,z:-5200}:{x:0,z:0}; }
   resize();
 }
 export function toggleMapLevel() {
@@ -434,17 +449,19 @@ function drawWorldOverview(playerPos, css, px, py) {
   }
   // Draw planned travel corridors as dashed lines, never as drivable roads.
   ctx.save();
-  ctx.setLineDash([6, 5]);
   ctx.lineWidth = 2;
   for (const link of WORLD_CONNECTIONS) {
     const from = gateways.get(link.from), to = gateways.get(link.to);
     if (!from || !to) continue;
-    ctx.strokeStyle = link.tier === 'underwater' ? '#3d91b6' : '#7e9ba3';
+    const open=from.town.playable && to.town.playable && link.id==='st-fh';
+    ctx.setLineDash(open ? [] : [6,5]);
+    ctx.strokeStyle = open ? '#71db99' : link.tier === 'underwater' ? '#3d91b6' : '#7e9ba3';
     ctx.beginPath();
     ctx.moveTo(px(from.node.x), py(from.node.z));
     ctx.lineTo(px(to.node.x), py(to.node.z));
     ctx.stroke();
   }
+  ctx.setLineDash([]);
   ctx.restore();
   for (const town of WORLD_TOWNS) {
     const x = px(town.origin.x), y = py(town.origin.z);
@@ -481,7 +498,7 @@ function drawWorldOverview(playerPos, css, px, py) {
   ctx.textAlign = 'center'; ctx.fillText('← CITY MAP', css - 66, 15);
   ctx.fillStyle = '#b1c2dd'; ctx.font = '10px system-ui';
   ctx.textAlign = 'left'; ctx.textBaseline = 'bottom';
-  ctx.fillText('Dashed connections are planned routes, not playable highways.', 9, css - 12);
+  ctx.fillText('Solid: open route · dashed: planned future connection.', 9, css - 12);
 }
 
 function line(x1, y1, x2, y2) { ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); }

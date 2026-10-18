@@ -1,5 +1,5 @@
 // ───────────────────────────────────────────────────────────────────────────
-//  worldMapPlan.js — FORWARD-LOOKING world map data (NOT wired into gameplay).
+//  worldMapPlan.js — shared world geography; playable states are updated as towns ship.
 //
 //  Pure data (no THREE import). Describes the multi-town world: town bounds,
 //  districts, road/water hierarchy, inter-town connections, landmarks, activity
@@ -68,7 +68,7 @@ export const DISTRICTS = Object.freeze([
   town({
     id: 'fishing-harbor', name: 'Fishing Harbor', themeId: 'fishing',
     origin: { x: 0, z: -5200 }, bounds: { w: 2400, h: 2200 }, terrain: { w: 2800, h: 3000 },
-    localGridRef: null, playable: false, streamingCell: 250,
+    localGridRef: 'fishingHarborPlan.js', playable: true, streamingCell: 250,
     gateways: [
       { id: 'fh-south-hwy', node: { x: 0, z: -4100 }, tier: 'highway' },
       { id: 'fh-north-coast', node: { x: 0, z: -6300 }, tier: 'bridge' },
