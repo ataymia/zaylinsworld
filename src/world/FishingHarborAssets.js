@@ -12,7 +12,7 @@ const asset=(id,name,kind,x,z,w,d,h,rot=0)=>Object.freeze({
 });
 export const HARBOR_PRODUCTION_SPECS=Object.freeze([
  // Functioning civic and service landmarks, anchored to real gameplay sites.
- asset('harbor-master','building_harbor_master_hall_exterior_v01','building_shell',-35,-5075,39,35,17),
+ asset('harbor-master','building_harbor_master_hall_exterior_v01','building_shell',-60,-5075,39,35,17),
  asset('harbor-patrol','building_harbor_patrol_station_exterior_v01','building_shell',-820,-4820,50,40,18),
  asset('harbor-academy','building_harbor_academy_exterior_v01','building_shell',680,-4590,65,50,25),
  asset('harbor-clinic','building_harbor_clinic_exterior_v01','building_shell',-140,-4480,38,32,16),
@@ -22,15 +22,15 @@ export const HARBOR_PRODUCTION_SPECS=Object.freeze([
  asset('boat-rental','building_bluecurrent_boat_rental_exterior_v01','building_shell',610,-5280,40,30,13),
  asset('tidefuel','building_tidefuel_harbor_station_exterior_v01','building_shell',120,-4590,48,38,14),
  // Complete working town, not a row of identical generic green boxes.
- asset('boatworks','building_anchor_axle_boatworks_exterior_v01','building_shell',-1010,-4675,58,48,18),
+ asset('boatworks','building_anchor_axle_boatworks_exterior_v01','building_shell',-1010,-4600,58,48,18),
  asset('harbor-cannery','building_harbor_cannery_exterior_v01','building_shell',-945,-5050,72,51,22),
  asset('harbor-warehouse','arch_harbor_warehouse_wall_a_v01','building_shell',-970,-5150,40,21,13),
  asset('village-market','building_harbor_village_market_exterior_v01','building_shell',860,-4890,42,37,14),
- asset('village-apartments','building_harbor_village_apartments_exterior_v01','building_shell',960,-4740,63,52,24),
- asset('marina-condos','building_harbor_marina_condo_exterior_v01','building_shell',860,-5180,56,46,21),
+ asset('village-apartments','building_harbor_village_apartments_exterior_v01','building_shell',960,-4635,63,52,24),
+ asset('marina-condos','building_harbor_marina_condo_exterior_v01','building_shell',860,-5090,56,46,21),
  asset('lighthouse','building_breakwater_lighthouse_exterior_v01','building_shell',-1060,-5430,34,34,64),
  asset('dock-room','building_harbor_dock_room_exterior_v01','building_shell',-750,-5300,30,27,12),
- asset('seaside-home-west','building_harbor_waterfront_house_a_v01','building_shell',790,-5230,33,30,15),
+ asset('seaside-home-west','building_harbor_waterfront_house_a_v01','building_shell',1025,-5160,33,30,15),
  asset('seaside-home-east','building_harbor_waterfront_house_a_v01','building_shell',970,-5090,33,30,15),
  asset('fisher-cottage-1','building_harbor_houseboat_home_a_v01','building_shell',-430,-5490,25,12,12),
  asset('fisher-cottage-2','building_harbor_houseboat_home_a_v01','building_shell',750,-5530,25,12,12),
@@ -61,7 +61,7 @@ export const HARBOR_PRODUCTION_SPECS=Object.freeze([
  asset('no-wake-sign','prop_harbor_no_wake_sign_a_v01','modular_prop',610,-5380,2.5,2,4),
  asset('academy-sign','prop_harbor_academy_sign_v01','modular_prop',690,-4540,7,2,5),
  asset('boat-lift','prop_boat_service_lift_a_v01','modular_infrastructure',-1010,-5270,14,12,12),
- asset('repair-tools','prop_boat_tool_cart_a_v01','modular_prop',-975,-5210,3,3,2),
+ asset('repair-tools','prop_boat_tool_cart_a_v01','modular_prop',-975,-5160,3,3,2),
  asset('net-mending','prop_net_mending_table_a_v01','modular_prop',-925,-5180,5,4,3),
  asset('market-counter','furniture_harbor_market_counter_a_v01','modular_furniture',-520,-5160,8,4,4),
 ]);
