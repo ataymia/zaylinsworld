@@ -41,7 +41,7 @@ export const HARBOR_LOCATIONS=Object.freeze([
 
 ]);
 export const HARBOR_LIGHTHOUSE = Object.freeze({id:'harbor-lighthouse',name:'Breakwater Lighthouse',
-  x:870,z:-5490,w:35,d:35});
+  x:870,z:-5490,w:35,d:35,kind:'lighthouse'});
 export const HARBOR_WATERWAYS = Object.freeze([
   {id:'harbor-main-channel',name:'Main Harbor Channel',points:[{x:0,z:-5510},{x:40,z:-6000},{x:120,z:-6410}]},
   {id:'western-marina-lane',name:'West Marina Lane',points:[{x:-330,z:-5500},{x:-600,z:-5800},{x:-500,z:-6300}]},
@@ -52,7 +52,7 @@ export const FISHING_SPOTS=Object.freeze([
   {id:'central-pier',name:'Central Fishing Pier',kind:'fish',x:120,z:-5590,water:'harbor'},
   {id:'eastern-pier',name:'East Fishing Pier',kind:'fish',x:490,z:-5600,water:'deep'},
 ]);
-export const HARBOR_ACTIONS=Object.freeze([...HARBOR_LOCATIONS,...FISHING_SPOTS].map(item=>Object.freeze(item)));
+export const HARBOR_ACTIONS=Object.freeze([...HARBOR_LOCATIONS,...FISHING_SPOTS,HARBOR_LIGHTHOUSE].map(item=>Object.freeze(item)));
 export function inFishingHarbor(point){return !!point && point.x>=-1200 && point.x<=1200 && point.z>=-6300 && point.z<=-4100;}
 export function onFishingHighway(point) {return !!point && Math.abs(point.x)<=65 && point.z<=-980 && point.z>=-4100;}
 export function onHarborPier(point) {
