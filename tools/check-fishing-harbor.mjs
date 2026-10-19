@@ -36,7 +36,13 @@ assert(Math.hypot(FISHING_HIGHWAY.points.at(-1).x,FISHING_HIGHWAY.points.at(-1).
 // authored placement references in the runtime, not remain unused in a folder.
 const production=readFileSync(new URL('../src/world/FishingHarborAssets.js',import.meta.url),'utf8');
 const sourceAssets=[...production.matchAll(/asset\('[^']+','([^']+)','([^']+)'/g)];
-assert(sourceAssets.length>=35,'Harbor needs a populated authored GLB placement map');
+assert(sourceAssets.length>=45,'Harbor needs a full authored GLB town rather than bare boxes');
+assert.match(production,/addRealNeighborhoods\(group,renderer,report\)/,
+ 'ordinary cottages must switch to real themed GLBs alongside the named landmarks');
+assert.match(production,/harborStreetlightSites\(\)/,
+ 'Harbor must sample authentic streetlight meshes along all road edges');
+assert.match(production,/roadWidth|width\/2\+4\.2/,
+ 'streetlight positions must be tested against cross-street clearance');
 for(const [,name,category] of sourceAssets)
  assert(existsSync(new URL('../public/assets/models/generated/fishing-harbor/'+category+'/'+name+'.glb',import.meta.url)),
   'production Harbor model missing: '+category+'/'+name);
