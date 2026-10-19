@@ -3,6 +3,7 @@
 // Loads only when a player approaches the harbor, with bounded concurrency.
 import * as THREE from 'three';
 import { loadModel } from '../assets.js';
+import {HARBOR_ROUTES,HARBOR_SHIFT_Z,HARBOR_ACTIONS} from '../config/fishingHarborPlan.js';
 
 // Coordinates are Harbor's AUTHORING-space coordinates. The parent town group
 // applies any world-location offset, so old site IDs never lose their positions.
@@ -87,6 +88,81 @@ const fit=(scene,spec)=>{
  wrapper.traverse(node=>{if(node.isMesh){node.castShadow=false;node.receiveShadow=true;}});
  return wrapper;
 };
+
+function pointToSegmentDistance(point,a,b) {
+ const dx=b.x-a.x,dz=b.z-a.z,span=dx*dx+dz*dz;
+ const t=span?Math.max(0,Math.min(1,((point.x-a.x)*dx+(point.z-a.z)*dz)/span)):0;
+ return Math.hypot(point.x-a.x-dx*t,point.z-a.z-dz*t);
+}
+export function harborStreetlightSites(limit=64) {
+ // Both axes are AUTHORITATIVE world coordinates when checking every road.
+ // We translate to harbor-scene local space only at the final placement.
+ const result=[];
+ for(const road of HARBOR_ROUTES) {
+  if(!['main','local'].includes(road.tier))continue;
+  for(let i=1;i<road.points.length;i++){
+   const a=road.points[i-1],q=road.points[i],dx=q.x-a.x,dz=q.z-a.z;
+   const len=Math.hypot(dx,dz);
+   if(len<60)continue;
+   const count=Math.floor(len/95);
+   for(let j=0;j<count;j++){
+    const t=(j+.5)/count;
+    const side=(i+j)%2?-1:1;
+    const offset=road.width/2+8;
+    const world={x:a.x+dx*t-side*dz/len*offset,
+      z:a.z+dz*t+side*dx/len*offset};
+    if(HARBOR_ACTIONS.some(site=>Math.hypot(site.x-world.x,site.z-world.z)<22))continue;
+    let safe=true;
+    for(const other of HARBOR_ROUTES){
+     for(let k=1;k<other.points.length;k++){
+      if(pointToSegmentDistance(world,other.points[k-1],other.points[k])
+         <other.width/2+4.2){safe=false;break;}
+     }
+     if(!safe)break;
+    }
+    if(!safe)continue;
+    if(result.some(site=>Math.hypot(site.x-world.x,site.z+HARBOR_SHIFT_Z-world.z)<30))continue;
+    result.push({x:world.x,z:world.z-HARBOR_SHIFT_Z,rot:Math.atan2(dx,dz)});
+    if(result.length>=limit)return result;
+   }
+  }
+ }
+ return result;
+}
+async function addRealNeighborhoods(group,renderer,report){
+ // Replace each geometrically cleared primitive cottage at ITS existing
+ // gameplay-safe position. No new unvalidated footprints or save identifiers.
+ const cottages=group.children.filter(child=>/^FH_cottage_\d+$/.test(child.name));
+ const homeName='building_harbor_waterfront_house_a_v01';
+ const homePath='./assets/models/generated/fishing-harbor/building_shell/'+homeName+'.glb';
+ const house=await loadModel(homePath,renderer);
+ report.neighborhoodHomes=0;
+ if(house?.scene){
+  for(let i=0;i<cottages.length;i++){
+   const old=cottages[i];
+   const model=fit(house.scene,{id:'neighborhood-'+i,w:22,d:20,h:6.5+(i%3)*1.1,rot:i%4===0?Math.PI:0,
+    x:old.position.x,z:old.position.z});
+   if(!model)continue;
+   group.add(model);
+   old.visible=false;
+   const roof=group.getObjectByName('FH_cottage_roof_'+i);
+   if(roof)roof.visible=false;
+   report.neighborhoodHomes++;
+  }
+ }else report.failed.push({id:'neighborhood-houses',path:homePath,error:'GLB unavailable'});
+ const lamps=await loadModel('./assets/models/generated/fishing-harbor/streetlight/prop_harbor_streetlight_a_v01.glb',renderer);
+ report.realStreetlights=0;
+ if(lamps?.scene){
+  const positions=harborStreetlightSites();
+  for(let i=0;i<positions.length;i++){
+   const site=positions[i];
+   const lamp=fit(lamps.scene,{id:'streetlight-'+i,w:3,d:3,h:9,x:site.x,z:site.z,rot:site.rot});
+   if(!lamp)continue;
+   group.add(lamp);report.realStreetlights++;
+  }
+ }else report.failed.push({id:'harbor-streetlight',error:'GLB unavailable'});
+}
+
 export async function populateHarborAssets({group,renderer,onModel=null}={}){
  const report={planned:HARBOR_PRODUCTION_SPECS.length,loaded:0,failed:[],byId:{},complete:false};
  if(!group)return report;
@@ -104,6 +180,7 @@ export async function populateHarborAssets({group,renderer,onModel=null}={}){
   }
  }
  await Promise.all(Array.from({length:concurrency},worker));
+ await addRealNeighborhoods(group,renderer,report);
  report.complete=true;
  group.userData.productionAssets=report;
  return report;
