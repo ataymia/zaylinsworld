@@ -1,7 +1,9 @@
 // Procedural, playable first pass for Fishing Harbor. No remote assets,
 // per-frame geometry creation or effect-heavy water shaders.
 import * as THREE from 'three';
-import {HARBOR_BOUNDS,HARBOR_SHORE_Z,HARBOR_ROUTES,FISHING_HIGHWAY,HARBOR_ACTIONS,FISHING_SPOTS} from '../config/fishingHarborPlan.js';
+import { populateHarborAssets,HARBOR_PRODUCTION_SPECS } from './FishingHarborAssets.js';
+import { buildHarborSignals } from './FishingHarborSignals.js';
+import {HARBOR_BOUNDS,HARBOR_SHORE_Z,HARBOR_ROUTES,FISHING_HIGHWAY,HARBOR_ACTIONS,FISHING_SPOTS,HARBOR_SHIFT_Z} from '../config/fishingHarborPlan.js';
 
 const mat=(color,roughness=0.85,metalness=0)=>new THREE.MeshStandardMaterial({color,roughness,metalness});
 const earth=mat('#648467'),asphalt=mat('#303c4c'),lane=mat('#e4d5a0');
@@ -89,6 +91,9 @@ function shop(group,action,colliders){
 // Geometric road clearance includes complete segments. Checking only waypoint
 // vertices misses long uninterrupted lanes and puts scenery in traffic.
 function roadClearAt(x,z,halfWidth=2,halfDepth=2,margin=4) {
+ // The authored placement samples are local to the Harbor. Road contracts are
+ // world coordinates after the travel-distance shortening.
+ z+=HARBOR_SHIFT_Z;
  const footprintRadius=Math.hypot(halfWidth,halfDepth);
  for(const route of [FISHING_HIGHWAY,...HARBOR_ROUTES]) {
    for(let i=1;i<route.points.length;i++) {
@@ -177,18 +182,21 @@ function harborPeople(group){
 export function buildFishingHarbor(scene){
  const group=new THREE.Group();group.name='ZW_FishingHarbor_Playable_v1';
  // Real separate landscape 4km north; the original Starter Town is untouched.
- block(group,'FH_approach_verge',0,-0.11,-2650,76,0.14,3100,earth);
+ block(group,'FH_approach_verge',0,-0.11,-3950,76,0.14,425,earth);
  block(group,'FH_land',0,-0.15,-4740,2400,0.25,1320,earth);
  block(group,'FH_shore_grass',0,-0.015,-5300,2400,0.08,155,mat('#879a6e'));
  block(group,'FH_ocean',0,-0.27,-6000,2850,0.12,1450,waterMat);
  block(group,'FH_harbor_water_edge',0,-0.24,-5410,2850,0.06,150,waterMat);
- const roadCount=[FISHING_HIGHWAY,...HARBOR_ROUTES].reduce((n,road)=>n+roadSurface(group,road),0);
+ const roadCount=[FISHING_HIGHWAY,...HARBOR_ROUTES].reduce((n,road)=>n+roadSurface(group,{...road,
+   points:road.points.map(pt=>({...pt,z:pt.z-HARBOR_SHIFT_Z}))}),0);
  const colliders=[];
- for(const action of HARBOR_ACTIONS.filter(a=>a.kind!=='fish'))shop(group,action,colliders);
+ for(const action of HARBOR_ACTIONS.filter(a=>a.kind!=='fish'))shop(group,{...action,z:action.z-HARBOR_SHIFT_Z},colliders);
  const decoration=decorate(group,colliders);
  const people=harborPeople(group);
+ const signals=buildHarborSignals(group);
  let elapsed=0;
  const update=(dt)=>{
+   signals.update(dt);
    elapsed+=Math.min(0.05,Math.max(0,dt));
    for(const p of people){
      p.group.position.z=p.originZ+Math.sin(elapsed*0.52+p.phase)*5;
@@ -196,8 +204,53 @@ export function buildFishingHarbor(scene){
    }
  };
  group.userData.report={playable:true,id:'fishing-harbor',roadSegments:roadCount,
-   businesses:8,fishingSpots:FISHING_SPOTS.length,pedestrians:people.length,...decoration};
+   productionAssetsPlanned:HARBOR_PRODUCTION_SPECS.length,productionAssetsLoaded:0,
+   businesses:8,fishingSpots:FISHING_SPOTS.length,pedestrians:people.length,
+   trafficSignals:signals.nodes.length,...decoration};
+ // Clear regional visual identity: the ocean is broad and distinctly lower
+ // than the land. Players approach into visible sea with a lighthouse landmark.
+ // The shoreline remains north of the waterfront, not through a drivable lane.
+ const deepWater=new THREE.Mesh(new THREE.PlaneGeometry(3500,3400),
+   new THREE.MeshStandardMaterial({color:'#1b6383',roughness:.25,metalness:.12,
+     transparent:true,opacity:.98,side:THREE.DoubleSide}));
+ deepWater.name='FH_Crownwater_OpenSea';
+ deepWater.rotation.x=-Math.PI/2;
+ deepWater.position.set(0,-.12,-6725);
+ group.add(deepWater);
+ const shallows=new THREE.Mesh(new THREE.PlaneGeometry(2390,390),
+   new THREE.MeshStandardMaterial({color:'#48a9b3',roughness:.26,metalness:.06,
+     transparent:true,opacity:.84,side:THREE.DoubleSide}));
+ shallows.rotation.x=-Math.PI/2;shallows.position.set(0,-.09,-5585);
+ shallows.name='FH_VisibleShallowWater';group.add(shallows);
+ // Coastwork and promenade distinguish the working waterfront from an empty
+ // roadside grid. Real authored pier/railing and seawall assets load later.
+ for(let i=0;i<14;i++){
+   const x=-990+i*148;
+   block(group,'FH_promenade_rail_post_'+i,x,.9,-5358,1.5,1.8,1.5,concrete);
+ }
+ group.position.z=HARBOR_SHIFT_Z;
+ // World-space collision bounds are separate from child-local render meshes.
+ for(const collider of colliders)collider.translate(new THREE.Vector3(0,0,HARBOR_SHIFT_Z));
  scene.add(group);
+ let hydration=null;
+ const hydrate=({renderer}={})=>{
+   if(hydration)return hydration;
+   hydration=populateHarborAssets({group,renderer,onModel:(spec)=>{
+     // Keep interaction signage, but hide crude building boxes whenever a
+     // verified production exterior replaces that exact action's placeholder.
+     const fallback=group.getObjectByName('FH_'+spec.id);
+     if(fallback)fallback.children.forEach(child=>{
+       if(child.name?.startsWith('FH_building_')||child.name?.startsWith('FH_roof_')||
+          child.name?.startsWith('FH_door_')||child.name?.startsWith('FH_window_'))child.visible=false;
+     });
+   }}).then(report=>{
+     group.userData.report.productionAssetsLoaded=report.loaded;
+     group.userData.report.productionAssetsFailed=report.failed;
+     group.userData.report.assetHydrationComplete=true;
+     return report;
+   });
+   return hydration;
+ };
  const actionByProximity=(position,radius=7)=> {
    let selected=null,distance=radius;
    for(const action of HARBOR_ACTIONS){
@@ -207,5 +260,5 @@ export function buildFishingHarbor(scene){
    }
    return selected;
  };
- return {group,colliders,nearestAction:actionByProximity,update,report:group.userData.report};
+ return {group,colliders,nearestAction:actionByProximity,update,hydrate,signals,report:group.userData.report};
 }

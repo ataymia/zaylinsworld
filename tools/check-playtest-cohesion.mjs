@@ -83,7 +83,8 @@ assert.ok(traffic.every((car) => car.routeName && car.position));
 // respecting the authored road safety margin.
 const vegetation = createStarterTownVegetationPlan();
 assert.equal(vegetation.trees.length, 1400);
-assert.equal(vegetation.rocks.length, 240);
+assert.ok(vegetation.rocks.length >= 90 && vegetation.rocks.length <= 130,
+  'rocks should be scenic and road-clear, not 240 scattered urban obstacles');
 assert.ok(vegetation.trees.some((entry) => Math.hypot(entry.x, entry.z) > 1000),
   'outer terrain needs a landscaped horizon');
 for (const entry of [...vegetation.trees, ...vegetation.rocks]) {

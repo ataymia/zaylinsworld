@@ -11,7 +11,7 @@ import { placeWorldBuildings } from './worldBuildings.js';
 import { furnishInteriors } from './furnish.js';
 import { initMinimap, setMarkers } from './minimap.js';
 import { buildFishingHarbor } from './world/FishingHarbor.js';
-import { HARBOR_ACTIONS, HARBOR_ROUTES, FISHING_HIGHWAY, inFishingHarbor, onFishingHighway, harborSafePoint } from './config/fishingHarborPlan.js';
+import { HARBOR_ACTIONS, HARBOR_ROUTES, FISHING_HIGHWAY, HARBOR_PEDESTRIAN_LOOPS, HARBOR_TRAFFIC_LOOPS, inFishingHarbor, onFishingHighway, harborSafePoint } from './config/fishingHarborPlan.js';
 import { ensureFishingState, fishingLevel, startFishing, tickFishing, pressFishing, sellFishingCatch, buyFishingBait } from './runtime/FishingHarborLife.js';
 import { showFishingPanel, hideFishingPanel } from './ui/FishingHarborPanel.js';
 import { STARTER_TOWN_RUNTIME_PLAN } from './config/starterTownRuntimePlan.js';
@@ -302,6 +302,7 @@ const crossTownNavigation = new StarterTownNavigation({plan: {
   locations:[],
 }});
 let harborWorld = null;
+let harborProductionRequested = false;
 let fishingSession = null;
 let fishingBobber = null;
 let debugBadge = null;           // debug panel API (initDebugBadge → { toggle })
@@ -419,6 +420,10 @@ function enterWorld() {
     abandonedCars = [];                       // fresh city → no previously-stolen parked cars
     car = createDrivableCar(scene, 13, 3);
     harborWorld = buildFishingHarbor(scene);
+    // Feed Harbor's own civic, school, residential and waterfront loops into the
+    // SAME scheduling, traffic, driver and pedestrian systems as Starter Town.
+    cityNPCs.push(...createCityNPCs(scene,16,HARBOR_PEDESTRIAN_LOOPS));
+    traffic.push(...createTraffic(scene,9,HARBOR_TRAFFIC_LOOPS));
     ensureFishingState(state);
     debug.set('fishingHarbor', harborWorld.report);
     registerInteractables(cityInfo.entrances);
@@ -433,9 +438,20 @@ function enterWorld() {
         notify('📍 Destination set. Follow the cyan navigation line. Click again to change it.');
       },
       onSelectTown: (town) => {
-        notify(town.playable
-          ? '🗺️ ' + town.name + ' is playable. Reach Fishing Harbor by the north highway, or select streets in City Map.'
-          : '🗺️ ' + town.name + ' is mapped for future expansion, but is not yet drivable.');
+        if(!town.playable){
+          notify('🗺️ '+town.name+' is planned, not yet drivable.');return;
+        }
+        const visited=town.id==='starter-town'
+          || state.world?.discoveredTowns?.includes(town.id);
+        // You can route toward a not-yet-visited playable town. Its individual
+        // streets unlock on arrival, without making the world icon unusable.
+        customMapDestination=town.id==='fishing-harbor'
+          ? {x:0,z:-1750} : {x:0,z:-950};
+        guidanceAccum=1;
+        if(visited)minimap?.focusTown(town.id);
+        notify(visited
+          ? '📍 '+town.name+' street map unlocked. Click a street to route.'
+          : '📍 Road directions to '+town.name+' set. Visit to unlock its street map.');
       },
     });                                        // corner radar / town map (before asset wiring)
     debug.set('minimapInit', !!minimap);
@@ -2742,12 +2758,12 @@ function syncCurrentWorldTown(position) {
 function harborGatewayNear(position) {
  if(!position)return null;
  if(Math.hypot(position.x,position.z+1160)<24)return 'to-harbor';
- if(Math.hypot(position.x,position.z+4160)<24)return 'to-starter';
+ if(Math.hypot(position.x,position.z+1560)<24)return 'to-starter';
  return null;
 }
 function useHarborGateway(direction) {
  if(!player||!car||area!=='city'||fishingSession)return;
- const target=direction==='to-harbor'?{x:0,z:-4260}:{x:0,z:-1110};
+ const target=direction==='to-harbor'?{x:0,z:-1660}:{x:0,z:-1110};
  if(inCar){
    (drivingVehicle||car).g.position.set(target.x,0,target.z);
    (drivingVehicle||car).speed=0;
@@ -2843,7 +2859,16 @@ function handleHarborAction(action) {
    controls.snapTo(player.group.position,player.eyeHeight);
    notify('⛵ Free harbor shuttle to Central Fishing Pier!');
    break;
- case 'patrol':notify('🛟 Harbor Patrol: stay on the piers near deep water.');break;
+ case 'patrol':
+   if(!fishing.permit){
+     fishing.permit=true;
+     notify('🛟 Harbor Patrol issued your public fishing permit. Respect the protected waters.');
+   }else if((state.wanted||0)>0){
+     notify('🛟 Harbor Patrol: resolve active police trouble before licensing marine work.');
+   }else{
+     notify('🛟 Harbor Patrol station is staffed. Your fishing permit is valid.');
+   }
+   break;
  case 'fuel':
    if(Math.hypot(car.g.position.x-action.x,car.g.position.z-action.z)>45)
      notify('⛽ Bring your car near Tidefuel to refuel.');
@@ -2962,8 +2987,8 @@ function updateCar(dt) {
   const inp = controls.moveInput();
   // Phase 2: damage worsens handling. A totaled car (100%) can't drive at all.
   const h = handlingFor(v.damage || 0);
-  const accel = 16, maxR = 9, fric = 7;
-  const maxF = 24 * h.speedMult;
+  const accel = 35, maxR = 13, fric = 12;
+  const maxF = 54 * h.speedMult;
   // Fuel remains part of the vehicle economy, but a tank now lasts many hours of driving.
   if (v.fuel === undefined) v.fuel = (v === car) ? (state.fuel ?? 100) : 100;
   const dry = v.fuel <= 0 || h.totaled;
@@ -4189,10 +4214,10 @@ function enforceLiveStarterTownBoundary(position, { vehicle = null } = {}) {
    syncCurrentWorldTown(position);return null;
  }
  // Prevent stepping into unfinished terrain along the harbor's outer bounds.
- if(state.world?.townId==='fishing-harbor' && position.z<-3900
-   && position.z>-6500 && Math.abs(position.x)<1400){
+ if(state.world?.townId==='fishing-harbor' && position.z<-1300
+   && position.z>-3900 && Math.abs(position.x)<1400){
    position.x=Math.max(-1180,Math.min(1180,position.x));
-   position.z=Math.max(-6250,Math.min(-4130,position.z));
+   position.z=Math.max(-3650,Math.min(-1530,position.z));
    const safe=harborSafePoint(position);
    position.x=safe.x;position.z=safe.z;
    return {action:'clamp',reason:'harbor-coast'};
@@ -5868,7 +5893,24 @@ function animate() {
     if (player && !inCar) trafficObstacles.push(player.group.position);
     if (car && !inCar) trafficObstacles.push(car.g.position);
     if (trafficControl) trafficControl.update(dt);
-    updateTraffic(traffic, dt, trafficObstacles, trafficControl, cityObserver, state.timeMin);
+    // Harbor cars obey Harbor signals; Starter traffic keeps its established
+    // city controller and law system. Never route one town's AI through another.
+    const currentTrafficControl={
+      mustStop:(position,heading,vehicle,step)=>{
+        if(inFishingHarbor(position))return harborWorld?.signals?.mustStop(position,heading,vehicle,step) || {stop:false};
+        return trafficControl?.mustStop(position,heading,vehicle,step) || {stop:false};
+      },
+    };
+    updateTraffic(traffic, dt, trafficObstacles, currentTrafficControl, cityObserver, state.timeMin);
+  }
+  const worldObserver = inCar ? (drivingVehicle||car)?.g?.position : player?.group?.position;
+  // Load the already-authored Harbor models when travel approaches the coast.
+  if(!harborProductionRequested && worldObserver && worldObserver.z < -700
+     && Math.abs(worldObserver.x)<1400 && harborWorld){
+    harborProductionRequested=true;
+    void harborWorld.hydrate({renderer}).then(result=>debug.set('harborProductionAssets',{
+      loaded:result.loaded,planned:result.planned,failed:result.failed.length,
+    })).catch(error=>debug.set('harborProductionAssets',{error:String(error)}));
   }
   if(state.world?.townId==='fishing-harbor')harborWorld?.update?.(dt);
   updateMixers(dt);                                  // skinned GLB animations

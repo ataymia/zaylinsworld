@@ -107,7 +107,7 @@ const mainSource = fs.readFileSync(new URL('../src/main.js', import.meta.url), '
 assert.match(mainSource, /createLiveTownTraffic\(/, 'the production world must compose ambient and service traffic');
 assert.match(mainSource, /updateCityNPCs\(cityNPCs, dt, t, cityObserver, state\.timeMin\)/,
   'the live pedestrian update must receive the saved world clock');
-assert.match(mainSource, /updateTraffic\(traffic, dt, trafficObstacles, trafficControl, cityObserver, state\.timeMin\)/,
+assert.match(mainSource, /updateTraffic\(traffic, dt, trafficObstacles, currentTrafficControl, cityObserver, state\.timeMin\)/,
   'the live traffic update must receive the saved world clock');
 assert.match(mainSource, /c\.vehicleKit \|\| TRAFFIC_FLEET/,
   'service traffic must keep its authored vehicle identity after GLB replacement');

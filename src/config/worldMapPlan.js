@@ -67,17 +67,17 @@ export const DISTRICTS = Object.freeze([
   }),
   town({
     id: 'fishing-harbor', name: 'Fishing Harbor', themeId: 'fishing',
-    origin: { x: 0, z: -5200 }, bounds: { w: 2400, h: 2200 }, terrain: { w: 2800, h: 3000 },
+    origin: { x: 0, z: -2600 }, bounds: { w: 2400, h: 2200 }, terrain: { w: 2800, h: 3000 },
     localGridRef: 'fishingHarborPlan.js', playable: true, streamingCell: 250,
     gateways: [
-      { id: 'fh-south-hwy', node: { x: 0, z: -4100 }, tier: 'highway' },
-      { id: 'fh-north-coast', node: { x: 0, z: -6300 }, tier: 'bridge' },
-      { id: 'fh-aqualume-water', node: { x: 850, z: -5900 }, tier: 'water' },
+      { id: 'fh-south-hwy', node: { x: 0, z: -1500 }, tier: 'highway' },
+      { id: 'fh-north-coast', node: { x: 0, z: -3700 }, tier: 'bridge' },
+      { id: 'fh-aqualume-water', node: { x: 850, z: -3300 }, tier: 'water' },
     ],
     landmarks: ['bait-tackle', 'seafood-market', 'boat-rental', 'dockside-diner', 'harbor-master', 'harbor-patrol', 'harbor-academy', 'tidefuel'],
     activityZones: [
-      { id: 'fh-pier', category: 'fishing', shape: 'rect', x: -250, z: -5600, w: 500, h: 180 },
-      { id: 'fh-gillyfish-route', category: 'mission', shape: 'rect', x: 650, z: -6100, w: 700, h: 500 },
+      { id: 'fh-pier', category: 'fishing', shape: 'rect', x: -250, z: -3000, w: 500, h: 180 },
+      { id: 'fh-gillyfish-route', category: 'mission', shape: 'rect', x: 650, z: -3500, w: 700, h: 500 },
     ],
   }),
   town({

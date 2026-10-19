@@ -8,6 +8,31 @@
 import * as THREE from 'three';
 import { assetRuntimeRegistry } from '../runtime/AssetRuntimeRegistry.js';
 import { loadRegisteredAsset } from '../assets.js';
+import { RoadNetwork } from './RoadNetwork.js';
+import { STARTER_TOWN_RUNTIME_PLAN } from '../config/starterTownRuntimePlan.js';
+const STREET_NETWORK=new RoadNetwork(STARTER_TOWN_RUNTIME_PLAN.routes);
+export function streetscapeRoadClear(x,z,radius=3){
+ return STREET_NETWORK.segments.every(segment=>{
+   const dx=segment.end.x-segment.start.x,dz=segment.end.z-segment.start.z,ll=dx*dx+dz*dz;
+   const t=ll?Math.max(0,Math.min(1,((x-segment.start.x)*dx+
+       (z-segment.start.z)*dz)/ll)):0;
+   return Math.hypot(x-segment.start.x-t*dx,z-segment.start.z-t*dz)>
+     segment.width/2+radius;
+ });
+}
+export function placeStreetscapeSafely(placement){
+ const radius=placement.type==='districtSign'?5:
+   placement.type==='shelter'?3:placement.type==='loadingCrate'?3:1.8;
+ if(streetscapeRoadClear(placement.x,placement.z,radius))return placement;
+ const bearings=[[0,-1],[0,1],[-1,0],[1,0],[-1,-1],[1,1],[1,-1],[-1,1]];
+ for(const distance of [14,22,30,42,56,75])for(const [dx,dz]of bearings){
+   const x=placement.x+dx*distance,z=placement.z+dz*distance;
+   if(Math.abs(x)>980||Math.abs(z)>980)continue;
+   if(streetscapeRoadClear(x,z,radius+1.5))return {...placement,x,z,relocated:true};
+ }
+ return null; // Never leave a sign in a travel lane.
+}
+
 
 const TYPES = Object.freeze({
   hydrant: Object.freeze({ aliases: ['starter-town-fire-hydrant', 'fire hydrant', 'fire-hydrant', 'hydrant'], targetHeight: 0.9, color: '#b83d32' }),
@@ -149,7 +174,11 @@ export async function buildStreetscapeLayer({
     templates.set(type, await templateFor(type, renderer, report));
   }
 
-  for (const placement of placements) {
+  report.relocated=0;report.skippedUnsafe=0;
+  for (const original of placements) {
+    const placement=placeStreetscapeSafely(original);
+    if(!placement){report.skippedUnsafe++;continue;}
+    if(placement.relocated)report.relocated++;
     const source = templates.get(placement.type);
     if (!source) continue;
     const object = source.clone(true);

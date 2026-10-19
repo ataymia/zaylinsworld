@@ -29,6 +29,7 @@ let worldCenter = { x: 4100, z: -7900 };
 let selectDestination = null;
 let selectTown = null;
 let pointerDrag = null;
+let followTravelCorridor=true;
 
 const COMPACT = 168;
 const EXPANDED = 560;
@@ -113,8 +114,9 @@ export function initMinimap({
 } = {}) {
   landmarkLayout = landmarks;
   largeWorldMode = largeWorld;
-  routeLayout = minimapRoadPlan({ largeWorld, routes });
-  starterRoutes = routeLayout;
+  starterRoutes = minimapRoadPlan({largeWorld,routes});
+  // Both town networks and the intervening connection stay visible in radar.
+  routeLayout=largeWorld ? [...starterRoutes,...ALL_FISHING_ROUTES] : starterRoutes;
   districtLayout = largeWorld ? districts : [];
   expandedView = largeWorld ? 1220 : 70;
   selectDestination = onSelectDestination;
@@ -141,7 +143,7 @@ export function initMinimap({
   canvas.addEventListener('pointermove', (event) => {
     if (!expanded || !pointerDrag || event.pointerId !== pointerDrag.id) return;
     const dx = event.clientX - pointerDrag.x, dy = event.clientY - pointerDrag.y;
-    if (Math.abs(dx) + Math.abs(dy) > 3) pointerDrag.moved = true;
+    if (Math.abs(dx) + Math.abs(dy) > 3) {pointerDrag.moved=true;followTravelCorridor=false;}
     const { scale } = mapProjection(lastPlayerPosition);
     const center = mapMode === 'world' ? worldCenter : cityCenter;
     center.x -= dx / scale;
@@ -174,7 +176,7 @@ export function initMinimap({
   });
   canvas.addEventListener('pointercancel', () => { pointerDrag = null; });
   resize();
-  return { setMarkers, setGuidanceRoute, setActiveTown, draw, toggleExpand, toggleMapLevel,
+  return { setMarkers, setGuidanceRoute, setActiveTown, focusTown, draw, toggleExpand, toggleMapLevel,
     isExpanded: () => expanded, mapLevel: () => mapMode };
 }
 
@@ -183,10 +185,15 @@ export function setActiveTown(townId) {
   if(activeTownId===townId)return;
   activeTownId=townId;
   // All canonical road layers remain available for through-town waypoints.
-  routeLayout=activeTownId==='fishing-harbor'
-    ? [...starterRoutes,...ALL_FISHING_ROUTES] : starterRoutes;
-  cityCenter=activeTownId==='fishing-harbor' ? {x:0,z:-5200}:{x:0,z:0};
-  expandedView=activeTownId==='fishing-harbor'?1350:1220;
+  routeLayout=[...starterRoutes,...ALL_FISHING_ROUTES];
+  cityCenter=activeTownId==='fishing-harbor'?{x:0,z:-2600}:{x:0,z:0};
+  expandedView=activeTownId==='fishing-harbor'?1280:1220;
+}
+export function focusTown(townId) {
+ if(!expanded || !WORLD_TOWNS.some(t=>t.id===townId&&t.playable))return false;
+ mapMode='city';cityCenter=townId==='fishing-harbor'?{x:0,z:-2600}:{x:0,z:0};
+ expandedView=townId==='fishing-harbor'?1280:1220;
+ followTravelCorridor=false;resize();return true;
 }
 export function setMarkers(list) { markers = list || []; }
 
@@ -230,7 +237,7 @@ function resize() {
 
 export function toggleExpand() {
   expanded = !expanded;
-  if (expanded) { mapMode = 'city'; cityCenter = activeTownId==='fishing-harbor' ? {x:0,z:-5200}:{x:0,z:0}; }
+  if (expanded) { mapMode='city';followTravelCorridor=true;cityCenter=activeTownId==='fishing-harbor'?{x:0,z:-2600}:{x:0,z:0}; }
   resize();
 }
 export function toggleMapLevel() {
@@ -248,6 +255,10 @@ if (typeof window !== 'undefined') {
 export function draw(playerPos, headingRad, traffic = [], npcs = []) {
   if (!ctx) return;
   lastPlayerPosition = { x: playerPos.x, z: playerPos.z };
+  if(expanded && mapMode==='city' && followTravelCorridor && Math.abs(playerPos.x)<90
+     && playerPos.z<-950 && playerPos.z>-1500){
+    cityCenter={x:playerPos.x,z:playerPos.z};expandedView=550;
+  }
   const { css, center, scale } = mapProjection(playerPos);
   const cx = center.x;
   const cz = center.z;
@@ -453,7 +464,7 @@ function drawWorldOverview(playerPos, css, px, py) {
   for (const link of WORLD_CONNECTIONS) {
     const from = gateways.get(link.from), to = gateways.get(link.to);
     if (!from || !to) continue;
-    const open=from.town.playable && to.town.playable && link.id==='st-fh';
+    const open=from.town.playable && to.town.playable;
     ctx.setLineDash(open ? [] : [6,5]);
     ctx.strokeStyle = open ? '#71db99' : link.tier === 'underwater' ? '#3d91b6' : '#7e9ba3';
     ctx.beginPath();
@@ -491,7 +502,7 @@ function drawWorldOverview(playerPos, css, px, py) {
   ctx.fillRect(0, 0, css, 37);
   ctx.font = '11px system-ui'; ctx.fillStyle = '#edf3ff';
   ctx.textAlign = 'left'; ctx.textBaseline = 'top';
-  ctx.fillText('WORLD MAP · wheel: zoom · drag: pan · click town: status', 9, 12);
+  ctx.fillText('WORLD MAP · click town: route · visit to unlock streets', 9, 12);
   ctx.fillStyle = 'rgba(36,88,110,.96)';
   roundRect(ctx, css - 124, 6, 116, 27, 7); ctx.fill();
   ctx.fillStyle = '#f4fdff'; ctx.font = 'bold 11px system-ui';
