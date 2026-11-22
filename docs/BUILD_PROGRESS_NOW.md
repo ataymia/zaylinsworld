@@ -63,6 +63,13 @@ is separately required.
 - [x] Add freeze-then-rewarm regression coverage to `check:harbor-market` including score, quality, and per-crate reset.
 - [ ] Confirm deployed mouse/touch/keyboard feedback and full GitHub Actions quality gates before marking device acceptance.
 
+## November 22 Harbor cold-chain feedback follow-up (PR validation pending)
+
+- [x] Use the same crate-local `overChilled` state for the canvas crate stamp, thermometer color, and player guidance. A frozen-then-rewarmed crate now stays marked HOLD / INSPECT instead of falsely showing green safe status.
+- [x] Add regression assertions for frozen/rewarmed, reset warm crates, ready non-inspection crates, and required visual warning wiring.
+- [ ] Run full executable quality gate on the proposed commit; inspect GitHub Actions before merging.
+- [ ] Deployed mouse, touch, keyboard, inspection routing, and save/reload acceptance still required. No visual acceptance claimed.
+
 ## Unfinished product queue in dependency order
 
 ### P0. Current two-town runtime reliability
