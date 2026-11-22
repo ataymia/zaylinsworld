@@ -1,5 +1,12 @@
 # Zaylins Master Execution Checklist
 
+> **November 21, 2026 status note:** This is a phase-by-phase historical build inventory.
+> The header's old active branch, old Phase 2A "next" designation and unchecked
+> engineering tasks do not reflect the October 2026 playable-world cutover.
+> Consult [BUILD_PROGRESS_NOW.md](BUILD_PROGRESS_NOW.md) and deployed acceptance
+> evidence before deciding what still requires implementation. Do not rebuild
+> implemented Starter Town systems to satisfy historical unchecked boxes.
+
 Status: canonical operational build plan  
 Active branch: `agent/starter-town-construction`  
 Primary milestone: Starter Town playable demo  

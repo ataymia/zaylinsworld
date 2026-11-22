@@ -1,5 +1,11 @@
 # Zaylins Active Phase Status
 
+> **Status superseded for current production:** This document and its machine
+> ledger were last synchronized in August 2026. See
+> [BUILD_PROGRESS_NOW.md](BUILD_PROGRESS_NOW.md) for the November 2026
+> repository audit, two-town runtime, Harbor changes and remaining release gates.
+> The detailed Phase 0–8 records below remain useful for technical lineage.
+
 Updated: 2026-08-13
 Authoritative machine-readable source: `src/config/buildPhaseStatus.js`  
 Repository workflow: direct commits to `main`; no pull requests unless Mia explicitly requests one  
