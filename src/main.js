@@ -11,6 +11,8 @@ import { placeWorldBuildings } from './worldBuildings.js';
 import { furnishInteriors } from './furnish.js';
 import { initMinimap, setMarkers } from './minimap.js';
 import { buildFishingHarbor } from './world/FishingHarbor.js';
+import {createHarborRentalBoat} from './world/HarborRentalBoat.js';
+import {HARBOR_BOAT_EXIT,ensureBoatState,boardHarborBoat,dockHarborBoat,stepHarborBoat,serviceDockedBoat,canDockBoat} from './runtime/HarborBoatLife.js';
 import { HARBOR_ACTIONS, HARBOR_ROUTES, FISHING_HIGHWAY, HARBOR_PEDESTRIAN_LOOPS, HARBOR_TRAFFIC_LOOPS, inFishingHarbor, onFishingHighway, onHarborPier, harborSafePoint, HARBOR_SHUTTLE_LANDING } from './config/fishingHarborPlan.js';
 import { ensureFishingState, fishingLevel, startFishing, tickFishing, pressFishing, sellFishingCatch, buyFishingBait } from './runtime/FishingHarborLife.js';
 import { showFishingPanel, hideFishingPanel } from './ui/FishingHarborPanel.js';
@@ -303,6 +305,8 @@ const crossTownNavigation = new StarterTownNavigation({plan: {
   locations:[],
 }});
 let harborWorld = null;
+let harborRentalBoat = null;
+let inBoat = false;
 let harborProductionRequested = false;
 let fishingSession = null;
 let fishingBobber = null;
@@ -421,6 +425,7 @@ function enterWorld() {
     abandonedCars = [];                       // fresh city → no previously-stolen parked cars
     car = createDrivableCar(scene, 13, 3);
     harborWorld = buildFishingHarbor(scene);
+    harborRentalBoat = createHarborRentalBoat(scene);
     // Feed Harbor's own civic, school, residential and waterfront loops into the
     // SAME scheduling, traffic, driver and pedestrian systems as Starter Town.
     cityNPCs.push(...createCityNPCs(scene,16,HARBOR_PEDESTRIAN_LOOPS));
@@ -482,6 +487,10 @@ function enterWorld() {
     registerInteractables(cityEntrances);      // relocation-only anchors (mailbox, moved doors)
   }
   rebuildPlayer();
+  const savedBoat=ensureBoatState(state);
+  inBoat=savedBoat.riding;
+  harborRentalBoat?.update(savedBoat);
+  player.group.visible=!inBoat;
   player.group.position.set(state.pos.x, 0, state.pos.z);
   player.group.rotation.y = state.facing || 0;
   returnPos.set(state.pos.x, 0, state.pos.z);
@@ -519,7 +528,7 @@ function placeStarterCarAtArrival() {
     source: 'starter-grant',
     makeActive: !state.vehicleState.activeVehicleId,
   });
-  const placement = starterVehicleSpawnNear(state.pos, { facing: state.facing });
+  const placement = starterVehicleSpawnNear(state.boating?.riding ? HARBOR_BOAT_EXIT : state.pos, { facing: state.facing });
   car.g.position.set(placement.x, 0, placement.z);
   car.g.rotation.y = placement.rotationY;
   car.spawn.set(placement.x, 0, placement.z);
@@ -2862,15 +2871,18 @@ function handleHarborAction(action) {
    notify('🍲 Fresh chowder restored energy and hunger.');
    break;
  case 'boats':{
-   const landing=harborSafePoint(HARBOR_SHUTTLE_LANDING);
-   if(!onHarborPier(landing)){
-     notify('⛵ Harbor shuttle is unavailable. Walk to a fishing pier instead.');
+   const result=boardHarborBoat(state,{purchase:controls.keys.has('shift')});
+   if(!result.ok){
+     notify(result.reason==='need-purchase-funds'?'⛵ Purchase costs 450 DreamBucks.'
+       :result.reason==='need-rental-funds'?'⛵ Rental costs 45 DreamBucks for the day.':'⛵ Already aboard.');
      break;
    }
-   player.group.position.set(landing.x,0,landing.z);
-   controls.snapTo(player.group.position,player.eyeHeight);
-   syncCurrentWorldTown(landing);
-   notify('⛵ Free harbor shuttle to Central Fishing Pier!');
+   const boat=ensureBoatState(state);
+   harborRentalBoat?.update(boat);
+   inBoat=true;player.group.visible=false;
+   player.group.position.set(boat.x,0,boat.z);
+   controls.bounds=null;controls.snapTo(player.group.position,1.7);
+   notify('⛵ W/S throttle, A/D steer. Return to the marina and press F to dock.');
    break;
  }
  case 'patrol':
@@ -2890,6 +2902,29 @@ function handleHarborAction(action) {
    break;
  default:notify(action.name);
  }
+ saveNow();
+}
+function updateHarborBoat(dt){
+ const boat=ensureBoatState(state);
+ const input=controls.moveInput();
+ const result=stepHarborBoat(boat,controls.moveInput(),dt);
+ harborRentalBoat?.update(boat,performance.now()*.001);
+ player.group.position.set(boat.x,0,boat.z);
+ if(result.collision&&input.f)notify('⛵ Slow down near piers and moored boats.');
+ const targetYaw=controls.mode===CAM.FIRST?boat.yaw:boat.yaw+Math.PI;
+ let delta=targetYaw-controls.yaw;
+ while(delta>Math.PI)delta-=Math.PI*2;
+ while(delta<-Math.PI)delta+=Math.PI*2;
+ controls.yaw+=delta*Math.min(1,dt*6);
+ controls.shoulder=0;
+ controls.update(harborRentalBoat.group.position.clone().setY(.9),1.7,dt);
+}
+function disembarkHarborBoat(){
+ if(!dockHarborBoat(state).ok){notify('⚓ Return to the marina slip and stop before docking.');return;}
+ inBoat=false;player.group.visible=true;
+ player.group.position.set(HARBOR_BOAT_EXIT.x,0,HARBOR_BOAT_EXIT.z);
+ controls.snapTo(player.group.position,player.eyeHeight);
+ notify('⚓ Docked at Bay Boat Rentals. Press E to board again.');
  saveNow();
 }
 function fishingPress() {
@@ -5506,13 +5541,14 @@ function applyVibe() {
 function saveNow() {
   if (!player) return false;
   if (area === 'city') {
-    const savedPosition=inCar?(drivingVehicle||car).g.position:player.group.position;
+    const savedPosition=inBoat?harborRentalBoat.group.position
+      :inCar?(drivingVehicle||car).g.position:player.group.position;
     state.pos.x=savedPosition.x;state.pos.z=savedPosition.z;
     state.world.townId=inFishingHarbor(savedPosition)?'fishing-harbor':'starter-town';
   } else {
     state.pos.x = returnPos.x; state.pos.z = returnPos.z;
   }
-  state.facing = player.group.rotation.y;
+  state.facing = inBoat?state.boating.yaw:player.group.rotation.y;
   if (car && state.vehicleState?.activeVehicleId) {
     updateOwnedVehicleCondition(state, state.vehicleState.activeVehicleId, {
       fuel: car.fuel ?? state.fuel ?? 100,
@@ -5566,6 +5602,7 @@ function aimRayOnTarget() {
   return false;
 }
 function locationLabel() {
+  if(inBoat)return '⛵ Fishing Harbor waters';
   if (inCar) return state.world?.townId==='fishing-harbor'?'🚗 Fishing Harbor':'🚗 Driving';
   if (area !== 'city') return interiors.byId[area].name;
   if(state.world?.townId==='fishing-harbor')return '🎣 Fishing Harbor';
@@ -5574,6 +5611,11 @@ function locationLabel() {
 
 // ── interaction dispatch each frame ────────────────────────────────────────────
 function handleInteraction(clicked = false) {
+  if(inBoat){
+    showPrompt(canDockBoat(ensureBoatState(state))?'Dock boat':'Return to marina to dock','f');
+    if(controls.consumePress('f'))disembarkHarborBoat();
+    return;
+  }
   const currentPos=inCar?(drivingVehicle||car)?.g.position:player?.group.position;
   const gateway=harborGatewayNear(currentPos);
   if(gateway && (!inCar || Math.abs((drivingVehicle||car)?.speed||0)<1.5)){
@@ -5600,7 +5642,14 @@ function handleInteraction(clicked = false) {
   }
   const harborAction=harborInteractionAt(player.group.position);
   if(harborAction){
-    showPrompt(harborAction.kind==='fish'?'Cast at '+harborAction.name:harborAction.name,'e');
+    showPrompt(harborAction.kind==='fish'?'Cast at '+harborAction.name
+      :harborAction.kind==='boats'?'Rent boat (E 45) · Buy (Shift+E 450) · Service (R)'
+      :harborAction.name,'e');
+    if(harborAction.kind==='boats'&&controls.consumePress('r')){
+      const result=serviceDockedBoat(state);
+      notify(result.ok?'🛠️ Boat serviced for '+result.cost+' DreamBucks.':'🛠️ Dock the boat and bring enough DreamBucks for repairs.');
+      if(result.ok)saveNow();
+    }
     if(controls.consumePress('e')||clicked)handleHarborAction(harborAction);
     return;
   }
@@ -5922,6 +5971,7 @@ function animate() {
   if(!harborProductionRequested && worldObserver && worldObserver.z < -700
      && Math.abs(worldObserver.x)<1400 && harborWorld){
     harborProductionRequested=true;
+    void harborRentalBoat?.hydrate(renderer).then(ready=>debug.set('harborBoatGLB',ready));
     void harborWorld.hydrate({renderer}).then(result=>debug.set('harborProductionAssets',{
       loaded:result.loaded,planned:result.planned,failed:result.failed.length,
     })).catch(error=>debug.set('harborProductionAssets',{error:String(error)}));
@@ -5940,7 +5990,8 @@ function animate() {
     updateCityGems(dt, t, pp);
   }
   if (!busy) {
-    if (inCar) updateCar(dt); else updatePlayer(dt, t);
+    if(inBoat) updateHarborBoat(dt);
+    else if (inCar) updateCar(dt); else updatePlayer(dt, t);
     updateVehicleCollisions(dt);
     updateNpcHealthBars(dt);
     // BARE-FISTS left-click = interact / pick up the nearest object (trash etc.).
@@ -5950,11 +6001,11 @@ function animate() {
     // otherwise equipped melee weapons feel broken. Use the E key to interact
     // while a melee weapon is out.
     let interactClick = false;
-    if (!inCar && player && currentWeapon().id === 'fists' && firePressed) {
+    if (!inCar && !inBoat && player && currentWeapon().id === 'fists' && firePressed) {
       const nearNow = manager.findNearest(player.group.position, area);
       if (nearNow) interactClick = true;
     }
-    if (!inCar) updateWeapons(dt, { fireHeld, firePressed: firePressed && !interactClick, reloadPressed });
+    if (!inCar && !inBoat) updateWeapons(dt, { fireHeld, firePressed: firePressed && !interactClick, reloadPressed });
     firePressed = false; reloadPressed = false;
     updatePolice(dt);
     updateEjectedPeople(dt, t);
@@ -5998,7 +6049,7 @@ function animate() {
     updateProgression(dt);
   } else {
     // keep camera framing the player while a menu/minigame is open
-    if (!inCar && player) controls.update(player.group.position, player.eyeHeight, dt);
+    if (!inCar && !inBoat && player) controls.update(player.group.position, player.eyeHeight, dt);
     updateNpcHealthBars(dt);
     reloadPressed = false;
     // NOTE: do NOT clear firePressed here — the eating loop consumes a click as a "bite".
@@ -6010,7 +6061,10 @@ function animate() {
 
   updateHUD(state, locationLabel());
   // car HUD (speed / fuel / damage) while driving
-  if (inCar) {
+  if(inBoat){
+    const boat=ensureBoatState(state);
+    updateCarHUD({visible:true,speed:Math.abs(boat.speed)*3.6,fuel:boat.fuel,damage:100-boat.hull});
+  }else if (inCar) {
     const v = drivingVehicle || car;
     updateCarHUD({ visible: true, speed: Math.abs(v.speed || 0) * 4, fuel: v.fuel ?? 100, damage: v.damage || 0 });
   } else {
@@ -6024,12 +6078,14 @@ function animate() {
       // stylesheet rule (#minimap{display:none}) and the radar would never show.
       if (mm && mm.style.display !== 'block') mm.style.display = 'block';
       let heading;
-      if (inCar) heading = (drivingVehicle || car).g.rotation.y;
+      if(inBoat)heading=state.boating.yaw;
+      else if (inCar) heading = (drivingVehicle || car).g.rotation.y;
       else {
         const fwd = new THREE.Vector3().subVectors(player.group.position, camera.position);
         heading = Math.atan2(fwd.x, fwd.z);
       }
-      const ppos = (inCar ? (drivingVehicle || car).g.position : player.group.position);
+      const ppos = (inBoat ? harborRentalBoat.group.position
+        : inCar ? (drivingVehicle || car).g.position : player.group.position);
       updateQuestGuidance(ppos, dt);
       minimap.draw(
         { x: ppos.x, z: ppos.z }, heading,
@@ -6045,7 +6101,7 @@ function animate() {
   const cw = currentWeapon();
   const xh = document.getElementById('crosshair');
   const scopeEl = document.getElementById('scope');
-  const armed = cw && !cw.melee && !inCar && area === 'city';
+  const armed = cw && !cw.melee && !inCar && !inBoat && area === 'city';
   // The first-person view model duplicates the in-hand weapon — only show it in
   // first-person so third-person doesn't render a second gun floating in-frame.
   setFirstPersonView(controls.mode === CAM.FIRST);

@@ -7,6 +7,7 @@ import { SPAWN } from './config/mapConfig.js';
 import { repairLegacyParkArrival, repairSchoolRoadPlacement } from './config/saveMigrations.js';
 import { ensureStarterTownLifeState } from './runtime/StarterTownLife.js';
 import { worldRegistry } from './runtime/WorldRegistry.js';
+import {normalizeBoatState} from './runtime/HarborBoatLife.js';
 
 export { repairLegacyParkArrival, repairSchoolRoadPlacement } from './config/saveMigrations.js';
 
@@ -111,6 +112,7 @@ export function defaultState() {
     policeCareer: { status: 'not-applied', rank: null, discipline: 0 },
     vehicleState: { activeVehicleId: null, stored: {}, impounded: [] },
     fishing: {rod:'starter-rod',bait:8,xp:0,totalCaught:0,catches:[]},
+    boating: normalizeBoatState(),
     settings: {},
   };
 }
@@ -200,6 +202,7 @@ function migrateAndNormalize(data = {}) {
       ...base.fishing,...(data.fishing || {}),
       catches: Array.isArray(data.fishing?.catches) ? data.fishing.catches.slice(0,120) : [],
     },
+    boating: normalizeBoatState(data.boating),
     settings: { ...(data.settings || {}) },
   });
 }
