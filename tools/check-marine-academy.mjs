@@ -49,6 +49,7 @@ assert.match(src,/startMarineLesson\(state\)/);
 assert.match(src,/answerMarineLesson\(state,marineLessonSession,choice\)/);
 assert.match(src,/showMarineAcademyPanel\(marineLessonSession/);
 assert.match(src,/!!marineLessonSession/);
-assert.match(src,/marineLessonSession&&controls\.consumePress/);
+assert.match(src,/if\(marineLessonSession\)\{/);
+assert.match(src,/chooseMarineAcademyAnswer\(i\)/,'keyboard choices must reach the graded lesson');
 assert.match(src,/action\.kind==='academy'/);
 console.log('[marine-academy] 8 real water-safety questions, 4 graded attempts, one-time certificate, daily retakes, state migration and live UI wiring passed');
