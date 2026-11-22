@@ -75,16 +75,20 @@ export function submitHarborMarketChoice(state,session,choice,{timeout=false}={}
  // Inspection crates should bypass cold storage: preserve their safety evidence.
  // For a legitimate pickup/storage order, moving a hot or frozen crate without
  // cooling and checking the thermometer is an actual mechanical failure.
- if(!timeout && order.answer!=='inspect' && choice!=='inspect' && !inRange){
+ if(!timeout && order.answer!=='inspect' && choice!=='inspect' && !inRange && !session.overChilled){
    return {type:'unprepared',tempC:session.tempC};
  }
- const correct=!timeout && choice===order.answer && (order.answer==='inspect'||inRange);
+ // Once a crate has frozen, reheating cannot erase the cold-chain breach.
+ // Route it to inspection instead of granting a paid successful dispatch.
+ const correct=!timeout && choice===order.answer &&
+   (order.answer==='inspect'||(inRange&&!session.overChilled));
  if(correct){
    session.score++;
    if(session.orderTime>=10)session.quality+=2;
    if(order.answer!=='inspect'&&session.tempC>=1.5&&session.tempC<=3.5)
      session.quality+=2;
  }
+ const overChilled=!!session.overChilled;
  const remaining=session.orderTime;
  session.index++;
  if(session.index<session.orders.length){
@@ -92,7 +96,7 @@ export function submitHarborMarketChoice(state,session,choice,{timeout=false}={}
    session.orderTime=19;
    session.cooledSeconds=0;
    session.overChilled=false;
-   return {type:'next',correct,score:session.score,timeout,remaining};
+   return {type:'next',correct,score:session.score,timeout,remaining,overChilled};
  }
  session.finished=true;
  const market=ensureHarborJobsState(state).market;

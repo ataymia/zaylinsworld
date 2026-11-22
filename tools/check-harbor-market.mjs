@@ -54,6 +54,21 @@ assert(cold.tempC<1,'overuse of the ice chute must freeze the crate');
 const initialOrder=cold.orders[cold.index];
 if(initialOrder.answer!=='inspect')
  assert.equal(submitHarborMarketChoice(coldState,cold,initialOrder.answer).type,'unprepared');
+// Freeze then rewarm must never earn a dispatch point or quality bonus.
+const thawState=defaultState(),thaw=startHarborMarketShift(thawState,{random:()=>0});
+const thawOrder=thaw.orders.findIndex(o=>o.answer!=='inspect');
+while(thaw.index<thawOrder)assert.equal(submitHarborMarketChoice(thawState,thaw,'inspect').type,'next');
+for(let i=0;i<35;i++)tickHarborMarketShift(thawState,thaw,.1,{cooling:true});
+assert(thaw.overChilled&&thaw.tempC<1);
+for(let i=0;i<100&&thaw.tempC<2;i++)tickHarborMarketShift(thawState,thaw,.1);
+assert(thaw.tempC>=1&&thaw.tempC<=4);
+const beforeScore=thaw.score,beforeQuality=thaw.quality;
+const thawResult=submitHarborMarketChoice(thawState,thaw,thaw.orders[thaw.index].answer);
+assert.equal(thawResult.correct,false);
+assert.equal(thaw.score,beforeScore);
+assert.equal(thaw.quality,beforeQuality);
+assert.equal(thawResult.overChilled,true);
+assert.equal(thaw.overChilled,false,'next crate must start with a clean temperature history');
 let expirations=0,finished=null;
 for(let i=0;i<4*200;i++){
  if(!cold.finished){

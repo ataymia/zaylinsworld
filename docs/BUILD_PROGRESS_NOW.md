@@ -57,6 +57,12 @@ is separately required.
 - [x] `f2ff6bb8`: introduce separate west/central/east catch pools, protect rare deep-water fish with a free East Pier permit, check current wanted status before issuing, preserve/sanitize permit data across saves and test the mechanics.
 - [ ] Verify both commits in the final target deployment and perform human playtest. CI alone is insufficient.
 
+## November 22 cold-chain integrity patch (source implementation, device QA pending)
+
+- [x] Prevent frozen seafood crates from earning dispatch points or quality bonuses after warming back into the 1–4°C range. The overchill flag is crate-local and clears for the next crate; inspection routing and existing wage/save schema remain intact.
+- [x] Add freeze-then-rewarm regression coverage to `check:harbor-market` including score, quality, and per-crate reset.
+- [ ] Confirm deployed mouse/touch/keyboard feedback and full GitHub Actions quality gates before marking device acceptance.
+
 ## Unfinished product queue in dependency order
 
 ### P0. Current two-town runtime reliability
