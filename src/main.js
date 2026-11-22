@@ -16,6 +16,8 @@ import {HARBOR_BOAT_EXIT,ensureBoatState,boardHarborBoat,dockHarborBoat,stepHarb
 import { HARBOR_ACTIONS, HARBOR_ROUTES, FISHING_HIGHWAY, HARBOR_PEDESTRIAN_LOOPS, HARBOR_TRAFFIC_LOOPS, inFishingHarbor, onFishingHighway, onHarborPier, harborSafePoint, HARBOR_SHUTTLE_LANDING } from './config/fishingHarborPlan.js';
 import { ensureFishingState, fishingLevel, startFishing, tickFishing, pressFishing, sellFishingCatch, buyFishingBait } from './runtime/FishingHarborLife.js';
 import { showFishingPanel, hideFishingPanel } from './ui/FishingHarborPanel.js';
+import {startHarborMarketShift,submitHarborMarketChoice} from './runtime/HarborMarketJob.js';
+import {showHarborMarketPanel,hideHarborMarketPanel} from './ui/HarborMarketPanel.js';
 import { STARTER_TOWN_RUNTIME_PLAN } from './config/starterTownRuntimePlan.js';
 import { preloadVehicles, swapVehicleVisual, TRAFFIC_FLEET, DRIVABLE_DEFAULT, DEALER_FLEET } from './vehicleKit.js';
 import { buildCity, colliders as cityColliders } from './world.js';
@@ -309,6 +311,7 @@ let harborRentalBoat = null;
 let inBoat = false;
 let harborProductionRequested = false;
 let fishingSession = null;
+let harborMarketSession = null;
 let fishingBobber = null;
 let debugBadge = null;           // debug panel API (initDebugBadge → { toggle })
 let monsters = [];               // active Monster Mode creatures
@@ -2843,6 +2846,7 @@ function handleHarborAction(action) {
      :'🎣 Eight bait cost 16 DreamBucks. Sell some fish to earn money.');
    break;
  case 'sell':{
+   if(controls.keys.has('shift')){beginHarborMarketJob();return;}
    const sold=sellFishingCatch(state);
    notify(sold.count?'🐟 Sold '+sold.count+' fish for '+sold.earnings+' DreamBucks!'
      :'🐟 Catch fish on the piers before selling your catch.');
@@ -2926,6 +2930,30 @@ function disembarkHarborBoat(){
  controls.snapTo(player.group.position,player.eyeHeight);
  notify('⚓ Docked at Bay Boat Rentals. Press E to board again.');
  saveNow();
+}
+function beginHarborMarketJob(){
+ if(harborMarketSession)return;
+ const result=startHarborMarketShift(state);
+ if(result.error){notify('🐟 Market shift already completed today. Come back tomorrow.');return;}
+ harborMarketSession=result;
+ showHarborMarketPanel(harborMarketSession,{choose:chooseHarborMarketStation,cancel:cancelHarborMarketJob});
+ notify('🐟 Sorting shift started. Handle four seafood orders.');
+}
+function cancelHarborMarketJob(){
+ harborMarketSession=null;hideHarborMarketPanel();
+ notify('🐟 Shift cancelled. No wages paid.');
+}
+function chooseHarborMarketStation(choice){
+ if(!harborMarketSession)return;
+ const result=submitHarborMarketChoice(state,harborMarketSession,choice);
+ if(result.type==='invalid'||result.type==='inactive')return;
+ if(result.type==='finished'){
+  harborMarketSession=null;hideHarborMarketPanel();
+  notify('🐟 Sorting shift: '+result.score+'/4 correct. Paid '+result.payout+' DreamBucks.');
+  saveNow();return;
+ }
+ notify(result.correct?'✅ Correct station.':'⚠️ Wrong station.');
+ showHarborMarketPanel(harborMarketSession,{choose:chooseHarborMarketStation,cancel:cancelHarborMarketJob});
 }
 function fishingPress() {
  if(!fishingSession)return;
@@ -5656,6 +5684,7 @@ function handleInteraction(clicked = false) {
   const harborAction=harborInteractionAt(player.group.position);
   if(harborAction){
     showPrompt(harborAction.kind==='fish'?'Cast at '+harborAction.name
+      :harborAction.kind==='sell'?'Sell fish (E) · Work sorting shift (Shift+E)'
       :harborAction.kind==='boats'?'Rent boat (E 45) · Buy (Shift+E 450) · Service (R)'
       :harborAction.name,'e');
     if(harborAction.kind==='boats'&&controls.consumePress('r')){
@@ -5996,7 +6025,13 @@ function animate() {
   if (interiors) Object.values(interiors.byId).forEach(intr => intr.stations.forEach(st => { if (st.mesh && st.mesh.userData.spin) st.mesh.rotation.y += 0.02; }));
 
   updateHarborFishing(dt);
-  const busy = interiorAcceptanceRunning || isUIOpen() || isSettingsOpen() || eating || hairGame || lineupGame || !!fishingSession || !!minimap?.isExpanded();
+  if(harborMarketSession){
+    const stations=['ice','counter','inspect'];
+    for(let i=0;i<3;i++)if(controls.consumePress(String(i+1))){
+      chooseHarborMarketStation(stations[i]);break;
+    }
+  }
+  const busy = interiorAcceptanceRunning || isUIOpen() || isSettingsOpen() || eating || hairGame || lineupGame || !!fishingSession || !!harborMarketSession || !!minimap?.isExpanded();
   // collectible gems: always bob/twinkle; only collectible while on foot in the city
   if (cityGems.length) {
     const pp = (!busy && !inCar && area === 'city' && player) ? player.group.position : null;

@@ -8,6 +8,7 @@ import { repairLegacyParkArrival, repairSchoolRoadPlacement } from './config/sav
 import { ensureStarterTownLifeState } from './runtime/StarterTownLife.js';
 import { worldRegistry } from './runtime/WorldRegistry.js';
 import {normalizeBoatState} from './runtime/HarborBoatLife.js';
+import {normalizeHarborJobsState} from './runtime/HarborMarketJob.js';
 
 export { repairLegacyParkArrival, repairSchoolRoadPlacement } from './config/saveMigrations.js';
 
@@ -113,6 +114,7 @@ export function defaultState() {
     vehicleState: { activeVehicleId: null, stored: {}, impounded: [] },
     fishing: {rod:'starter-rod',bait:8,xp:0,totalCaught:0,catches:[]},
     boating: normalizeBoatState(),
+    harborJobs: normalizeHarborJobsState(),
     settings: {},
   };
 }
@@ -203,6 +205,7 @@ function migrateAndNormalize(data = {}) {
       catches: Array.isArray(data.fishing?.catches) ? data.fishing.catches.slice(0,120) : [],
     },
     boating: normalizeBoatState(data.boating),
+    harborJobs: normalizeHarborJobsState(data.harborJobs),
     settings: { ...(data.settings || {}) },
   });
 }
