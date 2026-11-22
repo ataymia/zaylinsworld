@@ -75,7 +75,7 @@ export function submitHarborMarketChoice(state,session,choice,{timeout=false}={}
  // Inspection crates should bypass cold storage: preserve their safety evidence.
  // For a legitimate pickup/storage order, moving a hot or frozen crate without
  // cooling and checking the thermometer is an actual mechanical failure.
- if(!timeout && order.answer!=='inspect' && choice!=='inspect' && !inRange && !session.overChilled){
+ if(!timeout && order.answer!=='inspect' && choice!=='inspect' && (!inRange || session.overChilled)){
    return {type:'unprepared',tempC:session.tempC};
  }
  // Once a crate has frozen, reheating cannot erase the cold-chain breach.
