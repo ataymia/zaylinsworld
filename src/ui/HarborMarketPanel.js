@@ -109,7 +109,7 @@ function draw(s){
  c.beginPath();c.moveTo(crateX-18,crateY-7);c.lineTo(crateX-28,crateY-17);c.lineTo(crateX-28,crateY+3);c.fill();
  fillRound(crateX-37,crateY+5,74,17,4,color);
  text(s.tempC.toFixed(1)+'°C',crateX-23,crateY+18,'#092a32','900 12px system-ui');
- text('❄',crateeX=crateX-44,crateY-11,'#dffbff','900 14px system-ui');
+ text('❄',crateX-44,crateY-11,'#dffbff','900 14px system-ui');
  // Separated physical dispatch bays under the active conveyor.
  const labels=['❄️ COLD STORAGE','🧾 CUSTOMER','🔎 INSPECTION'];
  const colors=['#26576b','#226454','#715136'];
