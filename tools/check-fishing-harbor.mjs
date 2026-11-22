@@ -6,7 +6,7 @@ import {FISHING_HIGHWAY,HARBOR_ROUTES,HARBOR_ACTIONS,FISHING_SPOTS,
 import {RoadNetwork} from '../src/world/RoadNetwork.js';
 import {RoadGraph} from '../src/world/RoadGraph.js';
 import {defaultState} from '../src/state.js';
-import {ensureFishingState,startFishing,tickFishing,pressFishing,
+import {ensureFishingState,startFishing,tickFishing,pressFishing,landFishingCatch,
  fishingLevel,buyFishingBait,sellFishingCatch,FISHING_SPOT_CATCH_WEIGHTS} from '../src/runtime/FishingHarborLife.js';
 import {readFileSync,existsSync} from 'node:fs';
 import { HARBOR_TRAFFIC_LOOPS,HARBOR_PEDESTRIAN_LOOPS } from '../src/config/fishingHarborPlan.js';
@@ -107,12 +107,27 @@ assert.equal(pressFishing(first,state).type,'early');
 for(let i=0;i<50 && first.phase==='waiting';i++)tickFishing(first,0.12);
 assert.equal(first.phase,'bite','fish should bite after deterministic waiting');
 assert.equal(pressFishing(first,state).type,'hooked');
-let caught=null;
-for(let i=0;i<first.needed;i++){
- tickFishing(first,0.12);tickFishing(first,0.12);
- caught=pressFishing(first,state,{random:()=>0.6});
+// Holding SPACE with no aiming cannot win. Line tension must matter.
+const reckless=startFishing(defaultState(),{random:()=>.05});
+for(let i=0;i<60&&reckless.phase==='waiting';i++)tickFishing(reckless,.12);
+assert.equal(pressFishing(reckless).type,'hooked');
+for(let i=0;i<250&&reckless.phase==='reeling';i++)
+ tickFishing(reckless,.10,{rodX:-1,reel:true});
+assert.equal(reckless.phase,'escaped','blindly holding/repeatedly pressing SPACE must not catch fish');
+assert.equal(reckless.escapedReason,'line snapped');
+// A skillful player aligns the rod to the moving fish and releases the reel
+// whenever the line becomes risky; only then can they land the catch.
+let landed=null,frames=0,released=false;
+while(first.phase==='reeling'&&frames++<850){
+ const reel=first.tension<70;
+ if(!reel)released=true;
+ landed=tickFishing(first,.05,{rodX:first.fishX,reel});
 }
+assert.equal(landed?.type,'landed','steering and tension management must land the fish');
+assert(released,'player should have to release the reel to cool the line');
+const caught=landFishingCatch(first,state,{random:()=>0.6});
 assert.equal(caught.type,'caught');
+assert.equal(landFishingCatch(first,state).type,'inactive','claiming same catch twice must not duplicate');
 assert.equal(state.fishing.totalCaught,1);
 assert.equal(state.fishing.catches.length,1);
 assert(fishingLevel(state.fishing)>=1);
@@ -136,6 +151,11 @@ const scene=readFileSync(new URL('../src/world/FishingHarbor.js',import.meta.url
 assert.match(main,/buildFishingHarbor\(scene\)/);
 assert.match(main,/enforceLiveStarterTownBoundary/);
 assert.match(main,/updateHarborFishing\(dt\)/);
+assert.match(main,/getFishingPanelInput\(\)/,'rod aim and held reel must feed the live scene');
+assert.match(main,/landFishingCatch\(fishingSession,state\)/,'only a landed fish should award money and inventory');
+const panel=readFileSync(new URL('../src/ui/FishingHarborPanel.js',import.meta.url),'utf8');
+assert.match(panel,/pointerdown/,'fishing must support touch and mouse interaction');
+assert.match(panel,/getFishingPanelInput/,'fishing must have actual independent minigame controls');
 assert.match(main,/if\(fishingSession\)/);
 assert.match(main,/crossTownNavigation\.routePoints/);
 assert.match(scene,/FH_pier_deck_/);

@@ -14,8 +14,8 @@ import { buildFishingHarbor } from './world/FishingHarbor.js';
 import {createHarborRentalBoat} from './world/HarborRentalBoat.js';
 import {HARBOR_BOAT_EXIT,ensureBoatState,boardHarborBoat,dockHarborBoat,stepHarborBoat,serviceDockedBoat,canDockBoat,requestHarborBoatRescue} from './runtime/HarborBoatLife.js';
 import { HARBOR_ACTIONS, HARBOR_ROUTES, FISHING_HIGHWAY, HARBOR_PEDESTRIAN_LOOPS, HARBOR_TRAFFIC_LOOPS, inFishingHarbor, onFishingHighway, onHarborPier, harborSafePoint, HARBOR_SHUTTLE_LANDING } from './config/fishingHarborPlan.js';
-import { ensureFishingState, fishingLevel, startFishing, tickFishing, pressFishing, sellFishingCatch, buyFishingBait } from './runtime/FishingHarborLife.js';
-import { showFishingPanel, hideFishingPanel } from './ui/FishingHarborPanel.js';
+import { ensureFishingState, fishingLevel, startFishing, tickFishing, pressFishing, landFishingCatch, sellFishingCatch, buyFishingBait } from './runtime/FishingHarborLife.js';
+import { showFishingPanel, hideFishingPanel, getFishingPanelInput } from './ui/FishingHarborPanel.js';
 import {startHarborMarketShift,submitHarborMarketChoice} from './runtime/HarborMarketJob.js';
 import {showHarborMarketPanel,hideHarborMarketPanel} from './ui/HarborMarketPanel.js';
 import {ensureMarineAcademyState,startMarineLesson,answerMarineLesson} from './runtime/MarineAcademyLife.js';
@@ -2842,8 +2842,8 @@ function startPierFishing(spot) {
  if(session.error==='unknown-spot'){notify('🎣 This fishing spot is unavailable.');return;}
  fishingSession=session;
  makeFishingBobber(spot);
- showFishingPanel(session,state.fishing);
- notify('🎣 Casting at '+spot.name+'. Press SPACE when you get a bite.');
+ showFishingPanel(session,state.fishing,{hook:fishingPress,cancel:cancelFishing});
+ notify('🎣 Casting at '+spot.name+'. Set the hook on the bite, then aim and control reel tension.');
  saveNow();
 }
 function handleHarborAction(action) {
@@ -3033,26 +3033,35 @@ function chooseMarineAcademyAnswer(choice){
  showMarineAcademyPanel(marineLessonSession,{answer:chooseMarineAcademyAnswer,cancel:cancelMarineAcademyLesson});
 }
 function fishingPress() {
- if(!fishingSession)return;
+ if(!fishingSession||!['waiting','bite'].includes(fishingSession.phase))return;
  const result=pressFishing(fishingSession,state);
- if(result.type==='hooked')notify('🎣 Hooked! Tap SPACE to reel it in!');
- else if(result.type==='caught'){
-   notify('🐟 '+result.fish.name+' ('+result.fish.sizeKg+' kg) caught! Worth '+
-     result.fish.value+' DreamBucks. Fishing level '+result.level+'.');
-   fishingSession=null;hideFishingPanel();releaseFishingBobber();saveNow();return;
- }else if(result.type==='early')notify('🎣 Too early! Wait for the bite.');
- showFishingPanel(fishingSession,state.fishing);
+ if(result.type==='hooked')notify('🎣 Hooked! Follow the fish with A/D or drag. Hold SPACE to reel, release to lower tension.');
+ else if(result.type==='early')notify('🎣 Too early! Watch the fish, then set the hook.');
+ showFishingPanel(fishingSession,state.fishing,{hook:fishingPress,cancel:cancelFishing});
 }
 function updateHarborFishing(dt) {
  if(!fishingSession)return;
- if(fishingBobber)fishingBobber.position.y=-0.10+Math.sin(performance.now()*0.004)*0.12;
- const result=tickFishing(fishingSession,dt);
- if(result?.type==='bite')notify('🐟 A fish is biting! Press SPACE!');
- if(result?.type==='escaped'){
-   fishingSession=null;hideFishingPanel();releaseFishingBobber();
-   notify('🐟 The fish escaped. Try casting again.');saveNow();return;
+ if(fishingBobber)fishingBobber.position.y=-0.10+Math.sin(performance.now()*.004)*.12;
+ const input=getFishingPanelInput();
+ const turn=(controls.keys.has('d')?1:0)-(controls.keys.has('a')?1:0);
+ const rod=turn?Math.max(-1,Math.min(1,fishingSession.rodX+turn*dt*1.65))
+   :input.hasAim?input.rodX:fishingSession.rodX;
+ const outcome=tickFishing(fishingSession,dt,{rodX:rod,reel:controls.keys.has(' ')||input.reel});
+ if(outcome?.type==='bite')notify('🐟 Bite! Press SPACE or tap SET HOOK!');
+ if(outcome?.type==='landed'){
+   const landed=landFishingCatch(fishingSession,state);
+   if(landed.type==='caught')notify('🐟 '+landed.fish.name+' landed! '+
+      landed.fish.quality+' catch · '+landed.fish.sizeKg+' kg · '+landed.fish.value+
+      ' DreamBucks · Fishing level '+landed.level);
+   fishingSession=null;hideFishingPanel();releaseFishingBobber();saveNow();return;
  }
- showFishingPanel(fishingSession,state.fishing);
+ if(outcome?.type==='escaped'){
+   const reason=outcome.reason==='line snapped'?'Line snapped from too much tension.'
+      :outcome.reason==='missed hook'?'The bite was missed.':'The fish shook loose or time ran out.';
+   fishingSession=null;hideFishingPanel();releaseFishingBobber();
+   notify('🐟 '+reason+' Try again using both aim and reel pressure.');saveNow();return;
+ }
+ showFishingPanel(fishingSession,state.fishing,{hook:fishingPress,cancel:cancelFishing});
 }
 function cancelFishing() {
  if(!fishingSession)return;

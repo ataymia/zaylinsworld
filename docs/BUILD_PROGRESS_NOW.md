@@ -46,7 +46,7 @@ satisfy the approved visual direction.*
 - [x] Police wanted system, pursuits and recoveries; crime alternatives need further depth
 - [x] Quest/mission, dialogue and save/migration foundations
 - [x] Fishing Harbor arrival road, themed exterior assets, piers, traffic, signals and shore
-- [x] Fishing casting/timing/reeling/market sale/bait and school rod-upgrade loop
+- [x] Fishing skill challenge with moving fish, rod aiming, held/released reel and snap-risk tension, cast/bite timing, market sale/bait and school rod upgrade loop. Automated tests; visual acceptance pending.
 
 These items are source/automated-test implementation statements; device acceptance
 is separately required.
@@ -68,6 +68,7 @@ is separately required.
 - [ ] Test Maritime Academy questions, buttons/keyboard, daily lessons, first-pass award, certificates and save/reload.
 - [ ] Test Marina Buoy Run authentic buoy loading, B-start at dock, race timer, checkpoint sequence, certificate bonus, replays without duplicate pay and boat-rescue cancellation.
 - [ ] Verify West/Central fishing accessible, East permit-required, permit denied under active heat, and permit persists through reload.
+- [ ] Playtest fishing aim/reel/tension on mouse, keyboard and touch; confirm fish motion clarity, difficulty, no rapid-space exploit and failure feedback.
 - [ ] Validate all functional Starter Town doors, return positions, city roads and police/service routes.
 - [ ] Complete deployed 5-minute stationary, 15-minute travel and 60-minute mixed-play stability matrix, including Low/Auto presets.
 - [ ] Visual parity: readable signs, correct authentic GLBs, no props in driving lanes or floating/blocked interiors.
@@ -122,6 +123,7 @@ performance verification. Do not promote an art preview to "playable".
 1. Preserve the existing **2,000 × 2,000 playable Starter Town** and working user saves.
 2. Use existing authentic model packs and the approved district/map reference art.
 3. Every new gameplay prompt must deliver an actual working result.
+3a. **Minigames are skill-based playable activities, never spacebar spam or a token quiz**. Require multiple relevant controls and meaningful player decisions, audiovisual feedback, mastery, failure and scoring. Follow the Lineup Lab standard (tool choice, continuous manipulation, skill score); basic Harbor Market sorting is a transitional interaction and must be expanded into a real tactile processing game.
 4. Ship one testable system slice per commit and watch the quality/deployment gates.
 5. Do not count an untested build, asset inventory record or blueprint as completed gameplay.
 6. Use the active `main` history. No PR unless explicitly requested.

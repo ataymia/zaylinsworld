@@ -9,6 +9,13 @@ Backing code/data (skeletons, **not yet wired** into gameplay):
 - [src/minigames/index.js](../src/minigames/index.js) — registration + lookup API
 - [src/minigames/minigameRunner.js](../src/minigames/minigameRunner.js) — lifecycle driver
 
+> **November 2026 quality rule:** a countdown plus one button or multiple-choice
+> questions alone do not count as a completed minigame. Use Lineup Lab as the
+> quality bar: independent controls, visible interactive objects, continuous
+> simulation, risk/failure, skill grading and repeatable mastery. Fishing Harbor
+> Cast & Reel now uses independent rod aiming, moving fish and reel-tension
+> management. The market quiz is still transitional, not a finished minigame.
+>
 > The existing in-game `startTimingGame()` (clippers/gym/study) is the proven
 > pattern this framework generalizes. The runner is additive and does not replace
 > `startTimingGame` yet.
