@@ -72,7 +72,7 @@ is separately required.
 
 ### P1. Fishing Harbor, a complete second-town gameplay package
 
-- [x] First playable boat slice: rental/purchase, controls, bounds, pier collision, docking, service and saved water position using existing Harbor boat GLB. **Device acceptance still required.**
+- [x] First playable boat slice: rental/purchase, controls, bounds, pier collision, docking, service, emergency water rescue and saved water position using existing Harbor boat GLB. **Device acceptance still required.**
 - [ ] Multiple boat types, water traffic, buoy race, rescue and full marine services.
 - [ ] Add real player and NPC water routes, buoy safety signals and water-boundary/recovery rules.
 - [ ] Provide Harbor civic/retail/residential enterable interiors with functional exit registration; no decorative unreachable playable-block buildings.

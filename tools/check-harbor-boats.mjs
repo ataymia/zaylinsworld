@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {defaultState} from '../src/state.js';
 import {HARBOR_BOAT_DOCK,HARBOR_BOAT_EXIT,HARBOR_WATER_BOUNDS,BOAT_RENT_DREAMBUCKS,
  BOAT_BUY_DREAMBUCKS,normalizeBoatState,ensureBoatState,boatWaterPosition,boatObstructed,
- boardHarborBoat,dockHarborBoat,canDockBoat,serviceDockedBoat,stepHarborBoat}
+ boardHarborBoat,dockHarborBoat,canDockBoat,serviceDockedBoat,stepHarborBoat,requestHarborBoatRescue}
  from '../src/runtime/HarborBoatLife.js';
 import {inFishingHarbor,harborSafePoint} from '../src/config/fishingHarborPlan.js';
 import {readFileSync,existsSync} from 'node:fs';
@@ -39,11 +39,28 @@ const buyer=defaultState();assert(boardHarborBoat(buyer,{purchase:true}).ok);
 assert.equal(buyer.money,500-BOAT_BUY_DREAMBUCKS);assert(buyer.boating.owned);
 assert(normalizeBoatState(JSON.parse(JSON.stringify(buyer.boating))).riding);
 assert(!normalizeBoatState({riding:true}).riding);
+// Never strand an owner or renter at sea after damage, exhaustion or an old save.
+const stranded=defaultState();
+stranded.money=0;
+stranded.boating={...normalizeBoatState({owned:true,riding:true,x:400,z:-3410,fuel:0,hull:0})};
+assert.equal(dockHarborBoat(stranded).ok,false);
+const rescue=requestHarborBoatRescue(stranded);
+assert(rescue.ok&&rescue.fee===0);
+assert(canDockBoat(stranded.boating));
+assert(stranded.boating.fuel>=25&&stranded.boating.hull>=35);
+assert(stranded.boating.riding,'rescue must preserve vehicle occupancy until F disembark');
+assert(dockHarborBoat(stranded).ok);
+const rescuer=defaultState();
+rescuer.boating={...normalizeBoatState({owned:true,riding:true,x:-500,z:-3400})};
+const rescueCash=rescuer.money;
+assert.equal(requestHarborBoatRescue(rescuer).fee,25);
+assert.equal(rescuer.money,rescueCash-25);
 assert.equal(normalizeBoatState({fuel:999,hull:-1}).fuel,100);
 const main=readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
 assert.match(main,/stepHarborBoat\(boat,controls\.moveInput\(\),dt\)/);
 assert.match(main,/if\(inBoat\) updateHarborBoat\(dt\)/);
 assert.match(main,/const savedPosition=inBoat\?/);
 assert.match(main,/case 'boats':/);
+assert.match(main,/requestHarborBoatRescue\(state\)/,'player must be able to call water rescue from input');
 assert(existsSync(new URL('../public/assets/models/generated/fishing-harbor/modular_prop/vehicle_harbor_rental_boat_a_v01.glb',import.meta.url)));
 console.log('[harbor-boats] water physics, pier collisions, boat purchase/rent, service, saves and existing authored GLB checks passed');

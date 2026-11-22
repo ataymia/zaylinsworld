@@ -12,7 +12,7 @@ import { furnishInteriors } from './furnish.js';
 import { initMinimap, setMarkers } from './minimap.js';
 import { buildFishingHarbor } from './world/FishingHarbor.js';
 import {createHarborRentalBoat} from './world/HarborRentalBoat.js';
-import {HARBOR_BOAT_EXIT,ensureBoatState,boardHarborBoat,dockHarborBoat,stepHarborBoat,serviceDockedBoat,canDockBoat} from './runtime/HarborBoatLife.js';
+import {HARBOR_BOAT_EXIT,ensureBoatState,boardHarborBoat,dockHarborBoat,stepHarborBoat,serviceDockedBoat,canDockBoat,requestHarborBoatRescue} from './runtime/HarborBoatLife.js';
 import { HARBOR_ACTIONS, HARBOR_ROUTES, FISHING_HIGHWAY, HARBOR_PEDESTRIAN_LOOPS, HARBOR_TRAFFIC_LOOPS, inFishingHarbor, onFishingHighway, onHarborPier, harborSafePoint, HARBOR_SHUTTLE_LANDING } from './config/fishingHarborPlan.js';
 import { ensureFishingState, fishingLevel, startFishing, tickFishing, pressFishing, sellFishingCatch, buyFishingBait } from './runtime/FishingHarborLife.js';
 import { showFishingPanel, hideFishingPanel } from './ui/FishingHarborPanel.js';
@@ -5612,7 +5612,20 @@ function locationLabel() {
 // ── interaction dispatch each frame ────────────────────────────────────────────
 function handleInteraction(clicked = false) {
   if(inBoat){
-    showPrompt(canDockBoat(ensureBoatState(state))?'Dock boat':'Return to marina to dock','f');
+    showPrompt(canDockBoat(ensureBoatState(state))?'Dock boat (F) · Rescue (R)'
+      :'Return to marina to dock · Call Harbor Rescue (R)','f');
+    if(controls.consumePress('r')){
+      const rescue=requestHarborBoatRescue(state);
+      if(rescue.ok){
+        const boat=ensureBoatState(state);
+        harborRentalBoat?.update(boat);
+        player.group.position.set(boat.x,0,boat.z);
+        controls.snapTo(player.group.position,1.7);
+        notify(rescue.fee?'🛟 Harbor Rescue returned you to the marina for 25 DreamBucks.'
+          :'🛟 Harbor Rescue brought you home safely. No DreamBucks required.');
+        saveNow();
+      }
+    }
     if(controls.consumePress('f'))disembarkHarborBoat();
     return;
   }

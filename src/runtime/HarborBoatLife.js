@@ -58,6 +58,17 @@ export function serviceDockedBoat(state){
  if((state.money||0)<cost)return {ok:false,reason:'need-service-funds',cost};
  state.money-=cost;b.fuel=100;b.hull=100;return {ok:true,cost};
 }
+// A no-softlock Harbor Patrol tow: even a player with zero DreamBucks can
+// return safely when low fuel, disabled hull or an unfamiliar coastline traps them.
+export function requestHarborBoatRescue(state){
+ const b=ensureBoatState(state);
+ if(!b.riding)return {ok:false,reason:'not-aboard'};
+ const fee=(state.money||0)>=25?25:0;
+ state.money=Math.max(0,(state.money||0)-fee);
+ Object.assign(b,{x:HARBOR_BOAT_DOCK.x,z:HARBOR_BOAT_DOCK.z,
+   yaw:Math.PI,speed:0,fuel:Math.max(25,b.fuel),hull:Math.max(35,b.hull)});
+ return {ok:true,fee};
+}
 export function stepHarborBoat(boat,input={},dt=0){
  if(!boat?.riding)return {moved:false};
  const t=clamp(num(dt,0),0,.05),f=clamp(num(input.f,0),-1,1),
