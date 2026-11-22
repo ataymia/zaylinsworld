@@ -51,5 +51,5 @@ assert.match(src,/showMarineAcademyPanel\(marineLessonSession/);
 assert.match(src,/!!marineLessonSession/);
 assert.match(src,/if\(marineLessonSession\)\{/);
 assert.match(src,/chooseMarineAcademyAnswer\(i\)/,'keyboard choices must reach the graded lesson');
-assert.match(src,/action\.kind==='academy'/);
+assert.match(src,/harborAction\.kind==='academy'/,'Academy prompt must expose the Shift+E class');
 console.log('[marine-academy] 8 real water-safety questions, 4 graded attempts, one-time certificate, daily retakes, state migration and live UI wiring passed');
