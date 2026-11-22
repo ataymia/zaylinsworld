@@ -141,8 +141,10 @@ assert.match(main,/crossTownNavigation\.routePoints/);
 assert.match(scene,/FH_pier_deck_/);
 assert.match(scene,/FH_ocean/);
 assert.match(scene,/FH_approach_verge/);
-assert.match(main,/const landing=harborSafePoint\(HARBOR_SHUTTLE_LANDING\)/,
- 'shuttle must use translated central pier rather than legacy coordinates');
+assert.match(main,/boardHarborBoat\(state,\{purchase:/,
+ 'Harbor boat terminal must board the player on real owned or rented craft');
+assert.match(main,/createHarborRentalBoat\(scene\)/,
+ 'the active Harbor scene must create a controllable boat');
 assert.doesNotMatch(main,/player\.group\.position\.set\(120,0,-5530\)/,
  'legacy shuttle coordinates must never return');
 assert.match(main,/renderedTownMarkers!==townId/,
