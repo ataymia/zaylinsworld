@@ -11,7 +11,7 @@ import { placeWorldBuildings } from './worldBuildings.js';
 import { furnishInteriors } from './furnish.js';
 import { initMinimap, setMarkers } from './minimap.js';
 import { buildFishingHarbor } from './world/FishingHarbor.js';
-import { HARBOR_ACTIONS, HARBOR_ROUTES, FISHING_HIGHWAY, HARBOR_PEDESTRIAN_LOOPS, HARBOR_TRAFFIC_LOOPS, inFishingHarbor, onFishingHighway, harborSafePoint } from './config/fishingHarborPlan.js';
+import { HARBOR_ACTIONS, HARBOR_ROUTES, FISHING_HIGHWAY, HARBOR_PEDESTRIAN_LOOPS, HARBOR_TRAFFIC_LOOPS, inFishingHarbor, onFishingHighway, onHarborPier, harborSafePoint, HARBOR_SHUTTLE_LANDING } from './config/fishingHarborPlan.js';
 import { ensureFishingState, fishingLevel, startFishing, tickFishing, pressFishing, sellFishingCatch, buyFishingBait } from './runtime/FishingHarborLife.js';
 import { showFishingPanel, hideFishingPanel } from './ui/FishingHarborPanel.js';
 import { STARTER_TOWN_RUNTIME_PLAN } from './config/starterTownRuntimePlan.js';
@@ -264,6 +264,7 @@ let cityEntrances = [];           // saved for live density re-registration
 let cityLandmarks = LANDMARKS;    // resolved compact/production positions for teleports and runtime lookups
 let entranceMap = {};            // interiorId -> { doorPos, faceDir }
 let townMarkers = [];            // accumulated minimap markers (gas, buildings, police, garage)
+let renderedTownMarkers = null;   // separate rendered view from persisted town identity
 let area = 'city';
 let interiorTransitioning = false;
 let inCar = false;
@@ -1949,7 +1950,7 @@ function addTownMarkers(list) {
       Math.round(e.x) === Math.round(m.x) && Math.round(e.z) === Math.round(m.z));
     if (!dup) townMarkers.push(m);
   }
-  if (minimap) setMarkers(townMarkers);
+  if (minimap && renderedTownMarkers !== 'fishing-harbor') setMarkers(townMarkers);
 }
 function addCruiserLivery(g) {
   const bar = new THREE.Group();
@@ -2737,19 +2738,23 @@ function syncCurrentWorldTown(position) {
  if(!position||!state.world)return;
  const townId=inFishingHarbor(position)?'fishing-harbor':'starter-town';
  minimap?.setActiveTown(townId);
- if(state.world.townId===townId){
-   if(townId==='fishing-harbor')setMarkers(HARBOR_ACTIONS.map(a=>({x:a.x,z:a.z,
-     icon:a.kind==='fish'?'🎣':'🏠',color:'#73deed'})));
-   return;
+ const townChanged=state.world.townId!==townId;
+ if(townChanged){
+   state.world.townId=townId;
+   if(!Array.isArray(state.world.discoveredTowns))state.world.discoveredTowns=['starter-town'];
+   if(!state.world.discoveredTowns.includes(townId))state.world.discoveredTowns.push(townId);
  }
- state.world.townId=townId;
- if(!Array.isArray(state.world.discoveredTowns))state.world.discoveredTowns=['starter-town'];
- if(!state.world.discoveredTowns.includes(townId))state.world.discoveredTowns.push(townId);
- setMarkers(townId==='fishing-harbor'
-   ? HARBOR_ACTIONS.map(a=>({x:a.x,z:a.z,
-       icon:a.kind==='fish'?'🎣':a.kind==='sell'?'🐟':'🏠',
-       color:a.kind==='fish'?'#4ee8ff':'#ffd996'}))
-   : townMarkers);
+ // Update markers only when the displayed town changes, including saved Harbor starts.
+ // Repeated boundary checks formerly wiped fish-market icons on every frame.
+ if(renderedTownMarkers!==townId){
+   setMarkers(townId==='fishing-harbor'
+     ? HARBOR_ACTIONS.map(a=>({x:a.x,z:a.z,
+         icon:a.kind==='fish'?'🎣':a.kind==='sell'?'🐟':'🏠',
+         color:a.kind==='fish'?'#4ee8ff':'#ffd996'}))
+     : townMarkers);
+   renderedTownMarkers=townId;
+ }
+ if(!townChanged)return;
  customMapDestination=null;guidanceAccum=1;
  notify(townId==='fishing-harbor'
    ? '🎣 Fishing Harbor unlocked! Walk to a pier and press E to cast.'
@@ -2854,11 +2859,18 @@ function handleHarborAction(action) {
    state.stats.hunger=Math.min(100,state.stats.hunger+35);
    notify('🍲 Fresh chowder restored energy and hunger.');
    break;
- case 'boats':
-   player.group.position.set(120,0,-5530);
+ case 'boats':{
+   const landing=harborSafePoint(HARBOR_SHUTTLE_LANDING);
+   if(!onHarborPier(landing)){
+     notify('⛵ Harbor shuttle is unavailable. Walk to a fishing pier instead.');
+     break;
+   }
+   player.group.position.set(landing.x,0,landing.z);
    controls.snapTo(player.group.position,player.eyeHeight);
+   syncCurrentWorldTown(landing);
    notify('⛵ Free harbor shuttle to Central Fishing Pier!');
    break;
+ }
  case 'patrol':
    if(!fishing.permit){
      fishing.permit=true;

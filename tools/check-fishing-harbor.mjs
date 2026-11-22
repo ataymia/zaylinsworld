@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {DISTRICTS} from '../src/config/worldMapPlan.js';
 import {STARTER_TOWN_RUNTIME_PLAN} from '../src/config/starterTownRuntimePlan.js';
 import {FISHING_HIGHWAY,HARBOR_ROUTES,HARBOR_ACTIONS,FISHING_SPOTS,
- inFishingHarbor,onFishingHighway,onHarborPier,harborSafePoint} from '../src/config/fishingHarborPlan.js';
+ inFishingHarbor,onFishingHighway,onHarborPier,harborSafePoint,HARBOR_SHUTTLE_LANDING} from '../src/config/fishingHarborPlan.js';
 import {RoadNetwork} from '../src/world/RoadNetwork.js';
 import {RoadGraph} from '../src/world/RoadGraph.js';
 import {defaultState} from '../src/state.js';
@@ -23,6 +23,10 @@ assert(inFishingHarbor({x:0,z:-2600}),'waterfront must be accessible');
 assert(onHarborPier(FISHING_SPOTS[0]),'pier action must be on walkable deck');
 assert(!onHarborPier({x:800,z:-3020}),'open water must not be a pier');
 assert(harborSafePoint({x:800,z:-3030}).z>=-2780,'player cannot walk on open sea');
+assert(inFishingHarbor(HARBOR_SHUTTLE_LANDING),'shuttle destination must be within Harbor');
+assert(onHarborPier(HARBOR_SHUTTLE_LANDING),'shuttle destination must be a walkable pier');
+assert.deepEqual(harborSafePoint(HARBOR_SHUTTLE_LANDING),HARBOR_SHUTTLE_LANDING,
+ 'shuttle should not be clamped off the pier');
 
 const network=new RoadNetwork([...STARTER_TOWN_RUNTIME_PLAN.routes,FISHING_HIGHWAY,...HARBOR_ROUTES]);
 const graph=new RoadGraph(network);
@@ -116,6 +120,14 @@ assert.match(main,/crossTownNavigation\.routePoints/);
 assert.match(scene,/FH_pier_deck_/);
 assert.match(scene,/FH_ocean/);
 assert.match(scene,/FH_approach_verge/);
+assert.match(main,/const landing=harborSafePoint\(HARBOR_SHUTTLE_LANDING\)/,
+ 'shuttle must use translated central pier rather than legacy coordinates');
+assert.doesNotMatch(main,/player\.group\.position\.set\(120,0,-5530\)/,
+ 'legacy shuttle coordinates must never return');
+assert.match(main,/renderedTownMarkers!==townId/,
+ 'harbor map markers should follow displayed town changes');
+assert.match(main,/if\(!townChanged\)return/,
+ 'same-town boundary checks must not reset map icons');
 console.log('[fishing-harbor] connected shortened highway, 11 harbor roads, 3 fishing piers and 8 services verified');
 console.log('[fishing-harbor] '+sourceAssets.length+' existing harbor GLB paths, '+checkedRoadFootprints+' roadway-footprint clearance checks and runtime wiring passed');
 console.log('[fishing-harbor] cast, bite timing, reel, catch, market sale, bait, progression and save continuity verified');

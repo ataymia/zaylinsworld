@@ -79,6 +79,10 @@ const ORIGINAL_FISHING_SPOTS=Object.freeze([
   {id:'eastern-pier',name:'East Fishing Pier',kind:'fish',x:490,z:-5600,water:'deep'},
 ]);
 export const FISHING_SPOTS=Object.freeze(ORIGINAL_FISHING_SPOTS.map(a=>Object.freeze({...a,z:a.z+HARBOR_SHIFT_Z})));
+// Shore shuttle arrival follows the relocated central pier, not old world coordinates.
+export const HARBOR_SHUTTLE_LANDING=Object.freeze({
+ x:FISHING_SPOTS[1].x,z:FISHING_SPOTS[1].z+60,
+});
 export const HARBOR_ACTIONS=Object.freeze([...HARBOR_LOCATIONS,...FISHING_SPOTS]);
 export function inFishingHarbor(point){return !!point && point.x>=-1200 && point.x<=1200 && point.z>=-3700 && point.z<=-1500;}
 export function onFishingHighway(point) {return !!point && Math.abs(point.x)<=65 && point.z<=-980 && point.z>=-1500;}
