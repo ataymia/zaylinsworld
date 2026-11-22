@@ -14,7 +14,7 @@ Backing code/data (skeletons, **not yet wired** into gameplay):
 > quality bar: independent controls, visible interactive objects, continuous
 > simulation, risk/failure, skill grading and repeatable mastery. Fishing Harbor
 > Cast & Reel now uses independent rod aiming, moving fish and reel-tension
-> management. The market quiz is still transitional, not a finished minigame.
+> management. Harbor Market now has timed cold-chain management, a draggable fish crate, dispatch bays and quality scoring, with deployed playtest pending.
 >
 > The existing in-game `startTimingGame()` (clippers/gym/study) is the proven
 > pattern this framework generalizes. The runner is additive and does not replace

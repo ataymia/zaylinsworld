@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import {defaultState} from '../src/state.js';
 import {MARKET_DESTINATIONS,MARKET_ORDERS,ensureHarborJobsState,
- normalizeHarborJobsState,startHarborMarketShift,submitHarborMarketChoice}
+ normalizeHarborJobsState,startHarborMarketShift,submitHarborMarketChoice,tickHarborMarketShift,
+ SAFE_MARKET_TEMPERATURE}
  from '../src/runtime/HarborMarketJob.js';
 import {readFileSync} from 'node:fs';
 assert(MARKET_ORDERS.length>=8&&MARKET_DESTINATIONS.length===3);
@@ -10,28 +11,69 @@ const state=defaultState(),cash=state.money;
 const s=startHarborMarketShift(state,{random:()=>0});
 assert.equal(s.orders.length,4);
 assert.equal(new Set(s.orders.map(o=>o.id)).size,4);
-for(let i=0;i<3;i++)assert.equal(submitHarborMarketChoice(state,s,s.orders[s.index].answer).type,'next');
-const end=submitHarborMarketChoice(state,s,s.orders[s.index].answer);
+// A correct answer alone is not gameplay: cooling and temperature validation
+// are required before transferring any real seafood to a sales/storage bay.
+function prepAndDispatch(st,session){
+ const order=session.orders[session.index];
+ if(order.answer!=='inspect'){
+   assert.equal(submitHarborMarketChoice(st,session,order.answer).type,'unprepared');
+   let attempts=0;
+   while(session.tempC>3.3&&attempts++<80)tickHarborMarketShift(st,session,.1,{cooling:true});
+   assert(session.tempC>=SAFE_MARKET_TEMPERATURE.min);
+   assert(session.tempC<=SAFE_MARKET_TEMPERATURE.max);
+ }
+ return submitHarborMarketChoice(st,session,order.answer);
+}
+for(let i=0;i<3;i++)assert.equal(prepAndDispatch(state,s).type,'next');
+const end=prepAndDispatch(state,s);
 assert.equal(end.type,'finished');assert.equal(end.score,4);
-assert.equal(end.payout,52);assert.equal(state.money,cash+52);
+assert(end.payout>=52);assert.equal(state.money,cash+end.payout);
 assert.equal(ensureHarborJobsState(state).market.shifts,1);
 assert.equal(state.harborJobs.market.bestScore,4);
 assert.equal(submitHarborMarketChoice(state,s,'ice').type,'inactive');
 assert.equal(startHarborMarketShift(state).error,'already-worked');
 assert.equal(normalizeHarborJobsState(JSON.parse(JSON.stringify(state.harborJobs))).market.lastDay,state.day);
+// One poor shift does not delete high score or training progress.
 state.day++;
 const next=startHarborMarketShift(state,{random:()=>.5});
 for(let i=0;i<4;i++){
- const wrong=MARKET_DESTINATIONS.find(d=>d.id!==next.orders[next.index].answer).id;
- submitHarborMarketChoice(state,next,wrong);
+ const order=next.orders[next.index];
+ const wrong=MARKET_DESTINATIONS.find(d=>d.id!==order.answer).id;
+ let result=submitHarborMarketChoice(state,next,wrong);
+ if(result.type==='unprepared')result=submitHarborMarketChoice(state,next,'inspect');
+ assert(['next','finished'].includes(result.type));
 }
 assert.equal(next.score,0);assert.equal(state.harborJobs.market.shifts,2);
 assert.equal(state.harborJobs.market.bestScore,4);
 assert.equal(state.harborJobs.market.lastPayout,15);
 assert.equal(normalizeHarborJobsState({market:{bestScore:999,shifts:-100}}).market.bestScore,4);
+// Overcooling and a conveyor timeout create genuine failure without an infinite shift.
+const coldState=defaultState(),cold=startHarborMarketShift(coldState,{random:()=>0});
+for(let i=0;i<35;i++)tickHarborMarketShift(coldState,cold,.1,{cooling:true});
+assert(cold.tempC<1,'overuse of the ice chute must freeze the crate');
+const initialOrder=cold.orders[cold.index];
+if(initialOrder.answer!=='inspect')
+ assert.equal(submitHarborMarketChoice(coldState,cold,initialOrder.answer).type,'unprepared');
+let expirations=0,finished=null;
+for(let i=0;i<4*200;i++){
+ if(!cold.finished){
+   const result=tickHarborMarketShift(coldState,cold,.1);
+   if(result?.timeout)expirations++;
+   if(result.type==='finished')finished=result;
+ }
+}
+assert(finished&&finished.score===0);
+assert.equal(expirations,4);
+assert.equal(coldState.harborJobs.market.lastScore,0);
 const main=readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
 assert.match(main,/startHarborMarketShift\(state\)/);
 assert.match(main,/submitHarborMarketChoice\(state,harborMarketSession,choice\)/);
+assert.match(main,/tickHarborMarketShift\(state,harborMarketSession,dt/);
+assert.match(main,/getHarborMarketPanelInput\(\)/);
+const panel=readFileSync(new URL('../src/ui/HarborMarketPanel.js',import.meta.url),'utf8');
+assert.match(panel,/pointerdown/,'crate sorting must have physical drag and mobile support');
+assert.match(panel,/crateX/,'the crate must be a manipulable object');
+assert.match(panel,/cooling=true/,'the cold-chain is an independent input');
 assert.match(main,/showHarborMarketPanel\(harborMarketSession/);
 assert.match(main,/!!harborMarketSession/);
 assert.match(main,/harborAction.kind==='sell'/);

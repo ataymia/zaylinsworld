@@ -16,8 +16,8 @@ import {HARBOR_BOAT_EXIT,ensureBoatState,boardHarborBoat,dockHarborBoat,stepHarb
 import { HARBOR_ACTIONS, HARBOR_ROUTES, FISHING_HIGHWAY, HARBOR_PEDESTRIAN_LOOPS, HARBOR_TRAFFIC_LOOPS, inFishingHarbor, onFishingHighway, onHarborPier, harborSafePoint, HARBOR_SHUTTLE_LANDING } from './config/fishingHarborPlan.js';
 import { ensureFishingState, fishingLevel, startFishing, tickFishing, pressFishing, landFishingCatch, sellFishingCatch, buyFishingBait } from './runtime/FishingHarborLife.js';
 import { showFishingPanel, hideFishingPanel, getFishingPanelInput } from './ui/FishingHarborPanel.js';
-import {startHarborMarketShift,submitHarborMarketChoice} from './runtime/HarborMarketJob.js';
-import {showHarborMarketPanel,hideHarborMarketPanel} from './ui/HarborMarketPanel.js';
+import {startHarborMarketShift,submitHarborMarketChoice,tickHarborMarketShift} from './runtime/HarborMarketJob.js';
+import {showHarborMarketPanel,hideHarborMarketPanel,getHarborMarketPanelInput} from './ui/HarborMarketPanel.js';
 import {ensureMarineAcademyState,startMarineLesson,answerMarineLesson} from './runtime/MarineAcademyLife.js';
 import {showMarineAcademyPanel,hideMarineAcademyPanel} from './ui/MarineAcademyPanel.js';
 import {createHarborBuoyCourse} from './world/HarborBuoyCourse.js';
@@ -2988,7 +2988,7 @@ function beginHarborMarketJob(){
  if(result.error){notify('🐟 Market shift already completed today. Come back tomorrow.');return;}
  harborMarketSession=result;
  showHarborMarketPanel(harborMarketSession,{choose:chooseHarborMarketStation,cancel:cancelHarborMarketJob});
- notify('🐟 Sorting shift started. Handle four seafood orders.');
+ notify('🐟 Dockside Dispatch started! Chill seafood, drag crates to bays and beat the clock.');
 }
 function cancelHarborMarketJob(){
  harborMarketSession=null;hideHarborMarketPanel();
@@ -2998,12 +2998,17 @@ function chooseHarborMarketStation(choice){
  if(!harborMarketSession)return;
  const result=submitHarborMarketChoice(state,harborMarketSession,choice);
  if(result.type==='invalid'||result.type==='inactive')return;
+ if(result.type==='unprepared'){
+  notify('❄️ Seafood is not in the safe 1–4°C band. Hold the ice chute, then release before it freezes.');
+  return;
+ }
  if(result.type==='finished'){
   harborMarketSession=null;hideHarborMarketPanel();
-  notify('🐟 Sorting shift: '+result.score+'/4 correct. Paid '+result.payout+' DreamBucks.');
+  notify('🐟 Dockside Dispatch: '+result.score+'/4 correct. Paid '+result.payout+
+    ' DreamBucks including '+(result.tip||0)+' quality bonus.');
   saveNow();return;
  }
- notify(result.correct?'✅ Correct station.':'⚠️ Wrong station.');
+ notify(result.correct?'✅ Crate dispatched correctly.':'⚠️ Mishandled crate. Check the next ticket and cold-chain gauge.');
  showHarborMarketPanel(harborMarketSession,{choose:chooseHarborMarketStation,cancel:cancelHarborMarketJob});
 }
 function beginMarineAcademyLesson(){
@@ -5909,6 +5914,10 @@ function teleportTo(which) {
 // ── global hotkeys ─────────────────────────────────────────────────────────────
 window.addEventListener('keydown', e => {
   const kc = e.key.toLowerCase();
+  if(harborMarketSession && (kc==='escape'||kc==='c'||kc==='1'||kc==='2'||kc==='3')){
+    if(kc==='escape')cancelHarborMarketJob();
+    e.preventDefault();return;
+  }
   if(fishingSession){
     if(kc===' '){e.preventDefault();fishingPress();return;}
     if(kc==='escape'){e.preventDefault();cancelFishing();return;}
@@ -6121,9 +6130,22 @@ function animate() {
 
   updateHarborFishing(dt);
   if(harborMarketSession){
-    const stations=['ice','counter','inspect'];
-    for(let i=0;i<3;i++)if(controls.consumePress(String(i+1))){
-      chooseHarborMarketStation(stations[i]);break;
+    const result=tickHarborMarketShift(state,harborMarketSession,dt,{
+      cooling:controls.keys.has('c')||getHarborMarketPanelInput().cooling,
+    });
+    if(result.type==='finished'){
+      harborMarketSession=null;hideHarborMarketPanel();
+      notify('🐟 Shift complete: '+result.score+'/4 correctly packed. Paid '+result.payout+' DreamBucks.');
+      saveNow();
+    }else if(harborMarketSession){
+      if(result.type==='next'&&result.timeout)notify('⏰ Crate expired on the belt. The next order is ready.');
+      const stations=['ice','counter','inspect'];
+      for(let i=0;i<3;i++)if(controls.consumePress(String(i+1))){
+        chooseHarborMarketStation(stations[i]);break;
+      }
+      if(harborMarketSession)showHarborMarketPanel(harborMarketSession,{
+        choose:chooseHarborMarketStation,cancel:cancelHarborMarketJob,
+      });
     }
   }
   if(marineLessonSession){

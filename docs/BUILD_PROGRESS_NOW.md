@@ -64,7 +64,7 @@ is separately required.
 - [ ] Run `npm run check`, `npm run audit:characters`, `npm run audit:assets` on the target head and retain GitHub check evidence.
 - [ ] Verify live Harbor travel and the relocated shuttle with an existing save and a fresh save.
 - [ ] Test boat rentals, purchases, GLB loading, water travel, dock returns, collision, fuel/repair, and mid-water save/reload.
-- [ ] Test Harbor Market sorting with keyboard/buttons, pay, daily shift lockout and save/reload.
+- [ ] Playtest Dockside Dispatch crate drag/drop, touch cooling and pointer capture, overchill/overheat, timeouts, keyboard controls (C + 1/2/3), wages, daily shift lockout and save/reload.
 - [ ] Test Maritime Academy questions, buttons/keyboard, daily lessons, first-pass award, certificates and save/reload.
 - [ ] Test Marina Buoy Run authentic buoy loading, B-start at dock, race timer, checkpoint sequence, certificate bonus, replays without duplicate pay and boat-rescue cancellation.
 - [ ] Verify West/Central fishing accessible, East permit-required, permit denied under active heat, and permit persists through reload.
@@ -81,7 +81,7 @@ is separately required.
 - [ ] Multiple boat types, NPC water traffic, rescue missions and full marine services.
 - [ ] Add real player and NPC water routes, buoy safety signals and water-boundary/recovery rules.
 - [ ] Provide Harbor civic/retail/residential enterable interiors with functional exit registration; no decorative unreachable playable-block buildings.
-- [x] Harbor Catch Market sorting-shift minigame: four distinct seafood decisions, scored wages, once-per-day rule, saved career totals and keyboard/touch controls. Live acceptance pending.
+- [x] Harbor Catch Market **Dockside Dispatch minigame**: four timed physical crate-handling rounds, independently controlled cold-chain ice chute, 1–4°C safe temperature band, conveyor clock, drag-and-drop handling bays, keyboard alternative, time/quality scoring and wages, daily shift rule and saved career records. **Live acceptance pending.**
 - [ ] Add bait-shop restocking, dock work, courier and boat maintenance jobs with distinct actions, pay and progression.
 - [x] Maritime Academy Water Safety & Navigation: 8 question bank, 4-question graded lessons, daily attempt policy, first-pass certification/one-time award, stat gains and save migration. **Device QA pending.**
 - [ ] Add Maritime Academy advanced navigation/simulator, clinic, local housing, and patrol/restitution/service behavior.
@@ -123,7 +123,7 @@ performance verification. Do not promote an art preview to "playable".
 1. Preserve the existing **2,000 × 2,000 playable Starter Town** and working user saves.
 2. Use existing authentic model packs and the approved district/map reference art.
 3. Every new gameplay prompt must deliver an actual working result.
-3a. **Minigames are skill-based playable activities, never spacebar spam or a token quiz**. Require multiple relevant controls and meaningful player decisions, audiovisual feedback, mastery, failure and scoring. Follow the Lineup Lab standard (tool choice, continuous manipulation, skill score); basic Harbor Market sorting is a transitional interaction and must be expanded into a real tactile processing game.
+3a. **Minigames are skill-based playable activities, never spacebar spam or a token quiz**. Require multiple relevant controls and meaningful player decisions, audiovisual feedback, mastery, failure and scoring. Follow the Lineup Lab standard (tool choice, continuous manipulation, skill score); Harbor Market Dockside Dispatch now adds physical crate drag-and-drop, live cold-chain management, timed dispatch and quality scoring. Awaiting device acceptance.
 4. Ship one testable system slice per commit and watch the quality/deployment gates.
 5. Do not count an untested build, asset inventory record or blueprint as completed gameplay.
 6. Use the active `main` history. No PR unless explicitly requested.
