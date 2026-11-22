@@ -20,6 +20,8 @@ import {startHarborMarketShift,submitHarborMarketChoice} from './runtime/HarborM
 import {showHarborMarketPanel,hideHarborMarketPanel} from './ui/HarborMarketPanel.js';
 import {ensureMarineAcademyState,startMarineLesson,answerMarineLesson} from './runtime/MarineAcademyLife.js';
 import {showMarineAcademyPanel,hideMarineAcademyPanel} from './ui/MarineAcademyPanel.js';
+import {createHarborBuoyCourse} from './world/HarborBuoyCourse.js';
+import {ensureHarborRaceRecord,beginBuoyRace,tickBuoyRace,abortBuoyRace,BUOY_RACE_CHECKPOINTS} from './runtime/HarborBuoyRace.js';
 import { STARTER_TOWN_RUNTIME_PLAN } from './config/starterTownRuntimePlan.js';
 import { preloadVehicles, swapVehicleVisual, TRAFFIC_FLEET, DRIVABLE_DEFAULT, DEALER_FLEET } from './vehicleKit.js';
 import { buildCity, colliders as cityColliders } from './world.js';
@@ -310,6 +312,8 @@ const crossTownNavigation = new StarterTownNavigation({plan: {
 }});
 let harborWorld = null;
 let harborRentalBoat = null;
+let harborBuoyCourse = null;
+let buoyRaceSession = null;
 let inBoat = false;
 let harborProductionRequested = false;
 let fishingSession = null;
@@ -432,12 +436,14 @@ function enterWorld() {
     car = createDrivableCar(scene, 13, 3);
     harborWorld = buildFishingHarbor(scene);
     harborRentalBoat = createHarborRentalBoat(scene);
+    harborBuoyCourse = createHarborBuoyCourse(scene);
     // Feed Harbor's own civic, school, residential and waterfront loops into the
     // SAME scheduling, traffic, driver and pedestrian systems as Starter Town.
     cityNPCs.push(...createCityNPCs(scene,16,HARBOR_PEDESTRIAN_LOOPS));
     traffic.push(...createTraffic(scene,9,HARBOR_TRAFFIC_LOOPS));
     ensureFishingState(state);
     ensureMarineAcademyState(state);
+    ensureHarborRaceRecord(state);
     debug.set('fishingHarbor', harborWorld.report);
     registerInteractables(cityInfo.entrances);
     graphics.applyToScene(scene, renderer);   // reflections + texture filtering
@@ -2920,6 +2926,7 @@ function updateHarborBoat(dt){
  harborRentalBoat?.update(boat,performance.now()*.001);
  player.group.position.set(boat.x,0,boat.z);
  if(result.collision&&input.f)notify('⛵ Slow down near piers and moored boats.');
+  updateBuoyRaceSession(dt);
  const targetYaw=controls.mode===CAM.FIRST?boat.yaw:boat.yaw+Math.PI;
  let delta=targetYaw-controls.yaw;
  while(delta>Math.PI)delta-=Math.PI*2;
@@ -2928,8 +2935,47 @@ function updateHarborBoat(dt){
  controls.shoulder=0;
  controls.update(harborRentalBoat.group.position.clone().setY(.9),1.7,dt);
 }
+// Interactive on-water checkpoint mission. Only a real boat can start or finish.
+function startHarborBuoyRace(){
+ if(buoyRaceSession){notify('🏁 Buoy Run is already underway.');return;}
+ const result=beginBuoyRace(state);
+ if(result.error){
+   notify(result.error==='start-at-marina'?'🏁 Return to your marina slip to start the race.'
+     :result.error==='service-required'?'🛠️ Service your boat before racing.'
+     :'🏁 Board a boat to enter the Marina Buoy Run.');
+   return;
+ }
+ buoyRaceSession=result;
+ harborBuoyCourse?.update(0,performance.now()*.001);
+ notify('🏁 Buoy Run started! Follow the golden numbered markers in order.');
+}
+function stopHarborBuoyRace(message='🏁 Buoy Run cancelled.'){
+ if(!buoyRaceSession)return;
+ abortBuoyRace(buoyRaceSession);buoyRaceSession=null;
+ harborBuoyCourse?.update(-1,performance.now()*.001);
+ notify(message);
+}
+function updateBuoyRaceSession(dt){
+ if(!buoyRaceSession)return;
+ const result=tickBuoyRace(state,buoyRaceSession,dt);
+ harborBuoyCourse?.update(buoyRaceSession.index,performance.now()*.001);
+ if(result.type==='checkpoint'){
+  notify('🏁 Buoy '+result.number+'/'+BUOY_RACE_CHECKPOINTS.length+' cleared! Next: '+result.next+'.');
+ }else if(result.type==='finished'){
+  notify('🏆 Marina Buoy Run: '+result.seconds+' seconds! '+
+    (result.payout?'Earned '+result.payout+' DreamBucks.':'Daily prize previously claimed.')+
+    (result.academy?' Academy certificate bonus earned.':''));
+  buoyRaceSession=null;harborBuoyCourse?.update(-1,performance.now()*.001);
+  saveNow();
+ }else if(result.type==='timeout'){
+  buoyRaceSession=null;harborBuoyCourse?.update(-1,performance.now()*.001);
+  notify('⏱️ The Buoy Run timer expired. Try a safer route next time.');
+  saveNow();
+ }
+}
 function disembarkHarborBoat(){
  if(!dockHarborBoat(state).ok){notify('⚓ Return to the marina slip and stop before docking.');return;}
+ if(buoyRaceSession)stopHarborBuoyRace();
  inBoat=false;player.group.visible=true;
  player.group.position.set(HARBOR_BOAT_EXIT.x,0,HARBOR_BOAT_EXIT.z);
  controls.snapTo(player.group.position,player.eyeHeight);
@@ -5671,9 +5717,16 @@ function locationLabel() {
 // ── interaction dispatch each frame ────────────────────────────────────────────
 function handleInteraction(clicked = false) {
   if(inBoat){
-    showPrompt(canDockBoat(ensureBoatState(state))?'Dock boat (F) · Rescue (R)'
-      :'Return to marina to dock · Call Harbor Rescue (R)','f');
+    const raceText=buoyRaceSession?
+      '🏁 Buoy Run '+(buoyRaceSession.index+1)+'/'+BUOY_RACE_CHECKPOINTS.length+
+      ' · '+Math.floor(buoyRaceSession.seconds)+'s / 240s · Quit (X)'
+      :canDockBoat(ensureBoatState(state))?'Buoy Run (B) · Dock (F) · Rescue (R)'
+       :'Return to marina for race · Rescue (R)';
+    showPrompt(raceText,'f');
+    if(controls.consumePress('b'))startHarborBuoyRace();
+    if(controls.consumePress('x')&&buoyRaceSession)stopHarborBuoyRace();
     if(controls.consumePress('r')){
+      if(buoyRaceSession)stopHarborBuoyRace('🏁 Race withdrawn for Harbor Rescue.');
       const rescue=requestHarborBoatRescue(state);
       if(rescue.ok){
         const boat=ensureBoatState(state);
@@ -6046,6 +6099,7 @@ function animate() {
      && Math.abs(worldObserver.x)<1400 && harborWorld){
     harborProductionRequested=true;
     void harborRentalBoat?.hydrate(renderer).then(ready=>debug.set('harborBoatGLB',ready));
+    void harborBuoyCourse?.hydrate(renderer).then(ready=>debug.set('harborBuoyGLB',ready));
     void harborWorld.hydrate({renderer}).then(result=>debug.set('harborProductionAssets',{
       loaded:result.loaded,planned:result.planned,failed:result.failed.length,
     })).catch(error=>debug.set('harborProductionAssets',{error:String(error)}));

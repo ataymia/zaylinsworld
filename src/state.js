@@ -10,6 +10,7 @@ import { worldRegistry } from './runtime/WorldRegistry.js';
 import {normalizeBoatState} from './runtime/HarborBoatLife.js';
 import {normalizeHarborJobsState} from './runtime/HarborMarketJob.js';
 import {normalizeMarineAcademyState} from './runtime/MarineAcademyLife.js';
+import {normalizeHarborRaceRecord} from './runtime/HarborBuoyRace.js';
 
 export { repairLegacyParkArrival, repairSchoolRoadPlacement } from './config/saveMigrations.js';
 
@@ -117,6 +118,7 @@ export function defaultState() {
     boating: normalizeBoatState(),
     harborJobs: normalizeHarborJobsState(),
     marineAcademy: normalizeMarineAcademyState(),
+    harborRace: normalizeHarborRaceRecord(),
     settings: {},
   };
 }
@@ -209,6 +211,7 @@ function migrateAndNormalize(data = {}) {
     boating: normalizeBoatState(data.boating),
     harborJobs: normalizeHarborJobsState(data.harborJobs),
     marineAcademy: normalizeMarineAcademyState(data.marineAcademy),
+    harborRace: normalizeHarborRaceRecord(data.harborRace),
     settings: { ...(data.settings || {}) },
   });
 }
