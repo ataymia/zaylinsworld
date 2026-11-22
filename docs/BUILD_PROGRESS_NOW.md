@@ -154,3 +154,9 @@ performance verification. Do not promote an art preview to "playable".
 - [x] Reset Dockside Dispatch round marker and crate coordinates when hiding the panel, preventing stale dragged-crate positions after cancel/restart at the same order index.
 - [x] Add lifecycle regression guards to `check:harbor-market` for order marker, crate location, cooling and dragging reset.
 - [ ] Confirm executable GitHub Actions gates and deployed cancel/restart on mouse and touch, including pointer capture and fresh/existing saves. No visual acceptance claimed.
+
+## November 22 Harbor interrupted-drag recovery (proposed, device QA pending)
+
+- [x] Abort an active crate drag on canvas `lostpointercapture` without submitting a destination; preserve successful `pointerup` drops and pointer-cancel cleanup.
+- [x] Add source-level regression guards for both abort paths, crate position/bay reset, and non-dispatch on lost capture.
+- [ ] Confirm CI quality gates, then validate interrupted mouse/touch drags and successful drops in deployed gameplay; existing-save acceptance remains open.

@@ -123,6 +123,19 @@ assert.match(hideBody,/crateX\s*=\s*310\s*;\s*crateY\s*=\s*92/,'closed shifts mu
 assert.match(hideBody,/cooling\s*=\s*false/,'closed shifts must release the ice chute');
 assert.match(hideBody,/dragging\s*=\s*false/,'closed shifts must stop pointer dragging');
 
+// Interrupted pointer capture must abort a drag without dispatching a crate.
+// A normal pointerup still routes through finishDrag; capture loss must not.
+const lostCapture=panel.match(/canvas\.addEventListener\('lostpointercapture',([^\n]+)\);/)?.[1];
+assert.equal(lostCapture,'abortDrag','canvas must clean up lost pointer capture');
+const abortBody=panel.match(/const abortDrag=\(\)=>\{([^}]+)\}/)?.[1];
+assert(abortBody,'interrupted drag must have an explicit abort handler');
+assert.match(abortBody,/dragging=false/);
+assert.match(abortBody,/crateX=310;crateY=92/);
+assert.match(abortBody,/nearBin=-1/);
+assert.doesNotMatch(abortBody,/chooseFn|finishDrag/,'capture loss cannot submit a destination');
+assert.match(panel,/canvas\.addEventListener\('pointercancel',abortDrag\)/);
+assert.match(panel,/canvas\.addEventListener\('pointerup',finishDrag\)/);
+
 assert.match(main,/showHarborMarketPanel\(harborMarketSession/);
 assert.match(main,/!!harborMarketSession/);
 assert.match(main,/harborAction.kind==='sell'/);
