@@ -5,6 +5,7 @@ import {MARKET_DESTINATIONS,MARKET_ORDERS,ensureHarborJobsState,
  SAFE_MARKET_TEMPERATURE}
  from '../src/runtime/HarborMarketJob.js';
 import {readFileSync} from 'node:fs';
+import {getHarborCrateSafetyStatus} from '../src/ui/HarborMarketPanel.js';
 assert(MARKET_ORDERS.length>=8&&MARKET_DESTINATIONS.length===3);
 for(const order of MARKET_ORDERS)assert(MARKET_DESTINATIONS.some(d=>d.id===order.answer));
 const state=defaultState(),cash=state.money;
@@ -68,6 +69,14 @@ assert.equal(refused.type,'unprepared','previously frozen crate cannot be dispat
 assert.equal(thaw.score,beforeScore);
 assert.equal(thaw.quality,beforeQuality);
 assert.equal(thaw.overChilled,true,'refusal must preserve cold-chain evidence');
+
+// Visual state must follow cold-chain history, not just the current thermometer.
+const thawSafety=getHarborCrateSafetyStatus(thaw);
+assert.equal(thawSafety.inRange,true);
+assert.equal(thawSafety.overChilled,true);
+assert.equal(thawSafety.requiresInspection,true);
+assert.equal(thawSafety.dispatchReady,false);
+
 const thawResult=submitHarborMarketChoice(thawState,thaw,'inspect');
 assert.equal(thawResult.type,'next','unsafe crate must be routable to inspection');
 assert.equal(thawResult.correct,false);
@@ -75,6 +84,13 @@ assert.equal(thaw.score,beforeScore);
 assert.equal(thaw.quality,beforeQuality);
 assert.equal(thawResult.overChilled,true);
 assert.equal(thaw.overChilled,false,'next crate must start with a clean temperature history');
+const freshSafety=getHarborCrateSafetyStatus(thaw);
+assert.equal(freshSafety.overChilled,false);
+assert.equal(freshSafety.dispatchReady,false,'new warm crate still requires chilling');
+const readySession={...thaw,tempC:2.5,overChilled:false};
+const readySafety=getHarborCrateSafetyStatus(readySession);
+assert.equal(readySafety.dispatchReady,readySession.orders[readySession.index].answer!=='inspect');
+
 let expirations=0,finished=null;
 for(let i=0;i<4*200;i++){
  if(!cold.finished){
@@ -95,6 +111,10 @@ const panel=readFileSync(new URL('../src/ui/HarborMarketPanel.js',import.meta.ur
 assert.match(panel,/pointerdown/,'crate sorting must have physical drag and mobile support');
 assert.match(panel,/crateX/,'the crate must be a manipulable object');
 assert.match(panel,/cooling=true/,'the cold-chain is an independent input');
+assert.match(panel,/safety\.overChilled\?'HOLD'/,'frozen crate must display a HOLD stamp');
+assert.match(panel,/FROZEN · INSPECT/,'thermometer must retain the cold-chain warning');
+assert.match(panel,/Rewarming cannot restore safety/,'instructions must explain inspection recovery');
+
 assert.match(main,/showHarborMarketPanel\(harborMarketSession/);
 assert.match(main,/!!harborMarketSession/);
 assert.match(main,/harborAction.kind==='sell'/);
