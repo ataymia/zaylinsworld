@@ -87,7 +87,11 @@ function setup(){
   if(!dragging){crateX=310;crateY=92;nearBin=-1;}
  }
  canvas.addEventListener('pointerup',finishDrag);
- canvas.addEventListener('pointercancel',()=>{dragging=false;crateX=310;crateY=92;nearBin=-1;});
+ // Capture can be revoked by the browser (touch interruption, DOM changes).
+ // Treat that as cancellation, never as a successful drop into a handling bay.
+ const abortDrag=()=>{dragging=false;crateX=310;crateY=92;nearBin=-1;};
+ canvas.addEventListener('pointercancel',abortDrag);
+ canvas.addEventListener('lostpointercapture',abortDrag);
 }
 function fillRound(x,y,w,h,r,color,stroke=null){
  const c=ctx;c.beginPath();c.roundRect(x,y,w,h,r);c.fillStyle=color;c.fill();
