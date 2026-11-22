@@ -7,30 +7,42 @@ export const FISH_SPECIES=Object.freeze([
   {id:'silver-snapper',name:'Silver Snapper',value:65,xp:39,weight:11,difficulty:5},
   {id:'golden-gillyfish',name:'Golden Gillyfish',value:135,xp:85,weight:5,difficulty:6},
 ]);
+// Shore-specific catch tables make the water distinct without disrupting old saves.
+// Beginner docks are public; East Pier holds the permit-gated rare catches.
+export const FISHING_SPOT_CATCH_WEIGHTS=Object.freeze({
+ 'western-pier':Object.freeze({'bluegill':68,'harbor-bass':25,'speckled-trout':7}),
+ 'central-pier':Object.freeze({'bluegill':30,'harbor-bass':38,'speckled-trout':24,'silver-snapper':8}),
+ 'eastern-pier':Object.freeze({'bluegill':10,'harbor-bass':17,'speckled-trout':30,'silver-snapper':38,'golden-gillyfish':5}),
+});
 const bounded=(n,lo,hi)=>Math.max(lo,Math.min(hi,n));
 export function ensureFishingState(state) {
- const old=state.fishing||{};
+ const old=state.fishing && typeof state.fishing==='object'?state.fishing:{};
+ // Keep extension fields from old saves, then validate all canonical fields.
  state.fishing={
-   rod:old.rod==='composite-rod'?'composite-rod':'starter-rod',bait:Math.max(0,Math.floor(Number(old.bait??8)||0)),
+   ...old,
+   rod:old.rod==='composite-rod'?'composite-rod':'starter-rod',
+   bait:bounded(Math.floor(Number(old.bait??8)||0),0,999),
    xp:Math.max(0,Math.floor(Number(old.xp)||0)),
    totalCaught:Math.max(0,Math.floor(Number(old.totalCaught)||0)),
-   catches:Array.isArray(old.catches)?old.catches.slice(0,120).filter(f=>FISH_SPECIES.some(s=>s.id===f.id)):[],
-   ...old,
+   catches:(Array.isArray(old.catches)?old.catches:[]).slice(0,120)
+     .filter(f=>f && FISH_SPECIES.some(s=>s.id===f.id)),
+   permit:old.permit===true,
+   masterRewards:Math.max(0,Math.floor(Number(old.masterRewards)||0)),
  };
- state.fishing.rod=state.fishing.rod==='composite-rod'?'composite-rod':'starter-rod';
- state.fishing.bait=bounded(Math.floor(Number(state.fishing.bait)||0),0,999);
- state.fishing.catches=state.fishing.catches.slice(0,120);
  return state.fishing;
 }
 export function fishingLevel(f){return Math.max(1,Math.floor(Math.sqrt((Number(f.xp)||0)/50))+1);}
 export function startFishing(state,{random=Math.random,spotId='western-pier'}={}) {
  const fishing=ensureFishingState(state);
+ const weights=FISHING_SPOT_CATCH_WEIGHTS[spotId];
+ if(!weights)return {error:'unknown-spot'};
+ if(spotId==='eastern-pier' && !fishing.permit)return {error:'permit-required'};
  if(fishing.bait<=0)return {error:'no-bait'};
  if(fishing.catches.length>=120)return {error:'full-bag'};
  fishing.bait-=1;
- const pool=FISH_SPECIES.reduce((sum,f)=>sum+f.weight,0);
+ const pool=FISH_SPECIES.reduce((sum,f)=>sum+(weights[f.id]||0),0);
  let roll=bounded(Number(random())||0,0,0.999999)*pool;
- const species=FISH_SPECIES.find(f=>((roll-=f.weight)<0))||FISH_SPECIES[0];
+ const species=FISH_SPECIES.find(f=>((roll-=(weights[f.id]||0))<0))||FISH_SPECIES[0];
  return {phase:'waiting',spotId,species,elapsed:0,wait:1.4+bounded(Number(random())||0,0,1)*2.5,
    hooked:0,hookWindow:fishing.rod==='composite-rod'?3:2.1,reelRemaining:11,reelTaps:0,needed:species.difficulty,
    lastTap:0};

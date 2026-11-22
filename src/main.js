@@ -2816,6 +2816,8 @@ function startPierFishing(spot) {
  const session=startFishing(state,{spotId:spot.id});
  if(session.error==='no-bait'){notify('🎣 No bait! Visit Bluefin Bait & Tackle.');return;}
  if(session.error==='full-bag'){notify('🎣 Bag full. Sell your fish at Harbor Catch Market.');return;}
+ if(session.error==='permit-required'){notify('🛟 Deep-water fishing needs a free Harbor Patrol permit.');return;}
+ if(session.error==='unknown-spot'){notify('🎣 This fishing spot is unavailable.');return;}
  fishingSession=session;
  makeFishingBobber(spot);
  showFishingPanel(session,state.fishing);
@@ -2872,13 +2874,13 @@ function handleHarborAction(action) {
    break;
  }
  case 'patrol':
-   if(!fishing.permit){
+   if((state.wanted||0)>0){
+     notify('🛟 Clear active police trouble before Harbor Patrol can issue a permit.');
+   }else if(!fishing.permit){
      fishing.permit=true;
-     notify('🛟 Harbor Patrol issued your public fishing permit. Respect the protected waters.');
-   }else if((state.wanted||0)>0){
-     notify('🛟 Harbor Patrol: resolve active police trouble before licensing marine work.');
+     notify('🛟 Free deep-water fishing permit issued! East Pier is now available.');
    }else{
-     notify('🛟 Harbor Patrol station is staffed. Your fishing permit is valid.');
+     notify('🛟 Harbor Patrol: deep-water fishing permit valid. Protect the marine habitat.');
    }
    break;
  case 'fuel':

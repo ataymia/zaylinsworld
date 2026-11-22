@@ -7,7 +7,7 @@ import {RoadNetwork} from '../src/world/RoadNetwork.js';
 import {RoadGraph} from '../src/world/RoadGraph.js';
 import {defaultState} from '../src/state.js';
 import {ensureFishingState,startFishing,tickFishing,pressFishing,
- fishingLevel,buyFishingBait,sellFishingCatch} from '../src/runtime/FishingHarborLife.js';
+ fishingLevel,buyFishingBait,sellFishingCatch,FISHING_SPOT_CATCH_WEIGHTS} from '../src/runtime/FishingHarborLife.js';
 import {readFileSync,existsSync} from 'node:fs';
 import { HARBOR_TRAFFIC_LOOPS,HARBOR_PEDESTRIAN_LOOPS } from '../src/config/fishingHarborPlan.js';
 
@@ -78,6 +78,27 @@ for(const model of productionFootprints){
  }
 }
 assert(checkedRoadFootprints>500,'test all asset footprints across full roadway segments');
+// Public piers remain playable, while East Pier has genuinely rare catches.
+assert.equal(FISHING_SPOT_CATCH_WEIGHTS['western-pier']['golden-gillyfish']||0,0);
+assert.equal(FISHING_SPOT_CATCH_WEIGHTS['central-pier']['golden-gillyfish']||0,0);
+assert(FISHING_SPOT_CATCH_WEIGHTS['eastern-pier']['golden-gillyfish']>0);
+const permitState=defaultState();
+const initialBait=ensureFishingState(permitState).bait;
+assert.equal(startFishing(permitState,{spotId:'eastern-pier'}).error,'permit-required');
+assert.equal(permitState.fishing.bait,initialBait,'denied deep-water cast must not consume bait');
+const west=startFishing(permitState,{spotId:'western-pier',random:()=>0.99999});
+assert.equal(west.species.id,'speckled-trout','public pier should not award deep-water rare fish');
+permitState.fishing.permit=true;
+const east=startFishing(permitState,{spotId:'eastern-pier',random:()=>0.99999});
+assert.equal(east.species.id,'golden-gillyfish','rare catch belongs to licensed deep-water pier');
+assert.equal(ensureFishingState(JSON.parse(JSON.stringify(permitState))).permit,true,
+ 'deep-water permit must survive save/load');
+const malformed=defaultState();
+malformed.fishing={...malformed.fishing,bait:999999,xp:-5,
+ catches:[{id:'made-up-species',value:1e9}]};
+assert.equal(ensureFishingState(malformed).bait,999);
+assert.equal(malformed.fishing.xp,0);
+assert.equal(malformed.fishing.catches.length,0);
 const state=defaultState();
 assert.equal(ensureFishingState(state).bait,8);
 const first=startFishing(state,{random:()=>0.01,spotId:FISHING_SPOTS[0].id});
@@ -128,6 +149,10 @@ assert.match(main,/renderedTownMarkers!==townId/,
  'harbor map markers should follow displayed town changes');
 assert.match(main,/if\(!townChanged\)return/,
  'same-town boundary checks must not reset map icons');
+assert.match(main,/case 'patrol':\s*if\(\(state\.wanted\|\|0\)>0\)/,
+ 'Harbor Patrol must check wanted status before granting a permit');
+assert.match(main,/session\.error==='permit-required'/,
+ 'deep-water permit denial must give the player instructions');
 console.log('[fishing-harbor] connected shortened highway, 11 harbor roads, 3 fishing piers and 8 services verified');
 console.log('[fishing-harbor] '+sourceAssets.length+' existing harbor GLB paths, '+checkedRoadFootprints+' roadway-footprint clearance checks and runtime wiring passed');
 console.log('[fishing-harbor] cast, bite timing, reel, catch, market sale, bait, progression and save continuity verified');
