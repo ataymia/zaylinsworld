@@ -137,6 +137,9 @@ export function getHarborMarketPanelInput(){return {cooling};}
 export function hideHarborMarketPanel(){
  if(root)root.style.display='none';
  cooling=false;dragging=false;nearBin=-1;
+ // A canceled shift may restart at the same order index. Never retain its
+ // dragged crate coordinates or round marker across separate sessions.
+ visibleOrder=-1;crateX=310;crateY=92;
 }
 export function showHarborMarketPanel(session,{choose,cancel}={}){
  if(!root)setup();

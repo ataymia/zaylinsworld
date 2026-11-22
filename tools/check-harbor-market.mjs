@@ -114,6 +114,14 @@ assert.match(panel,/cooling=true/,'the cold-chain is an independent input');
 assert.match(panel,/safety\.overChilled\?'HOLD'/,'frozen crate must display a HOLD stamp');
 assert.match(panel,/FROZEN · INSPECT/,'thermometer must retain the cold-chain warning');
 assert.match(panel,/Rewarming cannot restore safety/,'instructions must explain inspection recovery');
+// Hiding a canceled shift must reset the round marker and dragged crate
+// position even if the next shift starts on the same order index.
+const hideBody=panel.match(/export function hideHarborMarketPanel\(\)\{([\s\S]*?)\n\}/)?.[1];
+assert(hideBody,'Harbor panel must expose a close/reset lifecycle');
+assert.match(hideBody,/visibleOrder\s*=\s*-1/,'closed shifts must forget their previous order');
+assert.match(hideBody,/crateX\s*=\s*310\s*;\s*crateY\s*=\s*92/,'closed shifts must reset the dragged crate');
+assert.match(hideBody,/cooling\s*=\s*false/,'closed shifts must release the ice chute');
+assert.match(hideBody,/dragging\s*=\s*false/,'closed shifts must stop pointer dragging');
 
 assert.match(main,/showHarborMarketPanel\(harborMarketSession/);
 assert.match(main,/!!harborMarketSession/);

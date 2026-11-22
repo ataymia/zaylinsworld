@@ -148,3 +148,9 @@ performance verification. Do not promote an art preview to "playable".
 - `FISHING_HARBOR_BLUEPRINT.md`
 - `WORLD_VISUAL_REFERENCE_BIBLE.md`
 - `buildPhaseStatus.js` (historical August ledger, not last production commit)
+
+## November 22 Harbor canceled-shift panel reset (CI and device QA pending)
+
+- [x] Reset Dockside Dispatch round marker and crate coordinates when hiding the panel, preventing stale dragged-crate positions after cancel/restart at the same order index.
+- [x] Add lifecycle regression guards to `check:harbor-market` for order marker, crate location, cooling and dragging reset.
+- [ ] Confirm executable GitHub Actions gates and deployed cancel/restart on mouse and touch, including pointer capture and fresh/existing saves. No visual acceptance claimed.
