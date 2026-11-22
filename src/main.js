@@ -18,6 +18,8 @@ import { ensureFishingState, fishingLevel, startFishing, tickFishing, pressFishi
 import { showFishingPanel, hideFishingPanel } from './ui/FishingHarborPanel.js';
 import {startHarborMarketShift,submitHarborMarketChoice} from './runtime/HarborMarketJob.js';
 import {showHarborMarketPanel,hideHarborMarketPanel} from './ui/HarborMarketPanel.js';
+import {ensureMarineAcademyState,startMarineLesson,answerMarineLesson} from './runtime/MarineAcademyLife.js';
+import {showMarineAcademyPanel,hideMarineAcademyPanel} from './ui/MarineAcademyPanel.js';
 import { STARTER_TOWN_RUNTIME_PLAN } from './config/starterTownRuntimePlan.js';
 import { preloadVehicles, swapVehicleVisual, TRAFFIC_FLEET, DRIVABLE_DEFAULT, DEALER_FLEET } from './vehicleKit.js';
 import { buildCity, colliders as cityColliders } from './world.js';
@@ -312,6 +314,7 @@ let inBoat = false;
 let harborProductionRequested = false;
 let fishingSession = null;
 let harborMarketSession = null;
+let marineLessonSession = null;
 let fishingBobber = null;
 let debugBadge = null;           // debug panel API (initDebugBadge → { toggle })
 let monsters = [];               // active Monster Mode creatures
@@ -434,6 +437,7 @@ function enterWorld() {
     cityNPCs.push(...createCityNPCs(scene,16,HARBOR_PEDESTRIAN_LOOPS));
     traffic.push(...createTraffic(scene,9,HARBOR_TRAFFIC_LOOPS));
     ensureFishingState(state);
+    ensureMarineAcademyState(state);
     debug.set('fishingHarbor', harborWorld.report);
     registerInteractables(cityInfo.entrances);
     graphics.applyToScene(scene, renderer);   // reflections + texture filtering
@@ -2862,6 +2866,7 @@ function handleHarborAction(action) {
    break;
  }
  case 'academy':
+   if(controls.keys.has('shift')){beginMarineAcademyLesson();return;}
    if(fishing.rod==='composite-rod')notify('🎓 Composite rod equipped. Fishing level '+fishingLevel(fishing)+'.');
    else if(fishingLevel(fishing)<2)notify('🎓 Reach fishing level 2 to upgrade your rod.');
    else if(state.money<120)notify('🎓 A composite fishing rod costs 120 DreamBucks.');
@@ -2954,6 +2959,32 @@ function chooseHarborMarketStation(choice){
  }
  notify(result.correct?'✅ Correct station.':'⚠️ Wrong station.');
  showHarborMarketPanel(harborMarketSession,{choose:chooseHarborMarketStation,cancel:cancelHarborMarketJob});
+}
+function beginMarineAcademyLesson(){
+ if(marineLessonSession||harborMarketSession||fishingSession)return;
+ const start=startMarineLesson(state);
+ if(start.error){notify('🎓 You already studied today. Return on the next game day.');return;}
+ marineLessonSession=start;
+ showMarineAcademyPanel(marineLessonSession,{answer:chooseMarineAcademyAnswer,cancel:cancelMarineAcademyLesson});
+ notify('🎓 Water Safety & Navigation lesson started. Score 3/4 to qualify.');
+}
+function cancelMarineAcademyLesson(){
+ marineLessonSession=null;hideMarineAcademyPanel();
+ notify('🎓 Lesson paused without a grade.');
+}
+function chooseMarineAcademyAnswer(choice){
+ if(!marineLessonSession)return;
+ const outcome=answerMarineLesson(state,marineLessonSession,choice);
+ if(outcome.type==='inactive'||outcome.type==='invalid')return;
+ if(outcome.type==='finished'){
+  marineLessonSession=null;hideMarineAcademyPanel();
+  notify(outcome.passed
+    ?'🎓 Passed '+outcome.score+'/4! '+(outcome.firstCertificate?'Navigation certificate earned, 75 DreamBucks awarded!':'Safety skills refreshed.')
+    :'📚 Scored '+outcome.score+'/4. Study again next in-game day.');
+  saveNow();return;
+ }
+ notify(outcome.correct?'✅ Correct. '+outcome.explanation:'📖 Review: '+outcome.explanation);
+ showMarineAcademyPanel(marineLessonSession,{answer:chooseMarineAcademyAnswer,cancel:cancelMarineAcademyLesson});
 }
 function fishingPress() {
  if(!fishingSession)return;
@@ -5685,6 +5716,7 @@ function handleInteraction(clicked = false) {
   if(harborAction){
     showPrompt(harborAction.kind==='fish'?'Cast at '+harborAction.name
       :harborAction.kind==='sell'?'Sell fish (E) · Work sorting shift (Shift+E)'
+      :harborAction.kind==='academy'?'Upgrade rod (E) · Navigation class (Shift+E)'
       :harborAction.kind==='boats'?'Rent boat (E 45) · Buy (Shift+E 450) · Service (R)'
       :harborAction.name,'e');
     if(harborAction.kind==='boats'&&controls.consumePress('r')){
@@ -6031,7 +6063,12 @@ function animate() {
       chooseHarborMarketStation(stations[i]);break;
     }
   }
-  const busy = interiorAcceptanceRunning || isUIOpen() || isSettingsOpen() || eating || hairGame || lineupGame || !!fishingSession || !!harborMarketSession || !!minimap?.isExpanded();
+  if(marineLessonSession){
+    for(let i=0;i<3;i++)if(controls.consumePress(String(i+1))){
+      chooseMarineAcademyAnswer(i);break;
+    }
+  }
+  const busy = interiorAcceptanceRunning || isUIOpen() || isSettingsOpen() || eating || hairGame || lineupGame || !!fishingSession || !!harborMarketSession || !!marineLessonSession || !!minimap?.isExpanded();
   // collectible gems: always bob/twinkle; only collectible while on foot in the city
   if (cityGems.length) {
     const pp = (!busy && !inCar && area === 'city' && player) ? player.group.position : null;

@@ -65,6 +65,7 @@ is separately required.
 - [ ] Verify live Harbor travel and the relocated shuttle with an existing save and a fresh save.
 - [ ] Test boat rentals, purchases, GLB loading, water travel, dock returns, collision, fuel/repair, and mid-water save/reload.
 - [ ] Test Harbor Market sorting with keyboard/buttons, pay, daily shift lockout and save/reload.
+- [ ] Test Maritime Academy questions, buttons/keyboard, daily lessons, first-pass award, certificates and save/reload.
 - [ ] Verify West/Central fishing accessible, East permit-required, permit denied under active heat, and permit persists through reload.
 - [ ] Validate all functional Starter Town doors, return positions, city roads and police/service routes.
 - [ ] Complete deployed 5-minute stationary, 15-minute travel and 60-minute mixed-play stability matrix, including Low/Auto presets.
@@ -79,7 +80,8 @@ is separately required.
 - [ ] Provide Harbor civic/retail/residential enterable interiors with functional exit registration; no decorative unreachable playable-block buildings.
 - [x] Harbor Catch Market sorting-shift minigame: four distinct seafood decisions, scored wages, once-per-day rule, saved career totals and keyboard/touch controls. Live acceptance pending.
 - [ ] Add bait-shop restocking, dock work, courier and boat maintenance jobs with distinct actions, pay and progression.
-- [ ] Add Marine Academy lessons, clinic, local housing, and patrol/restitution/service behavior.
+- [x] Maritime Academy Water Safety & Navigation: 8 question bank, 4-question graded lessons, daily attempt policy, first-pass certification/one-time award, stat gains and save migration. **Device QA pending.**
+- [ ] Add Maritime Academy advanced navigation/simulator, clinic, local housing, and patrol/restitution/service behavior.
 - [ ] Add weather/ambient coastal behavior and curated population using existing Harbor assets.
 - [ ] Add local story, missions, town-specific unlocks, water safety and legal/risky alternatives.
 - [ ] Pass the full town release standard from `PLAYABLE_TOWN_RELEASE_STANDARD.md`.
