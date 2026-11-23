@@ -614,39 +614,49 @@
   function rrLocal(x,y,w,h,r,fill,stroke){ rr(x,y,w,h,r,fill,stroke); }
   function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
 
+  // Pointer Events handle mouse, pen and touch without duplicate touch cuts.
+  // Only the pointer that began the stroke may move or end it.
+  let activeCutPointer = null;
+  function stopCut(pointerId) {
+    if (activeCutPointer !== pointerId) return;
+    activeCutPointer = null;
+    state.pointer.down = false;
+    if (canvas.hasPointerCapture?.(pointerId)) canvas.releasePointerCapture(pointerId);
+  }
+
   canvas.addEventListener('pointermove', ev => {
-    const p=pointFromEvent(ev);
-    state.pointer.lastX=state.pointer.x; state.pointer.lastY=state.pointer.y;
-    state.pointer.x=clamp(p.x,0,W); state.pointer.y=clamp(p.y,0,H); state.pointer.inside=true;
+    if (activeCutPointer !== null && ev.pointerId !== activeCutPointer) return;
+    const p = pointFromEvent(ev);
+    state.pointer.lastX = state.pointer.x; state.pointer.lastY = state.pointer.y;
+    state.pointer.x = clamp(p.x, 0, W); state.pointer.y = clamp(p.y, 0, H);
+    state.pointer.inside = true;
   });
 
   canvas.addEventListener('pointerdown', ev => {
+    if (activeCutPointer !== null || (ev.pointerType === 'mouse' && ev.button !== 0)) return;
     ev.preventDefault();
-    const p=pointFromEvent(ev);
-    state.pointer.x=p.x; state.pointer.y=p.y; state.pointer.lastX=p.x; state.pointer.lastY=p.y; state.pointer.down=true;
-    if(!state.running && !state.finished){state.running=true;toast('Clippers on')}
-    cutAt(p.x,p.y);
+    activeCutPointer = ev.pointerId;
+    canvas.setPointerCapture?.(ev.pointerId);
+    const p = pointFromEvent(ev);
+    state.pointer.x = p.x; state.pointer.y = p.y;
+    state.pointer.lastX = p.x; state.pointer.lastY = p.y;
+    state.pointer.down = true;
+    if (!state.running && !state.finished) { state.running = true; toast('Clippers on'); }
+    cutAt(p.x, p.y);
   });
 
-  window.addEventListener('pointerup',()=>state.pointer.down=false);
-  canvas.addEventListener('pointerleave',()=>state.pointer.inside=false);
-
-  canvas.addEventListener('touchstart', ev => {
-    ev.preventDefault();
-    const p=pointFromEvent(ev);
-    state.pointer.x=p.x; state.pointer.y=p.y; state.pointer.lastX=p.x; state.pointer.lastY=p.y; state.pointer.down=true;
-    if(!state.running&&!state.finished){state.running=true;toast('Clippers on')}
-    cutAt(p.x,p.y);
-  }, {passive:false});
-
-  canvas.addEventListener('touchmove', ev => {
-    ev.preventDefault();
-    const p=pointFromEvent(ev);
-    state.pointer.lastX=state.pointer.x; state.pointer.lastY=state.pointer.y;
-    state.pointer.x=p.x; state.pointer.y=p.y;
-  }, {passive:false});
-
-  window.addEventListener('touchend',()=>state.pointer.down=false);
+  canvas.addEventListener('pointerup', ev => stopCut(ev.pointerId));
+  canvas.addEventListener('pointercancel', ev => stopCut(ev.pointerId));
+  canvas.addEventListener('lostpointercapture', ev => {
+    if (activeCutPointer === ev.pointerId) {
+      activeCutPointer = null;
+      state.pointer.down = false;
+    }
+  });
+  canvas.addEventListener('pointerleave', () => state.pointer.inside = false);
+  window.addEventListener('blur', () => {
+    if (activeCutPointer !== null) stopCut(activeCutPointer);
+  });
 
   ui.startBtn.onclick=()=>{state.running=true;state.finished=false;ui.resultOverlay.classList.remove('show');toast('Clippers on')};
   ui.finishBtn.onclick=finish;
