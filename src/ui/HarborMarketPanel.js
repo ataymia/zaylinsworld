@@ -3,6 +3,7 @@
 // Keyboard alternative: hold C to cool, 1/2/3 to select destination.
 import {MARKET_DESTINATIONS,SAFE_MARKET_TEMPERATURE} from '../runtime/HarborMarketJob.js';
 let root=null,canvas=null,ctx=null,ui={},cooling=false,chooseFn=null,cancelFn=null;
+let icePointerId=null;
 let dragging=false,activePointerId=null,crateX=310,crateY=92,visibleOrder=-1,nearBin=-1;
 const W=620,H=308;
 const clamp=(n,l,h)=>Math.max(l,Math.min(h,n));
@@ -43,7 +44,6 @@ function setup(){
  const shared='min-height:45px;flex:1 1 180px;padding:10px;border-radius:12px;font-weight:800;border:1px solid #8de7e5;cursor:pointer;touch-action:none;';
  chill.style.cssText=shared+'background:#b7f4eb;color:#063244';
  cancel.style.cssText=shared+'background:#1b3d4b;color:#ecf8fc';
- let icePointerId=null;
  chill.addEventListener('pointerdown',e=>{
   if(icePointerId!==null)return;
   e.preventDefault();icePointerId=e.pointerId;cooling=true;
@@ -154,7 +154,7 @@ function draw(s){
 export function getHarborMarketPanelInput(){return {cooling};}
 export function hideHarborMarketPanel(){
  if(root)root.style.display='none';
- cooling=false;dragging=false;activePointerId=null;nearBin=-1;
+ cooling=false;icePointerId=null;dragging=false;activePointerId=null;nearBin=-1;
  // A canceled shift may restart at the same order index. Never retain its
  // dragged crate coordinates or round marker across separate sessions.
  visibleOrder=-1;crateX=310;crateY=92;
@@ -164,7 +164,7 @@ export function showHarborMarketPanel(session,{choose,cancel}={}){
  chooseFn=choose;cancelFn=cancel;
  root.style.display='block';
  if(visibleOrder!==session.index){
-   visibleOrder=session.index;crateX=310;crateY=92;nearBin=-1;dragging=false;activePointerId=null;cooling=false;
+   visibleOrder=session.index;crateX=310;crateY=92;nearBin=-1;dragging=false;activePointerId=null;cooling=false;icePointerId=null;
  }
  const order=session.orders[session.index];
  ui.sub.textContent='Order '+(session.index+1)+' / '+session.orders.length+
