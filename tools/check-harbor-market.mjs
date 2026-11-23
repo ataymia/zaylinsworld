@@ -127,8 +127,10 @@ assert.match(hideBody,/dragging\s*=\s*false/,'closed shifts must stop pointer dr
 // A normal pointerup still routes through finishDrag; capture loss must not.
 const lostCapture=panel.match(/canvas\.addEventListener\('lostpointercapture',([^\n]+)\);/)?.[1];
 assert.equal(lostCapture,'abortDrag','canvas must clean up lost pointer capture');
-const abortBody=panel.match(/const abortDrag=\(\)=>\{([^}]+)\}/)?.[1];
+const abortBody=panel.match(/const abortDrag=e=>\{([\s\S]*?)\n \};/)?.[1];
 assert(abortBody,'interrupted drag must have an explicit abort handler');
+assert.match(abortBody,/e\.pointerId!==activePointerId/,'only the owning pointer can abort its drag');
+assert.match(abortBody,/activePointerId=null/,'aborted drag releases pointer ownership');
 assert.match(abortBody,/dragging=false/);
 assert.match(abortBody,/crateX=310;crateY=92/);
 assert.match(abortBody,/nearBin=-1/);
