@@ -160,3 +160,11 @@ performance verification. Do not promote an art preview to "playable".
 - [x] Abort an active crate drag on canvas `lostpointercapture` without submitting a destination; preserve successful `pointerup` drops and pointer-cancel cleanup.
 - [x] Add source-level regression guards for both abort paths, crate position/bay reset, and non-dispatch on lost capture.
 - [ ] Confirm CI quality gates, then validate interrupted mouse/touch drags and successful drops in deployed gameplay; existing-save acceptance remains open.
+
+## November 22 Harbor multi-touch crate ownership (branch validation pending)
+
+- [x] Bind crate drag start, movement, release and cancellation to the initiating pointer ID so another finger cannot steal, move, dispatch or abort its crate.
+- [x] Clear pointer ownership on successful release, canceled capture, hidden shift and new round; retain the existing keyboard station controls and cold-chain simulation.
+- [x] Add pointer-ownership source regression guards to `check:harbor-market`.
+- [ ] Run executable quality gates and inspect GitHub Actions before promoting to main; no test success is claimed yet.
+- [ ] Real multi-touch device testing: second-finger move/up/cancel, owner drop, lost capture, keyboard alternatives and fresh/existing save continuity.
