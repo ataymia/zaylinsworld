@@ -223,3 +223,9 @@ performance verification. Do not promote an art preview to "playable".
 - [x] When an existing save places a moving Harbor boat inside a pier/moored obstruction, normalize its position back to the safe marina dock **and zero its stale speed**. Preserve ownership, occupancy and valid mid-water speed/saves.
 - [x] Add regression assertions to the existing `check:harbor-boats` quality gate for obstructed recovery and valid saved motion.
 - [ ] Confirm GitHub Actions passes on the new main head; playtest corrupted/legacy save recovery and ordinary mid-water save/reload on a deployed device. No visual acceptance claimed.
+
+## November 23 Lineup Lab replay lifecycle repair (CI/device QA pending)
+
+- [x] Starting Clippers after finishing a haircut now calls the existing reset routine before beginning a new timed attempt, instead of reopening a completed session with the old timer, hair state, and result.
+- [x] Added a restart lifecycle source regression assertion to `check:lineup-lab`, already wired into `npm run check`.
+- [ ] Run complete GitHub Actions Quality Gate on the latest head; verify Start after Done, time expiry, replay, score/result reset, pointer handling, and game integration on deployed mouse/touch devices. No browser acceptance claimed.
