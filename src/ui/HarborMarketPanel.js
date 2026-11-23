@@ -43,9 +43,20 @@ function setup(){
  const shared='min-height:45px;flex:1 1 180px;padding:10px;border-radius:12px;font-weight:800;border:1px solid #8de7e5;cursor:pointer;touch-action:none;';
  chill.style.cssText=shared+'background:#b7f4eb;color:#063244';
  cancel.style.cssText=shared+'background:#1b3d4b;color:#ecf8fc';
- chill.addEventListener('pointerdown',e=>{e.preventDefault();cooling=true;chill.style.background='#a1d5ff';chill.setPointerCapture?.(e.pointerId);});
- const chillEnd=e=>{cooling=false;chill.style.background='#b7f4eb';if(e?.pointerId!==undefined){try{chill.releasePointerCapture?.(e.pointerId)}catch{}}};
- for(const event of ['pointerup','pointercancel','pointerleave','lostpointercapture'])chill.addEventListener(event,chillEnd);
+ let icePointerId=null;
+ chill.addEventListener('pointerdown',e=>{
+  if(icePointerId!==null)return;
+  e.preventDefault();icePointerId=e.pointerId;cooling=true;
+  chill.style.background='#a1d5ff';chill.setPointerCapture?.(e.pointerId);
+ });
+ const chillEnd=e=>{
+  if(e.pointerId!==icePointerId)return;
+  icePointerId=null;cooling=false;chill.style.background='#b7f4eb';
+  if(e.type!=='lostpointercapture'){
+   try{chill.releasePointerCapture?.(e.pointerId)}catch{}
+  }
+ };
+ for(const event of ['pointerup','pointercancel','lostpointercapture'])chill.addEventListener(event,chillEnd);
  cancel.addEventListener('click',()=>cancelFn?.());
  actions.append(chill,cancel);
  const assist=document.createElement('div');assist.textContent='Drag crate onto the correct dock · Hold C or ICE CHUTE to chill · Choose station with 1/2/3 · ESC cancels';
