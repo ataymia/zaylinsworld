@@ -1,6 +1,13 @@
 // Native DOM learning panel: keyboard, pointer, touch, and screen-reader status.
 let panel=null;
-export function hideMarineAcademyPanel(){if(panel)panel.style.display='none';}
+let previousFocus=null;
+export function hideMarineAcademyPanel(){
+ if(!panel)return;
+ panel.style.display='none';
+ const restore=previousFocus;
+ previousFocus=null;
+ if(restore?.isConnected&&typeof restore.focus==='function')restore.focus();
+}
 export function showMarineAcademyPanel(session,{answer,cancel}={}){
  if(!panel){
   panel=document.createElement('section');
@@ -17,6 +24,7 @@ export function showMarineAcademyPanel(session,{answer,cancel}={}){
   });
   document.body.appendChild(panel);
  }
+ if(panel.style.display!=='block')previousFocus=document.activeElement;
  panel.replaceChildren();panel.style.display='block';
  const heading=document.createElement('h2');
  heading.textContent='🎓 Maritime Academy';
@@ -45,4 +53,20 @@ export function showMarineAcademyPanel(session,{answer,cancel}={}){
  exit.style.cssText='border:none;background:transparent;color:#c1d8d7;text-decoration:underline;margin-top:8px;padding:10px;cursor:pointer';
  exit.addEventListener('click',()=>cancel?.(),{once:true});
  panel.append(exit);
+ // Keep keyboard navigation inside this active dialog; do not strand focus behind it.
+ panel.onkeydown=(event)=>{
+  if(event.key==='Escape'){
+   event.preventDefault();event.stopPropagation();cancel?.();return;
+  }
+  if(event.key!=='Tab')return;
+  const buttons=Array.from(panel.querySelectorAll('button:not([disabled])'));
+  if(!buttons.length)return;
+  const first=buttons[0],last=buttons[buttons.length-1];
+  if(event.shiftKey&&(document.activeElement===first||!panel.contains(document.activeElement))){
+   event.preventDefault();first===last?first.focus():last.focus();
+  }else if(!event.shiftKey&&(document.activeElement===last||!panel.contains(document.activeElement))){
+   event.preventDefault();first.focus();
+  }
+ };
+ panel.querySelector('button')?.focus();
 }
