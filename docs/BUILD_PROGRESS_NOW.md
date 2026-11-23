@@ -174,3 +174,9 @@ performance verification. Do not promote an art preview to "playable".
 - [x] Give the held ice chute its own pointer owner, independent of crate dragging. Unrelated touches cannot release cooling; leaving the button while captured does not stop it.
 - [x] Stop cooling on owner release/cancel/capture loss and reset ownership on shift close/new round. Add source regression assertions.
 - [ ] Validate simultaneous ice-and-crate touches, browser interruption, keyboard C, and fresh/existing save continuity on real devices. Automated checks do not establish visual acceptance.
+
+## November 23 Harbor ice chute shift lifecycle cleanup (PR validation pending)
+
+- [x] Explicitly release the held ice chute's DOM pointer capture when a shift closes or the order changes, clear cooling ownership, and restore the unpressed button color.
+- [x] Update Harbor Market regression guards to check the actual capture release, UI reference, and reset wiring, without changing saved data.
+- [ ] Validate GitHub Actions executable gates and real-device cancel/restart, simultaneous touches, keyboard C, and fresh/existing saves before claiming acceptance.
