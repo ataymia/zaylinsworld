@@ -14,5 +14,5 @@ assert.match(script, /canvas\.addEventListener\('pointercancel', ev => stopCut\(
 assert.match(script, /canvas\.addEventListener\('lostpointercapture'/, 'interrupted capture must stop cutting');
 assert.match(script, /window\.addEventListener\('blur'/, 'tab switching must stop cutting');
 assert.doesNotMatch(script, /canvas\.addEventListener\('touch(?:start|move)'/, 'duplicate touch event cutting must not return');
-assert.match(script, /if \(state\.pointer\.down\) cutAt\(/, 'continuous cutting must remain connected to the animation loop');
+assert.match(script, /if\s*\(state\.pointer\.down\)\s*cutAt\(/, 'continuous cutting must remain connected to the animation loop');
 console.log('[lineup-lab] pointer ownership, touch cancellation, continuous cutting and script syntax verified');
