@@ -217,3 +217,9 @@ performance verification. Do not promote an art preview to "playable".
 - [x] Commit `90f2f44359cc707ea806be1ed7cdbd9dde8472f4` corrects the test expectation and adds source guards for forward/reverse focus wrap. No gameplay code, saves, world geometry, or assets changed.
 - [ ] Verify fresh GitHub Actions Quality Gate on the updated main head, including character and asset audits; this patch has not yet been confirmed green by CI.
 - [ ] Perform deployed keyboard focus and save-continuity QA before marking the Academy dialog accepted.
+
+## November 23 blocked-save boat recovery (CI/device QA pending)
+
+- [x] When an existing save places a moving Harbor boat inside a pier/moored obstruction, normalize its position back to the safe marina dock **and zero its stale speed**. Preserve ownership, occupancy and valid mid-water speed/saves.
+- [x] Add regression assertions to the existing `check:harbor-boats` quality gate for obstructed recovery and valid saved motion.
+- [ ] Confirm GitHub Actions passes on the new main head; playtest corrupted/legacy save recovery and ordinary mid-water save/reload on a deployed device. No visual acceptance claimed.
