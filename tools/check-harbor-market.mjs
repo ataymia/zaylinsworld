@@ -111,6 +111,13 @@ const panel=readFileSync(new URL('../src/ui/HarborMarketPanel.js',import.meta.ur
 assert.match(panel,/pointerdown/,'crate sorting must have physical drag and mobile support');
 assert.match(panel,/crateX/,'the crate must be a manipulable object');
 assert.match(panel,/cooling=true/,'the cold-chain is an independent input');
+// Ice chute is a sustained second skill input. A second touch cannot stop
+// the owner's cooling, and leaving the button with pointer capture stays held.
+assert.match(panel,/if\(icePointerId!==null\)return/,'only one touch can own the ice chute');
+assert.match(panel,/icePointerId=e\.pointerId;cooling=true/);
+assert.match(panel,/if\(e\.pointerId!==icePointerId\)return/,'unrelated touches cannot stop cooling');
+assert.doesNotMatch(panel,/chill\.addEventListener\('pointerleave'/,'captured pointer leaving the button must not stop cooling');
+assert.match(panel,/\['pointerup','pointercancel','lostpointercapture'\]/,'ice chute must stop on release, cancel or lost capture');
 assert.match(panel,/safety\.overChilled\?'HOLD'/,'frozen crate must display a HOLD stamp');
 assert.match(panel,/FROZEN · INSPECT/,'thermometer must retain the cold-chain warning');
 assert.match(panel,/Rewarming cannot restore safety/,'instructions must explain inspection recovery');
@@ -121,6 +128,7 @@ assert(hideBody,'Harbor panel must expose a close/reset lifecycle');
 assert.match(hideBody,/visibleOrder\s*=\s*-1/,'closed shifts must forget their previous order');
 assert.match(hideBody,/crateX\s*=\s*310\s*;\s*crateY\s*=\s*92/,'closed shifts must reset the dragged crate');
 assert.match(hideBody,/cooling\s*=\s*false/,'closed shifts must release the ice chute');
+assert.match(hideBody,/icePointerId=null/,'closed shifts must clear ice chute pointer ownership');
 assert.match(hideBody,/dragging\s*=\s*false/,'closed shifts must stop pointer dragging');
 
 // Interrupted pointer capture must abort a drag without dispatching a crate.
