@@ -42,7 +42,6 @@ export class Controls {
     });
     window.addEventListener('keyup', e => {
       this.keys.delete(e.key.toLowerCase());
-      this.justPressed.delete(e.key.toLowerCase());
     });
     // Releasing outside the tab never delivers keyup/mouseup. Avoid stuck
     // driving, running, jumping, aiming or firing after focus returns.
