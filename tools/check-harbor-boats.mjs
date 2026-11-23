@@ -39,6 +39,14 @@ const buyer=defaultState();assert(boardHarborBoat(buyer,{purchase:true}).ok);
 assert.equal(buyer.money,500-BOAT_BUY_DREAMBUCKS);assert(buyer.boating.owned);
 assert(normalizeBoatState(JSON.parse(JSON.stringify(buyer.boating))).riding);
 assert(!normalizeBoatState({riding:true}).riding);
+// Corrupt/legacy saves that put a moving boat inside a pier must not
+// respawn at the marina with stale velocity and drift into another obstacle.
+const recoveredPier=normalizeBoatState({owned:true,riding:true,x:550,z:-3180,speed:18});
+assert.deepEqual({x:recoveredPier.x,z:recoveredPier.z},HARBOR_BOAT_DOCK);
+assert.equal(recoveredPier.speed,0,'invalid saved boat position must cancel momentum');
+assert.equal(recoveredPier.riding,true,'recovery must preserve occupied boat');
+assert.equal(normalizeBoatState({owned:true,riding:true,x:400,z:-3410,speed:4}).speed,4,
+ 'valid mid-water saves must preserve speed');
 // Never strand an owner or renter at sea after damage, exhaustion or an old save.
 const stranded=defaultState();
 stranded.money=0;
