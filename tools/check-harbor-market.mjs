@@ -136,6 +136,25 @@ assert.doesNotMatch(abortBody,/chooseFn|finishDrag/,'capture loss cannot submit 
 assert.match(panel,/canvas\.addEventListener\('pointercancel',abortDrag\)/);
 assert.match(panel,/canvas\.addEventListener\('pointerup',finishDrag\)/);
 
+// Multi-touch ownership: an unrelated finger must not move, release, or
+// cancel the first finger's crate. The same owner must control the lifecycle.
+assert.match(panel,/let dragging=false,activePointerId=null/);
+assert.match(panel,/if\(dragging\|\|Math\.hypot\(/,'second pointerdown cannot steal an active drag');
+assert.match(panel,/dragging=true;activePointerId=e\.pointerId/);
+const moveBody=panel.match(/canvas\.addEventListener\('pointermove',e=>\{([\s\S]*?)\n \}\);/)?.[1];
+assert(moveBody,'crate movement handler must exist');
+assert.match(moveBody,/e\.pointerId!==activePointerId/,'other fingers cannot move the crate');
+const finishBody=panel.match(/function finishDrag\(e\)\{([\s\S]*?)\n \}/)?.[1];
+assert(finishBody,'pointer release handler must identify the releasing pointer');
+assert.match(finishBody,/e\.pointerId!==activePointerId/,'other fingers cannot dispatch the crate');
+assert.match(finishBody,/activePointerId=null/,'successful release must relinquish ownership');
+const ownedAbort=panel.match(/const abortDrag=e=>\{([\s\S]*?)\n \};/)?.[1];
+assert(ownedAbort,'cancel handler must identify the interrupted pointer');
+assert.match(ownedAbort,/e\.pointerId!==activePointerId/,'unrelated cancellation cannot abort the drag');
+assert.match(ownedAbort,/activePointerId=null/,'owner cancellation must release ownership');
+assert.match(hideBody,/activePointerId=null/,'shift closure must clear pointer ownership');
+assert.match(panel,/visibleOrder=session\.index;[\s\S]*?activePointerId=null/,'new rounds clear pointer ownership');
+
 assert.match(main,/showHarborMarketPanel\(harborMarketSession/);
 assert.match(main,/!!harborMarketSession/);
 assert.match(main,/harborAction.kind==='sell'/);
