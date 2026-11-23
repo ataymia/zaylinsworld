@@ -3,7 +3,7 @@
 // Keyboard alternative: hold C to cool, 1/2/3 to select destination.
 import {MARKET_DESTINATIONS,SAFE_MARKET_TEMPERATURE} from '../runtime/HarborMarketJob.js';
 let root=null,canvas=null,ctx=null,ui={},cooling=false,chooseFn=null,cancelFn=null;
-let dragging=false,crateX=310,crateY=92,visibleOrder=-1,nearBin=-1;
+let dragging=false,activePointerId=null,crateX=310,crateY=92,visibleOrder=-1,nearBin=-1;
 const W=620,H=308;
 const clamp=(n,l,h)=>Math.max(l,Math.min(h,n));
 const text=(s,x,y,color='#e5faff',font='bold 15px system-ui')=>{
@@ -71,25 +71,28 @@ function setup(){
  };
  canvas.addEventListener('pointerdown',e=>{
   const p=getXY(e);
-  if(Math.hypot(p.x-crateX,p.y-crateY)>62)return;
-  e.preventDefault();dragging=true;canvas.setPointerCapture?.(e.pointerId);
+  if(dragging||Math.hypot(p.x-crateX,p.y-crateY)>62)return;
+  e.preventDefault();dragging=true;activePointerId=e.pointerId;canvas.setPointerCapture?.(e.pointerId);
   crateX=p.x;crateY=p.y;
  });
  canvas.addEventListener('pointermove',e=>{
-  if(!dragging)return;
+  if(!dragging||e.pointerId!==activePointerId)return;
   const p=getXY(e);crateX=clamp(p.x,40,W-40);crateY=clamp(p.y,36,H-22);
   nearBin=crateY>211?clamp(Math.floor(crateX/(W/3)),0,2):-1;
  });
- function finishDrag(){
-  if(!dragging)return;
-  dragging=false;
+ function finishDrag(e){
+  if(!dragging||e.pointerId!==activePointerId)return;
+  dragging=false;activePointerId=null;
   if(nearBin>=0)chooseFn?.(MARKET_DESTINATIONS[nearBin].id);
   if(!dragging){crateX=310;crateY=92;nearBin=-1;}
  }
  canvas.addEventListener('pointerup',finishDrag);
  // Capture can be revoked by the browser (touch interruption, DOM changes).
  // Treat that as cancellation, never as a successful drop into a handling bay.
- const abortDrag=()=>{dragging=false;crateX=310;crateY=92;nearBin=-1;};
+ const abortDrag=e=>{
+  if(!dragging||e.pointerId!==activePointerId)return;
+  dragging=false;activePointerId=null;crateX=310;crateY=92;nearBin=-1;
+ };
  canvas.addEventListener('pointercancel',abortDrag);
  canvas.addEventListener('lostpointercapture',abortDrag);
 }
@@ -140,7 +143,7 @@ function draw(s){
 export function getHarborMarketPanelInput(){return {cooling};}
 export function hideHarborMarketPanel(){
  if(root)root.style.display='none';
- cooling=false;dragging=false;nearBin=-1;
+ cooling=false;dragging=false;activePointerId=null;nearBin=-1;
  // A canceled shift may restart at the same order index. Never retain its
  // dragged crate coordinates or round marker across separate sessions.
  visibleOrder=-1;crateX=310;crateY=92;
@@ -150,7 +153,7 @@ export function showHarborMarketPanel(session,{choose,cancel}={}){
  chooseFn=choose;cancelFn=cancel;
  root.style.display='block';
  if(visibleOrder!==session.index){
-   visibleOrder=session.index;crateX=310;crateY=92;nearBin=-1;dragging=false;cooling=false;
+   visibleOrder=session.index;crateX=310;crateY=92;nearBin=-1;dragging=false;activePointerId=null;cooling=false;
  }
  const order=session.orders[session.index];
  ui.sub.textContent='Order '+(session.index+1)+' / '+session.orders.length+
