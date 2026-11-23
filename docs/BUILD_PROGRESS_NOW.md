@@ -204,3 +204,9 @@ performance verification. Do not promote an art preview to "playable".
 - [x] Add source regression guards to the existing `check:marine-academy` test, already included in `npm run check`.
 - [ ] Execute `npm run check:marine-academy` and full Quality Gate on the new main head. Source guards have not been executed in this run.
 - [ ] Browser/device QA: keyboard Tab wrap, Shift+Tab wrap, Escape, touch/button answer progression, focus restoration after cancellation and completion, fresh/existing saves. No deployed acceptance claimed.
+
+## November 23 world-input handoff safety (source implementation; device QA pending)
+
+- [x] When a keyboard event belongs to an editable control or a modified browser shortcut, immediately release previously held movement, sprint, jump, mouse-fire and pending click/key edges instead of only ignoring the new key. Prevents a player from continuing to walk or fire while typing in an overlay.
+- [x] Expand the existing `check:controls-focus` regression with held walking, sprint, firing, queued click, and stale quick-tap cancellation, while retaining ordinary quick-tap and blur behavior. Isolated JavaScript behavioral checks passed for the runtime change; full Node/CI checks are not yet confirmed.
+- [ ] Run `npm run check:controls-focus` and full `npm run check` on the current head, then inspect GitHub Actions. Verify typing transitions, Ctrl shortcuts, mouse hold, tab blur, and resumed world controls in deployed keyboard/mouse gameplay with clean and existing saves. No save schema, GLB, or Starter Town geometry changed; no deployed acceptance claimed.
