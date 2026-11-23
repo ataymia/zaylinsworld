@@ -42,7 +42,7 @@ function setup(){
  const chill=document.createElement('button');chill.textContent='❄️ HOLD ICE CHUTE (C)';chill.type='button';
  const cancel=document.createElement('button');cancel.type='button';cancel.textContent='End shift';
  const shared='min-height:45px;flex:1 1 180px;padding:10px;border-radius:12px;font-weight:800;border:1px solid #8de7e5;cursor:pointer;touch-action:none;';
- chill.style.cssText=shared+'background:#b7f4eb;color:#063244';
+ chill.style.cssText=shared+'background:#b7f4eb;color:#063244';ui.chill=chill;
  cancel.style.cssText=shared+'background:#1b3d4b;color:#ecf8fc';
  chill.addEventListener('pointerdown',e=>{
   if(icePointerId!==null)return;
@@ -107,6 +107,18 @@ function setup(){
  canvas.addEventListener('pointercancel',abortDrag);
  canvas.addEventListener('lostpointercapture',abortDrag);
 }
+// Closing a shift or changing rounds must release DOM pointer capture as well
+// as clearing logical cooling state, or the old button can stay pressed.
+function resetIceChute(){
+ const previous=icePointerId;
+ icePointerId=null;cooling=false;
+ if(ui.chill){
+  ui.chill.style.background='#b7f4eb';
+  if(previous!==null){
+   try{ui.chill.releasePointerCapture?.(previous)}catch{}
+  }
+ }
+}
 function fillRound(x,y,w,h,r,color,stroke=null){
  const c=ctx;c.beginPath();c.roundRect(x,y,w,h,r);c.fillStyle=color;c.fill();
  if(stroke){c.strokeStyle=stroke;c.lineWidth=2;c.stroke();}
@@ -154,7 +166,7 @@ function draw(s){
 export function getHarborMarketPanelInput(){return {cooling};}
 export function hideHarborMarketPanel(){
  if(root)root.style.display='none';
- cooling=false;icePointerId=null;dragging=false;activePointerId=null;nearBin=-1;
+ resetIceChute();dragging=false;activePointerId=null;nearBin=-1;
  // A canceled shift may restart at the same order index. Never retain its
  // dragged crate coordinates or round marker across separate sessions.
  visibleOrder=-1;crateX=310;crateY=92;
@@ -164,7 +176,7 @@ export function showHarborMarketPanel(session,{choose,cancel}={}){
  chooseFn=choose;cancelFn=cancel;
  root.style.display='block';
  if(visibleOrder!==session.index){
-   visibleOrder=session.index;crateX=310;crateY=92;nearBin=-1;dragging=false;activePointerId=null;cooling=false;icePointerId=null;
+   visibleOrder=session.index;crateX=310;crateY=92;nearBin=-1;dragging=false;activePointerId=null;resetIceChute();
  }
  const order=session.orders[session.index];
  ui.sub.textContent='Order '+(session.index+1)+' / '+session.orders.length+
