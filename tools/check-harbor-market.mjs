@@ -127,8 +127,14 @@ const hideBody=panel.match(/export function hideHarborMarketPanel\(\)\{([\s\S]*?
 assert(hideBody,'Harbor panel must expose a close/reset lifecycle');
 assert.match(hideBody,/visibleOrder\s*=\s*-1/,'closed shifts must forget their previous order');
 assert.match(hideBody,/crateX\s*=\s*310\s*;\s*crateY\s*=\s*92/,'closed shifts must reset the dragged crate');
-assert.match(hideBody,/cooling\s*=\s*false/,'closed shifts must release the ice chute');
-assert.match(hideBody,/icePointerId=null/,'closed shifts must clear ice chute pointer ownership');
+assert.match(hideBody,/resetIceChute\(\)/,'closed shifts must release DOM capture and reset cooling');
+const iceReset=panel.match(/function resetIceChute\(\)\{([\s\S]*?)\n\}/)?.[1];
+assert(iceReset,'ice chute needs explicit lifecycle cleanup');
+assert.match(iceReset,/icePointerId=null;cooling=false/,'reset must clear pointer ownership and cooling');
+assert.match(iceReset,/ui\.chill\.style\.background='#b7f4eb'/,'reset must restore button appearance');
+assert.match(iceReset,/releasePointerCapture\?\.\(previous\)/,'reset must release actual DOM capture');
+assert.match(panel,/ui\.chill=chill/,'cleanup must retain the live button reference');
+assert.match(panel,/activePointerId=null;resetIceChute\(\)/,'new rounds must clean up ice capture');
 assert.match(hideBody,/dragging\s*=\s*false/,'closed shifts must stop pointer dragging');
 
 // Interrupted pointer capture must abort a drag without dispatching a crate.
