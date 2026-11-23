@@ -189,3 +189,10 @@ performance verification. Do not promote an art preview to "playable".
 - [x] Connector-side source syntax and regression assertions passed. **This does not mean the Node test command or full CI ran.**
 - [ ] Inspect GitHub Actions on the new head; run `npm run check` and `npm run check:lineup-lab` in an executable checkout.
 - [ ] Device QA: mouse press/move/release, touch draw with a second finger, pen input, pointercancel, tab blur, restart, and result scoring. No visual or save acceptance claimed; no save schema changed.
+
+## November 23 shared gameplay controls focus safety (source implementation; device QA pending)
+
+- [x] Stop gameplay movement, jump, sprint and shortcuts from being triggered by typing in input, textarea, select and contenteditable UI, or modified browser shortcuts.
+- [x] Release held keyboard and mouse controls, pending clicks and key edges on browser window blur so returning to the tab cannot resume unintended driving, firing or movement.
+- [x] Preserve short key taps until frame consumption; add `tools/check-controls-focus.mjs` behavior tests and include `check:controls-focus` in `npm run check`. No save schema or world geometry changed.
+- [ ] Confirm the GitHub Actions Quality Gate on this head, then deployed mouse/keyboard focus, text entry, tab switching while moving/aiming, and clean/existing-save behavior. No device or visual acceptance claimed.
