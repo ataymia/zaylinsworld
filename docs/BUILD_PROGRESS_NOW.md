@@ -196,3 +196,11 @@ performance verification. Do not promote an art preview to "playable".
 - [x] Release held keyboard and mouse controls, pending clicks and key edges on browser window blur so returning to the tab cannot resume unintended driving, firing or movement.
 - [x] Preserve short key taps until frame consumption; add `tools/check-controls-focus.mjs` behavior tests and include `check:controls-focus` in `npm run check`. No save schema or world geometry changed.
 - [ ] Confirm the GitHub Actions Quality Gate on this head, then deployed mouse/keyboard focus, text entry, tab switching while moving/aiming, and clean/existing-save behavior. No device or visual acceptance claimed.
+
+## November 23 Maritime Academy dialog keyboard accessibility (source implementation; QA pending)
+
+- [x] Move focus into the first lesson answer when opening or advancing questions, constrain Tab/Shift+Tab to the answer/exit buttons, and allow Escape to cancel the lesson.
+- [x] Restore the previously focused control when the lesson closes if that control remains attached; leave saved academy state, lesson grading, and town geometry unchanged.
+- [x] Add source regression guards to the existing `check:marine-academy` test, already included in `npm run check`.
+- [ ] Execute `npm run check:marine-academy` and full Quality Gate on the new main head. Source guards have not been executed in this run.
+- [ ] Browser/device QA: keyboard Tab wrap, Shift+Tab wrap, Escape, touch/button answer progression, focus restoration after cancellation and completion, fresh/existing saves. No deployed acceptance claimed.
