@@ -23,7 +23,7 @@ export function normalizeBoatState(src={}){
    owned,rentalDay,fuel:clamp(num(p.fuel,100),0,100),hull:clamp(num(p.hull,100),0,100),
    x:valid?pos.x:HARBOR_BOAT_DOCK.x,z:valid?pos.z:HARBOR_BOAT_DOCK.z,
    yaw:clamp(num(p.yaw,Math.PI),-100*Math.PI,100*Math.PI),
-   speed:clamp(num(p.speed,0),-5,18),
+   speed:valid?clamp(num(p.speed,0),-5,18):0,
    riding:p.riding===true&&(owned||rentalDay!==null),
  };
 }
