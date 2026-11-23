@@ -180,3 +180,12 @@ performance verification. Do not promote an art preview to "playable".
 - [x] Explicitly release the held ice chute's DOM pointer capture when a shift closes or the order changes, clear cooling ownership, and restore the unpressed button color.
 - [x] Update Harbor Market regression guards to check the actual capture release, UI reference, and reset wiring, without changing saved data.
 - [ ] Validate GitHub Actions executable gates and real-device cancel/restart, simultaneous touches, keyboard C, and fresh/existing saves before claiming acceptance.
+
+
+## November 23 Lineup Lab multi-input stability (source QA, deployed QA pending)
+
+- [x] Lineup Lab now uses a single Pointer Events path for mouse, pen and touch, eliminating duplicate touch/pointer cuts. The initiating pointer exclusively controls each stroke, with capture, cancel, capture-loss and window-blur cleanup.
+- [x] Add `tools/check-lineup-lab.mjs` and wire `check:lineup-lab` into `npm run check`; guard active pointer ownership, secondary-button rejection, interruption handling, continuous cutting, and script parsing.
+- [x] Connector-side source syntax and regression assertions passed. **This does not mean the Node test command or full CI ran.**
+- [ ] Inspect GitHub Actions on the new head; run `npm run check` and `npm run check:lineup-lab` in an executable checkout.
+- [ ] Device QA: mouse press/move/release, touch draw with a second finger, pen input, pointercancel, tab blur, restart, and result scoring. No visual or save acceptance claimed; no save schema changed.
