@@ -658,7 +658,7 @@
     if (activeCutPointer !== null) stopCut(activeCutPointer);
   });
 
-  ui.startBtn.onclick=()=>{state.running=true;state.finished=false;ui.resultOverlay.classList.remove('show');toast('Clippers on')};
+  ui.startBtn.onclick=()=>{if(state.finished) resetGame();state.running=true;ui.resultOverlay.classList.remove('show');toast('Clippers on')};
   ui.finishBtn.onclick=finish;
   ui.resetBtn.onclick=resetGame;
   ui.retryBtn.onclick=resetGame;
