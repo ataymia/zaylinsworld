@@ -56,7 +56,9 @@ const panelSource=readFileSync(new URL('../src/ui/MarineAcademyPanel.js',import.
 assert.match(panelSource,/previousFocus=document\.activeElement/,'opening the lesson must remember prior focus');
 assert.match(panelSource,/restore\?\.isConnected/,'closing the lesson must safely restore existing focus');
 assert.match(panelSource,/panel\.onkeydown=\(event\)=>/,'the dialog must own its keyboard navigation');
-assert.match(panelSource,/event\.key==='Tab'/,'Tab must stay within the lesson');
+assert.match(panelSource,/event\.key!=='Tab'/,'only Tab should enter the dialog focus-trap branch');
+assert.match(panelSource,/first===last\?first\.focus\(\):last\.focus\(\)/,'reverse Tab wraps to the final choice');
+assert.match(panelSource,/event\.preventDefault\(\);first\.focus\(\)/,'forward Tab wraps to the first choice');
 assert.match(panelSource,/event\.key==='Escape'/,'Escape must cancel the lesson');
 assert.match(panelSource,/panel\.querySelector\('button'\)\?\.focus\(\)/,'question choices must receive focus');
 console.log('[marine-academy] 8 real water-safety questions, 4 graded attempts, one-time certificate, daily retakes, state migration and live UI wiring passed');
