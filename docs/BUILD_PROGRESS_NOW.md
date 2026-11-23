@@ -210,3 +210,10 @@ performance verification. Do not promote an art preview to "playable".
 - [x] When a keyboard event belongs to an editable control or a modified browser shortcut, immediately release previously held movement, sprint, jump, mouse-fire and pending click/key edges instead of only ignoring the new key. Prevents a player from continuing to walk or fire while typing in an overlay.
 - [x] Expand the existing `check:controls-focus` regression with held walking, sprint, firing, queued click, and stale quick-tap cancellation, while retaining ordinary quick-tap and blur behavior. Isolated JavaScript behavioral checks passed for the runtime change; full Node/CI checks are not yet confirmed.
 - [ ] Run `npm run check:controls-focus` and full `npm run check` on the current head, then inspect GitHub Actions. Verify typing transitions, Ctrl shortcuts, mouse hold, tab blur, and resumed world controls in deployed keyboard/mouse gameplay with clean and existing saves. No save schema, GLB, or Starter Town geometry changed; no deployed acceptance claimed.
+
+## November 23 Maritime Academy Quality Gate assertion repair
+
+- [x] Retrieved the failed GitHub Actions check job log for run `45233158743`; `npm run check` stopped at `tools/check-marine-academy.mjs:59` because the source assertion expected `event.key==='Tab'` while the working dialog guard correctly uses `event.key!=='Tab'` to return for non-Tab keys.
+- [x] Commit `90f2f44359cc707ea806be1ed7cdbd9dde8472f4` corrects the test expectation and adds source guards for forward/reverse focus wrap. No gameplay code, saves, world geometry, or assets changed.
+- [ ] Verify fresh GitHub Actions Quality Gate on the updated main head, including character and asset audits; this patch has not yet been confirmed green by CI.
+- [ ] Perform deployed keyboard focus and save-continuity QA before marking the Academy dialog accepted.
