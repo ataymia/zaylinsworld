@@ -168,3 +168,9 @@ performance verification. Do not promote an art preview to "playable".
 - [x] Add pointer-ownership source regression guards to `check:harbor-market`.
 - [ ] Run executable quality gates and inspect GitHub Actions before promoting to main; no test success is claimed yet.
 - [ ] Real multi-touch device testing: second-finger move/up/cancel, owner drop, lost capture, keyboard alternatives and fresh/existing save continuity.
+
+## November 22 Harbor ice chute multitouch integrity (device QA pending)
+
+- [x] Give the held ice chute its own pointer owner, independent of crate dragging. Unrelated touches cannot release cooling; leaving the button while captured does not stop it.
+- [x] Stop cooling on owner release/cancel/capture loss and reset ownership on shift close/new round. Add source regression assertions.
+- [ ] Validate simultaneous ice-and-crate touches, browser interruption, keyboard C, and fresh/existing save continuity on real devices. Automated checks do not establish visual acceptance.
