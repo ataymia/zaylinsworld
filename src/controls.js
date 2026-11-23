@@ -34,7 +34,14 @@ export class Controls {
         target?.closest?.('[contenteditable="true"]');
     };
     window.addEventListener('keydown', e => {
-      if (isTyping(e)) return;
+      if (isTyping(e)) {
+        // Editable UI and browser shortcuts must cancel previously held world input.
+        this.keys.clear();
+        this.justPressed.clear();
+        this.mouse.clear();
+        this.justClicked.clear();
+        return;
+      }
       const k = e.key.toLowerCase();
       if (!this.keys.has(k)) this.justPressed.add(k);
       this.keys.add(k);
