@@ -25,13 +25,33 @@ export class Controls {
   }
 
   _bind() {
+    // Never steal typing or shortcuts from forms, editable overlays or browser UI.
+    const isTyping = e => {
+      const target = e.target;
+      return e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey ||
+        target?.isContentEditable ||
+        ['INPUT', 'TEXTAREA', 'SELECT'].includes(target?.tagName) ||
+        target?.closest?.('[contenteditable="true"]');
+    };
     window.addEventListener('keydown', e => {
+      if (isTyping(e)) return;
       const k = e.key.toLowerCase();
       if (!this.keys.has(k)) this.justPressed.add(k);
       this.keys.add(k);
       if ([' ', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(k)) e.preventDefault();
     });
-    window.addEventListener('keyup', e => this.keys.delete(e.key.toLowerCase()));
+    window.addEventListener('keyup', e => {
+      this.keys.delete(e.key.toLowerCase());
+      this.justPressed.delete(e.key.toLowerCase());
+    });
+    // Releasing outside the tab never delivers keyup/mouseup. Avoid stuck
+    // driving, running, jumping, aiming or firing after focus returns.
+    window.addEventListener('blur', () => {
+      this.keys.clear();
+      this.justPressed.clear();
+      this.mouse.clear();
+      this.justClicked.clear();
+    });
 
     // Pointer lock + mouse-look are intentionally DISABLED. The mouse stays a
     // free cursor for clicking objects, shooting and UI; the view is turned with
