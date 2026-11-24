@@ -229,3 +229,10 @@ performance verification. Do not promote an art preview to "playable".
 - [x] Starting Clippers after finishing a haircut now calls the existing reset routine before beginning a new timed attempt, instead of reopening a completed session with the old timer, hair state, and result.
 - [x] Added a restart lifecycle source regression assertion to `check:lineup-lab`, already wired into `npm run check`.
 - [ ] Run complete GitHub Actions Quality Gate on the latest head; verify Start after Done, time expiry, replay, score/result reset, pointer handling, and game integration on deployed mouse/touch devices. No browser acceptance claimed.
+
+## November 23 Lineup Lab active-stroke lifecycle cleanup (CI/device QA pending)
+
+- [x] Stop and release any active clipper pointer capture on Reset and Done, including completion while the mouse or finger remains held. Prevent stale held strokes from cutting into a newly reset haircut.
+- [x] Reject new canvas pointerdown cutting while a completed result is displayed; replay still requires Start Clippers or Try Again.
+- [x] Extend `check:lineup-lab` with lifecycle source guards. Connector-side JavaScript parsing and new assertion matches passed; full Node quality gate and deployed browser QA remain unverified.
+- [ ] Confirm current-head GitHub Actions and executable `npm run check`, then test held-stroke Reset/Done, secondary touches, replay, scoring and fresh/existing saves on mouse/touch devices.
