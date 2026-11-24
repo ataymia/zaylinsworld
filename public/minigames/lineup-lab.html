@@ -257,6 +257,8 @@
   }
 
   function resetGame(){
+    if (activeCutPointer !== null) stopCut(activeCutPointer);
+    state.pointer.down = false;
     state.running=false; state.finished=false; state.time=75; state.cuts=0; state.result=null;
     state.particles.length=0; state.history.length=0; state.historyCooldown=0;
     ui.resultOverlay.classList.remove('show');
@@ -537,6 +539,8 @@
 
   function finish(){
     if(state.finished) return;
+    if (activeCutPointer !== null) stopCut(activeCutPointer);
+    state.pointer.down = false;
     state.running=false; state.finished=true;
     const s=updateMeters();
     const result={
@@ -633,7 +637,7 @@
   });
 
   canvas.addEventListener('pointerdown', ev => {
-    if (activeCutPointer !== null || (ev.pointerType === 'mouse' && ev.button !== 0)) return;
+    if (state.finished || activeCutPointer !== null || (ev.pointerType === 'mouse' && ev.button !== 0)) return;
     ev.preventDefault();
     activeCutPointer = ev.pointerId;
     canvas.setPointerCapture?.(ev.pointerId);
