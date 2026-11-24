@@ -16,4 +16,7 @@ assert.match(script, /window\.addEventListener\('blur'/, 'tab switching must sto
 assert.doesNotMatch(script, /canvas\.addEventListener\('touch(?:start|move)'/, 'duplicate touch event cutting must not return');
 assert.match(script, /if\s*\(state\.pointer\.down\)\s*cutAt\(/, 'continuous cutting must remain connected to the animation loop');
 assert.match(script, /ui\.startBtn\.onclick=\(\)=>\{if\(state\.finished\) resetGame\(\);state\.running=true/, 'starting after a completed cut must reset the timer, hair, and result before replay');
+assert.match(script, /function resetGame\(\)\s*\{\s*if \(activeCutPointer !== null\) stopCut\(activeCutPointer\)/, 'reset must release an active blade');
+assert.match(script, /function finish\(\)\s*\{\s*if\(state\.finished\) return;\s*if \(activeCutPointer !== null\) stopCut\(activeCutPointer\)/, 'finishing must release an active blade');
+assert.match(script, /if \(state\.finished \|\| activeCutPointer !== null/, 'finished results must reject new cutting strokes');
 console.log('[lineup-lab] pointer ownership, touch cancellation, continuous cutting and script syntax verified');
