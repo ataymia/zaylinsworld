@@ -56,6 +56,9 @@ export function serviceDockedBoat(state){
  const b=ensureBoatState(state);
  if(b.riding||!canDockBoat(b))return {ok:false,reason:'return-to-marina'};
  if(!b.owned&&b.rentalDay===null)return {ok:false,reason:'no-boat'};
+ const day=Math.max(1,Math.floor(num(state.day,1)));
+ // A new rental already includes a fully serviced boat. Never charge for an expired rental.
+ if(!b.owned&&b.rentalDay!==day)return {ok:true,cost:0};
  const cost=Math.ceil((100-b.fuel)*.8+(100-b.hull)*1.5);
  if((state.money||0)<cost)return {ok:false,reason:'need-service-funds',cost};
  state.money-=cost;b.fuel=100;b.hull=100;return {ok:true,cost};
