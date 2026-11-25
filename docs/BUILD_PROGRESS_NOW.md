@@ -253,3 +253,8 @@ performance verification. Do not promote an art preview to "playable".
 - PR #46 merged after successful Quality Gate and Runtime Foundation checks.
 - Missing, nonnumeric or nonfinite saved boat coordinates now cancel stale speed while retaining existing position normalization and occupancy. Added regression cases to check:harbor-boats.
 - New CI and deployed/device QA pending.
+
+## November 25 Harbor repeat rescue protection
+
+- Avoid charging another tow fee when the occupied boat is already safely dockable and serviceable; retain assistance for disabled boats and preserve existing saves.
+- Add repeat-rescue and disabled-at-marina regression coverage. CI and deployed/device QA pending.
