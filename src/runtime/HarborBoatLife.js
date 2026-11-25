@@ -48,7 +48,7 @@ export function boardHarborBoat(state,{purchase=false}={}){
 export function dockHarborBoat(state){
  const b=ensureBoatState(state);
  if(!b.riding||!canDockBoat(b))return {ok:false,reason:'return-to-marina'};
- b.speed=0;b.riding=false;return {ok:true};
+ Object.assign(b,{x:HARBOR_BOAT_DOCK.x,z:HARBOR_BOAT_DOCK.z,yaw:Math.PI,speed:0,riding:false});return {ok:true};
 }
 export function serviceDockedBoat(state){
  const b=ensureBoatState(state);
