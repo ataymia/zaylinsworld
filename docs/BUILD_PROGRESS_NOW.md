@@ -263,3 +263,7 @@ performance verification. Do not promote an art preview to "playable".
 
 - Avoid charging another tow fee when the occupied boat is already safely dockable and serviceable; retain assistance for disabled boats and preserve existing saves.
 - Add repeat-rescue and disabled-at-marina regression coverage. CI and deployed/device QA pending.
+
+## November 25 marina balance integrity
+- Merged rental service protection in PR #49 after both CI workflows passed.
+- Proposed zero-cost service balance preservation and legacy-balance regression; CI and deployed QA pending.
