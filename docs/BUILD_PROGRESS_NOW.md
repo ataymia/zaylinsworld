@@ -236,3 +236,9 @@ performance verification. Do not promote an art preview to "playable".
 - [x] Reject new canvas pointerdown cutting while a completed result is displayed; replay still requires Start Clippers or Try Again.
 - [x] Extend `check:lineup-lab` with lifecycle source guards. Connector-side JavaScript parsing and new assertion matches passed; full Node quality gate and deployed browser QA remain unverified.
 - [ ] Confirm current-head GitHub Actions and executable `npm run check`, then test held-stroke Reset/Done, secondary touches, replay, scoring and fresh/existing saves on mouse/touch devices.
+
+## November 24 Harbor canonical mooring (PR validation pending)
+
+- Docking now snaps the boat to its canonical marina slip and resets heading and speed before disembarking, so saved mooring matches the next boarding location.
+- Added off-center docking and JSON save round-trip regression assertions to check:harbor-boats.
+- CI and deployed/device QA pending; no asset or save schema changes.
