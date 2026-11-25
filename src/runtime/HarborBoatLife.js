@@ -17,8 +17,8 @@ export function boatObstructed({x,z}){
 export function normalizeBoatState(src={}){
  const p=src&&typeof src==='object'?src:{},pos=boatWaterPosition(p);
  const valid=!boatObstructed(pos);
- const outside=Number.isFinite(p.x)&&Number.isFinite(p.z)&&
-   (p.x!==pos.x||p.z!==pos.z);
+ const outside=!Number.isFinite(p.x)||!Number.isFinite(p.z)||
+   p.x!==pos.x||p.z!==pos.z;
  const rentalDay=Number.isInteger(p.rentalDay)&&p.rentalDay>=1?p.rentalDay:null;
  const owned=p.owned===true;
  return {
