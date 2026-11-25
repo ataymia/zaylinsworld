@@ -38,6 +38,15 @@ assert.equal(state.money,m2-BOAT_RENT_DREAMBUCKS);assert(dockHarborBoat(state).o
 state.boating.fuel=20;state.boating.hull=80;
 const service=serviceDockedBoat(state);
 assert(service.ok&&service.cost>0&&state.boating.fuel===100&&state.boating.hull===100);
+state.day=3;
+state.boating.fuel=10;state.boating.hull=40;
+const expiredCash=state.money;
+assert.deepEqual(serviceDockedBoat(state),{ok:true,cost:0});
+assert.equal(state.money,expiredCash);
+assert(boardHarborBoat(state).ok);
+assert.equal(state.money,expiredCash-BOAT_RENT_DREAMBUCKS);
+assert.equal(state.boating.fuel,100);
+assert.equal(state.boating.hull,100);
 const poor=defaultState();poor.money=0;
 assert.equal(boardHarborBoat(poor).reason,'need-rental-funds');
 assert.equal(poor.boating.riding,false);
