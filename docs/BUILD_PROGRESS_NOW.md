@@ -70,6 +70,11 @@ is separately required.
 - [ ] Run full executable quality gate on the proposed commit; inspect GitHub Actions before merging.
 - [ ] Deployed mouse, touch, keyboard, inspection routing, and save/reload acceptance still required. No visual acceptance claimed.
 
+## November 25 expired rental service protection (CI and device QA pending)
+
+- Prevent paid marina service on expired rentals; renewal already restores fuel and hull. Regression covers no charge and normal renewal.
+- Deployed interaction acceptance remains outstanding.
+
 ## Unfinished product queue in dependency order
 
 ### P0. Current two-town runtime reliability
