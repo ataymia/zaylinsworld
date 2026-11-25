@@ -53,6 +53,10 @@ assert.equal(recoveredPier.speed,0,'invalid saved boat position must cancel mome
 assert.equal(recoveredPier.riding,true,'recovery must preserve occupied boat');
 assert.equal(normalizeBoatState({owned:true,riding:true,x:400,z:-3410,speed:4}).speed,4,
  'valid mid-water saves must preserve speed');
+const recoveredBoundary=normalizeBoatState({owned:true,riding:true,x:9000,z:-8000,speed:18});
+assert.deepEqual({x:recoveredBoundary.x,z:recoveredBoundary.z},{x:HARBOR_WATER_BOUNDS.maxX,z:HARBOR_WATER_BOUNDS.minZ});
+assert.equal(recoveredBoundary.speed,0,'clamped saves must cancel stale momentum');
+assert.equal(recoveredBoundary.riding,true);
 // Never strand an owner or renter at sea after damage, exhaustion or an old save.
 const stranded=defaultState();
 stranded.money=0;
