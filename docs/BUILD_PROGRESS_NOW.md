@@ -247,3 +247,9 @@ performance verification. Do not promote an art preview to "playable".
 
 - Cancel stale velocity when numeric saved boat coordinates are clamped to water bounds; preserve occupancy and valid mid-water momentum. Regression added to harbor boat checks. CI and deployed/device QA pending.
 - Docking consistency PR #45 merged after Quality Gate and Runtime Foundation passed; deployed QA remains outstanding.
+
+## November 25 Harbor malformed coordinate recovery
+
+- PR #46 merged after successful Quality Gate and Runtime Foundation checks.
+- Missing, nonnumeric or nonfinite saved boat coordinates now cancel stale speed while retaining existing position normalization and occupancy. Added regression cases to check:harbor-boats.
+- New CI and deployed/device QA pending.
