@@ -61,7 +61,8 @@ export function serviceDockedBoat(state){
  if(!b.owned&&b.rentalDay!==day)return {ok:true,cost:0};
  const cost=Math.ceil((100-b.fuel)*.8+(100-b.hull)*1.5);
  if((state.money||0)<cost)return {ok:false,reason:'need-service-funds',cost};
- state.money-=cost;b.fuel=100;b.hull=100;return {ok:true,cost};
+ if(cost>0)state.money-=cost;
+ b.fuel=100;b.hull=100;return {ok:true,cost};
 }
 // A no-softlock Harbor Patrol tow: even a player with zero DreamBucks can
 // return safely when low fuel, disabled hull or an unfamiliar coastline traps them.
