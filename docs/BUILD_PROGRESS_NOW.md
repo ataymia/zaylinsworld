@@ -242,3 +242,8 @@ performance verification. Do not promote an art preview to "playable".
 - Docking now snaps the boat to its canonical marina slip and resets heading and speed before disembarking, so saved mooring matches the next boarding location.
 - Added off-center docking and JSON save round-trip regression assertions to check:harbor-boats.
 - CI and deployed/device QA pending; no asset or save schema changes.
+
+## November 25 boat boundary save recovery
+
+- Cancel stale velocity when numeric saved boat coordinates are clamped to water bounds; preserve occupancy and valid mid-water momentum. Regression added to harbor boat checks. CI and deployed/device QA pending.
+- Docking consistency PR #45 merged after Quality Gate and Runtime Foundation passed; deployed QA remains outstanding.
