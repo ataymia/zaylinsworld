@@ -65,6 +65,8 @@ export function serviceDockedBoat(state){
 export function requestHarborBoatRescue(state){
  const b=ensureBoatState(state);
  if(!b.riding)return {ok:false,reason:'not-aboard'};
+ // An already safe, serviceable boat does not need another paid tow.
+ if(canDockBoat(b)&&b.fuel>=25&&b.hull>=35)return {ok:true,fee:0};
  const fee=(state.money||0)>=25?25:0;
  state.money=Math.max(0,(state.money||0)-fee);
  Object.assign(b,{x:HARBOR_BOAT_DOCK.x,z:HARBOR_BOAT_DOCK.z,
