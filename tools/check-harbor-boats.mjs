@@ -79,6 +79,11 @@ rescuer.boating={...normalizeBoatState({owned:true,riding:true,x:-500,z:-3400})}
 const rescueCash=rescuer.money;
 assert.equal(requestHarborBoatRescue(rescuer).fee,25);
 assert.equal(rescuer.money,rescueCash-25);
+assert.equal(requestHarborBoatRescue(rescuer).fee,0,'repeat tow at safe marina must not charge');
+assert.equal(rescuer.money,rescueCash-25);
+rescuer.boating.fuel=0;
+assert.equal(requestHarborBoatRescue(rescuer).fee,25,'disabled boat at marina still receives assistance');
+assert.equal(rescuer.boating.fuel,25);
 assert.equal(normalizeBoatState({fuel:999,hull:-1}).fuel,100);
 const main=readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
 assert.match(main,/stepHarborBoat\(boat,controls\.moveInput\(\),dt\)/);
