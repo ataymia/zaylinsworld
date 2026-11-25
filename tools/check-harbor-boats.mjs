@@ -57,6 +57,12 @@ const recoveredBoundary=normalizeBoatState({owned:true,riding:true,x:9000,z:-800
 assert.deepEqual({x:recoveredBoundary.x,z:recoveredBoundary.z},{x:HARBOR_WATER_BOUNDS.maxX,z:HARBOR_WATER_BOUNDS.minZ});
 assert.equal(recoveredBoundary.speed,0,'clamped saves must cancel stale momentum');
 assert.equal(recoveredBoundary.riding,true);
+for(const coords of [{x:undefined,z:-3410},{x:400,z:null},{x:'9000',z:-3410},{x:400,z:NaN}]){
+ const recovered=normalizeBoatState({owned:true,riding:true,speed:12,...coords});
+ assert.equal(recovered.speed,0,'malformed coordinates must cancel momentum');
+ assert.equal(recovered.riding,true);
+ assert(Number.isFinite(recovered.x)&&Number.isFinite(recovered.z));
+}
 // Never strand an owner or renter at sea after damage, exhaustion or an old save.
 const stranded=defaultState();
 stranded.money=0;
