@@ -33,7 +33,7 @@ export function ensureMarineAcademyState(state){
 export function startMarineLesson(state,{random=Math.random}={}){
  const progress=ensureMarineAcademyState(state);
  const day=Math.max(1,integer(state.day));
- if(progress.lastDay===day)return {error:'already-studied'};
+ if(progress.lastDay!==null&&progress.lastDay>=day)return {error:'already-studied'};
  const questions=MARINE_LESSON_QUESTIONS.map(question=>question);
  for(let i=questions.length-1;i>0;i--){
   const sample=Number(random());

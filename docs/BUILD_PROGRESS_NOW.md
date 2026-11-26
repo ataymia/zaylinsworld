@@ -277,3 +277,8 @@ performance verification. Do not promote an art preview to "playable".
 
 - PR #51 boat braking merged after both CI workflows passed.
 - Reject stale lesson completions after a newer recorded lesson; regression checks progress, money, smarts and daily lockout. CI and deployed/device QA pending.
+
+## November 25 Academy clock rollback guard (CI pending)
+
+- Reject lesson launch when the recorded study day is ahead of the current game day, matching the completion guard. Regression covers rollback and resumption on a later day.
+- Device QA and advanced navigation simulation remain outstanding.
