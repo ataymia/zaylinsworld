@@ -267,3 +267,8 @@ performance verification. Do not promote an art preview to "playable".
 ## November 25 marina balance integrity
 - Merged rental service protection in PR #49 after both CI workflows passed.
 - Proposed zero-cost service balance preservation and legacy-balance regression; CI and deployed QA pending.
+
+## November 25 boat braking transition (CI pending)
+
+- Opposing throttle stops at zero before reversing on the next frame, with regression coverage in both directions.
+- Deployed controls and device QA remain outstanding.
