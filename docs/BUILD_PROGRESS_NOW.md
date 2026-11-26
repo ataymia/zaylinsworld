@@ -272,3 +272,8 @@ performance verification. Do not promote an art preview to "playable".
 
 - Opposing throttle stops at zero before reversing on the next frame, with regression coverage in both directions.
 - Deployed controls and device QA remain outstanding.
+
+## November 25 Maritime Academy daily lockout integrity
+
+- PR #51 boat braking merged after both CI workflows passed.
+- Reject stale lesson completions after a newer recorded lesson; regression checks progress, money, smarts and daily lockout. CI and deployed/device QA pending.
