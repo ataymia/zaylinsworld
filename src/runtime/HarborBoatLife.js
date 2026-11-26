@@ -81,7 +81,11 @@ export function stepHarborBoat(boat,input={},dt=0){
  if(!boat?.riding)return {moved:false};
  const t=clamp(num(dt,0),0,.05),f=clamp(num(input.f,0),-1,1),
    s=clamp(num(input.s,0),-1,1),usable=boat.fuel>0&&boat.hull>0;
- if(f&&usable)boat.speed+=f*12*t;
+ if(f&&usable){
+   // Opposing throttle brakes to zero before reversing on the next frame.
+   const next=boat.speed+f*12*t;
+   boat.speed=boat.speed*f<0&&next*f>0?0:next;
+ }
  else boat.speed-=Math.sign(boat.speed)*Math.min(Math.abs(boat.speed),4*t);
  boat.speed=clamp(boat.speed,-5,18);
  if(s&&Math.abs(boat.speed)>.2)boat.yaw-=s*1.25*t*Math.sign(boat.speed);
