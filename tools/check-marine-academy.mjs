@@ -52,6 +52,11 @@ assert.equal(JSON.stringify(staleState.marineAcademy),snapshot,'stale lesson can
 assert.equal(staleState.money,balance);
 assert.equal(staleState.stats?.smarts,smarts);
 assert.equal(startMarineLesson(staleState).error,'already-studied');
+staleState.day--;
+assert.equal(startMarineLesson(staleState).error,'already-studied','clock rollback cannot open an unfinishable lesson');
+assert.equal(JSON.stringify(staleState.marineAcademy),snapshot);
+staleState.day+=2;
+assert.equal(startMarineLesson(staleState).questions.length,4,'study resumes after recorded day');
 const saved=defaultState();
 saved.education.certificates=[MARINE_CERTIFICATE_ID];
 assert(ensureMarineAcademyState(saved).certified,'certificate survives old/migrated progress');
