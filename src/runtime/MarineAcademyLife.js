@@ -14,8 +14,9 @@ export const MARINE_LESSON_QUESTIONS=Object.freeze([
 const integer=value=>Math.max(0,Math.floor(Number.isFinite(Number(value))?Number(value):0));
 export function normalizeMarineAcademyState(value={}){
  const input=value&&typeof value==='object'?value:{};
+ const attempts=integer(input.attempts);
  return {
-  attempts:integer(input.attempts),passes:integer(input.passes),
+  attempts,passes:Math.min(attempts,integer(input.passes)),
   lastScore:Math.min(4,integer(input.lastScore)),
   bestScore:Math.min(4,integer(input.bestScore)),
   lastDay:Number.isInteger(input.lastDay)&&input.lastDay>=1?input.lastDay:null,
