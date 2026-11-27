@@ -284,3 +284,7 @@ performance verification. Do not promote an art preview to "playable".
 - Device QA and advanced navigation simulation remain outstanding.
 
 - 2026-11-26: Maritime Academy restores an earned certificate missing from the education inventory on migrated saves, without duplicate cash or certificate entries. Regression added; CI and device QA pending.
+
+## November 27 academy counter integrity (validation pending)
+
+- Normalize migrated pass counts to no more than recorded attempts, preserving earned certification. Added regression assertions; CI and deployed/device QA pending.
