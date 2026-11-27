@@ -88,3 +88,9 @@ assert.match(panelSource,/event\.preventDefault\(\);first\.focus\(\)/,'forward T
 assert.match(panelSource,/event\.key==='Escape'/,'Escape must cancel the lesson');
 assert.match(panelSource,/panel\.querySelector\('button'\)\?\.focus\(\)/,'question choices must receive focus');
 console.log('[marine-academy] 8 real water-safety questions, 4 graded attempts, one-time certificate, daily retakes, state migration and live UI wiring passed');
+
+// Migrated/corrupt counters must not report more passes than attempts.
+assert.equal(normalizeMarineAcademyState({attempts:2,passes:9}).passes,2);
+assert.equal(normalizeMarineAcademyState({attempts:0,passes:3,certified:true}).passes,0);
+assert.equal(normalizeMarineAcademyState({attempts:0,passes:3,certified:true}).certified,true);
+assert.equal(normalizeMarineAcademyState({attempts:5,passes:3}).passes,3);
