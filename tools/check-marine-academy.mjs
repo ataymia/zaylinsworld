@@ -60,6 +60,14 @@ assert.equal(startMarineLesson(staleState).questions.length,4,'study resumes aft
 const saved=defaultState();
 saved.education.certificates=[MARINE_CERTIFICATE_ID];
 assert(ensureMarineAcademyState(saved).certified,'certificate survives old/migrated progress');
+const recovered=defaultState();
+recovered.marineAcademy={certified:true};
+recovered.education.certificates=[];
+const recoveredMoney=recovered.money;
+ensureMarineAcademyState(recovered);
+ensureMarineAcademyState(recovered);
+assert.equal(recovered.education.certificates.filter(id=>id===MARINE_CERTIFICATE_ID).length,1);
+assert.equal(recovered.money,recoveredMoney,'migration must not award cash again');
 const clean=normalizeMarineAcademyState({attempts:-8,lastScore:500,bestScore:999,lastDay:-4});
 assert.equal(clean.attempts,0);assert.equal(clean.bestScore,4);assert.equal(clean.lastDay,null);
 const src=readFileSync(new URL('../src/main.js',import.meta.url),'utf8');

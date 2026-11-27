@@ -282,3 +282,5 @@ performance verification. Do not promote an art preview to "playable".
 
 - Reject lesson launch when the recorded study day is ahead of the current game day, matching the completion guard. Regression covers rollback and resumption on a later day.
 - Device QA and advanced navigation simulation remain outstanding.
+
+- 2026-11-26: Maritime Academy restores an earned certificate missing from the education inventory on migrated saves, without duplicate cash or certificate entries. Regression added; CI and device QA pending.

@@ -28,6 +28,8 @@ export function ensureMarineAcademyState(state){
  if(!Array.isArray(state.education.certificates))state.education.certificates=[];
  if(state.education.certificates.includes(MARINE_CERTIFICATE_ID))
    state.marineAcademy.certified=true;
+ else if(state.marineAcademy.certified)
+   state.education.certificates.push(MARINE_CERTIFICATE_ID);
  return state.marineAcademy;
 }
 export function startMarineLesson(state,{random=Math.random}={}){
