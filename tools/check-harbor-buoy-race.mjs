@@ -14,6 +14,10 @@ assert(boardHarborBoat(state).ok);
 const rentalMoney=state.money;
 const s=beginBuoyRace(state);assert(!s.error);
 assert.equal(tickBuoyRace(state,s,.05,HARBOR_BOAT_DOCK).type,'running');
+for(const invalid of [{x:NaN,z:-2920},{x:800},{x:Infinity,z:-2920},{x:'800',z:-2920}]){
+ assert.equal(tickBuoyRace(state,s,.05,invalid).type,'running');
+ assert.equal(s.index,0,'invalid coordinates must not advance the race');
+}
 for(let i=0;i<BUOY_RACE_CHECKPOINTS.length;i++){
  const result=tickBuoyRace(state,s,.05,BUOY_RACE_CHECKPOINTS[i]);
  if(i<BUOY_RACE_CHECKPOINTS.length-1){
