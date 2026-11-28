@@ -106,3 +106,10 @@ assert.equal(expiredResult.duplicate,true);
 assert.equal(expiredResult.awarded,0);
 assert.equal(JSON.stringify(expiredState),beforeExpired,'expired lesson cannot change progression');
 assert.equal(startMarineLesson(expiredState).questions.length,4);
+
+// A lesson must not corrupt the shared question bank for future players.
+const immutableLesson=startMarineLesson(defaultState(),{random:()=>0});
+const originalAnswer=immutableLesson.questions[0].answer;
+assert.throws(()=>{immutableLesson.questions[0].answer=(originalAnswer+1)%3;},TypeError);
+assert.throws(()=>{immutableLesson.questions[0].choices[0]='corrupted';},TypeError);
+assert.equal(startMarineLesson(defaultState(),{random:()=>0}).questions[0].answer,originalAnswer);

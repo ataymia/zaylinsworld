@@ -10,7 +10,7 @@ export const MARINE_LESSON_QUESTIONS=Object.freeze([
  {id:'water',prompt:'Which route is safer when entering shallow, unfamiliar water?',choices:['Leave the marked channel','Follow marked navigation channels','Drive directly toward rocks'],answer:1,topic:'Waterway marks identify safer navigable routes.'},
  {id:'wildlife',prompt:'A protected wildlife zone is marked beside the channel. What do you do?',choices:['Keep a respectful distance','Chase the animals','Anchor on the nest site'],answer:0,topic:'Protected wildlife and habitats must not be disturbed.'},
  {id:'distress',prompt:'Another boat signals that its engine failed. What is the best first step?',choices:['Approach without looking','Ignore it and accelerate','Alert Harbor Patrol and assist safely'],answer:2,topic:'Call for help and assist without endangering your own crew.'},
-]);
+].map(question=>Object.freeze({...question,choices:Object.freeze(question.choices)})));
 const integer=value=>Math.max(0,Math.floor(Number.isFinite(Number(value))?Number(value):0));
 export function normalizeMarineAcademyState(value={}){
  const input=value&&typeof value==='object'?value:{};
