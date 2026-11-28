@@ -59,7 +59,8 @@ export function answerMarineLesson(state,session,choice){
  session.done=true;
  const record=ensureMarineAcademyState(state);
  // Reject stale sessions as well as same-day duplicates; never rewind the daily lockout.
- if(record.lastDay!==null&&record.lastDay>=session.day)
+ if(session.day!==Math.max(1,integer(state.day)) ||
+    (record.lastDay!==null&&record.lastDay>=session.day))
   return {type:'finished',passed:false,score:session.score,awarded:0,duplicate:true};
  record.attempts++;
  record.lastDay=session.day;
