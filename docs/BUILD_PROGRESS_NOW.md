@@ -296,3 +296,8 @@ performance verification. Do not promote an art preview to "playable".
 ## November 28 buoy race coordinate integrity (CI and device QA pending)
 
 - Reject non-finite or non-numeric boat positions before checkpoint advancement; regression covers missing, NaN, infinite and string coordinates. Existing course and rewards unchanged.
+
+
+## November 28 buoy race deadline fix
+
+- Reject finish-line arrival at the exact time limit; regression covers timeout and unchanged money. CI and deployed/device QA pending.
