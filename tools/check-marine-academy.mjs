@@ -94,3 +94,15 @@ assert.equal(normalizeMarineAcademyState({attempts:2,passes:9}).passes,2);
 assert.equal(normalizeMarineAcademyState({attempts:0,passes:3,certified:true}).passes,0);
 assert.equal(normalizeMarineAcademyState({attempts:0,passes:3,certified:true}).certified,true);
 assert.equal(normalizeMarineAcademyState({attempts:5,passes:3}).passes,3);
+
+// A day rollover without any newer completion must also invalidate the old lesson.
+const expiredState=defaultState();
+const expired=startMarineLesson(expiredState,{random:()=>0});
+expiredState.day++;
+const beforeExpired=JSON.stringify(expiredState);
+let expiredResult;
+for(let i=0;i<4;i++)expiredResult=answerMarineLesson(expiredState,expired,expired.questions[expired.index].answer);
+assert.equal(expiredResult.duplicate,true);
+assert.equal(expiredResult.awarded,0);
+assert.equal(JSON.stringify(expiredState),beforeExpired,'expired lesson cannot change progression');
+assert.equal(startMarineLesson(expiredState).questions.length,4);
