@@ -64,7 +64,7 @@ export function tickBuoyRace(state,session,dt,position=state.boating){
  }
  const mark=BUOY_RACE_CHECKPOINTS[session.index];
  if(!mark)return {type:'invalid'};
- if(!position||Math.hypot(position.x-mark.x,position.z-mark.z)>mark.radius)
+ if(!position||!Number.isFinite(position.x)||!Number.isFinite(position.z)||Math.hypot(position.x-mark.x,position.z-mark.z)>mark.radius)
   return {type:'running'};
  session.index++;
  if(session.index<BUOY_RACE_CHECKPOINTS.length)
