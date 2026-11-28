@@ -113,3 +113,8 @@ const originalAnswer=immutableLesson.questions[0].answer;
 assert.throws(()=>{immutableLesson.questions[0].answer=(originalAnswer+1)%3;},TypeError);
 assert.throws(()=>{immutableLesson.questions[0].choices[0]='corrupted';},TypeError);
 assert.equal(startMarineLesson(defaultState(),{random:()=>0}).questions[0].answer,originalAnswer);
+
+// Active lesson order and length must remain stable throughout grading.
+assert.throws(()=>immutableLesson.questions.pop(),TypeError);
+assert.throws(()=>immutableLesson.questions.reverse(),TypeError);
+assert.equal(immutableLesson.questions.length,4);
