@@ -292,3 +292,7 @@ performance verification. Do not promote an art preview to "playable".
 ## November 28 Academy lesson sequence integrity
 
 - Freeze the selected four-question sequence to prevent accidental removal or reordering during grading; regression covers both mutations. CI and deployed/device QA pending.
+
+## November 28 buoy race coordinate integrity (CI and device QA pending)
+
+- Reject non-finite or non-numeric boat positions before checkpoint advancement; regression covers missing, NaN, infinite and string coordinates. Existing course and rewards unchanged.
