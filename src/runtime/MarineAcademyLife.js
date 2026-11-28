@@ -44,7 +44,7 @@ export function startMarineLesson(state,{random=Math.random}={}){
   const j=Math.floor(safe*(i+1));
   [questions[i],questions[j]]=[questions[j],questions[i]];
  }
- return {day,questions:questions.slice(0,4),index:0,score:0,done:false};
+ return {day,questions:Object.freeze(questions.slice(0,4)),index:0,score:0,done:false};
 }
 export function answerMarineLesson(state,session,choice){
  if(!session||session.done)return {type:'inactive'};
