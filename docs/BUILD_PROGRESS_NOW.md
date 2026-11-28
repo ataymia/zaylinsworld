@@ -288,3 +288,7 @@ performance verification. Do not promote an art preview to "playable".
 ## November 27 academy counter integrity (validation pending)
 
 - Normalize migrated pass counts to no more than recorded attempts, preserving earned certification. Added regression assertions; CI and deployed/device QA pending.
+
+## November 28 Academy lesson sequence integrity
+
+- Freeze the selected four-question sequence to prevent accidental removal or reordering during grading; regression covers both mutations. CI and deployed/device QA pending.
