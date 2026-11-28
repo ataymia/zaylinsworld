@@ -66,6 +66,12 @@ const timeTrial=beginBuoyRace(certified);timeTrial.seconds=BUOY_RACE_TIME_LIMIT-
 const timeout=tickBuoyRace(certified,timeTrial,.05,{x:0,z:0});
 assert.equal(timeout.type,'timeout');assert.equal(timeout.payout,0);
 assert.equal(certified.harborRace.attempts,2);
+const exact=beginBuoyRace(certified);
+exact.index=BUOY_RACE_CHECKPOINTS.length-1;
+exact.seconds=BUOY_RACE_TIME_LIMIT-.05;
+const beforeDeadlineMoney=certified.money;
+assert.equal(tickBuoyRace(certified,exact,.05,BUOY_RACE_CHECKPOINTS.at(-1)).type,'timeout');
+assert.equal(certified.money,beforeDeadlineMoney,'finish at deadline must not pay');
 const cancelled=beginBuoyRace(certified);
 assert.equal(abortBuoyRace(cancelled).type,'aborted');
 assert.equal(abortBuoyRace(cancelled).type,'inactive');
