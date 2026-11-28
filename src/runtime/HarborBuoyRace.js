@@ -59,7 +59,7 @@ export function tickBuoyRace(state,session,dt,position=state.boating){
  if(!state.boating?.riding)return abortBuoyRace(session);
  const step=Number(dt);
  session.seconds+=Number.isFinite(step)?Math.max(0,Math.min(.05,step)):0;
- if(session.seconds>BUOY_RACE_TIME_LIMIT){
+ if(session.seconds>=BUOY_RACE_TIME_LIMIT){
   session.seconds=BUOY_RACE_TIME_LIMIT;return finalizeRace(state,session,false);
  }
  const mark=BUOY_RACE_CHECKPOINTS[session.index];
